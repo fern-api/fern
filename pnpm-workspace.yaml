@@ -128,7 +128,7 @@ catalog:
   esutils: ^2.0.3
   express: ^4.22.0
   fast-levenshtein: ^3.0.0
-  file-type: ^21.3.1
+  file-type: ^21.3.2
   find-up: ^6.3.0
   form-data: 4.0.4
   fs-extra: ^11.1.1

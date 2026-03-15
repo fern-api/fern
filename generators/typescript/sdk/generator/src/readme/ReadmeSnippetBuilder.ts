@@ -37,6 +37,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
     public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
     public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
+    private static readonly CUSTOM_FETCH_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCH";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -97,6 +98,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
+        snippets[ReadmeSnippetBuilder.CUSTOM_FETCH_FEATURE_ID] = this.buildCustomFetchSnippets();
 
         if (this.isPaginationEnabled) {
             const paginationSnippets = this.buildPaginationSnippets();
@@ -478,6 +480,26 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         silent: false, // defaults to true, set to false to enable logging
     }
 });
+`
+            )
+        ];
+    }
+
+    private buildCustomFetchSnippets(): string[] {
+        return [
+            this.writeCode(
+                code`
+const response = await ${this.clientVariableName}.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
+    },
+});
+
+const data = await response.json();
 `
             )
         ];

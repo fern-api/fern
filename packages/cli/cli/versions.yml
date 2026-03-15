@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.29.0
+  changelogEntry:
+    - summary: |
+        Add AI changelog rollup for multi-chunk diff analysis. When large diffs
+        are split into multiple chunks, the resulting changelog entries are now
+        consolidated via a dedicated AI call that deduplicates repetitive bullets,
+        groups changes under Keep a Changelog headers (Breaking Changes, Added,
+        Changed, Fixed), and produces a structured PR description with
+        Before/After code fences for breaking changes. Also adds a
+        `version_bump_reason` field to AI analysis responses, providing an
+        explicit one-sentence justification for why MAJOR/MINOR/PATCH was chosen.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 4.28.0
   changelogEntry:
     - summary: |
@@ -22,7 +37,6 @@
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65
-
 - version: 4.27.0
   changelogEntry:
     - summary: |
@@ -33,7 +47,6 @@
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65
-
 - version: 4.26.1
   changelogEntry:
     - summary: |

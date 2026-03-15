@@ -100,7 +100,8 @@ export async function sdkDiffCommand({
         return {
             message: "No changes detected between the directories",
             changelog_entry: "",
-            version_bump: VersionBump.NO_CHANGE
+            version_bump: VersionBump.NO_CHANGE,
+            version_bump_reason: "No functional changes detected."
         };
     }
 
@@ -146,6 +147,7 @@ export async function sdkDiffCommand({
         // Multi-chunk analysis — analyze each chunk, merge results
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
+        let bestVersionBumpReason = "";
         const allChangelogEntries: string[] = [];
 
         for (let i = 0; i < cappedChunks.length; i++) {
@@ -169,6 +171,7 @@ export async function sdkDiffCommand({
 
             if (bestBump !== prevBest) {
                 bestMessage = chunkAnalysis.message;
+                bestVersionBumpReason = chunkAnalysis.version_bump_reason?.trim() || "";
             }
 
             const entry = chunkAnalysis.changelog_entry?.trim();
@@ -188,17 +191,37 @@ export async function sdkDiffCommand({
             return {
                 version_bump: VersionBump.NO_CHANGE,
                 message: "No changes detected between the directories",
-                changelog_entry: ""
+                changelog_entry: "",
+                version_bump_reason: "No functional changes detected."
             };
+        }
+
+        let changelogEntry: string;
+        let versionBumpReason = bestVersionBumpReason;
+        if (allChangelogEntries.length > 1) {
+            // Consolidate repetitive multi-chunk entries via AI rollup
+            const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
+            try {
+                context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
+                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
+                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                versionBumpReason = rollup.version_bump_reason?.trim() || "";
+            } catch (rollupError) {
+                context.logger.warn(
+                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                );
+                changelogEntry = rawEntries;
+            }
+        } else {
+            changelogEntry = allChangelogEntries[0] ?? "";
+            versionBumpReason = bestVersionBumpReason;
         }
 
         return {
             version_bump: bestBump as VersionBump,
             message: bestMessage || "SDK regeneration",
-            changelog_entry:
-                allChangelogEntries.length > 1
-                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
-                    : (allChangelogEntries[0] ?? "")
+            changelog_entry: changelogEntry,
+            version_bump_reason: versionBumpReason
         };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);

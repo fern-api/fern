@@ -1,7 +1,7 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { getNamespaceExport } from "@fern-api/typescript-base";
+import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
@@ -42,6 +42,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
+            naming: parsed?.naming,
             outputEsm: parsed?.outputEsm ?? false,
             outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
@@ -166,10 +167,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
-            namespaceExport: customConfig.namespaceExport
+            namespaceExport: customConfig.namespaceExport,
+            naming: customConfig.naming
+        });
+        const resolvedNaming = resolveNaming({
+            namespaceExport,
+            naming: customConfig.naming
         });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
+            naming: resolvedNaming,
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
