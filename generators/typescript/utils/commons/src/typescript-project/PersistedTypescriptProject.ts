@@ -364,9 +364,8 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        // Stage dist contents and root markdown files into a temp directory so
-        // the output zip includes documentation (README.md, reference.md, etc.)
-        // alongside the compiled cjs/esm output.
+        // Stage dist contents and root documentation files into a temp directory
+        // so the output zip includes them alongside the compiled cjs/esm output.
         const stagingDir = AbsoluteFilePath.of((await tmp.dir()).path);
         const distDir = join(this.directory, this.distDirectory);
         const distItems = await readdir(distDir);
@@ -376,13 +375,13 @@ export class PersistedTypescriptProject {
             });
         }
 
-        const rootEntries = await readdir(this.directory, { withFileTypes: true });
-        for (const entry of rootEntries) {
-            if (entry.isFile() && entry.name.endsWith(".md")) {
-                await cp(
-                    join(this.directory, RelativeFilePath.of(entry.name)),
-                    join(stagingDir, RelativeFilePath.of(entry.name))
-                );
+        const ROOT_FILES_TO_INCLUDE = ["README.md", "reference.md", "CONTRIBUTING.md"];
+        for (const filename of ROOT_FILES_TO_INCLUDE) {
+            const src = join(this.directory, RelativeFilePath.of(filename));
+            try {
+                await cp(src, join(stagingDir, RelativeFilePath.of(filename)));
+            } catch {
+                // File may not exist (e.g. whitelabel skips CONTRIBUTING.md)
             }
         }
 
