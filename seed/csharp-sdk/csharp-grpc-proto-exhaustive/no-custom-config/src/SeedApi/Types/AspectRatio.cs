@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(StringEnumSerializer<AspectRatio>))]
+[JsonConverter(typeof(AspectRatio.AspectRatioSerializer))]
 [Serializable]
 public readonly record struct AspectRatio : IStringEnum
 {
@@ -57,6 +58,32 @@ public readonly record struct AspectRatio : IStringEnum
     public static explicit operator string(AspectRatio value) => value.Value;
 
     public static explicit operator AspectRatio(string value) => new(value);
+
+    internal class AspectRatioSerializer : JsonConverter<AspectRatio>
+    {
+        public override AspectRatio Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new AspectRatio(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            AspectRatio value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
