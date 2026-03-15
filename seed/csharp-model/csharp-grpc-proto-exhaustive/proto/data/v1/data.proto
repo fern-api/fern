@@ -7,6 +7,7 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/rpc/status.proto";
 
 option csharp_namespace = "Data.V1.Grpc";
 option go_package = "github.com/acme.co/data-go-grpc";
@@ -164,6 +165,7 @@ message UpdateRequest {
   google.protobuf.Any details = 7;
   repeated IndexType index_types = 8;
   optional AspectRatio aspect_ratio = 9;
+  optional google.rpc.Status status = 10;
 }
 
 message UpdateResponse {

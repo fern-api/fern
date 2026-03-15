@@ -41,7 +41,7 @@ public record UserModel : IJsonOnDeserialized
             Email = value.Email,
             Age = value.Age,
             Weight = value.Weight,
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
         };
     }
 
