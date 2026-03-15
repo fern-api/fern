@@ -380,8 +380,9 @@ export class PersistedTypescriptProject {
             const src = join(this.directory, RelativeFilePath.of(filename));
             try {
                 await cp(src, join(stagingDir, RelativeFilePath.of(filename)));
-            } catch {
+            } catch (e) {
                 // File may not exist (e.g. whitelabel skips CONTRIBUTING.md)
+                logger.debug(`Skipping ${filename}: ${e}`);
             }
         }
 
