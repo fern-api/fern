@@ -206,6 +206,9 @@ export class CsharpTypeMapper extends WithGeneration {
             }
             return objectClassReference;
         }
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            return this.context.protobufResolver.getExternalProtobufClassReference(named.typeId);
+        }
 
         const typeDeclaration = this.model.dereferenceType(named.typeId).typeDeclaration;
         switch (typeDeclaration.shape.type) {

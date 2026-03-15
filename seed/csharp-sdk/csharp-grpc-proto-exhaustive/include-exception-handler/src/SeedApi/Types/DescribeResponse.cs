@@ -36,7 +36,7 @@ public record DescribeResponse : IJsonOnDeserialized
         {
             Namespaces = value.Namespaces?.ToDictionary(
                 kvp => kvp.Key,
-                kvp => NamespaceSummary.FromProto(kvp.Value)
+                kvp => SeedApi.NamespaceSummary.FromProto(kvp.Value)
             ),
             Dimension = value.Dimension,
             Fullness = value.Fullness,

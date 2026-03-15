@@ -40,7 +40,7 @@ public record CreateResponse : IJsonOnDeserialized
     {
         return new CreateResponse
         {
-            Resource = value.Resource != null ? Column.FromProto(value.Resource) : null,
+            Resource = value.Resource != null ? SeedApi.Column.FromProto(value.Resource) : null,
             Success = value.Success,
             ErrorMessage = value.ErrorMessage,
         };

@@ -33,10 +33,10 @@ public record FetchResponse : IJsonOnDeserialized
         {
             Columns = value.Columns?.ToDictionary(
                 kvp => kvp.Key,
-                kvp => Column.FromProto(kvp.Value)
+                kvp => SeedApi.Column.FromProto(kvp.Value)
             ),
             Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+            Usage = value.Usage != null ? SeedApi.Usage.FromProto(value.Usage) : null,
         };
     }
 

@@ -1008,6 +1008,140 @@
                 }
             ]
         },
+        "type_:GoogleRpcStatus": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "GoogleRpcStatus",
+                    "camelCase": {
+                        "unsafeName": "googleRPCStatus",
+                        "safeName": "googleRPCStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "google_rpc_status",
+                        "safeName": "google_rpc_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GOOGLE_RPC_STATUS",
+                        "safeName": "GOOGLE_RPC_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GoogleRPCStatus",
+                        "safeName": "GoogleRPCStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "code",
+                            "camelCase": {
+                                "unsafeName": "code",
+                                "safeName": "code"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "code",
+                                "safeName": "code"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CODE",
+                                "safeName": "CODE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Code",
+                                "safeName": "Code"
+                            }
+                        },
+                        "wireValue": "code"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "details",
+                            "camelCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DETAILS",
+                                "safeName": "DETAILS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Details",
+                                "safeName": "Details"
+                            }
+                        },
+                        "wireValue": "details"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "unknown"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:IndexType": {
             "type": "enum",
             "declaration": {
@@ -5366,6 +5500,39 @@
                                 "value": {
                                     "type": "named",
                                     "value": "type_:AspectRatio"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "status",
+                                    "camelCase": {
+                                        "unsafeName": "status",
+                                        "safeName": "status"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "status",
+                                        "safeName": "status"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "STATUS",
+                                        "safeName": "STATUS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Status",
+                                        "safeName": "Status"
+                                    }
+                                },
+                                "wireValue": "status"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:GoogleRpcStatus"
                                 }
                             },
                             "propertyAccess": null,

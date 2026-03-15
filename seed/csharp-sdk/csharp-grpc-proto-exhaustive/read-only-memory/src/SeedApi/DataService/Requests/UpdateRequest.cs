@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Google.Rpc;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -34,6 +35,9 @@ public record UpdateRequest
 
     [JsonPropertyName("aspect_ratio")]
     public AspectRatio? AspectRatio { get; set; }
+
+    [JsonPropertyName("status")]
+    public Status? Status { get; set; }
 
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
@@ -105,6 +109,10 @@ public record UpdateRequest
                 SeedApi.AspectRatio.Values.AspectRatio43 => ProtoDataV1Grpc.AspectRatio._43,
                 _ => throw new ArgumentException($"Unknown enum value: {AspectRatio.Value.Value}"),
             };
+        }
+        if (Status != null)
+        {
+            result.Status = Status;
         }
         return result;
     }

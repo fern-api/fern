@@ -302,6 +302,11 @@ class ToProtoPropertyMapper extends WithGeneration {
         if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
             return this.getValueForAny({ propertyName });
         }
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            // External proto types (e.g. google.rpc.Status) are used directly;
+            // no conversion needed since the SDK type IS the proto type.
+            return this.csharp.codeblock(propertyName);
+        }
         const resolvedType = this.model.dereferenceType(named.typeId).typeDeclaration;
         if (resolvedType.shape.type === "enum") {
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
@@ -668,6 +673,11 @@ class FromProtoPropertyMapper extends WithGeneration {
         named: NamedType;
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            // External proto types (e.g. google.rpc.Status) are used directly;
+            // no conversion needed since the SDK type IS the proto type.
+            return this.csharp.codeblock(propertyName);
+        }
         const resolvedType = this.model.dereferenceType(named.typeId).typeDeclaration;
         if (resolvedType.shape.type === "enum") {
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
@@ -688,9 +698,12 @@ class FromProtoPropertyMapper extends WithGeneration {
                 propertyName
             });
         }
-        const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named);
+        const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
+            fullyQualified: true
+        });
         if (wrapperType === WrapperType.List) {
             // The static function is mapped within a LINQ expression.
+            // Use fully qualified reference to avoid collisions with property names.
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(propertyClassReference);
                 writer.write(".FromProto");

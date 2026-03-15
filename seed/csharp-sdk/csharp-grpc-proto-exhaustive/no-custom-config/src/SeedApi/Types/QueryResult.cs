@@ -28,7 +28,7 @@ public record QueryResult : IJsonOnDeserialized
     {
         return new QueryResult
         {
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Matches = value.Matches?.Select(SeedApi.ScoredColumn.FromProto),
             Namespace = value.Namespace,
         };
     }

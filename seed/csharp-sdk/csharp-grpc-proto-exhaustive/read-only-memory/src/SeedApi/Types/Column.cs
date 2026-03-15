@@ -36,9 +36,9 @@ public record Column : IJsonOnDeserialized
         {
             Id = value.Id,
             Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+                value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 
