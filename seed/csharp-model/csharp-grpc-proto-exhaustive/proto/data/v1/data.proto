@@ -173,6 +173,67 @@ message UpdateResponse {
   repeated IndexType index_types = 4;
 }
 
+enum ToolMode {
+  // Invalid tool mode.
+  TOOL_MODE_INVALID = 0;
+
+  // Let the model decide if a tool shall be used.
+  TOOL_MODE_AUTO = 1;
+
+  // Force the model to not use tools.
+  TOOL_MODE_NONE = 2;
+
+  // Force the model to use tools.
+  TOOL_MODE_REQUIRED = 3;
+}
+
+message ToolChoice {
+  oneof tool_choice {
+    // Force the model to perform in a given mode.
+    ToolMode mode = 1;
+
+    // Force the model to call a particular function.
+    string function_name = 2;
+  }
+}
+
+message CreateRequest {
+  // The name of the resource to create.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // A description of the resource.
+  string description = 2;
+
+  // The tool choice configuration.
+  ToolChoice tool_choice = 3;
+
+  oneof source {
+    // A URL to fetch the resource from.
+    string url = 4;
+
+    // Inline content for the resource.
+    string content = 5;
+  }
+
+  // Optional metadata for the resource.
+  google.protobuf.Struct metadata = 6;
+}
+
+message CreateResponse {
+  // The created resource.
+  Column resource = 1;
+
+  oneof status {
+    // Indicates successful creation.
+    bool success = 2;
+
+    // Error message if creation failed.
+    string error_message = 3;
+  }
+}
+
 message DescribeRequest {
   google.protobuf.Struct filter = 1;
   google.protobuf.Timestamp after = 2;
@@ -233,6 +294,13 @@ service DataService {
   rpc Describe(DescribeRequest) returns (DescribeResponse) {
     option (google.api.http) = {
       post: "/data/describe"
+      body: "*"
+    };
+  }
+
+  rpc Create(CreateRequest) returns (CreateResponse) {
+    option (google.api.http) = {
+      post: "/data/create"
       body: "*"
     };
   }
