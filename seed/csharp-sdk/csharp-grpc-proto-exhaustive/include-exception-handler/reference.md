@@ -77,6 +77,46 @@ await client.DataService.UploadAsync(
 </dl>
 </details>
 
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">CreateAsync</a>(CreateRequest { ... }) -> WithRawResponseTask&lt;CreateResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.DataService.CreateAsync(new CreateRequest { Name = "name" });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">DeleteAsync</a>(DeleteRequest { ... }) -> WithRawResponseTask&lt;DeleteResponse&gt;</code></summary>
 <dl>
 <dd>

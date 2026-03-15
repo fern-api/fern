@@ -16,6 +16,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/data/create",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.CreateAsync(new CreateRequest { Name = \"name\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/data/delete",
                 "method": "POST",
                 "identifier_override": "endpoint_dataService.Delete"

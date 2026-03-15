@@ -86,6 +86,64 @@ public partial class DataServiceClient : IDataServiceClient
     }
 
     /// <example><code>
+    /// await client.DataService.CreateAsync(new CreateRequest { Name = "name" });
+    /// </code></example>
+    public async Task<CreateResponse> CreateAsync(
+        CreateRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        try
+        {
+            var metadata = new global::Grpc.Core.Metadata();
+            foreach (var header in _client.Options.Headers)
+            {
+                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+                metadata.Add(header.Key, value);
+            }
+            if (_client.Options.AdditionalHeaders != null)
+            {
+                foreach (var header in _client.Options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+            if (options?.AdditionalHeaders != null)
+            {
+                foreach (var header in options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+
+            var callOptions = _grpc.CreateCallOptions(
+                metadata,
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            var call = _dataService.CreateAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return CreateResponse.FromProto(response);
+        }
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
+    }
+
+    /// <example><code>
     /// await client.DataService.DeleteAsync(new DeleteRequest());
     /// </code></example>
     public async Task<DeleteResponse> DeleteAsync(

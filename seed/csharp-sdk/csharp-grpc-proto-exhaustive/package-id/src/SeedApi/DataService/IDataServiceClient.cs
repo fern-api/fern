@@ -8,6 +8,12 @@ public partial interface IDataServiceClient
         CancellationToken cancellationToken = default
     );
 
+    Task<CreateResponse> CreateAsync(
+        CreateRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task<DeleteResponse> DeleteAsync(
         DeleteRequest request,
         GrpcRequestOptions? options = null,
