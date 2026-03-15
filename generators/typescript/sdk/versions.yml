@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.1
+  changelogEntry:
+    - summary: |
+        Include root markdown files (README.md, reference.md, CONTRIBUTING.md) in
+        the output when `outputSourceFiles` is `false`. Previously, the compiled
+        CJS/ESM output mode only included the `dist/` directory contents, silently
+        dropping generated documentation files.
+      type: fix
+  createdAt: "2026-03-15"
+  irVersion: 65
+
 - version: 3.56.0
   changelogEntry:
     - summary: |

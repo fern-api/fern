@@ -364,7 +364,29 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
+        // Stage dist contents and root markdown files into a temp directory so
+        // the output zip includes documentation (README.md, reference.md, etc.)
+        // alongside the compiled cjs/esm output.
+        const stagingDir = AbsoluteFilePath.of((await tmp.dir()).path);
+        const distDir = join(this.directory, this.distDirectory);
+        const distItems = await readdir(distDir);
+        for (const item of distItems) {
+            await cp(join(distDir, RelativeFilePath.of(item)), join(stagingDir, RelativeFilePath.of(item)), {
+                recursive: true
+            });
+        }
+
+        const rootEntries = await readdir(this.directory, { withFileTypes: true });
+        for (const entry of rootEntries) {
+            if (entry.isFile() && entry.name.endsWith(".md")) {
+                await cp(
+                    join(this.directory, RelativeFilePath.of(entry.name)),
+                    join(stagingDir, RelativeFilePath.of(entry.name))
+                );
+            }
+        }
+
+        await this.zipDirectoryContents(stagingDir, {
             logger,
             destinationPath,
             zipFilename,
