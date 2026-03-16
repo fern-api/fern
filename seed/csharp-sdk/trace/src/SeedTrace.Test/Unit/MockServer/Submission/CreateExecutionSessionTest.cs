@@ -6,6 +6,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Submission;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateExecutionSessionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

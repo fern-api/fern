@@ -6,6 +6,7 @@ using SeedWebsocketAuth.Test.Utils;
 namespace SeedWebsocketAuth.Test.Unit.MockServer.Auth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RefreshTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

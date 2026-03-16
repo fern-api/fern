@@ -4,6 +4,7 @@ using SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer.Nested.Api;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetSomethingTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

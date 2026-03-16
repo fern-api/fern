@@ -14,7 +14,8 @@ import {
     CONTAINER_GENERATOR_CONFIG_PATH,
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
-    CONTAINER_PATH_TO_SNIPPET_TEMPLATES
+    CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
+    CONTAINER_SOURCES_DIRECTORY
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
@@ -146,6 +147,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             snippetPath,
             snippetTemplatePath,
             licenseFilePath,
+            sourceMounts,
             context,
             inspect
         }: ExecutionEnvironment.ExecuteArgs
@@ -172,7 +174,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             command: [
                 "sh",
                 "-c",
-                `rm -rf ${CONTAINER_FERN_DIRECTORY} /tmp/LICENSE && mkdir -p ${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
+                `rm -rf ${CONTAINER_FERN_DIRECTORY} /tmp/LICENSE && mkdir -p ${CONTAINER_CODEGEN_OUTPUT_DIRECTORY} ${CONTAINER_SOURCES_DIRECTORY}`
             ],
             runner: this.runner,
             writeLogsToFile: false
@@ -221,6 +223,16 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 containerId,
                 hostPath: licenseFilePath,
                 containerPath: "/tmp/LICENSE",
+                runner: this.runner
+            });
+        }
+
+        for (const sourceMount of sourceMounts ?? []) {
+            await copyToContainer({
+                logger,
+                containerId,
+                hostPath: sourceMount.hostPath,
+                containerPath: sourceMount.containerPath,
                 runner: this.runner
             });
         }

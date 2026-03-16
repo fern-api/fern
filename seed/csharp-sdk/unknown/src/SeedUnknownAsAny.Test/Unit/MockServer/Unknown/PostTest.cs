@@ -5,6 +5,7 @@ using SeedUnknownAsAny.Test.Utils;
 namespace SeedUnknownAsAny.Test.Unit.MockServer.Unknown;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

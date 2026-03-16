@@ -5,6 +5,7 @@ using SeedMultiUrlEnvironment.Test.Unit.MockServer;
 namespace SeedMultiUrlEnvironment.Test.Unit.MockServer.Ec2;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class BootInstanceTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

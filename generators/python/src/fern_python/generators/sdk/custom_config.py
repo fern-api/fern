@@ -168,6 +168,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Useful for APIs that require fixed-width datetime formats with fractional seconds.
     datetime_milliseconds: bool = False
 
+    # If true, omits Fern platform headers (X-Fern-Language, SDK name/version,
+    # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
+    omit_fern_headers: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -179,6 +183,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
             if "offsetSemantics" in obj and "offset_semantics" not in obj:
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
+            if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
+                obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
 
         obj = super().parse_obj(obj)
 

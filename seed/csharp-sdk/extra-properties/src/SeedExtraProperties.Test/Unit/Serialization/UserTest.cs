@@ -6,6 +6,7 @@ using SeedExtraProperties.Core;
 namespace SeedExtraProperties.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UserTest
 {
     [NUnit.Framework.Test]

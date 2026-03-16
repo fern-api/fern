@@ -6,6 +6,7 @@ using SeedMixedFileDirectory.Test.Utils;
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

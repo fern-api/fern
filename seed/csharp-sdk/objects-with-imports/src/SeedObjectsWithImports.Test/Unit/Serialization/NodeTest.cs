@@ -7,6 +7,7 @@ using SeedObjectsWithImports.Core;
 namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class NodeTest
 {
     [NUnit.Framework.Test]

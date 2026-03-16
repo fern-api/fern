@@ -7,7 +7,7 @@
         "type": "number"
       }
     },
-    "topK": {
+    "top_k": {
       "oneOf": [
         {
           "type": "integer",
@@ -38,7 +38,7 @@
         }
       ]
     },
-    "indexedData": {
+    "indexed_data": {
       "oneOf": [
         {
           "$ref": "#/definitions/IndexedData"

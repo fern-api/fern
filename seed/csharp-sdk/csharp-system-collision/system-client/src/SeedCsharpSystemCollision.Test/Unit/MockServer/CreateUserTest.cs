@@ -5,6 +5,7 @@ using SeedCsharpSystemCollision.Test.Utils;
 namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

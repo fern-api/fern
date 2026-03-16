@@ -6,6 +6,7 @@ using SeedExtraProperties.Test.Utils;
 namespace SeedExtraProperties.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -4,6 +4,7 @@ using SeedIdempotencyHeaders.Test.Unit.MockServer;
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer.Payment;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeleteTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

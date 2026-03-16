@@ -302,6 +302,11 @@ class ToProtoPropertyMapper extends WithGeneration {
         if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
             return this.getValueForAny({ propertyName });
         }
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            // External proto types (e.g. google.rpc.Status) are used directly;
+            // no conversion needed since the SDK type IS the proto type.
+            return this.csharp.codeblock(propertyName);
+        }
         const resolvedType = this.model.dereferenceType(named.typeId).typeDeclaration;
         if (resolvedType.shape.type === "enum") {
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
@@ -320,7 +325,8 @@ class ToProtoPropertyMapper extends WithGeneration {
                 enum_: resolvedType.shape,
                 classReference: enumClassReference,
                 protobufClassReference,
-                propertyName
+                propertyName,
+                wrapperType
             });
         }
         if (wrapperType === WrapperType.List) {
@@ -361,11 +367,13 @@ class ToProtoPropertyMapper extends WithGeneration {
         propertyName: string;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeLine(`${propertyName}.Select(type => type switch`);
+            // Switch on the string Value property using const string patterns from Values class,
+            // since the enum is a readonly record struct (static readonly fields aren't constant patterns).
+            writer.writeLine(`${propertyName}.Select(type => type.Value switch`);
             writer.writeLine("{");
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
-                writer.write(".");
+                writer.write(".Values.");
                 writer.write(enumValue.name.name.pascalCase.safeName);
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
@@ -382,19 +390,25 @@ class ToProtoPropertyMapper extends WithGeneration {
         enum_,
         classReference,
         protobufClassReference,
-        propertyName
+        propertyName,
+        wrapperType
     }: {
         enum_: EnumTypeDeclaration;
         classReference: ast.ClassReference;
         protobufClassReference: ast.ClassReference;
         propertyName: string;
+        wrapperType?: WrapperType;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeLine(`${propertyName}.Value switch`);
+            // Switch on the string Value property using const string patterns from Values class,
+            // since the enum is a readonly record struct (static readonly fields aren't constant patterns).
+            // For optional enums, .Value does the nullable unwrap, so we need .Value.Value to get the string.
+            const valueAccess = wrapperType === WrapperType.Optional ? ".Value.Value" : ".Value";
+            writer.writeLine(`${propertyName}${valueAccess} switch`);
             writer.writeLine("{");
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
-                writer.write(".");
+                writer.write(".Values.");
                 writer.write(enumValue.name.name.pascalCase.safeName);
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
@@ -402,7 +416,9 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.writeLine(",");
             }
-            writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}.Value}")`);
+            writer.writeLine(
+                ` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}${valueAccess}}")`
+            );
             writer.write("}");
         });
     }
@@ -657,6 +673,11 @@ class FromProtoPropertyMapper extends WithGeneration {
         named: NamedType;
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            // External proto types (e.g. google.rpc.Status) are used directly;
+            // no conversion needed since the SDK type IS the proto type.
+            return this.csharp.codeblock(propertyName);
+        }
         const resolvedType = this.model.dereferenceType(named.typeId).typeDeclaration;
         if (resolvedType.shape.type === "enum") {
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
@@ -677,9 +698,12 @@ class FromProtoPropertyMapper extends WithGeneration {
                 propertyName
             });
         }
-        const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named);
+        const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
+            fullyQualified: true
+        });
         if (wrapperType === WrapperType.List) {
             // The static function is mapped within a LINQ expression.
+            // Use fully qualified reference to avoid collisions with property names.
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(propertyClassReference);
                 writer.write(".FromProto");
@@ -972,6 +996,9 @@ function getValueForLiteral({ literal }: { literal: Literal }, csharp: CSharp): 
 /*
  * Protobuf enums remove the stutter in their generated enum value names.
  * For example, the enum value `Status.StatusActive` becomes `Status.Active`.
+ *
+ * If the resulting name starts with a digit, protobuf's C# codegen prepends
+ * an underscore (e.g., `VIDEO_ASPECT_RATIO_1_1` becomes `_11`).
  */
 function getProtobufEnumValueName({
     generation,
@@ -983,5 +1010,9 @@ function getProtobufEnumValueName({
     enumValue: EnumValue;
 }): string {
     const enumValueName = enumValue.name.name.pascalCase.safeName;
-    return enumValueName.replace(classReference.name, "");
+    const stripped = enumValueName.replace(classReference.name, "");
+    if (/^\d/.test(stripped)) {
+        return `_${stripped}`;
+    }
+    return stripped;
 }

@@ -87,6 +87,8 @@ export class LocalTaskHandler {
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -94,6 +96,17 @@ export class LocalTaskHandler {
         // Read prior changelog BEFORE copy operations overwrite the output directory
         const priorChangelog =
             this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+
+        if (isFernIgnorePresent) {
+            const absolutePathToFernignore = AbsoluteFilePath.of(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
+            );
+            const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+            const userPaths = fernIgnorePaths.filter((p) => p !== FERNIGNORE_FILENAME);
+            this.context.logger.debug(
+                `Detected ${FERNIGNORE_FILENAME} at ${absolutePathToFernignore} — preserving ${userPaths.length} path(s): ${userPaths.join(", ")}`
+            );
+        }
 
         if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
@@ -125,7 +138,9 @@ export class LocalTaskHandler {
                 return {
                     shouldCommit: false,
                     autoVersioningCommitMessage: undefined,
-                    autoVersioningChangelogEntry: undefined
+                    autoVersioningChangelogEntry: undefined,
+                    autoVersioningPrDescription: undefined,
+                    autoVersioningVersionBumpReason: undefined
                 };
             }
             // Replace placeholder version with computed version
@@ -137,7 +152,9 @@ export class LocalTaskHandler {
             return {
                 shouldCommit: true,
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,
-                autoVersioningChangelogEntry: autoVersionResult.changelogEntry
+                autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
+                autoVersioningPrDescription: autoVersionResult.prDescription,
+                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -266,6 +283,7 @@ export class LocalTaskHandler {
                     // We process ALL chunks so that every changelog entry is captured.
                     let bestBump: string = VersionBump.NO_CHANGE;
                     let bestMessage = "";
+                    let bestVersionBumpReason: string | undefined;
                     const allChangelogEntries: string[] = [];
 
                     for (let i = 0; i < cappedChunks.length; i++) {
@@ -294,9 +312,10 @@ export class LocalTaskHandler {
                         const prevBest = bestBump;
                         bestBump = maxVersionBump(bestBump, chunkAnalysis.versionBump);
 
-                        // Keep the commit message from the chunk that produced the highest bump
+                        // Keep the commit message and bump reason from the chunk that produced the highest bump
                         if (bestBump !== prevBest) {
                             bestMessage = chunkAnalysis.message;
+                            bestVersionBumpReason = chunkAnalysis.versionBumpReason;
                         }
 
                         // Collect all non-empty changelog entries so the final
@@ -315,13 +334,41 @@ export class LocalTaskHandler {
                     if (bestBump === VersionBump.NO_CHANGE) {
                         analysis = null;
                     } else {
+                        let changelogEntry: string;
+                        let prDescription: string | undefined;
+                        let versionBumpReason: string | undefined = bestVersionBumpReason;
+                        if (allChangelogEntries.length > 1) {
+                            // Consolidate repetitive multi-chunk entries via AI rollup
+                            const rawEntries = allChangelogEntries
+                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
+                                .join("\n");
+                            try {
+                                this.context.logger.debug(
+                                    `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
+                                );
+                                const rollup = await BamlClient.withOptions({
+                                    clientRegistry: await this.getClientRegistry()
+                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                                prDescription = rollup.pr_description?.trim() || undefined;
+                                versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
+                            } catch (rollupError) {
+                                this.context.logger.warn(
+                                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                                );
+                                changelogEntry = rawEntries;
+                            }
+                        } else {
+                            changelogEntry = allChangelogEntries[0] ?? "";
+                            versionBumpReason = bestVersionBumpReason;
+                        }
+
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                            changelogEntry:
-                                allChangelogEntries.length > 1
-                                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
-                                    : (allChangelogEntries[0] ?? "")
+                            changelogEntry,
+                            prDescription,
+                            versionBumpReason
                         };
                     }
                 }
@@ -355,6 +402,8 @@ export class LocalTaskHandler {
             const finalBump = analysis.versionBump;
             const finalMessage = analysis.message;
             const finalChangelogEntry = analysis.changelogEntry;
+            const finalPrDescription = analysis.prDescription;
+            const finalVersionBumpReason = analysis.versionBumpReason;
 
             const newVersion = this.incrementVersion(previousVersion, finalBump);
             this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
@@ -363,11 +412,15 @@ export class LocalTaskHandler {
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
             const changelogEntry = finalChangelogEntry?.trim() || undefined;
+            const prDescription = finalPrDescription?.trim() || undefined;
+            const versionBumpReason = finalVersionBumpReason?.trim() || undefined;
 
             return {
                 version: newVersion,
                 commitMessage,
-                changelogEntry
+                changelogEntry,
+                prDescription,
+                versionBumpReason
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -433,7 +486,8 @@ export class LocalTaskHandler {
             return {
                 versionBump: analysis.version_bump,
                 message: analysis.message,
-                changelogEntry: analysis.changelog_entry
+                changelogEntry: analysis.changelog_entry,
+                versionBumpReason: analysis.version_bump_reason
             };
         };
 

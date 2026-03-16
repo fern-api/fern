@@ -95,11 +95,8 @@ export class ModelGeneratorContext extends GeneratorContext {
         );
 
         if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
 
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
@@ -117,11 +114,6 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
-        }
 
         return files;
     }

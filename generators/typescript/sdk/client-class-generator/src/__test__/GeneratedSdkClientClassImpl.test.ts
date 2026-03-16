@@ -107,7 +107,7 @@ function createClientClass(opts?: {
     neverThrowErrors?: boolean;
     includeCredentialsOnCrossOriginRequests?: boolean;
     allowCustomFetcher?: boolean;
-    shouldGenerateWebsocketClients?: boolean;
+    generateWebSocketClients?: boolean;
     requireDefaultEnvironment?: boolean;
     defaultTimeoutInSeconds?: number | "infinity" | undefined;
     includeContentHeadersOnFileDownloadResponse?: boolean;
@@ -137,7 +137,7 @@ function createClientClass(opts?: {
         neverThrowErrors: opts?.neverThrowErrors ?? false,
         includeCredentialsOnCrossOriginRequests: opts?.includeCredentialsOnCrossOriginRequests ?? false,
         allowCustomFetcher: opts?.allowCustomFetcher ?? false,
-        shouldGenerateWebsocketClients: opts?.shouldGenerateWebsocketClients ?? false,
+        generateWebSocketClients: opts?.generateWebSocketClients ?? false,
         requireDefaultEnvironment: opts?.requireDefaultEnvironment ?? false,
         defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
         includeContentHeadersOnFileDownloadResponse: opts?.includeContentHeadersOnFileDownloadResponse ?? false,

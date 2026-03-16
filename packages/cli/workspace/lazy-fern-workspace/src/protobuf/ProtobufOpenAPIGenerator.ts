@@ -215,6 +215,7 @@ plugins:
       - title=""
       - enum_type=string
       - default_response=false
+      - flatten_oneofs=true
       - source_root=${relativeFilepathToProtobufRoot}
 `;
 }

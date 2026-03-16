@@ -256,24 +256,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         // Platform headers (no auth)
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.language}"`),
-            value: this.csharp.codeblock('"C#"')
-        });
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-            value: this.csharp.codeblock(`"${this.namespaces.root}"`)
-        });
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-            value: this.context.getCurrentVersionValueAccess()
-        });
-        if (platformHeaders.userAgent != null) {
+        if (!this.settings.omitFernHeaders) {
+            const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
             platformHeaderEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+                value: this.csharp.codeblock('"C#"')
             });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+            });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+                value: this.context.getCurrentVersionValueAccess()
+            });
+            if (platformHeaders.userAgent != null) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
+                    value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                });
+            }
         }
 
         const platformHeaderDictionary = this.csharp.dictionary({
@@ -475,17 +477,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         })
                     );
                     if (this.grpcClientInfo != null) {
-                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);
                         innerWriter.write(" = ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
                                 classReference: this.grpcClientInfo.classReference,
-                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
                             })
                         );
                     }
-                    const arguments_ = [this.csharp.codeblock("_client")];
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
                     for (const subpackage of this.getSubpackages()) {
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                             innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
