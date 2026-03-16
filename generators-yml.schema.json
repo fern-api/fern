@@ -606,6 +606,45 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.WebSocketAuthFallbackTransport": {
+      "type": "string",
+      "enum": [
+        "websocket-subprotocol",
+        "query"
+      ]
+    },
+    "fernDefinition.auth.WebSocketAuthFallbackSchema": {
+      "type": "object",
+      "properties": {
+        "in": {
+          "$ref": "#/definitions/fernDefinition.auth.WebSocketAuthFallbackTransport"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "format": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "in"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -626,6 +665,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "websocket-auth-fallback": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.WebSocketAuthFallbackSchema"
             },
             {
               "type": "null"

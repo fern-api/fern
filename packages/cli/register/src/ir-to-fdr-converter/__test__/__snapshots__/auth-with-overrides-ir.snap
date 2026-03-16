@@ -52,6 +52,7 @@
         },
         "tokenEnvVar": "CUSTOM_AUTH_TOKEN",
         "type": "bearer",
+        "websocketAuthFallback": undefined,
       },
     ],
   },

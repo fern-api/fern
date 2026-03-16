@@ -942,6 +942,45 @@
       ],
       "additionalProperties": false
     },
+    "auth.WebSocketAuthFallbackTransport": {
+      "type": "string",
+      "enum": [
+        "websocket-subprotocol",
+        "query"
+      ]
+    },
+    "auth.WebSocketAuthFallbackSchema": {
+      "type": "object",
+      "properties": {
+        "in": {
+          "$ref": "#/definitions/auth.WebSocketAuthFallbackTransport"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "format": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "in"
+      ],
+      "additionalProperties": false
+    },
     "auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -962,6 +1001,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "websocket-auth-fallback": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.WebSocketAuthFallbackSchema"
             },
             {
               "type": "null"
