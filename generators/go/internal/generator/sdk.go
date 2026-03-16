@@ -426,9 +426,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				username = authScheme.Basic.Username.PascalCase.UnsafeName
 				password = authScheme.Basic.Password.PascalCase.UnsafeName
 			)
-			f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
-			f.P("}")
 		}
 		if header := authScheme.Header; header != nil {
 			var prefix string
