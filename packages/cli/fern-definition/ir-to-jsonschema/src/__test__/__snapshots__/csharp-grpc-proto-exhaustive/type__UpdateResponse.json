@@ -15,7 +15,7 @@
     "index_type": {
       "oneOf": [
         {
-          "$ref": "#/definitions/dataservice.IndexType"
+          "$ref": "#/definitions/IndexType"
         },
         {
           "type": "null"
@@ -37,7 +37,7 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dataservice.IndexType"
+            "$ref": "#/definitions/IndexType"
           }
         },
         {
@@ -48,7 +48,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "dataservice.IndexType": {
+    "IndexType": {
       "type": "string",
       "enum": [
         "INDEX_TYPE_INVALID",

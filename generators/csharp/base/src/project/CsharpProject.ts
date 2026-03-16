@@ -905,7 +905,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("");
         result.push("<ItemGroup>");
-        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />');
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.31.1" />');
         result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
@@ -918,6 +919,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("<ItemGroup>");
         for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            // Skip proto files provided by external packages (e.g. Google.Api.CommonProtos)
+            // to avoid conflicting with the types from those packages.
+            if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protobufSourceFilePath.startsWith(prefix))) {
+                continue;
+            }
             const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
             result.push(
                 `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
@@ -1009,3 +1015,10 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return path.win32.normalize(relativePath);
     }
 }
+
+/**
+ * Proto file path prefixes for types provided by external NuGet packages
+ * (e.g. Google.Api.CommonProtos). These files should be excluded from
+ * Grpc.Tools compilation to avoid conflicting type definitions.
+ */
+const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];

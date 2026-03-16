@@ -363,11 +363,11 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_userservice.create": {
+        "endpoint_userService.Create": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "create",
+                    "originalName": "Create",
                     "camelCase": {
                         "unsafeName": "create",
                         "safeName": "create"
@@ -388,43 +388,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "userservice",
+                            "originalName": "userService",
                             "camelCase": {
-                                "unsafeName": "userservice",
-                                "safeName": "userservice"
+                                "unsafeName": "userService",
+                                "safeName": "userService"
                             },
                             "snakeCase": {
-                                "unsafeName": "userservice",
-                                "safeName": "userservice"
+                                "unsafeName": "user_service",
+                                "safeName": "user_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "USERSERVICE",
-                                "safeName": "USERSERVICE"
+                                "unsafeName": "USER_SERVICE",
+                                "safeName": "USER_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Userservice",
-                                "safeName": "Userservice"
+                                "unsafeName": "UserService",
+                                "safeName": "UserService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "userservice",
+                        "originalName": "userService",
                         "camelCase": {
-                            "unsafeName": "userservice",
-                            "safeName": "userservice"
+                            "unsafeName": "userService",
+                            "safeName": "userService"
                         },
                         "snakeCase": {
-                            "unsafeName": "userservice",
-                            "safeName": "userservice"
+                            "unsafeName": "user_service",
+                            "safeName": "user_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USERSERVICE",
-                            "safeName": "USERSERVICE"
+                            "unsafeName": "USER_SERVICE",
+                            "safeName": "USER_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Userservice",
-                            "safeName": "Userservice"
+                            "unsafeName": "UserService",
+                            "safeName": "UserService"
                         }
                     }
                 }
@@ -458,43 +458,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "userservice",
+                                "originalName": "userService",
                                 "camelCase": {
-                                    "unsafeName": "userservice",
-                                    "safeName": "userservice"
+                                    "unsafeName": "userService",
+                                    "safeName": "userService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "userservice",
-                                    "safeName": "userservice"
+                                    "unsafeName": "user_service",
+                                    "safeName": "user_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "USERSERVICE",
-                                    "safeName": "USERSERVICE"
+                                    "unsafeName": "USER_SERVICE",
+                                    "safeName": "USER_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Userservice",
-                                    "safeName": "Userservice"
+                                    "unsafeName": "UserService",
+                                    "safeName": "UserService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "userservice",
+                            "originalName": "userService",
                             "camelCase": {
-                                "unsafeName": "userservice",
-                                "safeName": "userservice"
+                                "unsafeName": "userService",
+                                "safeName": "userService"
                             },
                             "snakeCase": {
-                                "unsafeName": "userservice",
-                                "safeName": "userservice"
+                                "unsafeName": "user_service",
+                                "safeName": "user_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "USERSERVICE",
-                                "safeName": "USERSERVICE"
+                                "unsafeName": "USER_SERVICE",
+                                "safeName": "USER_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Userservice",
-                                "safeName": "Userservice"
+                                "unsafeName": "UserService",
+                                "safeName": "UserService"
                             }
                         }
                     }

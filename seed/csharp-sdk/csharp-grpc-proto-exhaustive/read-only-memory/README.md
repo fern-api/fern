@@ -41,7 +41,15 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.Dataservice.FooAsync();
+await client.DataService.UploadAsync(
+    new UploadRequest
+    {
+        Columns = new List<SeedApi.Column>()
+        {
+            new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+        },
+    }
+);
 ```
 
 ## Exception Handling
@@ -53,7 +61,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.Dataservice.FooAsync(...);
+    var response = await client.DataService.UploadAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -77,7 +85,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
+var response = await client.DataService.UploadAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -90,7 +98,7 @@ var response = await client.Dataservice.FooAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
+var response = await client.DataService.UploadAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -103,7 +111,7 @@ var response = await client.Dataservice.FooAsync(
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
+var response = await client.DataService.UploadAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -122,25 +130,25 @@ This SDK uses forward-compatible enums that can handle unknown values gracefully
 using SeedApi;
 
 // Using a built-in value
-var indexType = IndexType.IndexTypeInvalid;
+var aspectRatio = AspectRatio.AspectRatioUnspecified;
 
 // Using a custom value
-var customIndexType = IndexType.FromCustom("custom-value");
+var customAspectRatio = AspectRatio.FromCustom("custom-value");
 
 // Using in a switch statement
-switch (indexType.Value)
+switch (aspectRatio.Value)
 {
-    case IndexType.Values.IndexTypeInvalid:
-        Console.WriteLine("IndexTypeInvalid");
+    case AspectRatio.Values.AspectRatioUnspecified:
+        Console.WriteLine("AspectRatioUnspecified");
         break;
     default:
-        Console.WriteLine($"Unknown value: {indexType.Value}");
+        Console.WriteLine($"Unknown value: {aspectRatio.Value}");
         break;
 }
 
 // Explicit casting
-string indexTypeString = (string)IndexType.IndexTypeInvalid;
-IndexType indexTypeFromString = (IndexType)"INDEX_TYPE_INVALID";
+string aspectRatioString = (string)AspectRatio.AspectRatioUnspecified;
+AspectRatio aspectRatioFromString = (AspectRatio)"ASPECT_RATIO_UNSPECIFIED";
 ```
 
 ## Contributing

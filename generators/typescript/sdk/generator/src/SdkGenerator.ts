@@ -118,7 +118,7 @@ export declare namespace SdkGenerator {
         outputEsm: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
@@ -182,7 +182,7 @@ export class SdkGenerator {
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
-    private shouldGenerateWebsocketClients: boolean;
+    private generateWebSocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
@@ -290,7 +290,7 @@ export class SdkGenerator {
         this.generateOAuthClients =
             config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
-        this.shouldGenerateWebsocketClients = config.shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = config.generateWebSocketClients;
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -490,7 +490,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
-            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
+            generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
@@ -597,7 +597,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generated errors");
         this.generateHandleNonStatusCodeError();
         this.context.logger.debug("Generated handleNonStatusCodeError");
-        if (this.shouldGenerateWebsocketClients) {
+        if (this.generateWebSocketClients) {
             if (this.config.includeSerdeLayer) {
                 this.generateUnionedResponseSchemas();
                 this.context.logger.debug("Generated unioned response schemas");
@@ -1119,7 +1119,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
+            if (!package_.hasEndpointsInTree && (!this.generateWebSocketClients || package_.websocket == null)) {
                 continue;
             }
             this.withSourceFile({
@@ -2077,7 +2077,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
@@ -2116,7 +2116,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);

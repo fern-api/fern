@@ -33,7 +33,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
-    shouldGenerateWebsocketClients: z.optional(z.boolean()),
+    generateWebSocketClients: z.optional(z.boolean()),
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
@@ -99,6 +99,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean()),
+    // @deprecated Use generateWebSocketClients instead
+    shouldGenerateWebsocketClients: z.optional(z.boolean()),
 
     // internal - license name extracted from custom license file
     _fernLicenseName: z.optional(z.string())

@@ -34,10 +34,10 @@ public record QueryResponse : IJsonOnDeserialized
     {
         return new QueryResponse
         {
-            Results = value.Results?.Select(QueryResult.FromProto),
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Results = value.Results?.Select(SeedApi.QueryResult.FromProto),
+            Matches = value.Matches?.Select(SeedApi.ScoredColumn.FromProto),
             Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+            Usage = value.Usage != null ? SeedApi.Usage.FromProto(value.Usage) : null,
         };
     }
 

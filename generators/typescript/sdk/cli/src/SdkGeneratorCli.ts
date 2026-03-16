@@ -48,7 +48,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
-            shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
+            generateWebSocketClients:
+                parsed?.generateWebSocketClients ?? parsed?.shouldGenerateWebsocketClients ?? false,
             includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
@@ -203,7 +204,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 outputEsm: customConfig.outputEsm,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
-                shouldGenerateWebsocketClients: customConfig.shouldGenerateWebsocketClients,
+                generateWebSocketClients: customConfig.generateWebSocketClients,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,

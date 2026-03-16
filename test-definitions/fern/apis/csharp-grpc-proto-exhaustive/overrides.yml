@@ -84,13 +84,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/IndexType"
+    CreateRequest:
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
     Column:
       properties:
         metadata:
           $ref: "#/components/schemas/Metadata"
     IndexType:
-      x-fern-sdk-group-name:
-        - dataservice
       x-fern-type-name: IndexType
       enum:
         - INDEX_TYPE_INVALID
