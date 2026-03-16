@@ -82,7 +82,8 @@ function convertSecuritySchemeHelper(
         } else if (securityScheme.type === "openIdConnect") {
             return SecurityScheme.bearer({
                 tokenVariableName: undefined,
-                tokenEnvVar: undefined
+                tokenEnvVar: undefined,
+                websocketAuthFallback: undefined
             });
         } else if (securityScheme.type === "oauth2") {
             return SecurityScheme.oauth({
