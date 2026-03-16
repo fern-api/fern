@@ -4,6 +4,7 @@ using SeedMultiLineDocs.Test.Unit.MockServer;
 namespace SeedMultiLineDocs.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -6,6 +6,7 @@ using SeedObjectsWithImports.Core;
 namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class MetadataTest
 {
     [NUnit.Framework.Test]

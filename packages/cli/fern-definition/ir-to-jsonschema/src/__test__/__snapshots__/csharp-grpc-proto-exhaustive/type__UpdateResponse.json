@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "updatedAt": {
+    "updated_at": {
       "oneOf": [
         {
           "type": "string",
@@ -12,10 +12,10 @@
         }
       ]
     },
-    "indexType": {
+    "index_type": {
       "oneOf": [
         {
-          "$ref": "#/definitions/dataservice.IndexType"
+          "$ref": "#/definitions/IndexType"
         },
         {
           "type": "null"
@@ -32,12 +32,12 @@
         }
       ]
     },
-    "indexTypes": {
+    "index_types": {
       "oneOf": [
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dataservice.IndexType"
+            "$ref": "#/definitions/IndexType"
           }
         },
         {
@@ -48,7 +48,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "dataservice.IndexType": {
+    "IndexType": {
       "type": "string",
       "enum": [
         "INDEX_TYPE_INVALID",

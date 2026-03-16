@@ -5,6 +5,7 @@ using SeedBasicAuthEnvironmentVariables.Test.Utils;
 namespace SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer.BasicAuth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithBasicAuthTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -5,6 +5,7 @@ using SeedHeaderToken.Test.Utils;
 namespace SeedHeaderToken.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithBearerTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

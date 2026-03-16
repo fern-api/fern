@@ -1,3 +1,4 @@
+pub mod realtime_error_event;
 pub mod realtime_receive_event;
 pub mod realtime_receive_event_2;
 pub mod realtime_receive_event_3;
@@ -6,6 +7,7 @@ pub mod realtime_send_event;
 pub mod realtime_send_event_2;
 pub mod realtime_send_snake_case;
 
+pub use realtime_error_event::ErrorEvent;
 pub use realtime_receive_event::ReceiveEvent;
 pub use realtime_receive_event_2::ReceiveEvent2;
 pub use realtime_receive_event_3::ReceiveEvent3;

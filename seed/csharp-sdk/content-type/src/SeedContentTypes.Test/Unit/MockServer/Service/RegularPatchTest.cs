@@ -5,6 +5,7 @@ using SeedContentTypes.Test.Unit.MockServer;
 namespace SeedContentTypes.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RegularPatchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

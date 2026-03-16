@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.NoReqBody;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithNoRequestBodyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

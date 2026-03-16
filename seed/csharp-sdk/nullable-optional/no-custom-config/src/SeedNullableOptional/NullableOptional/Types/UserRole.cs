@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedNullableOptional.Core;
 
 namespace SeedNullableOptional;
 
-[JsonConverter(typeof(StringEnumSerializer<UserRole>))]
+[JsonConverter(typeof(UserRole.UserRoleSerializer))]
 [Serializable]
 public readonly record struct UserRole : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct UserRole : IStringEnum
     public static explicit operator string(UserRole value) => value.Value;
 
     public static explicit operator UserRole(string value) => new(value);
+
+    internal class UserRoleSerializer : JsonConverter<UserRole>
+    {
+        public override UserRole Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new UserRole(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserRole value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

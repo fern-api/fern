@@ -7,6 +7,7 @@ using SeedQueryParameters.Test.Utils;
 namespace SeedQueryParameters.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUsernameTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

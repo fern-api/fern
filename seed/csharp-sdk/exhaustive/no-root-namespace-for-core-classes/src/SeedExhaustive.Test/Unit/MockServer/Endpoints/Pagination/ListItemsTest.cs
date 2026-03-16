@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Unit.MockServer;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Pagination;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListItemsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -15,6 +15,19 @@ export const defaultConfig = {
         reporters: process.env.CI ? [["default", { summary: false }], "github-actions"] : ["default"],
         maxConcurrency: 10,
         passWithNoTests: true,
+        tags: [
+            {
+                name: "slow",
+                description: "Tests that need a longer timeout (e.g. IR generation, heavy I/O).",
+                timeout: 30_000
+            },
+            {
+                name: "flaky",
+                description: "Flaky tests that should be retried in CI.",
+                retry: process.env.CI ? { count: 3, delay: 500 } : 0,
+                priority: 1
+            }
+        ],
         coverage: {
             provider: "v8",
             reporter: ["text", "json-summary", "html"],
