@@ -13,6 +13,8 @@ from fern_python.codegen.ast.dependency.dependency import (
 )
 from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
+from fern_python.version import get_minimum_compatible_version
+from fern_python.version.python_version import PythonVersion
 
 from fern.generator_exec import (
     BasicLicense,
@@ -225,14 +227,25 @@ packages = [
             if self.enable_wire_tests:
                 wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
+            # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
+            # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
+            # pair when the project still supports Python 3.8.
+            min_py = get_minimum_compatible_version(self.python_version)
+            if min_py is not None and min_py.spec >= PythonVersion.PY3_9.spec:
+                pytest_version = "^8.2.0"
+                pytest_asyncio_version = "^1.0.0"
+            else:
+                pytest_version = "^7.4.0"
+                pytest_asyncio_version = "^0.23.5"
+
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
-pytest = "^7.4.0"
-pytest-asyncio = "^1.0.0"
+pytest = "{pytest_version}"
+pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
