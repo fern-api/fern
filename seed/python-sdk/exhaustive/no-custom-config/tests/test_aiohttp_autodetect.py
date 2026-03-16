@@ -1,0 +1,114 @@
+import importlib
+import sys
+import typing
+import unittest
+from unittest import mock
+
+import httpx
+import pytest
+
+
+class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
+    """Tests for _make_default_async_client when httpx_aiohttp is NOT installed."""
+
+    def test_returns_httpx_async_client(self) -> None:
+        """When httpx_aiohttp is not installed, returns plain httpx.AsyncClient."""
+        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
+            from seed.client import _make_default_async_client
+
+            client = _make_default_async_client(timeout=60, follow_redirects=True)
+            self.assertIsInstance(client, httpx.AsyncClient)
+            self.assertEqual(client.timeout.read, 60)
+            self.assertTrue(client.follow_redirects)
+
+    def test_follow_redirects_none(self) -> None:
+        """When follow_redirects is None, omits it from httpx.AsyncClient."""
+        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
+            from seed.client import _make_default_async_client
+
+            client = _make_default_async_client(timeout=60, follow_redirects=None)
+            self.assertIsInstance(client, httpx.AsyncClient)
+            self.assertFalse(client.follow_redirects)
+
+    def test_explicit_httpx_client_bypasses_autodetect(self) -> None:
+        """When user passes httpx_client explicitly, auto-detect is not used."""
+        explicit_client = httpx.AsyncClient(timeout=60)
+        result = explicit_client if explicit_client is not None else None
+        self.assertIs(result, explicit_client)
+        self.assertEqual(result.timeout.read, 60)
+
+
+@pytest.mark.aiohttp
+class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
+    """Tests for _make_default_async_client when httpx_aiohttp IS installed."""
+
+    def test_returns_aiohttp_client(self) -> None:
+        """When httpx_aiohttp is installed, returns HttpxAiohttpClient."""
+        import httpx_aiohttp
+
+        from seed.client import _make_default_async_client
+
+        client = _make_default_async_client(timeout=60, follow_redirects=True)
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertEqual(client.timeout.read, 60)
+        self.assertTrue(client.follow_redirects)
+
+    def test_follow_redirects_none(self) -> None:
+        """When httpx_aiohttp is installed and follow_redirects is None, omits it."""
+        import httpx_aiohttp
+
+        from seed.client import _make_default_async_client
+
+        client = _make_default_async_client(timeout=60, follow_redirects=None)
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertFalse(client.follow_redirects)
+
+
+class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
+    """Tests for _default_clients.py convenience classes (no aiohttp)."""
+
+    def test_default_async_httpx_client_defaults(self) -> None:
+        """DefaultAsyncHttpxClient applies SDK defaults."""
+        from seed._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAsyncHttpxClient
+
+        client = DefaultAsyncHttpxClient()
+        self.assertIsInstance(client, httpx.AsyncClient)
+        self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
+        self.assertTrue(client.follow_redirects)
+
+    def test_default_async_httpx_client_overrides(self) -> None:
+        """DefaultAsyncHttpxClient allows overriding defaults."""
+        from seed._default_clients import DefaultAsyncHttpxClient
+
+        client = DefaultAsyncHttpxClient(timeout=30, follow_redirects=False)
+        self.assertEqual(client.timeout.read, 30)
+        self.assertFalse(client.follow_redirects)
+
+    def test_default_aiohttp_client_raises_without_package(self) -> None:
+        """DefaultAioHttpClient raises RuntimeError when httpx_aiohttp not installed."""
+        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
+            import seed._default_clients
+
+            importlib.reload(seed._default_clients)
+
+            with self.assertRaises(RuntimeError) as ctx:
+                seed._default_clients.DefaultAioHttpClient()
+            self.assertIn("pip install seed[aiohttp]", str(ctx.exception))
+
+            importlib.reload(seed._default_clients)
+
+
+@pytest.mark.aiohttp
+class TestDefaultClientsWithAiohttp(unittest.TestCase):
+    """Tests for _default_clients.py when httpx_aiohttp IS installed."""
+
+    def test_default_aiohttp_client_defaults(self) -> None:
+        """DefaultAioHttpClient works when httpx_aiohttp is installed."""
+        import httpx_aiohttp
+
+        from seed._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAioHttpClient
+
+        client = DefaultAioHttpClient()
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
+        self.assertTrue(client.follow_redirects)
