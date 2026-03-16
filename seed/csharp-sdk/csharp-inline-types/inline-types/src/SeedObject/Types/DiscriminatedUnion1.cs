@@ -75,21 +75,21 @@ public record DiscriminatedUnion1
     public bool IsRef => Type == "ref";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1"/> if <see cref="Type"/> is 'type1', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedObject.DiscriminatedUnion1InlineType1"/> if <see cref="Type"/> is 'type1', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'type1'.</exception>
-    public SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1 AsType1() =>
+    public SeedObject.DiscriminatedUnion1InlineType1 AsType1() =>
         IsType1
-            ? (SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1)Value!
+            ? (SeedObject.DiscriminatedUnion1InlineType1)Value!
             : throw new System.Exception("DiscriminatedUnion1.Type is not 'type1'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2"/> if <see cref="Type"/> is 'type2', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedObject.DiscriminatedUnion1InlineType2"/> if <see cref="Type"/> is 'type2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'type2'.</exception>
-    public SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2 AsType2() =>
+    public SeedObject.DiscriminatedUnion1InlineType2 AsType2() =>
         IsType2
-            ? (SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2)Value!
+            ? (SeedObject.DiscriminatedUnion1InlineType2)Value!
             : throw new System.Exception("DiscriminatedUnion1.Type is not 'type2'");
 
     /// <summary>
@@ -102,8 +102,8 @@ public record DiscriminatedUnion1
             : throw new System.Exception("DiscriminatedUnion1.Type is not 'ref'");
 
     public T Match<T>(
-        Func<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1, T> onType1,
-        Func<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2, T> onType2,
+        Func<SeedObject.DiscriminatedUnion1InlineType1, T> onType1,
+        Func<SeedObject.DiscriminatedUnion1InlineType2, T> onType2,
         Func<SeedObject.ReferenceType, T> onRef,
         Func<string, object?, T> onUnknown_
     )
@@ -118,8 +118,8 @@ public record DiscriminatedUnion1
     }
 
     public void Visit(
-        Action<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1> onType1,
-        Action<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2> onType2,
+        Action<SeedObject.DiscriminatedUnion1InlineType1> onType1,
+        Action<SeedObject.DiscriminatedUnion1InlineType2> onType2,
         Action<SeedObject.ReferenceType> onRef,
         Action<string, object?> onUnknown_
     )
@@ -142,15 +142,13 @@ public record DiscriminatedUnion1
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedObject.DiscriminatedUnion1InlineType1"/> and returns true if successful.
     /// </summary>
-    public bool TryAsType1(
-        out SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1? value
-    )
+    public bool TryAsType1(out SeedObject.DiscriminatedUnion1InlineType1? value)
     {
         if (Type == "type1")
         {
-            value = (SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1)Value!;
+            value = (SeedObject.DiscriminatedUnion1InlineType1)Value!;
             return true;
         }
         value = null;
@@ -158,15 +156,13 @@ public record DiscriminatedUnion1
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedObject.DiscriminatedUnion1InlineType2"/> and returns true if successful.
     /// </summary>
-    public bool TryAsType2(
-        out SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2? value
-    )
+    public bool TryAsType2(out SeedObject.DiscriminatedUnion1InlineType2? value)
     {
         if (Type == "type2")
         {
-            value = (SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2)Value!;
+            value = (SeedObject.DiscriminatedUnion1InlineType2)Value!;
             return true;
         }
         value = null;
@@ -240,18 +236,18 @@ public record DiscriminatedUnion1
             var value = discriminator switch
             {
                 "type1" =>
-                    jsonWithoutDiscriminator.Deserialize<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedObject.DiscriminatedUnion1InlineType1?>(
                         options
                     )
                         ?? throw new JsonException(
-                            "Failed to deserialize SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1"
+                            "Failed to deserialize SeedObject.DiscriminatedUnion1InlineType1"
                         ),
                 "type2" =>
-                    jsonWithoutDiscriminator.Deserialize<SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedObject.DiscriminatedUnion1InlineType2?>(
                         options
                     )
                         ?? throw new JsonException(
-                            "Failed to deserialize SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2"
+                            "Failed to deserialize SeedObject.DiscriminatedUnion1InlineType2"
                         ),
                 "ref" => jsonWithoutDiscriminator.Deserialize<SeedObject.ReferenceType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedObject.ReferenceType"),
@@ -285,17 +281,17 @@ public record DiscriminatedUnion1
     [Serializable]
     public struct Type1
     {
-        public Type1(SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1 value)
+        public Type1(SeedObject.DiscriminatedUnion1InlineType1 value)
         {
             Value = value;
         }
 
-        internal SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1 Value { get; set; }
+        internal SeedObject.DiscriminatedUnion1InlineType1 Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator DiscriminatedUnion1.Type1(
-            SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType1 value
+            SeedObject.DiscriminatedUnion1InlineType1 value
         ) => new(value);
     }
 
@@ -305,17 +301,17 @@ public record DiscriminatedUnion1
     [Serializable]
     public struct Type2
     {
-        public Type2(SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2 value)
+        public Type2(SeedObject.DiscriminatedUnion1InlineType2 value)
         {
             Value = value;
         }
 
-        internal SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2 Value { get; set; }
+        internal SeedObject.DiscriminatedUnion1InlineType2 Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator DiscriminatedUnion1.Type2(
-            SeedObject.DiscriminatedUnion1.Types.DiscriminatedUnion1InlineType2 value
+            SeedObject.DiscriminatedUnion1InlineType2 value
         ) => new(value);
     }
 
@@ -336,123 +332,5 @@ public record DiscriminatedUnion1
 
         public static implicit operator DiscriminatedUnion1.Ref(SeedObject.ReferenceType value) =>
             new(value);
-    }
-
-    public static class Types
-    {
-        /// <summary>
-        /// lorem ipsum
-        /// </summary>
-        [Serializable]
-        public record DiscriminatedUnion1InlineType1 : IJsonOnDeserialized
-        {
-            [JsonExtensionData]
-            private readonly IDictionary<string, JsonElement> _extensionData =
-                new Dictionary<string, JsonElement>();
-
-            /// <summary>
-            /// lorem ipsum
-            /// </summary>
-            [JsonPropertyName("foo")]
-            public required string Foo { get; set; }
-
-            /// <summary>
-            /// lorem ipsum
-            /// </summary>
-            [JsonPropertyName("bar")]
-            public required Types.DiscriminatedUnion1InlineType1InlineType1 Bar { get; set; }
-
-            /// <summary>
-            /// lorem ipsum
-            /// </summary>
-            [JsonPropertyName("ref")]
-            public required ReferenceType Ref { get; set; }
-
-            [JsonIgnore]
-            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
-
-            void IJsonOnDeserialized.OnDeserialized() =>
-                AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-            /// <inheritdoc />
-            public override string ToString()
-            {
-                return JsonUtils.Serialize(this);
-            }
-
-            public static class Types
-            {
-                /// <summary>
-                /// lorem ipsum
-                /// </summary>
-                [Serializable]
-                public record DiscriminatedUnion1InlineType1InlineType1 : IJsonOnDeserialized
-                {
-                    [JsonExtensionData]
-                    private readonly IDictionary<string, JsonElement> _extensionData =
-                        new Dictionary<string, JsonElement>();
-
-                    /// <summary>
-                    /// lorem ipsum
-                    /// </summary>
-                    [JsonPropertyName("foo")]
-                    public required string Foo { get; set; }
-
-                    /// <summary>
-                    /// lorem ipsum
-                    /// </summary>
-                    [JsonPropertyName("ref")]
-                    public required ReferenceType Ref { get; set; }
-
-                    [JsonIgnore]
-                    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-                        new();
-
-                    void IJsonOnDeserialized.OnDeserialized() =>
-                        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-                    /// <inheritdoc />
-                    public override string ToString()
-                    {
-                        return JsonUtils.Serialize(this);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// lorem ipsum
-        /// </summary>
-        [Serializable]
-        public record DiscriminatedUnion1InlineType2 : IJsonOnDeserialized
-        {
-            [JsonExtensionData]
-            private readonly IDictionary<string, JsonElement> _extensionData =
-                new Dictionary<string, JsonElement>();
-
-            /// <summary>
-            /// lorem ipsum
-            /// </summary>
-            [JsonPropertyName("baz")]
-            public required string Baz { get; set; }
-
-            /// <summary>
-            /// lorem ipsum
-            /// </summary>
-            [JsonPropertyName("ref")]
-            public required ReferenceType Ref { get; set; }
-
-            [JsonIgnore]
-            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
-
-            void IJsonOnDeserialized.OnDeserialized() =>
-                AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-            /// <inheritdoc />
-            public override string ToString()
-            {
-                return JsonUtils.Serialize(this);
-            }
-        }
     }
 }

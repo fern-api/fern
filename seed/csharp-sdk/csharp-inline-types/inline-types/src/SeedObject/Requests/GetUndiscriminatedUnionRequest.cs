@@ -9,14 +9,14 @@ public record GetUndiscriminatedUnionRequest
 {
     [JsonPropertyName("bar")]
     public required OneOf<
-        Types.UndiscriminatedUnion1InlineType1,
-        Types.UndiscriminatedUnion1InlineType2,
-        Types.UndiscriminatedUnion1DiscriminatedUnion1,
-        Types.UndiscriminatedUnion1InlineEnum1,
+        UndiscriminatedUnion1InlineType1,
+        UndiscriminatedUnion1InlineType2,
+        UndiscriminatedUnion1DiscriminatedUnion1,
+        UndiscriminatedUnion1InlineEnum1,
         string,
-        IEnumerable<Types.UndiscriminatedUnion1InlineListItem1>,
-        HashSet<Types.UndiscriminatedUnion1InlineSetItem1>,
-        Dictionary<string, Types.UndiscriminatedUnion1InlineMapItem1>,
+        IEnumerable<UndiscriminatedUnion1InlineListItem1>,
+        HashSet<UndiscriminatedUnion1InlineSetItem1>,
+        Dictionary<string, UndiscriminatedUnion1InlineMapItem1>,
         ReferenceType
     > Bar { get; set; }
 

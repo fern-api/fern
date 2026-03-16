@@ -986,6 +986,62 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             }
         }
 
+        // Third pass: validate that every parent in the chain will actually be generated
+        // as a class file. If a parent is itself inline (in the IR) but has no parent in
+        // the map (orphaned inline — e.g. only referenced from an endpoint request body),
+        // then it won't be generated, so its children can't be nested inside it either.
+        // Recursively remove such orphaned subtrees from the maps.
+        const orphanedParents = new Set<TypeId>();
+        for (const [inlineTypeId, parentTypeId] of parentMap) {
+            let currentParent: TypeId | undefined = parentTypeId;
+            while (currentParent != null) {
+                const currentParentDeclaration = this.ir.types[currentParent];
+                if (currentParentDeclaration?.inline === true && !parentMap.has(currentParent)) {
+                    // This parent is inline but has no parent itself — it's orphaned
+                    orphanedParents.add(currentParent);
+                    break;
+                }
+                // Walk up the chain
+                currentParent = parentMap.get(currentParent);
+            }
+        }
+
+        if (orphanedParents.size > 0) {
+            // Remove all inline types whose ancestor chain includes an orphaned parent
+            const toRemove = new Set<TypeId>();
+            const collectOrphanedDescendants = (typeId: TypeId) => {
+                toRemove.add(typeId);
+                const children = childrenMap.get(typeId);
+                if (children) {
+                    for (const childId of children) {
+                        collectOrphanedDescendants(childId);
+                    }
+                }
+            };
+            for (const orphanedParent of orphanedParents) {
+                const children = childrenMap.get(orphanedParent);
+                if (children) {
+                    for (const childId of children) {
+                        collectOrphanedDescendants(childId);
+                    }
+                }
+            }
+            for (const typeId of toRemove) {
+                const parent = parentMap.get(typeId);
+                if (parent != null) {
+                    childrenMap.get(parent)?.delete(typeId);
+                }
+                parentMap.delete(typeId);
+                childrenMap.delete(typeId);
+            }
+            // Clean up orphaned parents from childrenMap if they have no remaining children
+            for (const orphanedParent of orphanedParents) {
+                if (childrenMap.has(orphanedParent) && childrenMap.get(orphanedParent)?.size === 0) {
+                    childrenMap.delete(orphanedParent);
+                }
+            }
+        }
+
         this._inlineTypeParentMap = parentMap;
         this._inlineTypeChildrenMap = childrenMap;
     }

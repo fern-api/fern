@@ -63,10 +63,10 @@ await client.GetDiscriminatedUnionAsync(
     {
         Bar = new DiscriminatedUnion1(
             new DiscriminatedUnion1.Type1(
-                new Types.DiscriminatedUnion1InlineType1
+                new DiscriminatedUnion1InlineType1
                 {
                     Foo = "foo",
-                    Bar = new Types.DiscriminatedUnion1InlineType1InlineType1
+                    Bar = new DiscriminatedUnion1InlineType1InlineType1
                     {
                         Foo = "foo",
                         Ref = new ReferenceType { Foo = "foo" },
@@ -120,10 +120,10 @@ await client.GetDiscriminatedUnionAsync(
 await client.GetUndiscriminatedUnionAsync(
     new GetUndiscriminatedUnionRequest
     {
-        Bar = new Types.UndiscriminatedUnion1InlineType1
+        Bar = new UndiscriminatedUnion1InlineType1
         {
             Foo = "foo",
-            Bar = new Types.UndiscriminatedUnion1InlineType1InlineType1
+            Bar = new UndiscriminatedUnion1InlineType1InlineType1
             {
                 Foo = "foo",
                 Ref = new ReferenceType { Foo = "foo" },

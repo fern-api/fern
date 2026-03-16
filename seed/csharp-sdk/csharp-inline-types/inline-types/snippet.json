@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetDiscriminatedUnionAsync(\n    new GetDiscriminatedUnionRequest\n    {\n        Bar = new DiscriminatedUnion1(\n            new DiscriminatedUnion1.Type1(\n                new Types.DiscriminatedUnion1InlineType1\n                {\n                    Foo = \"foo\",\n                    Bar = new Types.DiscriminatedUnion1InlineType1InlineType1\n                    {\n                        Foo = \"foo\",\n                        Ref = new ReferenceType { Foo = \"foo\" },\n                    },\n                    Ref = new ReferenceType { Foo = \"foo\" },\n                }\n            )\n        ),\n        Foo = \"foo\",\n    }\n);\n"
+                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetDiscriminatedUnionAsync(\n    new GetDiscriminatedUnionRequest\n    {\n        Bar = new DiscriminatedUnion1(\n            new DiscriminatedUnion1.Type1(\n                new DiscriminatedUnion1InlineType1\n                {\n                    Foo = \"foo\",\n                    Bar = new DiscriminatedUnion1InlineType1InlineType1\n                    {\n                        Foo = \"foo\",\n                        Ref = new ReferenceType { Foo = \"foo\" },\n                    },\n                    Ref = new ReferenceType { Foo = \"foo\" },\n                }\n            )\n        ),\n        Foo = \"foo\",\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetUndiscriminatedUnionAsync(\n    new GetUndiscriminatedUnionRequest\n    {\n        Bar = new Types.UndiscriminatedUnion1InlineType1\n        {\n            Foo = \"foo\",\n            Bar = new Types.UndiscriminatedUnion1InlineType1InlineType1\n            {\n                Foo = \"foo\",\n                Ref = new ReferenceType { Foo = \"foo\" },\n            },\n            Ref = new ReferenceType { Foo = \"foo\" },\n        },\n        Foo = \"foo\",\n    }\n);\n"
+                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetUndiscriminatedUnionAsync(\n    new GetUndiscriminatedUnionRequest\n    {\n        Bar = new UndiscriminatedUnion1InlineType1\n        {\n            Foo = \"foo\",\n            Bar = new UndiscriminatedUnion1InlineType1InlineType1\n            {\n                Foo = \"foo\",\n                Ref = new ReferenceType { Foo = \"foo\" },\n            },\n            Ref = new ReferenceType { Foo = \"foo\" },\n        },\n        Foo = \"foo\",\n    }\n);\n"
             }
         }
     ]
