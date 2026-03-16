@@ -1054,7 +1054,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // Collect properties from both object types and union base properties
         const properties =
             typeDeclaration.shape.type === "object"
-                ? typeDeclaration.shape.properties
+                ? [...typeDeclaration.shape.properties, ...(typeDeclaration.shape.extendedProperties ?? [])]
                 : typeDeclaration.shape.type === "union"
                   ? typeDeclaration.shape.baseProperties
                   : [];
