@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.64.1
+  changelogEntry:
+    - summary: |
+        Wrap `python-version` in quotes in generated GitHub CI workflow so versions like
+        `^3.10` are not misinterpreted as `3.1` by the YAML parser.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 4.64.0
   changelogEntry:
     - summary: |
