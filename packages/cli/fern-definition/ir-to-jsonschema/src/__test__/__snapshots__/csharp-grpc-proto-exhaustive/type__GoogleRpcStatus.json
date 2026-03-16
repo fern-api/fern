@@ -26,14 +26,7 @@
         {
           "type": "array",
           "items": {
-            "type": [
-              "string",
-              "number",
-              "boolean",
-              "object",
-              "array",
-              "null"
-            ]
+            "$ref": "#/definitions/GoogleProtobufAny"
           }
         },
         {
@@ -43,5 +36,22 @@
     }
   },
   "additionalProperties": false,
-  "definitions": {}
+  "definitions": {
+    "GoogleProtobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
 }
