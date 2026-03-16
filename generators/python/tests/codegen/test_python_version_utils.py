@@ -86,13 +86,8 @@ class TestGetMatchingPythonVersions:
 class TestGetMinimumCompatibleVersion:
     """Tests for get_minimum_compatible_version function."""
 
-    def test_caret_3_8_returns_3_8(self) -> None:
-        """Test ^3.8 returns 3.8 as minimum."""
-        min_version = get_minimum_compatible_version("^3.8")
-        assert min_version == PythonVersion.PY3_8
-
     def test_caret_3_10_returns_3_10(self) -> None:
-        """Test ^3.10 returns 3.10 as minimum."""
+        """Test ^3.10 (the default) returns 3.10 as minimum."""
         min_version = get_minimum_compatible_version("^3.10")
         assert min_version == PythonVersion.PY3_10
 
