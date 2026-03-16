@@ -4,20 +4,32 @@
     - summary: |
         Add opt-in `enable-inline-types` configuration option. When enabled, types
         marked as inline in the API definition are generated as nested classes inside
-        a static `Types` class within their parent type, following the C# protobuf
-        convention. For example, an inline `Address` type on a `User` object becomes
-        `User.Types.Address` instead of a separate top-level `Address` class.
+        a static `Types` class on the parent type, instead of as separate top-level files.
 
-        All type shapes are fully supported as inline types: objects (with full field
-        generation, JSON serialization, and extension data), enums (both standard
-        `enum` with `EnumMember` attributes and forward-compatible `StringEnum` record
-        structs), discriminated unions (with `Match`/`Visit`, `Is`/`As`/`TryGet`,
-        implicit operators, and `JsonConverter`), and undiscriminated unions.
+        For example, given a `User` type with an inline `Address` property, the
+        generated C# looks like:
 
-        Recursive nesting is supported (e.g. `User.Types.Address.Types.Coordinate`).
-        Collision avoidance is built in: if a parent type has a property named `Types`,
-        the nested class is named `InnerTypes` instead (with further fallback to
-        `InnerTypes2`, `InnerTypes3`, etc.).
+        ```csharp
+        public record User
+        {
+            public required Types.Address Address { get; set; }
+
+            public static class Types
+            {
+                public record Address
+                {
+                    public required string Street { get; set; }
+                    public required string City { get; set; }
+                }
+            }
+        }
+        ```
+
+        All type shapes are supported: objects, enums, discriminated unions, and
+        undiscriminated unions. Recursive nesting works
+        (e.g. `User.Types.Address.Types.Coordinate`), and collision avoidance
+        renames the nested class to `InnerTypes` if the parent already has a
+        `Types` property.
 
         ```yaml
         generators:
