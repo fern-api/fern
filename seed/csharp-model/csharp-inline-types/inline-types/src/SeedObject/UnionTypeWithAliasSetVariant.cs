@@ -39,7 +39,7 @@ public record UnionTypeWithAliasSetVariant
     public object? Value { get; internal set; }
 
     [JsonPropertyName("prop")]
-    public required Types.AliasPropertyType Prop { get; set; }
+    public required AliasPropertyType Prop { get; set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "aliasVariant"
@@ -47,16 +47,16 @@ public record UnionTypeWithAliasSetVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="HashSet<Types.AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="HashSet<AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
-    public HashSet<Types.AliasVariantType> AsAliasVariant() =>
+    public HashSet<AliasVariantType> AsAliasVariant() =>
         IsAliasVariant
-            ? (HashSet<Types.AliasVariantType>)Value!
+            ? (HashSet<AliasVariantType>)Value!
             : throw new System.Exception("UnionTypeWithAliasSetVariant.Type is not 'aliasVariant'");
 
     public T Match<T>(
-        Func<HashSet<Types.AliasVariantType>, T> onAliasVariant,
+        Func<HashSet<AliasVariantType>, T> onAliasVariant,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -68,7 +68,7 @@ public record UnionTypeWithAliasSetVariant
     }
 
     public void Visit(
-        Action<HashSet<Types.AliasVariantType>> onAliasVariant,
+        Action<HashSet<AliasVariantType>> onAliasVariant,
         Action<string, object?> onUnknown_
     )
     {
@@ -84,13 +84,13 @@ public record UnionTypeWithAliasSetVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="HashSet<Types.AliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="HashSet<AliasVariantType>"/> and returns true if successful.
     /// </summary>
-    public bool TryAsAliasVariant(out HashSet<Types.AliasVariantType>? value)
+    public bool TryAsAliasVariant(out HashSet<AliasVariantType>? value)
     {
         if (Type == "aliasVariant")
         {
-            value = (HashSet<Types.AliasVariantType>)Value!;
+            value = (HashSet<AliasVariantType>)Value!;
             return true;
         }
         value = null;
@@ -106,7 +106,7 @@ public record UnionTypeWithAliasSetVariant
     internal record BaseProperties
     {
         [JsonPropertyName("prop")]
-        public required Types.AliasPropertyType Prop { get; set; }
+        public required AliasPropertyType Prop { get; set; }
     }
 
     [Serializable]
@@ -145,10 +145,8 @@ public record UnionTypeWithAliasSetVariant
             var value = discriminator switch
             {
                 "aliasVariant" => json.GetProperty("value")
-                    .Deserialize<HashSet<Types.AliasVariantType>?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize HashSet<Types.AliasVariantType>"
-                    ),
+                    .Deserialize<HashSet<AliasVariantType>?>(options)
+                    ?? throw new JsonException("Failed to deserialize HashSet<AliasVariantType>"),
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
@@ -200,18 +198,17 @@ public record UnionTypeWithAliasSetVariant
     [Serializable]
     public record AliasVariant
     {
-        public AliasVariant(HashSet<Types.AliasVariantType> value)
+        public AliasVariant(HashSet<AliasVariantType> value)
         {
             Value = value;
         }
 
-        internal HashSet<Types.AliasVariantType> Value { get; set; } =
-            new HashSet<Types.AliasVariantType>();
+        internal HashSet<AliasVariantType> Value { get; set; } = new HashSet<AliasVariantType>();
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionTypeWithAliasSetVariant.AliasVariant(
-            HashSet<Types.AliasVariantType> value
+            HashSet<AliasVariantType> value
         ) => new(value);
     }
 }

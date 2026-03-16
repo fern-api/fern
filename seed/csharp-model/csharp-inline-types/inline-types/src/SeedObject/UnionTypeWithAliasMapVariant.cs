@@ -39,7 +39,7 @@ public record UnionTypeWithAliasMapVariant
     public object? Value { get; internal set; }
 
     [JsonPropertyName("prop")]
-    public required Types.AliasPropertyType Prop { get; set; }
+    public required AliasPropertyType Prop { get; set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "aliasVariant"
@@ -47,16 +47,16 @@ public record UnionTypeWithAliasMapVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary<AliasVariantType, OtherAliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
-    public Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType> AsAliasVariant() =>
+    public Dictionary<AliasVariantType, OtherAliasVariantType> AsAliasVariant() =>
         IsAliasVariant
-            ? (Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>)Value!
+            ? (Dictionary<AliasVariantType, OtherAliasVariantType>)Value!
             : throw new System.Exception("UnionTypeWithAliasMapVariant.Type is not 'aliasVariant'");
 
     public T Match<T>(
-        Func<Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>, T> onAliasVariant,
+        Func<Dictionary<AliasVariantType, OtherAliasVariantType>, T> onAliasVariant,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -68,7 +68,7 @@ public record UnionTypeWithAliasMapVariant
     }
 
     public void Visit(
-        Action<Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>> onAliasVariant,
+        Action<Dictionary<AliasVariantType, OtherAliasVariantType>> onAliasVariant,
         Action<string, object?> onUnknown_
     )
     {
@@ -84,15 +84,13 @@ public record UnionTypeWithAliasMapVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary<AliasVariantType, OtherAliasVariantType>"/> and returns true if successful.
     /// </summary>
-    public bool TryAsAliasVariant(
-        out Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>? value
-    )
+    public bool TryAsAliasVariant(out Dictionary<AliasVariantType, OtherAliasVariantType>? value)
     {
         if (Type == "aliasVariant")
         {
-            value = (Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>)Value!;
+            value = (Dictionary<AliasVariantType, OtherAliasVariantType>)Value!;
             return true;
         }
         value = null;
@@ -108,7 +106,7 @@ public record UnionTypeWithAliasMapVariant
     internal record BaseProperties
     {
         [JsonPropertyName("prop")]
-        public required Types.AliasPropertyType Prop { get; set; }
+        public required AliasPropertyType Prop { get; set; }
     }
 
     [Serializable]
@@ -147,11 +145,9 @@ public record UnionTypeWithAliasMapVariant
             var value = discriminator switch
             {
                 "aliasVariant" => json.GetProperty("value")
-                    .Deserialize<Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>?>(
-                        options
-                    )
+                    .Deserialize<Dictionary<AliasVariantType, OtherAliasVariantType>?>(options)
                     ?? throw new JsonException(
-                        "Failed to deserialize Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>"
+                        "Failed to deserialize Dictionary<AliasVariantType, OtherAliasVariantType>"
                     ),
                 _ => json.Deserialize<object?>(options),
             };
@@ -204,21 +200,18 @@ public record UnionTypeWithAliasMapVariant
     [Serializable]
     public record AliasVariant
     {
-        public AliasVariant(Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType> value)
+        public AliasVariant(Dictionary<AliasVariantType, OtherAliasVariantType> value)
         {
             Value = value;
         }
 
-        internal Dictionary<
-            Types.AliasVariantType,
-            Types.OtherAliasVariantType
-        > Value { get; set; } =
-            new Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType>();
+        internal Dictionary<AliasVariantType, OtherAliasVariantType> Value { get; set; } =
+            new Dictionary<AliasVariantType, OtherAliasVariantType>();
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionTypeWithAliasMapVariant.AliasVariant(
-            Dictionary<Types.AliasVariantType, Types.OtherAliasVariantType> value
+            Dictionary<AliasVariantType, OtherAliasVariantType> value
         ) => new(value);
     }
 }

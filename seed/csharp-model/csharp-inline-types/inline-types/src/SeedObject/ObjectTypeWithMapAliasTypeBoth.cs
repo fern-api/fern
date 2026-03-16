@@ -12,8 +12,8 @@ public record ObjectTypeWithMapAliasTypeBoth : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prop")]
-    public Dictionary<Types.AliasPropertyType, Types.OtherAliasPropertyType> Prop { get; set; } =
-        new Dictionary<Types.AliasPropertyType, Types.OtherAliasPropertyType>();
+    public Dictionary<AliasPropertyType, Types.OtherAliasPropertyType> Prop { get; set; } =
+        new Dictionary<AliasPropertyType, Types.OtherAliasPropertyType>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -25,5 +25,31 @@ public record ObjectTypeWithMapAliasTypeBoth : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    public static class Types
+    {
+        [Serializable]
+        public record OtherAliasPropertyType : IJsonOnDeserialized
+        {
+            [JsonExtensionData]
+            private readonly IDictionary<string, JsonElement> _extensionData =
+                new Dictionary<string, JsonElement>();
+
+            [JsonPropertyName("prop")]
+            public required string Prop { get; set; }
+
+            [JsonIgnore]
+            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+            void IJsonOnDeserialized.OnDeserialized() =>
+                AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                return JsonUtils.Serialize(this);
+            }
+        }
     }
 }

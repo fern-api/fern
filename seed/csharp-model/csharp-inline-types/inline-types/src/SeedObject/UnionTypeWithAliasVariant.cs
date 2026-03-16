@@ -48,7 +48,7 @@ public record UnionTypeWithAliasVariant
     public object? Value { get; internal set; }
 
     [JsonPropertyName("prop")]
-    public required Types.AliasPropertyType Prop { get; set; }
+    public required AliasPropertyType Prop { get; set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "aliasVariant"
@@ -61,26 +61,26 @@ public record UnionTypeWithAliasVariant
     public bool IsNonAliasVariant => Type == "nonAliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedObject.AliasVariantType"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
-    public SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType AsAliasVariant() =>
+    public SeedObject.AliasVariantType AsAliasVariant() =>
         IsAliasVariant
-            ? (SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType)Value!
+            ? (SeedObject.AliasVariantType)Value!
             : throw new System.Exception("UnionTypeWithAliasVariant.Type is not 'aliasVariant'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant"/> if <see cref="Type"/> is 'nonAliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedObject.NonAliasVariant"/> if <see cref="Type"/> is 'nonAliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nonAliasVariant'.</exception>
-    public SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant AsNonAliasVariant() =>
+    public SeedObject.NonAliasVariant AsNonAliasVariant() =>
         IsNonAliasVariant
-            ? (SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant)Value!
+            ? (SeedObject.NonAliasVariant)Value!
             : throw new System.Exception("UnionTypeWithAliasVariant.Type is not 'nonAliasVariant'");
 
     public T Match<T>(
-        Func<SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType, T> onAliasVariant,
-        Func<SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant, T> onNonAliasVariant,
+        Func<SeedObject.AliasVariantType, T> onAliasVariant,
+        Func<SeedObject.NonAliasVariant, T> onNonAliasVariant,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -93,8 +93,8 @@ public record UnionTypeWithAliasVariant
     }
 
     public void Visit(
-        Action<SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType> onAliasVariant,
-        Action<SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant> onNonAliasVariant,
+        Action<SeedObject.AliasVariantType> onAliasVariant,
+        Action<SeedObject.NonAliasVariant> onNonAliasVariant,
         Action<string, object?> onUnknown_
     )
     {
@@ -113,15 +113,13 @@ public record UnionTypeWithAliasVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedObject.AliasVariantType"/> and returns true if successful.
     /// </summary>
-    public bool TryAsAliasVariant(
-        out SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType? value
-    )
+    public bool TryAsAliasVariant(out SeedObject.AliasVariantType? value)
     {
         if (Type == "aliasVariant")
         {
-            value = (SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType)Value!;
+            value = (SeedObject.AliasVariantType)Value!;
             return true;
         }
         value = null;
@@ -129,15 +127,13 @@ public record UnionTypeWithAliasVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedObject.NonAliasVariant"/> and returns true if successful.
     /// </summary>
-    public bool TryAsNonAliasVariant(
-        out SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant? value
-    )
+    public bool TryAsNonAliasVariant(out SeedObject.NonAliasVariant? value)
     {
         if (Type == "nonAliasVariant")
         {
-            value = (SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant)Value!;
+            value = (SeedObject.NonAliasVariant)Value!;
             return true;
         }
         value = null;
@@ -153,7 +149,7 @@ public record UnionTypeWithAliasVariant
     internal record BaseProperties
     {
         [JsonPropertyName("prop")]
-        public required Types.AliasPropertyType Prop { get; set; }
+        public required AliasPropertyType Prop { get; set; }
     }
 
     [Serializable]
@@ -198,18 +194,14 @@ public record UnionTypeWithAliasVariant
             var value = discriminator switch
             {
                 "aliasVariant" =>
-                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType?>(
-                        options
-                    )
+                    jsonWithoutDiscriminator.Deserialize<SeedObject.AliasVariantType?>(options)
                         ?? throw new JsonException(
-                            "Failed to deserialize SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType"
+                            "Failed to deserialize SeedObject.AliasVariantType"
                         ),
                 "nonAliasVariant" =>
-                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant?>(
-                        options
-                    )
+                    jsonWithoutDiscriminator.Deserialize<SeedObject.NonAliasVariant?>(options)
                         ?? throw new JsonException(
-                            "Failed to deserialize SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant"
+                            "Failed to deserialize SeedObject.NonAliasVariant"
                         ),
                 _ => json.Deserialize<object?>(options),
             };
@@ -260,17 +252,17 @@ public record UnionTypeWithAliasVariant
     [Serializable]
     public struct AliasVariant
     {
-        public AliasVariant(SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType value)
+        public AliasVariant(SeedObject.AliasVariantType value)
         {
             Value = value;
         }
 
-        internal SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType Value { get; set; }
+        internal SeedObject.AliasVariantType Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionTypeWithAliasVariant.AliasVariant(
-            SeedObject.UnionTypeWithAliasVariant.Types.AliasVariantType value
+            SeedObject.AliasVariantType value
         ) => new(value);
     }
 
@@ -280,66 +272,17 @@ public record UnionTypeWithAliasVariant
     [Serializable]
     public struct NonAliasVariant
     {
-        public NonAliasVariant(SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant value)
+        public NonAliasVariant(SeedObject.NonAliasVariant value)
         {
             Value = value;
         }
 
-        internal SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant Value { get; set; }
+        internal SeedObject.NonAliasVariant Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionTypeWithAliasVariant.NonAliasVariant(
-            SeedObject.UnionTypeWithAliasVariant.Types.NonAliasVariant value
+            SeedObject.NonAliasVariant value
         ) => new(value);
-    }
-
-    public static class Types
-    {
-        [Serializable]
-        public record AliasVariantType : IJsonOnDeserialized
-        {
-            [JsonExtensionData]
-            private readonly IDictionary<string, JsonElement> _extensionData =
-                new Dictionary<string, JsonElement>();
-
-            [JsonPropertyName("prop")]
-            public required string Prop { get; set; }
-
-            [JsonIgnore]
-            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
-
-            void IJsonOnDeserialized.OnDeserialized() =>
-                AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-            /// <inheritdoc />
-            public override string ToString()
-            {
-                return JsonUtils.Serialize(this);
-            }
-        }
-
-        [Serializable]
-        public record NonAliasVariant : IJsonOnDeserialized
-        {
-            [JsonExtensionData]
-            private readonly IDictionary<string, JsonElement> _extensionData =
-                new Dictionary<string, JsonElement>();
-
-            [JsonPropertyName("prop")]
-            public required string Prop { get; set; }
-
-            [JsonIgnore]
-            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
-
-            void IJsonOnDeserialized.OnDeserialized() =>
-                AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-            /// <inheritdoc />
-            public override string ToString()
-            {
-                return JsonUtils.Serialize(this);
-            }
-        }
     }
 }

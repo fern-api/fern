@@ -4,15 +4,21 @@ using SeedObject.Core;
 
 namespace SeedObject;
 
+/// <summary>
+/// lorem ipsum
+/// </summary>
 [Serializable]
-public record ObjectTypeWithSetAliasType : IJsonOnDeserialized
+public record RequestTypeInlineType1 : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("prop")]
-    public HashSet<AliasPropertyType> Prop { get; set; } = new HashSet<AliasPropertyType>();
+    /// <summary>
+    /// lorem ipsum
+    /// </summary>
+    [JsonPropertyName("foo")]
+    public required string Foo { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

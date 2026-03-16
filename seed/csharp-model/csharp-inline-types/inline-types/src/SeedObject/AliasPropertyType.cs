@@ -5,14 +5,14 @@ using SeedObject.Core;
 namespace SeedObject;
 
 [Serializable]
-public record ObjectTypeWithSetAliasType : IJsonOnDeserialized
+public record AliasPropertyType : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prop")]
-    public HashSet<AliasPropertyType> Prop { get; set; } = new HashSet<AliasPropertyType>();
+    public required string Prop { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

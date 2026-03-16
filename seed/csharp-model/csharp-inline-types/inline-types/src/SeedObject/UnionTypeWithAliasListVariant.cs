@@ -39,7 +39,7 @@ public record UnionTypeWithAliasListVariant
     public object? Value { get; internal set; }
 
     [JsonPropertyName("prop")]
-    public required Types.AliasPropertyType Prop { get; set; }
+    public required AliasPropertyType Prop { get; set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "aliasVariant"
@@ -47,18 +47,18 @@ public record UnionTypeWithAliasListVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<Types.AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable<AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
-    public IEnumerable<Types.AliasVariantType> AsAliasVariant() =>
+    public IEnumerable<AliasVariantType> AsAliasVariant() =>
         IsAliasVariant
-            ? (IEnumerable<Types.AliasVariantType>)Value!
+            ? (IEnumerable<AliasVariantType>)Value!
             : throw new System.Exception(
                 "UnionTypeWithAliasListVariant.Type is not 'aliasVariant'"
             );
 
     public T Match<T>(
-        Func<IEnumerable<Types.AliasVariantType>, T> onAliasVariant,
+        Func<IEnumerable<AliasVariantType>, T> onAliasVariant,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -70,7 +70,7 @@ public record UnionTypeWithAliasListVariant
     }
 
     public void Visit(
-        Action<IEnumerable<Types.AliasVariantType>> onAliasVariant,
+        Action<IEnumerable<AliasVariantType>> onAliasVariant,
         Action<string, object?> onUnknown_
     )
     {
@@ -86,13 +86,13 @@ public record UnionTypeWithAliasListVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<Types.AliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable<AliasVariantType>"/> and returns true if successful.
     /// </summary>
-    public bool TryAsAliasVariant(out IEnumerable<Types.AliasVariantType>? value)
+    public bool TryAsAliasVariant(out IEnumerable<AliasVariantType>? value)
     {
         if (Type == "aliasVariant")
         {
-            value = (IEnumerable<Types.AliasVariantType>)Value!;
+            value = (IEnumerable<AliasVariantType>)Value!;
             return true;
         }
         value = null;
@@ -108,7 +108,7 @@ public record UnionTypeWithAliasListVariant
     internal record BaseProperties
     {
         [JsonPropertyName("prop")]
-        public required Types.AliasPropertyType Prop { get; set; }
+        public required AliasPropertyType Prop { get; set; }
     }
 
     [Serializable]
@@ -147,9 +147,9 @@ public record UnionTypeWithAliasListVariant
             var value = discriminator switch
             {
                 "aliasVariant" => json.GetProperty("value")
-                    .Deserialize<IEnumerable<Types.AliasVariantType>?>(options)
+                    .Deserialize<IEnumerable<AliasVariantType>?>(options)
                     ?? throw new JsonException(
-                        "Failed to deserialize IEnumerable<Types.AliasVariantType>"
+                        "Failed to deserialize IEnumerable<AliasVariantType>"
                     ),
                 _ => json.Deserialize<object?>(options),
             };
@@ -202,13 +202,12 @@ public record UnionTypeWithAliasListVariant
     [Serializable]
     public record AliasVariant
     {
-        public AliasVariant(IEnumerable<Types.AliasVariantType> value)
+        public AliasVariant(IEnumerable<AliasVariantType> value)
         {
             Value = value;
         }
 
-        internal IEnumerable<Types.AliasVariantType> Value { get; set; } =
-            new List<Types.AliasVariantType>();
+        internal IEnumerable<AliasVariantType> Value { get; set; } = new List<AliasVariantType>();
 
         public override string ToString() => Value.ToString() ?? "null";
     }

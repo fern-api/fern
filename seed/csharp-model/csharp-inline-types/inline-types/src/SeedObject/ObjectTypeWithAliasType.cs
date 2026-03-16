@@ -12,7 +12,7 @@ public record ObjectTypeWithAliasType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prop")]
-    public required Types.AliasPropertyType Prop { get; set; }
+    public required AliasPropertyType Prop { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

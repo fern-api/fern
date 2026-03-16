@@ -841,13 +841,22 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
-     * Extracts all named TypeIds directly referenced from a TypeReference,
-     * recursing into containers (list, set, map, optional, nullable).
+     * Extracts all named TypeIds referenced from a TypeReference,
+     * recursing into containers (list, set, map, optional, nullable)
+     * and following alias chains to find transitively-referenced types.
      */
     private extractNamedTypeIdsFromTypeReference(typeRef: TypeReference): TypeId[] {
         switch (typeRef.type) {
-            case "named":
-                return [typeRef.typeId];
+            case "named": {
+                const ids: TypeId[] = [typeRef.typeId];
+                // Follow alias chains so that types referenced through aliases
+                // are also discovered (needed for inline type parent assignment).
+                const decl = this.ir.types[typeRef.typeId];
+                if (decl?.shape.type === "alias") {
+                    ids.push(...this.extractNamedTypeIdsFromTypeReference(decl.shape.aliasOf));
+                }
+                return ids;
+            }
             case "container":
                 switch (typeRef.container.type) {
                     case "list":
@@ -878,7 +887,9 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     /**
      * Builds the inline type parent and children maps by scanning all type declarations.
-     * For each type, finds named references to inline types in its properties/members.
+     * For each non-alias type, finds named references to inline types in its properties/members
+     * (following alias chains). An inline type is only inlined if exactly one non-alias type
+     * references it; otherwise it stays top-level to avoid broken cross-references.
      */
     private buildInlineTypeMaps(): void {
         if (this._inlineTypeParentMap != null) {
@@ -887,12 +898,21 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         const parentMap = new Map<TypeId, TypeId>();
         const childrenMap = new Map<TypeId, Set<TypeId>>();
 
+        // First pass: for each non-alias type, collect all inline types it references
+        // (following alias chains). Track how many non-alias types reference each inline type.
+        const inlineTypeReferencers = new Map<TypeId, Set<TypeId>>();
+
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            // Skip alias types as potential parents since they don't generate class files.
+            if (typeDeclaration.shape.type === "alias") {
+                continue;
+            }
+
             const referencedTypeIds: TypeId[] = [];
 
             typeDeclaration.shape._visit({
-                alias: (alias) => {
-                    referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(alias.aliasOf));
+                alias: () => {
+                    // Already filtered above, but required by visitor
                 },
                 object: (otd) => {
                     for (const property of otd.properties) {
@@ -914,7 +934,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                                 );
                             },
                             noProperties: () => {
-                                // Enums don't reference other types
+                                // No-op: no types to reference
                             },
                             _other: () => {
                                 // Unknown union types are ignored
@@ -938,14 +958,25 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             for (const refTypeId of referencedTypeIds) {
                 const refDeclaration = this.ir.types[refTypeId];
                 if (refDeclaration?.inline === true) {
-                    // Only set the parent if not already set (first referencing type wins)
-                    if (!parentMap.has(refTypeId)) {
-                        parentMap.set(refTypeId, typeId);
-                        if (!childrenMap.has(typeId)) {
-                            childrenMap.set(typeId, new Set());
-                        }
-                        childrenMap.get(typeId)?.add(refTypeId);
+                    if (!inlineTypeReferencers.has(refTypeId)) {
+                        inlineTypeReferencers.set(refTypeId, new Set());
                     }
+                    inlineTypeReferencers.get(refTypeId)?.add(typeId);
+                }
+            }
+        }
+
+        // Second pass: only inline types referenced by exactly one non-alias parent
+        // can be safely nested. Types referenced by multiple parents stay top-level.
+        for (const [inlineTypeId, referencers] of inlineTypeReferencers) {
+            if (referencers.size === 1) {
+                const parentTypeId = [...referencers][0];
+                if (parentTypeId != null) {
+                    parentMap.set(inlineTypeId, parentTypeId);
+                    if (!childrenMap.has(parentTypeId)) {
+                        childrenMap.set(parentTypeId, new Set());
+                    }
+                    childrenMap.get(parentTypeId)?.add(inlineTypeId);
                 }
             }
         }
@@ -979,8 +1010,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         if (!this.settings.enableInlineTypes) {
             return false;
         }
-        const typeDeclaration = this.ir.types[typeId];
-        return typeDeclaration?.inline === true;
+        // A type is only treated as inline if it has a parent in the map.
+        // Types marked inline in the IR but referenced by multiple non-alias parents
+        // cannot be safely nested, so they stay top-level.
+        return this.getInlineTypeParentMap().has(typeId);
     }
 
     /**

@@ -12,8 +12,7 @@ public record ObjectTypeWithListAliasType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prop")]
-    public IEnumerable<Types.AliasPropertyType> Prop { get; set; } =
-        new List<Types.AliasPropertyType>();
+    public IEnumerable<AliasPropertyType> Prop { get; set; } = new List<AliasPropertyType>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

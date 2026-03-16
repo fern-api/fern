@@ -12,8 +12,8 @@ public record ObjectTypeWithMapAliasTypeKey : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prop")]
-    public Dictionary<Types.AliasPropertyType, string> Prop { get; set; } =
-        new Dictionary<Types.AliasPropertyType, string>();
+    public Dictionary<AliasPropertyType, string> Prop { get; set; } =
+        new Dictionary<AliasPropertyType, string>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
