@@ -55,7 +55,7 @@ fixtures:
       outputFolder: plain-enums
   csharp-inline-types:
     - customConfig:
-        inline-types: true
+        enable-inline-types: true
       outputFolder: inline-types
 scripts:
   - image: fernapi/csharp-seed
