@@ -1019,12 +1019,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 }
             };
             for (const orphanedParent of orphanedParents) {
-                const children = childrenMap.get(orphanedParent);
-                if (children) {
-                    for (const childId of children) {
-                        collectOrphanedDescendants(childId);
-                    }
-                }
+                // Also collect the orphaned parent itself so it is removed from the maps
+                collectOrphanedDescendants(orphanedParent);
             }
             for (const typeId of toRemove) {
                 const parent = parentMap.get(typeId);
@@ -1033,12 +1029,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 }
                 parentMap.delete(typeId);
                 childrenMap.delete(typeId);
-            }
-            // Clean up orphaned parents from childrenMap if they have no remaining children
-            for (const orphanedParent of orphanedParents) {
-                if (childrenMap.has(orphanedParent) && childrenMap.get(orphanedParent)?.size === 0) {
-                    childrenMap.delete(orphanedParent);
-                }
             }
         }
 
