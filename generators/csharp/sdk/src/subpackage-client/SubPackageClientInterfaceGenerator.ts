@@ -75,10 +75,12 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         if (!serviceId) {
             throw new Error("Internal error; ServiceId is not defined");
         }
+        const grpcClientInfo = this.context.getGrpcClientInfoForServiceId(serviceId);
         for (const endpoint of service.endpoints) {
             this.context.endpointGenerator.generateInterfaceSignature(interface_, {
                 serviceId,
-                endpoint
+                endpoint,
+                grpcClientInfo
             });
         }
     }

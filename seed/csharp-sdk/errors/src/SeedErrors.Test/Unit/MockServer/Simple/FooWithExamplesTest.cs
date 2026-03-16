@@ -6,6 +6,7 @@ using SeedErrors.Test.Utils;
 namespace SeedErrors.Test.Unit.MockServer.Simple;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooWithExamplesTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

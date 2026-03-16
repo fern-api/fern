@@ -5,6 +5,7 @@ using SeedPathParameters.Test.Utils;
 namespace SeedPathParameters.Test.Unit.MockServer.Organizations;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetOrganizationTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

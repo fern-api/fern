@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types;
 
-[JsonConverter(typeof(StringEnumSerializer<WeatherReport>))]
+[JsonConverter(typeof(WeatherReport.WeatherReportSerializer))]
 [Serializable]
 public readonly record struct WeatherReport : IStringEnum
 {
@@ -55,6 +56,32 @@ public readonly record struct WeatherReport : IStringEnum
     public static explicit operator string(WeatherReport value) => value.Value;
 
     public static explicit operator WeatherReport(string value) => new(value);
+
+    internal class WeatherReportSerializer : JsonConverter<WeatherReport>
+    {
+        public override WeatherReport Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new WeatherReport(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            WeatherReport value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

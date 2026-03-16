@@ -5,6 +5,7 @@ using SeedNoRetries.Test.Utils;
 namespace SeedNoRetries.Test.Unit.MockServer.Retries;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUsersTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

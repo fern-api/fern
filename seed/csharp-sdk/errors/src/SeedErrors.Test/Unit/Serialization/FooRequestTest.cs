@@ -6,6 +6,7 @@ using SeedErrors.Core;
 namespace SeedErrors.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooRequestTest
 {
     [NUnit.Framework.Test]

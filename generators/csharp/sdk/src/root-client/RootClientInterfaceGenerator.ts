@@ -44,10 +44,12 @@ export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkG
         if (rootServiceId != null) {
             const service =
                 this.context.getHttpService(rootServiceId) ?? fail(`Service with id ${rootServiceId} not found`);
+            const grpcClientInfo = this.context.getGrpcClientInfoForServiceId(rootServiceId);
             for (const endpoint of service.endpoints) {
                 this.context.endpointGenerator.generateInterfaceSignature(interface_, {
                     serviceId: rootServiceId,
-                    endpoint
+                    endpoint,
+                    grpcClientInfo
                 });
             }
         }

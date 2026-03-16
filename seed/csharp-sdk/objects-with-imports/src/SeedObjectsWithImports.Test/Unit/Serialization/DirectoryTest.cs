@@ -5,6 +5,7 @@ using SeedObjectsWithImports.Core;
 namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DirectoryTest
 {
     [NUnit.Framework.Test]

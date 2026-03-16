@@ -7,6 +7,7 @@ using SeedNullableOptional.Test.Utils;
 namespace SeedNullableOptional.Test.Unit.MockServer.NullableOptional;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UpdateComplexProfileTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

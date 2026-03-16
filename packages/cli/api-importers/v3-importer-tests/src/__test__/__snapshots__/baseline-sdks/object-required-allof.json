@@ -418,19 +418,13 @@
                   "wireValue": "age"
                 },
                 "valueType": {
-                  "container": {
-                    "optional": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
                 "v2Examples": {
                   "userSpecifiedExamples": {},
@@ -461,37 +455,31 @@
                   "wireValue": "location"
                 },
                 "valueType": {
-                  "container": {
-                    "optional": {
-                      "name": {
-                        "originalName": "TreeCreateLocation",
-                        "camelCase": {
-                          "unsafeName": "treeCreateLocation",
-                          "safeName": "treeCreateLocation"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "tree_create_location",
-                          "safeName": "tree_create_location"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TREE_CREATE_LOCATION",
-                          "safeName": "TREE_CREATE_LOCATION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TreeCreateLocation",
-                          "safeName": "TreeCreateLocation"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:TreeCreateLocation",
-                      "type": "named"
+                  "name": {
+                    "originalName": "TreeCreateLocation",
+                    "camelCase": {
+                      "unsafeName": "treeCreateLocation",
+                      "safeName": "treeCreateLocation"
                     },
-                    "type": "optional"
+                    "snakeCase": {
+                      "unsafeName": "tree_create_location",
+                      "safeName": "tree_create_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_CREATE_LOCATION",
+                      "safeName": "TREE_CREATE_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeCreateLocation",
+                      "safeName": "TreeCreateLocation"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:TreeCreateLocation",
+                  "type": "named"
                 },
                 "v2Examples": {
                   "userSpecifiedExamples": {},
@@ -1061,11 +1049,8 @@
                   "wireValue": "age"
                 },
                 "typeReference": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "STRING",
+                  "type": "primitive"
                 }
               },
               {
@@ -1092,11 +1077,8 @@
                   "wireValue": "location"
                 },
                 "typeReference": {
-                  "value": {
-                    "value": "type_:TreeCreateLocation",
-                    "type": "named"
-                  },
-                  "type": "optional"
+                  "value": "type_:TreeCreateLocation",
+                  "type": "named"
                 }
               }
             ],

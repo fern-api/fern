@@ -5,6 +5,7 @@ using SeedSingleUrlEnvironmentDefault.Test.Utils;
 namespace SeedSingleUrlEnvironmentDefault.Test.Unit.MockServer.Dummy;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetDummyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

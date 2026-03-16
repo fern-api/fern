@@ -4,6 +4,7 @@ using SeedInferredAuthExplicit.Test.Unit.MockServer;
 namespace SeedInferredAuthExplicit.Test.Unit.MockServer.Simple;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetSomethingTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

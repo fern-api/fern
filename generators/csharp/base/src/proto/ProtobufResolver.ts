@@ -99,6 +99,43 @@ export class ProtobufResolver extends WithGeneration {
         });
     }
 
+    /**
+     * Returns true if the type is an external proto type (e.g. google.rpc.Status)
+     * that should be surfaced directly in the SDK without generating a wrapper type.
+     */
+    public isExternalProtobufType(typeId: TypeId): boolean {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType?.type === "userDefined") {
+            const packageName = protobufType.file.packageName;
+            if (packageName != null && EXTERNAL_PROTO_PACKAGES.has(packageName)) {
+                return true;
+            }
+        }
+        // Fallback: match on the type's declared name for cases where
+        // proto source may not be fully resolved.
+        const typeDeclaration = this.generation.ir.types[typeId];
+        const typeName = typeDeclaration?.name?.name?.originalName;
+        return typeName != null && EXTERNAL_PROTO_TYPE_NAMES.has(typeName);
+    }
+
+    /**
+     * Returns the class reference for an external proto type, using
+     * known mappings to resolve the correct namespace and type name.
+     */
+    public getExternalProtobufClassReference(typeId: TypeId): ast.ClassReference {
+        const typeDeclaration = this.generation.ir.types[typeId];
+        const typeName = typeDeclaration?.name?.name?.originalName;
+        const mapping = EXTERNAL_PROTO_TYPE_CLASS_REFERENCES[typeName ?? ""];
+        if (mapping != null) {
+            return this.csharp.classReference({
+                name: mapping.name,
+                namespace: mapping.namespace
+            });
+        }
+        // Fall back to the proto source if no known mapping exists.
+        return this.getProtobufClassReference(typeId);
+    }
+
     public isWellKnownAnyProtobufType(typeId: TypeId): boolean {
         return this._isWellKnownProtobufType({
             typeId,
@@ -130,3 +167,22 @@ export class ProtobufResolver extends WithGeneration {
         return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;
     }
 }
+
+/**
+ * Proto packages whose types should be surfaced directly in the SDK
+ * (using the proto-generated class) without generating a separate wrapper type.
+ */
+const EXTERNAL_PROTO_PACKAGES = new Set(["google.rpc"]);
+
+/**
+ * Type names that correspond to external proto types. Used as a fallback
+ * when proto source info may not be fully resolved (e.g. from OpenAPI imports).
+ */
+const EXTERNAL_PROTO_TYPE_NAMES = new Set(["GoogleRpcStatus"]);
+
+/**
+ * Known external proto type class references, keyed by IR type name.
+ */
+const EXTERNAL_PROTO_TYPE_CLASS_REFERENCES: Record<string, { name: string; namespace: string }> = {
+    GoogleRpcStatus: { name: "Status", namespace: "Google.Rpc" }
+};

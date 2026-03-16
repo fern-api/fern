@@ -10,6 +10,106 @@ import (
 )
 
 var (
+	errorEventFieldErrorCode    = big.NewInt(1 << 0)
+	errorEventFieldErrorMessage = big.NewInt(1 << 1)
+)
+
+type ErrorEvent struct {
+	ErrorCode    int    `json:"errorCode" url:"errorCode"`
+	ErrorMessage string `json:"errorMessage" url:"errorMessage"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ErrorEvent) GetErrorCode() int {
+	if e == nil {
+		return 0
+	}
+	return e.ErrorCode
+}
+
+func (e *ErrorEvent) GetErrorMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.ErrorMessage
+}
+
+func (e *ErrorEvent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ErrorEvent) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetErrorCode sets the ErrorCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ErrorEvent) SetErrorCode(errorCode int) {
+	e.ErrorCode = errorCode
+	e.require(errorEventFieldErrorCode)
+}
+
+// SetErrorMessage sets the ErrorMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ErrorEvent) SetErrorMessage(errorMessage string) {
+	e.ErrorMessage = errorMessage
+	e.require(errorEventFieldErrorMessage)
+}
+
+func (e *ErrorEvent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ErrorEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ErrorEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ErrorEvent) MarshalJSON() ([]byte, error) {
+	type embed ErrorEvent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ErrorEvent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+var (
 	receiveEventFieldAlpha = big.NewInt(1 << 0)
 	receiveEventFieldBeta  = big.NewInt(1 << 1)
 )

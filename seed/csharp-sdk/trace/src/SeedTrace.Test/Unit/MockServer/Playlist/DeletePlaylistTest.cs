@@ -4,6 +4,7 @@ using SeedTrace.Test_.Unit.MockServer;
 namespace SeedTrace.Test_.Unit.MockServer.Playlist;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeletePlaylistTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
