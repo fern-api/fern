@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -13,8 +14,6 @@ from fern_python.codegen.ast.dependency.dependency import (
 )
 from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
-from fern_python.version import get_minimum_compatible_version
-from fern_python.version.python_version import PythonVersion
 
 from fern.generator_exec import (
     BasicLicense,
@@ -230,8 +229,15 @@ packages = [
             # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
             # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
             # pair when the project still supports Python 3.8.
-            min_py = get_minimum_compatible_version(self.python_version)
-            if min_py is not None and min_py.spec >= PythonVersion.PY3_9.spec:
+            #
+            # Extract the minimum minor version from the constraint string
+            # (e.g. "^3.8" -> 8, "^3.8.1" -> 8, "^3.10" -> 10, ">=3.9" -> 9).
+            min_minor = 0
+            match = re.search(r"(\d+)\.(\d+)", self.python_version)
+            if match:
+                min_minor = int(match.group(2))
+
+            if min_minor >= 9:
                 pytest_version = "^8.2.0"
                 pytest_asyncio_version = "^1.0.0"
             else:
