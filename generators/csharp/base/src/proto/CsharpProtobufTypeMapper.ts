@@ -32,6 +32,8 @@ export declare namespace CsharpProtobufTypeMapper {
 
     interface Property {
         propertyName: string;
+        /** The proto field name in PascalCase. Defaults to propertyName if not set. */
+        protoPropertyName?: string;
         typeReference: TypeReference;
     }
 }
@@ -73,17 +75,24 @@ export class CsharpProtobufTypeMapper extends WithGeneration {
                     })
                 );
 
-                properties.forEach(({ propertyName, typeReference }: CsharpProtobufTypeMapper.Property) => {
-                    const condition = mapper.getCondition({ propertyName, typeReference });
-                    const value = mapper.getValueWithAssignment({ propertyName, typeReference });
-                    if (condition != null) {
-                        writer.writeNode(condition);
+                properties.forEach(
+                    ({ propertyName, protoPropertyName, typeReference }: CsharpProtobufTypeMapper.Property) => {
+                        const effectiveProtoName = protoPropertyName ?? propertyName;
+                        const condition = mapper.getCondition({ propertyName, typeReference });
+                        const value = mapper.getValueWithAssignment({
+                            propertyName,
+                            protoPropertyName: effectiveProtoName,
+                            typeReference
+                        });
+                        if (condition != null) {
+                            writer.writeNode(condition);
+                            writer.writeNodeStatement(value);
+                            writer.endControlFlow();
+                            return;
+                        }
                         writer.writeNodeStatement(value);
-                        writer.endControlFlow();
-                        return;
                     }
-                    writer.writeNodeStatement(value);
-                });
+                );
 
                 writer.writeLine("return result;");
             })
@@ -123,11 +132,12 @@ export class CsharpProtobufTypeMapper extends WithGeneration {
                 writer.writeNodeStatement(
                     this.csharp.instantiateClass({
                         classReference,
-                        arguments_: properties.map(({ propertyName, typeReference }) => {
+                        arguments_: properties.map(({ propertyName, protoPropertyName, typeReference }) => {
+                            const effectiveProtoName = protoPropertyName ?? propertyName;
                             return {
                                 name: propertyName,
                                 assignment: mapper.getValue({
-                                    propertyName: `value.${propertyName}`,
+                                    propertyName: `value.${effectiveProtoName}`,
                                     typeReference
                                 })
                             };
@@ -163,15 +173,18 @@ class ToProtoPropertyMapper extends WithGeneration {
 
     public getValueWithAssignment({
         propertyName,
+        protoPropertyName,
         typeReference
     }: {
         propertyName: string;
+        protoPropertyName?: string;
         typeReference: TypeReference;
     }): ast.CodeBlock {
-        const value = this.getValue({ propertyName, typeReference });
+        const targetName = protoPropertyName ?? propertyName;
+        const value = this.getValue({ propertyName, protoPropertyName: targetName, typeReference });
         return this.csharp.codeblock((writer) => {
             if (this.propertyNeedsAssignment({ typeReference })) {
-                writer.write(`result.${propertyName} = `);
+                writer.write(`result.${targetName} = `);
                 writer.writeNode(value);
                 return;
             }
@@ -267,10 +280,12 @@ class ToProtoPropertyMapper extends WithGeneration {
 
     private getValue({
         propertyName,
+        protoPropertyName,
         typeReference,
         wrapperType
     }: {
         propertyName: string;
+        protoPropertyName?: string;
         typeReference: TypeReference;
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
@@ -278,6 +293,7 @@ class ToProtoPropertyMapper extends WithGeneration {
             case "container":
                 return this.getValueForContainer({
                     propertyName,
+                    protoPropertyName,
                     container: typeReference.container,
                     wrapperType
                 });
@@ -378,7 +394,13 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
+                writer.write(
+                    getProtobufEnumValueName({
+                        generation: this.generation,
+                        classReference: protobufClassReference,
+                        enumValue
+                    })
+                );
                 writer.writeLine(",");
             }
             writer.writeLine(' _ => throw new ArgumentException($"Unknown enum value: {type}")');
@@ -413,7 +435,13 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
+                writer.write(
+                    getProtobufEnumValueName({
+                        generation: this.generation,
+                        classReference: protobufClassReference,
+                        enumValue
+                    })
+                );
                 writer.writeLine(",");
             }
             writer.writeLine(
@@ -425,32 +453,47 @@ class ToProtoPropertyMapper extends WithGeneration {
 
     private getValueForContainer({
         propertyName,
+        protoPropertyName,
         container,
         wrapperType
     }: {
         propertyName: string;
+        protoPropertyName?: string;
         container: ContainerType;
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
+        const effectiveProtoName = protoPropertyName ?? propertyName;
         switch (container.type) {
             case "optional":
                 return this.getValue({
                     propertyName,
+                    protoPropertyName: effectiveProtoName,
                     typeReference: container.optional,
                     wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "nullable":
                 return this.getValue({
                     propertyName,
+                    protoPropertyName: effectiveProtoName,
                     typeReference: container.nullable,
                     wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "list":
-                return this.getValueForList({ propertyName, listType: container.list, wrapperType });
+                return this.getValueForList({
+                    propertyName,
+                    protoPropertyName: effectiveProtoName,
+                    listType: container.list,
+                    wrapperType
+                });
             case "set":
-                return this.getValueForList({ propertyName, listType: container.set, wrapperType });
+                return this.getValueForList({
+                    propertyName,
+                    protoPropertyName: effectiveProtoName,
+                    listType: container.set,
+                    wrapperType
+                });
             case "map":
-                return this.getValueForMap({ propertyName, map: container });
+                return this.getValueForMap({ propertyName, protoPropertyName: effectiveProtoName, map: container });
             case "literal":
                 return getValueForLiteral({ literal: container.literal }, this.csharp);
         }
@@ -458,13 +501,16 @@ class ToProtoPropertyMapper extends WithGeneration {
 
     private getValueForList({
         propertyName,
+        protoPropertyName,
         listType,
         wrapperType
     }: {
         propertyName: string;
+        protoPropertyName?: string;
         listType: TypeReference;
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
+        const targetName = protoPropertyName ?? propertyName;
         const valuePropertyName =
             this.context.isReadOnlyMemoryType(listType) && wrapperType === WrapperType.Optional
                 ? `${propertyName}.Value`
@@ -472,7 +518,7 @@ class ToProtoPropertyMapper extends WithGeneration {
         return this.csharp.codeblock((writer) => {
             writer.writeNode(
                 this.csharp.invokeMethod({
-                    on: this.csharp.codeblock(`result.${propertyName}`),
+                    on: this.csharp.codeblock(`result.${targetName}`),
                     method: "AddRange",
                     arguments_: [
                         this.getValue({
@@ -486,12 +532,21 @@ class ToProtoPropertyMapper extends WithGeneration {
         });
     }
 
-    private getValueForMap({ propertyName, map }: { propertyName: string; map: MapType }): ast.CodeBlock {
+    private getValueForMap({
+        propertyName,
+        protoPropertyName,
+        map
+    }: {
+        propertyName: string;
+        protoPropertyName?: string;
+        map: MapType;
+    }): ast.CodeBlock {
+        const targetName = protoPropertyName ?? propertyName;
         return this.csharp.codeblock((writer) => {
             writer.controlFlow("foreach", this.csharp.codeblock(`var kvp in ${propertyName}`));
             writer.writeNodeStatement(
                 this.csharp.invokeMethod({
-                    on: this.csharp.codeblock(`result.${propertyName}`),
+                    on: this.csharp.codeblock(`result.${targetName}`),
                     method: "Add",
                     arguments_: [
                         this.csharp.codeblock("kvp.Key"),
@@ -517,8 +572,10 @@ class ToProtoPropertyMapper extends WithGeneration {
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
         const primitiveValue = this.getValueMapperForPrimitive({ propertyName, primitive });
-        if (primitive.v1 === "DATE_TIME") {
-            // The google.protobuf.Timestamp type doesn't need a default value guard.
+        if (primitive.v1 === "DATE_TIME" || primitive.v1 === "BASE_64") {
+            // The google.protobuf.Timestamp and ByteString types don't need a default value guard.
+            //
+            // The BASE_64 type is used to represent Protobuf byte[].
             return primitiveValue;
         }
         if (wrapperType === WrapperType.Optional) {
@@ -573,6 +630,17 @@ class ToProtoPropertyMapper extends WithGeneration {
                         })
                     )
                 );
+            case "BASE_64":
+                // Proto bytes fields are ByteString; SDK exposes byte[].
+                return this.csharp.codeblock((writer) =>
+                    writer.writeNode(
+                        this.csharp.invokeMethod({
+                            on: this.Google.Protobuf.ByteString,
+                            method: "CopyFrom",
+                            arguments_: [this.csharp.codeblock(propertyName)]
+                        })
+                    )
+                );
             case "DATE":
             case "INTEGER":
             case "LONG":
@@ -583,7 +651,6 @@ class ToProtoPropertyMapper extends WithGeneration {
             case "BOOLEAN":
             case "STRING":
             case "UUID":
-            case "BASE_64":
             case "BIG_INTEGER":
             case "DATE_TIME_RFC_2822":
                 return this.csharp.codeblock(propertyName);
@@ -755,7 +822,13 @@ class FromProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
+                writer.write(
+                    getProtobufEnumValueName({
+                        generation: this.generation,
+                        classReference: protobufClassReference,
+                        enumValue
+                    })
+                );
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
@@ -784,7 +857,13 @@ class FromProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
+                writer.write(
+                    getProtobufEnumValueName({
+                        generation: this.generation,
+                        classReference: protobufClassReference,
+                        enumValue
+                    })
+                );
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
@@ -962,6 +1041,9 @@ class FromProtoPropertyMapper extends WithGeneration {
         switch (primitive.v1) {
             case "DATE_TIME":
                 return this.csharp.codeblock(`${propertyName}.ToDateTime()`);
+            case "BASE_64":
+                // Proto bytes fields are ByteString; SDK exposes byte[].
+                return this.csharp.codeblock(`${propertyName}.ToByteArray()`);
             case "DATE":
             case "INTEGER":
             case "LONG":
@@ -972,7 +1054,6 @@ class FromProtoPropertyMapper extends WithGeneration {
             case "BOOLEAN":
             case "STRING":
             case "UUID":
-            case "BASE_64":
             case "BIG_INTEGER":
             case "DATE_TIME_RFC_2822":
                 return this.csharp.codeblock(propertyName);
@@ -994,14 +1075,21 @@ function getValueForLiteral({ literal }: { literal: Literal }, csharp: CSharp): 
 }
 
 /*
- * Protobuf enums remove the stutter in their generated enum value names.
- * For example, the enum value `Status.StatusActive` becomes `Status.Active`.
+ * Protobuf C# codegen strips the PascalCase enum type name from the
+ * beginning of each enum value name. If the value doesn't start with
+ * the type name, it's left unchanged.
+ *
+ * Examples:
+ *   enum IndexType { INDEX_TYPE_DEFAULT = 1; }
+ *     → PascalCase: IndexTypeDefault, strip prefix "IndexType" → "Default"
+ *
+ *   enum SearchMode { INVALID_SEARCH_MODE = 0; }
+ *     → PascalCase: InvalidSearchMode, doesn't start with "SearchMode" → "InvalidSearchMode"
  *
  * If the resulting name starts with a digit, protobuf's C# codegen prepends
- * an underscore (e.g., `VIDEO_ASPECT_RATIO_1_1` becomes `_11`).
+ * an underscore (e.g., `ASPECT_RATIO_1_1` becomes `_11`).
  */
 function getProtobufEnumValueName({
-    generation,
     classReference,
     enumValue
 }: {
@@ -1010,7 +1098,14 @@ function getProtobufEnumValueName({
     enumValue: EnumValue;
 }): string {
     const enumValueName = enumValue.name.name.pascalCase.safeName;
-    const stripped = enumValueName.replace(classReference.name, "");
+    // For nested enums (e.g. "UpdateResponse.Types.Status"), protobuf C# codegen
+    // strips only the bare enum name ("Status"), not the full nested path.
+    const fullName = classReference.name;
+    const bareEnumName = fullName.includes(".") ? (fullName.split(".").pop() ?? fullName) : fullName;
+    const stripped = enumValueName.startsWith(bareEnumName) ? enumValueName.slice(bareEnumName.length) : enumValueName;
+    if (stripped.length === 0) {
+        return enumValueName;
+    }
     if (/^\d/.test(stripped)) {
         return `_${stripped}`;
     }

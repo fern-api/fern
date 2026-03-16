@@ -17,8 +17,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -43,7 +41,7 @@ Homepage = 'https://buildwithfern.com/'
 Repository = 'https://github.com/plain-text/fern'
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 pydantic-core = ">=2.18.2"
 
 [tool.poetry.group.dev.dependencies]

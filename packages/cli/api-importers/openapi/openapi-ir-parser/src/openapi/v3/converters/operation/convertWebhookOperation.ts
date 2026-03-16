@@ -100,6 +100,7 @@ export function convertWebhookOperation({
             fullExamples: undefined,
             additionalProperties: false,
             availability: undefined,
+            encoding: undefined,
             source,
             inline: undefined,
             minProperties: undefined,

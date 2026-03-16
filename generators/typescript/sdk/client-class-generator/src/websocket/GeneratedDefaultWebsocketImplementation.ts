@@ -42,6 +42,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly HEADERS_PROPERTY_NAME = "headers";
     private static readonly HEADERS_VARIABLE_NAME = "_headers";
 
+    private static readonly PROTOCOLS_PROPERTY_NAME = "protocols";
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly CONNECTION_TIMEOUT_PROPERTY_NAME = "connectionTimeoutInSeconds";
     private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
@@ -189,6 +190,19 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     };
                 }),
                 {
+                    name: GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createUnionTypeNode([
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createArrayTypeNode(
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                            )
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["WebSocket subprotocols to use for the connection."]
+                },
+                {
                     name: GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
@@ -301,6 +315,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
+
+        // Add protocols binding
+        bindingElements.push(
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME)
+            )
+        );
 
         // Add additional query parameters binding
         bindingElements.push(
@@ -534,7 +557,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
             url: context.coreUtilities.urlUtils.join._invoke([baseUrl, url]),
-            protocols: ts.factory.createArrayLiteralExpression([]),
+            protocols: ts.factory.createBinaryExpression(
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createArrayLiteralExpression([])
+            ),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
                     "debug",

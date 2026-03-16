@@ -834,6 +834,15 @@ export class Extern {
         Protobuf: () =>
             lazy({
                 /**
+                 * Reference to Google.Protobuf.ByteString class.
+                 */
+                ByteString: () =>
+                    this.csharp.classReference({
+                        name: "ByteString",
+                        namespace: "Google.Protobuf"
+                    }),
+
+                /**
                  * Well-known types namespace references with namespace alias.
                  */
                 WellKnownTypes: () =>

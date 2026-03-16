@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Google.Protobuf;
 using Google.Rpc;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
@@ -38,6 +39,12 @@ public record UpdateRequest
 
     [JsonPropertyName("status")]
     public Status? Status { get; set; }
+
+    /// <summary>
+    /// Tests bytes field mapping (string &lt;-&gt; ByteString conversion).
+    /// </summary>
+    [JsonPropertyName("content")]
+    public byte[]? Content { get; set; }
 
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
@@ -113,6 +120,10 @@ public record UpdateRequest
         if (Status != null)
         {
             result.Status = Status;
+        }
+        if (Content != null)
+        {
+            result.Content = ByteString.CopyFrom(Content);
         }
         return result;
     }
