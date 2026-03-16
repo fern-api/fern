@@ -216,6 +216,7 @@ plugins:
       - enum_type=string
       - default_response=false
       - flatten_oneofs=true
+      - include_all_methods=true
       - source_root=${relativeFilepathToProtobufRoot}
 `;
 }
