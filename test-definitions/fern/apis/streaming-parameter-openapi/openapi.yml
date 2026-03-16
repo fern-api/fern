@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Streaming Parameter API
+  version: 1.0.0
+paths:
+  /chat:
+    post:
+      operationId: chat
+      summary: Chat endpoint with streaming support
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+      x-fern-streaming:
+        format: sse
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/ChatResponse"
+        response-stream:
+          $ref: "#/components/schemas/ChatStreamEvent"
+      x-fern-examples:
+        - name: default
+          request:
+            prompt: "Hello"
+          response:
+            body:
+              message: "Hello! How can I help you?"
+              finish_reason: complete
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - prompt
+      properties:
+        prompt:
+          type: string
+          description: The user's message
+        stream:
+          type: boolean
+          default: false
+    ChatResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        finish_reason:
+          type: string
+    ChatStreamEvent:
+      type: object
+      properties:
+        delta:
+          type: string
+        tokens:
+          type: integer
