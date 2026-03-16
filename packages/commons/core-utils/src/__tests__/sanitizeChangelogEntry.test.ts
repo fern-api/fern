@@ -17,9 +17,7 @@ describe("sanitizeChangelogEntry", () => {
         expect(sanitizeChangelogEntry("Returns CompletableFuture<List<Integer>>")).toBe(
             "Returns `CompletableFuture<List<Integer>>`"
         );
-        expect(sanitizeChangelogEntry("Takes Map<String, List<Integer>>")).toBe(
-            "Takes `Map<String, List<Integer>>`"
-        );
+        expect(sanitizeChangelogEntry("Takes Map<String, List<Integer>>")).toBe("Takes `Map<String, List<Integer>>`");
     });
 
     it("wraps three-level nested generics", () => {
@@ -64,9 +62,7 @@ describe("sanitizeChangelogEntry", () => {
     });
 
     it("handles type at start of string", () => {
-        expect(sanitizeChangelogEntry("Optional<String> is now supported")).toBe(
-            "`Optional<String>` is now supported"
-        );
+        expect(sanitizeChangelogEntry("Optional<String> is now supported")).toBe("`Optional<String>` is now supported");
     });
 
     it("handles type at end of string", () => {
