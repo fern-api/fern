@@ -7,7 +7,7 @@ import httpx
 SDK_DEFAULT_TIMEOUT = 60
 
 try:
-    import httpx_aiohttp
+    import httpx_aiohttp  # type: ignore[import-not-found]
 except ImportError:
 
     class DefaultAioHttpClient(httpx.AsyncClient):  # type: ignore
