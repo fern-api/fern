@@ -1,4 +1,4 @@
-import { Schemas, SecurityScheme, Source, WebsocketChannel } from "@fern-api/openapi-ir";
+import { Schemas, Source, WebsocketChannel } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ParseOpenAPIOptions } from "../options.js";
@@ -15,7 +15,6 @@ export interface AsyncAPIIntermediateRepresentation {
     groupedSchemas: Schemas;
     channels: Record<string, WebsocketChannel> | undefined;
     servers: Array<ServerContext> | undefined;
-    securitySchemes: Record<string, SecurityScheme>;
     basePath: string | undefined;
 }
 

@@ -52,11 +52,10 @@ export function buildChannel({
         }
     }
 
-    const hasSecuritySchemes = Object.keys(context.ir.securitySchemes).length > 0;
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: convertedPath,
         url: urlId,
-        auth: hasSecuritySchemes
+        auth: false
     };
 
     if (channel.audiences != null && channel.audiences.length > 0) {

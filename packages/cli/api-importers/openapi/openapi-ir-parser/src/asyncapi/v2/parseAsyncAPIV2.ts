@@ -5,7 +5,6 @@ import {
     QueryParameterWithExample,
     SchemaId,
     SchemaWithExample,
-    SecurityScheme,
     Source,
     WebsocketChannel,
     WebsocketMessageSchema,
@@ -14,7 +13,6 @@ import {
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../getExtension.js";
-import { convertSecurityScheme } from "../../openapi/v3/converters/convertSecurityScheme.js";
 import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions.js";
 import { ParseOpenAPIOptions } from "../../options.js";
 import { convertAvailability } from "../../schema/convertAvailability.js";
@@ -378,17 +376,6 @@ export function parseAsyncAPIV2({
         }
     }
 
-    const securitySchemes: Record<string, SecurityScheme> = {};
-    for (const [key, securityScheme] of Object.entries(document.components?.securitySchemes ?? {})) {
-        if (isReferenceObject(securityScheme)) {
-            continue;
-        }
-        const converted = convertSecurityScheme(securityScheme, source, context.taskContext);
-        if (converted != null) {
-            securitySchemes[key] = converted;
-        }
-    }
-
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
@@ -396,7 +383,6 @@ export function parseAsyncAPIV2({
             ...server,
             name: server.name as string
         })),
-        securitySchemes,
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
