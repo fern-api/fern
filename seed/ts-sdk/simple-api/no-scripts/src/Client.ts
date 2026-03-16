@@ -41,10 +41,7 @@ export class SeedSimpleApiClient {
     public async fetch(input: Request | string | URL, init?: RequestInit, requestOptions?: core.PassthroughRequest.RequestOptions): Promise<Response> {
 
         return core.makePassthroughRequest(input, init, {
-            baseUrl: this._options.baseUrl ?? (async () => {
-                const env = await core.Supplier.get(this._options.environment);
-                return typeof env === "string" ? env : env?.base;
-            }),
+            baseUrl: this._options.baseUrl ?? this._options.environment,
             headers: this._options.headers,
             timeoutInSeconds: this._options.timeoutInSeconds,
             maxRetries: this._options.maxRetries,

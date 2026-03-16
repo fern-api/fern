@@ -52,7 +52,7 @@ export class SeedMultiUrlEnvironmentClient {
                     this._options.baseUrl ??
                     (async () => {
                         const env = await core.Supplier.get(this._options.environment);
-                        return typeof env === "string" ? env : env?.base;
+                        return typeof env === "string" ? env : (env as Record<string, string>)?.base;
                     }),
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,

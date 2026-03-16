@@ -875,15 +875,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         // Resolve the base URL from either the explicit baseUrl option or the environment.
-        // The environment may be a string (single-URL) or an object (multi-URL, e.g. { base: string; production: string }),
-        // so we project it to a string to avoid passing an object where a string is expected.
-        const hasEnvironments = this.intermediateRepresentation.environments != null;
-        const baseUrlCode = hasEnvironments
+        // For multi-URL environments (e.g. { base: string; production: string }), the environment is an object,
+        // so we project it to a string via its .base property to avoid passing an object where a string is expected.
+        // For single-URL or no-IR-defined environments, the environment is already a string, so we fall back to it directly.
+        const isMultiUrlEnvironment =
+            this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls";
+        const baseUrlCode = isMultiUrlEnvironment
             ? `baseUrl: this._options.baseUrl ?? (async () => {
         const env = await core.Supplier.get(this._options.environment);
-        return typeof env === "string" ? env : env?.base;
+        return typeof env === "string" ? env : (env as Record<string, string>)?.base;
     }),`
-            : "baseUrl: this._options.baseUrl,";
+            : "baseUrl: this._options.baseUrl ?? this._options.environment,";
 
         const fetchMethodBody = `
 return core.makePassthroughRequest(input, init, {
