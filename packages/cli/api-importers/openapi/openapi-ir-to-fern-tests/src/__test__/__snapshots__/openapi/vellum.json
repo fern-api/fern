@@ -180,7 +180,7 @@ Executes a deployed Workflow and streams back its results.",
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ExecuteWorkflowStreamRequestStreaming",
+                "name": "ExecuteWorkflowStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -387,7 +387,7 @@ Generate a stream of completions using a previously defined deployment.
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "GenerateStreamBodyRequestStreaming",
+                "name": "GenerateStreamBodyRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -2659,7 +2659,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: ExecuteWorkflowStreamRequestStreaming
+        name: ExecuteWorkflowStreamRequest
         body:
           properties:
             workflow_deployment_id:
@@ -2808,7 +2808,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: GenerateStreamBodyRequestStreaming
+        name: GenerateStreamBodyRequest
         body:
           properties:
             deployment_id:

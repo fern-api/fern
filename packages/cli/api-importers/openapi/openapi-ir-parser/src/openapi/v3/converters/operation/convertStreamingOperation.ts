@@ -58,6 +58,23 @@ export function convertStreamingOperation({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
             });
+            // Auto-disambiguate the streaming request name when the request body is a $ref
+            // to a named schema. Without this, both streaming and non-streaming variants would
+            // resolve to the same wrapper name (e.g., "ChatRequest"), causing duplicate declaration
+            // errors. This aligns with the V3 importer's convention of appending "_streaming".
+            const autoStreamRequestName = (() => {
+                if (streamingExtension.streamRequestName != null) {
+                    return streamingExtension.streamRequestName;
+                }
+                if (streamingRequestBody?.schemaReference != null) {
+                    const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
+                    if (schemaId != null) {
+                        return `${schemaId}Streaming`;
+                    }
+                }
+                return undefined;
+            })();
+
             const streamingOperations = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
@@ -81,7 +98,7 @@ export function convertStreamingOperation({
                 streamTerminator: streamingExtension.terminator,
                 suffix: STREAM_SUFFIX,
                 source: context.source,
-                streamRequestNameOverride: streamingExtension.streamRequestName
+                streamRequestNameOverride: autoStreamRequestName
             });
             streamingOperations.forEach((streamingOperation) => {
                 streamingOperation.examples = streamingOperation.examples.filter(
