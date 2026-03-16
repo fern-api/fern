@@ -1,4 +1,4 @@
-import { AuthScheme } from "@fern-api/ir-sdk";
+import { AuthScheme, WebSocketAuthFallback } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -17,6 +17,12 @@ interface BasicSecuritySchemeExtension {
 interface BearerSecuritySchemeExtension {
     name?: string;
     env?: string;
+}
+
+interface WebSocketAuthFallbackExtension {
+    in: string;
+    name?: string;
+    format?: string;
 }
 
 interface HeaderSecuritySchemeExtension {
@@ -47,6 +53,31 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
         return value as T | undefined;
     }
 
+    private parseWebSocketAuthFallback(): WebSocketAuthFallback | undefined {
+        const extension = this.getExtension<WebSocketAuthFallbackExtension>("x-fern-websocket-auth-fallback");
+        if (extension == null) {
+            return undefined;
+        }
+        switch (extension.in) {
+            case "websocket-subprotocol":
+                if (extension.format == null) {
+                    return undefined;
+                }
+                return WebSocketAuthFallback.websocketSubprotocol({
+                    format: extension.format
+                });
+            case "query":
+                if (extension.name == null) {
+                    return undefined;
+                }
+                return WebSocketAuthFallback.query({
+                    name: extension.name
+                });
+            default:
+                return undefined;
+        }
+    }
+
     public convert(): AuthScheme | undefined {
         switch (this.securityScheme.type) {
             case "http": {
@@ -55,10 +86,12 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     const bearerExtension = this.getExtension<BearerSecuritySchemeExtension>("x-fern-bearer");
                     const tokenName = bearerExtension?.name ?? "token";
                     const tokenEnvVar = bearerExtension?.env;
+                    const websocketAuthFallback = this.parseWebSocketAuthFallback();
                     return AuthScheme.bearer({
                         key: this.schemeId,
                         token: this.context.casingsGenerator.generateName(tokenName),
                         tokenEnvVar,
+                        websocketAuthFallback,
                         docs: this.securityScheme.description
                     });
                 }

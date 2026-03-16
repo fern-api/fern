@@ -23,5 +23,7 @@ export * from "./OAuthRefreshTokenRequestPropertiesSchema.js";
 export * from "./OAuthRefreshTokenResponsePropertiesSchema.js";
 export * from "./OAuthSchemeSchema.js";
 export * from "./TokenBearerAuthSchema.js";
+export * from "./WebSocketAuthFallbackSchema.js";
+export * from "./WebSocketAuthFallbackTransport.js";
 export * from "./WithAuthSchema.js";
 export * from "./WithEnvironmentVariable.js";

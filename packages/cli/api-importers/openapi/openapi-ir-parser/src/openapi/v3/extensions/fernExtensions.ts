@@ -548,7 +548,27 @@ export const FernOpenAPIExtension = {
      *         - $ref: '#/components/schemas/CompletionEvent'
      *         - $ref: '#/components/schemas/ErrorEvent'
      */
-    DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context"
+    DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context",
+
+    /**
+     * Used to specify fallback auth transport for WebSocket channels on runtimes
+     * that do not support custom WebSocket headers (browsers, React Native, etc.).
+     *
+     * securitySchemes:
+     *   bearerAuth:
+     *     type: http
+     *     scheme: bearer
+     *     x-fern-websocket-auth-fallback:
+     *       in: websocket-subprotocol
+     *       format: "bearer.{token}"
+     *
+     * or:
+     *
+     *     x-fern-websocket-auth-fallback:
+     *       in: query
+     *       name: token
+     */
+    WEBSOCKET_AUTH_FALLBACK: "x-fern-websocket-auth-fallback"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

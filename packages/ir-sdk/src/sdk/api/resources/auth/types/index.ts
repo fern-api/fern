@@ -19,3 +19,6 @@ export * from "./OAuthRefreshEndpoint.js";
 export * from "./OAuthRefreshTokenRequestProperties.js";
 export * from "./OAuthScheme.js";
 export * from "./OAuthTokenEndpoint.js";
+export * from "./WebSocketAuthFallback.js";
+export * from "./WebSocketQueryAuthFallback.js";
+export * from "./WebSocketSubprotocolAuthFallback.js";

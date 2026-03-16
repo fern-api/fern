@@ -96,10 +96,28 @@ types:
       oauth:
         type: OauthSecurityScheme
 
+  WebSocketAuthFallback:
+    docs: |
+      Defines how bearer auth should be transported for WebSocket channels
+      on runtimes that do not support custom WebSocket headers.
+    discriminant: type
+    union:
+      websocketSubprotocol: WebSocketSubprotocolAuthFallback
+      query: WebSocketQueryAuthFallback
+
+  WebSocketSubprotocolAuthFallback:
+    properties:
+      format: string
+
+  WebSocketQueryAuthFallback:
+    properties:
+      name: string
+
   BearerSecurityScheme:
     properties:
       tokenVariableName: optional<string>
       tokenEnvVar: optional<string>
+      websocketAuthFallback: optional<WebSocketAuthFallback>
 
   BasicSecurityScheme:
     properties:

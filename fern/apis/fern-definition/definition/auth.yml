@@ -100,6 +100,29 @@ types:
     properties:
       scheme: literal<"bearer">
       token: optional<AuthVariable>
+      websocket-auth-fallback: optional<WebSocketAuthFallbackSchema>
+
+  WebSocketAuthFallbackSchema:
+    docs: |
+      Defines how bearer auth should be transported for WebSocket channels
+      on runtimes that do not support custom WebSocket headers.
+    properties:
+      in:
+        type: WebSocketAuthFallbackTransport
+        docs: Where to send the bearer token as a fallback.
+      name:
+        type: optional<string>
+        docs: Required when in is 'query'. The query parameter name.
+      format:
+        type: optional<string>
+        docs: Required when in is 'websocket-subprotocol'. The subprotocol string with {token} placeholder.
+
+  WebSocketAuthFallbackTransport:
+    enum:
+      - value: websocket-subprotocol
+        name: WebsocketSubprotocol
+      - value: query
+        name: Query
 
   InferredBearerAuthSchema:
     extends:

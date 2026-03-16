@@ -1,4 +1,4 @@
-import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
+import { EnumSchema, SecurityScheme, Source, WebSocketAuthFallback } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
@@ -59,11 +59,13 @@ function convertSecuritySchemeHelper(
                 securityScheme,
                 FernOpenAPIExtension.FERN_BEARER_TOKEN
             );
+            const websocketAuthFallback = parseWebSocketAuthFallback(securityScheme);
             return SecurityScheme.bearer({
                 tokenVariableName:
                     bearerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
-                tokenEnvVar: bearerNames?.env
+                tokenEnvVar: bearerNames?.env,
+                websocketAuthFallback
             });
         } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
             // ^ case insensitivity for securityScheme.scheme required in OAS
@@ -94,6 +96,40 @@ function convertSecuritySchemeHelper(
         `Skipping security scheme: ${JSON.stringify(securityScheme, null)} - not currently supported. Please reach out to Fern support team!`
     );
     return undefined;
+}
+
+interface WebSocketAuthFallbackExtension {
+    in: string;
+    name?: string;
+    format?: string;
+}
+
+function parseWebSocketAuthFallback(securityScheme: OpenAPIV3.SecuritySchemeObject): WebSocketAuthFallback | undefined {
+    const extension = getExtension<WebSocketAuthFallbackExtension>(
+        securityScheme,
+        FernOpenAPIExtension.WEBSOCKET_AUTH_FALLBACK
+    );
+    if (extension == null) {
+        return undefined;
+    }
+    switch (extension.in) {
+        case "websocket-subprotocol":
+            if (extension.format == null) {
+                return undefined;
+            }
+            return WebSocketAuthFallback.websocketSubprotocol({
+                format: extension.format
+            });
+        case "query":
+            if (extension.name == null) {
+                return undefined;
+            }
+            return WebSocketAuthFallback.query({
+                name: extension.name
+            });
+        default:
+            return undefined;
+    }
 }
 
 function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {

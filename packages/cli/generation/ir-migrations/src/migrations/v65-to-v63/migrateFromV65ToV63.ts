@@ -51,6 +51,16 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
+            auth: {
+                ...v65.auth,
+                schemes: v65.auth.schemes.map((scheme) => {
+                    if (scheme.type === "bearer") {
+                        const { websocketAuthFallback: _, ...rest } = scheme;
+                        return rest as unknown as IrVersions.V63.auth.AuthScheme;
+                    }
+                    return scheme as unknown as IrVersions.V63.auth.AuthScheme;
+                })
+            },
             types: mapValues(v65.types, (typeDeclaration) => {
                 if (typeDeclaration.shape.type === "enum") {
                     return {

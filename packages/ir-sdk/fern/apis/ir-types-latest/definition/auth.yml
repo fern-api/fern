@@ -79,6 +79,32 @@ types:
           Commonly used for setting the `Authorization` scheme, but could be used for other things.
           For `Authorization` header, the default will be `Bearer `, but `undefined` for other headers.
 
+  WebSocketAuthFallback:
+    docs: |
+      Defines how bearer auth should be transported for WebSocket channels
+      on runtimes that do not support custom WebSocket headers (e.g. browsers).
+    discriminant:
+      value: _type
+      name: type
+    union:
+      websocketSubprotocol: WebSocketSubprotocolAuthFallback
+      query: WebSocketQueryAuthFallback
+
+  WebSocketSubprotocolAuthFallback:
+    docs: |
+      Pass the token as a WebSocket subprotocol string.
+      The `format` field is a template string where `{token}` is replaced
+      with the resolved bearer token value.
+    properties:
+      format: string
+
+  WebSocketQueryAuthFallback:
+    docs: |
+      Append the token as a query parameter.
+      The `name` field is the query parameter key.
+    properties:
+      name: string
+
   BearerAuthScheme:
     extends: BaseAuthScheme
     properties:
@@ -86,6 +112,13 @@ types:
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
+      websocketAuthFallback:
+        type: optional<WebSocketAuthFallback>
+        docs: |
+          When present on a security scheme applied to a WebSocket channel,
+          runtimes that do not support custom WebSocket headers (browsers,
+          React Native, etc.) will use this fallback instead of the
+          Authorization header.
 
   OAuthScheme:
     extends: BaseAuthScheme

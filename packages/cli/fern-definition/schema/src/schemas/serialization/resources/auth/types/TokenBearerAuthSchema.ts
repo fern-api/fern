@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { AuthVariable } from "./AuthVariable.js";
+import { WebSocketAuthFallbackSchema } from "./WebSocketAuthFallbackSchema.js";
 
 export const TokenBearerAuthSchema: core.serialization.ObjectSchema<
     serializers.TokenBearerAuthSchema.Raw,
@@ -13,6 +14,7 @@ export const TokenBearerAuthSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.stringLiteral("bearer"),
         token: AuthVariable.optional(),
+        "websocket-auth-fallback": WebSocketAuthFallbackSchema.optional(),
     })
     .extend(WithDocsSchema);
 
@@ -20,5 +22,6 @@ export declare namespace TokenBearerAuthSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
         token?: AuthVariable.Raw | null;
+        "websocket-auth-fallback"?: WebSocketAuthFallbackSchema.Raw | null;
     }
 }

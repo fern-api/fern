@@ -6,4 +6,11 @@ export interface BearerAuthScheme extends FernIr.BaseAuthScheme {
     token: FernIr.Name;
     /** The environment variable the SDK should use to read the token. */
     tokenEnvVar: FernIr.EnvironmentVariable | undefined;
+    /**
+     * When present on a security scheme applied to a WebSocket channel,
+     * runtimes that do not support custom WebSocket headers (browsers,
+     * React Native, etc.) will use this fallback instead of the
+     * Authorization header.
+     */
+    websocketAuthFallback: FernIr.WebSocketAuthFallback | undefined;
 }

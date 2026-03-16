@@ -5,4 +5,5 @@ import type * as FernDefinition from "../../../index.js";
 export interface TokenBearerAuthSchema extends FernDefinition.WithDocsSchema {
     scheme: "bearer";
     token?: FernDefinition.AuthVariable;
+    "websocket-auth-fallback"?: FernDefinition.WebSocketAuthFallbackSchema;
 }

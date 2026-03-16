@@ -5,7 +5,8 @@ import {
     AuthSchemesRequirement,
     FernIr,
     InferredAuthSchemeTokenEndpoint,
-    OAuthConfiguration
+    OAuthConfiguration,
+    WebSocketAuthFallback
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
@@ -178,6 +179,32 @@ function convertSchemeReference({
     }
 }
 
+function convertWebSocketAuthFallback(
+    rawFallback: RawSchemas.WebSocketAuthFallbackSchema | undefined
+): WebSocketAuthFallback | undefined {
+    if (rawFallback == null) {
+        return undefined;
+    }
+    switch (rawFallback.in) {
+        case "websocket-subprotocol":
+            if (rawFallback.format == null) {
+                return undefined;
+            }
+            return WebSocketAuthFallback.websocketSubprotocol({
+                format: rawFallback.format
+            });
+        case "query":
+            if (rawFallback.name == null) {
+                return undefined;
+            }
+            return WebSocketAuthFallback.query({
+                name: rawFallback.name
+            });
+        default:
+            return undefined;
+    }
+}
+
 function generateBearerAuth({
     key,
     file,
@@ -193,7 +220,8 @@ function generateBearerAuth({
         key,
         docs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
-        tokenEnvVar: rawScheme?.token?.env
+        tokenEnvVar: rawScheme?.token?.env,
+        websocketAuthFallback: convertWebSocketAuthFallback(rawScheme?.["websocket-auth-fallback"])
     });
 }
 

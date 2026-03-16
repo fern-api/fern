@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { Name } from "../../commons/types/Name.js";
 import { BaseAuthScheme } from "./BaseAuthScheme.js";
 import { EnvironmentVariable } from "./EnvironmentVariable.js";
+import { WebSocketAuthFallback } from "./WebSocketAuthFallback.js";
 
 export const BearerAuthScheme: core.serialization.ObjectSchema<
     serializers.BearerAuthScheme.Raw,
@@ -14,6 +15,7 @@ export const BearerAuthScheme: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         token: Name,
         tokenEnvVar: EnvironmentVariable.optional(),
+        websocketAuthFallback: WebSocketAuthFallback.optional(),
     })
     .extend(BaseAuthScheme);
 
@@ -21,5 +23,6 @@ export declare namespace BearerAuthScheme {
     export interface Raw extends BaseAuthScheme.Raw {
         token: Name.Raw;
         tokenEnvVar?: EnvironmentVariable.Raw | null;
+        websocketAuthFallback?: WebSocketAuthFallback.Raw | null;
     }
 }

@@ -99,6 +99,21 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 }
             }
 
+            if (securityScheme.websocketAuthFallback != null) {
+                const fallback = securityScheme.websocketAuthFallback;
+                if (fallback.type === "websocketSubprotocol") {
+                    bearerAuthScheme["websocket-auth-fallback"] = {
+                        in: "websocket-subprotocol",
+                        format: fallback.format
+                    };
+                } else if (fallback.type === "query") {
+                    bearerAuthScheme["websocket-auth-fallback"] = {
+                        in: "query",
+                        name: fallback.name
+                    };
+                }
+            }
+
             context.builder.addAuthScheme({
                 name: id,
                 schema: bearerAuthScheme
