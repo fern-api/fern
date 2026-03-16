@@ -920,7 +920,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                     // Already filtered above, but required by visitor
                 },
                 object: (otd) => {
-                    for (const property of otd.properties) {
+                    for (const property of [...otd.properties, ...(otd.extendedProperties ?? [])]) {
                         referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(property.valueType));
                     }
                 },
