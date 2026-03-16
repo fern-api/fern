@@ -1046,7 +1046,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         if (typeDeclaration == null) {
             return "Types";
         }
-        const properties = typeDeclaration.shape.type === "object" ? typeDeclaration.shape.properties : [];
+        // Collect properties from both object types and union base properties
+        const properties =
+            typeDeclaration.shape.type === "object"
+                ? typeDeclaration.shape.properties
+                : typeDeclaration.shape.type === "union"
+                  ? typeDeclaration.shape.baseProperties
+                  : [];
         const hasTypesProperty = properties.some((p) => p.name.name.pascalCase.safeName === "Types");
         return hasTypesProperty ? "InnerTypes" : "Types";
     }

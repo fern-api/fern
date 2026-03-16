@@ -468,3 +468,19 @@ types:
     inline: true
     properties:
       prop: string
+
+  # Test collision avoidance: parent has a property named "Types",
+  # so the nested static class should be named "InnerTypes" instead.
+  TypesPropertyCollisionParent:
+    properties:
+      types:
+        type: string
+        docs: This property collides with the default nested class name "Types"
+      child:
+        type: TypesPropertyCollisionChild
+        docs: This inline child should be nested inside InnerTypes instead of Types
+
+  TypesPropertyCollisionChild:
+    inline: true
+    properties:
+      foo: string
