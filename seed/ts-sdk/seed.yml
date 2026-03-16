@@ -57,9 +57,6 @@ fixtures:
       customConfig:
         streamType: wrapper
         testFramework: jest
-  streaming-parameter-openapi:
-    - outputFolder: no-custom-config
-      customConfig: null
   audiences:
     - outputFolder: no-custom-config
       customConfig: null
