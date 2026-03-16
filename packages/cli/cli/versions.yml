@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.30.0
+  changelogEntry:
+    - summary: |
+        Configures the `flatten_oneofs` configuration option for protoc-gen-openapi.
+        When `flatten_oneofs` is enabled, the generated OpenAPI schema will flatten
+        oneOf structures with a single schema. No additional configuration is required
+        by the user.
+      type: feat
+    - summary: |
+        Add the `respectByteFormat` configuration option, which is implicitly enabled
+        for gRPC/Protobuf specs.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 4.29.0
   changelogEntry:
     - summary: |

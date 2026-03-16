@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.3
+  changelogEntry:
+    - summary: |
+        Fix TypeScript SDK generator crash when generating WebSocket clients for
+        AsyncAPI specs that define a named server (e.g. `servers.production`) with
+        a single-URL environment. The `baseUrlId` assigned by the Fern IR converter
+        is now silently ignored for single-URL environments since there is only one
+        URL to resolve to.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.56.2
   changelogEntry:
     - summary: |

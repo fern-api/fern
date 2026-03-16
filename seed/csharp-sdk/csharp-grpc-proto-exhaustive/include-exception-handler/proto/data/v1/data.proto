@@ -166,13 +166,23 @@ message UpdateRequest {
   repeated IndexType index_types = 8;
   optional AspectRatio aspect_ratio = 9;
   optional google.rpc.Status status = 10;
+  // Tests bytes field mapping (string <-> ByteString conversion).
+  bytes content = 11;
 }
 
 message UpdateResponse {
+  // Nested enum to test dot-separated naming for nested proto types.
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_PENDING = 1;
+    STATUS_ACTIVE = 2;
+    STATUS_FAILED = 3;
+  }
   google.protobuf.Timestamp updated_at = 1;
   IndexType index_type = 2;
   google.protobuf.Any details = 3;
   repeated IndexType index_types = 4;
+  Status status = 5;
 }
 
 enum ToolMode {
