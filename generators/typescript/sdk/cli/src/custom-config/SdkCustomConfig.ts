@@ -26,7 +26,7 @@ export interface SdkCustomConfig {
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
     allowCustomFetcher: boolean;
-    shouldGenerateWebsocketClients: boolean;
+    generateWebSocketClients: boolean;
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;

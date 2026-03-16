@@ -64,7 +64,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
@@ -107,7 +107,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
     private readonly generatedWrappedServices: GeneratedWrappedService[];
     private readonly allowCustomFetcher: boolean;
-    private readonly shouldGenerateWebsocketClients: boolean;
+    private readonly generateWebSocketClients: boolean;
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
     private readonly packageId: PackageId;
@@ -134,7 +134,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
-        shouldGenerateWebsocketClients,
+        generateWebSocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         includeContentHeadersOnFileDownloadResponse,
@@ -156,7 +156,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.serviceClassName = serviceClassName;
         this.packageId = packageId;
         this.allowCustomFetcher = allowCustomFetcher;
-        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = generateWebSocketClients;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -353,7 +353,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (websocketChannel != null && websocketChannelId != null && this.shouldGenerateWebsocketClients) {
+        if (websocketChannel != null && websocketChannelId != null && this.generateWebSocketClients) {
             this.generatedWebsocketImplementation = new GeneratedDefaultWebsocketImplementation({
                 channel: websocketChannel,
                 channelId: websocketChannelId,
@@ -374,10 +374,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
             (acc: GeneratedWrappedService[], wrappedSubpackageId: FernIr.SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
-                if (
-                    subpackage.hasEndpointsInTree ||
-                    (this.shouldGenerateWebsocketClients && subpackage.websocket != null)
-                ) {
+                if (subpackage.hasEndpointsInTree || (this.generateWebSocketClients && subpackage.websocket != null)) {
                     acc.push(
                         new GeneratedWrappedService({
                             wrappedSubpackageId,

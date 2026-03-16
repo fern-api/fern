@@ -335,11 +335,11 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
     - outputFolder: no-serde
       customConfig:
         noSerdeLayer: true
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
@@ -349,11 +349,11 @@ fixtures:
   websocket-bearer-auth:
     - outputFolder: websockets
       customConfig:
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   websocket-inferred-auth:
     - outputFolder: websockets
       customConfig:
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   any-auth:
     - outputFolder: no-custom-config
       customConfig: null
