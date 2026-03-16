@@ -120,6 +120,12 @@ export function parse({
                     if (parsedAsyncAPI.groupedSchemas != null) {
                         ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
                     }
+                    if (parsedAsyncAPI.securitySchemes != null) {
+                        ir.securitySchemes = {
+                            ...ir.securitySchemes,
+                            ...parsedAsyncAPI.securitySchemes
+                        };
+                    }
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
                     }

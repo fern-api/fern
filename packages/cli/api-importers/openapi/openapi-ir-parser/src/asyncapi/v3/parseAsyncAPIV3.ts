@@ -5,6 +5,7 @@ import {
     Schema,
     SchemaId,
     SchemaWithExample,
+    SecurityScheme,
     Source,
     WebsocketChannel,
     WebsocketMessageSchema,
@@ -14,6 +15,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
 import { FernOpenAPIExtension } from "../../index.js";
+import { convertSecurityScheme } from "../../openapi/v3/converters/convertSecurityScheme.js";
 import { convertAvailability } from "../../schema/convertAvailability.js";
 import { convertReferenceObject, convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
@@ -495,10 +497,19 @@ export function parseAsyncAPIV3({
     }));
     const basePath = getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH);
 
+    const securitySchemes: Record<string, SecurityScheme> = {};
+    for (const [key, securityScheme] of Object.entries(document.components?.securitySchemes ?? {})) {
+        const converted = convertSecurityScheme(securityScheme, source, context.taskContext);
+        if (converted != null) {
+            securitySchemes[key] = converted;
+        }
+    }
+
     return {
         groupedSchemas,
         channels: parsedChannels,
         servers: finalServers,
+        securitySchemes,
         basePath
     };
 }
