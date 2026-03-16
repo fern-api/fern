@@ -4,9 +4,9 @@
     - summary: |
         Fix Basic Auth header not being sent when the username is an empty string.
         Per RFC 7617, an empty user-id is valid in Basic Auth (e.g., `:password`).
-        The `if` guard in `ToHeader()` that required both username and password to
-        be non-empty has been removed so the Authorization header is always set
-        when Basic Auth is configured.
+        The condition in `ToHeader()` now uses `||` instead of `&&`, so the
+        Authorization header is set whenever either the username or password is
+        non-empty.
       type: fix
   createdAt: "2026-03-16"
   irVersion: 61
