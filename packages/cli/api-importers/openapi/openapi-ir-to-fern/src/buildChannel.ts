@@ -25,8 +25,7 @@ export function buildChannel({
     // This happens when there are only WebSocket servers (no HTTP servers) and only one
     // WebSocket server — buildEnvironments creates a single-URL environment in that case,
     // so a baseUrlId on the channel would be meaningless and can cause generator issues.
-    const hasSingleWebsocketServerOnly =
-        context.ir.servers.length === 0 && context.ir.websocketServers.length <= 1;
+    const hasSingleWebsocketServerOnly = context.ir.servers.length === 0 && context.ir.websocketServers.length <= 1;
     // Generate URL ID based on feature flag:
     // - If groupEnvironmentsByHost is enabled, look up the collision-aware URL ID from the map
     // - Otherwise, use simple server name for backward compatibility
