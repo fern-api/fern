@@ -125,11 +125,11 @@ class SeedExhaustive:
 
 
 def _make_default_async_client(
-    timeout: float,
+    timeout: typing.Optional[float],
     follow_redirects: typing.Optional[bool],
 ) -> httpx.AsyncClient:
     try:
-        import httpx_aiohttp
+        import httpx_aiohttp  # type: ignore[import-not-found]
     except ImportError:
         pass
     else:
