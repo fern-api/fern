@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.30.2
+- version: 4.30.3
   changelogEntry:
     - summary: |
         Fix AsyncAPI WebSocket channels always generating with `auth: false`,
@@ -8,6 +8,15 @@
         converter now sets `auth: true` so that the generated WebSocket client
         receives `NormalizedClientOptionsWithAuth` and calls
         `authProvider.getAuthRequest()` in `connect()`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.30.2
+  changelogEntry:
+    - summary: |
+        Fix an issue where the `x-fern-encoding` extension was not respected on
+        arbitrary object schemas (i.e. objects w/ properties).
       type: fix
   createdAt: "2026-03-16"
   irVersion: 65

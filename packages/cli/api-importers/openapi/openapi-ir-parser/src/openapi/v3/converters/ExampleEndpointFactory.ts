@@ -952,6 +952,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,
+        encoding: undefined,
         source: request.source,
         inline: undefined,
         minProperties: undefined,

@@ -8,6 +8,7 @@ export interface ObjectSchema
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
