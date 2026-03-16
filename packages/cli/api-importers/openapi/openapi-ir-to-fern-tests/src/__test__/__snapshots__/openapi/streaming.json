@@ -84,7 +84,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "UserStreamRequest",
+                "name": "UserStreamRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -177,7 +177,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "UserV2StreamRequest",
+                "name": "UserV2StreamRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -269,7 +269,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "UserV3StreamRequest",
+                "name": "UserV3StreamRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -416,7 +416,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: UserStreamRequest
+        name: UserStreamRequestStreaming
         body:
           properties:
             id:
@@ -464,7 +464,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: UserV2StreamRequest
+        name: UserV2StreamRequestStreaming
         body:
           properties:
             id:
@@ -516,7 +516,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: UserV3StreamRequest
+        name: UserV3StreamRequestStreaming
         body:
           properties:
             id:

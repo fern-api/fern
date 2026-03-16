@@ -166,7 +166,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "GetUserStreamRequest",
+                "name": "GetUserStreamRequestStreaming",
                 "path-parameters": {
                   "userId": "string",
                 },
@@ -200,7 +200,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: GetUserStreamRequest
+        name: GetUserStreamRequestStreaming
         path-parameters:
           userId: string
         body:

@@ -78,7 +78,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "CreateChatCompletionsRequest",
+                "name": "CreateCompletionRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -108,7 +108,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: CreateChatCompletionsRequest
+        name: CreateCompletionRequestStreaming
         body:
           properties:
             stream: optional<boolean>

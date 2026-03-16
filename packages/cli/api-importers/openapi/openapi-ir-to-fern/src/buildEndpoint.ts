@@ -752,17 +752,17 @@ function getRequest({
             requestBodySchema["extra-properties"] = true;
         }
 
-        // For streaming endpoints (stream-condition variants), prefer generatedRequestName over the
-        // resolved schema's generatedName to disambiguate the streaming and non-streaming request
-        // wrappers. When the request body is a $ref to a named schema, both variants resolve to the
-        // same schema and would otherwise get the same name (e.g., "ChatRequest" for both).
+        // For streaming endpoints (stream-condition variants), append "Streaming" to the resolved
+        // schema name to disambiguate from the non-streaming variant. When the request body is a
+        // $ref to a named schema, both variants resolve to the same schema and would otherwise get
+        // the same name (e.g., "ChatRequest" for both). This aligns with the V3 importer's
+        // convention of appending "_streaming" to the schemaId.
         const isStreamingEndpoint =
             endpoint.response?.type === "streamingJson" ||
             endpoint.response?.type === "streamingSse" ||
             endpoint.response?.type === "streamingText";
-        const resolvedRequestName = isStreamingEndpoint
-            ? generatedRequestName
-            : (resolvedSchema.nameOverride ?? resolvedSchema.generatedName);
+        const baseRequestName = resolvedSchema.nameOverride ?? resolvedSchema.generatedName;
+        const resolvedRequestName = isStreamingEndpoint ? `${baseRequestName}Streaming` : baseRequestName;
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedRequestName,
