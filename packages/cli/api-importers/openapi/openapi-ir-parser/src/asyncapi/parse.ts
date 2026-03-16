@@ -15,6 +15,7 @@ export interface AsyncAPIIntermediateRepresentation {
     groupedSchemas: Schemas;
     channels: Record<string, WebsocketChannel> | undefined;
     servers: Array<ServerContext> | undefined;
+    hasServerSecurity: boolean;
     basePath: string | undefined;
 }
 

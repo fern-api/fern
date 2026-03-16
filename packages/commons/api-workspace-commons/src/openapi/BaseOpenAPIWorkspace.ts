@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
+import { type ParseResult } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "../index.js";
@@ -87,12 +87,16 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): Promise<FernDefinition> {
-        const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
+        const { ir, channelsWithServerSecurity } = await this.getOpenAPIIr(
+            { context, relativePathToDependency },
+            settings
+        );
         return this.converter.convert({
             context,
-            ir: openApiIr,
+            ir,
             settings,
-            absoluteFilePath
+            absoluteFilePath,
+            channelsWithServerSecurity
         });
     }
 
@@ -123,7 +127,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
             relativePathToDependency?: RelativeFilePath;
         },
         settings?: BaseOpenAPIWorkspace.Settings
-    ): Promise<OpenApiIntermediateRepresentation>;
+    ): Promise<ParseResult>;
 
     public abstract getAbsoluteFilePaths(): AbsoluteFilePath[];
 }
@@ -172,12 +176,13 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): FernDefinition {
-        const openApiIr = this.getOpenAPIIr({ context, relativePathToDependency }, settings);
+        const { ir, channelsWithServerSecurity } = this.getOpenAPIIr({ context, relativePathToDependency }, settings);
         return this.converter.convert({
             context,
-            ir: openApiIr,
+            ir,
             settings,
-            absoluteFilePath
+            absoluteFilePath,
+            channelsWithServerSecurity
         });
     }
 
@@ -209,7 +214,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
             relativePathToDependency?: RelativeFilePath;
         },
         settings?: BaseOpenAPIWorkspace.Settings
-    ): OpenApiIntermediateRepresentation;
+    ): ParseResult;
 
     public abstract getAbsoluteFilePaths(): AbsoluteFilePath[];
 }

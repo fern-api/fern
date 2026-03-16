@@ -114,12 +114,14 @@ export class FernDefinitionConverter {
         context,
         ir,
         settings,
-        absoluteFilePath
+        absoluteFilePath,
+        channelsWithServerSecurity
     }: {
         context: TaskContext;
         ir: OpenApiIntermediateRepresentation;
         settings?: BaseOpenAPIWorkspace.Settings;
         absoluteFilePath?: AbsoluteFilePath;
+        channelsWithServerSecurity?: Set<string>;
     }): FernDefinition {
         const definition = convert({
             taskContext: context,
@@ -133,7 +135,8 @@ export class FernDefinitionConverter {
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }
                     : undefined,
-            globalHeaderOverrides: this.buildHeaderOverrides(settings?.headers)
+            globalHeaderOverrides: this.buildHeaderOverrides(settings?.headers),
+            channelsWithServerSecurity
         });
 
         return {

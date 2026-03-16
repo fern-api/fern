@@ -17,8 +17,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, type ParseResult, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -224,7 +223,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             loadAiExamples?: boolean;
         },
         settings?: OSSWorkspace.Settings
-    ): Promise<OpenApiIntermediateRepresentation> {
+    ): Promise<ParseResult> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
         return parse({
             context,

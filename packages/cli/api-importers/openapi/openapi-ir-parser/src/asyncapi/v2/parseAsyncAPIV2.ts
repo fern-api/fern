@@ -376,6 +376,10 @@ export function parseAsyncAPIV2({
         }
     }
 
+    const hasServerSecurity = Object.values(document.servers ?? {}).some(
+        (server) => (server.security ?? []).length > 0
+    );
+
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
@@ -383,6 +387,7 @@ export function parseAsyncAPIV2({
             ...server,
             name: server.name as string
         })),
+        hasServerSecurity,
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }

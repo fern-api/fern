@@ -24,6 +24,7 @@ export interface OpenApiIrConverterContextOpts {
     authOverrides?: RawSchemas.WithAuthSchema;
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
     globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+    channelsWithServerSecurity?: Set<string>;
 }
 
 export class OpenApiIrConverterContext {
@@ -35,6 +36,7 @@ export class OpenApiIrConverterContext {
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public readonly options: ConvertOpenAPIOptions;
+    public readonly channelsWithServerSecurity: Set<string>;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -92,7 +94,8 @@ export class OpenApiIrConverterContext {
         options,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides
+        authOverrides,
+        channelsWithServerSecurity
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -100,6 +103,7 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
+        this.channelsWithServerSecurity = channelsWithServerSecurity ?? new Set();
 
         this.options = getConvertOptions({ options });
         this.enableUniqueErrorsPerEndpoint = this.options.enableUniqueErrorsPerEndpoint;

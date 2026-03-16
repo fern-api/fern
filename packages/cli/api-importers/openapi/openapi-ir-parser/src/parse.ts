@@ -36,6 +36,11 @@ export interface AsyncAPIDocument {
     settings: ParseOpenAPIOptions;
 }
 
+export interface ParseResult {
+    ir: OpenApiIntermediateRepresentation;
+    channelsWithServerSecurity: Set<string>;
+}
+
 export function parse({
     context,
     documents,
@@ -44,7 +49,8 @@ export function parse({
     context: TaskContext;
     documents: Document[];
     options?: Partial<ParseOpenAPIOptions>;
-}): OpenApiIntermediateRepresentation {
+}): ParseResult {
+    const channelsWithServerSecurity = new Set<string>();
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
         title: undefined,
@@ -112,6 +118,11 @@ export function parse({
                         ];
                     }
                     if (parsedAsyncAPI.channels != null) {
+                        if (parsedAsyncAPI.hasServerSecurity) {
+                            for (const channel of Object.values(parsedAsyncAPI.channels)) {
+                                channelsWithServerSecurity.add(channel.path);
+                            }
+                        }
                         ir.channels = {
                             ...ir.channels,
                             ...parsedAsyncAPI.channels
@@ -138,7 +149,7 @@ export function parse({
             }
         }
     }
-    return ir;
+    return { ir, channelsWithServerSecurity };
 }
 
 function getParseAsyncOptions({

@@ -1,8 +1,7 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { type Overlay } from "@fern-api/core-utils";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, type ParseResult, parse } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
@@ -87,7 +86,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             context: TaskContext;
         },
         options?: OpenAPIWorkspace.Settings
-    ): OpenApiIntermediateRepresentation {
+    ): ParseResult {
         const document = this.loader.loadDocument(this.spec);
         return parse({
             context,

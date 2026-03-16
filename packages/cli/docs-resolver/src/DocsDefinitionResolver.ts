@@ -1351,7 +1351,7 @@ export class DocsDefinitionResolver {
         if (item.tagDescriptionPages && useV3Parser) {
             try {
                 const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
-                const openApiIr = await workspaceForTags.getOpenAPIIr({
+                const { ir: openApiIr } = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
                 });

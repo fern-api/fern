@@ -495,10 +495,15 @@ export function parseAsyncAPIV3({
     }));
     const basePath = getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH);
 
+    const hasServerSecurity = Object.values(document.servers ?? {}).some(
+        (server) => (server.security ?? []).length > 0
+    );
+
     return {
         groupedSchemas,
         channels: parsedChannels,
         servers: finalServers,
+        hasServerSecurity,
         basePath
     };
 }
