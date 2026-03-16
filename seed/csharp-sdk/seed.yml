@@ -258,6 +258,12 @@ fixtures:
         experimental-fully-qualified-namespaces: true
         experimental-dotnet-format: true
       outputFolder: fully-qualified-namespaces
+  csharp-namespace-conflict:
+    - customConfig:
+        namespace: Seed.CsharpNamespaceConflict
+        client-class-name: Seed
+        experimental-fully-qualified-namespaces: true
+      outputFolder: client-class-name-matches-namespace-root
   csharp-system-collision:
     - customConfig:
         client-class-name: System

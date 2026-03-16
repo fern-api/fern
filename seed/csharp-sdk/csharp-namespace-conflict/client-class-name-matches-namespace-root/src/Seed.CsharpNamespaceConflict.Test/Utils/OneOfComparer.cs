@@ -1,71 +1,53 @@
 using NUnit.Framework.Constraints;
-using <%= qualifyNamespace(namespaces.root) %>.Core;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
-using OneOf;<% } %>
+using OneOf;
 
 namespace NUnit.Framework;
 
 /// <summary>
-/// Extensions for EqualConstraint to handle Optional values.
+/// Extensions for EqualConstraint to handle OneOf values.
 /// </summary>
-public static class OptionalComparerExtensions
+public static class EqualConstraintExtensions
 {
     /// <summary>
-    /// Modifies the EqualConstraint to handle Optional instances by comparing their IsDefined state and inner values.
+    /// Modifies the EqualConstraint to handle OneOf instances by comparing their inner values.
     /// This works alongside other comparison modifiers like UsingPropertiesComparer.
     /// </summary>
     /// <param name="constraint">The EqualConstraint to modify.</param>
     /// <returns>The same constraint instance for method chaining.</returns>
-    public static EqualConstraint UsingOptionalComparer(this EqualConstraint constraint)
+    public static EqualConstraint UsingOneOfComparer(this EqualConstraint constraint)
     {
-        // Register a comparer factory for IOptional types
-        constraint.Using<IOptional>(
+        // Register a comparer factory for IOneOf types
+        constraint.Using<IOneOf>(
             (x, y) =>
             {
-                // Both must have the same IsDefined state
-                if (x.IsDefined != y.IsDefined)
-                {
-                    return false;
-                }
-
-                // If both are undefined, they're equal
-                if (!x.IsDefined)
-                {
-                    return true;
-                }
-
-                // Both are defined, compare their boxed values
-                var xValue = x.GetBoxedValue();
-                var yValue = y.GetBoxedValue();
-
                 // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-                if (xValue is null && yValue is null)
+                if (x.Value is null && y.Value is null)
                 {
                     return true;
                 }
 
-                if (xValue is null || yValue is null)
+                if (x.Value is null)
                 {
                     return false;
                 }
 
-                // Use NUnit's property comparer for the inner values
                 var propertiesComparer = new NUnitEqualityComparer();
                 var tolerance = Tolerance.Default;
-                propertiesComparer.CompareProperties = true;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
+                propertiesComparer.CompareProperties = true;
+                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists)
                 propertiesComparer.ExternalComparers.Add(
                     new OneOfEqualityAdapter(propertiesComparer)
-                );<% } %>
-                return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
+                );
+                return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
             }
         );
 
         return constraint;
-    }<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+    }
 
     /// <summary>
     /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
-    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+    /// This enables recursive comparison of nested OneOf values.
     /// </summary>
     private class OneOfEqualityAdapter : EqualityAdapter
     {
@@ -100,5 +82,5 @@ public static class OptionalComparerExtensions
             var tolerance = Tolerance.Default;
             return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
         }
-    }<% } %>
+    }
 }

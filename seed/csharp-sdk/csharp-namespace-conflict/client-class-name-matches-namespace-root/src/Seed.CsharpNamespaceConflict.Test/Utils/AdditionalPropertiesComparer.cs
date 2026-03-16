@@ -1,7 +1,7 @@
 using System.Text.Json;
+using global::Seed.CsharpNamespaceConflict;
+using global::Seed.CsharpNamespaceConflict.Core;
 using NUnit.Framework.Constraints;
-using <%= qualifyNamespace(namespaces.root) %>;
-using <%= qualifyNamespace(namespaces.root) %>.Core;
 
 namespace NUnit.Framework;
 
