@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { WithName } from "../../commons/types/WithName.js";
+import { WebSocketAuthFallbackSchema } from "./WebSocketAuthFallbackSchema.js";
 import { WithEnvironmentVariable } from "./WithEnvironmentVariable.js";
 
 export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
         header: core.serialization.string(),
         type: core.serialization.string().optional(),
         prefix: core.serialization.string().optional(),
+        "websocket-auth-fallback": WebSocketAuthFallbackSchema.optional(),
     })
     .extend(WithEnvironmentVariable)
     .extend(WithName)
@@ -25,5 +27,6 @@ export declare namespace HeaderAuthSchemeSchema {
         header: string;
         type?: string | null;
         prefix?: string | null;
+        "websocket-auth-fallback"?: WebSocketAuthFallbackSchema.Raw | null;
     }
 }

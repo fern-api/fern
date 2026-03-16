@@ -86,7 +86,8 @@ function convertSchemeReference({
                         v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                     }),
                     prefix: rawHeader.prefix,
-                    headerEnvVar: rawHeader.env
+                    headerEnvVar: rawHeader.env,
+                    websocketAuthFallback: convertWebSocketAuthFallback(rawHeader["websocket-auth-fallback"])
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
@@ -211,6 +212,7 @@ function generateBasicAuth({
         usernameOmit: rawScheme?.username?.omit,
         password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env,
-        passwordOmit: rawScheme?.password?.omit
+        passwordOmit: rawScheme?.password?.omit,
+        websocketAuthFallback: convertWebSocketAuthFallback(rawScheme?.["websocket-auth-fallback"])
     });
 }

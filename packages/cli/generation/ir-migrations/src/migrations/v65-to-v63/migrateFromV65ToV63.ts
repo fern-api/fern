@@ -56,7 +56,12 @@ export const V65_TO_V63_MIGRATION: IrMigration<
                     ? {
                           ...v65.auth,
                           schemes: v65.auth.schemes.map((scheme) => {
-                              if (scheme.type === "bearer") {
+                              if (
+                                  scheme.type === "bearer" ||
+                                  scheme.type === "basic" ||
+                                  scheme.type === "header" ||
+                                  scheme.type === "oauth"
+                              ) {
                                   const { websocketAuthFallback: _, ...rest } = scheme;
                                   return rest as unknown as IrVersions.V63.auth.AuthScheme;
                               }

@@ -98,7 +98,7 @@ types:
 
   WebSocketAuthFallback:
     docs: |
-      Defines how bearer auth should be transported for WebSocket channels
+      Defines how auth should be transported for WebSocket channels
       on runtimes that do not support custom WebSocket headers.
     discriminant: type
     union:
@@ -113,13 +113,18 @@ types:
     properties:
       name: string
 
+  BaseSecurityScheme:
+    properties:
+      websocketAuthFallback: optional<WebSocketAuthFallback>
+
   BearerSecurityScheme:
+    extends: BaseSecurityScheme
     properties:
       tokenVariableName: optional<string>
       tokenEnvVar: optional<string>
-      websocketAuthFallback: optional<WebSocketAuthFallback>
 
   BasicSecurityScheme:
+    extends: BaseSecurityScheme
     properties:
       usernameVariableName: optional<string>
       usernameEnvVar: optional<string>
@@ -127,6 +132,7 @@ types:
       passwordEnvVar: optional<string>
 
   HeaderSecurityScheme:
+    extends: BaseSecurityScheme
     properties:
       headerName: string
       prefix: optional<string>
@@ -134,10 +140,12 @@ types:
       headerEnvVar: optional<string>
 
   QuerySecurityScheme:
+    extends: BaseSecurityScheme
     properties:
       queryParameterName: string
 
   OauthSecurityScheme:
+    extends: BaseSecurityScheme
     properties:
       scopesEnum: optional<finalIr.EnumSchema>
 

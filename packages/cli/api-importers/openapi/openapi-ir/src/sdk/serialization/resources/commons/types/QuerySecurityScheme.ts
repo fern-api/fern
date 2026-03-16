@@ -3,16 +3,19 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { BaseSecurityScheme } from "./BaseSecurityScheme.js";
 
 export const QuerySecurityScheme: core.serialization.ObjectSchema<
     serializers.QuerySecurityScheme.Raw,
     FernOpenapiIr.QuerySecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    queryParameterName: core.serialization.string(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        queryParameterName: core.serialization.string(),
+    })
+    .extend(BaseSecurityScheme);
 
 export declare namespace QuerySecurityScheme {
-    export interface Raw {
+    export interface Raw extends BaseSecurityScheme.Raw {
         queryParameterName: string;
     }
 }

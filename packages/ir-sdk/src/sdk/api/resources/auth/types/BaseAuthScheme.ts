@@ -8,4 +8,11 @@ export interface BaseAuthScheme extends FernIr.WithDocs {
      * Defaults to the type of the auth scheme if not provided.
      */
     key: FernIr.AuthSchemeKey;
+    /**
+     * When present on a security scheme applied to a WebSocket channel,
+     * runtimes that do not support custom WebSocket headers (browsers,
+     * React Native, etc.) will use this fallback instead of the
+     * Authorization header.
+     */
+    websocketAuthFallback: FernIr.WebSocketAuthFallback | undefined;
 }

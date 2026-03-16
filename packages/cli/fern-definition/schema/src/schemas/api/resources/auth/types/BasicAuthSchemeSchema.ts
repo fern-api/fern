@@ -6,4 +6,5 @@ export interface BasicAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     scheme: "basic";
     username?: FernDefinition.AuthVariable;
     password?: FernDefinition.AuthVariable;
+    "websocket-auth-fallback"?: FernDefinition.WebSocketAuthFallbackSchema;
 }

@@ -2,6 +2,6 @@
 
 import type * as FernOpenapiIr from "../../../index.js";
 
-export interface OauthSecurityScheme {
+export interface OauthSecurityScheme extends FernOpenapiIr.BaseSecurityScheme {
     scopesEnum: FernOpenapiIr.EnumSchema | undefined;
 }

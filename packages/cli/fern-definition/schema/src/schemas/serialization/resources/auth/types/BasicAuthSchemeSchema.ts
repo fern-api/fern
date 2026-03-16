@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { AuthVariable } from "./AuthVariable.js";
+import { WebSocketAuthFallbackSchema } from "./WebSocketAuthFallbackSchema.js";
 
 export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.BasicAuthSchemeSchema.Raw,
@@ -14,6 +15,7 @@ export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
         scheme: core.serialization.stringLiteral("basic"),
         username: AuthVariable.optional(),
         password: AuthVariable.optional(),
+        "websocket-auth-fallback": WebSocketAuthFallbackSchema.optional(),
     })
     .extend(WithDocsSchema);
 
@@ -22,5 +24,6 @@ export declare namespace BasicAuthSchemeSchema {
         scheme: "basic";
         username?: AuthVariable.Raw | null;
         password?: AuthVariable.Raw | null;
+        "websocket-auth-fallback"?: WebSocketAuthFallbackSchema.Raw | null;
     }
 }

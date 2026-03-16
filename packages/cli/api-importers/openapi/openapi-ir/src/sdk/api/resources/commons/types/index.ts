@@ -1,3 +1,4 @@
+export * from "./BaseSecurityScheme.js";
 export * from "./BasicSecurityScheme.js";
 export * from "./BearerSecurityScheme.js";
 export * from "./Encoding.js";

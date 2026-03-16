@@ -74,6 +74,7 @@
         },
         "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
         "usernameOmit": false,
+        "websocketAuthFallback": undefined,
       },
     ],
   },

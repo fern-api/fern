@@ -3,21 +3,21 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { WebSocketAuthFallback } from "./WebSocketAuthFallback.js";
+import { BaseSecurityScheme } from "./BaseSecurityScheme.js";
 
 export const BearerSecurityScheme: core.serialization.ObjectSchema<
     serializers.BearerSecurityScheme.Raw,
     FernOpenapiIr.BearerSecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    tokenVariableName: core.serialization.string().optional(),
-    tokenEnvVar: core.serialization.string().optional(),
-    websocketAuthFallback: WebSocketAuthFallback.optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        tokenVariableName: core.serialization.string().optional(),
+        tokenEnvVar: core.serialization.string().optional(),
+    })
+    .extend(BaseSecurityScheme);
 
 export declare namespace BearerSecurityScheme {
-    export interface Raw {
+    export interface Raw extends BaseSecurityScheme.Raw {
         tokenVariableName?: string | null;
         tokenEnvVar?: string | null;
-        websocketAuthFallback?: WebSocketAuthFallback.Raw | null;
     }
 }

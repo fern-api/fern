@@ -10,4 +10,5 @@ export interface HeaderAuthSchemeSchema
     /** Defaults to string */
     type?: string;
     prefix?: string;
+    "websocket-auth-fallback"?: FernDefinition.WebSocketAuthFallbackSchema;
 }

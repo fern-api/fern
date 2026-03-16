@@ -5,16 +5,19 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { AuthSchemeKey } from "./AuthSchemeKey.js";
+import { WebSocketAuthFallback } from "./WebSocketAuthFallback.js";
 
 export const BaseAuthScheme: core.serialization.ObjectSchema<serializers.BaseAuthScheme.Raw, FernIr.BaseAuthScheme> =
     core.serialization
         .objectWithoutOptionalProperties({
             key: AuthSchemeKey,
+            websocketAuthFallback: WebSocketAuthFallback.optional(),
         })
         .extend(WithDocs);
 
 export declare namespace BaseAuthScheme {
     export interface Raw extends WithDocs.Raw {
         key: AuthSchemeKey.Raw;
+        websocketAuthFallback?: WebSocketAuthFallback.Raw | null;
     }
 }

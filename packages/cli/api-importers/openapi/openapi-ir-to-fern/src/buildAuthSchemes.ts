@@ -1,4 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { WebSocketAuthFallback } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
@@ -67,6 +69,8 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 }
             }
 
+            applyWebSocketAuthFallback(basicAuthScheme, securityScheme.websocketAuthFallback);
+
             context.builder.addAuthScheme({
                 name: id,
                 schema: basicAuthScheme
@@ -76,7 +80,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
         } else if (securityScheme.type === "bearer") {
-            const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
+            const bearerAuthScheme: RawSchemas.TokenBearerAuthSchema = {
                 scheme: "bearer"
             };
 
@@ -99,20 +103,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 }
             }
 
-            if (securityScheme.websocketAuthFallback != null) {
-                const fallback = securityScheme.websocketAuthFallback;
-                if (fallback.type === "websocketSubprotocol") {
-                    bearerAuthScheme["websocket-auth-fallback"] = {
-                        in: "websocket-subprotocol",
-                        format: fallback.format
-                    };
-                } else if (fallback.type === "query") {
-                    bearerAuthScheme["websocket-auth-fallback"] = {
-                        in: "query",
-                        name: fallback.name
-                    };
-                }
-            }
+            applyWebSocketAuthFallback(bearerAuthScheme, securityScheme.websocketAuthFallback);
 
             context.builder.addAuthScheme({
                 name: id,
@@ -124,7 +115,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             }
         } else if (securityScheme.type === "header") {
             if (!setAuth) {
-                const schema: RawSchemas.AuthSchemeDeclarationSchema = {
+                const schema: RawSchemas.HeaderAuthSchemeSchema = {
                     header: securityScheme.headerName,
                     name: securityScheme.headerVariableName ?? "apiKey",
                     type: "string"
@@ -135,6 +126,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 if (securityScheme.prefix != null) {
                     schema.prefix = securityScheme.prefix;
                 }
+                applyWebSocketAuthFallback(schema, securityScheme.websocketAuthFallback);
                 context.builder.addAuthScheme({
                     name: id,
                     schema
@@ -152,9 +144,10 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 });
             }
         } else if (securityScheme.type === "oauth") {
-            const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
+            const bearerAuthScheme: RawSchemas.TokenBearerAuthSchema = {
                 scheme: "bearer"
             };
+            applyWebSocketAuthFallback(bearerAuthScheme, securityScheme.websocketAuthFallback);
             context.builder.addAuthScheme({
                 name: id,
                 schema: bearerAuthScheme
@@ -170,5 +163,30 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 });
             }
         }
+    }
+}
+
+function applyWebSocketAuthFallback(
+    schema: RawSchemas.TokenBearerAuthSchema | RawSchemas.BasicAuthSchemeSchema | RawSchemas.HeaderAuthSchemeSchema,
+    fallback: WebSocketAuthFallback | undefined
+): void {
+    if (fallback == null) {
+        return;
+    }
+    switch (fallback.type) {
+        case "websocketSubprotocol":
+            schema["websocket-auth-fallback"] = {
+                in: "websocket-subprotocol",
+                format: fallback.format
+            };
+            return;
+        case "query":
+            schema["websocket-auth-fallback"] = {
+                in: "query",
+                name: fallback.name
+            };
+            return;
+        default:
+            assertNever(fallback);
     }
 }

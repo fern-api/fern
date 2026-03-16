@@ -3,19 +3,22 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { BaseSecurityScheme } from "./BaseSecurityScheme.js";
 
 export const BasicSecurityScheme: core.serialization.ObjectSchema<
     serializers.BasicSecurityScheme.Raw,
     FernOpenapiIr.BasicSecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    usernameVariableName: core.serialization.string().optional(),
-    usernameEnvVar: core.serialization.string().optional(),
-    passwordVariableName: core.serialization.string().optional(),
-    passwordEnvVar: core.serialization.string().optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        usernameVariableName: core.serialization.string().optional(),
+        usernameEnvVar: core.serialization.string().optional(),
+        passwordVariableName: core.serialization.string().optional(),
+        passwordEnvVar: core.serialization.string().optional(),
+    })
+    .extend(BaseSecurityScheme);
 
 export declare namespace BasicSecurityScheme {
-    export interface Raw {
+    export interface Raw extends BaseSecurityScheme.Raw {
         usernameVariableName?: string | null;
         usernameEnvVar?: string | null;
         passwordVariableName?: string | null;

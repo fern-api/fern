@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 /**
- * Defines how bearer auth should be transported for WebSocket channels
+ * Defines how auth should be transported for WebSocket channels
  * on runtimes that do not support custom WebSocket headers.
  */
 export interface WebSocketAuthFallbackSchema {

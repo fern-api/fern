@@ -2,6 +2,6 @@
 
 import type * as FernOpenapiIr from "../../../index.js";
 
-export interface QuerySecurityScheme extends FernOpenapiIr.BaseSecurityScheme {
-    queryParameterName: string;
+export interface BaseSecurityScheme {
+    websocketAuthFallback: FernOpenapiIr.WebSocketAuthFallback | undefined;
 }

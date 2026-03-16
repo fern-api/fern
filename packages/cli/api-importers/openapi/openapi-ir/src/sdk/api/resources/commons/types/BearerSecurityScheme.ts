@@ -2,8 +2,7 @@
 
 import type * as FernOpenapiIr from "../../../index.js";
 
-export interface BearerSecurityScheme {
+export interface BearerSecurityScheme extends FernOpenapiIr.BaseSecurityScheme {
     tokenVariableName: string | undefined;
     tokenEnvVar: string | undefined;
-    websocketAuthFallback: FernOpenapiIr.WebSocketAuthFallback | undefined;
 }

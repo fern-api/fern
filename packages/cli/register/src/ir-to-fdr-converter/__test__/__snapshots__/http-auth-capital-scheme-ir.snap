@@ -74,6 +74,7 @@
         },
         "usernameEnvVar": undefined,
         "usernameOmit": false,
+        "websocketAuthFallback": undefined,
       },
       {
         "_visit": [Function],

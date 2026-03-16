@@ -79,6 +79,7 @@ types:
         type: optional<string>
         docs: Defaults to string
       prefix: optional<string>
+      websocket-auth-fallback: optional<WebSocketAuthFallbackSchema>
 
   BasicAuthSchemeSchema:
     extends:
@@ -87,6 +88,7 @@ types:
       scheme: literal<"basic">
       username: optional<AuthVariable>
       password: optional<AuthVariable>
+      websocket-auth-fallback: optional<WebSocketAuthFallbackSchema>
 
   BearerAuthSchemeSchema:
     discriminated: false
@@ -104,7 +106,7 @@ types:
 
   WebSocketAuthFallbackSchema:
     docs: |
-      Defines how bearer auth should be transported for WebSocket channels
+      Defines how auth should be transported for WebSocket channels
       on runtimes that do not support custom WebSocket headers.
     properties:
       in:

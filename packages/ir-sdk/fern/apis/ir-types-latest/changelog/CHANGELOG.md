@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.6.0] - 2026-03-16
+- Feature: Add optional `websocketAuthFallback` field to `BaseAuthScheme`, making it available on all auth scheme types
+  (bearer, basic, header, OAuth). When present on a security scheme applied to a WebSocket channel, runtimes that do not
+  support custom WebSocket headers (browsers, React Native, etc.) will use this fallback transport instead.
+  Supports `websocket-subprotocol` and `query` fallback strategies via the `WebSocketAuthFallback` discriminated union.
+  Parsed from the `x-fern-websocket-auth-fallback` OpenAPI extension on security schemes.
+
 ## [v65.5.0] - 2026-03-10
 - Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
   (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as

@@ -79,6 +79,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     }
 
     public convert(): AuthScheme | undefined {
+        const websocketAuthFallback = this.parseWebSocketAuthFallback();
         switch (this.securityScheme.type) {
             case "http": {
                 // Case insensitivity for securityScheme.scheme required per OAS spec
@@ -86,7 +87,6 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     const bearerExtension = this.getExtension<BearerSecuritySchemeExtension>("x-fern-bearer");
                     const tokenName = bearerExtension?.name ?? "token";
                     const tokenEnvVar = bearerExtension?.env;
-                    const websocketAuthFallback = this.parseWebSocketAuthFallback();
                     return AuthScheme.bearer({
                         key: this.schemeId,
                         token: this.context.casingsGenerator.generateName(tokenName),
@@ -109,6 +109,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         passwordEnvVar,
                         usernameOmit: false,
                         passwordOmit: false,
+                        websocketAuthFallback,
                         docs: this.securityScheme.description
                     });
                 }
@@ -129,6 +130,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         valueType: AbstractConverter.OPTIONAL_STRING,
                         prefix,
                         headerEnvVar,
+                        websocketAuthFallback,
                         docs: this.securityScheme.description
                     });
                 }
@@ -140,7 +142,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     key: this.schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
-                    websocketAuthFallback: undefined,
+                    websocketAuthFallback,
                     docs: this.securityScheme.description
                 });
             }
