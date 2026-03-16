@@ -48,6 +48,7 @@ export function convertObject({
     fullExamples,
     additionalProperties,
     availability,
+    encoding,
     source,
     minProperties,
     maxProperties
@@ -382,6 +383,7 @@ export function convertObject({
         fullExamples,
         additionalProperties,
         availability,
+        encoding,
         source,
         context,
         minProperties,
@@ -404,6 +406,7 @@ export function wrapObject({
     fullExamples,
     additionalProperties,
     availability,
+    encoding,
     source,
     context,
     minProperties,
@@ -423,6 +426,7 @@ export function wrapObject({
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
+    encoding: Encoding | undefined;
     source: Source;
     context: SchemaParserContext;
     minProperties: number | undefined;
@@ -441,6 +445,7 @@ export function wrapObject({
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
+        encoding,
         source,
         inline: undefined,
         minProperties,

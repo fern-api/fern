@@ -26,6 +26,7 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 fullExamples: undefined,
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
+                encoding: schema.encoding,
                 source: schema.source,
                 inline: undefined,
                 minProperties: schema.minProperties,
