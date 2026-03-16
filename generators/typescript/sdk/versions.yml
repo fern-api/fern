@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Expose an optional `protocols` field on `RealtimeClient.ConnectArgs` for WebSocket
+        subprotocol negotiation. The `ReconnectingWebSocket` constructor already accepted a
+        `protocols` parameter but it was hardcoded to an empty array. Browser callers can now
+        authenticate via subprotocols (e.g. `xai-client-secret.<token>`) where custom headers
+        are forbidden by the browser security model.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.56.4
   changelogEntry:
     - summary: |
