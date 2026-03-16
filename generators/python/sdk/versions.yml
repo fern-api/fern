@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.64.2
+  changelogEntry:
+    - summary: |
+        Escape triple quotes (`"""`) in docstring content to prevent syntax errors.
+        When API descriptions contain Python code examples with triple-quoted strings
+        (e.g., docstrings inside code blocks), the inner `"""` would prematurely close
+        the enclosing docstring delimiters, producing invalid Python that fails `ruff check`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 4.64.1
   changelogEntry:
     - summary: |
