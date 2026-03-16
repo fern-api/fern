@@ -56,9 +56,16 @@ export class ProtobufResolver extends WithGeneration {
                         .filter((segment) => !this.namespaces.root.split(".").includes(segment))
                         .join("_")
                 );
+                // Nested proto types use underscore-separated names (e.g. "InvoiceBundle_Status")
+                // from protoc-gen-openapi. In C# protobuf codegen, nested types are
+                // accessed as "ParentMessage.Types.NestedType".
+                const originalName = protobufType.name.originalName;
+                const protoClassName = originalName.includes("_")
+                    ? originalName.split("_").join(".Types.")
+                    : originalName;
                 return this.csharp.classReference({
-                    name: protobufType.name.originalName,
-                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFile(protobufType.file),
+                    name: protoClassName,
+                    namespace: protoNamespace,
                     namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase()}${aliasSuffix.slice(1)}`
                 });
             }

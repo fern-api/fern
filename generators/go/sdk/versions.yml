@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.30.2
+  changelogEntry:
+    - summary: |
+        Fix Basic Auth header not being sent when the username is an empty string.
+        Per RFC 7617, an empty user-id is valid in Basic Auth (e.g., `:password`).
+        The condition in `ToHeader()` now uses `||` instead of `&&`, so the
+        Authorization header is set whenever either the username or password is
+        non-empty.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 61
+
 - version: 1.30.1
   changelogEntry:
     - summary: |

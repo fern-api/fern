@@ -72,6 +72,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         );
         const protobufProperties: {
             propertyName: string;
+            protoPropertyName?: string;
             typeReference: TypeReference;
         }[] = [];
 
@@ -135,6 +136,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
+                    protoPropertyName: query.name.name.pascalCase.safeName,
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -196,6 +198,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
+                            protoPropertyName: property.name.name.pascalCase.safeName,
                             typeReference: property.valueType
                         });
                     }

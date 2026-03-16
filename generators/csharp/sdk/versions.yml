@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.31.0
+  changelogEntry:
+    - summary: |
+        Add support for `base64` primitive type in the IR to represent Protobuf byte[].
+      type: feat
+    - summary: |
+        Fix the `.ToProto` and `.FromProto` mapper methods to support for enums nested within
+        message descriptors.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 2.30.3
   changelogEntry:
     - summary: |
