@@ -9,6 +9,7 @@ export interface DocumentV2 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<MessageId, MessageV2>;
+        securitySchemes?: Record<string, SecurityScheme>;
     };
     tags?: Tag[];
 }
@@ -17,6 +18,7 @@ export interface ServerV2 {
     name: string;
     url: string;
     protocol: string;
+    security?: Record<string, string[]>[];
 }
 
 export interface ChannelV2 {
@@ -63,4 +65,12 @@ export interface SubscribeEvent {
     description?: string;
     operationId?: string;
     message: OpenAPIV3.SchemaObject | MessageV2;
+}
+
+export interface SecurityScheme {
+    type: string;
+    scheme?: string;
+    bearerFormat?: string;
+    name?: string;
+    in?: string;
 }

@@ -111,7 +111,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 connectMethodName: undefined, // AsyncAPI v2 doesn't support x-fern-sdk-method-name on channels
                 baseUrl,
                 path,
-                auth: false,
+                auth: this.hasServerSecurity(),
                 headers,
                 queryParameters,
                 pathParameters,
@@ -315,6 +315,23 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             return AbstractServerConverter.getServerName(serverKey, server);
         }
         return serverKey;
+    }
+
+    /**
+     * Checks if any server in the AsyncAPI spec declares security schemes,
+     * indicating the channel should use auth.
+     */
+    private hasServerSecurity(): boolean {
+        const spec = this.context.spec as AsyncAPIV2.DocumentV2;
+        const servers = spec.servers;
+        if (servers != null) {
+            for (const server of Object.values(servers)) {
+                if (server.security != null && server.security.length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private convertBindingQueryParameters({

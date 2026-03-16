@@ -112,7 +112,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
-                auth: false,
+                auth: this.hasServerSecurity(),
                 headers,
                 queryParameters,
                 pathParameters,
@@ -274,6 +274,23 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         }
         const server = specServers[firstServerKey];
         return AbstractServerConverter.getServerName(firstServerKey, server);
+    }
+
+    /**
+     * Checks if any server in the AsyncAPI spec declares security schemes,
+     * indicating the channel should use auth.
+     */
+    private hasServerSecurity(): boolean {
+        const spec = this.context.spec as AsyncAPIV3.DocumentV3;
+        const servers = spec.servers;
+        if (servers != null) {
+            for (const server of Object.values(servers)) {
+                if (server.security != null && server.security.length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {

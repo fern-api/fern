@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.29.1
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI WebSocket channels always generating with `auth: false`,
+        preventing bearer auth auto-injection from the root client's authProvider.
+        When the AsyncAPI spec declares server-level security schemes, the channel
+        converter now sets `auth: true` so that the generated WebSocket client
+        receives `NormalizedClientOptionsWithAuth` and calls
+        `authProvider.getAuthRequest()` in `connect()`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 4.29.0
   changelogEntry:
     - summary: |

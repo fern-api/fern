@@ -11,6 +11,7 @@ export interface DocumentV3 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<string, ChannelMessage>;
+        securitySchemes?: Record<string, SecurityScheme>;
     };
 }
 
@@ -23,6 +24,7 @@ export interface ServerV3 {
     name: string;
     host: string;
     protocol: string;
+    security?: Record<string, string[]>[];
 }
 
 export interface ChannelV3 {
@@ -71,4 +73,12 @@ export interface WebSocketBindings {
     headers?: OpenAPIV3.SchemaObject;
     /* An OpenAPIV3 object where each property is a query parameter */
     query?: OpenAPIV3.SchemaObject;
+}
+
+export interface SecurityScheme {
+    type: string;
+    scheme?: string;
+    bearerFormat?: string;
+    name?: string;
+    in?: string;
 }

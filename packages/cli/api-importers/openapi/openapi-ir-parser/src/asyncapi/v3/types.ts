@@ -24,6 +24,7 @@ export interface ServerV3 {
     name: string;
     host: string;
     protocol: string;
+    security?: Record<string, string[]>[];
 }
 
 export interface ChannelV3 {

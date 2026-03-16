@@ -18,6 +18,7 @@ export interface ServerV2 {
     name: string;
     url: string;
     protocol: string;
+    security?: Record<string, string[]>[];
 }
 
 export interface ChannelV2 {
