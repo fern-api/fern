@@ -167,6 +167,9 @@ export class ClassReference extends Node implements Type {
             // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
             this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
             this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||
+            // if the first namespace segment is both a type name and a namespace root,
+            // the C# compiler will resolve it to the type instead of the namespace (CS0426)
+            this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
             // or we always are going to be using fully qualified namespaces
             writer.generation.settings.useFullyQualifiedNamespaces;
 
@@ -214,7 +217,8 @@ export class ClassReference extends Node implements Type {
                         const segments = typeQualification.split(".");
                         if (
                             this.registry.isAmbiguousTypeName(segments[0]) ||
-                            this.registry.isAmbiguousNamespaceName(segments[0])
+                            this.registry.isAmbiguousNamespaceName(segments[0]) ||
+                            this.registry.hasTypeNamespaceConflict(segments[0])
                         ) {
                             writer.write(fqName);
                         } else {
