@@ -25,7 +25,7 @@
     "details": {
       "oneOf": [
         {
-          "$ref": "#/definitions/Any"
+          "$ref": "#/definitions/GoogleProtobufAny"
         },
         {
           "type": "null"
@@ -66,18 +66,21 @@
         "INDEX_TYPE_STRICT"
       ]
     },
-    "Any": {
+    "GoogleProtobufAny": {
       "type": "object",
-      "additionalProperties": {
-        "type": [
-          "string",
-          "number",
-          "boolean",
-          "object",
-          "array",
-          "null"
-        ]
-      }
+      "properties": {
+        "@type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
     },
     "UpdateResponse_Status": {
       "type": "string",

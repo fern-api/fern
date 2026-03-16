@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "@type": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "definitions": {}
+}
