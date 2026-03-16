@@ -7,10 +7,11 @@
         named schema. Both the streaming and non-streaming endpoint variants
         previously resolved to the same wrapper name (e.g. `ChatRequest`),
         causing TypeScript SDK generation to fail with "already declared in this
-        file". Streaming variants now automatically receive a disambiguated
-        name derived from the endpoint breadcrumbs. Users can also explicitly
-        set the streaming request name via the new `stream-request-name`
-        property inside `x-fern-streaming`.
+        file". Streaming variants now automatically receive a `Streaming` suffix
+        (e.g. `ChatRequest` → `ChatRequestStreaming`), aligned with the V3
+        importer convention. Users can also explicitly set the streaming request
+        name via the new `stream-request-name` property inside
+        `x-fern-streaming`.
       type: fix
   createdAt: "2026-03-16"
   irVersion: 65
