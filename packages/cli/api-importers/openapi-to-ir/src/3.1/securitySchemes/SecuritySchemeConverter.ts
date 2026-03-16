@@ -140,6 +140,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     key: this.schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
+                    websocketAuthFallback: undefined,
                     docs: this.securityScheme.description
                 });
             }

@@ -160,7 +160,8 @@ function generateBearerAuth({
         key,
         docs,
         token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
-        tokenEnvVar: rawScheme?.token?.env
+        tokenEnvVar: rawScheme?.token?.env,
+        websocketAuthFallback: undefined
     });
 }
 
