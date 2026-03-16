@@ -4361,6 +4361,192 @@
             "availability": null,
             "docs": null
         },
+        "type_:Status": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "Status",
+                    "camelCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STATUS",
+                        "safeName": "STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Status",
+                        "safeName": "Status"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:Status"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": null,
+                "values": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "STATUS_UNSPECIFIED",
+                                "camelCase": {
+                                    "unsafeName": "statusUnspecified",
+                                    "safeName": "statusUnspecified"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status_unspecified",
+                                    "safeName": "status_unspecified"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS_UNSPECIFIED",
+                                    "safeName": "STATUS_UNSPECIFIED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StatusUnspecified",
+                                    "safeName": "StatusUnspecified"
+                                }
+                            },
+                            "wireValue": "STATUS_UNSPECIFIED"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "STATUS_PENDING",
+                                "camelCase": {
+                                    "unsafeName": "statusPending",
+                                    "safeName": "statusPending"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status_pending",
+                                    "safeName": "status_pending"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS_PENDING",
+                                    "safeName": "STATUS_PENDING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StatusPending",
+                                    "safeName": "StatusPending"
+                                }
+                            },
+                            "wireValue": "STATUS_PENDING"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "STATUS_ACTIVE",
+                                "camelCase": {
+                                    "unsafeName": "statusActive",
+                                    "safeName": "statusActive"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status_active",
+                                    "safeName": "status_active"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS_ACTIVE",
+                                    "safeName": "STATUS_ACTIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StatusActive",
+                                    "safeName": "StatusActive"
+                                }
+                            },
+                            "wireValue": "STATUS_ACTIVE"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "STATUS_FAILED",
+                                "camelCase": {
+                                    "unsafeName": "statusFailed",
+                                    "safeName": "statusFailed"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status_failed",
+                                    "safeName": "status_failed"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS_FAILED",
+                                    "safeName": "STATUS_FAILED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StatusFailed",
+                                    "safeName": "StatusFailed"
+                                }
+                            },
+                            "wireValue": "STATUS_FAILED"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "forwardCompatible": null
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": null,
+                "proto": {}
+            },
+            "source": {
+                "type": "proto",
+                "value": {
+                    "type": "userDefined",
+                    "file": {
+                        "filepath": "proto/data/v1/data.proto",
+                        "packageName": "data.v1",
+                        "options": {
+                            "csharp": {
+                                "namespace": "Data.V1.Grpc"
+                            }
+                        }
+                    },
+                    "name": {
+                        "originalName": "Status",
+                        "camelCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS",
+                            "safeName": "STATUS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Status",
+                            "safeName": "Status"
+                        }
+                    }
+                }
+            },
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
         "type_:ToolChoice": {
             "inline": null,
             "name": {
@@ -5066,22 +5252,22 @@
                                 "optional": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "UpdateResponse_Status",
+                                        "originalName": "Status",
                                         "camelCase": {
-                                            "unsafeName": "updateResponseStatus",
-                                            "safeName": "updateResponseStatus"
+                                            "unsafeName": "status",
+                                            "safeName": "status"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "update_response_status",
-                                            "safeName": "update_response_status"
+                                            "unsafeName": "status",
+                                            "safeName": "status"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "UPDATE_RESPONSE_STATUS",
-                                            "safeName": "UPDATE_RESPONSE_STATUS"
+                                            "unsafeName": "STATUS",
+                                            "safeName": "STATUS"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "UpdateResponseStatus",
-                                            "safeName": "UpdateResponseStatus"
+                                            "unsafeName": "Status",
+                                            "safeName": "Status"
                                         }
                                     },
                                     "fernFilepath": {
@@ -5090,7 +5276,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:UpdateResponse_Status",
+                                    "typeId": "type_:Status",
                                     "default": null,
                                     "inline": null
                                 }
@@ -5111,7 +5297,7 @@
             "referencedTypes": [
                 "type_:IndexType",
                 "type_:Any",
-                "type_:UpdateResponse_Status"
+                "type_:Status"
             ],
             "encoding": {
                 "json": null,
@@ -5147,192 +5333,6 @@
                         "pascalCase": {
                             "unsafeName": "UpdateResponse",
                             "safeName": "UpdateResponse"
-                        }
-                    }
-                }
-            },
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UpdateResponse_Status": {
-            "inline": null,
-            "name": {
-                "name": {
-                    "originalName": "UpdateResponse_Status",
-                    "camelCase": {
-                        "unsafeName": "updateResponseStatus",
-                        "safeName": "updateResponseStatus"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "update_response_status",
-                        "safeName": "update_response_status"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "UPDATE_RESPONSE_STATUS",
-                        "safeName": "UPDATE_RESPONSE_STATUS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UpdateResponseStatus",
-                        "safeName": "UpdateResponseStatus"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UpdateResponse_Status"
-            },
-            "shape": {
-                "_type": "enum",
-                "default": null,
-                "values": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "STATUS_UNSPECIFIED",
-                                "camelCase": {
-                                    "unsafeName": "statusUnspecified",
-                                    "safeName": "statusUnspecified"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status_unspecified",
-                                    "safeName": "status_unspecified"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS_UNSPECIFIED",
-                                    "safeName": "STATUS_UNSPECIFIED"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "StatusUnspecified",
-                                    "safeName": "StatusUnspecified"
-                                }
-                            },
-                            "wireValue": "STATUS_UNSPECIFIED"
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "STATUS_PENDING",
-                                "camelCase": {
-                                    "unsafeName": "statusPending",
-                                    "safeName": "statusPending"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status_pending",
-                                    "safeName": "status_pending"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS_PENDING",
-                                    "safeName": "STATUS_PENDING"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "StatusPending",
-                                    "safeName": "StatusPending"
-                                }
-                            },
-                            "wireValue": "STATUS_PENDING"
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "STATUS_ACTIVE",
-                                "camelCase": {
-                                    "unsafeName": "statusActive",
-                                    "safeName": "statusActive"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status_active",
-                                    "safeName": "status_active"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS_ACTIVE",
-                                    "safeName": "STATUS_ACTIVE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "StatusActive",
-                                    "safeName": "StatusActive"
-                                }
-                            },
-                            "wireValue": "STATUS_ACTIVE"
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "STATUS_FAILED",
-                                "camelCase": {
-                                    "unsafeName": "statusFailed",
-                                    "safeName": "statusFailed"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status_failed",
-                                    "safeName": "status_failed"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS_FAILED",
-                                    "safeName": "STATUS_FAILED"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "StatusFailed",
-                                    "safeName": "StatusFailed"
-                                }
-                            },
-                            "wireValue": "STATUS_FAILED"
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "forwardCompatible": null
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": null,
-                "proto": {}
-            },
-            "source": {
-                "type": "proto",
-                "value": {
-                    "type": "userDefined",
-                    "file": {
-                        "filepath": "proto/data/v1/data.proto",
-                        "packageName": "data.v1",
-                        "options": {
-                            "csharp": {
-                                "namespace": "Data.V1.Grpc"
-                            }
-                        }
-                    },
-                    "name": {
-                        "originalName": "UpdateResponse_Status",
-                        "camelCase": {
-                            "unsafeName": "updateResponseStatus",
-                            "safeName": "updateResponseStatus"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "update_response_status",
-                            "safeName": "update_response_status"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "UPDATE_RESPONSE_STATUS",
-                            "safeName": "UPDATE_RESPONSE_STATUS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UpdateResponseStatus",
-                            "safeName": "UpdateResponseStatus"
                         }
                     }
                 }
@@ -29628,8 +29628,17 @@
                                         "optional": {
                                             "_type": "primitive",
                                             "primitive": {
-                                                "v1": "BASE_64",
-                                                "v2": null
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": {
+                                                        "format": "bytes",
+                                                        "pattern": null,
+                                                        "minLength": null,
+                                                        "maxLength": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -30507,29 +30516,29 @@
                                                                             "shape": {
                                                                                 "type": "named",
                                                                                 "typeName": {
-                                                                                    "typeId": "type_:UpdateResponse_Status",
+                                                                                    "typeId": "type_:Status",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
                                                                                     "name": {
-                                                                                        "originalName": "UpdateResponse_Status",
+                                                                                        "originalName": "Status",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "updateResponseStatus",
-                                                                                            "safeName": "updateResponseStatus"
+                                                                                            "unsafeName": "status",
+                                                                                            "safeName": "status"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "update_response_status",
-                                                                                            "safeName": "update_response_status"
+                                                                                            "unsafeName": "status",
+                                                                                            "safeName": "status"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "UPDATE_RESPONSE_STATUS",
-                                                                                            "safeName": "UPDATE_RESPONSE_STATUS"
+                                                                                            "unsafeName": "STATUS",
+                                                                                            "safeName": "STATUS"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "UpdateResponseStatus",
-                                                                                            "safeName": "UpdateResponseStatus"
+                                                                                            "unsafeName": "Status",
+                                                                                            "safeName": "Status"
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
@@ -30565,22 +30574,22 @@
                                                                         "valueType": {
                                                                             "_type": "named",
                                                                             "name": {
-                                                                                "originalName": "UpdateResponse_Status",
+                                                                                "originalName": "Status",
                                                                                 "camelCase": {
-                                                                                    "unsafeName": "updateResponseStatus",
-                                                                                    "safeName": "updateResponseStatus"
+                                                                                    "unsafeName": "status",
+                                                                                    "safeName": "status"
                                                                                 },
                                                                                 "snakeCase": {
-                                                                                    "unsafeName": "update_response_status",
-                                                                                    "safeName": "update_response_status"
+                                                                                    "unsafeName": "status",
+                                                                                    "safeName": "status"
                                                                                 },
                                                                                 "screamingSnakeCase": {
-                                                                                    "unsafeName": "UPDATE_RESPONSE_STATUS",
-                                                                                    "safeName": "UPDATE_RESPONSE_STATUS"
+                                                                                    "unsafeName": "STATUS",
+                                                                                    "safeName": "STATUS"
                                                                                 },
                                                                                 "pascalCase": {
-                                                                                    "unsafeName": "UpdateResponseStatus",
-                                                                                    "safeName": "UpdateResponseStatus"
+                                                                                    "unsafeName": "Status",
+                                                                                    "safeName": "Status"
                                                                                 }
                                                                             },
                                                                             "fernFilepath": {
@@ -30589,7 +30598,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "typeId": "type_:UpdateResponse_Status",
+                                                                            "typeId": "type_:Status",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -30653,7 +30662,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "1c459289",
+                                "id": "ba85506f",
                                 "url": "/data/update",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -31288,8 +31297,17 @@
                                                         "valueType": {
                                                             "_type": "primitive",
                                                             "primitive": {
-                                                                "v1": "BASE_64",
-                                                                "v2": null
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": {
+                                                                        "format": "bytes",
+                                                                        "pattern": null,
+                                                                        "minLength": null,
+                                                                        "maxLength": null
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -32087,22 +32105,22 @@
                                                                                 },
                                                                                 "typeName": {
                                                                                     "name": {
-                                                                                        "originalName": "UpdateResponse_Status",
+                                                                                        "originalName": "Status",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "updateResponseStatus",
-                                                                                            "safeName": "updateResponseStatus"
+                                                                                            "unsafeName": "status",
+                                                                                            "safeName": "status"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "update_response_status",
-                                                                                            "safeName": "update_response_status"
+                                                                                            "unsafeName": "status",
+                                                                                            "safeName": "status"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "UPDATE_RESPONSE_STATUS",
-                                                                                            "safeName": "UPDATE_RESPONSE_STATUS"
+                                                                                            "unsafeName": "STATUS",
+                                                                                            "safeName": "STATUS"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "UpdateResponseStatus",
-                                                                                            "safeName": "UpdateResponseStatus"
+                                                                                            "unsafeName": "Status",
+                                                                                            "safeName": "Status"
                                                                                         }
                                                                                     },
                                                                                     "fernFilepath": {
@@ -32111,7 +32129,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "typeId": "type_:UpdateResponse_Status"
+                                                                                    "typeId": "type_:Status"
                                                                                 }
                                                                             },
                                                                             "jsonExample": "STATUS_UNSPECIFIED"
@@ -32119,22 +32137,22 @@
                                                                         "valueType": {
                                                                             "_type": "named",
                                                                             "name": {
-                                                                                "originalName": "UpdateResponse_Status",
+                                                                                "originalName": "Status",
                                                                                 "camelCase": {
-                                                                                    "unsafeName": "updateResponseStatus",
-                                                                                    "safeName": "updateResponseStatus"
+                                                                                    "unsafeName": "status",
+                                                                                    "safeName": "status"
                                                                                 },
                                                                                 "snakeCase": {
-                                                                                    "unsafeName": "update_response_status",
-                                                                                    "safeName": "update_response_status"
+                                                                                    "unsafeName": "status",
+                                                                                    "safeName": "status"
                                                                                 },
                                                                                 "screamingSnakeCase": {
-                                                                                    "unsafeName": "UPDATE_RESPONSE_STATUS",
-                                                                                    "safeName": "UPDATE_RESPONSE_STATUS"
+                                                                                    "unsafeName": "STATUS",
+                                                                                    "safeName": "STATUS"
                                                                                 },
                                                                                 "pascalCase": {
-                                                                                    "unsafeName": "UpdateResponseStatus",
-                                                                                    "safeName": "UpdateResponseStatus"
+                                                                                    "unsafeName": "Status",
+                                                                                    "safeName": "Status"
                                                                                 }
                                                                             },
                                                                             "fernFilepath": {
@@ -32143,7 +32161,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "typeId": "type_:UpdateResponse_Status",
+                                                                            "typeId": "type_:Status",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -32573,10 +32591,10 @@
                 "type_:QueryResponse",
                 "type_:QueryResult",
                 "type_:ScoredColumn",
+                "type_:Status",
                 "type_:ToolChoice",
                 "type_:ToolMode",
                 "type_:UpdateResponse",
-                "type_:UpdateResponse_Status",
                 "type_:UploadResponse",
                 "type_:Usage",
                 "type_:Any",
@@ -34968,6 +34986,125 @@
                 "extends": null,
                 "additionalProperties": false
             },
+            "type_:Status": {
+                "type": "enum",
+                "declaration": {
+                    "name": {
+                        "originalName": "Status",
+                        "camelCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS",
+                            "safeName": "STATUS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Status",
+                            "safeName": "Status"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "values": [
+                    {
+                        "name": {
+                            "originalName": "STATUS_UNSPECIFIED",
+                            "camelCase": {
+                                "unsafeName": "statusUnspecified",
+                                "safeName": "statusUnspecified"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status_unspecified",
+                                "safeName": "status_unspecified"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS_UNSPECIFIED",
+                                "safeName": "STATUS_UNSPECIFIED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StatusUnspecified",
+                                "safeName": "StatusUnspecified"
+                            }
+                        },
+                        "wireValue": "STATUS_UNSPECIFIED"
+                    },
+                    {
+                        "name": {
+                            "originalName": "STATUS_PENDING",
+                            "camelCase": {
+                                "unsafeName": "statusPending",
+                                "safeName": "statusPending"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status_pending",
+                                "safeName": "status_pending"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS_PENDING",
+                                "safeName": "STATUS_PENDING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StatusPending",
+                                "safeName": "StatusPending"
+                            }
+                        },
+                        "wireValue": "STATUS_PENDING"
+                    },
+                    {
+                        "name": {
+                            "originalName": "STATUS_ACTIVE",
+                            "camelCase": {
+                                "unsafeName": "statusActive",
+                                "safeName": "statusActive"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status_active",
+                                "safeName": "status_active"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS_ACTIVE",
+                                "safeName": "STATUS_ACTIVE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StatusActive",
+                                "safeName": "StatusActive"
+                            }
+                        },
+                        "wireValue": "STATUS_ACTIVE"
+                    },
+                    {
+                        "name": {
+                            "originalName": "STATUS_FAILED",
+                            "camelCase": {
+                                "unsafeName": "statusFailed",
+                                "safeName": "statusFailed"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status_failed",
+                                "safeName": "status_failed"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS_FAILED",
+                                "safeName": "STATUS_FAILED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StatusFailed",
+                                "safeName": "StatusFailed"
+                            }
+                        },
+                        "wireValue": "STATUS_FAILED"
+                    }
+                ]
+            },
             "type_:ToolChoice": {
                 "type": "object",
                 "declaration": {
@@ -35377,7 +35514,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_:UpdateResponse_Status"
+                                "value": "type_:Status"
                             }
                         },
                         "propertyAccess": null,
@@ -35386,125 +35523,6 @@
                 ],
                 "extends": null,
                 "additionalProperties": false
-            },
-            "type_:UpdateResponse_Status": {
-                "type": "enum",
-                "declaration": {
-                    "name": {
-                        "originalName": "UpdateResponse_Status",
-                        "camelCase": {
-                            "unsafeName": "updateResponseStatus",
-                            "safeName": "updateResponseStatus"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "update_response_status",
-                            "safeName": "update_response_status"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "UPDATE_RESPONSE_STATUS",
-                            "safeName": "UPDATE_RESPONSE_STATUS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UpdateResponseStatus",
-                            "safeName": "UpdateResponseStatus"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "values": [
-                    {
-                        "name": {
-                            "originalName": "STATUS_UNSPECIFIED",
-                            "camelCase": {
-                                "unsafeName": "statusUnspecified",
-                                "safeName": "statusUnspecified"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status_unspecified",
-                                "safeName": "status_unspecified"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS_UNSPECIFIED",
-                                "safeName": "STATUS_UNSPECIFIED"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StatusUnspecified",
-                                "safeName": "StatusUnspecified"
-                            }
-                        },
-                        "wireValue": "STATUS_UNSPECIFIED"
-                    },
-                    {
-                        "name": {
-                            "originalName": "STATUS_PENDING",
-                            "camelCase": {
-                                "unsafeName": "statusPending",
-                                "safeName": "statusPending"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status_pending",
-                                "safeName": "status_pending"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS_PENDING",
-                                "safeName": "STATUS_PENDING"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StatusPending",
-                                "safeName": "StatusPending"
-                            }
-                        },
-                        "wireValue": "STATUS_PENDING"
-                    },
-                    {
-                        "name": {
-                            "originalName": "STATUS_ACTIVE",
-                            "camelCase": {
-                                "unsafeName": "statusActive",
-                                "safeName": "statusActive"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status_active",
-                                "safeName": "status_active"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS_ACTIVE",
-                                "safeName": "STATUS_ACTIVE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StatusActive",
-                                "safeName": "StatusActive"
-                            }
-                        },
-                        "wireValue": "STATUS_ACTIVE"
-                    },
-                    {
-                        "name": {
-                            "originalName": "STATUS_FAILED",
-                            "camelCase": {
-                                "unsafeName": "statusFailed",
-                                "safeName": "statusFailed"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status_failed",
-                                "safeName": "status_failed"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS_FAILED",
-                                "safeName": "STATUS_FAILED"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StatusFailed",
-                                "safeName": "StatusFailed"
-                            }
-                        },
-                        "wireValue": "STATUS_FAILED"
-                    }
-                ]
             },
             "type_:UploadResponse": {
                 "type": "object",
@@ -38312,7 +38330,7 @@
                                     "type": "optional",
                                     "value": {
                                         "type": "primitive",
-                                        "value": "BASE_64"
+                                        "value": "STRING"
                                     }
                                 },
                                 "propertyAccess": null,
@@ -38515,10 +38533,10 @@
             "type_:QueryResponse",
             "type_:QueryResult",
             "type_:ScoredColumn",
+            "type_:Status",
             "type_:ToolChoice",
             "type_:ToolMode",
             "type_:UpdateResponse",
-            "type_:UpdateResponse_Status",
             "type_:UploadResponse",
             "type_:Usage",
             "type_:Any",
