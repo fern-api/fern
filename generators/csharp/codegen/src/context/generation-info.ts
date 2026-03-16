@@ -1201,4 +1201,17 @@ export class Generation {
     public get WireMock() {
         return this.extern.WireMock;
     }
+
+    /**
+     * Returns a namespace string with a `global::` prefix if the first segment
+     * has a type-namespace conflict (e.g., class "Candid" shadowing namespace "Candid.Net").
+     * Use this when writing raw namespace strings in string interpolations to avoid CS0426.
+     */
+    public qualifyNamespace(ns: string): string {
+        const firstSegment = ns.split(".")[0];
+        if (firstSegment && this.registry.hasTypeNamespaceConflict(firstSegment)) {
+            return `global::${ns}`;
+        }
+        return ns;
+    }
 }

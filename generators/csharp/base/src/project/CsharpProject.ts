@@ -627,7 +627,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    qualifyNamespace: (ns: string) => this.generation.qualifyNamespace(ns)
                 }
             })
         );
@@ -647,7 +648,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     namespace,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    qualifyNamespace: (ns: string) => this.generation.qualifyNamespace(ns)
                 }
             })
         );
@@ -676,7 +678,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
-                        namespaces: this.namespaces
+                        namespaces: this.namespaces,
+                        qualifyNamespace: (ns: string) => this.generation.qualifyNamespace(ns)
                     }
                 }).replaceAll("CustomPager", customPagerName)
             ),
@@ -692,7 +695,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
-                        namespaces: this.namespaces
+                        namespaces: this.namespaces,
+                        qualifyNamespace: (ns: string) => this.generation.qualifyNamespace(ns)
                     }
                 }).replaceAll("CustomPager", customPagerName)
             )
@@ -714,7 +718,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    qualifyNamespace: (ns: string) => this.generation.qualifyNamespace(ns)
                 }
             })
         );
