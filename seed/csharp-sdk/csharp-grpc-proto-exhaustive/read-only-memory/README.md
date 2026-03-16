@@ -41,15 +41,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.DataService.UploadAsync(
-    new UploadRequest
-    {
-        Columns = new List<SeedApi.Column>()
-        {
-            new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
-        },
-    }
-);
+await client.DataService.CreateAsync(new CreateRequest { Name = "name" });
 ```
 
 ## Exception Handling
@@ -61,7 +53,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.DataService.UploadAsync(...);
+    var response = await client.DataService.CreateAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -85,7 +77,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CreateAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -98,7 +90,7 @@ var response = await client.DataService.UploadAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CreateAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -111,7 +103,7 @@ var response = await client.DataService.UploadAsync(
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CreateAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
