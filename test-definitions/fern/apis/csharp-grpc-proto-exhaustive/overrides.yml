@@ -14,16 +14,9 @@ paths:
               index_type:
                 $ref: "#/components/schemas/IndexType"
               details:
-                $ref: "#/components/schemas/Any"
+                $ref: "#/components/schemas/GoogleProtobufAny"
 components:
   schemas:
-    Any:
-      type: object
-      x-fern-encoding:
-        proto:
-          type: google.protobuf.Any
-    GoogleProtobufAny:
-      x-fern-ignore: true
     Metadata:
       oneOf:
         - type: object
@@ -73,13 +66,13 @@ components:
           items:
             $ref: "#/components/schemas/IndexType"
         details:
-          $ref: "#/components/schemas/Any"
+          $ref: "#/components/schemas/GoogleProtobufAny"
     UpdateResponse:
       properties:
         index_type:
           $ref: "#/components/schemas/IndexType"
         details:
-          $ref: "#/components/schemas/Any"
+          $ref: "#/components/schemas/GoogleProtobufAny"
         index_types:
           type: array
           items:

@@ -1008,6 +1008,72 @@
                 }
             ]
         },
+        "type_:GoogleProtobufAny": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "GoogleProtobufAny",
+                    "camelCase": {
+                        "unsafeName": "googleProtobufAny",
+                        "safeName": "googleProtobufAny"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "google_protobuf_any",
+                        "safeName": "google_protobuf_any"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GOOGLE_PROTOBUF_ANY",
+                        "safeName": "GOOGLE_PROTOBUF_ANY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GoogleProtobufAny",
+                        "safeName": "GoogleProtobufAny"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "@type",
+                            "camelCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE",
+                                "safeName": "TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type",
+                                "safeName": "Type"
+                            }
+                        },
+                        "wireValue": "@type"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": true
+        },
         "type_:GoogleRpcStatus": {
             "type": "object",
             "declaration": {
@@ -1131,7 +1197,8 @@
                         "value": {
                             "type": "list",
                             "value": {
-                                "type": "unknown"
+                                "type": "named",
+                                "value": "type_:GoogleProtobufAny"
                             }
                         }
                     },
@@ -2713,7 +2780,7 @@
                         "type": "optional",
                         "value": {
                             "type": "named",
-                            "value": "type_:Any"
+                            "value": "type_:GoogleProtobufAny"
                         }
                     },
                     "propertyAccess": null,
@@ -3042,45 +3109,6 @@
             ],
             "extends": null,
             "additionalProperties": false
-        },
-        "type_:Any": {
-            "type": "alias",
-            "declaration": {
-                "name": {
-                    "originalName": "Any",
-                    "camelCase": {
-                        "unsafeName": "any",
-                        "safeName": "any"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "any",
-                        "safeName": "any"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ANY",
-                        "safeName": "ANY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Any",
-                        "safeName": "Any"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "typeReference": {
-                "type": "map",
-                "key": {
-                    "type": "primitive",
-                    "value": "STRING"
-                },
-                "value": {
-                    "type": "unknown"
-                }
-            }
         },
         "type_:Metadata": {
             "type": "undiscriminatedUnion",
@@ -5582,7 +5610,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:Any"
+                                    "value": "type_:GoogleProtobufAny"
                                 }
                             },
                             "propertyAccess": null,

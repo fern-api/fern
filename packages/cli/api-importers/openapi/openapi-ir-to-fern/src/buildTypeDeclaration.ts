@@ -306,6 +306,9 @@ export function buildObjectTypeDeclaration({
     if (schema.source != null) {
         objectTypeDeclaration.source = convertToSourceSchema(schema.source);
     }
+    if (schema.encoding != null) {
+        objectTypeDeclaration.encoding = convertToEncodingSchema(schema.encoding);
+    }
 
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
