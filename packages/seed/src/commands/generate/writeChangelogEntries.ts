@@ -3,6 +3,25 @@ import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generato
 import { writeFile } from "fs/promises";
 import moment from "moment";
 
+/**
+ * Wraps type references containing angle brackets (e.g., `Optional<String>`,
+ * `Map<String, Object>`) in inline code fences (backticks) so they are not
+ * parsed as HTML/JSX tags by MDX compilers.
+ *
+ * Already-backticked spans are left untouched.
+ */
+function sanitizeMarkdownEntry(text: string): string {
+    const parts = text.split(/(`[^`]+`)/g);
+    return parts
+        .map((part) => {
+            if (part.startsWith("`") && part.endsWith("`")) {
+                return part;
+            }
+            return part.replace(/\b([A-Za-z]\w*<(?:[^<>]*(?:<[^<>]*>)?[^<>]*)>)/g, "`$1`");
+        })
+        .join("");
+}
+
 export function writeChangelogEntries(version: string, entries: ChangelogEntry[] | undefined): string {
     // ## 0.0.1
     // <Note>
@@ -41,12 +60,12 @@ export function writeChangelogEntries(version: string, entries: ChangelogEntry[]
         changelogString += "Nothing new to report!";
     } else {
         entries.forEach((entry) => {
-            summary.push(`**\`(${entry.type}):\`** ${entry.summary}`);
-            added.push(...(entry.added ?? []));
-            changed.push(...(entry.changed ?? []));
-            deprecated.push(...(entry.deprecated ?? []));
-            removed.push(...(entry.removed ?? []));
-            fixed.push(...(entry.fixed ?? []));
+            summary.push(`**\`(${entry.type}):\`** ${sanitizeMarkdownEntry(entry.summary)}`);
+            added.push(...(entry.added ?? []).map(sanitizeMarkdownEntry));
+            changed.push(...(entry.changed ?? []).map(sanitizeMarkdownEntry));
+            deprecated.push(...(entry.deprecated ?? []).map(sanitizeMarkdownEntry));
+            removed.push(...(entry.removed ?? []).map(sanitizeMarkdownEntry));
+            fixed.push(...(entry.fixed ?? []).map(sanitizeMarkdownEntry));
 
             if (entry.upgradeNotes != null) {
                 upgradeNotes.push(entry.upgradeNotes);
