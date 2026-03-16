@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -8,6 +8,8 @@ type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 type TypeId = FernIr.TypeId;
+type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
+type UndiscriminatedUnionTypeDeclaration = FernIr.UndiscriminatedUnionTypeDeclaration;
 
 import { EnumGenerator } from "./enum/EnumGenerator.js";
 import { StringEnumGenerator } from "./enum/StringEnumGenerator.js";
@@ -172,8 +174,10 @@ function addInlineTypesToClass({
 
 /**
  * Generates an inline type as a nested class inside a Types static class.
- * Uses context.csharp.class_() with the ClassReference to propagate the origin,
- * which is required for features like explicit() member naming.
+ * For objects: generates fields, extension data, and ToString() directly.
+ * For enums: generates the enum definition as raw code (Enum AST can't be nested).
+ * For unions/undiscriminated unions: uses existing generators to produce the full class,
+ *   then extracts and nests it.
  * Returns the generated class so that recursive nesting can be applied.
  */
 function generateInlineTypeClass({
@@ -185,79 +189,252 @@ function generateInlineTypeClass({
     typesClass: ast.Class;
     context: ModelGeneratorContext;
 }): ast.Class | undefined {
-    const classReference = context.csharpTypeMapper.convertToClassReference(typeDeclaration);
-
     return typeDeclaration.shape._visit<ast.Class | undefined>({
         alias: () => undefined,
-        enum: () => {
-            // For inline enums, create a nested enum-like class inside the Types class
-            const nestedClass = context.csharp.class_({
-                reference: classReference,
-                access: ast.Access.Public
-            });
-            typesClass.addNestedClass(nestedClass);
-            return nestedClass;
+        enum: (etd: EnumTypeDeclaration) => {
+            return generateInlineEnum({ typeDeclaration, enumDeclaration: etd, typesClass, context });
         },
         object: (otd: ObjectTypeDeclaration) => {
-            const interfaces = [context.generation.extern.System.Text.Json.Serialization.IJsonOnDeserialized];
-            if (otd.extraProperties) {
-                interfaces.push(context.generation.extern.System.Text.Json.Serialization.IJsonOnSerializing);
-            }
-
-            const nestedClass = context.csharp.class_({
-                reference: classReference,
-                access: ast.Access.Public,
-                type: ast.Class.ClassType.Record,
-                interfaceReferences: interfaces,
-                annotations: [context.generation.extern.System.Serializable],
-                summary: typeDeclaration.docs
-            });
-            typesClass.addNestedClass(nestedClass);
-
-            // Generate fields for the nested object
-            const properties = [...otd.properties, ...(otd.extendedProperties ?? [])];
-            generateFields(nestedClass, {
-                properties,
-                className: classReference.name,
+            return generateInlineObject({ typeDeclaration, objectDeclaration: otd, typesClass, context });
+        },
+        union: (utd: UnionTypeDeclaration) => {
+            return generateInlineUnion({ typeDeclaration, unionDeclaration: utd, typesClass, context });
+        },
+        undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => {
+            return generateInlineUndiscriminatedUnion({
+                typeDeclaration,
+                unionDeclaration: uutd,
+                typesClass,
                 context
             });
-
-            // Add extension data and additional properties (same pattern as ObjectGenerator)
-            addExtensionDataAndAdditionalProperties(nestedClass, otd, context);
-            context.getToStringMethod(nestedClass);
-
-            return nestedClass;
-        },
-        union: () => {
-            if (!context.settings.shouldGeneratedDiscriminatedUnions) {
-                return undefined;
-            }
-            const nestedClass = context.csharp.class_({
-                reference: classReference,
-                access: ast.Access.Public,
-                type: ast.Class.ClassType.Record,
-                annotations: [context.generation.extern.System.Serializable],
-                summary: typeDeclaration.docs
-            });
-            typesClass.addNestedClass(nestedClass);
-            return nestedClass;
-        },
-        undiscriminatedUnion: () => {
-            if (!context.settings.shouldGenerateUndiscriminatedUnions) {
-                return undefined;
-            }
-            const nestedClass = context.csharp.class_({
-                reference: classReference,
-                access: ast.Access.Public,
-                type: ast.Class.ClassType.Class,
-                annotations: [context.generation.extern.System.Serializable],
-                summary: typeDeclaration.docs
-            });
-            typesClass.addNestedClass(nestedClass);
-            return nestedClass;
         },
         _other: () => undefined
     });
+}
+
+/**
+ * Generates an inline object type as a nested record class with full field generation,
+ * extension data, and ToString().
+ */
+function generateInlineObject({
+    typeDeclaration,
+    objectDeclaration,
+    typesClass,
+    context
+}: {
+    typeDeclaration: TypeDeclaration;
+    objectDeclaration: ObjectTypeDeclaration;
+    typesClass: ast.Class;
+    context: ModelGeneratorContext;
+}): ast.Class {
+    const classReference = context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+    const interfaces = [context.generation.extern.System.Text.Json.Serialization.IJsonOnDeserialized];
+    if (objectDeclaration.extraProperties) {
+        interfaces.push(context.generation.extern.System.Text.Json.Serialization.IJsonOnSerializing);
+    }
+
+    const nestedClass = context.csharp.class_({
+        reference: classReference,
+        access: ast.Access.Public,
+        type: ast.Class.ClassType.Record,
+        interfaceReferences: interfaces,
+        annotations: [context.generation.extern.System.Serializable],
+        summary: typeDeclaration.docs
+    });
+    typesClass.addNestedClass(nestedClass);
+
+    const properties = [...objectDeclaration.properties, ...(objectDeclaration.extendedProperties ?? [])];
+    generateFields(nestedClass, {
+        properties,
+        className: classReference.name,
+        context
+    });
+
+    addExtensionDataAndAdditionalProperties(nestedClass, objectDeclaration, context);
+    context.getToStringMethod(nestedClass);
+
+    return nestedClass;
+}
+
+/**
+ * Generates an inline enum as raw code injected into the Types class.
+ * The Enum AST node writes its own namespace declaration and can't be nested
+ * as a Class, so we generate the enum body as a CodeBlock instead.
+ */
+function generateInlineEnum({
+    typeDeclaration,
+    enumDeclaration,
+    typesClass,
+    context
+}: {
+    typeDeclaration: TypeDeclaration;
+    enumDeclaration: EnumTypeDeclaration;
+    typesClass: ast.Class;
+    context: ModelGeneratorContext;
+}): ast.Class | undefined {
+    if (context.settings.isForwardCompatibleEnumsEnabled) {
+        // StringEnumGenerator produces a Class (record struct) which CAN be nested.
+        const file = new StringEnumGenerator(context, typeDeclaration, enumDeclaration).generate();
+        const clazz = file.clazz;
+        if (clazz instanceof ast.Class) {
+            typesClass.addNestedClass(clazz);
+            return clazz;
+        }
+        return undefined;
+    }
+
+    // Standard EnumGenerator produces an Enum AST node which writes its own namespace
+    // and can't be nested. Generate the enum body as raw code.
+    const classReference = context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+    const enumName = classReference.name;
+
+    typesClass.addRawBodyContent(
+        context.csharp.codeblock((writer: Writer) => {
+            // Write JsonConverter annotation
+            writer.writeLine(`[global::System.Text.Json.Serialization.JsonConverter(typeof(${enumName}Serializer))]`);
+            writer.writeLine(`public enum ${enumName}`);
+            writer.writeLine("{");
+            writer.indent();
+
+            enumDeclaration.values.forEach((member, index) => {
+                const wireValue = JSON.stringify(member.name.wireValue);
+                writer.writeLine(`[global::System.Runtime.Serialization.EnumMember(Value = ${wireValue})]`);
+                writer.write(member.name.name.pascalCase.safeName);
+                if (index < enumDeclaration.values.length - 1) {
+                    writer.writeLine(",");
+                    writer.newLine();
+                }
+            });
+            writer.writeNewLineIfLastLineNot();
+            writer.dedent();
+            writer.writeLine("}");
+            writer.newLine();
+
+            // Write companion serializer class
+            writer.writeLine(
+                `internal class ${enumName}Serializer : global::System.Text.Json.Serialization.JsonConverter<${enumName}>`
+            );
+            writer.writeLine("{");
+            writer.indent();
+
+            // string-to-enum dictionary
+            writer.writeLine(
+                `private static readonly global::System.Collections.Generic.Dictionary<string, ${enumName}> _stringToEnum = new()`
+            );
+            writer.writeLine("{");
+            writer.indent();
+            for (const field of enumDeclaration.values) {
+                writer.writeLine(
+                    `{ ${JSON.stringify(field.name.wireValue)}, ${enumName}.${field.name.name.pascalCase.safeName} },`
+                );
+            }
+            writer.dedent();
+            writer.writeLine("};");
+            writer.newLine();
+
+            // enum-to-string dictionary
+            writer.writeLine(
+                `private static readonly global::System.Collections.Generic.Dictionary<${enumName}, string> _enumToString = new()`
+            );
+            writer.writeLine("{");
+            writer.indent();
+            for (const field of enumDeclaration.values) {
+                writer.writeLine(
+                    `{ ${enumName}.${field.name.name.pascalCase.safeName}, ${JSON.stringify(field.name.wireValue)} },`
+                );
+            }
+            writer.dedent();
+            writer.writeLine("};");
+            writer.newLine();
+
+            // Read method
+            writer.writeLine(
+                `public override ${enumName} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)`
+            );
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeLine(
+                `var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");`
+            );
+            writer.writeLine(`return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;`);
+            writer.dedent();
+            writer.writeLine("}");
+            writer.newLine();
+
+            // Write method
+            writer.writeLine(
+                `public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ${enumName} value, global::System.Text.Json.JsonSerializerOptions options)`
+            );
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeLine(
+                `writer.WriteStringValue(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : null);`
+            );
+            writer.dedent();
+            writer.writeLine("}");
+
+            writer.dedent();
+            writer.writeLine("}");
+        })
+    );
+
+    // Enums injected via raw content don't return a Class for recursive nesting
+    // (enums don't have child types anyway)
+    return undefined;
+}
+
+/**
+ * Generates an inline discriminated union by delegating to UnionGenerator,
+ * extracting the produced Class, and nesting it inside the Types class.
+ */
+function generateInlineUnion({
+    typeDeclaration,
+    unionDeclaration,
+    typesClass,
+    context
+}: {
+    typeDeclaration: TypeDeclaration;
+    unionDeclaration: UnionTypeDeclaration;
+    typesClass: ast.Class;
+    context: ModelGeneratorContext;
+}): ast.Class | undefined {
+    if (!context.settings.shouldGeneratedDiscriminatedUnions) {
+        return undefined;
+    }
+    const file = new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();
+    const clazz = file.clazz;
+    if (clazz instanceof ast.Class) {
+        typesClass.addNestedClass(clazz);
+        return clazz;
+    }
+    return undefined;
+}
+
+/**
+ * Generates an inline undiscriminated union by delegating to UndiscriminatedUnionGenerator,
+ * extracting the produced Class, and nesting it inside the Types class.
+ */
+function generateInlineUndiscriminatedUnion({
+    typeDeclaration,
+    unionDeclaration,
+    typesClass,
+    context
+}: {
+    typeDeclaration: TypeDeclaration;
+    unionDeclaration: UndiscriminatedUnionTypeDeclaration;
+    typesClass: ast.Class;
+    context: ModelGeneratorContext;
+}): ast.Class | undefined {
+    if (!context.settings.shouldGenerateUndiscriminatedUnions) {
+        return undefined;
+    }
+    const file = new UndiscriminatedUnionGenerator(context, typeDeclaration, unionDeclaration).generate();
+    const clazz = file.clazz;
+    if (clazz instanceof ast.Class) {
+        typesClass.addNestedClass(clazz);
+        return clazz;
+    }
+    return undefined;
 }
 
 /**

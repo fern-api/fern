@@ -845,33 +845,38 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      * recursing into containers (list, set, map, optional, nullable)
      * and following alias chains to find transitively-referenced types.
      */
-    private extractNamedTypeIdsFromTypeReference(typeRef: TypeReference): TypeId[] {
+    private extractNamedTypeIdsFromTypeReference(typeRef: TypeReference, visited?: Set<TypeId>): TypeId[] {
         switch (typeRef.type) {
             case "named": {
                 const ids: TypeId[] = [typeRef.typeId];
                 // Follow alias chains so that types referenced through aliases
                 // are also discovered (needed for inline type parent assignment).
+                // Track visited type IDs to prevent infinite recursion on circular aliases.
                 const decl = this.ir.types[typeRef.typeId];
                 if (decl?.shape.type === "alias") {
-                    ids.push(...this.extractNamedTypeIdsFromTypeReference(decl.shape.aliasOf));
+                    const visitedSet = visited ?? new Set<TypeId>();
+                    if (!visitedSet.has(typeRef.typeId)) {
+                        visitedSet.add(typeRef.typeId);
+                        ids.push(...this.extractNamedTypeIdsFromTypeReference(decl.shape.aliasOf, visitedSet));
+                    }
                 }
                 return ids;
             }
             case "container":
                 switch (typeRef.container.type) {
                     case "list":
-                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.list);
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.list, visited);
                     case "set":
-                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.set);
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.set, visited);
                     case "map":
                         return [
-                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.keyType),
-                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.valueType)
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.keyType, visited),
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.valueType, visited)
                         ];
                     case "optional":
-                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.optional);
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.optional, visited);
                     case "nullable":
-                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.nullable);
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.nullable, visited);
                     case "literal":
                         return [];
                     default:
@@ -1053,8 +1058,19 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 : typeDeclaration.shape.type === "union"
                   ? typeDeclaration.shape.baseProperties
                   : [];
-        const hasTypesProperty = properties.some((p) => p.name.name.pascalCase.safeName === "Types");
-        return hasTypesProperty ? "InnerTypes" : "Types";
+        const propertyNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
+
+        // Iteratively find a non-colliding name: Types → InnerTypes → InnerTypes2 → ...
+        let candidate = "Types";
+        if (propertyNames.has(candidate)) {
+            candidate = "InnerTypes";
+            let suffix = 2;
+            while (propertyNames.has(candidate)) {
+                candidate = `InnerTypes${suffix}`;
+                suffix++;
+            }
+        }
+        return candidate;
     }
 
     precalculate() {
