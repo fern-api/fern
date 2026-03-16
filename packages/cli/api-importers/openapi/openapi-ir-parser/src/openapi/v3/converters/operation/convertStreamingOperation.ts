@@ -80,7 +80,8 @@ export function convertStreamingOperation({
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
                 suffix: STREAM_SUFFIX,
-                source: context.source
+                source: context.source,
+                streamRequestNameOverride: streamingExtension.streamRequestName
             });
             streamingOperations.forEach((streamingOperation) => {
                 streamingOperation.examples = streamingOperation.examples.filter(

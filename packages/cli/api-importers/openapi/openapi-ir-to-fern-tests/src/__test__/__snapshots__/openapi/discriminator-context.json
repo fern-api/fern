@@ -42,7 +42,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "StreamRequest",
+                "name": "SseStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -155,7 +155,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: StreamRequest
+        name: SseStreamRequest
         body:
           properties:
             query:

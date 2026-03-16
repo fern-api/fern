@@ -387,7 +387,7 @@ Generate a stream of completions using a previously defined deployment.
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "GenerateStreamBodyRequest",
+                "name": "GenerateStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -2808,7 +2808,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: GenerateStreamBodyRequest
+        name: GenerateStreamRequest
         body:
           properties:
             deployment_id:
