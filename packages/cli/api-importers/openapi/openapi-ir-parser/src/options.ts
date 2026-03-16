@@ -124,6 +124,12 @@ export interface ParseOpenAPIOptions {
      * Defaults to `enums`.
      */
     coerceConstsTo: "literals" | "enums";
+
+    /**
+     * If true, treat OpenAPI `type: string, format: byte` as a base64/bytes primitive
+     * instead of a plain string. Defaults to false.
+     */
+    respectByteFormat: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -161,7 +167,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
     inferForwardCompatible: false,
-    coerceConstsTo: "enums"
+    coerceConstsTo: "enums",
+    respectByteFormat: false
 };
 
 function mergeOptions<T extends object>(params: {

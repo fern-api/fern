@@ -44,6 +44,16 @@
           "type": "null"
         }
       ]
+    },
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UpdateResponse_Status"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -68,6 +78,15 @@
           "null"
         ]
       }
+    },
+    "UpdateResponse_Status": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "STATUS_PENDING",
+        "STATUS_ACTIVE",
+        "STATUS_FAILED"
+      ]
     }
   }
 }
