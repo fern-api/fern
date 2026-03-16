@@ -99,6 +99,17 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
+    /**
+     * Lazily-initialized map from inline typeId to its immediate parent typeId.
+     * Built by scanning all type declarations' properties/members for references to inline types.
+     */
+    private _inlineTypeParentMap?: Map<TypeId, TypeId>;
+
+    /**
+     * Lazily-initialized map from parent typeId to the set of its direct inline child typeIds.
+     */
+    private _inlineTypeChildrenMap?: Map<TypeId, Set<TypeId>>;
+
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
@@ -827,6 +838,184 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             }),
             protobufService
         };
+    }
+
+    /**
+     * Extracts all named TypeIds directly referenced from a TypeReference,
+     * recursing into containers (list, set, map, optional, nullable).
+     */
+    private extractNamedTypeIdsFromTypeReference(typeRef: TypeReference): TypeId[] {
+        switch (typeRef.type) {
+            case "named":
+                return [typeRef.typeId];
+            case "container":
+                switch (typeRef.container.type) {
+                    case "list":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.list);
+                    case "set":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.set);
+                    case "map":
+                        return [
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.keyType),
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.valueType)
+                        ];
+                    case "optional":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.optional);
+                    case "nullable":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.nullable);
+                    case "literal":
+                        return [];
+                    default:
+                        return [];
+                }
+            case "primitive":
+            case "unknown":
+                return [];
+            default:
+                return [];
+        }
+    }
+
+    /**
+     * Builds the inline type parent and children maps by scanning all type declarations.
+     * For each type, finds named references to inline types in its properties/members.
+     */
+    private buildInlineTypeMaps(): void {
+        if (this._inlineTypeParentMap != null) {
+            return;
+        }
+        const parentMap = new Map<TypeId, TypeId>();
+        const childrenMap = new Map<TypeId, Set<TypeId>>();
+
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            const referencedTypeIds: TypeId[] = [];
+
+            typeDeclaration.shape._visit({
+                alias: (alias) => {
+                    referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(alias.aliasOf));
+                },
+                object: (otd) => {
+                    for (const property of otd.properties) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(property.valueType));
+                    }
+                },
+                enum: () => {
+                    // Enums don't reference other types
+                },
+                union: (utd) => {
+                    for (const unionType of utd.types) {
+                        unionType.shape._visit({
+                            samePropertiesAsObject: (declaredTypeName) => {
+                                referencedTypeIds.push(declaredTypeName.typeId);
+                            },
+                            singleProperty: (singleProperty) => {
+                                referencedTypeIds.push(
+                                    ...this.extractNamedTypeIdsFromTypeReference(singleProperty.type)
+                                );
+                            },
+                            noProperties: () => {
+                                // Enums don't reference other types
+                            },
+                            _other: () => {
+                                // Unknown union types are ignored
+                            }
+                        });
+                    }
+                    for (const baseProp of utd.baseProperties) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(baseProp.valueType));
+                    }
+                },
+                undiscriminatedUnion: (uutd) => {
+                    for (const member of uutd.members) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(member.type));
+                    }
+                },
+                _other: () => {
+                    // Unknown shape types are ignored
+                }
+            });
+
+            for (const refTypeId of referencedTypeIds) {
+                const refDeclaration = this.ir.types[refTypeId];
+                if (refDeclaration?.inline === true) {
+                    // Only set the parent if not already set (first referencing type wins)
+                    if (!parentMap.has(refTypeId)) {
+                        parentMap.set(refTypeId, typeId);
+                        if (!childrenMap.has(typeId)) {
+                            childrenMap.set(typeId, new Set());
+                        }
+                        childrenMap.get(typeId)?.add(refTypeId);
+                    }
+                }
+            }
+        }
+
+        this._inlineTypeParentMap = parentMap;
+        this._inlineTypeChildrenMap = childrenMap;
+    }
+
+    /**
+     * Returns the map from inline typeId to its immediate parent typeId.
+     */
+    public getInlineTypeParentMap(): Map<TypeId, TypeId> {
+        this.buildInlineTypeMaps();
+        // buildInlineTypeMaps always initializes the maps, so this is safe after the call
+        return this._inlineTypeParentMap ?? new Map();
+    }
+
+    /**
+     * Returns the map from parent typeId to the set of its direct inline child typeIds.
+     */
+    public getInlineTypeChildrenMap(): Map<TypeId, Set<TypeId>> {
+        this.buildInlineTypeMaps();
+        // buildInlineTypeMaps always initializes the maps, so this is safe after the call
+        return this._inlineTypeChildrenMap ?? new Map();
+    }
+
+    /**
+     * Returns true if the given typeId is an inline type AND the inline-types feature is enabled.
+     */
+    public isInlineType(typeId: TypeId): boolean {
+        if (!this.settings.enableInlineTypes) {
+            return false;
+        }
+        const typeDeclaration = this.ir.types[typeId];
+        return typeDeclaration?.inline === true;
+    }
+
+    /**
+     * Returns the immediate parent typeId for an inline type, or undefined if not inline.
+     */
+    public getInlineTypeParent(typeId: TypeId): TypeId | undefined {
+        if (!this.settings.enableInlineTypes) {
+            return undefined;
+        }
+        return this.getInlineTypeParentMap().get(typeId);
+    }
+
+    /**
+     * Returns the direct inline children of a type, or an empty set if none.
+     */
+    public getInlineTypeChildren(typeId: TypeId): Set<TypeId> {
+        if (!this.settings.enableInlineTypes) {
+            return new Set();
+        }
+        return this.getInlineTypeChildrenMap().get(typeId) ?? new Set();
+    }
+
+    /**
+     * Returns the name to use for the static nested `Types` class inside a parent type.
+     * Normally returns "Types", but if the parent type has a property whose PascalCase name
+     * is "Types", returns "InnerTypes" to avoid a C# naming collision.
+     */
+    public getInlineTypesClassName(typeId: TypeId): string {
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null) {
+            return "Types";
+        }
+        const properties = typeDeclaration.shape.type === "object" ? typeDeclaration.shape.properties : [];
+        const hasTypesProperty = properties.some((p) => p.name.name.pascalCase.safeName === "Types");
+        return hasTypesProperty ? "InnerTypes" : "Types";
     }
 
     precalculate() {
