@@ -50,6 +50,7 @@
           },
         },
         "tokenEnvVar": undefined,
+        "websocketAuthFallback": undefined,
         "type": "bearer",
       },
     ],
