@@ -380,6 +380,9 @@ export function parseAsyncAPIV2({
 
     const securitySchemes: Record<string, SecurityScheme> = {};
     for (const [key, securityScheme] of Object.entries(document.components?.securitySchemes ?? {})) {
+        if (isReferenceObject(securityScheme)) {
+            continue;
+        }
         const converted = convertSecurityScheme(securityScheme, source, context.taskContext);
         if (converted != null) {
             securitySchemes[key] = converted;
