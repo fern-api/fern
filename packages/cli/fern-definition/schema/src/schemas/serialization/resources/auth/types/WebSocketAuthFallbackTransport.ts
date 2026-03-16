@@ -2,9 +2,10 @@
 
 import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
+import type * as serializers from "../../../index.js";
 
 export const WebSocketAuthFallbackTransport: core.serialization.Schema<
-    WebSocketAuthFallbackTransport.Raw,
+    serializers.WebSocketAuthFallbackTransport.Raw,
     FernDefinition.WebSocketAuthFallbackTransport
 > = core.serialization.enum_(["websocket-subprotocol", "query"]);
 
