@@ -86,6 +86,7 @@
     "pathParameterOrder": "url-order",
     "resolveSchemaCollisions": false,
     "inferForwardCompatible": false,
-    "coerceConstsTo": "enums"
+    "coerceConstsTo": "enums",
+    "respectByteFormat": false
   }
 }
