@@ -13,6 +13,8 @@ export declare namespace RealtimeClient {
         model?: string;
         temperature?: number;
         languageCode?: string;
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -41,6 +43,7 @@ export class RealtimeClient {
             model,
             temperature,
             languageCode,
+            protocols,
             queryParams,
             headers,
             debug,
@@ -60,7 +63,7 @@ export class RealtimeClient {
                     (await core.Supplier.get(this._options.environment)),
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: {

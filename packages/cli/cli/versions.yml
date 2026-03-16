@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.30.3
+- version: 4.31.1
   changelogEntry:
     - summary: |
         Sanitize changelog entries to wrap type references containing angle
@@ -10,6 +10,15 @@
         auto-versioned changelog generation paths, and the AI prompt now
         instructs the model to wrap such references in backticks.
       type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        Update the gRPC SDK generator to not require the `google.api.http` annotation
+        on endpoints.
+      type: feat
   createdAt: "2026-03-16"
   irVersion: 65
 

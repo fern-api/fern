@@ -75,7 +75,7 @@ class AbstractGenerator(ABC):
                                     update={"installation_token": ir_publish_config.token}
                                 )
 
-        python_version = "^3.8"
+        python_version = "^3.10"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
 

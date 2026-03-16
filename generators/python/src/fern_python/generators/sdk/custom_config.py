@@ -100,7 +100,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     # WARNING - this changes your declared python dependency, which is not meant to
     # be done often if at all. This is a last resort if any dependencies force you
     # to change your version requirements.
-    pyproject_python_version: Optional[str] = "^3.8"
+    pyproject_python_version: Optional[str] = "^3.10"
 
     # Whether or not to generate TypedDicts instead of Pydantic
     # Models for request objects.
