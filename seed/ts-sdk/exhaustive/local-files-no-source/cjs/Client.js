@@ -88,7 +88,6 @@ class SeedExhaustiveClient {
     fetch(input, init, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             return core.makePassthroughRequest(input, init, {
-                environment: this._options.environment,
                 baseUrl: this._options.baseUrl,
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,

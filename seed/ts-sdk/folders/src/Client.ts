@@ -91,7 +91,6 @@ export class SeedApiClient {
             input,
             init,
             {
-                environment: this._options.environment,
                 baseUrl: this._options.baseUrl,
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
