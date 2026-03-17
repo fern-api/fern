@@ -54,7 +54,7 @@ export abstract class AbstractReadmeSnippetBuilder {
      * Shorter snippets generally make better README examples.
      */
     private getSnippetTextLength(endpoint: FernGeneratorExec.Endpoint): number {
-        const snippet = endpoint.snippet as Record<string, unknown>;
+        const snippet = endpoint.snippet as unknown as Record<string, unknown>;
         const text = (snippet.client ?? snippet.syncClient ?? "") as string;
         return text.length;
     }
