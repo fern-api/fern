@@ -220,7 +220,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                if (selfhostedGithubConfig != null && !selfhostedGithubConfig.previewMode) {
+                if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
 
