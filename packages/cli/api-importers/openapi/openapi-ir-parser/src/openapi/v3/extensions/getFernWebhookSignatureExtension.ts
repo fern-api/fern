@@ -87,9 +87,7 @@ function convertPayloadFormat(
     };
 }
 
-function convertBodySort(
-    bodySort: "alphabetical" | undefined
-): finalIr.WebhookPayloadBodySort | undefined {
+function convertBodySort(bodySort: "alphabetical" | undefined): finalIr.WebhookPayloadBodySort | undefined {
     if (bodySort == null) {
         return undefined;
     }
