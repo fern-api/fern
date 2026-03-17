@@ -25,11 +25,11 @@ describe("valid-field-names", () => {
             },
             {
                 name: "valid-field-names",
-                severity: "fatal",
+                severity: "warning",
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    'Enum value bla.bla is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.'
+                    "Enum value bla.bla contains special characters. It will be converted to BlaBla for code generation."
             },
             {
                 name: "valid-field-names",
@@ -46,6 +46,30 @@ describe("valid-field-names", () => {
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
                     "Enum name _invalidName for value _invalidName is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores."
+            },
+            {
+                name: "valid-field-names",
+                severity: "warning",
+                relativeFilepath: RelativeFilePath.of("enum.yml"),
+                nodePath: ["types", "ValidAndInvalidEnum"],
+                message:
+                    "Enum value % contains special characters. It will be converted to Percent for code generation."
+            },
+            {
+                name: "valid-field-names",
+                severity: "warning",
+                relativeFilepath: RelativeFilePath.of("enum.yml"),
+                nodePath: ["types", "ValidAndInvalidEnum"],
+                message:
+                    "Enum value %option contains special characters. It will be converted to PercentOption for code generation."
+            },
+            {
+                name: "valid-field-names",
+                severity: "warning",
+                relativeFilepath: RelativeFilePath.of("enum.yml"),
+                nodePath: ["types", "ValidAndInvalidEnum"],
+                message:
+                    "Enum value option% contains special characters. It will be converted to OptionPercent for code generation."
             },
             {
                 name: "valid-field-names",

@@ -1,7 +1,11 @@
+import { replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { Type } from "@fern-api/ir-sdk";
+import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../../index.js";
+
+const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -39,7 +43,8 @@ export class EnumSchemaConverter extends AbstractConverter<
         const values = enumValues.map((value) => {
             const stringValue = value.toString();
             const fernEnumValue = this.maybeFernEnum?.[stringValue];
-            const name = fernEnumValue?.name ?? stringValue;
+            const rawName = fernEnumValue?.name ?? stringValue;
+            const name = sanitizeEnumName(rawName);
 
             return {
                 name: this.context.casingsGenerator.generateNameAndWireValue({
@@ -69,4 +74,16 @@ export class EnumSchemaConverter extends AbstractConverter<
             })
         };
     }
+}
+
+function sanitizeEnumName(name: string): string {
+    if (VALID_ENUM_NAME_REGEX.test(name)) {
+        return name;
+    }
+    const withWords = replaceSpecialCharsWithWords(name);
+    const converted = upperFirst(camelCase(withWords));
+    if (converted.length > 0 && VALID_ENUM_NAME_REGEX.test(converted)) {
+        return converted;
+    }
+    return name;
 }

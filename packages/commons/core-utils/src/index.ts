@@ -42,6 +42,7 @@ export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js"
 export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
+export { hasConvertibleSpecialChars, replaceSpecialCharsWithWords } from "./specialCharToWords.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
 export { titleCase } from "./titleCase.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";

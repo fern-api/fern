@@ -4304,6 +4304,9 @@ importers:
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/core-utils
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23

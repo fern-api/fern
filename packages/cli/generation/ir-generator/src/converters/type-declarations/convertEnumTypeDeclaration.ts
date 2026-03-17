@@ -1,8 +1,12 @@
+import { replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { convertDeclaration } from "../convertDeclaration.js";
+
+const VALID_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export function convertEnumTypeDeclaration({
     _enum,
@@ -12,11 +16,13 @@ export function convertEnumTypeDeclaration({
     file: FernFileContext;
 }): EnumTypeDeclaration {
     const values = _enum.enum.map((value) => {
+        const rawName = getEnumName(value).name;
+        const name = sanitizeEnumNameForIR(rawName);
         return {
             ...convertDeclaration(value),
             name: file.casingsGenerator.generateNameAndWireValue({
                 wireValue: typeof value === "string" ? value : value.value,
-                name: getEnumName(value).name,
+                name,
                 opts: {
                     casingOverrides: typeof value !== "string" ? value.casing : undefined
                 }
@@ -76,4 +82,23 @@ export function getEnumName(enumValue: string | RawSchemas.EnumValueSchema): {
         name: enumValue.name,
         wasExplicitlySet: true
     };
+}
+
+/**
+ * Sanitizes an enum name for IR generation. If the name is already valid,
+ * it passes through unchanged (backwards compatible). If it contains special
+ * characters, they are converted to word equivalents.
+ */
+function sanitizeEnumNameForIR(name: string): string {
+    if (VALID_NAME_REGEX.test(name)) {
+        return name;
+    }
+    const withWords = replaceSpecialCharsWithWords(name);
+    const converted = upperFirst(camelCase(withWords));
+    if (converted.length > 0 && VALID_NAME_REGEX.test(converted)) {
+        return converted;
+    }
+    // Fall back to original name if conversion fails;
+    // the validator will have already reported this as an error
+    return name;
 }

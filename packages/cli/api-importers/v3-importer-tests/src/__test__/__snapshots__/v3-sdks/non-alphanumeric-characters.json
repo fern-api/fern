@@ -195,22 +195,22 @@
           {
             "name": {
               "name": {
-                "originalName": "|",
+                "originalName": "Pipe",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pipe",
+                  "safeName": "pipe"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pipe",
+                  "safeName": "pipe"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PIPE",
+                  "safeName": "PIPE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Pipe",
+                  "safeName": "Pipe"
                 }
               },
               "wireValue": "|"
