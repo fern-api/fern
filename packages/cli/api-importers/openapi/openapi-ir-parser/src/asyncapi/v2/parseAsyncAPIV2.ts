@@ -322,7 +322,10 @@ export function parseAsyncAPIV2({
                     origin: "client",
                     name: "publish",
                     body: convertSchemaWithExampleToSchema(publishSchema),
-                    methodName: channel.publish != null ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME) : undefined
+                    methodName:
+                        channel.publish != null
+                            ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             if (subscribeSchema != null) {
@@ -330,7 +333,10 @@ export function parseAsyncAPIV2({
                     origin: "server",
                     name: "subscribe",
                     body: convertSchemaWithExampleToSchema(subscribeSchema),
-                    methodName: channel.subscribe != null ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME) : undefined
+                    methodName:
+                        channel.subscribe != null
+                            ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             parsedChannels[channelPath] = {

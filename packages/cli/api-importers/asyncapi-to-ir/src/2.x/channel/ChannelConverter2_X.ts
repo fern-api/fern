@@ -318,7 +318,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
     }
 
     private getOperationMethodName(operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent): string | undefined {
-        const methodName = (operation as Record<string, unknown>)["x-fern-sdk-method-name"];
+        const methodName = (operation as unknown as Record<string, unknown>)["x-fern-sdk-method-name"];
         if (methodName == null || typeof methodName !== "string") {
             return undefined;
         }
