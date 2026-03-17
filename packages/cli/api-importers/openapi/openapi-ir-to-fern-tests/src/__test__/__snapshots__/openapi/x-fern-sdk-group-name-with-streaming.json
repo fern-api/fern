@@ -85,9 +85,7 @@
                   "path-parameters": {
                     "userId": "userId",
                   },
-                  "request": {
-                    "stream": false,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "id": "id",
@@ -101,9 +99,7 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "properties": {
-                    "stream": "literal<false>",
-                  },
+                  "properties": {},
                 },
                 "content-type": "application/json",
                 "headers": undefined,
@@ -130,9 +126,7 @@
                   "path-parameters": {
                     "userId": "userId",
                   },
-                  "request": {
-                    "stream": true,
-                  },
+                  "request": {},
                   "response": {
                     "stream": [
                       {
@@ -148,9 +142,7 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "properties": {
-                    "stream": "literal<true>",
-                  },
+                  "properties": {},
                 },
                 "content-type": "application/json",
                 "headers": undefined,
@@ -192,8 +184,7 @@ service:
         path-parameters:
           userId: string
         body:
-          properties:
-            stream: literal<true>
+          properties: {}
         content-type: application/json
       response-stream:
         docs: ''
@@ -202,8 +193,7 @@ service:
       examples:
         - path-parameters:
             userId: userId
-          request:
-            stream: true
+          request: {}
           response:
             stream:
               - id: id
@@ -218,8 +208,7 @@ service:
         path-parameters:
           userId: string
         body:
-          properties:
-            stream: literal<false>
+          properties: {}
         content-type: application/json
       response:
         docs: ''
@@ -228,8 +217,7 @@ service:
       examples:
         - path-parameters:
             userId: userId
-          request:
-            stream: false
+          request: {}
           response:
             body:
               id: id

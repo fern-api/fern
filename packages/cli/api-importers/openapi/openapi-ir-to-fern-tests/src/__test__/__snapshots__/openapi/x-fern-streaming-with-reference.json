@@ -58,7 +58,6 @@
                 {
                   "request": {
                     "prompt": "prompt",
-                    "stream": false,
                   },
                   "response": {
                     "body": {
@@ -74,7 +73,6 @@
                 "body": {
                   "properties": {
                     "prompt": "string",
-                    "stream": "literal<false>",
                   },
                 },
                 "content-type": "application/json",
@@ -99,7 +97,6 @@
                 {
                   "request": {
                     "prompt": "prompt",
-                    "stream": true,
                   },
                   "response": {
                     "stream": [
@@ -117,7 +114,6 @@
                 "body": {
                   "properties": {
                     "prompt": "string",
-                    "stream": "literal<true>",
                   },
                 },
                 "content-type": "application/json",
@@ -157,7 +153,6 @@ service:
         name: CreateCompletionRequestStreaming
         body:
           properties:
-            stream: literal<true>
             prompt: string
         content-type: application/json
       response-stream:
@@ -166,7 +161,6 @@ service:
         format: json
       examples:
         - request:
-            stream: true
             prompt: prompt
           response:
             stream:
@@ -180,7 +174,6 @@ service:
         name: CreateChatCompletionsRequest
         body:
           properties:
-            stream: literal<false>
             prompt: string
         content-type: application/json
       response:
@@ -189,7 +182,6 @@ service:
         status-code: 200
       examples:
         - request:
-            stream: false
             prompt: prompt
           response:
             body:

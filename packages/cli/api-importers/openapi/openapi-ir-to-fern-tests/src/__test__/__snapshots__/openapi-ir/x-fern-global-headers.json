@@ -109,25 +109,7 @@
       "request": {
         "schema": {
           "allOf": [],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "getUserStreamRequestStream",
-              "key": "stream",
-              "schema": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "generatedName": "GetUserStreamRequestStream",
-                "groupName": [],
-                "type": "literal"
-              },
-              "audiences": [
-                "public"
-              ]
-            }
-          ],
+          "properties": [],
           "allOfPropertyConflicts": [],
           "generatedName": "GetUserStreamRequest",
           "groupName": [],
@@ -259,15 +241,7 @@
             }
           ],
           "request": {
-            "properties": {
-              "stream": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "literal"
-              }
-            },
+            "properties": {},
             "type": "object"
           },
           "response": {
@@ -398,25 +372,7 @@
       "request": {
         "schema": {
           "allOf": [],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "getUserRequestStream",
-              "key": "stream",
-              "schema": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "generatedName": "GetUserRequestStream",
-                "groupName": [],
-                "type": "literal"
-              },
-              "audiences": [
-                "public"
-              ]
-            }
-          ],
+          "properties": [],
           "allOfPropertyConflicts": [],
           "generatedName": "GetUserRequest",
           "groupName": [],
@@ -548,15 +504,7 @@
             }
           ],
           "request": {
-            "properties": {
-              "stream": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "literal"
-              }
-            },
+            "properties": {},
             "type": "object"
           },
           "response": {

@@ -186,26 +186,21 @@ function getRequestBody({
         return undefined; // not an object
     }
 
-    let streamingProperty = resolvedRequestBodySchema.properties?.[streamingExtension.streamConditionProperty];
-    if (streamingProperty != null && isReferenceObject(streamingProperty)) {
-        streamingProperty = undefined;
-    }
+    // Remove the stream-condition property from the schema entirely.
+    // The SDK method already hardcodes the appropriate value (stream: true / false)
+    // in the request body, so exposing it on the type is misleading.
+    const { [streamingExtension.streamConditionProperty]: _streamProp, ...remainingProperties } =
+        resolvedRequestBodySchema.properties ?? {};
 
     const requestBodySchemaWithLiteralProperty: OpenAPIV3.SchemaObject = {
         ...resolvedRequestBodySchema,
-        properties: {
-            ...resolvedRequestBodySchema.properties,
-            [streamingExtension.streamConditionProperty]: {
-                type: "boolean",
-                "x-fern-boolean-literal": isStreaming,
-                ...(streamingProperty ?? {})
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any
-        },
+        properties: remainingProperties,
         // Set to undefined because we inline both the streaming and non-streaming request schemas
         // and title would cause conflicting names
         title: undefined,
-        required: [...(resolvedRequestBodySchema.required ?? []), streamingExtension.streamConditionProperty]
+        required: (resolvedRequestBodySchema.required ?? []).filter(
+            (r) => r !== streamingExtension.streamConditionProperty
+        )
     };
 
     return {

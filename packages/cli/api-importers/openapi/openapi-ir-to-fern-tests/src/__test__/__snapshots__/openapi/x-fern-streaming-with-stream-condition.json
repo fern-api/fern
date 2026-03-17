@@ -21,7 +21,6 @@
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
-                    "stream_response": false,
                   },
                   "response": {
                     "body": {
@@ -41,10 +40,6 @@
                     "query": {
                       "docs": "The chat message or question.",
                       "type": "string",
-                    },
-                    "stream_response": {
-                      "docs": "Indicates whether the response should be streamed or not.",
-                      "type": "literal<false>",
                     },
                   },
                 },
@@ -75,7 +70,6 @@
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
-                    "stream_response": true,
                   },
                   "response": {
                     "stream": [
@@ -95,10 +89,6 @@
                     "query": {
                       "docs": "The chat message or question.",
                       "type": "string",
-                    },
-                    "stream_response": {
-                      "docs": "Indicates whether the response should be streamed or not.",
-                      "type": "literal<true>",
                     },
                   },
                 },
@@ -180,9 +170,6 @@
             query:
               type: string
               docs: The chat message or question.
-            stream_response:
-              type: literal<true>
-              docs: Indicates whether the response should be streamed or not.
         content-type: application/json
       response-stream:
         docs: ''
@@ -194,7 +181,6 @@
             Request-Timeout-Millis: Request-Timeout-Millis
           request:
             query: How can I use the Vectara platform?
-            stream_response: true
           response:
             stream:
               - chunk: Hello, how can I help you today?
@@ -214,9 +200,6 @@
             query:
               type: string
               docs: The chat message or question.
-            stream_response:
-              type: literal<false>
-              docs: Indicates whether the response should be streamed or not.
         content-type: application/json
       response:
         docs: ''
@@ -228,7 +211,6 @@
             Request-Timeout-Millis: Request-Timeout-Millis
           request:
             query: How can I use the Vectara platform?
-            stream_response: false
           response:
             body:
               chat_id: chat_id

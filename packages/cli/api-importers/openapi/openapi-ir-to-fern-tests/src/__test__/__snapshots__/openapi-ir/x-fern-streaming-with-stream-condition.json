@@ -91,22 +91,6 @@
                 "type": "primitive"
               },
               "audiences": []
-            },
-            {
-              "conflict": {},
-              "generatedName": "chatStreamRequestStreamResponse",
-              "key": "stream_response",
-              "schema": {
-                "description": "Indicates whether the response should be streamed or not.",
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "generatedName": "ChatStreamRequestStreamResponse",
-                "groupName": [],
-                "type": "literal"
-              },
-              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -166,13 +150,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "stream_response": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "literal"
               }
             },
             "type": "object"
@@ -283,22 +260,6 @@
                 "type": "primitive"
               },
               "audiences": []
-            },
-            {
-              "conflict": {},
-              "generatedName": "chatRequestStreamResponse",
-              "key": "stream_response",
-              "schema": {
-                "description": "Indicates whether the response should be streamed or not.",
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "generatedName": "ChatRequestStreamResponse",
-                "groupName": [],
-                "type": "literal"
-              },
-              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -358,13 +319,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "stream_response": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "literal"
               }
             },
             "type": "object"
