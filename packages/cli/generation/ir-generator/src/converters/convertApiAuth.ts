@@ -310,7 +310,8 @@ function generateInferredAuth({
             rawScheme,
             propertyResolver,
             endpointResolver
-        })
+        }),
+        websocketAuthFallback: undefined
     });
 }
 
