@@ -41,6 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
+    private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
     private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<FernIr.EndpointId, string> = {};
@@ -55,17 +56,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         context,
         endpointSnippets,
         fileResponseType,
+        allowCustomFetcher,
         generateSubpackageExports
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
+        allowCustomFetcher: boolean;
         generateSubpackageExports: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.allowCustomFetcher = allowCustomFetcher;
         this.generateSubpackageExports = generateSubpackageExports;
 
         this.endpoints = this.buildEndpoints();
@@ -541,6 +545,9 @@ const data = await response.json();
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {
+        if (!this.allowCustomFetcher) {
+            return [];
+        }
         const snippet = this.writeCode(
             code`
 import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";

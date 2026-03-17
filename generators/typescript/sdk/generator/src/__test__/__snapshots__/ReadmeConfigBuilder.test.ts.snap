@@ -91,15 +91,7 @@ const client = new MySDKClient({
       "advanced": false,
       "description": undefined,
       "id": "RUNTIME_COMPATIBILITY",
-      "snippets": [
-        "import { MySDKClient } from "@acme/sdk";
-
-const client = new MySDKClient({
-    ...
-    fetcher: // provide your implementation here
-});
-",
-      ],
+      "snippets": [],
       "snippetsAreOptional": false,
     },
   ],

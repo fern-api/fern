@@ -100,15 +100,7 @@ const request: AcmeSdk.CreateUserRequest = {
 });
 ",
   ],
-  "RUNTIME_COMPATIBILITY": [
-    "import { MySDKClient } from "@acme/sdk";
-
-const client = new MySDKClient({
-    ...
-    fetcher: // provide your implementation here
-});
-",
-  ],
+  "RUNTIME_COMPATIBILITY": [],
   "STREAMING_RESPONSE": [
     "const stream = await client.streamEvents();",
   ],

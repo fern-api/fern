@@ -173,6 +173,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -201,6 +202,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -225,6 +227,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -248,6 +251,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -275,6 +279,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -306,6 +311,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -334,6 +340,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -360,6 +367,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -387,6 +395,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -400,7 +409,7 @@ describe("ReadmeSnippetBuilder", () => {
 
     // ── Runtime compatibility ──────────────────────────────────────────
     describe("runtime compatibility snippets", () => {
-        it("generates custom fetcher snippet", () => {
+        it("generates custom fetcher snippet when allowCustomFetcher is true", () => {
             const endpoint = createEndpoint("ep1", "createUser");
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
@@ -413,6 +422,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -422,6 +432,29 @@ describe("ReadmeSnippetBuilder", () => {
             expect(runtimeSnippets).toHaveLength(1);
             expect(runtimeSnippets[0]).toContain("fetcher:");
             expect(runtimeSnippets[0]).toContain("provide your implementation here");
+        });
+
+        it("returns empty runtime compatibility snippets when allowCustomFetcher is false", () => {
+            const endpoint = createEndpoint("ep1", "createUser");
+            const service = createService("svc1", createFernFilepath([]), [endpoint]);
+            const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
+
+            const context = createMockSdkContext({
+                services: { svc1: service },
+                packageName: "@acme/sdk"
+            });
+            const builder = new ReadmeSnippetBuilder({
+                context,
+                endpointSnippets: [endpointSnippet],
+                fileResponseType: "stream",
+                allowCustomFetcher: false,
+                generateSubpackageExports: false
+            });
+
+            const snippets = builder.buildReadmeSnippets();
+            const runtimeSnippets = snippets.RUNTIME_COMPATIBILITY;
+            assert(Array.isArray(runtimeSnippets));
+            expect(runtimeSnippets).toHaveLength(0);
         });
     });
 
@@ -440,6 +473,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -475,6 +509,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -506,6 +541,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -548,6 +584,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -584,6 +621,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -607,6 +645,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -644,6 +683,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -668,6 +708,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -707,6 +748,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: true
             });
 
@@ -747,6 +789,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -783,6 +826,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: true
             });
 
@@ -813,6 +857,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -866,6 +911,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -889,6 +935,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -961,6 +1008,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1016,6 +1064,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1056,6 +1105,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1076,6 +1126,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1099,6 +1150,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1122,6 +1174,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1144,6 +1197,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1182,6 +1236,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1206,6 +1261,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [snippetGet, snippetPost],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1247,6 +1303,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1284,6 +1341,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
