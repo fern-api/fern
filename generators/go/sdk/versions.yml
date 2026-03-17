@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.30.3
+- version: 1.31.0
   changelogEntry:
     - summary: |
         Use `any` instead of `interface{}` for unknown type schemas. Since Go 1.18+,
