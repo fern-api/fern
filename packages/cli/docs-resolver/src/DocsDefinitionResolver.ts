@@ -57,6 +57,7 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
+import { toNavigationV1Availability } from "./utils/toNavigationV1Availability.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
 
@@ -1859,7 +1860,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: toNavigationV1Availability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -1943,7 +1944,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: toNavigationV1Availability(frontmatterAvailability ?? item.availability ?? parentAvailability)
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
         } as SectionNodeWithNewCollapsibleConfig;
     }

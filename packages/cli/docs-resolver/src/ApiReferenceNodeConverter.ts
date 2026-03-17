@@ -29,6 +29,7 @@ import {
     stringifyEndpointPathParts,
     stringifyEndpointPathPartsWithMethod
 } from "./utils/stringifyEndpointPathParts.js";
+import { toNavigationV1Availability } from "./utils/toNavigationV1Availability.js";
 import { toPageNode } from "./utils/toPageNode.js";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath.js";
 
@@ -164,7 +165,9 @@ export class ApiReferenceNodeConverter {
                 hidden: this.hideChildren
             }),
             children: this.#children,
-            availability: this.apiSection.availability ?? this.parentAvailability,
+            availability:
+                toNavigationV1Availability(this.apiSection.availability) ??
+                toNavigationV1Availability(this.parentAvailability),
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
@@ -512,7 +515,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: this.createTagDescriptionPageId(subpackage),
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: toNavigationV1Availability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -579,9 +582,9 @@ export class ApiReferenceNodeConverter {
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        toNavigationV1Availability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(endpoint.availability) ??
-                        parentAvailability,
+                        toNavigationV1Availability(parentAvailability),
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
@@ -631,9 +634,9 @@ export class ApiReferenceNodeConverter {
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        toNavigationV1Availability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(webSocket.availability) ??
-                        parentAvailability,
+                        toNavigationV1Availability(parentAvailability),
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
                     viewers: endpointItem.viewers,
@@ -673,9 +676,9 @@ export class ApiReferenceNodeConverter {
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        toNavigationV1Availability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(webhook.availability) ??
-                        parentAvailability,
+                        toNavigationV1Availability(parentAvailability),
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -710,7 +713,9 @@ export class ApiReferenceNodeConverter {
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
                 apiDefinitionId: this.apiDefinitionId,
-                availability: endpointItem.availability ?? parentAvailability,
+                availability:
+                    toNavigationV1Availability(endpointItem.availability) ??
+                    toNavigationV1Availability(parentAvailability),
                 title:
                     endpointItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
                 slug: operationSlug.get(),
@@ -861,7 +866,9 @@ export class ApiReferenceNodeConverter {
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
             apiDefinitionId: this.apiDefinitionId,
-            availability: operationItem.availability ?? parentAvailability,
+            availability:
+                toNavigationV1Availability(operationItem.availability) ??
+                toNavigationV1Availability(parentAvailability),
             title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
             slug: operationSlug.get(),
             icon: undefined,
@@ -933,7 +940,7 @@ export class ApiReferenceNodeConverter {
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     method: endpoint.protocol?.methodType ?? "UNARY",
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability: toNavigationV1Availability(parentAvailability),
                     slug: grpcSlug.get(),
                     icon: undefined,
                     hidden: undefined,
@@ -961,7 +968,9 @@ export class ApiReferenceNodeConverter {
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: FernNavigation.V1.convertAvailability(endpoint.availability) ?? parentAvailability,
+                    availability:
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ??
+                        toNavigationV1Availability(parentAvailability),
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
@@ -994,7 +1003,9 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
+                availability:
+                    FernNavigation.V1.convertAvailability(webSocket.availability) ??
+                    toNavigationV1Availability(parentAvailability),
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
@@ -1022,7 +1033,9 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webhook.availability) ?? parentAvailability,
+                availability:
+                    FernNavigation.V1.convertAvailability(webhook.availability) ??
+                    toNavigationV1Availability(parentAvailability),
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -1076,7 +1089,7 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: tagDescriptionPageId,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    availability: parentAvailability,
+                    availability: toNavigationV1Availability(parentAvailability),
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -1178,7 +1191,7 @@ export class ApiReferenceNodeConverter {
                         operationType: operation.operationType,
                         graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                         apiDefinitionId: this.apiDefinitionId,
-                        availability: parentAvailability,
+                        availability: toNavigationV1Availability(parentAvailability),
                         title: operation.displayName ?? operation.name ?? operation.id,
                         slug: operationSlug.get(),
                         icon: undefined,
@@ -1202,7 +1215,7 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    availability: parentAvailability,
+                    availability: toNavigationV1Availability(parentAvailability),
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -1228,7 +1241,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: toNavigationV1Availability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -1260,7 +1273,7 @@ export class ApiReferenceNodeConverter {
                     operationType: operation.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability: toNavigationV1Availability(parentAvailability),
                     title: operation.displayName ?? operation.name ?? operation.id,
                     slug: operationSlug.get(),
                     icon: undefined,
@@ -1284,7 +1297,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: toNavigationV1Availability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
