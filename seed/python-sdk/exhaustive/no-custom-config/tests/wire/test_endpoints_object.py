@@ -166,6 +166,16 @@ def test_endpoints_object_get_and_return_with_documented_unknown_type() -> None:
     verify_request_count(test_id, "POST", "/object/get-and-return-with-documented-unknown-type", None, 1)
 
 
+def test_endpoints_object_get_and_return_map_of_documented_unknown_type() -> None:
+    """Test getAndReturnMapOfDocumentedUnknownType endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+        request={"string": {"key": "value"}},
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-map-of-documented-unknown-type", None, 1)
+
+
 def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:
     """Test getAndReturnWithDatetimeLikeString endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"

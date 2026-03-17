@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.31.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-streaming` with `stream-condition` emitting the condition field
+        as an optional boolean instead of a required literal in split request types.
+        When the source property was nullable (`type: [boolean, "null"]`), the spread
+        order allowed the original property to overwrite the literal overrides.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.31.0
   changelogEntry:
     - summary: |

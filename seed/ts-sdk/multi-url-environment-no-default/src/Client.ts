@@ -48,7 +48,12 @@ export class SeedMultiUrlEnvironmentNoDefaultClient {
             input,
             init,
             {
-                baseUrl: this._options.baseUrl,
+                baseUrl:
+                    this._options.baseUrl ??
+                    (async () => {
+                        const env = await core.Supplier.get(this._options.environment);
+                        return typeof env === "string" ? env : (env as Record<string, string>)?.ec2;
+                    }),
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

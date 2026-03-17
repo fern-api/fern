@@ -265,6 +265,27 @@ class EndpointsObjectWireTest < WireMockTestCase
     )
   end
 
+  def test_endpoints_object_get_and_return_map_of_documented_unknown_type_with_wiremock
+    test_id = "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+
+    @client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+      request: {},
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-map-of-documented-unknown-type",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
   def test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock
     test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
 
