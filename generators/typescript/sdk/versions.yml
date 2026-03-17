@@ -2,11 +2,10 @@
 - version: 3.60.0
   changelogEntry:
     - summary: |
-        Export `ReceiveEvent` and `SendEvent` type aliases in the generated WebSocket
-        client namespace (e.g. `RealtimeClient.ReceiveEvent`, `RealtimeClient.SendEvent`).
-        This makes the server-to-client and client-to-server event union types accessible
-        under the client namespace, avoiding naming conflicts if additional WebSocket
-        clients are added in the future.
+        Export a `Request` type alias in the generated WebSocket Socket namespace
+        (e.g. `RealtimeSocket.Request`). This is the union of all client-to-server
+        message types, complementing the existing `Response` type alias for
+        server-to-client messages.
       type: feat
   createdAt: "2026-03-17"
   irVersion: 65

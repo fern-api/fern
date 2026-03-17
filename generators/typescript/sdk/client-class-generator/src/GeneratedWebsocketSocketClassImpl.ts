@@ -186,20 +186,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private generateEventTypeAliases(context: SdkContext): TypeAliasDeclarationStructure[] {
         const aliases: TypeAliasDeclarationStructure[] = [];
-        const serverMessages = this.getMessagesForOrigin("server");
-        if (serverMessages.length > 0) {
-            aliases.push({
-                kind: StructureKind.TypeAlias,
-                name: "ReceiveEvent",
-                isExported: true,
-                type: getTextOfTsNode(this.getUnionedNodeForOrigin(context, "server"))
-            });
-        }
         const clientMessages = this.getMessagesForOrigin("client");
         if (clientMessages.length > 0) {
             aliases.push({
                 kind: StructureKind.TypeAlias,
-                name: "SendEvent",
+                name: "Request",
                 isExported: true,
                 type: getTextOfTsNode(this.getUnionedNodeForOrigin(context, "client"))
             });
