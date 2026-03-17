@@ -511,6 +511,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = { string: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-map-of-documented-unknown-type")
