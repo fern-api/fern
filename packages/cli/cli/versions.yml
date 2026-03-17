@@ -8,13 +8,6 @@
         causing the file to not be found in multi-API workspace layouts where
         these files are in different directories.
       type: fix
-    - summary: |
-        Fix `fern generate --preview` attempting to push to remote GitHub
-        repositories when a self-hosted GitHub configuration is present.
-        Preview mode now clones the repository (to pick up `.fernignore` and
-        non-generated files) and runs replay, but skips the push and PR
-        creation steps.
-      type: fix
   createdAt: "2026-03-17"
   irVersion: 65
 
