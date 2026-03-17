@@ -8,11 +8,10 @@ public partial class SeedSingleUrlEnvironmentNoDefaultClient
     private readonly RawClient _client;
 
     public SeedSingleUrlEnvironmentNoDefaultClient(
-        string? token = null,
-        ClientOptions? clientOptions = null
+        ClientOptions clientOptions,
+        string? token = null
     )
     {
-        clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {

@@ -6,9 +6,8 @@ public partial class SeedLiteralsUnionsClient : ISeedLiteralsUnionsClient
 {
     private readonly RawClient _client;
 
-    public SeedLiteralsUnionsClient(ClientOptions? clientOptions = null)
+    public SeedLiteralsUnionsClient(ClientOptions clientOptions)
     {
-        clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
