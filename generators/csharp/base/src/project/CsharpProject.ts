@@ -623,6 +623,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     hasBaseUrl: this.context.hasBaseUrl(),
+                    hasDefaultEnvironment: this.context.hasDefaultEnvironment(),
                     namespace,
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,

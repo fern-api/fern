@@ -6,6 +6,9 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedMultiUrlEnvironmentNoDefaultClient(
+            clientOptions: new ClientOptions {
+                Environment = SeedMultiUrlEnvironmentNoDefaultEnvironment.Production
+            },
             token: "<token>"
         );
 

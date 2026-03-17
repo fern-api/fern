@@ -204,24 +204,26 @@ export class EndpointSnippetGenerator extends WithGeneration {
         }
         this.context.errors.unscope();
 
-        if (optionArgs.length === 0) {
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+        if (optionArgs.length === 0 && hasDefaultEnvironment) {
             return [...authArgs, ...headerArgs];
         }
-        return [
-            ...authArgs,
-            ...headerArgs,
-            {
-                name: "clientOptions",
-                assignment: this.csharp.instantiateClass({
-                    classReference: this.Types.ClientOptions,
-                    arguments_: optionArgs.map((arg) => ({
-                        name: arg.name,
-                        assignment: arg.assignment
-                    })),
-                    multiline: true
-                })
-            }
-        ];
+        const clientOptionsArg: NamedArgument = {
+            name: "clientOptions",
+            assignment: this.csharp.instantiateClass({
+                classReference: this.Types.ClientOptions,
+                arguments_: optionArgs.map((arg) => ({
+                    name: arg.name,
+                    assignment: arg.assignment
+                })),
+                multiline: true
+            })
+        };
+        if (!hasDefaultEnvironment) {
+            // clientOptions is a required parameter that comes before optional auth/header args
+            return [clientOptionsArg, ...authArgs, ...headerArgs];
+        }
+        return [...authArgs, ...headerArgs, clientOptionsArg];
     }
 
     private getConstructorBaseUrlArgs({
@@ -233,6 +235,31 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
         if (is.Literal.nop(baseUrlArg)) {
+            // When there's no default environment and no URL was provided, use a placeholder
+            const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+            if (!hasDefaultEnvironment) {
+                const environments = this.context.ir.environments?.environments;
+                if (environments?.type === "multipleBaseUrls") {
+                    const firstEnv = environments.environments[0];
+                    if (firstEnv != null) {
+                        const classRef = this.context.getEnvironmentTypeReferenceFromID(firstEnv.id);
+                        if (classRef != null) {
+                            return [
+                                {
+                                    name: "Environment",
+                                    assignment: this.csharp.Literal.reference(classRef)
+                                }
+                            ];
+                        }
+                    }
+                }
+                return [
+                    {
+                        name: "BaseUrl",
+                        assignment: this.csharp.Literal.string("https://api.example.com")
+                    }
+                ];
+            }
             return [];
         }
         return [

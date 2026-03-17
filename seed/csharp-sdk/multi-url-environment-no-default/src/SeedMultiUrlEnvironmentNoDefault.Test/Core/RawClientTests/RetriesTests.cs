@@ -26,7 +26,12 @@ public class RetriesTests
         _baseUrl = _server.Url ?? "";
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         _rawClient = new RawClient(
-            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
+            new ClientOptions
+            {
+                Environment = new SeedMultiUrlEnvironmentNoDefaultEnvironment(),
+                HttpClient = _httpClient,
+                MaxRetries = MaxRetries,
+            }
         )
         {
             BaseRetryDelay = 0,

@@ -13,13 +13,13 @@ public partial class ClientOptions
     /// <summary>
     /// The Environment for the API.
     /// </summary>
-    public SeedMultiUrlEnvironmentNoDefaultEnvironment Environment { get;
+    public required SeedMultiUrlEnvironmentNoDefaultEnvironment Environment { get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = null;
+    }
 
     /// <summary>
     /// The http client used to make requests.

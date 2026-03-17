@@ -9,6 +9,11 @@
         which would silently produce invalid requests. APIs with a default
         environment are unaffected — the default still applies automatically.
       type: fix
+    - summary: |
+        Dynamic snippet generation now includes a `clientOptions` argument with a
+        placeholder environment or base URL when no default environment is configured,
+        so that generated usage examples compile without modification.
+      type: fix
   createdAt: "2026-03-17"
   irVersion: 65
 
