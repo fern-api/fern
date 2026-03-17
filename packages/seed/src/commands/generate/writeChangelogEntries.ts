@@ -1,3 +1,4 @@
+import { sanitizeChangelogEntry } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generators";
 import { writeFile } from "fs/promises";
@@ -41,15 +42,15 @@ export function writeChangelogEntries(version: string, entries: ChangelogEntry[]
         changelogString += "Nothing new to report!";
     } else {
         entries.forEach((entry) => {
-            summary.push(`**\`(${entry.type}):\`** ${entry.summary}`);
-            added.push(...(entry.added ?? []));
-            changed.push(...(entry.changed ?? []));
-            deprecated.push(...(entry.deprecated ?? []));
-            removed.push(...(entry.removed ?? []));
-            fixed.push(...(entry.fixed ?? []));
+            summary.push(`**\`(${entry.type}):\`** ${sanitizeChangelogEntry(entry.summary)}`);
+            added.push(...(entry.added ?? []).map(sanitizeChangelogEntry));
+            changed.push(...(entry.changed ?? []).map(sanitizeChangelogEntry));
+            deprecated.push(...(entry.deprecated ?? []).map(sanitizeChangelogEntry));
+            removed.push(...(entry.removed ?? []).map(sanitizeChangelogEntry));
+            fixed.push(...(entry.fixed ?? []).map(sanitizeChangelogEntry));
 
             if (entry.upgradeNotes != null) {
-                upgradeNotes.push(entry.upgradeNotes);
+                upgradeNotes.push(sanitizeChangelogEntry(entry.upgradeNotes));
             }
         });
 

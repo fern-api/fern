@@ -278,7 +278,15 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
         this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
 
-        if (context.getCustomConfig().wrappedAliases()) {
+        boolean hasUnknownAliasTypes = ir.getTypes().values().stream()
+                .anyMatch(typeDeclaration -> typeDeclaration.getShape().isAlias()
+                        && typeDeclaration
+                                .getShape()
+                                .getAlias()
+                                .get()
+                                .getAliasOf()
+                                .isUnknown());
+        if (context.getCustomConfig().wrappedAliases() || hasUnknownAliasTypes) {
             WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
             this.addGeneratedFile(wrappedAliasGenerator.generateFile());
         }
