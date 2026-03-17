@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.57.2
+  changelogEntry:
+    - summary: |
+        Fix map types with unknown/any value types to not include spurious `| undefined`.
+        Previously, `map<string, UnknownType>` generated `Record<string, UnknownType | undefined>`
+        instead of `Record<string, UnknownType>`. The `| undefined` is now correctly omitted
+        from map value types.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.57.1
   changelogEntry:
     - summary: |

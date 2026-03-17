@@ -4,6 +4,7 @@
 
 from .documented_unknown_type import DocumentedUnknownType
 from .double_optional import DoubleOptional
+from .map_of_documented_unknown_type import MapOfDocumentedUnknownType
 from .nested_object_with_optional_field import NestedObjectWithOptionalField
 from .nested_object_with_required_field import NestedObjectWithRequiredField
 from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
@@ -17,6 +18,7 @@ from .optional_alias import OptionalAlias
 __all__ = [
     "DocumentedUnknownType",
     "DoubleOptional",
+    "MapOfDocumentedUnknownType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",

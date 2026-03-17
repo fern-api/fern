@@ -368,19 +368,26 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         const keyTypeNode = this.convert({ ...params, typeReference: map.keyType });
         const valueTypeNode = this.convert({ ...params, typeReference: map.valueType });
         return this.generateNonOptionalTypeReferenceNode({
-            typeNode: ts.factory.createTypeReferenceNode("Record", [keyTypeNode.typeNode, valueTypeNode.typeNode]),
+            typeNode: ts.factory.createTypeReferenceNode("Record", [
+                keyTypeNode.typeNode,
+                valueTypeNode.typeNodeWithoutUndefined
+            ]),
             requestTypeNode:
                 keyTypeNode.requestTypeNode || valueTypeNode.requestTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.requestTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.requestTypeNode ?? valueTypeNode.typeNode
+                          valueTypeNode.requestTypeNodeWithoutUndefined ??
+                              valueTypeNode.requestTypeNode ??
+                              valueTypeNode.typeNodeWithoutUndefined
                       ])
                     : undefined,
             responseTypeNode:
                 keyTypeNode.responseTypeNode || valueTypeNode.responseTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.responseTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.responseTypeNode ?? valueTypeNode.typeNode
+                          valueTypeNode.responseTypeNodeWithoutUndefined ??
+                              valueTypeNode.responseTypeNode ??
+                              valueTypeNode.typeNodeWithoutUndefined
                       ])
                     : undefined
         });

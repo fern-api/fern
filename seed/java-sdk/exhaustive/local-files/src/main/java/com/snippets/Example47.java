@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.union.types.Animal;
-import com.fern.sdk.resources.types.union.types.Dog;
+import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 
 public class Example47 {
     public static void main(String[] args) {
@@ -12,14 +11,11 @@ public class Example47 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().union().getAndReturnUnion(
-            Animal.dog(
-                Dog
-                    .builder()
-                    .name("name")
-                    .likesToWoof(true)
-                    .build()
-            )
+        client.endpoints().put().add(
+            PutRequest
+                .builder()
+                .id("id")
+                .build()
         );
     }
 }
