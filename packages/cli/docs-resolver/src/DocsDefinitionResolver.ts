@@ -689,17 +689,39 @@ export class DocsDefinitionResolver {
                 return "stable";
             case "generally-available":
                 return "generally-available";
-            case "in-development":
-                return "in-development";
-            case "pre-release":
-                return "pre-release";
-            case "deprecated":
-                return "deprecated";
+            case "release-candidate":
+                return "release-candidate";
+            case "public-beta":
+                return "public-beta";
             case "beta":
                 return "beta";
+            case "private-beta":
+                return "private-beta";
+            case "limited-availability":
+                return "limited-availability";
+            case "canary-release":
+                return "canary-release";
+            case "preview":
+                return "preview";
+            case "pre-release":
+                return "pre-release";
+            case "alpha":
+                return "alpha";
+            case "experimental":
+                return "experimental";
+            case "internal":
+                return "internal";
+            case "in-development":
+                return "in-development";
+            case "sunset":
+                return "sunset";
+            case "deprecated":
+                return "deprecated";
+            case "retired":
+                return "retired";
             default:
                 this.taskContext.logger.warn(
-                    `Invalid availability value "${value}" in frontmatter. Valid values are: stable, generally-available, in-development, pre-release, deprecated, beta`
+                    `Invalid availability value "${value}" in frontmatter. Valid values are: stable, generally-available, release-candidate, public-beta, beta, private-beta, limited-availability, canary-release, preview, pre-release, alpha, experimental, internal, in-development, sunset, deprecated, retired`
                 );
                 return undefined;
         }

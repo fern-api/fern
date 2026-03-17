@@ -1359,10 +1359,21 @@
       "enum": [
         "stable",
         "generally-available",
-        "in-development",
+        "release-candidate",
+        "public-beta",
+        "beta",
+        "private-beta",
+        "limited-availability",
+        "canary-release",
+        "preview",
         "pre-release",
+        "alpha",
+        "experimental",
+        "internal",
+        "in-development",
+        "sunset",
         "deprecated",
-        "beta"
+        "retired"
       ]
     },
     "docs.PageConfiguration": {
