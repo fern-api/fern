@@ -983,11 +983,11 @@ public class EndpointsObjectWireTest {
                 .object()
                 .getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
                     {
-                        put("string", new HashMap<String, Object>() {
+                        put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
                             {
                                 put("key", "value");
                             }
-                        });
+                        }));
                     }
                 });
         RecordedRequest request = server.takeRequest();
