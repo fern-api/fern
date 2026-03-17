@@ -42,11 +42,57 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";
 
+/**
+ * Maximum byte size for a single AI analysis call.
+ * Diffs larger than this are split into chunks (via `chunkDiff`), each analysed
+ * separately, with version bumps merged by taking the maximum.
+ */
+export const MAX_AI_DIFF_BYTES = 40_000;
+
+/**
+ * Maximum number of chunks to analyse for a single diff.
+ * Chunks are ranked by semantic priority so the first chunks always contain
+ * the highest-signal sections (deletions, signature changes). Chunks beyond
+ * this limit are skipped — they are typically addition-only (MINOR/PATCH).
+ */
+export const MAX_CHUNKS = 40;
+
+/**
+ * Maximum raw diff size (in bytes) accepted for chunked analysis.
+ * Diffs larger than this are rejected before chunking to prevent
+ * excessive memory/CPU usage from parsing extremely large inputs
+ * (e.g. accidental binary file inclusion). 10 MB.
+ */
+export const MAX_RAW_DIFF_BYTES = 10_000_000;
+
 export enum VersionBump {
     MAJOR = "MAJOR",
     MINOR = "MINOR",
     PATCH = "PATCH",
     NO_CHANGE = "NO_CHANGE"
+}
+
+/**
+ * Numeric rank for each VersionBump level.
+ * Higher number = more significant change.
+ * Used by chunked analysis to pick the maximum bump across chunks.
+ */
+const VERSION_BUMP_RANK: Record<string, number> = {
+    [VersionBump.MAJOR]: 3,
+    [VersionBump.MINOR]: 2,
+    [VersionBump.PATCH]: 1,
+    [VersionBump.NO_CHANGE]: 0
+};
+
+/**
+ * Returns whichever version bump string is more significant.
+ * MAJOR > MINOR > PATCH > NO_CHANGE.
+ *
+ * Accepts plain strings so callers using the BAML-generated VersionBump enum
+ * (from @fern-api/cli-ai) or the local VersionBump enum can both use this.
+ */
+export function maxVersionBump(a: string, b: string): string {
+    return (VERSION_BUMP_RANK[a] ?? 0) >= (VERSION_BUMP_RANK[b] ?? 0) ? a : b;
 }
 
 const SEMVER_PATTERN = /^(v)?(\d+)\.(\d+)\.(\d+)(?:-([\w.-]+))?(?:\+([\w.-]+))?$/;

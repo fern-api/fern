@@ -4,6 +4,7 @@ using SeedCsharpXmlEntities.Test.Utils;
 namespace SeedCsharpXmlEntities.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTimeZoneTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

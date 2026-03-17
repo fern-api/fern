@@ -9,7 +9,6 @@
         "declaration": true,
         "outDir": "dist",
         "rootDir": "src/test-packagePath",
-        "baseUrl": "src/test-packagePath",
         "isolatedModules": true,
         "isolatedDeclarations": true
     },

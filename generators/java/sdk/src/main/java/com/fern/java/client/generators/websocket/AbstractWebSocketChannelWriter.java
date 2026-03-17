@@ -42,6 +42,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
@@ -72,6 +73,12 @@ public abstract class AbstractWebSocketChannelWriter {
     protected final FieldSpec onConnectedHandlerField;
     protected final FieldSpec onDisconnectedHandlerField;
     protected final FieldSpec onErrorHandlerField;
+
+    // Reserved lifecycle method names that take Consumer<T> parameters.
+    // Server message handlers also take Consumer<T>, so if a message type
+    // produces the same method name, Java type-erasure makes the two
+    // overloads ambiguous. We append "Message" to disambiguate.
+    private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
 
     public AbstractWebSocketChannelWriter(
             WebSocketChannel websocketChannel,
@@ -279,7 +286,7 @@ public abstract class AbstractWebSocketChannelWriter {
 
         // Convert message type to valid Java method name
         String messageTypeStr = message.getType().get();
-        String methodName = "on" + toPascalCase(messageTypeStr);
+        String methodName = getMessageMethodName(messageTypeStr);
         return MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
@@ -562,6 +569,18 @@ public abstract class AbstractWebSocketChannelWriter {
         }
         // Convert snake_case to PascalCase (same as capitalize for now)
         return capitalize(str);
+    }
+
+    /**
+     * Returns the method name for a server message handler, avoiding collisions with lifecycle methods that share the
+     * same erasure ({@code Consumer<?>}).
+     */
+    protected String getMessageMethodName(String messageType) {
+        String baseName = "on" + toPascalCase(messageType);
+        if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
+            return baseName + "Message";
+        }
+        return baseName;
     }
 
     protected CodeBlock generateClassJavadoc() {

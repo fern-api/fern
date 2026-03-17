@@ -81,6 +81,7 @@ type fileWriter struct {
 	gettersPassByValue           bool
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
+	omitFernHeaders              bool
 	unionVersion                 UnionVersion
 	customPagerName              string
 	scope                        *gospec.Scope
@@ -135,6 +136,7 @@ func newFileWriter(
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
+	omitFernHeaders bool,
 	unionVersion UnionVersion,
 	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
@@ -183,6 +185,7 @@ func newFileWriter(
 		gettersPassByValue:           gettersPassByValue,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
+		omitFernHeaders:              omitFernHeaders,
 		unionVersion:                 unionVersion,
 		customPagerName:              customPagerName,
 		scope:                        scope,
@@ -437,6 +440,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
+		f.omitFernHeaders,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,
@@ -932,6 +936,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
+		f.omitFernHeaders,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,

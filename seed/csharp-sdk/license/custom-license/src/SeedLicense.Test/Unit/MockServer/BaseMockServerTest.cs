@@ -6,14 +6,13 @@ using WireMock.Settings;
 
 namespace SeedLicense.Test.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedLicenseClient Client { get; set; } = null!;
+    protected SeedLicenseClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()

@@ -5,6 +5,7 @@ using SeedAlias.Core;
 namespace SeedAlias.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TypeTest
 {
     [NUnit.Framework.Test]

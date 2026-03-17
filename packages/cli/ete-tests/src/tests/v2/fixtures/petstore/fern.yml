@@ -23,7 +23,7 @@ sdks:
         - prod
 
     go:
-      version: 1.23.3
+      version: 1.30.0
       output:
         path: ./sdks/go
       group:

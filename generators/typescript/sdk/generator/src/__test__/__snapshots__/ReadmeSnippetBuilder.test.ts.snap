@@ -44,6 +44,16 @@ const response = await client.createUser(..., {
   ],
   "AUTHENTICATION": false,
   "BINARY_RESPONSE": [],
+  "CUSTOM_FETCH": [
+    "const response = await client.fetch("/v1/custom/endpoint", { method: "GET" }, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: { "X-Custom-Header": "custom-value" },
+});
+
+const data = await response.json();
+",
+  ],
   "EXCEPTION_HANDLING": [
     "import { MySDKError } from "@acme/sdk";
 

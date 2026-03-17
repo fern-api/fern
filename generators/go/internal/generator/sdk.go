@@ -426,7 +426,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				username = authScheme.Basic.Username.PascalCase.UnsafeName
 				password = authScheme.Basic.Password.PascalCase.UnsafeName
 			)
-			f.P(`if r.`, username, ` != "" && r.`, password, ` != "" {`)
+			f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
 			f.P("}")
 		}
@@ -518,7 +518,7 @@ func (f *fileWriter) writePlatformHeaders(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 ) error {
-	if sdkVersion == "" {
+	if sdkVersion == "" || f.omitFernHeaders {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("return r.HTTPHeader.Clone()")
 		f.P("}")

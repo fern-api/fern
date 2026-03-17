@@ -46,7 +46,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateTaskAsync(\n    new global::SeedCsharpNamespaceCollision.System.Task\n    {\n        Name = \"name\",\n        User = new global::SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateTaskAsync(\n    new global::SeedCsharpNamespaceCollision.System.Task\n    {\n        Name = \"name\",\n        User = new global::SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n        Owner = new global::SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_System.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.GetUserAsync(\"userId\");\n"
             }
         }
     ]

@@ -54,14 +54,15 @@ public partial class GrpcRequestOptions
     }
 
     /// <summary>
-    /// Headers to be sent with this particular request.
+    /// Additional headers to be sent with this particular request.
+    /// Headers with matching keys will be overwritten by headers set on the client options.
     /// </summary>
-    internal Headers Headers {
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders {
         get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = new();
+    } = new List<KeyValuePair<string, string?>>();
 }
