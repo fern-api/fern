@@ -2476,7 +2476,7 @@ func TestSettersExtendedMovie(t *testing.T) {
 
 	t.Run("SetMetadata", func(t *testing.T) {
 		obj := &ExtendedMovie{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 		obj.SetMetadata(fernTestValueMetadata)
 		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -2686,7 +2686,7 @@ func TestGettersExtendedMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Metadata = expected
 
 		// Act & Assert
@@ -2995,7 +2995,7 @@ func TestSettersMarkExplicitExtendedMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 
 		// Act
 		obj.SetMetadata(fernTestValueMetadata)
@@ -3682,7 +3682,7 @@ func TestSettersMovie(t *testing.T) {
 
 	t.Run("SetMetadata", func(t *testing.T) {
 		obj := &Movie{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 		obj.SetMetadata(fernTestValueMetadata)
 		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -3884,7 +3884,7 @@ func TestGettersMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Metadata = expected
 
 		// Act & Assert
@@ -4160,7 +4160,7 @@ func TestSettersMarkExplicitMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 
 		// Act
 		obj.SetMetadata(fernTestValueMetadata)
@@ -4509,7 +4509,7 @@ func TestSettersMarkExplicitRefreshTokenRequest(t *testing.T) {
 func TestSettersRequest(t *testing.T) {
 	t.Run("SetRequest", func(t *testing.T) {
 		obj := &Request{}
-		var fernTestValueRequest interface{}
+		var fernTestValueRequest any
 		obj.SetRequest(fernTestValueRequest)
 		assert.Equal(t, fernTestValueRequest, obj.Request)
 		assert.NotNil(t, obj.explicitFields)
@@ -4522,7 +4522,7 @@ func TestGettersRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Request{}
-		var expected interface{}
+		var expected any
 		obj.Request = expected
 
 		// Act & Assert
@@ -4548,7 +4548,7 @@ func TestSettersMarkExplicitRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Request{}
-		var fernTestValueRequest interface{}
+		var fernTestValueRequest any
 
 		// Act
 		obj.SetRequest(fernTestValueRequest)
@@ -4580,7 +4580,7 @@ func TestSettersMarkExplicitRequest(t *testing.T) {
 func TestSettersResponse(t *testing.T) {
 	t.Run("SetResponse", func(t *testing.T) {
 		obj := &Response{}
-		var fernTestValueResponse interface{}
+		var fernTestValueResponse any
 		obj.SetResponse(fernTestValueResponse)
 		assert.Equal(t, fernTestValueResponse, obj.Response)
 		assert.NotNil(t, obj.explicitFields)
@@ -4601,7 +4601,7 @@ func TestGettersResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Response{}
-		var expected interface{}
+		var expected any
 		obj.Response = expected
 
 		// Act & Assert
@@ -4660,7 +4660,7 @@ func TestSettersMarkExplicitResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Response{}
-		var fernTestValueResponse interface{}
+		var fernTestValueResponse any
 
 		// Act
 		obj.SetResponse(fernTestValueResponse)

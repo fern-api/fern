@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .documented_unknown_type import DocumentedUnknownType
     from .double_optional import DoubleOptional
+    from .map_of_documented_unknown_type import MapOfDocumentedUnknownType
     from .nested_object_with_optional_field import NestedObjectWithOptionalField
     from .nested_object_with_required_field import NestedObjectWithRequiredField
     from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentedUnknownType": ".documented_unknown_type",
     "DoubleOptional": ".double_optional",
+    "MapOfDocumentedUnknownType": ".map_of_documented_unknown_type",
     "NestedObjectWithOptionalField": ".nested_object_with_optional_field",
     "NestedObjectWithRequiredField": ".nested_object_with_required_field",
     "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
@@ -56,6 +58,7 @@ def __dir__():
 __all__ = [
     "DocumentedUnknownType",
     "DoubleOptional",
+    "MapOfDocumentedUnknownType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",

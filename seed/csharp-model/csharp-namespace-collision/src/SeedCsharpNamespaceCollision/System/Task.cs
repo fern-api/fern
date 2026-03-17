@@ -18,6 +18,9 @@ public record Task : IJsonOnDeserialized
     [JsonPropertyName("user")]
     public required User User { get; set; }
 
+    [JsonPropertyName("owner")]
+    public required User Owner { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

@@ -74,3 +74,8 @@ export interface ObjectWithDocumentedUnknownType {
  * Tests that unknown types are able to preserve their docstrings.
  */
 export type DocumentedUnknownType = unknown;
+
+/**
+ * Tests that map value types with unknown types don't get spurious | undefined.
+ */
+export type MapOfDocumentedUnknownType = Record<string, SeedExhaustive.types.DocumentedUnknownType>;

@@ -547,14 +547,14 @@ var (
 )
 
 type User struct {
-	Name           string                 `json:"name" url:"name"`
-	Id             UserId                 `json:"id" url:"id"`
-	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber           `json:"favorite-number" url:"favorite-number"`
-	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
-	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
+	Name           string         `json:"name" url:"name"`
+	Id             UserId         `json:"id" url:"id"`
+	Tags           []string       `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email          `json:"email,omitempty" url:"email,omitempty"`
+	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
+	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -612,7 +612,7 @@ func (u *User) GetNumbers() []int {
 	return u.Numbers
 }
 
-func (u *User) GetStrings() map[string]interface{} {
+func (u *User) GetStrings() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -684,7 +684,7 @@ func (u *User) SetNumbers(numbers []int) {
 
 // SetStrings sets the Strings field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetStrings(strings map[string]interface{}) {
+func (u *User) SetStrings(strings map[string]any) {
 	u.Strings = strings
 	u.require(userFieldStrings)
 }

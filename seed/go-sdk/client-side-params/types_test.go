@@ -125,7 +125,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetJwtConfiguration", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueJwtConfiguration map[string]interface{}
+		var fernTestValueJwtConfiguration map[string]any
 		obj.SetJwtConfiguration(fernTestValueJwtConfiguration)
 		assert.Equal(t, fernTestValueJwtConfiguration, obj.JwtConfiguration)
 		assert.NotNil(t, obj.explicitFields)
@@ -133,7 +133,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetSigningKeys", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueSigningKeys []map[string]interface{}
+		var fernTestValueSigningKeys []map[string]any
 		obj.SetSigningKeys(fernTestValueSigningKeys)
 		assert.Equal(t, fernTestValueSigningKeys, obj.SigningKeys)
 		assert.NotNil(t, obj.explicitFields)
@@ -141,7 +141,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetEncryptionKey", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueEncryptionKey map[string]interface{}
+		var fernTestValueEncryptionKey map[string]any
 		obj.SetEncryptionKey(fernTestValueEncryptionKey)
 		assert.Equal(t, fernTestValueEncryptionKey, obj.EncryptionKey)
 		assert.NotNil(t, obj.explicitFields)
@@ -221,7 +221,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetAddons", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueAddons map[string]interface{}
+		var fernTestValueAddons map[string]any
 		obj.SetAddons(fernTestValueAddons)
 		assert.Equal(t, fernTestValueAddons, obj.Addons)
 		assert.NotNil(t, obj.explicitFields)
@@ -237,7 +237,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetClientMetadata", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueClientMetadata map[string]interface{}
+		var fernTestValueClientMetadata map[string]any
 		obj.SetClientMetadata(fernTestValueClientMetadata)
 		assert.Equal(t, fernTestValueClientMetadata, obj.ClientMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -245,7 +245,7 @@ func TestSettersClient(t *testing.T) {
 
 	t.Run("SetMobile", func(t *testing.T) {
 		obj := &Client{}
-		var fernTestValueMobile map[string]interface{}
+		var fernTestValueMobile map[string]any
 		obj.SetMobile(fernTestValueMobile)
 		assert.Equal(t, fernTestValueMobile, obj.Mobile)
 		assert.NotNil(t, obj.explicitFields)
@@ -700,7 +700,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.JwtConfiguration = expected
 
 		// Act & Assert
@@ -733,7 +733,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected []map[string]interface{}
+		var expected []map[string]any
 		obj.SigningKeys = expected
 
 		// Act & Assert
@@ -766,7 +766,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.EncryptionKey = expected
 
 		// Act & Assert
@@ -1096,7 +1096,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Addons = expected
 
 		// Act & Assert
@@ -1162,7 +1162,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.ClientMetadata = expected
 
 		// Act & Assert
@@ -1195,7 +1195,7 @@ func TestGettersClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Mobile = expected
 
 		// Act & Assert
@@ -1665,7 +1665,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueJwtConfiguration map[string]interface{}
+		var fernTestValueJwtConfiguration map[string]any
 
 		// Act
 		obj.SetJwtConfiguration(fernTestValueJwtConfiguration)
@@ -1696,7 +1696,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueSigningKeys []map[string]interface{}
+		var fernTestValueSigningKeys []map[string]any
 
 		// Act
 		obj.SetSigningKeys(fernTestValueSigningKeys)
@@ -1727,7 +1727,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueEncryptionKey map[string]interface{}
+		var fernTestValueEncryptionKey map[string]any
 
 		// Act
 		obj.SetEncryptionKey(fernTestValueEncryptionKey)
@@ -2037,7 +2037,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueAddons map[string]interface{}
+		var fernTestValueAddons map[string]any
 
 		// Act
 		obj.SetAddons(fernTestValueAddons)
@@ -2099,7 +2099,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueClientMetadata map[string]interface{}
+		var fernTestValueClientMetadata map[string]any
 
 		// Act
 		obj.SetClientMetadata(fernTestValueClientMetadata)
@@ -2130,7 +2130,7 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Client{}
-		var fernTestValueMobile map[string]interface{}
+		var fernTestValueMobile map[string]any
 
 		// Act
 		obj.SetMobile(fernTestValueMobile)
@@ -2194,7 +2194,7 @@ func TestSettersConnection(t *testing.T) {
 
 	t.Run("SetOptions", func(t *testing.T) {
 		obj := &Connection{}
-		var fernTestValueOptions map[string]interface{}
+		var fernTestValueOptions map[string]any
 		obj.SetOptions(fernTestValueOptions)
 		assert.Equal(t, fernTestValueOptions, obj.Options)
 		assert.NotNil(t, obj.explicitFields)
@@ -2226,7 +2226,7 @@ func TestSettersConnection(t *testing.T) {
 
 	t.Run("SetMetadata", func(t *testing.T) {
 		obj := &Connection{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 		obj.SetMetadata(fernTestValueMetadata)
 		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -2341,7 +2341,7 @@ func TestGettersConnection(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Connection{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Options = expected
 
 		// Act & Assert
@@ -2473,7 +2473,7 @@ func TestGettersConnection(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Connection{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Metadata = expected
 
 		// Act & Assert
@@ -2633,7 +2633,7 @@ func TestSettersMarkExplicitConnection(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Connection{}
-		var fernTestValueOptions map[string]interface{}
+		var fernTestValueOptions map[string]any
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
@@ -2757,7 +2757,7 @@ func TestSettersMarkExplicitConnection(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Connection{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 
 		// Act
 		obj.SetMetadata(fernTestValueMetadata)
@@ -2837,7 +2837,7 @@ func TestSettersCreateUserRequest(t *testing.T) {
 
 	t.Run("SetUserMetadata", func(t *testing.T) {
 		obj := &CreateUserRequest{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 		obj.SetUserMetadata(fernTestValueUserMetadata)
 		assert.Equal(t, fernTestValueUserMetadata, obj.UserMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -2845,7 +2845,7 @@ func TestSettersCreateUserRequest(t *testing.T) {
 
 	t.Run("SetAppMetadata", func(t *testing.T) {
 		obj := &CreateUserRequest{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 		obj.SetAppMetadata(fernTestValueAppMetadata)
 		assert.Equal(t, fernTestValueAppMetadata, obj.AppMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -3054,7 +3054,7 @@ func TestGettersCreateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserRequest{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.UserMetadata = expected
 
 		// Act & Assert
@@ -3087,7 +3087,7 @@ func TestGettersCreateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserRequest{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.AppMetadata = expected
 
 		// Act & Assert
@@ -3332,7 +3332,7 @@ func TestSettersMarkExplicitCreateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserRequest{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 
 		// Act
 		obj.SetUserMetadata(fernTestValueUserMetadata)
@@ -3363,7 +3363,7 @@ func TestSettersMarkExplicitCreateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserRequest{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 
 		// Act
 		obj.SetAppMetadata(fernTestValueAppMetadata)
@@ -4545,7 +4545,7 @@ func TestSettersResource(t *testing.T) {
 
 	t.Run("SetMetadata", func(t *testing.T) {
 		obj := &Resource{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 		obj.SetMetadata(fernTestValueMetadata)
 		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -4683,7 +4683,7 @@ func TestGettersResource(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Resource{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Metadata = expected
 
 		// Act & Assert
@@ -4874,7 +4874,7 @@ func TestSettersMarkExplicitResource(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Resource{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 
 		// Act
 		obj.SetMetadata(fernTestValueMetadata)
@@ -5171,7 +5171,7 @@ func TestSettersUpdateUserRequest(t *testing.T) {
 
 	t.Run("SetUserMetadata", func(t *testing.T) {
 		obj := &UpdateUserRequest{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 		obj.SetUserMetadata(fernTestValueUserMetadata)
 		assert.Equal(t, fernTestValueUserMetadata, obj.UserMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -5179,7 +5179,7 @@ func TestSettersUpdateUserRequest(t *testing.T) {
 
 	t.Run("SetAppMetadata", func(t *testing.T) {
 		obj := &UpdateUserRequest{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 		obj.SetAppMetadata(fernTestValueAppMetadata)
 		assert.Equal(t, fernTestValueAppMetadata, obj.AppMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -5373,7 +5373,7 @@ func TestGettersUpdateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserRequest{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.UserMetadata = expected
 
 		// Act & Assert
@@ -5406,7 +5406,7 @@ func TestGettersUpdateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserRequest{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.AppMetadata = expected
 
 		// Act & Assert
@@ -5663,7 +5663,7 @@ func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserRequest{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 
 		// Act
 		obj.SetUserMetadata(fernTestValueUserMetadata)
@@ -5694,7 +5694,7 @@ func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserRequest{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 
 		// Act
 		obj.SetAppMetadata(fernTestValueAppMetadata)
@@ -5860,7 +5860,7 @@ func TestSettersUser(t *testing.T) {
 
 	t.Run("SetAppMetadata", func(t *testing.T) {
 		obj := &User{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 		obj.SetAppMetadata(fernTestValueAppMetadata)
 		assert.Equal(t, fernTestValueAppMetadata, obj.AppMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -5868,7 +5868,7 @@ func TestSettersUser(t *testing.T) {
 
 	t.Run("SetUserMetadata", func(t *testing.T) {
 		obj := &User{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 		obj.SetUserMetadata(fernTestValueUserMetadata)
 		assert.Equal(t, fernTestValueUserMetadata, obj.UserMetadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -6208,7 +6208,7 @@ func TestGettersUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.AppMetadata = expected
 
 		// Act & Assert
@@ -6241,7 +6241,7 @@ func TestGettersUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.UserMetadata = expected
 
 		// Act & Assert
@@ -6886,7 +6886,7 @@ func TestSettersMarkExplicitUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var fernTestValueAppMetadata map[string]interface{}
+		var fernTestValueAppMetadata map[string]any
 
 		// Act
 		obj.SetAppMetadata(fernTestValueAppMetadata)
@@ -6917,7 +6917,7 @@ func TestSettersMarkExplicitUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var fernTestValueUserMetadata map[string]interface{}
+		var fernTestValueUserMetadata map[string]any
 
 		// Act
 		obj.SetUserMetadata(fernTestValueUserMetadata)

@@ -263,19 +263,11 @@ message DescribeResponse {
 }
 
 service DataService {
-  rpc Upload(UploadRequest) returns (UploadResponse) {
-    option (google.api.http) = {
-      post: "/data"
-      body: "*"
-    };
-  }
-
-  rpc Delete(DeleteRequest) returns (DeleteResponse) {
-    option (google.api.http) = {
-      post: "/data/delete"
-      body: "*"
-    };
-  }
+  rpc Upload(UploadRequest) returns (UploadResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  rpc Query(QueryRequest) returns (QueryResponse);
+  rpc Describe(DescribeRequest) returns (DescribeResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
 
   rpc Fetch(FetchRequest) returns (FetchResponse) {
     option (google.api.http) = {
@@ -289,30 +281,9 @@ service DataService {
     };
   }
 
-  rpc Query(QueryRequest) returns (QueryResponse) {
-    option (google.api.http) = {
-      post: "/data/query"
-      body: "*"
-    };
-  }
-
   rpc Update(UpdateRequest) returns (UpdateResponse) {
     option (google.api.http) = {
       post: "/data/update"
-      body: "*"
-    };
-  }
-
-  rpc Describe(DescribeRequest) returns (DescribeResponse) {
-    option (google.api.http) = {
-      post: "/data/describe"
-      body: "*"
-    };
-  }
-
-  rpc Create(CreateRequest) returns (CreateResponse) {
-    option (google.api.http) = {
-      post: "/data/create"
       body: "*"
     };
   }

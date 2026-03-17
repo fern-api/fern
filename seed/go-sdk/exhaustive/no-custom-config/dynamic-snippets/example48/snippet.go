@@ -3,6 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
     context "context"
 )
 
@@ -15,7 +16,14 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
+        },
+    }
+    client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
+        request,
     )
 }

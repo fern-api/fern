@@ -28,7 +28,7 @@ func TestSettersDocumentMetadata(t *testing.T) {
 
 	t.Run("SetTags", func(t *testing.T) {
 		obj := &DocumentMetadata{}
-		var fernTestValueTags []interface{}
+		var fernTestValueTags []any
 		obj.SetTags(fernTestValueTags)
 		assert.Equal(t, fernTestValueTags, obj.Tags)
 		assert.NotNil(t, obj.explicitFields)
@@ -115,7 +115,7 @@ func TestGettersDocumentMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentMetadata{}
-		var expected []interface{}
+		var expected []any
 		obj.Tags = expected
 
 		// Act & Assert
@@ -246,7 +246,7 @@ func TestSettersMarkExplicitDocumentMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentMetadata{}
-		var fernTestValueTags []interface{}
+		var fernTestValueTags []any
 
 		// Act
 		obj.SetTags(fernTestValueTags)
