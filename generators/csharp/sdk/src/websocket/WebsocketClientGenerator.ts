@@ -486,7 +486,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 if (hasQueryParameters) {
                     writer.write(
-                        `\n{\n    Query = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.websocketChannel.queryParameters.length})`
+                        `\n{\n    Query = new ${this.namespaces.qualifiedCore}.QueryStringBuilder.Builder(capacity: ${this.websocketChannel.queryParameters.length})`
                     );
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         const isComplexType = this.isComplexType(queryParameter.valueType);

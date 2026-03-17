@@ -264,6 +264,12 @@ fixtures:
         explicit-namespaces: true
         experimental-fully-qualified-namespaces: true
       outputFolder: namespace-client-collision
+  csharp-namespace-conflict:
+    - customConfig:
+        namespace: Seed.CsharpNamespaceConflict
+        client-class-name: Seed
+        experimental-fully-qualified-namespaces: true
+      outputFolder: client-class-name-matches-namespace-root
   csharp-system-collision:
     - customConfig:
         client-class-name: System
@@ -317,7 +323,6 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
-  - csharp-namespace-collision:namespace-client-collision
   - enum:forward-compatible-enums
   - enum:plain-enums
   - examples:no-custom-config
