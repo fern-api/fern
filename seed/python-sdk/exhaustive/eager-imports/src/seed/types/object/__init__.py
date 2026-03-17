@@ -5,6 +5,7 @@
 from .types import (
     DocumentedUnknownType,
     DoubleOptional,
+    MapOfDocumentedUnknownType,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithDatetimeLikeString,
@@ -25,6 +26,7 @@ from .errors import (
 __all__ = [
     "DocumentedUnknownType",
     "DoubleOptional",
+    "MapOfDocumentedUnknownType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",

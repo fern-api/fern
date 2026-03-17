@@ -1371,7 +1371,7 @@ func TestSettersSearchResourcesRequest(t *testing.T) {
 
 	t.Run("SetFilters", func(t *testing.T) {
 		obj := &SearchResourcesRequest{}
-		var fernTestValueFilters map[string]interface{}
+		var fernTestValueFilters map[string]any
 		obj.SetFilters(fernTestValueFilters)
 		assert.Equal(t, fernTestValueFilters, obj.Filters)
 		assert.NotNil(t, obj.explicitFields)
@@ -1477,7 +1477,7 @@ func TestSettersMarkExplicitSearchResourcesRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SearchResourcesRequest{}
-		var fernTestValueFilters map[string]interface{}
+		var fernTestValueFilters map[string]any
 
 		// Act
 		obj.SetFilters(fernTestValueFilters)

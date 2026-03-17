@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.2
+  changelogEntry:
+    - summary: |
+        Add docstring emission for unknown/any type alias definitions. When a type alias
+        resolves to `typing.Any` and has a description in the API definition, the generated
+        Python code now includes the docstring below the type alias declaration.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 5.0.1
   changelogEntry:
     - summary: |
@@ -52,6 +62,7 @@
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65
+
 - version: 4.63.5
   changelogEntry:
     - summary: |

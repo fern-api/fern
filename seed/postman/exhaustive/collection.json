@@ -2054,6 +2054,86 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get And Return Map Of Documented Unknown Type",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-map-of-documented-unknown-type",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-map-of-documented-unknown-type"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-map-of-documented-unknown-type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-map-of-documented-unknown-type"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Get And Return With Datetime Like String",
               "request": {
                 "description": "Tests that string fields containing datetime-like values are NOT reformatted.\nThe datetimeLikeString field should preserve its exact value \"2023-08-31T14:15:22Z\"\nwithout being converted to \"2023-08-31T14:15:22.000Z\".",

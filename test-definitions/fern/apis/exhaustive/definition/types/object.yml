@@ -72,6 +72,10 @@ types:
       Tests that unknown types are able to preserve their docstrings.
     type: unknown
 
+  MapOfDocumentedUnknownType:
+    docs: Tests that map value types with unknown types don't get spurious | undefined.
+    type: map<string, DocumentedUnknownType>
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

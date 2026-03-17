@@ -650,6 +650,32 @@
       }
     },
     {
+      "id": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+      "name": "getAndReturnMapOfDocumentedUnknownType - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
@@ -1508,6 +1534,6 @@
     }
   ],
   "meta": {
-    "total": 54
+    "total": 55
   }
 }
