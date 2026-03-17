@@ -8,7 +8,7 @@
       "$ref": "#/definitions/System.User"
     },
     "owner": {
-      "$ref": "#/definitions/User"
+      "$ref": "#/definitions/System.User"
     }
   },
   "required": [
@@ -53,30 +53,6 @@
         "state",
         "zip",
         "country"
-      ],
-      "additionalProperties": false
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "email",
-        "password"
       ],
       "additionalProperties": false
     }
