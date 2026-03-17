@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "lodash-es": "catalog:"

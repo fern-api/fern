@@ -195,7 +195,7 @@
           {
             "name": {
               "name": {
-                "originalName": "Pipe",
+                "originalName": "|",
                 "camelCase": {
                   "unsafeName": "pipe",
                   "safeName": "pipe"

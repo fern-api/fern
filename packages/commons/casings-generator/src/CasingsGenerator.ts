@@ -1,5 +1,4 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
@@ -9,12 +8,20 @@ import { RESERVED_KEYWORDS } from "./reserved.js";
 export interface CasingsGenerator {
     generateName(
         name: string,
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
+        opts?: {
+            casingOverrides?: RawSchemas.CasingOverridesSchema;
+            preserveUnderscores?: boolean;
+            nameForCasing?: string;
+        }
     ): Name;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
+        opts?: {
+            casingOverrides?: RawSchemas.CasingOverridesSchema;
+            preserveUnderscores?: boolean;
+            nameForCasing?: string;
+        };
     }): NameAndWireValue;
 }
 
@@ -31,7 +38,7 @@ export function constructCasingsGenerator({
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (inputName, opts) => {
-            const name = preprocessName(inputName);
+            const name = preprocessName(opts?.nameForCasing ?? inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeName({
@@ -253,13 +260,10 @@ const NAME_PREPROCESSOR_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> =
 ];
 
 function preprocessName(name: string): string {
-    const withReplacements = NAME_PREPROCESSOR_REPLACEMENTS.reduce(
+    return NAME_PREPROCESSOR_REPLACEMENTS.reduce(
         (result, [pattern, replacement]) => result.replace(pattern, replacement),
         name
     );
-    // Replace special characters (like %, #, @) with word equivalents
-    // so that camelCase/snakeCase can produce valid identifiers.
-    return replaceSpecialCharsWithWords(withReplacements);
 }
 
 /**

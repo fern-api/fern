@@ -345,7 +345,7 @@
           {
             "name": {
               "name": {
-                "originalName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
+                "originalName": "urn-devrev-params-oauth-grant-type-token-issue",
                 "camelCase": {
                   "unsafeName": "urnDevrevParamsOauthGrantTypeTokenIssue",
                   "safeName": "urnDevrevParamsOauthGrantTypeTokenIssue"
@@ -369,7 +369,7 @@
           {
             "name": {
               "name": {
-                "originalName": "UrnIetfParamsOauthGrantTypeTokenExchange",
+                "originalName": "urn-ietf-params-oauth-grant-type-token-exchange",
                 "camelCase": {
                   "unsafeName": "urnIetfParamsOauthGrantTypeTokenExchange",
                   "safeName": "urnIetfParamsOauthGrantTypeTokenExchange"

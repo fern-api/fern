@@ -95,7 +95,14 @@ export function replaceSpecialCharsWithWords(name: string): string {
     // Only clean up underscores if we actually performed replacements,
     // to avoid altering names that are already valid (e.g. "__dunder__").
     if (didReplace) {
-        return result.replace(/_+/g, "_");
+        // Preserve leading and trailing underscore runs while collapsing
+        // interior consecutive underscores (e.g. "__init%__" → "__init_percent__")
+        const leadingMatch = result.match(/^(_*)/);
+        const trailingMatch = result.match(/(_*)$/);
+        const leading = leadingMatch?.[1] ?? "";
+        const trailing = trailingMatch?.[1] ?? "";
+        const core = result.slice(leading.length, result.length - (trailing.length || 0) || undefined);
+        return leading + core.replace(/_+/g, "_") + trailing;
     }
     return result;
 }
