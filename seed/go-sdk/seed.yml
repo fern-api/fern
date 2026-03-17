@@ -270,6 +270,11 @@ fixtures:
         packageName: fern
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
+  go-deterministic-ordering:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:

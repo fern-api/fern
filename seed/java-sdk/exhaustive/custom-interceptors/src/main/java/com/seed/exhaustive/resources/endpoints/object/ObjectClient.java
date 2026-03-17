@@ -14,6 +14,7 @@ import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectClient {
     protected final ClientOptions clientOptions;
@@ -137,6 +138,17 @@ public class ObjectClient {
             ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithDocumentedUnknownType(request, requestOptions)
+                .body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+        return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(
+            Map<String, Object> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfDocumentedUnknownType(request, requestOptions)
                 .body();
     }
 

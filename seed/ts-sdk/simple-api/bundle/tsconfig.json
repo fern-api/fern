@@ -12,7 +12,6 @@
         "sourceMap": true,
         "outDir": "types",
         "rootDir": "src",
-        "baseUrl": "src",
         "isolatedModules": true,
         "isolatedDeclarations": true,
         "verbatimModuleSyntax": true

@@ -45,7 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.27.2" />
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
     <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />
     <PackageReference Include="Grpc.Tools" Version="2.64.0">
@@ -55,16 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf
-      Include="..\..\proto\google\api\annotations.proto"
-      GrpcServices="Client"
-      ProtoRoot="..\..\proto"
-    ></Protobuf>
-    <Protobuf
-      Include="..\..\proto\google\api\http.proto"
-      GrpcServices="Client"
-      ProtoRoot="..\..\proto"
-    ></Protobuf>
     <Protobuf
       Include="..\..\proto\user\v1\user.proto"
       GrpcServices="Client"

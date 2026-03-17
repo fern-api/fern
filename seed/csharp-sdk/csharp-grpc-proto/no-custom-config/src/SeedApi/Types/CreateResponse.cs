@@ -25,7 +25,7 @@ public record CreateResponse : IJsonOnDeserialized
     {
         return new CreateResponse
         {
-            User = value.User != null ? UserModel.FromProto(value.User) : null,
+            User = value.User != null ? SeedApi.UserModel.FromProto(value.User) : null,
         };
     }
 

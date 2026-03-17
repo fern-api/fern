@@ -840,7 +840,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // types that can get used
         this.Types.ReadOnlyAdditionalProperties();
         this.Types.JsonUtils;
-        this.Types.StringEnumSerializer;
         this.Types.IStringEnum;
 
         // start with the models
@@ -865,6 +864,18 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         this.csharp.classReference({
                             origin: this.model.explicit(typeDeclaration, "Values"),
                             enclosingType
+                        });
+
+                        // Register nested serializer class reference
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            enclosingType
+                        });
+                    } else {
+                        // Register companion serializer class reference for regular enums
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            namespace: enclosingType.namespace
                         });
                     }
                 },

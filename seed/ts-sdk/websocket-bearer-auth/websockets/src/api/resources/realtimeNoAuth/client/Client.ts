@@ -11,6 +11,8 @@ export declare namespace RealtimeNoAuthClient {
     export interface ConnectArgs {
         session_id: string;
         model?: string;
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -37,6 +39,7 @@ export class RealtimeNoAuthClient {
         const {
             session_id: sessionId,
             model,
+            protocols,
             queryParams,
             headers,
             debug,
@@ -54,7 +57,7 @@ export class RealtimeNoAuthClient {
                     (await core.Supplier.get(this._options.environment)),
                 `/realtime-no-auth/${core.url.encodePathParam(sessionId)}`,
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: {

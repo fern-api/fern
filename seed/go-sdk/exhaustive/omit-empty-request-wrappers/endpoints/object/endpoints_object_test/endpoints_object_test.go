@@ -517,6 +517,33 @@ func TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-with-documented-unknown-type", nil, 1)
 }
 
+func TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := map[string]types.DocumentedUnknownType{
+		"string": map[string]any{
+			"key": "value",
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-map-of-documented-unknown-type", nil, 1)
+}
+
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	t *testing.T,
 ) {

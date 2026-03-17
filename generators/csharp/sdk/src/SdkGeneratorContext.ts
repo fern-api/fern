@@ -203,9 +203,6 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.Json.StringEnumSerializer);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(
             FernIr.WellKnownProtobufType.any()
@@ -237,11 +234,6 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
-        }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }

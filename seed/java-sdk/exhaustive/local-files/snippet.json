@@ -326,6 +326,19 @@
             }
         },
         {
+            "example_identifier": "d3bae07f",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-map-of-documented-unknown-type",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(\n            new HashMap<String, Object>() {{\n                put(\"string\", new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }});\n            }}\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(\n            new HashMap<String, Object>() {{\n                put(\"string\", new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }});\n            }}\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "method": "POST",

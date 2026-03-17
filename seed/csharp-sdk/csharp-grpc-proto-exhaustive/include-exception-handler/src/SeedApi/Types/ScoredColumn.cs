@@ -40,9 +40,9 @@ public record ScoredColumn : IJsonOnDeserialized
             Id = value.Id,
             Score = value.Score,
             Values = value.Values?.ToList(),
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+                value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 

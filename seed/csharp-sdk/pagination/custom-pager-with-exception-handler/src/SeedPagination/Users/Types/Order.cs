@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
 namespace SeedPagination;
 
-[JsonConverter(typeof(StringEnumSerializer<Order>))]
+[JsonConverter(typeof(Order.OrderSerializer))]
 [Serializable]
 public readonly record struct Order : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct Order : IStringEnum
     public static explicit operator string(Order value) => value.Value;
 
     public static explicit operator Order(string value) => new(value);
+
+    internal class OrderSerializer : JsonConverter<Order>
+    {
+        public override Order Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new Order(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Order value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

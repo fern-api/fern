@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .object import (
         DocumentedUnknownType,
         DoubleOptional,
+        MapOfDocumentedUnknownType,
         NestedObjectWithOptionalField,
         NestedObjectWithOptionalFieldError,
         NestedObjectWithRequiredField,
@@ -37,6 +38,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".object",
     "ErrorWithEnumBody": ".enum",
     "ErrorWithUnionBody": ".union",
+    "MapOfDocumentedUnknownType": ".object",
     "MixedType": ".union",
     "NestedObjectWithOptionalField": ".object",
     "NestedObjectWithOptionalFieldError": ".object",
@@ -91,6 +93,7 @@ __all__ = [
     "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
+    "MapOfDocumentedUnknownType",
     "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",

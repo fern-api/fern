@@ -389,9 +389,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             properties: {
                 ...resolvedMediaTypeSchema.properties,
                 [this.streamingExtension.streamConditionProperty]: {
+                    ...streamConditionProperty,
                     type: "boolean",
-                    const: isStreaming,
-                    ...streamConditionProperty
+                    const: isStreaming
                 } as OpenAPIV3_1.SchemaObject
             },
             required: [...(resolvedMediaTypeSchema.required ?? []), this.streamingExtension.streamConditionProperty]
@@ -418,7 +418,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: undefined,
                     name: this.context.casingsGenerator.generateName(
-                        isStreaming ? `${this.schemaId}_streaming` : this.schemaId
+                        isStreaming
+                            ? (this.streamingExtension?.streamRequestName ?? `${this.schemaId}_streaming`)
+                            : this.schemaId
                     ),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,

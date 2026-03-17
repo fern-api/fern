@@ -1,0 +1,29 @@
+types:
+  Animal:
+    discriminant: animal
+    union:
+      dog: Dog
+      cat: Cat
+
+  Dog:
+    properties:
+      name: string
+      likesToWoof: boolean
+
+  Cat:
+    properties:
+      name: string
+      likesToMeow: boolean
+
+  MixedType:
+    discriminated: false
+    union:
+      - double
+      - boolean
+      - string
+      - list<string>
+
+errors:
+  ErrorWithUnionBody:
+    status-code: 400
+    type: Animal #has to send either dog or cat object in error body

@@ -15,7 +15,7 @@
     "index_type": {
       "oneOf": [
         {
-          "$ref": "#/definitions/dataservice.IndexType"
+          "$ref": "#/definitions/IndexType"
         },
         {
           "type": "null"
@@ -25,7 +25,7 @@
     "details": {
       "oneOf": [
         {
-          "$ref": "#/definitions/Any"
+          "$ref": "#/definitions/GoogleProtobufAny"
         },
         {
           "type": "null"
@@ -37,8 +37,18 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dataservice.IndexType"
+            "$ref": "#/definitions/IndexType"
           }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UpdateResponse_Status"
         },
         {
           "type": "null"
@@ -48,7 +58,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "dataservice.IndexType": {
+    "IndexType": {
       "type": "string",
       "enum": [
         "INDEX_TYPE_INVALID",
@@ -56,18 +66,30 @@
         "INDEX_TYPE_STRICT"
       ]
     },
-    "Any": {
+    "GoogleProtobufAny": {
       "type": "object",
-      "additionalProperties": {
-        "type": [
-          "string",
-          "number",
-          "boolean",
-          "object",
-          "array",
-          "null"
-        ]
-      }
+      "properties": {
+        "@type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "UpdateResponse_Status": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "STATUS_PENDING",
+        "STATUS_ACTIVE",
+        "STATUS_FAILED"
+      ]
     }
   }
 }

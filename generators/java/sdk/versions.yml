@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Fix `enable-forward-compatible-enums` config flag being ignored in
+        download files mode. The flag was missing from
+        `JavaSdkDownloadFilesCustomConfig`, so `enable-forward-compatible-enums: false`
+        in generators.yml had no effect when using `--local` generation.
+      type: fix
+  createdAt: "2026-03-14"
+  irVersion: 65
+
 - version: 3.44.0
   changelogEntry:
     - summary: |

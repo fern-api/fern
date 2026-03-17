@@ -40,9 +40,9 @@ public record QueryColumn : IJsonOnDeserialized
             Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
             TopK = value.TopK,
             Namespace = value.Namespace,
-            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
+            Filter = value.Filter != null ? SeedApi.Metadata.FromProto(value.Filter) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+                value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 

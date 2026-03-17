@@ -138,7 +138,7 @@ public class QueryStringConverterTest
     }
 
     // Test helper types - defined inline to avoid dependency on generated types
-    [JsonConverter(typeof(EnumSerializer<TestEnum>))]
+    [JsonConverter(typeof(TestEnumSerializer))]
     private enum TestEnum
     {
         [EnumMember(Value = "value_1")]
@@ -148,7 +148,31 @@ public class QueryStringConverterTest
         Value2
     }
 
-    [JsonConverter(typeof(StringEnumSerializer<TestStringEnum>))]
+    private class TestEnumSerializer : JsonConverter<TestEnum>
+    {
+        public override TestEnum Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+        {
+            var stringValue = reader.GetString() ?? throw new System.Exception("The JSON value could not be read as a string.");
+            return stringValue switch
+            {
+                "value_1" => TestEnum.Value1,
+                "value_2" => TestEnum.Value2,
+                _ => default
+            };
+        }
+
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, TestEnum value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value switch
+            {
+                TestEnum.Value1 => "value_1",
+                TestEnum.Value2 => "value_2",
+                _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, null)
+            });
+        }
+    }
+
+    [JsonConverter(typeof(TestStringEnum.TestStringEnumSerializer))]
     [System.Serializable]
     private readonly record struct TestStringEnum : IStringEnum
     {
@@ -165,6 +189,20 @@ public class QueryStringConverterTest
         public bool Equals(string? other) => Value.Equals(other);
 
         public override string ToString() => Value;
+
+        internal class TestStringEnumSerializer : JsonConverter<TestStringEnum>
+        {
+            public override TestStringEnum Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+            {
+                var stringValue = reader.GetString() ?? throw new System.Exception("The JSON value could not be read as a string.");
+                return new TestStringEnum(stringValue);
+            }
+
+            public override void Write(System.Text.Json.Utf8JsonWriter writer, TestStringEnum value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value.Value);
+            }
+        }
     }
 
     private class TestObject
