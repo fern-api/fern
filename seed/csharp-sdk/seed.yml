@@ -258,6 +258,12 @@ fixtures:
         experimental-fully-qualified-namespaces: true
         experimental-dotnet-format: true
       outputFolder: fully-qualified-namespaces
+    - customConfig:
+        namespace: "Candid.Net"
+        client-class-name: "Candid"
+        explicit-namespaces: true
+        experimental-fully-qualified-namespaces: true
+      outputFolder: namespace-client-collision
   csharp-system-collision:
     - customConfig:
         client-class-name: System
