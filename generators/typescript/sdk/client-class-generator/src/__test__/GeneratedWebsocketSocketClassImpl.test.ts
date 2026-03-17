@@ -187,18 +187,20 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             expect(methodNames).toContain("sendJson");
         });
 
-        it("generates module with Args, Response, and EventHandlers types", () => {
+        it("generates module with Args, Response, ReceiveEvent, SendEvent, and EventHandlers types", () => {
             const impl = createImpl();
             const context = createMockContext();
             impl.writeToFile(context);
 
             const moduleStructure = context._addedModules[0] as { name: string; statements: { name: string }[] };
             expect(moduleStructure.name).toBe("ChatSocket");
-            expect(moduleStructure.statements).toHaveLength(3);
+            expect(moduleStructure.statements).toHaveLength(5);
 
             const statementNames = moduleStructure.statements.map((s: { name: string }) => s.name);
             expect(statementNames).toContain("Args");
             expect(statementNames).toContain("Response");
+            expect(statementNames).toContain("ReceiveEvent");
+            expect(statementNames).toContain("SendEvent");
             expect(statementNames).toContain("EventHandlers");
         });
 
