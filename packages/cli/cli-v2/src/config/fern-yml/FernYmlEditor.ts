@@ -215,6 +215,9 @@ export class FernYmlEditor {
      * Adds an overlay path to the matching spec entry.
      * Unlike overrides, overlays is a single path (not an array).
      * Returns the edit location if a mutation was made, or undefined if no change.
+     *
+     * TODO (parser/ir): Support multiple overlays, in which case the add/removeOverrides
+     * and add/removeOverlays functions can be more easily collapsed.
      */
     public async addOverlay(
         specFilePath: AbsoluteFilePath,

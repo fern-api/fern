@@ -17,7 +17,15 @@ import type { SpecEntry } from "../utils/filterSpecs.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
 import { isEnoentError } from "../utils/isEnoentError.js";
 import { loadSpec, parseSpec, serializeSpec } from "../utils/loadSpec.js";
-import { deriveOutputPath, type SplitFormat } from "./deriveOutputPath.js";
+import {
+    ALL_FORMAT_NAMES,
+    deriveOutputPath,
+    normalizeSplitFormat,
+    OVERLAY_NAME,
+    OVERRIDES_NAME,
+    type SplitFormat,
+    type SplitFormatInput
+} from "./deriveOutputPath.js";
 import { generateOverlay, generateOverrides, hasChanges, type OverlayOutputAction } from "./diffSpecs.js";
 
 const execFileAsync = promisify(execFile);
@@ -29,7 +37,7 @@ export declare namespace SplitCommand {
     export interface Args extends GlobalArgs {
         api?: string;
         output?: string;
-        format?: SplitFormat;
+        format?: SplitFormatInput;
     }
 }
 
@@ -48,7 +56,7 @@ export class SplitCommand {
             return;
         }
 
-        const format: SplitFormat = args.format ?? "overlays";
+        const format: SplitFormat = normalizeSplitFormat(args.format ?? OVERLAY_NAME);
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
             throw new CliError({
@@ -71,7 +79,7 @@ export class SplitCommand {
                 continue;
             }
 
-            if (format === "overlays") {
+            if (format === OVERLAY_NAME) {
                 await this.splitAsOverlay(context, editor, entry, originalContent, currentContent, args.output);
             } else {
                 await this.splitAsOverrides(context, editor, entry, originalContent, currentContent, args.output);
@@ -120,7 +128,7 @@ export class SplitCommand {
             outputPath =
                 outputArg != null
                     ? resolvePathOrThrow(context, outputArg)
-                    : deriveOutputPath(entry.specFilePath, "overlays");
+                    : deriveOutputPath(entry.specFilePath, OVERLAY_NAME);
         }
 
         if (await this.tryMergeOverlayIntoExistingFile(outputPath, overlay.actions)) {
@@ -155,7 +163,7 @@ export class SplitCommand {
         const outputPath =
             outputArg != null
                 ? resolvePathOrThrow(context, outputArg)
-                : deriveOutputPath(entry.specFilePath, "overrides");
+                : deriveOutputPath(entry.specFilePath, OVERRIDES_NAME);
 
         if (await this.tryMergeIntoExistingFile(outputPath, overrides)) {
             context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
@@ -273,9 +281,16 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .option("format", {
                     type: "string",
-                    choices: ["overlays", "overrides"] as const,
-                    default: "overlays" as const,
-                    description: "Output format: 'overlays' (OpenAPI Overlay 1.0.0) or 'overrides' (Fern deep-merge)"
+                    default: OVERLAY_NAME,
+                    description: `Output format: '${OVERLAY_NAME}' (OpenAPI Overlay 1.0.0) or '${OVERRIDES_NAME}' (Fern deep-merge)`
+                })
+                .coerce("format", (value: string): SplitFormatInput => {
+                    if (!(ALL_FORMAT_NAMES as readonly string[]).includes(value)) {
+                        throw new Error(
+                            `Invalid format '${value}'. Expected one of: ${OVERLAY_NAME}, ${OVERRIDES_NAME}`
+                        );
+                    }
+                    return value as SplitFormatInput;
                 })
     );
 }

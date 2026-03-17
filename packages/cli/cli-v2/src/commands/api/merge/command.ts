@@ -86,10 +86,9 @@ export class MergeCommand {
             mergedCount++;
 
             if (editor != null) {
-                // Clean up overrides
+                // Remove references from the in-memory YAML (files deleted after save)
                 if (overridePaths != null) {
                     const edit = await editor.removeOverrides(entry.specFilePath);
-                    await this.cleanupFiles(context, overridePaths);
                     if (edit != null) {
                         const relPath = path.relative(context.cwd, await editor.getApiFilePath());
                         const names = overridePaths.map((o) => path.basename(o)).join(", ");
@@ -97,10 +96,8 @@ export class MergeCommand {
                     }
                 }
 
-                // Clean up overlays
                 if (overlayPath != null) {
                     const edit = await editor.removeOverlay(entry.specFilePath);
-                    await this.cleanupFiles(context, [overlayPath]);
                     if (edit != null) {
                         const relPath = path.relative(context.cwd, await editor.getApiFilePath());
                         context.stderr.info(
@@ -113,6 +110,18 @@ export class MergeCommand {
 
         if (editor != null) {
             await editor.save();
+        }
+
+        // Delete overlay/override files only after the YAML has been saved successfully
+        if (args.remove === true) {
+            for (const entry of entries) {
+                if (entry.overrides != null && entry.overrides.length > 0) {
+                    await this.cleanupFiles(context, entry.overrides);
+                }
+                if (entry.overlays != null) {
+                    await this.cleanupFiles(context, [entry.overlays]);
+                }
+            }
         }
 
         if (mergedCount === 0) {
