@@ -3,15 +3,13 @@ import { streamObjectToFile } from "@fern-api/fs-utils";
 import chalk from "chalk";
 import { JsonStreamStringify } from "json-stream-stringify";
 import type { Argv } from "yargs";
-import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import { IrCompiler } from "../../../api/compiler/IrCompiler.js";
-import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { LANGUAGES } from "../../../sdk/config/Language.js";
-import type { Workspace } from "../../../workspace/Workspace.js";
 import { command } from "../../_internal/command.js";
+import { checkOrThrow } from "../utils/checkOrThrow.js";
+import { resolveApi } from "../utils/resolveApi.js";
 
 export declare namespace CompileCommand {
     export interface Args extends GlobalArgs {
@@ -28,9 +26,9 @@ export declare namespace CompileCommand {
 export class CompileCommand {
     public async handle(context: Context, args: CompileCommand.Args): Promise<void> {
         const workspace = await context.loadWorkspaceOrThrow();
-        const { apiName, definition } = this.resolveApi(args, workspace);
+        const { apiName, definition } = resolveApi(args, workspace);
 
-        await this.checkOrThrow({ context, workspace, apiName });
+        await checkOrThrow({ context, workspace, apiName });
 
         const compiler = new IrCompiler({
             context,
@@ -54,66 +52,6 @@ export class CompileCommand {
             : await compiler.compile({ apiName, definition, options });
 
         await this.writeOutput(context, args, result.object);
-    }
-
-    private resolveApi(
-        args: CompileCommand.Args,
-        workspace: Workspace
-    ): { apiName: string; definition: ApiDefinition } {
-        const apiNames = Object.keys(workspace.apis);
-
-        if (args.api != null) {
-            const definition = workspace.apis[args.api];
-            if (definition == null) {
-                const available = apiNames.join(", ");
-                throw new CliError({
-                    message: `API '${args.api}' not found. Available APIs: ${available}`
-                });
-            }
-            return { apiName: args.api, definition };
-        }
-
-        if (apiNames.length === 1) {
-            const apiName = apiNames[0];
-            if (apiName == null) {
-                throw new CliError({
-                    message: "Internal error; no APIs found in workspace"
-                });
-            }
-            const definition = workspace.apis[apiName];
-            if (definition == null) {
-                throw new CliError({
-                    message: `Internal error; API '${apiName}' not found in workspace`
-                });
-            }
-            return { apiName, definition };
-        }
-
-        const available = apiNames.join(", ");
-        throw new CliError({
-            message: `Multiple APIs found: ${available}. Use --api to select one.`
-        });
-    }
-
-    private async checkOrThrow({
-        context,
-        workspace,
-        apiName
-    }: {
-        context: Context;
-        workspace: Workspace;
-        apiName: string;
-    }): Promise<void> {
-        const checker = new ApiChecker({ context, cliVersion: workspace.cliVersion });
-        const result = await checker.check({ workspace, apiNames: [apiName] });
-        if (result.invalidApis.size > 0) {
-            for (const violation of result.violations) {
-                context.stderr.error(
-                    `${violation.displayRelativeFilepath}:${violation.line}:${violation.column}: ${violation.message}`
-                );
-            }
-            throw CliError.exit();
-        }
     }
 
     private async writeOutput(context: Context, args: CompileCommand.Args, object: unknown): Promise<void> {
