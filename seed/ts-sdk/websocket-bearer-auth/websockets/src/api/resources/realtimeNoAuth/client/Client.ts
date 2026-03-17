@@ -3,10 +3,13 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
+import type * as SeedWebsocketBearerAuth from "../../../index.js";
 import { RealtimeNoAuthSocket } from "./Socket.js";
 
 export declare namespace RealtimeNoAuthClient {
     export type Options = BaseClientOptions;
+    export type ReceiveEvent = SeedWebsocketBearerAuth.NoAuthReceiveEvent;
+    export type SendEvent = SeedWebsocketBearerAuth.NoAuthSendEvent;
 
     export interface ConnectArgs {
         session_id: string;

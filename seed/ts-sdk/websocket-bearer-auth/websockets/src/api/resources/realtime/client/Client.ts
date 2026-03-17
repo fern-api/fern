@@ -4,10 +4,20 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import type * as SeedWebsocketBearerAuth from "../../../index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
     export type Options = BaseClientOptions;
+    export type ReceiveEvent =
+        | SeedWebsocketBearerAuth.ReceiveEvent
+        | SeedWebsocketBearerAuth.ReceiveSnakeCase
+        | SeedWebsocketBearerAuth.ReceiveEvent2
+        | SeedWebsocketBearerAuth.ReceiveEvent3;
+    export type SendEvent =
+        | SeedWebsocketBearerAuth.SendEvent
+        | SeedWebsocketBearerAuth.SendSnakeCase
+        | SeedWebsocketBearerAuth.SendEvent2;
 
     export interface ConnectArgs {
         session_id: string;

@@ -3,10 +3,18 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
+import type * as SeedWebsocket from "../../../index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
     export type Options = BaseClientOptions;
+    export type ReceiveEvent =
+        | SeedWebsocket.ReceiveEvent
+        | SeedWebsocket.ReceiveSnakeCase
+        | SeedWebsocket.ReceiveEvent2
+        | SeedWebsocket.ReceiveEvent3
+        | SeedWebsocket.ErrorEvent;
+    export type SendEvent = SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2;
 
     export interface ConnectArgs {
         sessionId: string;

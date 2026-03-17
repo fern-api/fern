@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Export `ReceiveEvent` and `SendEvent` type aliases in the generated WebSocket
+        client namespace (e.g. `RealtimeClient.ReceiveEvent`, `RealtimeClient.SendEvent`).
+        This makes the server-to-client and client-to-server event union types accessible
+        under the client namespace, avoiding naming conflicts if additional WebSocket
+        clients are added in the future.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 3.59.0
   changelogEntry:
     - summary: |
