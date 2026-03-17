@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using global::Seed.CsharpNamespaceConflict;\n\nvar client = new Seed();\nawait client.Tasktest.HelloAsync();\n"
+                "client": "\n\nvar client = new global::Seed.CsharpNamespaceConflict.Seed();\nawait client.Tasktest.HelloAsync();\n"
             }
         }
     ]

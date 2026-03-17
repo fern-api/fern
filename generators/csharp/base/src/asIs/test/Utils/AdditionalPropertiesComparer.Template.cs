@@ -1,7 +1,7 @@
 using System.Text.Json;
 using NUnit.Framework.Constraints;
-using <%= qualifyNamespace(namespaces.root) %>;
-using <%= qualifyNamespace(namespaces.root) %>.Core;
+using <%= namespaces.qualifiedRoot %>;
+using <%= namespaces.qualifiedRoot %>.Core;
 
 namespace NUnit.Framework;
 

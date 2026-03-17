@@ -1,6 +1,6 @@
 using global::System.Text.Json;
 using NUnit.Framework;
-using <%= qualifyNamespace(namespaces.core)%>;
+using <%= namespaces.qualifiedCore%>;
 
 namespace <%= namespace%>;
 

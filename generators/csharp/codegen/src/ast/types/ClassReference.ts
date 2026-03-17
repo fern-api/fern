@@ -229,6 +229,11 @@ export class ClassReference extends Node implements Type {
                         // we must to fully qualify the type
                         // writer.addReference(this);
                         writer.write(fqName);
+                    } else if (this.registry.hasTypeNamespaceConflict(this.name)) {
+                        // If the class name itself matches a root namespace segment,
+                        // the C# compiler resolves it as the namespace instead of the type (CS0118).
+                        // Use the fully qualified name to disambiguate.
+                        writer.write(fqName);
                     } else {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name

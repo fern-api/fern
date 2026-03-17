@@ -90,12 +90,4 @@ export class WithGeneration {
     public get Collection() {
         return this.generation.Collection;
     }
-
-    /**
-     * Returns a namespace string with `global::` prefix if needed to avoid CS0426
-     * when a type name shadows a namespace root segment.
-     */
-    protected qualifyNamespace(ns: string): string {
-        return this.generation.qualifyNamespace(ns);
-    }
 }

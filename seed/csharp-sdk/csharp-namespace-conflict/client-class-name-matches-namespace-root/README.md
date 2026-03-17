@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using global::Seed.CsharpNamespaceConflict;
 
-var client = new Seed();
+
+var client = new global::Seed.CsharpNamespaceConflict.Seed();
 await client.Tasktest.HelloAsync();
 ```
 

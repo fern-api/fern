@@ -328,6 +328,10 @@ export class Generation {
         root: (): string => this.settings.namespace,
         /** Internal Core namespace for SDK implementation details and utilities ({root}.Core). */
         core: (): string => `${this.namespaces.root}.Core`,
+        /** Pre-qualified root namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedRoot: (): string => this.qualifyNamespace(this.namespaces.root),
+        /** Pre-qualified Core namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedCore: (): string => this.qualifyNamespace(this.namespaces.core),
         /** Test namespace for all test-related code, canonicalized to avoid conflicts ({root}.Test). */
         test: (): string => this.registry.canonicalizeNamespace(`${this.namespaces.root}.Test`),
         /** Test utilities namespace for helper methods and fixtures ({root}.Test.Utils). */
