@@ -54,8 +54,7 @@ export class SeedOauthClientCredentialsMandatoryAuthClient {
             input,
             init,
             {
-                environment: this._options.environment,
-                baseUrl: this._options.baseUrl,
+                baseUrl: this._options.baseUrl ?? this._options.environment,
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

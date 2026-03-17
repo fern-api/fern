@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method producing 404s when the SDK environment is an
+        object (e.g. `{ base: string; production: string }`) instead of a plain string URL.
+        The generated code now resolves the environment supplier inline and projects object
+        environments to their `.base` property, instead of passing the raw object to
+        `makePassthroughRequest` where it would be stringified as `[object Object]`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.57.0
   changelogEntry:
     - summary: |
@@ -10,7 +22,6 @@
       type: feat
   createdAt: "2026-03-16"
   irVersion: 65
-
 - version: 3.56.4
   changelogEntry:
     - summary: |
