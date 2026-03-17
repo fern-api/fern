@@ -1,0 +1,2402 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "websocket-auth-fallback",
+        "camelCase": {
+            "unsafeName": "websocketAuthFallback",
+            "safeName": "websocketAuthFallback"
+        },
+        "snakeCase": {
+            "unsafeName": "websocket_auth_fallback",
+            "safeName": "websocket_auth_fallback"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "WEBSOCKET_AUTH_FALLBACK",
+            "safeName": "WEBSOCKET_AUTH_FALLBACK"
+        },
+        "pascalCase": {
+            "unsafeName": "WebsocketAuthFallback",
+            "safeName": "WebsocketAuthFallback"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer",
+                "token": {
+                    "originalName": "apiKey",
+                    "camelCase": {
+                        "unsafeName": "apiKey",
+                        "safeName": "apiKey"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api_key",
+                        "safeName": "api_key"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API_KEY",
+                        "safeName": "API_KEY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "APIKey",
+                        "safeName": "APIKey"
+                    }
+                },
+                "tokenEnvVar": "SEED_API_KEY",
+                "key": "Bearer",
+                "websocketAuthFallback": {
+                    "_type": "websocketSubprotocol",
+                    "format": "bearer.{token}"
+                },
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_realtime:SendEvent": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "SendEvent",
+                    "camelCase": {
+                        "unsafeName": "sendEvent",
+                        "safeName": "sendEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_event",
+                        "safeName": "send_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_EVENT",
+                        "safeName": "SEND_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendEvent",
+                        "safeName": "SendEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_realtime:SendEvent"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sendText",
+                                "camelCase": {
+                                    "unsafeName": "sendText",
+                                    "safeName": "sendText"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "send_text",
+                                    "safeName": "send_text"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEND_TEXT",
+                                    "safeName": "SEND_TEXT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SendText",
+                                    "safeName": "SendText"
+                                }
+                            },
+                            "wireValue": "sendText"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sendParam",
+                                "camelCase": {
+                                    "unsafeName": "sendParam",
+                                    "safeName": "sendParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "send_param",
+                                    "safeName": "send_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEND_PARAM",
+                                    "safeName": "SEND_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SendParam",
+                                    "safeName": "SendParam"
+                                }
+                            },
+                            "wireValue": "sendParam"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_realtime:ReceiveEvent": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "ReceiveEvent",
+                    "camelCase": {
+                        "unsafeName": "receiveEvent",
+                        "safeName": "receiveEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "receive_event",
+                        "safeName": "receive_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RECEIVE_EVENT",
+                        "safeName": "RECEIVE_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ReceiveEvent",
+                        "safeName": "ReceiveEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_realtime:ReceiveEvent"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "alpha",
+                                "camelCase": {
+                                    "unsafeName": "alpha",
+                                    "safeName": "alpha"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "alpha",
+                                    "safeName": "alpha"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ALPHA",
+                                    "safeName": "ALPHA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Alpha",
+                                    "safeName": "Alpha"
+                                }
+                            },
+                            "wireValue": "alpha"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "beta",
+                                "camelCase": {
+                                    "unsafeName": "beta",
+                                    "safeName": "beta"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "beta",
+                                    "safeName": "beta"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BETA",
+                                    "safeName": "BETA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Beta",
+                                    "safeName": "Beta"
+                                }
+                            },
+                            "wireValue": "beta"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        }
+    },
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_realtime:SendEvent",
+            "type_realtime:ReceiveEvent"
+        ]
+    },
+    "webhookGroups": {},
+    "websocketChannels": {
+        "channel_realtime": {
+            "path": {
+                "head": "/realtime/",
+                "parts": [
+                    {
+                        "pathParameter": "session_id",
+                        "tail": ""
+                    }
+                ]
+            },
+            "baseUrl": null,
+            "auth": true,
+            "name": {
+                "originalName": "realtime",
+                "camelCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "snakeCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "REALTIME",
+                    "safeName": "REALTIME"
+                },
+                "pascalCase": {
+                    "unsafeName": "Realtime",
+                    "safeName": "Realtime"
+                }
+            },
+            "displayName": null,
+            "connectMethodName": null,
+            "headers": [],
+            "pathParameters": [
+                {
+                    "name": {
+                        "originalName": "session_id",
+                        "camelCase": {
+                            "unsafeName": "sessionID",
+                            "safeName": "sessionID"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "session_id",
+                            "safeName": "session_id"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SESSION_ID",
+                            "safeName": "SESSION_ID"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SessionID",
+                            "safeName": "SessionID"
+                        }
+                    },
+                    "valueType": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    },
+                    "location": "ENDPOINT",
+                    "variable": null,
+                    "v2Examples": {
+                        "userSpecifiedExamples": {},
+                        "autogeneratedExamples": {}
+                    },
+                    "explode": null,
+                    "docs": null
+                }
+            ],
+            "queryParameters": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "model",
+                            "camelCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MODEL",
+                                "safeName": "MODEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Model",
+                                "safeName": "Model"
+                            }
+                        },
+                        "wireValue": "model"
+                    },
+                    "valueType": {
+                        "_type": "container",
+                        "container": {
+                            "_type": "optional",
+                            "optional": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "allowMultiple": false,
+                    "v2Examples": {
+                        "userSpecifiedExamples": {},
+                        "autogeneratedExamples": {}
+                    },
+                    "explode": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "messages": [
+                {
+                    "type": "send",
+                    "origin": "client",
+                    "body": {
+                        "type": "reference",
+                        "bodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "SendEvent",
+                                "camelCase": {
+                                    "unsafeName": "sendEvent",
+                                    "safeName": "sendEvent"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "send_event",
+                                    "safeName": "send_event"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEND_EVENT",
+                                    "safeName": "SEND_EVENT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SendEvent",
+                                    "safeName": "SendEvent"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "realtime",
+                                        "camelCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REALTIME",
+                                            "safeName": "REALTIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Realtime",
+                                            "safeName": "Realtime"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "realtime",
+                                    "camelCase": {
+                                        "unsafeName": "realtime",
+                                        "safeName": "realtime"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "realtime",
+                                        "safeName": "realtime"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REALTIME",
+                                        "safeName": "REALTIME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Realtime",
+                                        "safeName": "Realtime"
+                                    }
+                                }
+                            },
+                            "displayName": null,
+                            "typeId": "type_realtime:SendEvent",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    "displayName": "Send",
+                    "methodName": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "type": "receive",
+                    "origin": "server",
+                    "body": {
+                        "type": "reference",
+                        "bodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "ReceiveEvent",
+                                "camelCase": {
+                                    "unsafeName": "receiveEvent",
+                                    "safeName": "receiveEvent"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "receive_event",
+                                    "safeName": "receive_event"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RECEIVE_EVENT",
+                                    "safeName": "RECEIVE_EVENT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ReceiveEvent",
+                                    "safeName": "ReceiveEvent"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "realtime",
+                                        "camelCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REALTIME",
+                                            "safeName": "REALTIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Realtime",
+                                            "safeName": "Realtime"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "realtime",
+                                    "camelCase": {
+                                        "unsafeName": "realtime",
+                                        "safeName": "realtime"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "realtime",
+                                        "safeName": "realtime"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REALTIME",
+                                        "safeName": "REALTIME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Realtime",
+                                        "safeName": "Realtime"
+                                    }
+                                }
+                            },
+                            "displayName": null,
+                            "typeId": "type_realtime:ReceiveEvent",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    "displayName": "Receive",
+                    "methodName": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Default example",
+                        "camelCase": {
+                            "unsafeName": "defaultExample",
+                            "safeName": "defaultExample"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default_example",
+                            "safeName": "default_example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT_EXAMPLE",
+                            "safeName": "DEFAULT_EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DefaultExample",
+                            "safeName": "DefaultExample"
+                        }
+                    },
+                    "url": "/realtime/session_123",
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "session_id",
+                                "camelCase": {
+                                    "unsafeName": "sessionID",
+                                    "safeName": "sessionID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "session_id",
+                                    "safeName": "session_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SESSION_ID",
+                                    "safeName": "SESSION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SessionID",
+                                    "safeName": "SessionID"
+                                }
+                            },
+                            "value": {
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "session_123"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "session_123"
+                            }
+                        }
+                    ],
+                    "headers": [],
+                    "queryParameters": [],
+                    "messages": [
+                        {
+                            "type": "send",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "typeName": {
+                                        "typeId": "type_realtime:SendEvent",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "realtime",
+                                                    "camelCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REALTIME",
+                                                        "safeName": "REALTIME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Realtime",
+                                                        "safeName": "Realtime"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "realtime",
+                                                "camelCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REALTIME",
+                                                    "safeName": "REALTIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Realtime",
+                                                    "safeName": "Realtime"
+                                                }
+                                            }
+                                        },
+                                        "name": {
+                                            "originalName": "SendEvent",
+                                            "camelCase": {
+                                                "unsafeName": "sendEvent",
+                                                "safeName": "sendEvent"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "send_event",
+                                                "safeName": "send_event"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SEND_EVENT",
+                                                "safeName": "SEND_EVENT"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "SendEvent",
+                                                "safeName": "SendEvent"
+                                            }
+                                        },
+                                        "displayName": null
+                                    },
+                                    "shape": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "sendText",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendText",
+                                                            "safeName": "sendText"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_text",
+                                                            "safeName": "send_text"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_TEXT",
+                                                            "safeName": "SEND_TEXT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendText",
+                                                            "safeName": "SendText"
+                                                        }
+                                                    },
+                                                    "wireValue": "sendText"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "Hello"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "Hello"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_realtime:SendEvent",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "SendEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendEvent",
+                                                            "safeName": "sendEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_event",
+                                                            "safeName": "send_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_EVENT",
+                                                            "safeName": "SEND_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendEvent",
+                                                            "safeName": "SendEvent"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "propertyAccess": null
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "sendParam",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendParam",
+                                                            "safeName": "sendParam"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_param",
+                                                            "safeName": "send_param"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_PARAM",
+                                                            "safeName": "SEND_PARAM"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendParam",
+                                                            "safeName": "SendParam"
+                                                        }
+                                                    },
+                                                    "wireValue": "sendParam"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "integer",
+                                                            "integer": 1
+                                                        }
+                                                    },
+                                                    "jsonExample": 1
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_realtime:SendEvent",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "SendEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendEvent",
+                                                            "safeName": "sendEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_event",
+                                                            "safeName": "send_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_EVENT",
+                                                            "safeName": "SEND_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendEvent",
+                                                            "safeName": "SendEvent"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "propertyAccess": null
+                                            }
+                                        ],
+                                        "extraProperties": null
+                                    }
+                                },
+                                "jsonExample": {
+                                    "sendText": "Hello",
+                                    "sendParam": 1
+                                }
+                            }
+                        },
+                        {
+                            "type": "receive",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "typeName": {
+                                        "typeId": "type_realtime:ReceiveEvent",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "realtime",
+                                                    "camelCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REALTIME",
+                                                        "safeName": "REALTIME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Realtime",
+                                                        "safeName": "Realtime"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "realtime",
+                                                "camelCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REALTIME",
+                                                    "safeName": "REALTIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Realtime",
+                                                    "safeName": "Realtime"
+                                                }
+                                            }
+                                        },
+                                        "name": {
+                                            "originalName": "ReceiveEvent",
+                                            "camelCase": {
+                                                "unsafeName": "receiveEvent",
+                                                "safeName": "receiveEvent"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "receive_event",
+                                                "safeName": "receive_event"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "RECEIVE_EVENT",
+                                                "safeName": "RECEIVE_EVENT"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ReceiveEvent",
+                                                "safeName": "ReceiveEvent"
+                                            }
+                                        },
+                                        "displayName": null
+                                    },
+                                    "shape": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "alpha",
+                                                        "camelCase": {
+                                                            "unsafeName": "alpha",
+                                                            "safeName": "alpha"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "alpha",
+                                                            "safeName": "alpha"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "ALPHA",
+                                                            "safeName": "ALPHA"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Alpha",
+                                                            "safeName": "Alpha"
+                                                        }
+                                                    },
+                                                    "wireValue": "alpha"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "Response"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "Response"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_realtime:ReceiveEvent",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "ReceiveEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "receiveEvent",
+                                                            "safeName": "receiveEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "receive_event",
+                                                            "safeName": "receive_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RECEIVE_EVENT",
+                                                            "safeName": "RECEIVE_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "ReceiveEvent",
+                                                            "safeName": "ReceiveEvent"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "propertyAccess": null
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "beta",
+                                                        "camelCase": {
+                                                            "unsafeName": "beta",
+                                                            "safeName": "beta"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "beta",
+                                                            "safeName": "beta"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "BETA",
+                                                            "safeName": "BETA"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Beta",
+                                                            "safeName": "Beta"
+                                                        }
+                                                    },
+                                                    "wireValue": "beta"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "integer",
+                                                            "integer": 42
+                                                        }
+                                                    },
+                                                    "jsonExample": 42
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_realtime:ReceiveEvent",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "ReceiveEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "receiveEvent",
+                                                            "safeName": "receiveEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "receive_event",
+                                                            "safeName": "receive_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RECEIVE_EVENT",
+                                                            "safeName": "RECEIVE_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "ReceiveEvent",
+                                                            "safeName": "ReceiveEvent"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "propertyAccess": null
+                                            }
+                                        ],
+                                        "extraProperties": null
+                                    }
+                                },
+                                "jsonExample": {
+                                    "alpha": "Response",
+                                    "beta": 42
+                                }
+                            }
+                        }
+                    ],
+                    "docs": null
+                },
+                {
+                    "name": null,
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "session_id",
+                                "camelCase": {
+                                    "unsafeName": "sessionID",
+                                    "safeName": "sessionID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "session_id",
+                                    "safeName": "session_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SESSION_ID",
+                                    "safeName": "SESSION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SessionID",
+                                    "safeName": "SessionID"
+                                }
+                            },
+                            "value": {
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "session_id"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "session_id"
+                            }
+                        }
+                    ],
+                    "headers": [],
+                    "queryParameters": [],
+                    "messages": [
+                        {
+                            "type": "send",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "shape": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "sendText",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendText",
+                                                            "safeName": "sendText"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_text",
+                                                            "safeName": "send_text"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_TEXT",
+                                                            "safeName": "SEND_TEXT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendText",
+                                                            "safeName": "SendText"
+                                                        }
+                                                    },
+                                                    "wireValue": "sendText"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "name": {
+                                                        "originalName": "SendEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendEvent",
+                                                            "safeName": "sendEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_event",
+                                                            "safeName": "send_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_EVENT",
+                                                            "safeName": "SEND_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendEvent",
+                                                            "safeName": "SendEvent"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_realtime:SendEvent"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "sendText"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "sendText"
+                                                },
+                                                "propertyAccess": null
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "sendParam",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendParam",
+                                                            "safeName": "sendParam"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_param",
+                                                            "safeName": "send_param"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_PARAM",
+                                                            "safeName": "SEND_PARAM"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendParam",
+                                                            "safeName": "SendParam"
+                                                        }
+                                                    },
+                                                    "wireValue": "sendParam"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "name": {
+                                                        "originalName": "SendEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendEvent",
+                                                            "safeName": "sendEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_event",
+                                                            "safeName": "send_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_EVENT",
+                                                            "safeName": "SEND_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendEvent",
+                                                            "safeName": "SendEvent"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_realtime:SendEvent"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "integer",
+                                                            "integer": 1
+                                                        }
+                                                    },
+                                                    "jsonExample": 1
+                                                },
+                                                "propertyAccess": null
+                                            }
+                                        ],
+                                        "extraProperties": null
+                                    },
+                                    "typeName": {
+                                        "name": {
+                                            "originalName": "SendEvent",
+                                            "camelCase": {
+                                                "unsafeName": "sendEvent",
+                                                "safeName": "sendEvent"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "send_event",
+                                                "safeName": "send_event"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SEND_EVENT",
+                                                "safeName": "SEND_EVENT"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "SendEvent",
+                                                "safeName": "SendEvent"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "realtime",
+                                                    "camelCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REALTIME",
+                                                        "safeName": "REALTIME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Realtime",
+                                                        "safeName": "Realtime"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "realtime",
+                                                "camelCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REALTIME",
+                                                    "safeName": "REALTIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Realtime",
+                                                    "safeName": "Realtime"
+                                                }
+                                            }
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_realtime:SendEvent"
+                                    }
+                                },
+                                "jsonExample": {
+                                    "sendText": "sendText",
+                                    "sendParam": 1
+                                }
+                            }
+                        },
+                        {
+                            "type": "receive",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "shape": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "alpha",
+                                                        "camelCase": {
+                                                            "unsafeName": "alpha",
+                                                            "safeName": "alpha"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "alpha",
+                                                            "safeName": "alpha"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "ALPHA",
+                                                            "safeName": "ALPHA"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Alpha",
+                                                            "safeName": "Alpha"
+                                                        }
+                                                    },
+                                                    "wireValue": "alpha"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "name": {
+                                                        "originalName": "ReceiveEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "receiveEvent",
+                                                            "safeName": "receiveEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "receive_event",
+                                                            "safeName": "receive_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RECEIVE_EVENT",
+                                                            "safeName": "RECEIVE_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "ReceiveEvent",
+                                                            "safeName": "ReceiveEvent"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_realtime:ReceiveEvent"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "alpha"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "alpha"
+                                                },
+                                                "propertyAccess": null
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "beta",
+                                                        "camelCase": {
+                                                            "unsafeName": "beta",
+                                                            "safeName": "beta"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "beta",
+                                                            "safeName": "beta"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "BETA",
+                                                            "safeName": "BETA"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Beta",
+                                                            "safeName": "Beta"
+                                                        }
+                                                    },
+                                                    "wireValue": "beta"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "name": {
+                                                        "originalName": "ReceiveEvent",
+                                                        "camelCase": {
+                                                            "unsafeName": "receiveEvent",
+                                                            "safeName": "receiveEvent"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "receive_event",
+                                                            "safeName": "receive_event"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RECEIVE_EVENT",
+                                                            "safeName": "RECEIVE_EVENT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "ReceiveEvent",
+                                                            "safeName": "ReceiveEvent"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "realtime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "realtime",
+                                                                    "safeName": "realtime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REALTIME",
+                                                                    "safeName": "REALTIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Realtime",
+                                                                    "safeName": "Realtime"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "realtime",
+                                                            "camelCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "realtime",
+                                                                "safeName": "realtime"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REALTIME",
+                                                                "safeName": "REALTIME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Realtime",
+                                                                "safeName": "Realtime"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_realtime:ReceiveEvent"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "integer",
+                                                            "integer": 1
+                                                        }
+                                                    },
+                                                    "jsonExample": 1
+                                                },
+                                                "propertyAccess": null
+                                            }
+                                        ],
+                                        "extraProperties": null
+                                    },
+                                    "typeName": {
+                                        "name": {
+                                            "originalName": "ReceiveEvent",
+                                            "camelCase": {
+                                                "unsafeName": "receiveEvent",
+                                                "safeName": "receiveEvent"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "receive_event",
+                                                "safeName": "receive_event"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "RECEIVE_EVENT",
+                                                "safeName": "RECEIVE_EVENT"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ReceiveEvent",
+                                                "safeName": "ReceiveEvent"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "realtime",
+                                                    "camelCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "realtime",
+                                                        "safeName": "realtime"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REALTIME",
+                                                        "safeName": "REALTIME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Realtime",
+                                                        "safeName": "Realtime"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "realtime",
+                                                "camelCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "realtime",
+                                                    "safeName": "realtime"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REALTIME",
+                                                    "safeName": "REALTIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Realtime",
+                                                    "safeName": "Realtime"
+                                                }
+                                            }
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_realtime:ReceiveEvent"
+                                    }
+                                },
+                                "jsonExample": {
+                                    "alpha": "alpha",
+                                    "beta": 1
+                                }
+                            }
+                        }
+                    ],
+                    "url": "/realtime/session_id",
+                    "docs": null
+                }
+            ],
+            "v2Examples": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+            },
+            "availability": null,
+            "docs": null
+        }
+    },
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {
+            "type_realtime:SendEvent": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "SendEvent",
+                        "camelCase": {
+                            "unsafeName": "sendEvent",
+                            "safeName": "sendEvent"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "send_event",
+                            "safeName": "send_event"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEND_EVENT",
+                            "safeName": "SEND_EVENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SendEvent",
+                            "safeName": "SendEvent"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "realtime",
+                                "camelCase": {
+                                    "unsafeName": "realtime",
+                                    "safeName": "realtime"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "realtime",
+                                    "safeName": "realtime"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REALTIME",
+                                    "safeName": "REALTIME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Realtime",
+                                    "safeName": "Realtime"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sendText",
+                                "camelCase": {
+                                    "unsafeName": "sendText",
+                                    "safeName": "sendText"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "send_text",
+                                    "safeName": "send_text"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEND_TEXT",
+                                    "safeName": "SEND_TEXT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SendText",
+                                    "safeName": "SendText"
+                                }
+                            },
+                            "wireValue": "sendText"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "sendParam",
+                                "camelCase": {
+                                    "unsafeName": "sendParam",
+                                    "safeName": "sendParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "send_param",
+                                    "safeName": "send_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEND_PARAM",
+                                    "safeName": "SEND_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SendParam",
+                                    "safeName": "SendParam"
+                                }
+                            },
+                            "wireValue": "sendParam"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "extends": null,
+                "additionalProperties": false
+            },
+            "type_realtime:ReceiveEvent": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "ReceiveEvent",
+                        "camelCase": {
+                            "unsafeName": "receiveEvent",
+                            "safeName": "receiveEvent"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "receive_event",
+                            "safeName": "receive_event"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RECEIVE_EVENT",
+                            "safeName": "RECEIVE_EVENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ReceiveEvent",
+                            "safeName": "ReceiveEvent"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "realtime",
+                                "camelCase": {
+                                    "unsafeName": "realtime",
+                                    "safeName": "realtime"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "realtime",
+                                    "safeName": "realtime"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REALTIME",
+                                    "safeName": "REALTIME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Realtime",
+                                    "safeName": "Realtime"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "alpha",
+                                "camelCase": {
+                                    "unsafeName": "alpha",
+                                    "safeName": "alpha"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "alpha",
+                                    "safeName": "alpha"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ALPHA",
+                                    "safeName": "ALPHA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Alpha",
+                                    "safeName": "Alpha"
+                                }
+                            },
+                            "wireValue": "alpha"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "beta",
+                                "camelCase": {
+                                    "unsafeName": "beta",
+                                    "safeName": "beta"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "beta",
+                                    "safeName": "beta"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BETA",
+                                    "safeName": "BETA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Beta",
+                                    "safeName": "Beta"
+                                }
+                            },
+                            "wireValue": "beta"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "extends": null,
+                "additionalProperties": false
+            }
+        },
+        "headers": [],
+        "endpoints": {},
+        "pathParameters": [],
+        "environments": null,
+        "variables": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "apiPlayground": true,
+    "subpackages": {
+        "subpackage_realtime": {
+            "name": {
+                "originalName": "realtime",
+                "camelCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "snakeCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "REALTIME",
+                    "safeName": "REALTIME"
+                },
+                "pascalCase": {
+                    "unsafeName": "Realtime",
+                    "safeName": "Realtime"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "realtime",
+                    "camelCase": {
+                        "unsafeName": "realtime",
+                        "safeName": "realtime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "realtime",
+                        "safeName": "realtime"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REALTIME",
+                        "safeName": "REALTIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Realtime",
+                        "safeName": "Realtime"
+                    }
+                }
+            },
+            "service": null,
+            "types": [
+                "type_realtime:SendEvent",
+                "type_realtime:ReceiveEvent"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": "channel_realtime",
+            "hasEndpointsInTree": false,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_realtime"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

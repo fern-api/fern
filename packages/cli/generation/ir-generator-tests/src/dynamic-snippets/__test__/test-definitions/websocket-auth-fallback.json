@@ -1,0 +1,273 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_realtime:SendEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SendEvent",
+                    "camelCase": {
+                        "unsafeName": "sendEvent",
+                        "safeName": "sendEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_event",
+                        "safeName": "send_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_EVENT",
+                        "safeName": "SEND_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendEvent",
+                        "safeName": "SendEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "sendText",
+                            "camelCase": {
+                                "unsafeName": "sendText",
+                                "safeName": "sendText"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send_text",
+                                "safeName": "send_text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND_TEXT",
+                                "safeName": "SEND_TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SendText",
+                                "safeName": "SendText"
+                            }
+                        },
+                        "wireValue": "sendText"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "sendParam",
+                            "camelCase": {
+                                "unsafeName": "sendParam",
+                                "safeName": "sendParam"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send_param",
+                                "safeName": "send_param"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND_PARAM",
+                                "safeName": "SEND_PARAM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SendParam",
+                                "safeName": "SendParam"
+                            }
+                        },
+                        "wireValue": "sendParam"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_realtime:ReceiveEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ReceiveEvent",
+                    "camelCase": {
+                        "unsafeName": "receiveEvent",
+                        "safeName": "receiveEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "receive_event",
+                        "safeName": "receive_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RECEIVE_EVENT",
+                        "safeName": "RECEIVE_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ReceiveEvent",
+                        "safeName": "ReceiveEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "alpha",
+                            "camelCase": {
+                                "unsafeName": "alpha",
+                                "safeName": "alpha"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "alpha",
+                                "safeName": "alpha"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ALPHA",
+                                "safeName": "ALPHA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Alpha",
+                                "safeName": "Alpha"
+                            }
+                        },
+                        "wireValue": "alpha"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "beta",
+                            "camelCase": {
+                                "unsafeName": "beta",
+                                "safeName": "beta"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "beta",
+                                "safeName": "beta"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BETA",
+                                "safeName": "BETA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Beta",
+                                "safeName": "Beta"
+                            }
+                        },
+                        "wireValue": "beta"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
