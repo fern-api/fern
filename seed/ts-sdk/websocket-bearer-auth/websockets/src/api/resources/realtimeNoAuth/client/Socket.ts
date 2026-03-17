@@ -10,6 +10,8 @@ export declare namespace RealtimeNoAuthSocket {
     }
 
     export type Response = SeedWebsocketBearerAuth.NoAuthReceiveEvent;
+    export type ReceiveEvent = SeedWebsocketBearerAuth.NoAuthReceiveEvent;
+    export type SendEvent = SeedWebsocketBearerAuth.NoAuthSendEvent;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;

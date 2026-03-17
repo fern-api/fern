@@ -603,7 +603,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ? [this.generateRequestOptionsInterface(context)]
                 : []),
             ...(this.generatedWebsocketImplementation != null
-                ? this.generatedWebsocketImplementation.getModuleStatements(context)
+                ? [this.generatedWebsocketImplementation.getModuleStatement(context)]
                 : [])
         ];
 

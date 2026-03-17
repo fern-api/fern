@@ -1,11 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    InterfaceDeclarationStructure,
-    OptionalKind,
-    ParameterDeclarationStructure,
-    TypeAliasDeclarationStructure,
-    ts
-} from "ts-morph";
+import { InterfaceDeclarationStructure, OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { SdkContext } from "../SdkContext.js";
 
@@ -17,6 +11,6 @@ export interface ChannelSignature {
 export interface GeneratedWebsocketImplementation {
     channel: FernIr.WebSocketChannel;
     getSignature: (context: SdkContext) => ChannelSignature;
-    getModuleStatements: (context: SdkContext) => (InterfaceDeclarationStructure | TypeAliasDeclarationStructure)[];
+    getModuleStatement: (context: SdkContext) => InterfaceDeclarationStructure;
     getClassStatements: (context: SdkContext) => ts.Statement[];
 }

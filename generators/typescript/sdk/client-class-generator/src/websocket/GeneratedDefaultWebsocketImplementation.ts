@@ -13,7 +13,6 @@ import {
     type ModuleDeclarationStructure,
     Scope,
     StructureKind,
-    type TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { buildUrl } from "../endpoints/utils/buildUrl.js";
@@ -104,8 +103,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         };
     }
 
-    public getModuleStatements(context: SdkContext): (InterfaceDeclarationStructure | TypeAliasDeclarationStructure)[] {
-        return [...this.generateEventTypeAliases(context), this.generateConnectArgsInterface(context)];
+    public getModuleStatement(context: SdkContext): InterfaceDeclarationStructure {
+        return this.generateConnectArgsInterface(context);
     }
 
     public getClassStatements(context: SdkContext): ts.Statement[] {
@@ -120,7 +119,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             name: this.serviceClassName,
             isExported: true,
             hasDeclareKeyword: true,
-            statements: [...this.generateEventTypeAliases(context), connectArgsInterface]
+            statements: [connectArgsInterface]
         };
 
         const serviceClass: ClassDeclarationStructure = {
@@ -769,39 +768,5 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 parameterNaming: this.parameterNaming
             })
         };
-    }
-
-    private generateEventTypeAliases(context: SdkContext): TypeAliasDeclarationStructure[] {
-        const aliases: TypeAliasDeclarationStructure[] = [];
-        const serverMessages = this.channel.messages.filter((m) => m.origin === "server");
-        if (serverMessages.length > 0) {
-            aliases.push({
-                kind: StructureKind.TypeAlias,
-                name: "ReceiveEvent",
-                isExported: true,
-                type: getTextOfTsNode(this.getUnionedTypeNode(context, serverMessages))
-            });
-        }
-        const clientMessages = this.channel.messages.filter((m) => m.origin === "client");
-        if (clientMessages.length > 0) {
-            aliases.push({
-                kind: StructureKind.TypeAlias,
-                name: "SendEvent",
-                isExported: true,
-                type: getTextOfTsNode(this.getUnionedTypeNode(context, clientMessages))
-            });
-        }
-        return aliases;
-    }
-
-    private getUnionedTypeNode(context: SdkContext, messages: FernIr.WebSocketMessage[]): ts.TypeNode {
-        const typeNodes = messages.map((message) => {
-            if (message.body.type === "inlinedBody") {
-                throw new Error("Websocket inlined schemas are not supported at the moment.");
-            }
-            const generatedType = context.type.getReferenceToType(message.body.bodyType);
-            return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
-        });
-        return ts.factory.createUnionTypeNode(typeNodes);
     }
 }
