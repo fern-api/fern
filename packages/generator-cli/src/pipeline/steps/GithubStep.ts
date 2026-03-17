@@ -90,6 +90,22 @@ export class GithubStep extends BaseStep {
         replayResult: ReplayStepResult | undefined
     ): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+
+        // In preview mode, skip all remote GitHub API calls (PR lookup, push, PR creation)
+        // but still perform local operations (branch checkout, commit, fernignore)
+        if (this.config.previewMode) {
+            await repository.checkout(newPrBranch);
+            await this.ensureFernignore();
+            this.logger.debug("Committing changes...");
+            const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+            await repository.commitAllChanges(finalCommitMessage);
+            this.logger.info("Preview mode: skipping push and PR creation");
+            return {
+                executed: true,
+                success: true
+            };
+        }
+
         const octokit = new Octokit({ auth: this.config.token });
         const { owner, repo } = parseRepository(this.config.uri);
 

@@ -336,8 +336,7 @@ export async function runLocalGenerationForWorkspace({
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
                 // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
-                // Skip entirely in preview mode — preview only generates files locally without pushing
-                if (selfhostedGithubConfig != null && shouldCommit && !selfhostedGithubConfig.previewMode) {
+                if (selfhostedGithubConfig != null && shouldCommit) {
                     const pipelineLogger: PipelineLogger = {
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
