@@ -65,10 +65,11 @@ class InlinedRequestsWireTest extends WireMockTestCase
      */
     protected function setUp(): void {
         parent::setUp();
+        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
         $this->client = new SeedClient(
             token: 'test-token',
         options: [
-            'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',
+            'baseUrl' => $wiremockUrl,
         ],
         );
     }

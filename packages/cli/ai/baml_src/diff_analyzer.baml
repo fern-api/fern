@@ -614,6 +614,9 @@ function AnalyzeSdkDiff(
     - PATCH: leave empty string — patch changes don't warrant changelog entries
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person ("The SDK now supports..." not "Add support for...")
+    - IMPORTANT: Wrap any type references containing angle brackets in backticks
+      to prevent MDX parsing issues. For example, write `Optional<String>` not
+      Optional<String>, and `Map<String, Object>` not Map<String, Object>.
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
