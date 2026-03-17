@@ -16,6 +16,7 @@ import { AbstractServerConverter } from "../../converters/AbstractServerConverte
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name.js";
 import { AsyncAPIV2 } from "../index.js";
 
 export declare namespace ChannelConverter2_X {
@@ -249,7 +250,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: this.breadcrumbs
                 }),
                 docs: operation.description,
-                methodName: undefined // AsyncAPI v2 doesn't support x-fern-sdk-method-name extension
+                methodName: this.getOperationMethodName(operation)
             };
         }
 
@@ -339,6 +340,15 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             return AbstractServerConverter.getServerName(serverKey, server);
         }
         return serverKey;
+    }
+
+    private getOperationMethodName(operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent): string | undefined {
+        const sdkMethodNameExtension = new SdkMethodNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation,
+            context: this.context
+        });
+        return sdkMethodNameExtension.convert();
     }
 
     private convertBindingQueryParameters({
