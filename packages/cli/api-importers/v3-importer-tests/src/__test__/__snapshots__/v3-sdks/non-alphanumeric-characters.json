@@ -197,19 +197,19 @@
               "name": {
                 "originalName": "|",
                 "camelCase": {
-                  "unsafeName": "pipe",
+                  "unsafeName": "",
                   "safeName": "pipe"
                 },
                 "snakeCase": {
-                  "unsafeName": "pipe",
+                  "unsafeName": "",
                   "safeName": "pipe"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "PIPE",
+                  "unsafeName": "",
                   "safeName": "PIPE"
                 },
                 "pascalCase": {
-                  "unsafeName": "Pipe",
+                  "unsafeName": "",
                   "safeName": "Pipe"
                 }
               },

@@ -1,10 +1,7 @@
-import { hasConvertibleSpecialChars, replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { Type } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../../index.js";
-
-const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -42,14 +39,10 @@ export class EnumSchemaConverter extends AbstractConverter<
         const values = enumValues.map((value) => {
             const stringValue = value.toString();
             const fernEnumValue = this.maybeFernEnum?.[stringValue];
-            const rawName = fernEnumValue?.name ?? stringValue;
-            const nameForCasing = getEnumNameForCasing(rawName);
-
             return {
                 name: this.context.casingsGenerator.generateNameAndWireValue({
-                    name: rawName,
-                    wireValue: stringValue,
-                    opts: nameForCasing != null ? { nameForCasing } : undefined
+                    name: fernEnumValue?.name ?? stringValue,
+                    wireValue: stringValue
                 }),
                 docs: fernEnumValue?.description,
                 availability: undefined,
@@ -74,14 +67,4 @@ export class EnumSchemaConverter extends AbstractConverter<
             })
         };
     }
-}
-
-function getEnumNameForCasing(name: string): string | undefined {
-    if (VALID_ENUM_NAME_REGEX.test(name)) {
-        return undefined;
-    }
-    if (!hasConvertibleSpecialChars(name)) {
-        return undefined;
-    }
-    return replaceSpecialCharsWithWords(name);
 }

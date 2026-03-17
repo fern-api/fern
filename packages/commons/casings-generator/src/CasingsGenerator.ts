@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { hasConvertibleSpecialChars, replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
@@ -8,20 +9,12 @@ import { RESERVED_KEYWORDS } from "./reserved.js";
 export interface CasingsGenerator {
     generateName(
         name: string,
-        opts?: {
-            casingOverrides?: RawSchemas.CasingOverridesSchema;
-            preserveUnderscores?: boolean;
-            nameForCasing?: string;
-        }
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
     ): Name;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
-        opts?: {
-            casingOverrides?: RawSchemas.CasingOverridesSchema;
-            preserveUnderscores?: boolean;
-            nameForCasing?: string;
-        };
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
     }): NameAndWireValue;
 }
 
@@ -38,13 +31,33 @@ export function constructCasingsGenerator({
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (inputName, opts) => {
-            const name = preprocessName(opts?.nameForCasing ?? inputName);
-            const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
+            const name = preprocessName(inputName);
+
+            // If the input contains special characters that camelCase would silently
+            // drop, compute safe name alternatives from the word-replaced input.
+            // unsafeName stays as-is (backwards compatible); only safeName is fixed.
+            let safeNameAlternatives: Name | undefined;
+            if (hasConvertibleSpecialChars(inputName)) {
+                const wordReplacedInput = replaceSpecialCharsWithWords(inputName);
+                if (wordReplacedInput !== inputName) {
+                    safeNameAlternatives = casingsGenerator.generateName(wordReplacedInput, {
+                        ...opts,
+                        casingOverrides: undefined
+                    });
+                }
+            }
+
+            const generateSafeAndUnsafeString = (
+                unsafeString: string,
+                safeAlternative: SafeAndUnsafeString | undefined
+            ): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: sanitizeName({
-                    name: unsafeString,
-                    keywords: getKeywords({ generationLanguage, keywords })
-                })
+                safeName:
+                    safeAlternative?.safeName ??
+                    sanitizeName({
+                        name: unsafeString,
+                        keywords: getKeywords({ generationLanguage, keywords })
+                    })
             });
 
             const preserve = opts?.preserveUnderscores === true;
@@ -117,12 +130,24 @@ export function constructCasingsGenerator({
 
             return {
                 originalName: inputName,
-                camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
-                snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
-                screamingSnakeCase: generateSafeAndUnsafeString(
-                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
+                camelCase: generateSafeAndUnsafeString(
+                    opts?.casingOverrides?.camel ?? camelCaseName,
+                    opts?.casingOverrides?.camel != null ? undefined : safeNameAlternatives?.camelCase
                 ),
-                pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
+                snakeCase: generateSafeAndUnsafeString(
+                    opts?.casingOverrides?.snake ?? snakeCaseName,
+                    opts?.casingOverrides?.snake != null ? undefined : safeNameAlternatives?.snakeCase
+                ),
+                screamingSnakeCase: generateSafeAndUnsafeString(
+                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase(),
+                    opts?.casingOverrides?.["screaming-snake"] != null
+                        ? undefined
+                        : safeNameAlternatives?.screamingSnakeCase
+                ),
+                pascalCase: generateSafeAndUnsafeString(
+                    opts?.casingOverrides?.pascal ?? pascalCaseName,
+                    opts?.casingOverrides?.pascal != null ? undefined : safeNameAlternatives?.pascalCase
+                )
             };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({

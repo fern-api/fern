@@ -1,11 +1,15 @@
 /**
  * Maps individual special characters to their word equivalents.
- * Only includes characters that lodash camelCase() cannot handle
- * as word separators (i.e., characters that get silently dropped
- * and produce empty/invalid names).
+ * Only includes characters with clear semantic meaning that would
+ * be lost if silently dropped by camelCase.
  *
  * Characters like `:`, `.`, `/`, `-`, ` ` are already handled as
  * word separators by camelCase and should NOT be mapped here.
+ *
+ * Structural/formatting characters like backtick, parentheses,
+ * brackets, and braces are intentionally excluded — they are
+ * typically used for quoting or grouping in API names and should
+ * just act as word separators, not be converted to words.
  */
 const SPECIAL_CHAR_TO_WORD: Record<string, string> = {
     "%": "percent",
@@ -19,18 +23,9 @@ const SPECIAL_CHAR_TO_WORD: Record<string, string> = {
     "^": "caret",
     "=": "equals",
     "*": "asterisk",
-    "<": "less_than",
-    ">": "greater_than",
     "|": "pipe",
     "?": "question",
-    "\\": "backslash",
-    "`": "backtick",
-    "(": "open_paren",
-    ")": "close_paren",
-    "[": "open_bracket",
-    "]": "close_bracket",
-    "{": "open_brace",
-    "}": "close_brace"
+    "\\": "backslash"
 };
 
 /**
