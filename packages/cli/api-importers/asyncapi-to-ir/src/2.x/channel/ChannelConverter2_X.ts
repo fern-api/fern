@@ -225,7 +225,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: this.breadcrumbs
                 }),
                 docs: operation.description,
-                methodName: undefined // AsyncAPI v2 doesn't support x-fern-sdk-method-name extension
+                methodName: this.getOperationMethodName(operation)
             };
         }
 
@@ -315,6 +315,14 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             return AbstractServerConverter.getServerName(serverKey, server);
         }
         return serverKey;
+    }
+
+    private getOperationMethodName(operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent): string | undefined {
+        const methodName = (operation as Record<string, unknown>)["x-fern-sdk-method-name"];
+        if (methodName == null || typeof methodName !== "string") {
+            return undefined;
+        }
+        return methodName;
     }
 
     private convertBindingQueryParameters({

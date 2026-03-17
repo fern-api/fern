@@ -322,7 +322,7 @@ export function parseAsyncAPIV2({
                     origin: "client",
                     name: "publish",
                     body: convertSchemaWithExampleToSchema(publishSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName: getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
                 });
             }
             if (subscribeSchema != null) {
@@ -330,7 +330,7 @@ export function parseAsyncAPIV2({
                     origin: "server",
                     name: "subscribe",
                     body: convertSchemaWithExampleToSchema(subscribeSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName: getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
                 });
             }
             parsedChannels[channelPath] = {
