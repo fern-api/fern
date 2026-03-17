@@ -3305,6 +3305,12 @@
         "message-id"
       ]
     },
+    "webhooks.WebhookPayloadBodySortSchema": {
+      "type": "string",
+      "enum": [
+        "alphabetical"
+      ]
+    },
     "webhooks.WebhookPayloadFormatSchema": {
       "type": "object",
       "properties": {
@@ -3318,6 +3324,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "body-sort": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookPayloadBodySortSchema"
             },
             {
               "type": "null"

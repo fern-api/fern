@@ -877,7 +877,8 @@
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": {
@@ -1266,7 +1267,8 @@
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": {
