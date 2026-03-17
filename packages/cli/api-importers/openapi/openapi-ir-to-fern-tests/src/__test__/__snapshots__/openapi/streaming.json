@@ -14,7 +14,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": false,
+                  },
                   "response": {
                     "body": {
                       "id": "id",
@@ -32,6 +34,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<false>",
                   },
                 },
                 "content-type": "application/json",
@@ -54,7 +57,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": true,
+                  },
                   "response": {
                     "stream": [
                       {
@@ -74,6 +79,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<true>",
                   },
                 },
                 "content-type": "application/json",
@@ -97,7 +103,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": false,
+                  },
                   "response": {
                     "body": {
                       "id": "id",
@@ -117,6 +125,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<false>",
                   },
                 },
                 "content-type": "application/json",
@@ -139,7 +148,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": true,
+                  },
                   "response": {
                     "stream": [
                       {
@@ -161,6 +172,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<true>",
                   },
                 },
                 "content-type": "application/json",
@@ -184,7 +196,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": false,
+                  },
                   "response": {
                     "body": {
                       "id": "id",
@@ -203,6 +217,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<false>",
                   },
                 },
                 "content-type": "application/json",
@@ -225,7 +240,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "stream": true,
+                  },
                   "response": {
                     "stream": [
                       {
@@ -247,6 +264,7 @@
                       "docs": "",
                       "type": "optional<string>",
                     },
+                    "stream": "literal<true>",
                   },
                 },
                 "content-type": "application/json",
@@ -404,13 +422,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<true>
         content-type: application/json
       response-stream:
         docs: ''
         type: StreamUser
         format: json
       examples:
-        - request: {}
+        - request:
+            stream: true
           response:
             stream:
               - id: id
@@ -426,13 +446,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<false>
         content-type: application/json
       response:
         docs: ''
         type: User
         status-code: 200
       examples:
-        - request: {}
+        - request:
+            stream: false
           response:
             body:
               id: id
@@ -448,13 +470,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<true>
         content-type: application/json
       response-stream:
         docs: ''
         type: StreamUser2
         format: json
       examples:
-        - request: {}
+        - request:
+            stream: true
           response:
             stream:
               - id: id
@@ -472,13 +496,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<false>
         content-type: application/json
       response:
         docs: ''
         type: User2
         status-code: 200
       examples:
-        - request: {}
+        - request:
+            stream: false
           response:
             body:
               id: id
@@ -496,13 +522,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<true>
         content-type: application/json
       response-stream:
         docs: ''
         type: UserV3StreamResponse
         format: json
       examples:
-        - request: {}
+        - request:
+            stream: true
           response:
             stream:
               - id: id
@@ -520,13 +548,15 @@
             id:
               type: optional<string>
               docs: ''
+            stream: literal<false>
         content-type: application/json
       response:
         docs: ''
         type: UserV3Response
         status-code: 200
       examples:
-        - request: {}
+        - request:
+            stream: false
           response:
             body:
               id: id

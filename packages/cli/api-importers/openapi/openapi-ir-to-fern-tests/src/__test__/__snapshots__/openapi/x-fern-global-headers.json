@@ -92,7 +92,9 @@
                   "path-parameters": {
                     "userId": "userId",
                   },
-                  "request": {},
+                  "request": {
+                    "stream": false,
+                  },
                   "response": {
                     "body": {
                       "id": "id",
@@ -106,7 +108,15 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "properties": {},
+                  "properties": {
+                    "stream": {
+                      "audiences": [
+                        "public",
+                      ],
+                      "docs": undefined,
+                      "type": "literal<false>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
                 "headers": undefined,
@@ -140,7 +150,9 @@
                   "path-parameters": {
                     "userId": "userId",
                   },
-                  "request": {},
+                  "request": {
+                    "stream": true,
+                  },
                   "response": {
                     "stream": [
                       {
@@ -156,7 +168,15 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "properties": {},
+                  "properties": {
+                    "stream": {
+                      "audiences": [
+                        "public",
+                      ],
+                      "docs": undefined,
+                      "type": "literal<true>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
                 "headers": undefined,
@@ -198,7 +218,11 @@ service:
         path-parameters:
           userId: string
         body:
-          properties: {}
+          properties:
+            stream:
+              type: literal<true>
+              audiences: &ref_0
+                - public
         content-type: application/json
       response-stream:
         docs: ''
@@ -213,7 +237,8 @@ service:
             x-api-key: x-api-key
             my-api-version: my-api-version
             version: '2024-06-04'
-          request: {}
+          request:
+            stream: true
           response:
             stream:
               - id: id
@@ -228,7 +253,10 @@ service:
         path-parameters:
           userId: string
         body:
-          properties: {}
+          properties:
+            stream:
+              type: literal<false>
+              audiences: *ref_0
         content-type: application/json
       response:
         docs: ''
@@ -243,7 +271,8 @@ service:
             x-api-key: x-api-key
             my-api-version: my-api-version
             version: '2024-06-04'
-          request: {}
+          request:
+            stream: false
           response:
             body:
               id: id

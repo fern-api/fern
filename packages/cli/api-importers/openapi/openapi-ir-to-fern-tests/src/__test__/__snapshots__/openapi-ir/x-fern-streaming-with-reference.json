@@ -27,6 +27,21 @@
           "properties": [
             {
               "conflict": {},
+              "generatedName": "createChatCompletionsStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "CreateChatCompletionsStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
               "generatedName": "createChatCompletionsStreamRequestPrompt",
               "key": "prompt",
               "schema": {
@@ -90,6 +105,13 @@
           "headers": [],
           "request": {
             "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
               "prompt": {
                 "value": {
                   "value": "prompt",
@@ -144,6 +166,21 @@
         "schema": {
           "allOf": [],
           "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createChatCompletionsRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "CreateChatCompletionsRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
             {
               "conflict": {},
               "generatedName": "createChatCompletionsRequestPrompt",
@@ -209,6 +246,13 @@
           "headers": [],
           "request": {
             "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
               "prompt": {
                 "value": {
                   "value": "prompt",

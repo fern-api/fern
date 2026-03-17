@@ -39,6 +39,21 @@
                 "type": "optional"
               },
               "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -90,7 +105,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -152,6 +175,21 @@
                 "type": "optional"
               },
               "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -203,7 +241,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -262,6 +308,21 @@
                 "type": "optional"
               },
               "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV2StreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -313,7 +374,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -389,6 +458,21 @@
                 "type": "optional"
               },
               "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2RequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV2RequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -440,7 +524,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -511,6 +603,21 @@
                 },
                 "groupName": [],
                 "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV3StreamRequestStream",
+                "groupName": [],
+                "type": "literal"
               },
               "audiences": []
             }
@@ -628,7 +735,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -702,6 +817,21 @@
                 },
                 "groupName": [],
                 "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3RequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV3RequestStream",
+                "groupName": [],
+                "type": "literal"
               },
               "audiences": []
             }
@@ -799,7 +929,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
             "type": "object"
           },
           "response": {

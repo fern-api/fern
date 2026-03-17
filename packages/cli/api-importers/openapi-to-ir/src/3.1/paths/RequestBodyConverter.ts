@@ -324,7 +324,14 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined;
         }
 
+        const streamConditionProperty =
+            resolvedMediaTypeSchema.properties?.[this.streamingExtension.streamConditionProperty];
+        if (streamConditionProperty == null || this.context.isReferenceObject(streamConditionProperty)) {
+            return undefined;
+        }
+
         const streamingOutput = this.buildStreamConditionInlinedRequestBody({
+            streamConditionProperty,
             resolvedMediaTypeSchema,
             isStreaming: true,
             contentType,
@@ -332,6 +339,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         });
 
         const nonStreamingOutput = this.buildStreamConditionInlinedRequestBody({
+            streamConditionProperty,
             resolvedMediaTypeSchema,
             isStreaming: false,
             contentType,
@@ -356,11 +364,13 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private buildStreamConditionInlinedRequestBody({
+        streamConditionProperty,
         resolvedMediaTypeSchema,
         isStreaming,
         contentType,
         mediaTypeObject
     }: {
+        streamConditionProperty: OpenAPIV3_1.SchemaObject;
         resolvedMediaTypeSchema: OpenAPIV3_1.SchemaObject;
         isStreaming: boolean;
         contentType: string;
@@ -374,18 +384,17 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         if (this.streamingExtension == null || this.streamingExtension.type !== "streamCondition") {
             return undefined;
         }
-        const streamingExtension = this.streamingExtension;
-        // Remove the stream-condition property from the schema entirely.
-        // The SDK method already hardcodes the appropriate value (stream: true / false)
-        // in the request body, so exposing it on the type is misleading.
-        const { [streamingExtension.streamConditionProperty]: _, ...remainingProperties } =
-            resolvedMediaTypeSchema.properties ?? {};
         const modifiedSchema = {
             ...resolvedMediaTypeSchema,
-            properties: remainingProperties,
-            required: (resolvedMediaTypeSchema.required ?? []).filter(
-                (r) => r !== streamingExtension.streamConditionProperty
-            )
+            properties: {
+                ...resolvedMediaTypeSchema.properties,
+                [this.streamingExtension.streamConditionProperty]: {
+                    type: "boolean",
+                    const: isStreaming,
+                    ...streamConditionProperty
+                } as OpenAPIV3_1.SchemaObject
+            },
+            required: [...(resolvedMediaTypeSchema.required ?? []), this.streamingExtension.streamConditionProperty]
         };
 
         const modifiedMediaTypeObject = {
@@ -410,7 +419,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: undefined,
                     name: this.context.casingsGenerator.generateName(
                         isStreaming
-                            ? (streamingExtension.streamRequestName ?? `${this.schemaId}_streaming`)
+                            ? (this.streamingExtension?.streamRequestName ?? `${this.schemaId}_streaming`)
                             : this.schemaId
                     ),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
