@@ -172,6 +172,15 @@ await client.System.CreateTaskAsync(
             Zip = "zip",
             Country = "USA",
         },
+        Owner = new global::SeedCsharpNamespaceCollision.System.User
+        {
+            Line1 = "line1",
+            Line2 = "line2",
+            City = "city",
+            State = "state",
+            Zip = "zip",
+            Country = "USA",
+        },
     }
 );
 ```
@@ -189,6 +198,46 @@ await client.System.CreateTaskAsync(
 <dd>
 
 **request:** `Task` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.System.GetUserAsync("userId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
     
 </dd>
 </dl>
