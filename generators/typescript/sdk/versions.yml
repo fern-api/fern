@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.53.16
+- version: 3.57.2
   changelogEntry:
     - summary: |
         Fix map types with unknown/any value types to not include spurious `| undefined`.
@@ -7,7 +7,110 @@
         instead of `Record<string, UnknownType>`. The `| undefined` is now correctly omitted
         from map value types.
       type: fix
-  createdAt: "2026-03-12"
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method producing 404s when the SDK environment is an
+        object (e.g. `{ base: string; production: string }`) instead of a plain string URL.
+        The generated code now resolves the environment supplier inline and projects object
+        environments to their `.base` property, instead of passing the raw object to
+        `makePassthroughRequest` where it would be stringified as `[object Object]`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Expose an optional `protocols` field on `RealtimeClient.ConnectArgs` for WebSocket
+        subprotocol negotiation. The `ReconnectingWebSocket` constructor already accepted a
+        `protocols` parameter but it was hardcoded to an empty array. Browser callers can now
+        authenticate via subprotocols (e.g. `xai-client-secret.<token>`) where custom headers
+        are forbidden by the browser security model.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+- version: 3.56.4
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from generated `tsconfig.base.json` files. Setting `baseUrl`
+        to `src` was unnecessary alongside `rootDir` and caused unexpected module
+        resolution side effects in some project setups.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.3
+  changelogEntry:
+    - summary: |
+        Fix TypeScript SDK generator crash when generating WebSocket clients for
+        AsyncAPI specs that define a named server (e.g. `servers.production`) with
+        a single-URL environment. The `baseUrlId` assigned by the Fern IR converter
+        is now silently ignored for single-URL environments since there is only one
+        URL to resolve to.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.2
+  changelogEntry:
+    - summary: |
+        Rename the `shouldGenerateWebsocketClients` configuration option to
+        `generateWebSocketClients`. The old name is still accepted as a deprecated
+        fallback for backwards compatibility.
+      type: chore
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.1
+  changelogEntry:
+    - summary: |
+        Include root markdown files (README.md, reference.md, CONTRIBUTING.md) in
+        the output when `outputSourceFiles` is `false`. Previously, the compiled
+        CJS/ESM output mode only included the `dist/` directory contents, silently
+        dropping generated documentation files.
+      type: fix
+  createdAt: "2026-03-15"
+  irVersion: 65
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add a `naming` configuration object that allows users to independently control the
+        namespace export and PascalCase class/type names (client, error, timeout error,
+        environment, environment URLs, version). When individual overrides are not provided,
+        they are derived from the namespace value using the existing `${PascalCase(namespace)}Suffix`
+        pattern. The existing `namespaceExport` config continues to work for backwards compatibility.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.55.0
+  changelogEntry:
+    - summary: |
+        Add a passthrough `fetch` method to the root client class of all generated TypeScript SDKs.
+        The method mimics the standard `fetch` API while automatically applying the SDK's configured
+        authentication, base URL resolution, retry logic with exponential backoff, request timeouts,
+        custom headers, and logging. This allows users to make requests to endpoints not yet exposed
+        in the SDK definition (e.g., new public endpoints, closed beta endpoints) without additional
+        setup. The method accepts three parameters: `url` (string or relative path), `init` (standard
+        `RequestInit`), and `requestOptions` (SDK-specific overrides for timeout, retries, headers,
+        and abort signal).
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination. Endpoints configured with
+        `next_uri` or `next_path` pagination now generate `Page<T, R>` return types
+        that automatically follow the next URL from the response body to load
+        subsequent pages.
+      type: feat
+  createdAt: "2026-03-11"
   irVersion: 65
 
 - version: 3.53.15
@@ -290,6 +393,7 @@
       type: feat
   createdAt: "2026-02-27"
   irVersion: 65
+
 - version: 3.52.0
   changelogEntry:
     - summary: |

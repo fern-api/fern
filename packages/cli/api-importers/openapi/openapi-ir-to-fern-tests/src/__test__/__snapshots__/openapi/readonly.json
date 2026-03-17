@@ -115,7 +115,7 @@
           },
         },
         "types": {
-          "UserRead": {
+          "User": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -130,7 +130,18 @@
               },
               "name": "optional<string>",
               "settings": "optional<UserSettingsRead>",
-              "stats": "optional<UserStatsRead>",
+              "stats": "optional<UserStats>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserSettings": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "notifications": "optional<boolean>",
+              "theme": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -151,18 +162,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "UserStatsAccountStatus": {
-            "enum": [
-              "active",
-              "suspended",
-              "deleted",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "UserStatsRead": {
+          "UserStats": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -176,6 +176,17 @@
                 "type": "optional<integer>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserStatsAccountStatus": {
+            "enum": [
+              "active",
+              "suspended",
+              "deleted",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -254,7 +265,7 @@
   source:
     openapi: ../openapi.yml
 types:
-  UserRead:
+  User:
     properties:
       id:
         type: optional<string>
@@ -265,7 +276,7 @@ types:
         type: optional<datetime>
         access: read-only
       settings: optional<UserSettingsRead>
-      stats: optional<UserStatsRead>
+      stats: optional<UserStats>
     source:
       openapi: ../openapi.yml
   UserSettingsRead:
@@ -277,6 +288,12 @@ types:
         access: read-only
     source:
       openapi: ../openapi.yml
+  UserSettings:
+    properties:
+      theme: optional<string>
+      notifications: optional<boolean>
+    source:
+      openapi: ../openapi.yml
   UserStatsAccountStatus:
     enum:
       - active
@@ -285,7 +302,7 @@ types:
     inline: true
     source:
       openapi: ../openapi.yml
-  UserStatsRead:
+  UserStats:
     properties:
       totalLogins:
         type: optional<integer>

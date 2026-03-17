@@ -9,6 +9,7 @@ describe("UrlsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/urls/MixedCase").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.urls.withMixedCase();
@@ -20,6 +21,7 @@ describe("UrlsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .get("/urls/no-ending-slash")
@@ -37,6 +39,7 @@ describe("UrlsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .get("/urls/with-ending-slash/")
@@ -54,6 +57,7 @@ describe("UrlsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .get("/urls/with_underscores")

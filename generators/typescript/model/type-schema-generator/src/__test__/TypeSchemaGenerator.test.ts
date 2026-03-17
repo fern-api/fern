@@ -181,10 +181,15 @@ function createMockGeneratedAliasType(opts?: { isBranded?: boolean }): Generated
 function createMockGeneratedUnionType(): GeneratedType<unknown> {
     return {
         type: "union",
-        getGeneratedUnion: () =>
-            ({
-                // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal GeneratedUnion interface
-            }) as any
+        getGeneratedUnion: () => ({
+            discriminant: "type",
+            visitPropertyName: "_visit",
+            getReferenceTo: () => ts.factory.createTypeReferenceNode("ParsedUnion"),
+            buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
+            buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
+            getBasePropertyKey: (wireValue: string) => wireValue
+        }),
+        getSinglePropertyKey: ({ name }: { name: FernIr.NameAndWireValue }) => name.wireValue
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal GeneratedType interface
     } as any;
 }
@@ -983,6 +988,218 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
                 ]
             });
             expect(schema).toBeDefined();
+        });
+    });
+
+    describe("writeToFile", () => {
+        it("generates schema output for noProperties union types", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties()),
+                    createSingleUnionType("hover", FernIr.SingleUnionTypeProperties.noProperties())
+                ]
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates schema output for samePropertiesAsObject union type", () => {
+            const schema = createUnionSchema({
+                typeName: "Shape",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType(
+                        "circle",
+                        FernIr.SingleUnionTypeProperties.samePropertiesAsObject(createDeclaredTypeName("Circle"))
+                    )
+                ]
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates schema output for singleProperty union type", () => {
+            const schema = createUnionSchema({
+                typeName: "Container",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType(
+                        "string",
+                        FernIr.SingleUnionTypeProperties.singleProperty({
+                            name: createNameAndWireValue("value", "value"),
+                            type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        })
+                    )
+                ]
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates schema output for mixed union type variants", () => {
+            const schema = createUnionSchema({
+                typeName: "Response",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType("empty", FernIr.SingleUnionTypeProperties.noProperties()),
+                    createSingleUnionType(
+                        "data",
+                        FernIr.SingleUnionTypeProperties.samePropertiesAsObject(createDeclaredTypeName("DataPayload"))
+                    ),
+                    createSingleUnionType(
+                        "error",
+                        FernIr.SingleUnionTypeProperties.singleProperty({
+                            name: createNameAndWireValue("message", "message"),
+                            type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        })
+                    )
+                ]
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates schema output with base properties", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())],
+                baseProperties: [
+                    createObjectProperty("timestamp", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                ]
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates schema output with includeUtilsOnUnionMembers", () => {
+            const schema = createUnionSchema({
+                typeName: "Shape",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("circle", FernIr.SingleUnionTypeProperties.noProperties())],
+                includeUtilsOnUnionMembers: true
+            });
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toMatchSnapshot();
+        });
+    });
+
+    describe("buildSchema", () => {
+        it("builds schema expression for union with noProperties types", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties()),
+                    createSingleUnionType("hover", FernIr.SingleUnionTypeProperties.noProperties())
+                ]
+            });
+            const context = createMockContext();
+            const builtSchema = schema.buildSchema(context);
+            expect(builtSchema).toBeDefined();
+            expect(builtSchema.toExpression()).toBeDefined();
+        });
+
+        it("builds schema expression for union with singleProperty types", () => {
+            const schema = createUnionSchema({
+                typeName: "Container",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType(
+                        "string",
+                        FernIr.SingleUnionTypeProperties.singleProperty({
+                            name: createNameAndWireValue("value", "value"),
+                            type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        })
+                    )
+                ]
+            });
+            const context = createMockContext();
+            const builtSchema = schema.buildSchema(context);
+            expect(builtSchema).toBeDefined();
+            expect(builtSchema.toExpression()).toBeDefined();
+        });
+    });
+
+    describe("generateRawTypeDeclaration", () => {
+        it("generates raw type declaration in module for noProperties union", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
+            });
+            const context = createMockContext();
+            const module = context.sourceFile.addModule({
+                name: "Event",
+                isExported: true,
+                hasDeclareKeyword: true
+            });
+            schema.generateRawTypeDeclaration(context, module);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("generates raw type declaration for samePropertiesAsObject union", () => {
+            const schema = createUnionSchema({
+                typeName: "Shape",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [
+                    createSingleUnionType(
+                        "circle",
+                        FernIr.SingleUnionTypeProperties.samePropertiesAsObject(createDeclaredTypeName("Circle"))
+                    )
+                ]
+            });
+            const context = createMockContext();
+            const module = context.sourceFile.addModule({
+                name: "Shape",
+                isExported: true,
+                hasDeclareKeyword: true
+            });
+            schema.generateRawTypeDeclaration(context, module);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+    });
+
+    describe("writeSchemaToFile", () => {
+        it("calls writeSchemaToFile which delegates to generatedUnionSchema", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
+            });
+            const context = createMockContext();
+            schema.writeSchemaToFile(context);
+            const output = context.sourceFile.getFullText();
+            expect(output).toMatchSnapshot();
+        });
+    });
+
+    describe("getReferenceToZurgSchema", () => {
+        it("returns a Zurg schema reference for the union schema", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
+            });
+            const context = createMockContext();
+            const zurgSchema = schema.getReferenceToZurgSchema(context);
+            expect(zurgSchema).toBeDefined();
+            expect(zurgSchema.toExpression()).toBeDefined();
+        });
+    });
+
+    describe("getReferenceToRawShape", () => {
+        it("returns a type node referencing the Raw shape", () => {
+            const schema = createUnionSchema({
+                typeName: "Event",
+                discriminant: createNameAndWireValue("type", "type"),
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
+            });
+            const context = createMockContext();
+            const rawShape = schema.getReferenceToRawShape(context);
+            expect(rawShape).toBeDefined();
         });
     });
 });

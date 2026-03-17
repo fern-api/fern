@@ -11,7 +11,7 @@ import { generateIRFromPath } from "./generateAndSnapshotIR.js";
 
 const CHANGES_DIR = path.join(__dirname, "changes");
 
-it("breaking", { timeout: 10_000 }, async () => {
+it("breaking", { tags: ["slow"] }, async () => {
     const breakingChangesDir = path.join(CHANGES_DIR, "breaking");
     const breakingChangeDirs = await readdir(breakingChangesDir, { withFileTypes: true });
     for (const dir of breakingChangeDirs) {
@@ -40,7 +40,7 @@ it("breaking", { timeout: 10_000 }, async () => {
     }
 });
 
-it("non-breaking", { timeout: 10_000 }, async () => {
+it("non-breaking", { tags: ["slow"] }, async () => {
     const nonBreakingChangesDir = path.join(CHANGES_DIR, "non-breaking");
     const nonBreakingChangeDirs = await readdir(nonBreakingChangesDir, { withFileTypes: true });
     for (const dir of nonBreakingChangeDirs) {
@@ -69,7 +69,7 @@ it("non-breaking", { timeout: 10_000 }, async () => {
     }
 });
 
-it("identical IRs should return null bump", { timeout: 10_000 }, async () => {
+it("identical IRs should return null bump", { tags: ["slow"] }, async () => {
     // Use the first non-breaking change directory to get a valid IR
     const nonBreakingChangesDir = path.join(CHANGES_DIR, "non-breaking");
     const nonBreakingChangeDirs = await readdir(nonBreakingChangesDir, { withFileTypes: true });

@@ -6,14 +6,13 @@ using WireMock.Settings;
 
 namespace SeedOauthClientCredentialsDefault.Test.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedOauthClientCredentialsDefaultClient Client { get; set; } = null!;
+    protected SeedOauthClientCredentialsDefaultClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     private void MockOAuthEndpoint()
     {

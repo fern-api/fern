@@ -2,6 +2,7 @@ import { type Generation } from "../../context/generation-info.js";
 import { Node } from "../core/AstNode.js";
 import { Writer } from "../core/Writer.js";
 import { Access } from "../language/Access.js";
+import { Annotation } from "../language/Annotation.js";
 import { CodeBlock } from "../language/CodeBlock.js";
 import { Class } from "./Class.js";
 import { type ClassReference } from "./ClassReference.js";
@@ -53,12 +54,19 @@ export class TestClass extends Node {
     }
 
     public getClass(): Class {
+        const annotations: (Annotation | ClassReference)[] = [
+            this.NUnit.Framework.TestFixture,
+            this.csharp.annotation({
+                reference: this.NUnit.Framework.Parallelizable,
+                argument: "ParallelScope.Self"
+            })
+        ];
         const _class = new Class(
             {
                 access: Access.Public,
                 name: this.name,
                 namespace: this.namespace,
-                annotations: [this.NUnit.Framework.TestFixture],
+                annotations,
                 parentClassReference: this.parentClassReference,
                 origin: this.origin
             },

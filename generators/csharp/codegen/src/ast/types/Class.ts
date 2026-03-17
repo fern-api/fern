@@ -41,6 +41,7 @@ export class Class extends DefinedType {
     private operators: Class.Operator[] = [];
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
+    private rawBodyBlocks: CodeBlock[] = [];
 
     constructor(
         {
@@ -131,6 +132,15 @@ export class Class extends DefinedType {
         operators.forEach((operator) => this.addOperator(operator));
     }
 
+    /**
+     * Adds a raw content block to the class body.
+     * This is written after operators and before nested classes.
+     * Useful for injecting pre-formatted code (e.g., nested literal struct members).
+     */
+    public addRawBodyContent(content: CodeBlock): void {
+        this.rawBodyBlocks.push(content);
+    }
+
     public write(writer: Writer): void {
         // tell the writer of any namespaces that this class references
         this.namespaceReferences.forEach((namespace) => {
@@ -217,6 +227,7 @@ export class Class extends DefinedType {
         this.writeProperties(writer);
         this.writeMethods(writer);
         this.writeOperators(writer);
+        this.writeRawBodyBlocks(writer);
         this.writeNestedClasses(writer);
         this.writeNestedInterfaces(writer);
 
@@ -230,7 +241,8 @@ export class Class extends DefinedType {
             this.nestedClasses.length > 0 ||
             this.nestedInterfaces.length > 0 ||
             this.methods.length > 0 ||
-            this.operators.length > 0
+            this.operators.length > 0 ||
+            this.rawBodyBlocks.length > 0
         );
     }
 
@@ -304,6 +316,13 @@ export class Class extends DefinedType {
         this.operators.forEach((operator) => {
             this.writeOperator({ writer, operator });
             writer.newLine();
+        });
+    }
+
+    private writeRawBodyBlocks(writer: Writer): void {
+        this.rawBodyBlocks.forEach((block) => {
+            block.write(writer);
+            writer.writeNewLineIfLastLineNot();
         });
     }
 

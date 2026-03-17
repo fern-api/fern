@@ -12,6 +12,7 @@ describe("SeedUndiscriminatedUnionWithResponsePropertyClient", () => {
         });
 
         const rawResponseBody = { data: { type: "A", valueA: "valueA" } };
+
         server.mockEndpoint().get("/union").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getUnion();
@@ -36,6 +37,7 @@ describe("SeedUndiscriminatedUnionWithResponsePropertyClient", () => {
                 { type: "A", valueA: "valueA" },
             ],
         };
+
         server.mockEndpoint().get("/unions").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.listUnions();

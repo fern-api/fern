@@ -917,6 +917,137 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_realtime:ErrorEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ErrorEvent",
+                    "camelCase": {
+                        "unsafeName": "errorEvent",
+                        "safeName": "errorEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "error_event",
+                        "safeName": "error_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ERROR_EVENT",
+                        "safeName": "ERROR_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ErrorEvent",
+                        "safeName": "ErrorEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "errorCode",
+                            "camelCase": {
+                                "unsafeName": "errorCode",
+                                "safeName": "errorCode"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error_code",
+                                "safeName": "error_code"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR_CODE",
+                                "safeName": "ERROR_CODE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ErrorCode",
+                                "safeName": "ErrorCode"
+                            }
+                        },
+                        "wireValue": "errorCode"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "errorMessage",
+                            "camelCase": {
+                                "unsafeName": "errorMessage",
+                                "safeName": "errorMessage"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error_message",
+                                "safeName": "error_message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR_MESSAGE",
+                                "safeName": "ERROR_MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ErrorMessage",
+                                "safeName": "ErrorMessage"
+                            }
+                        },
+                        "wireValue": "errorMessage"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [],

@@ -18,7 +18,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     // and lib/<gem>/sentry_integration.rb if they exist)
     requirePaths: z.optional(z.array(z.string())),
     // Apply IR-defined default values to query parameters and headers in request wrappers
-    useDefaultRequestParameterValues: z.boolean().optional()
+    useDefaultRequestParameterValues: z.boolean().optional(),
+    omitFernHeaders: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

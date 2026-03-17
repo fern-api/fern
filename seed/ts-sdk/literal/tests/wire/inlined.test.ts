@@ -18,6 +18,7 @@ describe("InlinedClient", () => {
             query: "What is the weather today",
         };
         const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+
         server
             .mockEndpoint()
             .post("/inlined")

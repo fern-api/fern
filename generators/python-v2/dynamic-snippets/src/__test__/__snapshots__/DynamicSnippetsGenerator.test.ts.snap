@@ -480,7 +480,9 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
 )
@@ -499,7 +501,9 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
 )

@@ -112,13 +112,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
         const modelsStartTime = Date.now();
-        const models = generateModels({ context });
+        const { files: models, literalTypeFiles } = generateModels({ context });
         context.logger.debug(`[TIMING] generateModels took ${Date.now() - modelsStartTime}ms`);
 
         await context.snippetGenerator.populateSnippetsCache();
 
         for (const file of models) {
             context.project.addSourceFiles(file);
+        }
+        for (const file of literalTypeFiles) {
+            context.project.addSourceRawFile(file);
         }
 
         context.project.addSourceFiles(generateVersion({ context }));
