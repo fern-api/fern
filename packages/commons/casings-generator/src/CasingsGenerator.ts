@@ -33,9 +33,9 @@ export function constructCasingsGenerator({
         generateName: (inputName, opts) => {
             const name = preprocessName(inputName);
 
-            // If the input contains special characters that camelCase would silently
-            // drop, compute safe name alternatives from the word-replaced input.
-            // unsafeName stays as-is (backwards compatible); only safeName is fixed.
+            // If casing produces an empty string (all chars were silently dropped),
+            // and the input contains convertible special chars, re-derive the name
+            // from the word-replaced input so safeName is usable for code generation.
             let safeNameAlternatives: Name | undefined;
             if (hasConvertibleSpecialChars(inputName)) {
                 const wordReplacedInput = replaceSpecialCharsWithWords(inputName);
@@ -52,12 +52,8 @@ export function constructCasingsGenerator({
                 safeAlternative: SafeAndUnsafeString | undefined
             ): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                // Only fall back to the safe alternative when the unsafe name
-                // is empty or not a valid identifier (e.g. camelCase dropped
-                // all meaningful chars). This avoids breaking changes for names
-                // where camelCase produces a valid result.
                 safeName:
-                    safeAlternative != null && !isValidIdentifier(unsafeString)
+                    unsafeString === "" && safeAlternative != null
                         ? safeAlternative.safeName
                         : sanitizeName({
                               name: unsafeString,
@@ -195,11 +191,6 @@ function getKeywords({
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
-}
-
-const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
-function isValidIdentifier(str: string): boolean {
-    return str.length > 0 && VALID_IDENTIFIER.test(str);
 }
 
 function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
