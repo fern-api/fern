@@ -12,7 +12,7 @@ import (
 )
 
 // Tests that unknown types are able to preserve their docstrings.
-type DocumentedUnknownType = interface{}
+type DocumentedUnknownType = any
 
 var (
 	doubleOptionalFieldOptionalAlias = big.NewInt(1 << 0)
