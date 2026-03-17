@@ -104,6 +104,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
@@ -111,7 +113,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 connectMethodName: undefined, // AsyncAPI v2 doesn't support x-fern-sdk-method-name on channels
                 baseUrl,
                 path,
-                auth: false,
+                auth,
                 headers,
                 queryParameters,
                 pathParameters,
@@ -134,6 +136,28 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             audiences,
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private hasServerSecurity(): boolean {
+        const servers = this.context.spec.servers ?? {};
+
+        if (this.channel.servers && this.channel.servers.length > 0) {
+            for (const serverName of this.channel.servers) {
+                const server = (servers as Record<string, AsyncAPIV2.ServerV2>)[serverName];
+                if (server?.security && server.security.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (const server of Object.values(servers)) {
+            const serverV2 = server as AsyncAPIV2.ServerV2;
+            if (serverV2.security && serverV2.security.length > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private convertMessage({
