@@ -11,7 +11,6 @@ import {
     detectAffected,
     findRepoRoot,
     getChangedFiles,
-    getTurboAffectedPackages,
     resolveAffectedFixtures,
     resolveAffectedGenerators
 } from "./commands/affected/index.js";
@@ -32,6 +31,7 @@ import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./comman
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
+import { WorkspaceCache } from "./commands/test/WorkspaceCache.js";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local/index.js";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils.js";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog.js";
@@ -173,9 +173,7 @@ function addTestCommand(cli: Argv) {
             if (isGeneratorAffected || isFixtureAffected) {
                 const repoRoot = findRepoRoot();
                 const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
-                // Try turbo for generator detection (handles transitive deps like generators/base/)
-                const turboPackages = getTurboAffectedPackages(repoRoot, argv.baseRef);
-                affectedResult = detectAffected(changedFiles, generators, turboPackages);
+                affectedResult = detectAffected(changedFiles, generators);
 
                 // Log the detection summary
                 console.log("\n=== Affected Detection ===");
@@ -330,7 +328,9 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         scriptRunner,
                         keepContainer: false, // not used for local
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        workspaceCache: new WorkspaceCache(),
+                        logLevel: argv["log-level"]
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(
@@ -349,7 +349,9 @@ function addTestCommand(cli: Argv) {
                         scriptRunner,
                         inspect: argv.inspect,
                         runner: argv.containerRuntime as "docker" | "podman" | undefined,
-                        parallelism: argv.parallel
+                        parallelism: argv.parallel,
+                        workspaceCache: new WorkspaceCache(),
+                        logLevel: argv["log-level"]
                     });
                 }
 
@@ -778,9 +780,7 @@ function addAffectedCommand(cli: Argv) {
             const generators = await loadGeneratorWorkspaces();
             const repoRoot = findRepoRoot();
             const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
-            // Try turbo for generator detection (handles transitive deps like generators/base/)
-            const turboPackages = getTurboAffectedPackages(repoRoot, argv.baseRef);
-            const affected = detectAffected(changedFiles, generators, turboPackages);
+            const affected = detectAffected(changedFiles, generators);
 
             if (argv.json) {
                 const resolvedGenerators = resolveAffectedGenerators(affected, generators);

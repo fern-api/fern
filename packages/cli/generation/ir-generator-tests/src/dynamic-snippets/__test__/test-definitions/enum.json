@@ -212,6 +212,81 @@
                 }
             ]
         },
+        "type_:ForwardCompatibleEnum": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "ForwardCompatibleEnum",
+                    "camelCase": {
+                        "unsafeName": "forwardCompatibleEnum",
+                        "safeName": "forwardCompatibleEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forward_compatible_enum",
+                        "safeName": "forward_compatible_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORWARD_COMPATIBLE_ENUM",
+                        "safeName": "FORWARD_COMPATIBLE_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForwardCompatibleEnum",
+                        "safeName": "ForwardCompatibleEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "ACTIVE",
+                        "camelCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ACTIVE",
+                            "safeName": "ACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Active",
+                            "safeName": "Active"
+                        }
+                    },
+                    "wireValue": "active"
+                },
+                {
+                    "name": {
+                        "originalName": "INACTIVE",
+                        "camelCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INACTIVE",
+                            "safeName": "INACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inactive",
+                            "safeName": "Inactive"
+                        }
+                    },
+                    "wireValue": "inactive"
+                }
+            ]
+        },
         "type_:EnumWithSpecialCharacters": {
             "type": "enum",
             "declaration": {

@@ -504,28 +504,37 @@ import NullableOptional
             nullableStatus: Nullable<UserStatus>.value(.active),
             optionalStatus: Optional(.active),
             optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
-            nullableNotification: Nullable<NotificationMethod>.value(.email(
+            nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNotification: Optional(.email(
+            optionalNotification: Optional(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             ))),
-            nullableSearchResult: Nullable<SearchResult>.value(.user(
+            nullableSearchResult: Nullable<SearchResult>.value(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -541,10 +550,13 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
-            optionalSearchResult: Optional(.user(
+            optionalSearchResult: Optional(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -560,7 +572,10 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
             nullableArray: Nullable<[String]>.value([
@@ -591,18 +606,24 @@ import NullableOptional
                 ))
             ]),
             nullableListOfUnions: Nullable<[NotificationMethod]>.value([
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 ),
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 )
             ]),
@@ -620,28 +641,28 @@ import NullableOptional
                 optionalStatus: .active,
                 optionalNullableStatus: .value(.active),
                 nullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 optionalNotification: NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 ),
                 optionalNullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 nullableSearchResult: .value(SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -660,7 +681,7 @@ import NullableOptional
                     )
                 )),
                 optionalSearchResult: SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -707,14 +728,14 @@ import NullableOptional
                 ]),
                 nullableListOfUnions: .value([
                     NotificationMethod.email(
-                        .init(
+                        EmailNotification(
                             emailAddress: "emailAddress",
                             subject: "subject",
                             htmlContent: "htmlContent"
                         )
                     ),
                     NotificationMethod.email(
-                        .init(
+                        EmailNotification(
                             emailAddress: "emailAddress",
                             subject: "subject",
                             htmlContent: "htmlContent"
@@ -857,28 +878,37 @@ import NullableOptional
             nullableStatus: Nullable<UserStatus>.value(.active),
             optionalStatus: Optional(.active),
             optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
-            nullableNotification: Nullable<NotificationMethod>.value(.email(
+            nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNotification: Optional(.email(
+            optionalNotification: Optional(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             ))),
-            nullableSearchResult: Nullable<SearchResult>.value(.user(
+            nullableSearchResult: Nullable<SearchResult>.value(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -894,10 +924,13 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
-            optionalSearchResult: Optional(.user(
+            optionalSearchResult: Optional(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -913,7 +946,10 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
             nullableArray: Nullable<[String]>.value([
@@ -944,18 +980,24 @@ import NullableOptional
                 ))
             ]),
             nullableListOfUnions: Nullable<[NotificationMethod]>.value([
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 ),
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 )
             ]),
@@ -1097,28 +1139,37 @@ import NullableOptional
             nullableStatus: Nullable<UserStatus>.value(.active),
             optionalStatus: Optional(.active),
             optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
-            nullableNotification: Nullable<NotificationMethod>.value(.email(
+            nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNotification: Optional(.email(
+            optionalNotification: Optional(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             )),
-            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: Optional("htmlContent")
+                    htmlContent: Optional("htmlContent"),
+                    additionalProperties: [
+                        "type": JSONValue.string("email")
+                    ]
                 )
             ))),
-            nullableSearchResult: Nullable<SearchResult>.value(.user(
+            nullableSearchResult: Nullable<SearchResult>.value(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -1134,10 +1185,13 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
-            optionalSearchResult: Optional(.user(
+            optionalSearchResult: Optional(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -1153,7 +1207,10 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )),
             nullableArray: Nullable<[String]>.value([
@@ -1184,18 +1241,24 @@ import NullableOptional
                 ))
             ]),
             nullableListOfUnions: Nullable<[NotificationMethod]>.value([
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 ),
-                .email(
+                NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 )
             ]),
@@ -1209,14 +1272,14 @@ import NullableOptional
                 nullableRole: .value(.admin),
                 nullableStatus: .value(.active),
                 nullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 nullableSearchResult: .value(SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -1323,14 +1386,17 @@ import NullableOptional
                 optionalNullableString: Optional(Nullable<String>.value("optionalNullableString")),
                 nullableEnum: Nullable<UserRole>.value(.admin),
                 optionalEnum: Optional(.active),
-                nullableUnion: Nullable<NotificationMethod>.value(.email(
+                nullableUnion: Nullable<NotificationMethod>.value(NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: Optional("htmlContent")
+                        htmlContent: Optional("htmlContent"),
+                        additionalProperties: [
+                            "type": JSONValue.string("email")
+                        ]
                     )
                 )),
-                optionalUnion: Optional(.user(
+                optionalUnion: Optional(SearchResult.user(
                     .init(
                         id: "id",
                         username: "username",
@@ -1346,7 +1412,10 @@ import NullableOptional
                             country: Optional(Nullable<String>.value("country")),
                             buildingId: Nullable<String>.value("buildingId"),
                             tenantId: Optional("tenantId")
-                        ))
+                        )),
+                        additionalProperties: [
+                            "type": JSONValue.string("user")
+                        ]
                     )
                 )),
                 nullableList: Nullable<[String]>.value([
@@ -1385,14 +1454,14 @@ import NullableOptional
                 nullableEnum: .value(.admin),
                 optionalEnum: .active,
                 nullableUnion: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 optionalUnion: SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -1549,11 +1618,14 @@ import NullableOptional
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Nullable<NotificationMethod>.value(.email(
+        let expectedResponse = Nullable<NotificationMethod>.value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
-                htmlContent: Optional("htmlContent")
+                htmlContent: Optional("htmlContent"),
+                additionalProperties: [
+                    "type": JSONValue.string("email")
+                ]
             )
         ))
         let response = try await client.nullableOptional.getNotificationSettings(
@@ -1655,7 +1727,7 @@ import NullableOptional
             urlSession: stub.urlSession
         )
         let expectedResponse = Nullable<[SearchResult]>.value([
-            .user(
+            SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -1671,10 +1743,13 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             ),
-            .user(
+            SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
@@ -1690,7 +1765,10 @@ import NullableOptional
                         country: Optional(Nullable<String>.value("country")),
                         buildingId: Nullable<String>.value("buildingId"),
                         tenantId: Optional("tenantId")
-                    ))
+                    )),
+                    additionalProperties: [
+                        "type": JSONValue.string("user")
+                    ]
                 )
             )
         ])

@@ -41,7 +41,7 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         package_path: Optional[str] = None,
-        python_version: str = "^3.8",
+        python_version: str = "^3.10",
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,

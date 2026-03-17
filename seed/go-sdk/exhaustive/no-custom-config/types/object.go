@@ -11,6 +11,9 @@ import (
 	time "time"
 )
 
+// Tests that unknown types are able to preserve their docstrings.
+type DocumentedUnknownType = interface{}
+
 var (
 	doubleOptionalFieldOptionalAlias = big.NewInt(1 << 0)
 )
@@ -394,6 +397,91 @@ func (o *ObjectWithDatetimeLikeString) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithDatetimeLikeString) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown types are able to preserve their type names.
+var (
+	objectWithDocumentedUnknownTypeFieldDocumentedUnknownType = big.NewInt(1 << 0)
+)
+
+type ObjectWithDocumentedUnknownType struct {
+	DocumentedUnknownType DocumentedUnknownType `json:"documentedUnknownType" url:"documentedUnknownType"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetDocumentedUnknownType() DocumentedUnknownType {
+	if o == nil {
+		return nil
+	}
+	return o.DocumentedUnknownType
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithDocumentedUnknownType) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetDocumentedUnknownType sets the DocumentedUnknownType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithDocumentedUnknownType) SetDocumentedUnknownType(documentedUnknownType DocumentedUnknownType) {
+	o.DocumentedUnknownType = documentedUnknownType
+	o.require(objectWithDocumentedUnknownTypeFieldDocumentedUnknownType)
+}
+
+func (o *ObjectWithDocumentedUnknownType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithDocumentedUnknownType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithDocumentedUnknownType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithDocumentedUnknownType) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithDocumentedUnknownType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithDocumentedUnknownType) String() string {
 	if o == nil {
 		return "<nil>"
 	}

@@ -93,6 +93,8 @@ export interface APIDefinitionSettings {
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
+    inferForwardCompatible: boolean | undefined;
+    coerceConstsTo: "literals" | "enums" | undefined;
 }
 
 export interface APIDefinitionLocation {

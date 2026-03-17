@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "namespace": "Contoso.Net",
+    "client-class-name": "Contoso",
+    "explicit-namespaces": true,
+    "experimental-fully-qualified-namespaces": true
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

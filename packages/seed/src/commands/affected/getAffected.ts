@@ -28,17 +28,27 @@ export interface AffectedResult {
 
 /**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
- * These are infrastructure-level changes that turbo cannot detect
- * (generators depend on the published npm @fern-fern/ir-sdk, not the local workspace).
+ * These are infrastructure-level changes that feed into IR generation
+ * or affect how seed tests execute. Includes:
+ * - IR SDK and IR generator (the core IR pipeline)
+ * - Seed CLI itself
+ * - Workspace loader, API importers, Fern definition parsing (affect IR input)
+ * - Configuration parsing (affects generator config)
+ * - Local workspace runner (affects how generators are invoked)
+ * - Shared generator base packages
  */
-const GLOBAL_AFFECT_PATHS = ["packages/ir-sdk/", "packages/seed/", "packages/cli/generation/ir-generator/"];
-
-/**
- * Extended global paths used when turbo is unavailable as fallback.
- * Includes shared base packages that turbo would normally handle via dependency graph.
- */
-const GLOBAL_AFFECT_PATHS_WITH_BASE = [
-    ...GLOBAL_AFFECT_PATHS,
+const GLOBAL_AFFECT_PATHS = [
+    "packages/ir-sdk/",
+    "packages/seed/",
+    "packages/cli/generation/ir-generator/",
+    "packages/cli/generation/ir-migrations/",
+    "packages/cli/generation/local-generation/",
+    "packages/cli/generation/source-resolver/",
+    "packages/cli/generation/protoc-gen-fern/",
+    "packages/cli/workspace/",
+    "packages/cli/api-importers/",
+    "packages/cli/fern-definition/",
+    "packages/cli/configuration/",
     "generators/base/",
     "generators/browser-compatible-base/"
 ];
@@ -49,32 +59,8 @@ const GLOBAL_AFFECT_PATHS_WITH_BASE = [
 const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-openapi/fern/apis/"];
 
 /**
- * Maps generator directory prefixes (under generators/) to seed workspace names.
- * Used to convert turbo's affected package paths to seed workspace names.
- * Turbo handles transitive dependencies automatically (e.g. generators/base/ changes
- * will cause all dependent generator packages to appear as affected).
- */
-const GENERATOR_DIR_TO_SEED_WORKSPACES: Record<string, string[]> = {
-    typescript: ["ts-sdk", "ts-express"],
-    "typescript-v2": ["ts-sdk", "ts-express"],
-    python: ["python-sdk", "pydantic", "fastapi"],
-    "python-v2": ["python-sdk", "pydantic", "pydantic-v2", "fastapi"],
-    java: ["java-sdk", "java-model", "java-spring"],
-    "java-v2": ["java-sdk", "java-model", "java-spring"],
-    go: ["go-sdk", "go-model"],
-    "go-v2": ["go-sdk", "go-model"],
-    "ruby-v2": ["ruby-sdk", "ruby-sdk-v2"],
-    csharp: ["csharp-sdk", "csharp-model"],
-    php: ["php-sdk", "php-model"],
-    swift: ["swift-sdk"],
-    rust: ["rust-sdk", "rust-model"],
-    openapi: ["openapi"],
-    postman: ["postman"]
-};
-
-/**
- * Fallback: Maps generator workspace names to their source code paths.
- * Used when turbo detection is not available.
+ * Maps generator workspace names to their source code paths.
+ * Used to detect which generators are affected by file changes.
  */
 const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "ts-sdk": ["generators/typescript/", "generators/typescript-v2/"],
@@ -101,105 +87,6 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     postman: ["generators/postman/"]
 };
 
-export interface TurboPackage {
-    name: string;
-    path: string;
-}
-
-interface TurboLsOutput {
-    packages: {
-        count: number;
-        items: TurboPackage[];
-    };
-}
-
-/**
- * Get affected packages using turbo's built-in dependency graph analysis.
- * Turbo automatically resolves transitive dependencies, so if a shared base package
- * (like generators/base/) changes, all dependent generator packages are reported.
- *
- * @param repoRoot - The root directory of the repository
- * @param baseRef - The git ref to diff against (passed via TURBO_SCM_BASE env var)
- * @returns Array of affected packages, or null if turbo detection fails
- */
-export function getTurboAffectedPackages(repoRoot: string, baseRef: string): TurboPackage[] | null {
-    try {
-        const output = execFileSync("pnpm", ["turbo", "ls", "--affected", "--output=json"], {
-            cwd: repoRoot,
-            encoding: "utf-8",
-            timeout: 60000,
-            env: {
-                ...process.env,
-                TURBO_SCM_BASE: baseRef
-            }
-        });
-
-        // turbo may output non-JSON lines (e.g. update notices) before the JSON
-        const jsonStart = output.indexOf("{");
-        if (jsonStart === -1) {
-            console.error("No JSON found in turbo output");
-            return null;
-        }
-
-        const parsed = JSON.parse(output.slice(jsonStart)) as TurboLsOutput;
-        return parsed.packages.items;
-    } catch (error) {
-        console.error("turbo ls --affected failed, falling back to git diff detection:", error);
-        return null;
-    }
-}
-
-/**
- * Map turbo affected package paths to seed workspace names.
- */
-export function mapTurboPackagesToSeedWorkspaces(
-    turboPackages: TurboPackage[],
-    allGeneratorNames: string[]
-): {
-    affectedGenerators: Set<string>;
-    allGeneratorsAffected: boolean;
-    allFixturesAffected: boolean;
-    summary: string[];
-} {
-    const affectedGenerators = new Set<string>();
-    const summary: string[] = [];
-    let allGeneratorsAffected = false;
-    let allFixturesAffected = false;
-
-    for (const pkg of turboPackages) {
-        // Check if this is a global infrastructure package
-        for (const globalPath of GLOBAL_AFFECT_PATHS) {
-            if (pkg.path === globalPath.replace(/\/$/, "") || pkg.path.startsWith(globalPath)) {
-                allGeneratorsAffected = true;
-                allFixturesAffected = true;
-                summary.push(`Global infrastructure package affected (turbo): ${pkg.name} (${pkg.path})`);
-                break;
-            }
-        }
-
-        // Check if this is a generator package
-        if (pkg.path.startsWith("generators/")) {
-            const parts = pkg.path.split("/");
-            if (parts.length >= 2) {
-                const generatorDir = parts[1];
-                if (generatorDir != null) {
-                    const seedWorkspaces = GENERATOR_DIR_TO_SEED_WORKSPACES[generatorDir];
-                    if (seedWorkspaces != null) {
-                        for (const workspace of seedWorkspaces) {
-                            if (allGeneratorNames.includes(workspace)) {
-                                affectedGenerators.add(workspace);
-                            }
-                        }
-                        summary.push(`Generator package affected (turbo): ${pkg.name} -> ${seedWorkspaces.join(", ")}`);
-                    }
-                }
-            }
-        }
-    }
-
-    return { affectedGenerators, allGeneratorsAffected, allFixturesAffected, summary };
-}
-
 /**
  * Get the list of changed files by running git diff against a base ref.
  *
@@ -221,40 +108,30 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
             .filter((line) => line.length > 0);
     } catch (error) {
         console.error("git diff --merge-base failed, trying fallback:", error);
-        // Fallback: try without --merge-base (for cases where merge-base doesn't work)
-        try {
-            const output = execFileSync("git", ["diff", "--name-only", baseRef], {
-                cwd: repoRoot,
-                encoding: "utf-8",
-                timeout: 30000
-            });
-            return output
-                .trim()
-                .split("\n")
-                .filter((line) => line.length > 0);
-        } catch (innerError) {
-            console.error("Failed to get changed files from git. Falling back to running everything.", innerError);
-            return [];
-        }
+        // Fallback: try without --merge-base (for cases where merge-base doesn't work,
+        // e.g. disconnected shallow commits). If this also fails, let the error propagate
+        // so the CLI exits non-zero and the workflow falls back to "run everything".
+        const output = execFileSync("git", ["diff", "--name-only", baseRef], {
+            cwd: repoRoot,
+            encoding: "utf-8",
+            timeout: 30000
+        });
+        return output
+            .trim()
+            .split("\n")
+            .filter((line) => line.length > 0);
     }
 }
 
 /**
  * Detect which generators and fixtures are affected based on changed files.
- * Uses turbo for generator detection when available (handles transitive dependencies
- * like generators/base/ automatically), with git diff path matching as fallback.
- * Always uses git diff for test definitions and seed.yml changes.
+ * Uses git diff path matching to determine affected generators and fixtures.
  *
  * @param changedFiles - Array of changed file paths relative to repo root
  * @param allGenerators - All available generator workspaces
- * @param turboPackages - Optional turbo affected packages (null if turbo unavailable)
  * @returns AffectedResult describing what needs to run
  */
-export function detectAffected(
-    changedFiles: string[],
-    allGenerators: GeneratorWorkspace[],
-    turboPackages?: TurboPackage[] | null
-): AffectedResult {
+export function detectAffected(changedFiles: string[], allGenerators: GeneratorWorkspace[]): AffectedResult {
     const summary: string[] = [];
     const affectedGeneratorSet = new Set<string>();
     const affectedFixtureSet = new Set<string>();
@@ -262,11 +139,11 @@ export function detectAffected(
     let allFixturesAffected = false;
     const allGeneratorNames = allGenerators.map((g) => g.workspaceName);
 
-    if (changedFiles.length === 0 && (turboPackages == null || turboPackages.length === 0)) {
-        summary.push("No changed files detected — running everything as fallback.");
+    if (changedFiles.length === 0) {
+        summary.push("No changed files detected — skipping all seed tests.");
         return {
-            allGeneratorsAffected: true,
-            allFixturesAffected: true,
+            allGeneratorsAffected: false,
+            allFixturesAffected: false,
             affectedGenerators: [],
             generatorsWithAllFixtures: [],
             affectedFixtures: [],
@@ -274,29 +151,9 @@ export function detectAffected(
         };
     }
 
-    // === GENERATOR DETECTION ===
-    // Use turbo if available (handles transitive deps like generators/base/ automatically)
-    if (turboPackages != null) {
-        summary.push("Using turbo for generator affected detection (transitive dependency support).");
-        const turboResult = mapTurboPackagesToSeedWorkspaces(turboPackages, allGeneratorNames);
-        if (turboResult.allGeneratorsAffected) {
-            allGeneratorsAffected = true;
-        }
-        if (turboResult.allFixturesAffected) {
-            allFixturesAffected = true;
-        }
-        for (const gen of turboResult.affectedGenerators) {
-            affectedGeneratorSet.add(gen);
-        }
-        summary.push(...turboResult.summary);
-    }
-
     // Check git diff for infrastructure paths
-    // (needed even with turbo because generators depend on published @fern-fern/ir-sdk,
-    // not the local workspace, so turbo won't detect ir-sdk changes as affecting generators)
-    const globalPaths = turboPackages != null ? GLOBAL_AFFECT_PATHS : GLOBAL_AFFECT_PATHS_WITH_BASE;
     for (const file of changedFiles) {
-        for (const globalPath of globalPaths) {
+        for (const globalPath of GLOBAL_AFFECT_PATHS) {
             if (file.startsWith(globalPath)) {
                 allGeneratorsAffected = true;
                 allFixturesAffected = true;
@@ -335,20 +192,17 @@ export function detectAffected(
         }
     }
 
-    // === FALLBACK GENERATOR DETECTION (git diff, only when turbo unavailable) ===
-    if (turboPackages == null) {
-        summary.push("Turbo unavailable — using git diff for generator detection.");
-        for (const file of changedFiles) {
-            for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
-                if (!allGeneratorNames.includes(generatorName)) {
-                    continue;
-                }
-                for (const sourcePath of sourcePaths) {
-                    if (file.startsWith(sourcePath)) {
-                        affectedGeneratorSet.add(generatorName);
-                        summary.push(`Generator source changed: ${generatorName} (from ${file})`);
-                        break;
-                    }
+    // === GENERATOR DETECTION (git diff path matching) ===
+    for (const file of changedFiles) {
+        for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
+            if (!allGeneratorNames.includes(generatorName)) {
+                continue;
+            }
+            for (const sourcePath of sourcePaths) {
+                if (file.startsWith(sourcePath)) {
+                    affectedGeneratorSet.add(generatorName);
+                    summary.push(`Generator source changed: ${generatorName} (from ${file})`);
+                    break;
                 }
             }
         }
@@ -382,12 +236,13 @@ export function detectAffected(
         summary.push(`Generator source changed — ${[...affectedGeneratorSet].join(", ")} need all fixtures.`);
     }
 
-    // If nothing was detected as affected, fall back to running everything
+    // If nothing was detected as affected, skip all seed tests — the changes
+    // are in code unrelated to generators/fixtures/seed infrastructure.
     if (!allGeneratorsAffected && affectedGeneratorSet.size === 0 && affectedFixtureSet.size === 0) {
-        summary.push("No recognized changes detected — running everything as fallback.");
+        summary.push("No seed-related changes detected — skipping all seed tests.");
         return {
-            allGeneratorsAffected: true,
-            allFixturesAffected: true,
+            allGeneratorsAffected: false,
+            allFixturesAffected: false,
             affectedGenerators: [],
             generatorsWithAllFixtures: [],
             affectedFixtures: [],

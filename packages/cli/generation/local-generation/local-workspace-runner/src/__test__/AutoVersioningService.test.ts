@@ -6,7 +6,6 @@ import {
     AutoVersioningException,
     AutoVersioningService,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "../AutoVersioningService.js";
 
@@ -1255,6 +1254,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             // Create initial files
             await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
@@ -1291,6 +1291,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
             await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
@@ -1329,6 +1330,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
             await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.40.0"}');
@@ -2412,11 +2414,5 @@ describe("formatSizeKB", () => {
 
     it("formats small sizes", () => {
         expect(formatSizeKB(500)).toBe("0.5");
-    });
-});
-
-describe("DIFF_SIZE_LIMIT", () => {
-    it("is 100,000 characters", () => {
-        expect(DIFF_SIZE_LIMIT).toBe(100_000);
     });
 });

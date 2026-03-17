@@ -2,8 +2,9 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { createHash } from "crypto";
 import { Eta } from "eta";
-import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
@@ -25,6 +26,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
     private publicCoreTestFiles: File[] = [];
+    private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
 
@@ -117,6 +119,10 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.sourceFiles.push(file);
     }
 
+    public addSourceRawFile(file: File): void {
+        this.sourceRawFiles.push(file);
+    }
+
     public addTestFiles(file: CSharpFile): void {
         this.testFiles.push(file);
     }
@@ -148,7 +154,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format on the solution file using absolute path
+        // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
         const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
             doNotPipeOutput: false
@@ -212,30 +218,29 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const createProjectStartTime = Date.now();
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
-            absolutePathToSolutionDirectory,
-            absolutePathToOtherDirectory,
-            libraryPath,
-            solutionPath
+            absolutePathToOtherDirectory
         });
         this.context.logger.debug(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
         const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
-            absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
         this.context.logger.debug(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
+        // Generate the .slnx solution file directly as XML instead of using dotnet CLI
+        await this.createSolutionFile({
+            absolutePathToSolutionDirectory,
+            absolutePathToProjectDirectory,
+            absolutePathToTestProjectDirectory
+        });
+
         const writeSourceFilesStartTime = Date.now();
-        for (const file of this.sourceFiles) {
-            await file.write(absolutePathToProjectDirectory);
-        }
+        await this.writeFilesInBatches([...this.sourceFiles, ...this.sourceRawFiles], absolutePathToProjectDirectory);
         this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();
-        for (const file of this.testFiles) {
-            await file.write(absolutePathToTestProjectDirectory);
-        }
+        await this.writeFilesInBatches(this.testFiles, absolutePathToTestProjectDirectory);
         this.context.logger.debug(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
@@ -350,30 +355,11 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createProject({
         absolutePathToLibraryDirectory,
-        absolutePathToSolutionDirectory,
-        absolutePathToOtherDirectory,
-        libraryPath,
-        solutionPath
+        absolutePathToOtherDirectory
     }: {
         absolutePathToLibraryDirectory: AbsoluteFilePath;
-        absolutePathToSolutionDirectory: AbsoluteFilePath;
         absolutePathToOtherDirectory: AbsoluteFilePath;
-        libraryPath: string;
-        solutionPath: string;
     }): Promise<AbsoluteFilePath> {
-        // Create solution file in the solution directory using absolute paths
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await access(solutionFilePath).catch(() =>
-            loggingExeca(
-                this.context.logger,
-                "dotnet",
-                ["new", "sln", "-n", this.name, "-o", absolutePathToSolutionDirectory, "--no-update-check"],
-                {
-                    doNotPipeOutput: true
-                }
-            )
-        );
-
         const absolutePathToProjectDirectory = join(absolutePathToLibraryDirectory, RelativeFilePath.of(this.name));
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
@@ -410,39 +396,34 @@ dotnet_diagnostic.IDE0005.severity = error
             (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
         );
 
-        // Add library project to solution using absolute paths
-        // Use --in-root to place project at solution root without folder nesting
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["sln", solutionFilePath, "add", libraryCsprojPath, "--in-root"],
-            {
-                doNotPipeOutput: true
-            }
-        );
-
         return absolutePathToProjectDirectory;
     }
 
     private async createTestProject({
         absolutePathToTestDirectory,
-        absolutePathToSolutionDirectory,
         absolutePathToProjectDirectory
     }: {
         absolutePathToTestDirectory: AbsoluteFilePath;
-        absolutePathToSolutionDirectory: AbsoluteFilePath;
         absolutePathToProjectDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
         const testProjectName = this.names.files.testProject;
         const absolutePathToTestProject = join(absolutePathToTestDirectory, RelativeFilePath.of(testProjectName));
         await mkdir(absolutePathToTestProject, { recursive: true });
 
+        // Compute the relative path from the test project to the library .csproj
+        // Use win32.normalize to produce backslash paths matching dotnet CLI conventions
+        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const projectReferenceRelativePath = path.win32.normalize(
+            path.relative(absolutePathToTestProject, libraryCsprojPath)
+        );
+
         const testCsProjTemplateContents = (
             await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
         ).toString();
         const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
-            testProjectName
+            testProjectName,
+            projectReferencePath: projectReferenceRelativePath
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
@@ -451,38 +432,94 @@ dotnet_diagnostic.IDE0005.severity = error
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
 
-        // Add test project to solution using absolute paths
-        // Use --in-root to place project at solution root without folder nesting
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["sln", solutionFilePath, "add", testCsprojPath, "--in-root"],
-            {
-                doNotPipeOutput: true
-            }
+        return absolutePathToTestProject;
+    }
+
+    /**
+     * Generates the solution file directly as a template, avoiding dotnet CLI overhead.
+     * Computes relative paths from the solution directory to both project .csproj files.
+     * When `sln-format` is "sln", generates both .sln and .slnx files.
+     * When `sln-format` is "slnx" (default), generates only .slnx.
+     */
+    private async createSolutionFile({
+        absolutePathToSolutionDirectory,
+        absolutePathToProjectDirectory,
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToSolutionDirectory: AbsoluteFilePath;
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<void> {
+        const testProjectName = this.names.files.testProject;
+
+        // Compute relative paths from the solution directory to each .csproj file
+        const libraryCsprojAbsolute = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const testCsprojAbsolute = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
-        // Update project reference in test project to point to the library project using absolute paths
-        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        // Always generate .slnx format
+        const libraryCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+            .replace(/\\/g, "/");
+        const testCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+            .replace(/\\/g, "/");
 
-        // First remove the old reference (from template), then add the correct one
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["remove", testCsprojPath, "reference", `../${this.name}/${this.name}.csproj`],
-            {
-                doNotPipeOutput: true
-            }
-        ).catch(() => {
-            // Ignore error if reference doesn't exist
-        });
+        const slnxContents = `<Solution>
+  <Project Path="${testCsprojRelative}" />
+  <Project Path="${libraryCsprojRelative}" />
+</Solution>
+`;
 
-        await loggingExeca(this.context.logger, "dotnet", ["add", testCsprojPath, "reference", libraryCsprojPath], {
-            doNotPipeOutput: true
-        });
+        const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(slnxFilePath, slnxContents);
 
-        return absolutePathToTestProject;
+        // When sln-format is "sln", also generate the legacy .sln file
+        if (this.settings.slnFormat === "sln") {
+            const libraryCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+                .replace(/\//g, "\\");
+            const testCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+                .replace(/\//g, "\\");
+
+            const projectTypeGuid = "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC";
+            const libraryProjectGuid = generateDeterministicGuid(this.name);
+            const testProjectGuid = generateDeterministicGuid(testProjectName);
+
+            const slnContents = [
+                "Microsoft Visual Studio Solution File, Format Version 12.00",
+                "# Visual Studio Version 17",
+                "VisualStudioVersion = 17.0.31903.59",
+                "MinimumVisualStudioVersion = 10.0.40219.1",
+                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelativeBackslash}", "{${libraryProjectGuid}}"`,
+                "EndProject",
+                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelativeBackslash}", "{${testProjectGuid}}"`,
+                "EndProject",
+                "Global",
+                "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution",
+                "\t\tDebug|Any CPU = Debug|Any CPU",
+                "\t\tRelease|Any CPU = Release|Any CPU",
+                "\tEndGlobalSection",
+                "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution",
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                "\tEndGlobalSection",
+                "EndGlobal",
+                ""
+            ].join("\n");
+
+            const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
+            await writeFile(slnFilePath, slnContents);
+        }
     }
 
     private async createCoreDirectory({
@@ -497,9 +534,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreDirectory}`);
         await mkdir(absolutePathToCoreDirectory, { recursive: true });
 
-        for (const file of this.coreFiles) {
-            await file.write(absolutePathToCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.coreFiles, absolutePathToCoreDirectory);
 
         return absolutePathToCoreDirectory;
     }
@@ -516,9 +551,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreTestDirectory}`);
         await mkdir(absolutePathToCoreTestDirectory, { recursive: true });
 
-        for (const file of this.coreTestFiles) {
-            await file.write(absolutePathToCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.coreTestFiles, absolutePathToCoreTestDirectory);
 
         return absolutePathToCoreTestDirectory;
     }
@@ -539,9 +572,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreTestDirectory}`);
         await mkdir(absolutePathToPublicCoreTestDirectory, { recursive: true });
 
-        for (const file of this.publicCoreTestFiles) {
-            await file.write(absolutePathToPublicCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreTestFiles, absolutePathToPublicCoreTestDirectory);
 
         return absolutePathToPublicCoreTestDirectory;
     }
@@ -558,9 +589,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
         await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
 
-        for (const file of this.testUtilFiles) {
-            await file.write(absolutePathToTestUtilsDirectory);
-        }
+        await this.writeFilesInBatches(this.testUtilFiles, absolutePathToTestUtilsDirectory);
 
         return absolutePathToTestUtilsDirectory;
     }
@@ -578,9 +607,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
         await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
 
-        for (const file of this.publicCoreFiles) {
-            await file.write(absolutePathToPublicCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreFiles, absolutePathToPublicCoreDirectory);
 
         return absolutePathToPublicCoreDirectory;
     }
@@ -693,6 +720,19 @@ dotnet_diagnostic.IDE0005.severity = error
         );
     }
 
+    private static readonly FILE_WRITE_BATCH_SIZE = 100;
+
+    /**
+     * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
+     * while still being significantly faster than sequential writes.
+     */
+    private async writeFilesInBatches(files: File[], directoryPrefix: AbsoluteFilePath): Promise<void> {
+        for (let i = 0; i < files.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
+            const batch = files.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
+            await Promise.all(batch.map((file) => file.write(directoryPrefix)));
+        }
+    }
+
     private async createRawFiles(): Promise<void> {
         for (const filename of this.context.getRawAsIsFiles()) {
             this.addRawFiles(await this.createRawAsIsFile({ filename }));
@@ -713,6 +753,16 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 
 function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
+}
+
+/**
+ * Generates a deterministic GUID from a project name using MD5 hashing.
+ * This ensures the same project name always produces the same GUID,
+ * making .sln files reproducible across generation runs.
+ */
+function generateDeterministicGuid(name: string): string {
+    const hash = createHash("md5").update(name).digest("hex");
+    return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-${hash.slice(12, 16)}-${hash.slice(16, 20)}-${hash.slice(20, 32)}`.toUpperCase();
 }
 
 declare namespace CsProj {
@@ -855,7 +905,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("");
         result.push("<ItemGroup>");
-        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />');
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.31.1" />');
         result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
@@ -868,6 +919,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("<ItemGroup>");
         for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            // Skip proto files provided by external packages (e.g. Google.Api.CommonProtos)
+            // to avoid conflicting with the types from those packages.
+            if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protobufSourceFilePath.startsWith(prefix))) {
+                continue;
+            }
             const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
             result.push(
                 `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
@@ -959,3 +1015,10 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return path.win32.normalize(relativePath);
     }
 }
+
+/**
+ * Proto file path prefixes for types provided by external NuGet packages
+ * (e.g. Google.Api.CommonProtos). These files should be excluded from
+ * Grpc.Tools compilation to avoid conflicting type definitions.
+ */
+const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];

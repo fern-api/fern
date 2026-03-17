@@ -3,5 +3,6 @@
   "generatorName": "fernapi/fern-swift-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {},
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

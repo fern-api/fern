@@ -503,6 +503,37 @@ exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
 ]"
 `;
 
+exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id",
+    });
+    await client.plantstore.list();
+}
+main();
+"
+`;
+
+exports[`snippets > required-headers > 'POST /plants (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id",
+    });
+    await client.plantstore.create({
+        name: "Fern",
+        price: 12.99,
+    });
+}
+main();
+"
+`;
+
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
 "import { AcmeClient, AcmeEnvironment } from "acme";
 

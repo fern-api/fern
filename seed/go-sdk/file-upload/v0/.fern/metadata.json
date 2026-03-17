@@ -10,5 +10,6 @@
     "useReaderForBytesRequest": false,
     "union": "v0"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

@@ -161,9 +161,10 @@ export class ContainerScriptRunner extends ScriptRunner {
     }
 
     public async stop(): Promise<void> {
+        const logger = this.shouldStreamOutput() ? this.context.logger : undefined;
         for (const script of this.scripts) {
-            await loggingExeca(this.context.logger, this.runner, ["kill", script.containerId], {
-                doNotPipeOutput: false
+            await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                doNotPipeOutput: !this.shouldStreamOutput()
             });
         }
     }
@@ -261,17 +262,22 @@ export class ContainerScriptRunner extends ScriptRunner {
 
     private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
         const rootDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../.."));
-        await loggingExeca(context.logger, "pnpm", ["fern:build"], { cwd: rootDir });
+        const logger = this.shouldStreamOutput() ? context.logger : undefined;
+        await loggingExeca(logger, "pnpm", ["fern:build"], {
+            cwd: rootDir,
+            doNotPipeOutput: !this.shouldStreamOutput()
+        });
         return join(rootDir, RelativeFilePath.of("packages/cli/cli/dist/prod"));
     }
 
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
+        const logger = this.shouldStreamOutput() ? context.logger : undefined;
         // Start running a container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(
-                context.logger,
+                logger,
                 this.runner,
                 [
                     "run",
@@ -286,7 +292,7 @@ export class ContainerScriptRunner extends ScriptRunner {
                     "/bin/sh"
                 ],
                 {
-                    doNotPipeOutput: false
+                    doNotPipeOutput: !this.shouldStreamOutput()
                 }
             );
             const containerId = startSeedCommand.stdout;

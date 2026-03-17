@@ -25,11 +25,11 @@ module <%= gem_namespace %>
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
-          @default_headers = {
+          @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
-          }.merge(headers)
+          }.merge(headers)<% } else { %>headers<% } %>
         end
 
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
@@ -194,4 +194,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end                                                                                                                                                                                                                                                                
+end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

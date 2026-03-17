@@ -37,13 +37,12 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
-    "zod": "catalog:"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:",
-    "zod-to-json-schema": "^3.25.1"
+    "vitest": "catalog:"
   }
 }

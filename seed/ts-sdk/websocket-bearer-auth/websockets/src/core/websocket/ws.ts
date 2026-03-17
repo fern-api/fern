@@ -5,11 +5,11 @@ import { toQueryString } from "../url/qs.js";
 import * as Events from "./events.js";
 
 const getGlobalWebSocket = (): WebSocket | undefined => {
-    if (typeof WebSocket !== "undefined") {
+    if (RUNTIME.type === "node" || RUNTIME.type === "bun" || RUNTIME.type === "deno") {
+        return NodeWebSocket as unknown as WebSocket;
+    } else if (typeof WebSocket !== "undefined") {
         // @ts-ignore
         return WebSocket;
-    } else if (RUNTIME.type === "node") {
-        return NodeWebSocket as unknown as WebSocket;
     }
     return undefined;
 };

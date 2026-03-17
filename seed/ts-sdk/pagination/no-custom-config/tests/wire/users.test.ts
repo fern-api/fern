@@ -17,6 +17,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -72,6 +73,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
@@ -116,6 +118,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
@@ -171,6 +174,7 @@ describe("UsersClient", () => {
                 { name: "Bob", id: 2 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users/top-level-cursor")
@@ -217,6 +221,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -274,6 +279,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -331,6 +337,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
@@ -388,6 +395,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -444,6 +452,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -501,6 +510,7 @@ describe("UsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -549,6 +559,7 @@ describe("UsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -588,6 +599,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -617,6 +629,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -646,6 +659,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -680,6 +694,7 @@ describe("UsersClient", () => {
                 { name: "Bob", id: 2 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users/optional-data")
@@ -730,6 +745,7 @@ describe("UsersClient", () => {
             page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 1 },
             total_count: 0,
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users/optional-data")

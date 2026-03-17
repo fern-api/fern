@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";
@@ -13,6 +14,7 @@ import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDocker
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests.js";
 import { ScriptRunner } from "../index.js";
 import { TaskContextFactory } from "../TaskContextFactory.js";
+import { WorkspaceCache } from "../WorkspaceCache.js";
 
 export declare namespace TestRunner {
     interface Args {
@@ -23,6 +25,8 @@ export declare namespace TestRunner {
         scriptRunner: ScriptRunner | undefined;
         keepContainer: boolean;
         inspect: boolean;
+        workspaceCache?: WorkspaceCache;
+        logLevel: LogLevel;
     }
 
     interface RunArgs {
@@ -35,6 +39,12 @@ export declare namespace TestRunner {
         outputDir?: AbsoluteFilePath;
         /** Generator invocation with per-generator API overrides **/
         generatorInvocation?: GeneratorInvocation;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
+        /** If true, use lenient parsing for generators config (tolerates unrecognized keys) */
+        lenient?: boolean;
     }
 
     interface DoRunArgs {
@@ -60,6 +70,10 @@ export declare namespace TestRunner {
         inspect: boolean | undefined;
         license?: unknown;
         smartCasing?: boolean;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -113,14 +127,31 @@ export abstract class TestRunner {
     private readonly skipScripts: boolean;
     private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
+    private readonly workspaceCache: WorkspaceCache | undefined;
+    protected readonly logLevel: LogLevel;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepContainer, scriptRunner }: TestRunner.Args) {
+    constructor({
+        generator,
+        lock,
+        taskContextFactory,
+        skipScripts,
+        keepContainer,
+        scriptRunner,
+        workspaceCache,
+        logLevel
+    }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
         this.skipScripts = skipScripts;
         this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
+        this.workspaceCache = workspaceCache;
+        this.logLevel = logLevel;
+    }
+
+    protected shouldPipeOutput(): boolean {
+        return this.logLevel === LogLevel.Debug || this.logLevel === LogLevel.Trace;
     }
 
     public abstract build(): Promise<void>;
@@ -139,8 +170,12 @@ export abstract class TestRunner {
         inspect,
         absolutePathToApiDefinition,
         outputDir,
-        generatorInvocation
+        generatorInvocation,
+        organization,
+        absolutePathToFernConfig,
+        lenient
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+        let lockAcquired = false;
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -185,20 +220,35 @@ export abstract class TestRunner {
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
 
-            const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-                absolutePathToAPIDefinition: absolutePathToApiDefinition,
-                taskContext,
-                fixture
-            });
-            const workspaceSettings =
-                generatorInvocation != null
-                    ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    : undefined;
-            const fernWorkspace = await apiWorkspace?.toFernWorkspace(
-                { context: taskContext },
-                workspaceSettings,
-                generatorInvocation?.apiOverride?.specs
-            );
+            let fernWorkspace: FernWorkspace | undefined;
+            if (this.workspaceCache != null && generatorInvocation == null) {
+                // Use cache when no generatorInvocation overrides are present.
+                // The cache is keyed by absolutePathToAPIDefinition (derived from fixture name),
+                // which is safe because all variants of the same fixture share the same API definition.
+                fernWorkspace = await this.workspaceCache.getOrConvertToFernWorkspace({
+                    fixture,
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext
+                });
+            } else {
+                // Fallback to uncached loading when generatorInvocation may provide
+                // custom workspaceSettings or apiOverride specs.
+                const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext,
+                    fixture,
+                    lenient
+                });
+                const workspaceSettings =
+                    generatorInvocation != null
+                        ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        : undefined;
+                fernWorkspace = await apiWorkspace?.toFernWorkspace(
+                    { context: taskContext },
+                    workspaceSettings,
+                    generatorInvocation?.apiOverride?.specs
+                );
+            }
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
@@ -212,6 +262,7 @@ export abstract class TestRunner {
 
             taskContext.logger.debug("Acquiring lock...");
             await this.lock.acquire();
+            lockAcquired = true;
             taskContext.logger.info("Running generator...");
             try {
                 const generationStopwatch = new Stopwatch();
@@ -240,7 +291,9 @@ export abstract class TestRunner {
                         !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license,
-                    smartCasing
+                    smartCasing,
+                    organization,
+                    absolutePathToFernConfig
                 });
 
                 generationStopwatch.stop();
@@ -267,6 +320,12 @@ export abstract class TestRunner {
                     metrics
                 };
             }
+
+            // Release the semaphore after generation completes but before scripts run.
+            // Scripts use their own separate containers (ContainerScriptRunner),
+            // so holding the generation lock during scripts unnecessarily limits parallelism.
+            this.lock.release();
+            lockAcquired = false;
 
             if (this.skipScripts) {
                 return {
@@ -305,7 +364,9 @@ export abstract class TestRunner {
                 metrics
             };
         } finally {
-            this.lock.release();
+            if (lockAcquired) {
+                this.lock.release();
+            }
         }
     }
 

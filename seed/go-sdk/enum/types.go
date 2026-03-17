@@ -135,6 +135,30 @@ func (e EnumWithSpecialCharacters) Ptr() *EnumWithSpecialCharacters {
 	return &e
 }
 
+// Tests forward-compatible enums that accept
+// both known values and arbitrary strings.
+type ForwardCompatibleEnum string
+
+const (
+	ForwardCompatibleEnumActive   ForwardCompatibleEnum = "active"
+	ForwardCompatibleEnumInactive ForwardCompatibleEnum = "inactive"
+)
+
+func NewForwardCompatibleEnumFromString(s string) (ForwardCompatibleEnum, error) {
+	switch s {
+	case "active":
+		return ForwardCompatibleEnumActive, nil
+	case "inactive":
+		return ForwardCompatibleEnumInactive, nil
+	}
+	var t ForwardCompatibleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f ForwardCompatibleEnum) Ptr() *ForwardCompatibleEnum {
+	return &f
+}
+
 // Tests enum name and value can be
 // different.
 type Operand string

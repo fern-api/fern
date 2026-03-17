@@ -749,11 +749,31 @@ export class WireTestGenerator {
             return "nil";
         }
 
+        // Build a set of query parameter wire names that have datetime type so we can
+        // normalize their values to include millisecond precision (matching RFC3339Milli
+        // format used by the Go SDK's query.go serialization).
+        const datetimeQueryParams = new Set<string>();
+        for (const qp of endpoint.queryParameters) {
+            const primitive = this.context.maybePrimitive(qp.valueType);
+            if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
+                datetimeQueryParams.add(qp.name.wireValue);
+            }
+        }
+
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
+                let stringValue = String(paramValue);
+                // Normalize datetime values to always include milliseconds, matching the
+                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                if (datetimeQueryParams.has(paramName)) {
+                    const date = new Date(stringValue);
+                    if (!isNaN(date.getTime())) {
+                        stringValue = date.toISOString();
+                    }
+                }
+                const value = JSON.stringify(stringValue);
                 queryParamEntries.push(`${key}: ${value}`);
             }
         }

@@ -165,6 +165,10 @@ export class LegacyRemoteGenerationRunner {
                 })
             };
         } catch (error) {
+            if (taskContext.getResult() === TaskResult.Failure) {
+                // If the task already recorded a failure, the error is in task.logs.
+                return { success: false };
+            }
             return {
                 success: false,
                 error: error instanceof Error ? error.message : String(error)

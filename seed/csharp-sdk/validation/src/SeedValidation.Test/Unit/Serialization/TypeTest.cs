@@ -6,6 +6,7 @@ using SeedValidation.Core;
 namespace SeedValidation.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TypeTest
 {
     [NUnit.Framework.Test]

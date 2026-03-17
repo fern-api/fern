@@ -14,17 +14,11 @@ private func main() async throws {
             result: TestCaseResultWithStdout(
                 result: TestCaseResult(
                     expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+
                     ),
                     actualResult: ActualResult.value(
-                        .init(
-                            value: VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            )
+                        VariableValue.integerValue(
+
                         )
                     ),
                     passed: true
@@ -36,9 +30,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -53,18 +45,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-                                            .init(
-                                                integerValue: 
-                                            )
+
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-                                            .init(
-                                                integerValue: 
-                                            )
+
                                         )
                                     ]
                                 )
@@ -77,9 +65,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -94,18 +80,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-                                            .init(
-                                                integerValue: 
-                                            )
+
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-                                            .init(
-                                                integerValue: 
-                                            )
+
                                         )
                                     ]
                                 )

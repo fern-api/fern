@@ -1,0 +1,315 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedRequestWrapperImpl > getReferencedBodyPropertyName > returns camelCase body key when retainOriginalCasing=false 1`] = `"requestBody"`;
+
+exports[`GeneratedRequestWrapperImpl > getReferencedBodyPropertyName > returns originalName body key when retainOriginalCasing=true 1`] = `"requestBody"`;
+
+exports[`GeneratedRequestWrapperImpl > getRequestProperties > creates union type for allowMultiple query parameter 1`] = `"string | string[]"`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > applies naming to headers 1`] = `
+"export interface TestRequest {
+    xApiVersion: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > applies naming to path parameters when inlined 1`] = `
+"export interface TestRequest {
+    plantId: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses camelCase for inlined body properties with includeSerdeLayer=true 1`] = `
+"export interface TestRequest {
+    waterFrequency: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses camelCase names with includeSerdeLayer=true, retainOriginalCasing=false (default) 1`] = `
+"export interface TestRequest {
+    plantName: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses camelCase parameterNaming mode 1`] = `
+"export interface TestRequest {
+    plantName: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses originalName parameterNaming mode 1`] = `
+"export interface TestRequest {
+    plantName: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses snakeCase parameterNaming mode 1`] = `
+"export interface TestRequest {
+    plant_name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses wire values for inlined body properties with includeSerdeLayer=false 1`] = `
+"export interface TestRequest {
+    water_frequency: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses wire values with includeSerdeLayer=false 1`] = `
+"export interface TestRequest {
+    plant_name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses wire values with retainOriginalCasing=true 1`] = `
+"export interface TestRequest {
+    plant_name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > property naming > uses wireValue parameterNaming mode 1`] = `
+"export interface TestRequest {
+    plant_name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > withQueryParameter > generates Array.isArray + optional check for allowMultiple optional query param 1`] = `
+"if (request.categories != null) {
+    if (Array.isArray(request.categories)) {
+        _setItemParam(request.categories);
+    }
+    else {
+        _setParam(request.categories);
+    }
+}"
+`;
+
+exports[`GeneratedRequestWrapperImpl > withQueryParameter > generates Array.isArray check for allowMultiple query param 1`] = `
+"if (Array.isArray(request.tags)) {
+    _setItemParam(request.tags);
+}
+else {
+    _setParam(request.tags);
+}"
+`;
+
+exports[`GeneratedRequestWrapperImpl > withQueryParameter > generates direct setter for required non-nullable query param 1`] = `"_setParam(request.plantId);"`;
+
+exports[`GeneratedRequestWrapperImpl > withQueryParameter > wraps in != null check for optional query param 1`] = `
+"if (request.cursor != null) {
+    _setParam(request.cursor);
+}"
+`;
+
+exports[`GeneratedRequestWrapperImpl > withQueryParameter > wraps in !== undefined check for nullable query param 1`] = `
+"if (request.filter !== undefined) {
+    _setParam(request.filter);
+}"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > does not include path parameters when shouldInlinePathParameters is false 1`] = `
+"export interface TestRequest {
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > filters out literal headers 1`] = `
+"export interface TestRequest {
+    xDynamic: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates empty interface with no properties 1`] = `
+"export interface TestRequest {
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with all property sources combined 1`] = `
+"export interface TestRequest {
+    gardenId: string;
+    plantId: string;
+    page?: number;
+    limit?: number;
+    xTenantId: string;
+    xRequestId?: string;
+    name: string;
+    sunlightHours?: number;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with allowMultiple query parameter 1`] = `
+"export interface TestRequest {
+    tags: string | string[];
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with file array property 1`] = `
+"export interface TestRequest {
+    photos: Uploadable[];
+    albumName: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with file upload and inlineFileProperties=false 1`] = `
+"export interface TestRequest {
+    altText: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with file upload and inlineFileProperties=true (Node16) 1`] = `
+"export interface TestRequest {
+    photo: File | fs.ReadStream | Blob;
+    caption: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with file upload and inlineFileProperties=true (Node18) 1`] = `
+"export interface TestRequest {
+    document: Uploadable;
+    description?: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with inlined path parameters 1`] = `
+"export interface TestRequest {
+    organizationId: string;
+    plantId: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with inlined request body and extraProperties 1`] = `
+"export interface TestRequest {
+    name: string;
+    /** Accepts any additional properties */
+    [key: string]: any;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with inlined request body properties 1`] = `
+"export interface TestRequest {
+    name: string;
+    species: string;
+    waterFrequency?: number;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with non-literal headers 1`] = `
+"export interface TestRequest {
+    xCustom: string;
+    xRequestId: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with optional file property 1`] = `
+"export interface TestRequest {
+    thumbnail?: Uploadable | undefined;
+    title: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with query parameter docs 1`] = `
+"export interface TestRequest {
+    /** The cursor for pagination */
+    cursor?: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with query parameters 1`] = `
+"export interface TestRequest {
+    cursor?: string;
+    limit?: number;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with referenced request body 1`] = `
+"export interface TestRequest {
+    /** The plant description */
+    body: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with required query parameters 1`] = `
+"export interface TestRequest {
+    plantId: string;
+    name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > does not generate namespace module when no inline properties exist 1`] = `
+"export interface TestRequest {
+    name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > generates namespace module for inline named type properties 1`] = `
+"export interface TestRequest {
+    color: unknown;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes with fileUpload body > generates namespace module for file upload body with inline named properties 1`] = `
+"export interface TestRequest {
+    metadata: unknown;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - flattenRequestParameters with named reference body > flattens named body properties into wrapper interface 1`] = `
+"export interface TestRequest {
+    email: string;
+    age: number;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - flattenRequestParameters with named reference body > flattens named body with optional properties into wrapper 1`] = `
+"export interface TestRequest {
+    dryRun?: string;
+    name?: string;
+    description?: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - inlinedRequestBody.extends > generates interface extending multiple named types 1`] = `
+"export interface TestRequest extends BaseParams, PaginationParams {
+    query: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - inlinedRequestBody.extends > generates interface that extends named types from inlined body 1`] = `
+"export interface TestRequest extends BaseParams {
+    name: string;
+}
+"
+`;

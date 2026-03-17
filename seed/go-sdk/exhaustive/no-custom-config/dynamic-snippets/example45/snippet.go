@@ -3,7 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
 )
 
@@ -16,10 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        Id: "id",
-    }
-    client.Endpoints.Put.Add(
+    request := []byte("SGVsbG8gd29ybGQh")
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
         request,
     )

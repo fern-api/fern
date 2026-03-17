@@ -286,6 +286,7 @@
           "generatedName": "BadRequestError",
           "schema": {
             "generatedName": "BadRequestErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Bad request",
@@ -298,6 +299,7 @@
           "generatedName": "UnauthorizedError",
           "schema": {
             "generatedName": "UnauthorizedErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Unauthorized",

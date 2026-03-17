@@ -118,7 +118,7 @@
             }
           ]
         },
-        "indexedData": {
+        "indexed_data": {
           "oneOf": [
             {
               "$ref": "#/definitions/IndexedData"

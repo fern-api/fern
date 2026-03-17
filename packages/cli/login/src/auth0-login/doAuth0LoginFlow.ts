@@ -4,6 +4,14 @@ import open from "open";
 
 import { createServer } from "./createServer.js";
 
+/**
+ * Returns the base URL for Auth0, using HTTP for localhost (local dev) and HTTPS otherwise.
+ */
+function getAuth0BaseUrl(auth0Domain: string): string {
+    const protocol = auth0Domain.startsWith("localhost") ? "http" : "https";
+    return `${protocol}://${auth0Domain}`;
+}
+
 const SUCCESS_PAGE = `
 <!DOCTYPE html>
 <html id="web" lang="en">
@@ -101,7 +109,7 @@ async function getTokenFromCode({
     origin: string;
 }): Promise<Auth0TokenResponse> {
     const response = await axios.post(
-        `https://${auth0Domain}/oauth/token`,
+        `${getAuth0BaseUrl(auth0Domain)}/oauth/token`,
         new URLSearchParams({
             grant_type: "authorization_code",
             client_id: auth0ClientId,
@@ -148,6 +156,6 @@ function constructAuth0Url({
         queryParams.set("prompt", "login");
     }
 
-    const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    const url = `${getAuth0BaseUrl(auth0Domain)}/authorize?${queryParams.toString()}`;
     return url;
 }

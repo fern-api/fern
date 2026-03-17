@@ -466,25 +466,28 @@ export function convertSchemaObject(
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
-        // Per JSON Schema spec, `const` restricts a value to a single fixed value,
-        // so we always treat it as a literal regardless of `coerceEnumsToLiterals`.
-        if ("const" in schema) {
-            const constValue = schema.const;
-            if (typeof constValue === "string" || typeof constValue === "boolean") {
-                return convertLiteral({
-                    nameOverride,
-                    generatedName,
-                    title,
-                    wrapAsOptional,
-                    wrapAsNullable,
-                    value: constValue,
-                    description,
-                    availability,
-                    namespace,
-                    groupName
-                });
+        const isFromConst = "const" in schema;
+        if (isFromConst) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- `const` is an OpenAPI 3.1 attribute not in the V3 types
+            const constValue = (schema as Record<string, unknown>).const;
+            if (context.options.coerceConstsTo === "literals") {
+                // Const directly becomes a literal — skip enum path entirely
+                if (typeof constValue === "string" || typeof constValue === "boolean") {
+                    return convertLiteral({
+                        nameOverride,
+                        generatedName,
+                        title,
+                        wrapAsOptional,
+                        wrapAsNullable,
+                        value: constValue,
+                        description,
+                        availability,
+                        namespace,
+                        groupName
+                    });
+                }
             }
-            // For non-string/boolean const values, fall back to enum behavior
+            // Default: coerce to enum (current behavior)
             schema.enum = [constValue];
         }
 
@@ -524,6 +527,7 @@ export function convertSchemaObject(
 
             if (
                 context.options.coerceEnumsToLiterals &&
+                !isFromConst &&
                 schema.enum.length === 1 &&
                 schema.enum[0] != null &&
                 fernEnum == null
@@ -792,6 +796,25 @@ export function convertSchemaObject(
                     });
                 }
                 return result;
+            }
+
+            if (schema.format === "byte" && context.options.respectByteFormat) {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    // TODO: We should actually expose a bytes primitive type in the IR.
+                    // For now, we're using base64 to represent bytes specifically in gRPC SDKs.
+                    primitive: PrimitiveSchemaValueWithExample.base64({
+                        example: getExamplesString({ schema, logger: context.logger, fallback })
+                    }),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
             }
 
             const maybeConstValue = getProperty<string>(schema, "const");

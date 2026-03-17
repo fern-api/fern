@@ -7,7 +7,7 @@ import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionCon
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
 import { DocsConfigConverter } from "../docs/config/converter/DocsConfigConverter.js";
 import type { DocsConfig } from "../docs/config/DocsConfig.js";
-import { ValidationError } from "../errors/ValidationError.js";
+import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
 import { SdkConfig } from "../sdk/config/SdkConfig.js";
 import { Version } from "../version.js";
@@ -50,7 +50,7 @@ export class WorkspaceLoader {
     public async loadOrThrow({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<Workspace> {
         const result = await this.load({ fernYml });
         if (!result.success) {
-            throw new ValidationError(result.issues);
+            throw new SourcedValidationError(result.issues);
         }
         return result.workspace;
     }

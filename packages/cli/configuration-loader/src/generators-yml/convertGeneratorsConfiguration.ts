@@ -48,7 +48,9 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    inferForwardCompatible: undefined,
+    coerceConstsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -177,7 +179,9 @@ export function parseBaseApiDefinitionSettingsSchema(
             settings?.["remove-discriminants-from-schemas"]
         ),
         pathParameterOrder: settings?.["path-parameter-order"],
-        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
+        inferForwardCompatible: settings?.["infer-forward-compatible"],
+        coerceConstsTo: settings?.["coerce-consts-to"]
     };
 }
 

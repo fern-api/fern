@@ -10,14 +10,14 @@ private func main() async throws {
             nullableRole: .value(.admin),
             nullableStatus: .value(.active),
             nullableNotification: .value(NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
             )),
             nullableSearchResult: .value(SearchResult.user(
-                .init(
+                UserResponse(
                     id: "id",
                     username: "username",
                     email: .value("email"),
