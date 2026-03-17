@@ -61,7 +61,7 @@ describe("valid-field-names", () => {
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Enum value %option contains special characters. It will be converted to PercentOption for code generation."
+                    "Enum value %option contains special characters. It will be converted to Option for code generation."
             },
             {
                 name: "valid-field-names",
@@ -69,7 +69,7 @@ describe("valid-field-names", () => {
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Enum value option% contains special characters. It will be converted to OptionPercent for code generation."
+                    "Enum value option% contains special characters. It will be converted to Option for code generation."
             },
             {
                 name: "valid-field-names",

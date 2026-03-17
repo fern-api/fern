@@ -1,4 +1,4 @@
-import { replaceSpecialCharsWithWords } from "@fern-api/core-utils";
+import { hasConvertibleSpecialChars, replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getEnumName } from "@fern-api/ir-generator";
 import chalk from "chalk";
@@ -39,24 +39,43 @@ export function validateEnumNames(
             ? ` If your API is defined using OpenAPI, you can use the x-fern-enum extension to specify a valid name: ${X_FERN_ENUM_DOCS_LINK}`
             : "";
 
-        // Try to auto-convert the name if it contains characters outside the
-        // valid identifier set [a-zA-Z0-9_]. This handles special chars like %,
-        // and separator chars like . or : that camelCase can handle.
+        // Check if the name contains characters outside [a-zA-Z0-9_].
         // Names that only fail due to leading underscore/number (e.g. _invalidName,
-        // 523_Invalid) are NOT auto-converted - those need explicit user fixes.
+        // 523_Invalid) are NOT auto-converted — those need explicit user fixes.
         const hasNonIdentifierChars = /[^a-zA-Z0-9_]/.test(enumName.name);
-        const withWords = replaceSpecialCharsWithWords(enumName.name);
-        const converted = upperFirst(camelCase(withWords));
-        if (hasNonIdentifierChars && converted.length > 0 && VALID_NAME_REGEX.test(converted)) {
-            violations.push({
-                severity: "warning",
-                message: `Enum ${enumName.wasExplicitlySet ? "name" : "value"} ${chalk.bold(
-                    enumName.name
-                )} contains special characters. It will be converted to ${chalk.bold(
-                    converted
-                )} for code generation.${openApiGuidance}`
-            });
-            return;
+        if (hasNonIdentifierChars) {
+            // First, see what camelCase produces from the raw name.
+            const casingResult = upperFirst(camelCase(enumName.name));
+
+            if (casingResult === "" && hasConvertibleSpecialChars(enumName.name)) {
+                // Name consists entirely of special chars that camelCase drops.
+                // CasingsGenerator will use word-replaced safeName fallback.
+                const withWords = replaceSpecialCharsWithWords(enumName.name);
+                const converted = upperFirst(camelCase(withWords));
+                if (converted.length > 0 && VALID_NAME_REGEX.test(converted)) {
+                    violations.push({
+                        severity: "warning",
+                        message: `Enum ${enumName.wasExplicitlySet ? "name" : "value"} ${chalk.bold(
+                            enumName.name
+                        )} contains special characters. It will be converted to ${chalk.bold(
+                            converted
+                        )} for code generation.${openApiGuidance}`
+                    });
+                    return;
+                }
+            } else if (casingResult.length > 0 && VALID_NAME_REGEX.test(casingResult)) {
+                // camelCase handles the separator chars (like . : / -) naturally
+                // and produces a valid name. Just warn the user about the conversion.
+                violations.push({
+                    severity: "warning",
+                    message: `Enum ${enumName.wasExplicitlySet ? "name" : "value"} ${chalk.bold(
+                        enumName.name
+                    )} contains special characters. It will be converted to ${chalk.bold(
+                        casingResult
+                    )} for code generation.${openApiGuidance}`
+                });
+                return;
+            }
         }
 
         if (enumName.wasExplicitlySet) {

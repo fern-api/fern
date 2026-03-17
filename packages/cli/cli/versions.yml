@@ -2,13 +2,13 @@
 - version: 4.32.0
   changelogEntry:
     - summary: |
-        Convert invalid enum name characters to word equivalents instead of
-        throwing fatal errors. Characters like `%`, `#`, `@`, `&`, `+` are now
-        automatically converted to their word forms (e.g. `%` → `Percent`,
-        `%option` → `PercentOption`) with a warning, rather than blocking code
-        generation. Characters that lodash `camelCase` already handles as word
-        separators (like `.`, `:`, `/`) are left for casing to handle naturally.
-        Names that are already valid pass through unchanged (backwards compatible).
+        Warn instead of fatally erroring when enum names contain special
+        characters. Names that consist entirely of unmappable characters
+        (e.g. `%` → `Percent`, `|` → `Pipe`) now produce a usable safeName
+        via word conversion instead of an empty string. Names with separator
+        characters (like `.`, `:`, `/`) that lodash `camelCase` already handles
+        are warned about but pass through casing naturally. Names that are
+        already valid pass through unchanged (backwards compatible).
       type: feat
   createdAt: "2026-03-17"
   irVersion: 65
