@@ -54,6 +54,14 @@ export class DynamicTypeMapper {
     private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): java.Type {
         switch (named.type) {
             case "alias":
+                if (named.typeReference.type === "unknown") {
+                    return java.Type.reference(
+                        java.classReference({
+                            name: this.context.getClassName(named.declaration.name),
+                            packageName: this.context.getTypesPackageName(named.declaration.fernFilepath)
+                        })
+                    );
+                }
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "discriminatedUnion":
