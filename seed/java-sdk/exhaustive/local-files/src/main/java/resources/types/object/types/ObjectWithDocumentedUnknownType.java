@@ -17,24 +17,25 @@ import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ObjectWithDocumentedUnknownType.Builder.class
 )
 public final class ObjectWithDocumentedUnknownType {
-  private final Object documentedUnknownType;
+  private final DocumentedUnknownType documentedUnknownType;
 
   private final Map<String, Object> additionalProperties;
 
-  private ObjectWithDocumentedUnknownType(Object documentedUnknownType,
+  private ObjectWithDocumentedUnknownType(DocumentedUnknownType documentedUnknownType,
       Map<String, Object> additionalProperties) {
     this.documentedUnknownType = documentedUnknownType;
     this.additionalProperties = additionalProperties;
   }
 
   @JsonProperty("documentedUnknownType")
-  public Object getDocumentedUnknownType() {
+  public DocumentedUnknownType getDocumentedUnknownType() {
     return documentedUnknownType;
   }
 
@@ -68,7 +69,7 @@ public final class ObjectWithDocumentedUnknownType {
   }
 
   public interface DocumentedUnknownTypeStage {
-    _FinalStage documentedUnknownType(Object documentedUnknownType);
+    _FinalStage documentedUnknownType(@NotNull DocumentedUnknownType documentedUnknownType);
 
     Builder from(ObjectWithDocumentedUnknownType other);
   }
@@ -85,7 +86,7 @@ public final class ObjectWithDocumentedUnknownType {
       ignoreUnknown = true
   )
   public static final class Builder implements DocumentedUnknownTypeStage, _FinalStage {
-    private Object documentedUnknownType;
+    private DocumentedUnknownType documentedUnknownType;
 
     @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
@@ -101,8 +102,8 @@ public final class ObjectWithDocumentedUnknownType {
 
     @java.lang.Override
     @JsonSetter("documentedUnknownType")
-    public _FinalStage documentedUnknownType(Object documentedUnknownType) {
-      this.documentedUnknownType = documentedUnknownType;
+    public _FinalStage documentedUnknownType(@NotNull DocumentedUnknownType documentedUnknownType) {
+      this.documentedUnknownType = Objects.requireNonNull(documentedUnknownType, "documentedUnknownType must not be null");
       return this;
     }
 
