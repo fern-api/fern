@@ -52,13 +52,10 @@ export function buildChannel({
         }
     }
 
-    const hasAuth =
-        context.authOverrides?.auth != null || (context.ir.security != null && context.ir.security.length > 0);
-
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: convertedPath,
         url: urlId,
-        auth: hasAuth
+        auth: context.authOverrides?.auth != null
     };
 
     if (channel.audiences != null && channel.audiences.length > 0) {
