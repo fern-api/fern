@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.58.1
+  changelogEntry:
+    - summary: |
+        Export the generated Socket class from subpackage `exports.ts` when
+        WebSocket clients are enabled. Previously only the Client class was
+        exported, making the Socket class inaccessible through the public
+        exports path.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 3.58.0
   changelogEntry:
     - summary: |
