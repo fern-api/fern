@@ -15,5 +15,6 @@ export const HARDCODED_ENUM_NAMES: Record<string, string> = {
     "-": "HYPHEN",
     "|": "PIPE",
     ".": "DOT",
-    "/": "SLASH"
+    "/": "SLASH",
+    "%": "PERCENT"
 };
