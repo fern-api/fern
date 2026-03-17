@@ -10,11 +10,11 @@ import (
 // Admin not found
 type NotFoundError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (n *NotFoundError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}

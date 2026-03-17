@@ -242,7 +242,7 @@ func TestSettersType(t *testing.T) {
 
 	t.Run("SetFourteen", func(t *testing.T) {
 		obj := &Type{}
-		var fernTestValueFourteen interface{}
+		var fernTestValueFourteen any
 		obj.SetFourteen(fernTestValueFourteen)
 		assert.Equal(t, fernTestValueFourteen, obj.Fourteen)
 		assert.NotNil(t, obj.explicitFields)
@@ -653,7 +653,7 @@ func TestGettersType(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Type{}
-		var expected interface{}
+		var expected any
 		obj.Fourteen = expected
 
 		// Act & Assert
@@ -1308,7 +1308,7 @@ func TestSettersMarkExplicitType(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Type{}
-		var fernTestValueFourteen interface{}
+		var fernTestValueFourteen any
 
 		// Act
 		obj.SetFourteen(fernTestValueFourteen)
