@@ -1861,6 +1861,21 @@ types:
       "og:dynamic:background-color":
         type: optional<string>
         docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
+      "og:dynamic:show-logo":
+        type: optional<boolean>
+        docs: Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-section":
+        type: optional<boolean>
+        docs: Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-description":
+        type: optional<boolean>
+        docs: Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-url":
+        type: optional<boolean>
+        docs: Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-gradient":
+        type: optional<boolean>
+        docs: Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
       canonical-host:
         type: optional<string>
         docs: |

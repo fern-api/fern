@@ -46,6 +46,16 @@ export interface MetadataConfig {
     ogDynamicTextColor?: string;
     /** Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff"). */
     ogDynamicBackgroundColor?: string;
+    /** Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
+    ogDynamicShowLogo?: boolean;
+    /** Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
+    ogDynamicShowSection?: boolean;
+    /** Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
+    ogDynamicShowDescription?: boolean;
+    /** Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
+    ogDynamicShowUrl?: boolean;
+    /** Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
+    ogDynamicShowGradient?: boolean;
     /**
      * The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.
      * Defaults to the URL defined in the `instances` configuration.

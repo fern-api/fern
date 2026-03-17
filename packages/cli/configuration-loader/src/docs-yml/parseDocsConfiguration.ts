@@ -1618,6 +1618,11 @@ async function convertMetadata(
         "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         "og:dynamic:text-color": metadata.ogDynamicTextColor,
         "og:dynamic:background-color": metadata.ogDynamicBackgroundColor,
+        "og:dynamic:show-logo": metadata.ogDynamicShowLogo,
+        "og:dynamic:show-section": metadata.ogDynamicShowSection,
+        "og:dynamic:show-description": metadata.ogDynamicShowDescription,
+        "og:dynamic:show-url": metadata.ogDynamicShowUrl,
+        "og:dynamic:show-gradient": metadata.ogDynamicShowGradient,
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost

@@ -547,6 +547,11 @@ export const MetadataConfig = z.object({
     "twitter:card": TwitterCardSetting.optional(),
     "og:dynamic:text-color": z.string().optional(),
     "og:dynamic:background-color": z.string().optional(),
+    "og:dynamic:show-logo": z.boolean().optional(),
+    "og:dynamic:show-section": z.boolean().optional(),
+    "og:dynamic:show-description": z.boolean().optional(),
+    "og:dynamic:show-url": z.boolean().optional(),
+    "og:dynamic:show-gradient": z.boolean().optional(),
     "canonical-host": z.string().optional()
 });
 
