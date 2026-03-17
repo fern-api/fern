@@ -10,22 +10,53 @@ export abstract class AbstractReadmeSnippetBuilder {
 
     /**
      * Get the default endpoint that should be used in the generated README.md.
-     * We prefer POST endpoints for better snippet quality, but if none are available,
-     * we use the first endpoint.
+     * We prefer POST endpoints for better snippet quality, and among those,
+     * we prefer the shortest snippet to avoid verbose examples with many optional parameters.
      */
     public getDefaultEndpointId(): string {
-        let defaultEndpoint = this.endpointSnippets.find((endpoint) => endpoint.id.method === "POST");
-        if (defaultEndpoint == null) {
-            const firstEndpoint = this.endpointSnippets[0];
-            if (firstEndpoint == null) {
-                throw new Error("Internal error; no endpoint snippets were provided");
-            }
-            defaultEndpoint = firstEndpoint;
+        let candidates = this.endpointSnippets.filter((endpoint) => endpoint.id.method === "POST");
+        if (candidates.length === 0) {
+            candidates = [...this.endpointSnippets];
         }
-        if (defaultEndpoint.id.identifierOverride == null) {
+        if (candidates.length === 0) {
+            throw new Error("Internal error; no endpoint snippets were provided");
+        }
+
+        // Among candidates, prefer the one with the shortest snippet.
+        // This avoids endpoints with many optional parameters that produce verbose README examples
+        // (e.g. bytes endpoints with 30+ optional query parameters all rendered as &None).
+        let bestEndpoint = candidates[0];
+        if (bestEndpoint == null) {
+            throw new Error("Internal error; no endpoint snippets were provided");
+        }
+        let bestLength = this.getSnippetTextLength(bestEndpoint);
+
+        for (let i = 1; i < candidates.length; i++) {
+            const candidate = candidates[i];
+            if (candidate == null) {
+                continue;
+            }
+            const length = this.getSnippetTextLength(candidate);
+            if (length < bestLength) {
+                bestEndpoint = candidate;
+                bestLength = length;
+            }
+        }
+
+        if (bestEndpoint.id.identifierOverride == null) {
             throw new Error("Internal error; all endpoints must define an endpoint id to generate README.md");
         }
-        return defaultEndpoint.id.identifierOverride;
+        return bestEndpoint.id.identifierOverride;
+    }
+
+    /**
+     * Get the text length of a snippet for comparison purposes.
+     * Shorter snippets generally make better README examples.
+     */
+    private getSnippetTextLength(endpoint: FernGeneratorExec.Endpoint): number {
+        const snippet = endpoint.snippet as Record<string, unknown>;
+        const text = (snippet.client ?? snippet.syncClient ?? "") as string;
+        return text.length;
     }
 
     /**
