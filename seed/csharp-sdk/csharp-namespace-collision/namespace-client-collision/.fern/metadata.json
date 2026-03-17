@@ -3,8 +3,8 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "namespace": "Candid.Net",
-    "client-class-name": "Candid",
+    "namespace": "Contoso.Net",
+    "client-class-name": "Contoso",
     "explicit-namespaces": true,
     "experimental-fully-qualified-namespaces": true
   },

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/Candid.Net/Candid.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.CreateUserAsync(
-    new global::Candid.Net.User
+    new global::Contoso.Net.User
     {
         Id = "id",
         Name = "name",
@@ -47,7 +47,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Candid.Net/Candid.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ await client.CreateUserAsync(
 
 ```csharp
 await client.CreateTaskAsync(
-    new global::Candid.Net.Task
+    new global::Contoso.Net.Task
     {
         Id = "id",
         Name = "name",
@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/Candid.Net/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ await client.CreateTaskAsync(
 
 ```csharp
 await client.System.CreateUserAsync(
-    new global::Candid.Net.System.User
+    new global::Contoso.Net.System.User
     {
         Line1 = "line1",
         Line2 = "line2",
@@ -146,7 +146,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/Candid.Net/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -160,10 +160,10 @@ await client.System.CreateUserAsync(
 
 ```csharp
 await client.System.CreateTaskAsync(
-    new global::Candid.Net.System.Task
+    new global::Contoso.Net.System.Task
     {
         Name = "name",
-        User = new global::Candid.Net.System.User
+        User = new global::Contoso.Net.System.User
         {
             Line1 = "line1",
             Line2 = "line2",
@@ -172,7 +172,7 @@ await client.System.CreateTaskAsync(
             Zip = "zip",
             Country = "USA",
         },
-        Owner = new global::Candid.Net.System.User
+        Owner = new global::Contoso.Net.System.User
         {
             Line1 = "line1",
             Line2 = "line2",
@@ -209,7 +209,7 @@ await client.System.CreateTaskAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/Candid.Net/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

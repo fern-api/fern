@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/Candid.Net)](https://nuget.org/packages/Candid.Net)
+[![nuget shield](https://img.shields.io/nuget/v/Contoso.Net)](https://nuget.org/packages/Contoso.Net)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -27,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package Candid.Net
+dotnet add package Contoso.Net
 ```
 
 ## Reference
@@ -39,11 +39,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using Candid.Net;
+using Contoso.Net;
 
-var client = new Candid();
+var client = new Contoso();
 await client.CreateUserAsync(
-    new global::Candid.Net.User
+    new global::Contoso.Net.User
     {
         Id = "id",
         Name = "name",
@@ -59,11 +59,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using Candid.Net;
+using Contoso.Net;
 
 try {
     var response = await client.CreateUserAsync(...);
-} catch (CandidApiException e) {
+} catch (ContosoApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -112,7 +112,7 @@ var response = await client.CreateUserAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using Candid.Net;
+using Contoso.Net;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.CreateUserAsync(...).WithRawResponse();

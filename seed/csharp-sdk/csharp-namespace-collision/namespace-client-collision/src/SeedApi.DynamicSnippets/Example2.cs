@@ -1,18 +1,18 @@
-using Candid.Net;
+using Contoso.Net;
 
 namespace Usage;
 
 public class Example2
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new Candid(
+        var client = new Contoso(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.System.CreateUserAsync(
-            new global::Candid.Net.System.User {
+            new global::Contoso.Net.System.User {
                 Line1 = "line1",
                 Line2 = "line2",
                 City = "city",
