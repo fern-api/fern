@@ -23,14 +23,14 @@ export type Event = Events.Event;
 export type ErrorEvent = Events.ErrorEvent;
 export type CloseEvent = Events.CloseEvent;
 
-export enum ReadyState {
-    CONNECTING = 0,
-    OPEN = 1,
-    CLOSING = 2,
-    CLOSED = 3,
-}
-
-export declare namespace ReconnectingWebSocket {
+export namespace ReconnectingWebSocket {
+    export const ReadyState = {
+        CONNECTING: 0,
+        OPEN: 1,
+        CLOSING: 2,
+        CLOSED: 3,
+    } as const;
+    export type ReadyState = (typeof ReadyState)[keyof typeof ReadyState];
     export interface Args {
         url: string;
         protocols?: string | string[];
@@ -185,11 +185,11 @@ export class ReconnectingWebSocket {
     /**
      * The current state of the connection; this is one of the Ready state constants
      */
-    get readyState(): ReadyState {
+    get readyState(): ReconnectingWebSocket.ReadyState {
         if (this._ws) {
-            return this._ws.readyState as ReadyState;
+            return this._ws.readyState as ReconnectingWebSocket.ReadyState;
         }
-        return this._options.startClosed ? ReadyState.CLOSED : ReadyState.CONNECTING;
+        return this._options.startClosed ? ReconnectingWebSocket.ReadyState.CLOSED : ReconnectingWebSocket.ReadyState.CONNECTING;
     }
 
     /**

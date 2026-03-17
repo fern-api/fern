@@ -17,9 +17,6 @@ export interface Websocket {
             abortSignal?: ts.Expression;
         }) => ts.Expression;
     };
-    readonly ReadyState: {
-        _getReferenceToType: () => ts.TypeNode;
-    };
     readonly CloseEvent: {
         _getReferenceToType: () => ts.TypeNode;
     };
@@ -85,10 +82,6 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                     ]);
                 }
         )
-    };
-
-    public ReadyState = {
-        _getReferenceToType: this.withExportedName("ReadyState", (ReadyState) => () => ReadyState.getTypeNode())
     };
 
     public CloseEvent = {
