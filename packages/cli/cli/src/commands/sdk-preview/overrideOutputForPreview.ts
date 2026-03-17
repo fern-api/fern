@@ -3,8 +3,6 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
 
-const PREVIEW_REGISTRY_TOKEN = process.env.FERN_PREVIEW_REGISTRY_TOKEN;
-
 const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
     "fernapi/fern-typescript-node-sdk",
     "fernapi/fern-typescript-browser-sdk",
@@ -46,7 +44,7 @@ export function overrideGroupOutputForPreview({
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: PREVIEW_REGISTRY_URL,
                     packageName,
-                    token: PREVIEW_REGISTRY_TOKEN ?? token,
+                    token,
                     downloadSnippets: false
                 })
             ),
