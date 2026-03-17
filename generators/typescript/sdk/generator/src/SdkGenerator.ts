@@ -2137,10 +2137,9 @@ export class SdkGenerator {
                         });
 
                         if (this.generateWebSocketClients && package_.websocket != null) {
-                            const socketClassName =
-                                this.websocketSocketDeclarationReferencer.getExportedName(
-                                    packageId.subpackageId
-                                );
+                            const socketClassName = this.websocketSocketDeclarationReferencer.getExportedName(
+                                packageId.subpackageId
+                            );
                             sourceFile.addExportDeclaration({
                                 moduleSpecifier: "./client/Socket",
                                 namedExports: [socketClassName]
