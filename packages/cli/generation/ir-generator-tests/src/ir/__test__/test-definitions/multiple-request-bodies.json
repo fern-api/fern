@@ -49,6 +49,7 @@
                 },
                 "tokenEnvVar": null,
                 "key": "BearerAuthScheme",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],

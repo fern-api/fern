@@ -49,6 +49,7 @@
                 },
                 "tokenEnvVar": "MY_TOKEN",
                 "key": "Bearer",
+                "websocketAuthFallback": null,
                 "docs": null
             },
             {
@@ -89,6 +90,7 @@
                 "prefix": null,
                 "headerEnvVar": "MY_API_KEY",
                 "key": "ApiKey",
+                "websocketAuthFallback": null,
                 "docs": null
             },
             {
@@ -390,6 +392,7 @@
                     "refreshEndpoint": null
                 },
                 "key": "OAuth",
+                "websocketAuthFallback": null,
                 "docs": null
             },
             {
@@ -437,6 +440,7 @@
                 "passwordEnvVar": "MY_PASSWORD",
                 "passwordOmit": null,
                 "key": "Basic",
+                "websocketAuthFallback": null,
                 "docs": null
             },
             {
@@ -545,6 +549,7 @@
                     ]
                 },
                 "key": "InferredAuth",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],

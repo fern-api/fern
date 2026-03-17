@@ -64,6 +64,7 @@
                 "prefix": "test_prefix",
                 "headerEnvVar": "HEADER_TOKEN_ENV_VAR",
                 "key": "Header",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],

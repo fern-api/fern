@@ -71,6 +71,7 @@
                 "passwordEnvVar": null,
                 "passwordOmit": null,
                 "key": "basic",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],

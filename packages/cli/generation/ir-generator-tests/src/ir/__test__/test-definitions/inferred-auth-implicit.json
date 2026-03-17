@@ -132,6 +132,7 @@
                     ]
                 },
                 "key": "InferredAuthScheme",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],

@@ -60,7 +60,8 @@ export const V65_TO_V63_MIGRATION: IrMigration<
                                   scheme.type === "bearer" ||
                                   scheme.type === "basic" ||
                                   scheme.type === "header" ||
-                                  scheme.type === "oauth"
+                                  scheme.type === "oauth" ||
+                                  scheme.type === "inferred"
                               ) {
                                   const { websocketAuthFallback: _, ...rest } = scheme;
                                   return rest as unknown as IrVersions.V63.auth.AuthScheme;

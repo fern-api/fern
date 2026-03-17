@@ -49,6 +49,7 @@
                 },
                 "tokenEnvVar": "SEED_API_KEY",
                 "key": "Bearer",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],
