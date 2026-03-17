@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.1
+  changelogEntry:
+    - summary: |
+        Upgrade `pytest-asyncio` dev dependency from `^0.23.5` to `^1.0.0` in generated
+        `pyproject.toml`. This eliminates deprecation warnings about `asyncio.iscoroutinefunction`,
+        `asyncio.get_event_loop_policy`, and `asyncio.set_event_loop_policy` when running tests
+        on Python 3.14+.
+      type: chore
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 5.0.0
   changelogEntry:
     - summary: |
