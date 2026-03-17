@@ -1305,9 +1305,11 @@ client.endpoints().object().getAndReturnWithUnknownField(
 client.endpoints().object().getAndReturnWithDocumentedUnknownType(
     ObjectWithDocumentedUnknownType
         .builder()
-        .documentedUnknownType(new 
+        .documentedUnknownType(
+            DocumentedUnknownType.of(new 
             HashMap<String, Object>() {{put("key", "value");
             }})
+        )
         .build()
 );
 ```
