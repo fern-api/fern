@@ -3,7 +3,6 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { CoerceConstsTo } from "./CoerceConstsTo.js";
 import { PathParameterOrder } from "./PathParameterOrder.js";
 import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas.js";
 
@@ -23,7 +22,6 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "path-parameter-order": PathParameterOrder.optional(),
     "resolve-schema-collisions": core.serialization.boolean().optional(),
     "infer-forward-compatible": core.serialization.boolean().optional(),
-    "coerce-consts-to": CoerceConstsTo.optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -40,6 +38,5 @@ export declare namespace BaseApiSettingsSchema {
         "path-parameter-order"?: PathParameterOrder.Raw | null;
         "resolve-schema-collisions"?: boolean | null;
         "infer-forward-compatible"?: boolean | null;
-        "coerce-consts-to"?: CoerceConstsTo.Raw | null;
     }
 }

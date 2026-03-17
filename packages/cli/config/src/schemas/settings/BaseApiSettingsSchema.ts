@@ -60,15 +60,7 @@ export const BaseApiSettingsSchema = z.object({
      * - `specOrder`: Use the order path parameters are defined in the spec
      * Defaults to `urlOrder`.
      */
-    pathParameterOrder: PathParameterOrderSchema.optional(),
-
-    /**
-     * Controls how `const` values in OpenAPI specs are represented.
-     * - `literals`: Convert const values directly to literals with defaults.
-     * - `enums`: Convert const values to single-element enums (current behavior).
-     * Defaults to `enums`.
-     */
-    coerceConstsTo: z.enum(["literals", "enums"]).optional()
+    pathParameterOrder: PathParameterOrderSchema.optional()
 });
 
 export type BaseApiSettingsSchema = z.infer<typeof BaseApiSettingsSchema>;

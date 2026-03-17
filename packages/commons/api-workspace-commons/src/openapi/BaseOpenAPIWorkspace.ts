@@ -25,7 +25,6 @@ export declare namespace BaseOpenAPIWorkspace {
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-        coerceConstsTo: "literals" | "enums" | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -49,7 +48,6 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-    public readonly coerceConstsTo: "literals" | "enums" | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -71,7 +69,6 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.pathParameterOrder = args.pathParameterOrder;
-        this.coerceConstsTo = args.coerceConstsTo;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -140,7 +137,6 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
-    public coerceConstsTo: "literals" | "enums" | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -156,7 +152,6 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
         this.pathParameterOrder = args.pathParameterOrder;
-        this.coerceConstsTo = args.coerceConstsTo;
         this.converter = new FernDefinitionConverter(args);
     }
 

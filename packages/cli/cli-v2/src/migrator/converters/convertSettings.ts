@@ -17,7 +17,6 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "group-environments-by-host": "groupEnvironmentsByHost",
     "remove-discriminants-from-schemas": "removeDiscriminantsFromSchemas",
     "path-parameter-order": "pathParameterOrder",
-    "coerce-consts-to": "coerceConstsTo",
 
     // OpenAPI-specific settings
     "only-include-referenced-schemas": "onlyIncludeReferencedSchemas",

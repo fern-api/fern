@@ -118,14 +118,6 @@ export interface ParseOpenAPIOptions {
     inferForwardCompatible: boolean;
 
     /**
-     * Controls how `const` values in OpenAPI specs are represented.
-     * - `literals`: Convert const values directly to literals with defaults.
-     * - `enums`: Convert const values to single-element enums (current behavior).
-     * Defaults to `enums`.
-     */
-    coerceConstsTo: "literals" | "enums";
-
-    /**
      * If true, treat OpenAPI `type: string, format: byte` as a base64/bytes primitive
      * instead of a plain string. Defaults to false.
      */
@@ -167,7 +159,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
     inferForwardCompatible: false,
-    coerceConstsTo: "enums",
     respectByteFormat: false
 };
 

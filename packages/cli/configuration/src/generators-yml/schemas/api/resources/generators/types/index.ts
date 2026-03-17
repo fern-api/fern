@@ -11,7 +11,6 @@ export * from "./ApiDefinitionWithOverridesSchema.js";
 export * from "./AsyncApiSettingsSchema.js";
 export * from "./AsyncApiSpecSchema.js";
 export * from "./BaseApiSettingsSchema.js";
-export * from "./CoerceConstsTo.js";
 export * from "./ConjureSchema.js";
 export * from "./DefaultIntegerFormat.js";
 export * from "./ExampleStyle.js";

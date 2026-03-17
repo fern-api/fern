@@ -61,8 +61,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     defaultIntegerFormat: "defaultIntegerFormat",
     pathParameterOrder: "pathParameterOrder",
     resolveSchemaCollisions: "resolveSchemaCollisions",
-    inferForwardCompatible: "inferForwardCompatible",
-    coerceConstsTo: "coerceConstsTo"
+    inferForwardCompatible: "inferForwardCompatible"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(
