@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.32.0
+  changelogEntry:
+    - summary: |
+        Add support for the `google.protobuf.Empty` well-known type for gRPC endpoints.
+      type: feat
+    - summary: |
+        Add more permissive handling for optional `google.protobuf.Timestamp` response properties.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 2.31.1
   changelogEntry:
     - summary: |
