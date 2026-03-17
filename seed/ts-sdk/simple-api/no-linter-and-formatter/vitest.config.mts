@@ -5,7 +5,7 @@
                 test: {
                     typecheck: {
                         enabled: true,
-                        tsconfig: "./tests/tsconfig.json",
+                        tsconfig: "./tests/tsconfig.json"
                     },
                     projects: [
                         {
