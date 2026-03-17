@@ -23,14 +23,7 @@ export type Event = Events.Event;
 export type ErrorEvent = Events.ErrorEvent;
 export type CloseEvent = Events.CloseEvent;
 
-export namespace ReconnectingWebSocket {
-    export const ReadyState = {
-        CONNECTING: 0,
-        OPEN: 1,
-        CLOSING: 2,
-        CLOSED: 3,
-    } as const;
-    export type ReadyState = (typeof ReadyState)[keyof typeof ReadyState];
+export declare namespace ReconnectingWebSocket {
     export interface Args {
         url: string;
         protocols?: string | string[];
@@ -556,4 +549,14 @@ export class ReconnectingWebSocket {
         clearTimeout(this._connectTimeout);
         clearTimeout(this._uptimeTimeout);
     }
+}
+
+export namespace ReconnectingWebSocket {
+    export const ReadyState = {
+        CONNECTING: 0,
+        OPEN: 1,
+        CLOSING: 2,
+        CLOSED: 3,
+    } as const;
+    export type ReadyState = (typeof ReadyState)[keyof typeof ReadyState];
 }
