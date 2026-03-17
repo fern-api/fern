@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add explicit type annotation to `mockServerPool` export in generated test
+        mock-server code to satisfy `--isolatedDeclarations`.
+      type: fix
+    - summary: |
+        Enable vitest typechecking in generated vitest config so that type errors
+        in test and source files are caught when running `vitest`.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 3.57.2
   changelogEntry:
     - summary: |
