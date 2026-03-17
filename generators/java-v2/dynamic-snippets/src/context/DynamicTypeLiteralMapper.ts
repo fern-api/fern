@@ -291,7 +291,12 @@ export class DynamicTypeLiteralMapper {
         switch (named.type) {
             case "alias":
                 if (named.typeReference.type === "unknown") {
-                    const convertedValue = this.convert({ typeReference: named.typeReference, value, as, inUndiscriminatedUnion });
+                    const convertedValue = this.convert({
+                        typeReference: named.typeReference,
+                        value,
+                        as,
+                        inUndiscriminatedUnion
+                    });
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: this.context.getJavaClassReferenceFromDeclaration({
