@@ -39,6 +39,7 @@ export { PLATFORM, type Platform } from "./platform.js";
 export { removeSuffix } from "./removeSuffix.js";
 export { replaceEnvVariables } from "./replaceEnvVars.js";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
+export { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
