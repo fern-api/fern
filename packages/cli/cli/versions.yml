@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.2
+  changelogEntry:
+    - summary: |
+        Revert the `coerce-consts-to` setting introduced in 4.28.0.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.32.1
   changelogEntry:
     - summary: |
