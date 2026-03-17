@@ -545,6 +545,8 @@ export const MetadataConfig = z.object({
     "twitter:site": z.string().optional(),
     "twitter:url": z.string().optional(),
     "twitter:card": TwitterCardSetting.optional(),
+    "og:text-color": z.string().optional(),
+    "og:background-color": z.string().optional(),
     "canonical-host": z.string().optional()
 });
 

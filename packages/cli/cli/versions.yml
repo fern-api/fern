@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Add `og:text-color` and `og:background-color` metadata settings for dynamic
+        OG images. These allow explicit control over text and background colors in
+        dynamically generated OG images, fixing visibility issues on light backgrounds.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.31.1
   changelogEntry:
     - summary: |

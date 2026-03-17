@@ -42,6 +42,10 @@ export interface MetadataConfig {
     ogDynamic?: boolean;
     /** A custom background image for dynamically generated OG images. Can be a URL or a file path. */
     ogBackgroundImage?: string;
+    /** Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a"). */
+    ogTextColor?: string;
+    /** Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff"). */
+    ogBackgroundColor?: string;
     /**
      * The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.
      * Defaults to the URL defined in the `instances` configuration.

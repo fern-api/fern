@@ -1855,6 +1855,12 @@ types:
       "og:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
+      "og:text-color":
+        type: optional<string>
+        docs: Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a").
+      "og:background-color":
+        type: optional<string>
+        docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
       canonical-host:
         type: optional<string>
         docs: |

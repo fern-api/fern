@@ -4549,6 +4549,26 @@
             }
           ]
         },
+        "og:text-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:background-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "canonical-host": {
           "oneOf": [
             {
