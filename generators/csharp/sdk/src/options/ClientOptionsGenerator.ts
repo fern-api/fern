@@ -117,7 +117,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                         access: ast.Access.Public,
                         get: true,
                         init: true,
-                        useRequired: defaultEnvironment != null,
+                        useRequired: true,
                         type: this.Primitive.string,
                         summary: this.baseOptionsGenerator.members.baseUrlSummary,
                         initializer:
@@ -126,7 +126,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                                       writer.writeNode(this.Types.Environments);
                                       writer.write(`.${defaultEnvironmentName}`);
                                   })
-                                : this.csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
+                                : undefined
                     }));
                 },
                 multipleBaseUrls: () => {
@@ -135,7 +135,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                         access: ast.Access.Public,
                         get: true,
                         init: true,
-                        useRequired: defaultEnvironment != null,
+                        useRequired: true,
                         type: this.Types.Environments,
                         summary: "The Environment for the API.",
                         initializer:
@@ -144,7 +144,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                                       writer.writeNode(this.Types.Environments);
                                       writer.write(`.${defaultEnvironmentName}`);
                                   })
-                                : this.csharp.codeblock("null") // TODO: remove this logic since it sets url to null
+                                : undefined
                     }));
                 },
                 _other: () => undefined
@@ -157,7 +157,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
             access: ast.Access.Public,
             get: true,
             init: true,
-            useRequired: defaultEnvironment != null,
+            useRequired: true,
             type: this.Primitive.string,
             summary: this.baseOptionsGenerator.members.baseUrlSummary,
             initializer:
@@ -166,7 +166,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                           writer.writeNode(this.Types.Environments);
                           writer.write(`.${defaultEnvironmentName}`);
                       })
-                    : this.csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
+                    : undefined
         }));
     }
 

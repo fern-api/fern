@@ -13,13 +13,13 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get;
+    public required string BaseUrl { get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = "";
+    }
 
     /// <summary>
     /// The http client used to make requests.
