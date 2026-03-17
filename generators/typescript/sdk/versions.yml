@@ -112,11 +112,42 @@
 - version: 3.56.0
   changelogEntry:
     - summary: |
-        Add a `naming` configuration object that allows users to independently control the
-        namespace export and PascalCase class/type names (client, error, timeout error,
-        environment, environment URLs, version). When individual overrides are not provided,
-        they are derived from the namespace value using the existing `${PascalCase(namespace)}Suffix`
-        pattern. The existing `namespaceExport` config continues to work for backwards compatibility.
+        Add a `naming` configuration object that gives you fine-grained control over the
+        exported namespace and generated class names (client, error, timeout error,
+        environment, environment URLs, version).
+
+        You can use it as a simple string shorthand to set the namespace:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming: acme
+        ```
+
+        Or as a full object to override individual names:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming:
+                    namespace: acme
+                    client: AcmeApiClient
+                    error: AcmeApiError
+                    environment: AcmeRegion
+        ```
+
+        When individual overrides are not provided, they are derived from the namespace
+        using the `PascalCase(namespace) + Suffix` pattern (e.g. `namespace: acme` produces
+        `AcmeClient`, `AcmeError`, `AcmeTimeoutError`, `AcmeEnvironment`, `AcmeEnvironmentUrls`,
+        and `AcmeVersion` by default).
+
+        The existing `namespaceExport` config continues to work for backwards compatibility.
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65
