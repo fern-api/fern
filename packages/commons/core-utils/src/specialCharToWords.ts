@@ -57,6 +57,7 @@ const SPECIAL_CHAR_TO_WORD: Record<string, string> = {
 export function replaceSpecialCharsWithWords(name: string): string {
     const VALID_CHAR_REGEX = /[a-zA-Z0-9_]/;
     let result = "";
+    let didReplace = false;
 
     for (let i = 0; i < name.length; i++) {
         const char = name[i];
@@ -71,6 +72,7 @@ export function replaceSpecialCharsWithWords(name: string): string {
 
         const word = SPECIAL_CHAR_TO_WORD[char];
         if (word != null) {
+            didReplace = true;
             // Add underscore separator before the word if needed
             if (result.length > 0 && !result.endsWith("_") && !result.endsWith("-") && !result.endsWith(" ")) {
                 result += "_";
@@ -90,8 +92,12 @@ export function replaceSpecialCharsWithWords(name: string): string {
         }
     }
 
-    // Clean up multiple consecutive underscores
-    return result.replace(/_+/g, "_").replace(/^_|_$/g, "");
+    // Only clean up underscores if we actually performed replacements,
+    // to avoid altering names that are already valid (e.g. "__dunder__").
+    if (didReplace) {
+        return result.replace(/_+/g, "_");
+    }
+    return result;
 }
 
 /**
