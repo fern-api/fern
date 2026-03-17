@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.3
+  changelogEntry:
+    - summary: |
+        Skip Docker container management in generated `tests/conftest.py` when the
+        `WIREMOCK_URL` environment variable is already set. This allows wire tests to
+        run in CI/CD pipelines that provide an external WireMock sidecar container
+        without requiring Docker-in-Docker support.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 5.0.2
   changelogEntry:
     - summary: |
