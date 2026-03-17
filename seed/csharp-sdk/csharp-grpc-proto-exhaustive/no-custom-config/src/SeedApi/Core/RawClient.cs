@@ -20,6 +20,13 @@ internal partial class RawClient(ClientOptions clientOptions)
 #endif
     internal int BaseRetryDelay { get; set; } = 1000;
 
+    private readonly Lazy<RawGrpcClient> _grpc = new(() => new RawGrpcClient(clientOptions));
+
+    /// <summary>
+    /// The gRPC client used to make requests.
+    /// </summary>
+    public RawGrpcClient Grpc => _grpc.Value;
+
     /// <summary>
     /// The client options applied on every request.
     /// </summary>

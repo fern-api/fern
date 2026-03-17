@@ -5,6 +5,7 @@ api:
         root: proto
         target: proto/user/v1/user.proto
         overrides: overrides.yml
+        from-openapi: true
         local-generation: true
 groups:
   php-sdk:

@@ -53,4 +53,11 @@ export interface BaseApiSettingsSchema {
     "resolve-schema-collisions"?: boolean;
     /** If true, infer forward-compatible enums from `oneOf: [enum, string]` or `anyOf: [enum, string]` patterns. Defaults to false. */
     "infer-forward-compatible"?: boolean;
+    /**
+     * Controls how `const` values in OpenAPI specs are represented.
+     * - `literals`: Convert const values directly to literals with defaults.
+     * - `enums`: Convert const values to single-element enums (current behavior).
+     * Defaults to `enums`.
+     */
+    "coerce-consts-to"?: GeneratorsYml.CoerceConstsTo;
 }

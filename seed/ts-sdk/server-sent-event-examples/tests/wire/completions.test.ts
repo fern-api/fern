@@ -11,6 +11,7 @@ describe("CompletionsClient", () => {
         const rawRequestBody = { query: "foo" };
         const rawResponseBody =
             'event: completion\ndata: {"delta":"foo","tokens":1}\n\nevent: completion\ndata: {"delta":"bar","tokens":2}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream")
@@ -38,6 +39,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
         const rawResponseBody = "bad request";
+
         server
             .mockEndpoint()
             .post("/stream")
@@ -59,6 +61,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
         const rawResponseBody = 'event: completion\ndata: {"content":"content"}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream-events")
@@ -83,6 +86,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
         const rawResponseBody = "bad request";
+
         server
             .mockEndpoint()
             .post("/stream-events")

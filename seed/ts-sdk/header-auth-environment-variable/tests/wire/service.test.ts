@@ -13,6 +13,7 @@ describe("ServiceClient", () => {
         });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/apiKey").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getWithBearerToken();

@@ -3,15 +3,18 @@ import { FernRegistryClient } from "@fern-fern/fdr-test-sdk";
 
 export function createFdrService({
     environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-    token
+    token,
+    headers
 }: {
     environment?: string;
     token: (() => string) | string;
+    headers?: Record<string, string>;
 }): FdrClient {
     const overrideEnvironment = process.env.FERN_FDR_ORIGIN ?? process.env.OVERRIDE_FDR_ORIGIN;
     return new FdrClient({
         environment: overrideEnvironment ?? environment,
-        token
+        token,
+        headers
     });
 }
 

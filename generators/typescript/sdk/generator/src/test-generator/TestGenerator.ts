@@ -1126,6 +1126,28 @@ describe("${serviceName}", () => {
             example.response,
             isSSEStreaming ? { endpoint, context } : undefined
         );
+        // For URI/path pagination, compute a next-page URL override so that getNextPage()
+        // actually hits the mock server (which listens at server.baseUrl).
+        // uri: full URL = server.baseUrl + endpoint path
+        // path: just the endpoint path
+        let uriPathNextOverride: { wireKey: string; nextValueCode: Code } | undefined;
+        if (rawResponseBody != null && endpoint.pagination != null) {
+            const pagination = endpoint.pagination;
+            if (pagination.type === "uri" || pagination.type === "path") {
+                const nextProperty = pagination.type === "uri" ? pagination.nextUri : pagination.nextPath;
+                // Only override if the next property is top-level; nested paths would require
+                // deep-merging the response body which is not worth the complexity.
+                // If nested, isCursorMissing is forced to true below to skip getNextPage().
+                if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
+                    const wireKey = nextProperty.property.name.wireValue;
+                    const nextValueCode =
+                        pagination.type === "uri"
+                            ? code`\`\${server.baseUrl}${example.url}\``
+                            : code`${literalOf(example.url)}`;
+                    uriPathNextOverride = { wireKey, nextValueCode };
+                }
+            }
+        }
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
             ir: this.ir
@@ -1304,12 +1326,22 @@ describe("${serviceName}", () => {
                 endpoint
             });
 
-        const isCursorMissing =
+        let isCursorMissing =
             endpoint.pagination !== undefined &&
             isPaginationCursorMissingInExample({
                 example,
                 endpoint
             });
+
+        // For URI/path pagination: if the next property is nested we can't safely override it in the
+        // mock response body, so fall back to skipping getNextPage() (same as missing cursor).
+        if (
+            !isCursorMissing &&
+            (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") &&
+            uriPathNextOverride == null
+        ) {
+            isCursorMissing = true;
+        }
 
         // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
         if (isCursorMissing) {
@@ -1320,8 +1352,12 @@ describe("${serviceName}", () => {
         // When getNextPage() is called, the SDK sends a different page/cursor value than the original request
         const paginationIgnoredFields: string[] = [];
         if (endpoint.pagination !== undefined) {
-            // Both cursor and offset pagination have a "page" property that changes between requests
-            if (paginationGeneratesPageObject(endpoint.pagination)) {
+            // Cursor and offset pagination have a "page" property that changes between requests
+            // URI/path pagination does not have a "page" property since they use URLs from the response
+            if (
+                paginationGeneratesPageObject(endpoint.pagination) &&
+                (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset")
+            ) {
                 const pageProperty = endpoint.pagination.page;
                 const pathParts = [
                     ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
@@ -1371,6 +1407,7 @@ describe("${serviceName}", () => {
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+        ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
@@ -1397,7 +1434,10 @@ describe("${serviceName}", () => {
                     ? isSSEStreaming && !willThrowError
                         ? code`.sseBody(rawResponseBody)
                 `
-                        : code`.jsonBody(rawResponseBody)
+                        : uriPathNextOverride != null
+                          ? code`.jsonBody(mockResponseBody)
+                `
+                          : code`.jsonBody(rawResponseBody)
                 `
                     : ""
             }.build();
@@ -2148,14 +2188,14 @@ function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown |
 
 function paginationGeneratesPageObject(
     pagination: FernIr.Pagination
-): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset {
+): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Uri | FernIr.Pagination.Path {
     switch (pagination.type) {
         case "cursor":
         case "offset":
-            return true;
-        case "custom":
         case "uri":
         case "path":
+            return true;
+        case "custom":
             return false;
         default:
             assertNever(pagination);
@@ -2236,9 +2276,13 @@ function isPaginationCursorMissingInExample({
                 return false;
             }
             break;
-        case "custom":
         case "uri":
+            cursorProperty = pagination.nextUri;
+            break;
         case "path":
+            cursorProperty = pagination.nextPath;
+            break;
+        case "custom":
             return false;
         default:
             assertNever(pagination);

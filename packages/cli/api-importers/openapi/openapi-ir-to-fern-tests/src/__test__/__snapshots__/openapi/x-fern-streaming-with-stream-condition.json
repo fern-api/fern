@@ -104,7 +104,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ChatStreamRequest",
+                "name": "ChatRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -174,7 +174,7 @@
         openapi: ../openapi.yml
       display-name: Start a chat
       request:
-        name: ChatStreamRequest
+        name: ChatRequestStreaming
         body:
           properties:
             query:

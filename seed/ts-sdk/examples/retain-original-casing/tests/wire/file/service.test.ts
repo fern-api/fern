@@ -10,6 +10,7 @@ describe("ServiceClient", () => {
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "A file with that name was not found!";
+
         server
             .mockEndpoint()
             .get("/file/file.txt")

@@ -1,10 +1,9 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedEnum.Core;
 
 namespace SeedEnum;
 
-[JsonConverter(typeof(EnumSerializer<SpecialEnum>))]
+[JsonConverter(typeof(SpecialEnumSerializer))]
 public enum SpecialEnum
 {
     [EnumMember(Value = "")]
@@ -102,4 +101,109 @@ public enum SpecialEnum
 
     [EnumMember(Value = "transcript[transcriptType='final']")]
     Gg,
+}
+
+internal class SpecialEnumSerializer
+    : global::System.Text.Json.Serialization.JsonConverter<SpecialEnum>
+{
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        SpecialEnum
+    > _stringToEnum = new()
+    {
+        { "", SpecialEnum.A },
+        { "Hello \\\"World\\\"", SpecialEnum.B },
+        { "Hello 'World'", SpecialEnum.C },
+        { "Hello\\\\World", SpecialEnum.D },
+        { "Hello\\nWorld", SpecialEnum.E },
+        { "Hello\\rWorld", SpecialEnum.F },
+        { "Hello\\tWorld", SpecialEnum.H },
+        { "Hello\\fWorld", SpecialEnum.I },
+        { "Hello\\u0008World", SpecialEnum.J },
+        { "Hello\\vWorld", SpecialEnum.K },
+        { "Hello\\x00World", SpecialEnum.L },
+        { "Hello\\u0007World", SpecialEnum.M },
+        { "Hello\\u0001World", SpecialEnum.N },
+        { "Hello\\u0002World", SpecialEnum.O },
+        { "Hello\\u001FWorld", SpecialEnum.P },
+        { "Hello\\u007FWorld", SpecialEnum.Q },
+        { "Hello\\u009FWorld", SpecialEnum.R },
+        { "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null", SpecialEnum.S },
+        { "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007", SpecialEnum.T },
+        { "Hello 世界", SpecialEnum.U },
+        { "café", SpecialEnum.V },
+        { "🚀", SpecialEnum.W },
+        { "\\\\n", SpecialEnum.X },
+        { "\\\\", SpecialEnum.Y },
+        { "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}", SpecialEnum.Z },
+        { "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'", SpecialEnum.Aa },
+        { "C:\\\\Users\\\\John\\\\Documents\\\\file.txt", SpecialEnum.Bb },
+        { "/usr/local/bin/app", SpecialEnum.Cc },
+        { "\\\\d{3}-\\\\d{2}-\\\\d{4}", SpecialEnum.Dd },
+        { "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}", SpecialEnum.Ee },
+        { "transcript[transcriptType=\"final\"]", SpecialEnum.Ff },
+        { "transcript[transcriptType='final']", SpecialEnum.Gg },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        SpecialEnum,
+        string
+    > _enumToString = new()
+    {
+        { SpecialEnum.A, "" },
+        { SpecialEnum.B, "Hello \\\"World\\\"" },
+        { SpecialEnum.C, "Hello 'World'" },
+        { SpecialEnum.D, "Hello\\\\World" },
+        { SpecialEnum.E, "Hello\\nWorld" },
+        { SpecialEnum.F, "Hello\\rWorld" },
+        { SpecialEnum.H, "Hello\\tWorld" },
+        { SpecialEnum.I, "Hello\\fWorld" },
+        { SpecialEnum.J, "Hello\\u0008World" },
+        { SpecialEnum.K, "Hello\\vWorld" },
+        { SpecialEnum.L, "Hello\\x00World" },
+        { SpecialEnum.M, "Hello\\u0007World" },
+        { SpecialEnum.N, "Hello\\u0001World" },
+        { SpecialEnum.O, "Hello\\u0002World" },
+        { SpecialEnum.P, "Hello\\u001FWorld" },
+        { SpecialEnum.Q, "Hello\\u007FWorld" },
+        { SpecialEnum.R, "Hello\\u009FWorld" },
+        { SpecialEnum.S, "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null" },
+        { SpecialEnum.T, "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007" },
+        { SpecialEnum.U, "Hello 世界" },
+        { SpecialEnum.V, "café" },
+        { SpecialEnum.W, "🚀" },
+        { SpecialEnum.X, "\\\\n" },
+        { SpecialEnum.Y, "\\\\" },
+        { SpecialEnum.Z, "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}" },
+        { SpecialEnum.Aa, "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'" },
+        { SpecialEnum.Bb, "C:\\\\Users\\\\John\\\\Documents\\\\file.txt" },
+        { SpecialEnum.Cc, "/usr/local/bin/app" },
+        { SpecialEnum.Dd, "\\\\d{3}-\\\\d{2}-\\\\d{4}" },
+        { SpecialEnum.Ee, "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}" },
+        { SpecialEnum.Ff, "transcript[transcriptType=\"final\"]" },
+        { SpecialEnum.Gg, "transcript[transcriptType='final']" },
+    };
+
+    public override SpecialEnum Read(
+        ref global::System.Text.Json.Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void Write(
+        global::System.Text.Json.Utf8JsonWriter writer,
+        SpecialEnum value,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        writer.WriteStringValue(
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
+        );
+    }
 }

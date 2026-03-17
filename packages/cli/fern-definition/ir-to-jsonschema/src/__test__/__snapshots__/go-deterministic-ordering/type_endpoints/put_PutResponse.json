@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/endpoints.put.Error"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "endpoints.put.ErrorCategory": {
+      "type": "string",
+      "enum": [
+        "API_ERROR",
+        "AUTHENTICATION_ERROR",
+        "INVALID_REQUEST_ERROR"
+      ]
+    },
+    "endpoints.put.ErrorCode": {
+      "type": "string",
+      "enum": [
+        "INTERNAL_SERVER_ERROR",
+        "UNAUTHORIZED",
+        "FORBIDDEN",
+        "BAD_REQUEST",
+        "CONFLICT",
+        "GONE",
+        "UNPROCESSABLE_ENTITY",
+        "NOT_IMPLEMENTED",
+        "BAD_GATEWAY",
+        "SERVICE_UNAVAILABLE",
+        "Unknown"
+      ]
+    },
+    "endpoints.put.Error": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/endpoints.put.ErrorCategory"
+        },
+        "code": {
+          "$ref": "#/definitions/endpoints.put.ErrorCode"
+        },
+        "detail": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "field": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "category",
+        "code"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import type { Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
-import type {  AnalyzeCommitDiffRequest,  AnalyzeCommitDiffResponse,  VersionBump } from "./types"
+import type {  AnalyzeCommitDiffRequest,  AnalyzeCommitDiffResponse,  ConsolidateChangelogResponse,  VersionBump } from "./types"
 import type * as types from "./types"
 
 /******************************************************************************
@@ -43,5 +43,11 @@ export namespace partial_types {
       message?: string | null
       changelog_entry?: string | null
       version_bump?: types.VersionBump | null
+      version_bump_reason?: string | null
+    }
+    export interface ConsolidateChangelogResponse {
+      consolidated_changelog?: string | null
+      pr_description?: string | null
+      version_bump_reason?: string | null
     }
 }

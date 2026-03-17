@@ -72,6 +72,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         );
         const protobufProperties: {
             propertyName: string;
+            protoPropertyName?: string;
             typeReference: TypeReference;
         }[] = [];
 
@@ -135,6 +136,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
+                    protoPropertyName: query.name.name.pascalCase.safeName,
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -183,22 +185,28 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 });
             },
             inlinedRequestBody: (request) => {
-                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
+                const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
+                const allPropertyPascalNames = new Set(allProps.map((p) => p.name.name.pascalCase.safeName));
+                for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
                         className: this.classReference.name,
-                        context: this.context
+                        context: this.context,
+                        allPropertyPascalNames
                     });
 
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
+                            protoPropertyName: property.name.name.pascalCase.safeName,
                             typeReference: property.valueType
                         });
                     }
                 }
             },
             fileUpload: (request) => {
+                const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
+                const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
@@ -206,7 +214,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                                 property,
                                 className: this.classReference.name,
                                 context: this.context,
-                                jsonProperty: false
+                                jsonProperty: false,
+                                allPropertyPascalNames
                             });
 
                             break;

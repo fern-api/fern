@@ -162,6 +162,9 @@ fixtures:
     - customConfig:
         package-layout: flat
       outputFolder: flat-package-layout
+    - customConfig:
+        omit-fern-headers: true
+      outputFolder: omit-fern-headers
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"

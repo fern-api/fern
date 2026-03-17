@@ -245,19 +245,35 @@ export class CoreUtilitiesManager {
         }
 
         if (this.referencedCoreUtilities["customPagination"] != null) {
-            let contents = await readFile(path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"), "utf8");
-            contents = contents.replaceAll("CustomPager", this.customPagerName);
-            const customPagerPath = path.join(
-                pathToRoot,
-                this.getPackagePathImport(),
-                "core",
-                "pagination",
-                `${this.customPagerName}.ts`
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            let customPagerContents = await readFile(
+                path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
+                "utf8"
             );
-            await mkdir(path.dirname(customPagerPath), { recursive: true });
-            await writeFile(customPagerPath, contents, {
+            customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
+            await writeFile(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents, {
                 encoding: "utf8"
             });
+        }
+
+        if (this.referencedCoreUtilities["pagination"] != null) {
+            const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            if (hasCustomPagination) {
+                await writeFile(
+                    path.join(paginationDir, "index.ts"),
+                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`,
+                    { encoding: "utf8" }
+                );
+            } else {
+                await writeFile(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`, {
+                    encoding: "utf8"
+                });
+            }
         }
     }
 

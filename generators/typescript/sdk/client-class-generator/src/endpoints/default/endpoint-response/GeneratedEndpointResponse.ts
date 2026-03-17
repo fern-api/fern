@@ -4,7 +4,8 @@ import { ts } from "ts-morph";
 export type PaginationResponseInfo =
     | CursorPaginationResponseInfo
     | OffsetPaginationResponseInfo
-    | CustomPaginationResponseInfo;
+    | CustomPaginationResponseInfo
+    | UriOrPathPaginationResponseInfo;
 
 export interface CursorPaginationResponseInfo {
     type: "cursor";
@@ -27,6 +28,15 @@ export interface OffsetPaginationResponseInfo {
 
 export interface CustomPaginationResponseInfo {
     type: "custom";
+    responseType: ts.TypeNode;
+    itemType: ts.TypeNode;
+    getItems: ts.Expression;
+    hasNextPage: ts.Expression;
+    loadPage: ts.Statement[];
+}
+
+export interface UriOrPathPaginationResponseInfo {
+    type: "uri" | "path";
     responseType: ts.TypeNode;
     itemType: ts.TypeNode;
     getItems: ts.Expression;

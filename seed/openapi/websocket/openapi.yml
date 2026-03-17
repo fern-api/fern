@@ -82,4 +82,15 @@ components:
           type: string
       required:
         - receiveText3
+    ErrorEvent:
+      title: ErrorEvent
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        errorMessage:
+          type: string
+      required:
+        - errorCode
+        - errorMessage
   securitySchemes: {}

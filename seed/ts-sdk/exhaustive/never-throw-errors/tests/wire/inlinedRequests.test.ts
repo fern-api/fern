@@ -41,6 +41,7 @@ describe("InlinedRequestsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .post("/req-bodies/object")

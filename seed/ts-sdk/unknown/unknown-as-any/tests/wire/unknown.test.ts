@@ -9,6 +9,7 @@ describe("UnknownClient", () => {
         const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
+
         server
             .mockEndpoint()
             .post("")
@@ -36,6 +37,7 @@ describe("UnknownClient", () => {
         const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { unknown: { key: "value" } };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
+
         server
             .mockEndpoint()
             .post("/with-object")

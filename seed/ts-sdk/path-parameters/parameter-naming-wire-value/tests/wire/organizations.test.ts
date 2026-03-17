@@ -13,6 +13,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/organizations/organization_id/")
@@ -37,6 +38,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/organizations/organization_id/users/user_id")
@@ -67,6 +69,7 @@ describe("OrganizationsClient", () => {
             { name: "name", tags: ["tags", "tags"] },
             { name: "name", tags: ["tags", "tags"] },
         ];
+
         server
             .mockEndpoint()
             .get("/tenant_id/organizations/organization_id/search")

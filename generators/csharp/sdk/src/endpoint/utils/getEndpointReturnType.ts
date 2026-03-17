@@ -19,10 +19,12 @@ function wrapWithRawResponseTask(context: SdkGeneratorContext, innerType: ast.Ty
 
 export function getEndpointReturnType({
     context,
-    endpoint
+    endpoint,
+    isGrpc
 }: {
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
+    isGrpc?: boolean;
 }): ast.Type | undefined {
     if (endpoint.response?.body == null) {
         if (endpoint.method === FernIr.HttpMethod.Head) {
@@ -60,8 +62,9 @@ export function getEndpointReturnType({
         _other: () => undefined
     });
 
-    // Wrap non-streaming responses in WithRawResponseTask<T>
-    if (baseType != null && !isStreamingEndpoint(endpoint)) {
+    // Wrap non-streaming, non-gRPC responses in WithRawResponseTask<T>.
+    // gRPC endpoints don't support response headers/trailers, so they return Task<T> directly.
+    if (baseType != null && !isStreamingEndpoint(endpoint) && !isGrpc) {
         return wrapWithRawResponseTask(context, baseType);
     }
 
