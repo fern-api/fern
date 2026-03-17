@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Convert invalid enum name characters to word equivalents instead of
+        throwing fatal errors. Characters like `%`, `#`, `@`, `&`, `+` are now
+        automatically converted to their word forms (e.g. `%` → `Percent`,
+        `%option` → `PercentOption`) with a warning, rather than blocking code
+        generation. Characters that lodash `camelCase` already handles as word
+        separators (like `.`, `:`, `/`) are left for casing to handle naturally.
+        Names that are already valid pass through unchanged (backwards compatible).
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.31.0
   changelogEntry:
     - summary: |
