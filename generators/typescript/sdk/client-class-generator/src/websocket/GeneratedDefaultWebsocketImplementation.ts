@@ -1036,7 +1036,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 return ts.factory.createBinaryExpression(
                     ts.factory.createElementAccessChain(
                         ts.factory.createCallChain(
-                            ts.factory.createPropertyAccessExpression(
+                            ts.factory.createPropertyAccessChain(
                                 ts.factory.createElementAccessExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier("_authRequest"),
@@ -1044,9 +1044,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                     ),
                                     ts.factory.createStringLiteral("Authorization")
                                 ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                 "split"
                             ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            undefined,
                             undefined,
                             [ts.factory.createStringLiteral(" ")]
                         ),
@@ -1061,7 +1062,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 return ts.factory.createBinaryExpression(
                     ts.factory.createElementAccessChain(
                         ts.factory.createCallChain(
-                            ts.factory.createPropertyAccessExpression(
+                            ts.factory.createPropertyAccessChain(
                                 ts.factory.createElementAccessExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier("_authRequest"),
@@ -1069,9 +1070,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                     ),
                                     ts.factory.createStringLiteral("Authorization")
                                 ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                 "split"
                             ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            undefined,
                             undefined,
                             [ts.factory.createStringLiteral(" ")]
                         ),

@@ -53,7 +53,7 @@ export class RealtimeClient {
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _isBrowserLike = !["node", "bun", "deno"].includes(core.RUNTIME.type);
-        const _authToken = _authRequest.headers.Authorization.split?.(" ")[1] ?? "";
+        const _authToken = _authRequest.headers.Authorization?.split(" ")[1] ?? "";
         const _authFallbackHeaders = _isBrowserLike ? {} : _authRequest.headers;
         const _fallbackProtocols = _isBrowserLike ? ["bearer.{token}".replace("{token}", _authToken)] : [];
         const _headers: Record<string, unknown> = mergeHeaders(_authFallbackHeaders, headers);
