@@ -92,7 +92,7 @@ const client = new MySDKClient({
       "description": undefined,
       "id": "RUNTIME_COMPATIBILITY",
       "snippets": [],
-      "snippetsAreOptional": false,
+      "snippetsAreOptional": true,
     },
   ],
   "introduction": "Welcome to Acme SDK",

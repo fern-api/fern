@@ -22,6 +22,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
   - [Custom Fetch](#custom-fetch)
+  - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
 ## Installation
@@ -263,6 +264,21 @@ const response = await client.fetch("/v1/custom/endpoint", {
 
 const data = await response.json();
 ```
+
+### Runtime Compatibility
+
+
+The SDK works in the following runtimes:
+
+
+
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
+
 
 ## Contributing
 

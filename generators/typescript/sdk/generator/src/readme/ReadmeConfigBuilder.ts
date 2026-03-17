@@ -86,13 +86,16 @@ export class ReadmeConfigBuilder {
                 description = authenticationDescription;
             }
 
+            // Features with description-only content (no code snippets) should still be rendered
+            const isDescriptionOnlyFeature = feature.id === "RUNTIME_COMPATIBILITY";
+
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
                 snippets: snippetForFeature === false ? [] : (snippetForFeature ?? []),
                 addendum: feature.addendum ? this.processTemplateText(feature.addendum) : undefined,
-                snippetsAreOptional: isAuthenticationWithDescription
+                snippetsAreOptional: isAuthenticationWithDescription || isDescriptionOnlyFeature
             });
         }
         return {

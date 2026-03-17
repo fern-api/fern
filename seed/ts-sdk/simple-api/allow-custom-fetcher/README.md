@@ -22,6 +22,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Logging](#logging)
   - [Custom Fetch](#custom-fetch)
   - [Custom Fetcher](#custom-fetcher)
+  - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
 ## Installation
@@ -260,6 +261,21 @@ const client = new SeedSimpleApiClient({
     fetcher: // provide your implementation here
 });
 ```
+
+### Runtime Compatibility
+
+
+The SDK works in the following runtimes:
+
+
+
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
+
 
 ## Contributing
 
