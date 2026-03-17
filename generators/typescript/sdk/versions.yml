@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Make `readyState` on generated WebSocket socket classes return a `ReadyState`
+        enum (`CONNECTING`, `OPEN`, `CLOSING`, `CLOSED`) instead of a raw `number`,
+        improving developer experience with IDE autocompletion and self-documenting code.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 3.58.1
   changelogEntry:
     - summary: |
