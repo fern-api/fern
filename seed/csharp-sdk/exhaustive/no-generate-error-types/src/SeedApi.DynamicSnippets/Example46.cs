@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,10 +12,8 @@ public class Example46
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
-            }
+        await client.Endpoints.Primitive.GetAndReturnBase64Async(
+            "SGVsbG8gd29ybGQh"
         );
     }
 

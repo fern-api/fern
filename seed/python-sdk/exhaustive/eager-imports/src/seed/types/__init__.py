@@ -8,6 +8,7 @@ from .enum import ErrorWithEnumBody, WeatherReport
 from .object import (
     DocumentedUnknownType,
     DoubleOptional,
+    MapOfDocumentedUnknownType,
     NestedObjectWithOptionalField,
     NestedObjectWithOptionalFieldError,
     NestedObjectWithRequiredField,
@@ -34,6 +35,7 @@ __all__ = [
     "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
+    "MapOfDocumentedUnknownType",
     "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",

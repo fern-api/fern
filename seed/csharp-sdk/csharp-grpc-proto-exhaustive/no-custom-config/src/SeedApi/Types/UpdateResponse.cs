@@ -25,6 +25,9 @@ public record UpdateResponse : IJsonOnDeserialized
     [JsonPropertyName("index_types")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
 
+    [JsonPropertyName("status")]
+    public UpdateResponseStatus? Status { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -53,6 +56,22 @@ public record UpdateResponse : IJsonOnDeserialized
                     _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
                 }
             ),
+            Status = value.Status switch
+            {
+                ProtoDataV1Grpc.UpdateResponse.Types.Status.Unspecified => SeedApi
+                    .UpdateResponseStatus
+                    .StatusUnspecified,
+                ProtoDataV1Grpc.UpdateResponse.Types.Status.Pending => SeedApi
+                    .UpdateResponseStatus
+                    .StatusPending,
+                ProtoDataV1Grpc.UpdateResponse.Types.Status.Active => SeedApi
+                    .UpdateResponseStatus
+                    .StatusActive,
+                ProtoDataV1Grpc.UpdateResponse.Types.Status.Failed => SeedApi
+                    .UpdateResponseStatus
+                    .StatusFailed,
+                _ => throw new ArgumentException($"Unknown enum value: {value.Status}"),
+            },
         };
     }
 
@@ -104,6 +123,33 @@ public record UpdateResponse : IJsonOnDeserialized
                     }
                 )
             );
+        }
+        if (Status != null)
+        {
+            result.Status = Status.Value.Value switch
+            {
+                SeedApi.UpdateResponseStatus.Values.StatusUnspecified => ProtoDataV1Grpc
+                    .UpdateResponse
+                    .Types
+                    .Status
+                    .Unspecified,
+                SeedApi.UpdateResponseStatus.Values.StatusPending => ProtoDataV1Grpc
+                    .UpdateResponse
+                    .Types
+                    .Status
+                    .Pending,
+                SeedApi.UpdateResponseStatus.Values.StatusActive => ProtoDataV1Grpc
+                    .UpdateResponse
+                    .Types
+                    .Status
+                    .Active,
+                SeedApi.UpdateResponseStatus.Values.StatusFailed => ProtoDataV1Grpc
+                    .UpdateResponse
+                    .Types
+                    .Status
+                    .Failed,
+                _ => throw new ArgumentException($"Unknown enum value: {Status.Value.Value}"),
+            };
         }
         return result;
     }

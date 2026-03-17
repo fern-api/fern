@@ -1,6 +1,10 @@
 import { defineConfig } from "vitest/config";
 export default defineConfig({
     test: {
+        typecheck: {
+            enabled: true,
+            tsconfig: "./src/test-packagePath/tests/tsconfig.json",
+        },
         projects: [
             {
                 test: {

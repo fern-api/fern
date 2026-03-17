@@ -115,19 +115,18 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         expect(getTextOfTsNode(result)).toBe("env");
     });
 
-    it("getReferenceToEnvironmentUrl throws when baseUrlId is provided", () => {
+    it("getReferenceToEnvironmentUrl ignores baseUrlId for single URL", () => {
         const impl = new GeneratedSingleUrlEnvironmentsImpl({
             environmentEnumName: "MyEnvironment",
             defaultEnvironmentId: undefined,
             environments: singleUrlEnvironments
         });
         const inputExpr = ts.factory.createIdentifier("env");
-        expect(() =>
-            impl.getReferenceToEnvironmentUrl({
-                referenceToEnvironmentValue: inputExpr,
-                baseUrlId: "some-base-url"
-            })
-        ).toThrow();
+        const result = impl.getReferenceToEnvironmentUrl({
+            referenceToEnvironmentValue: inputExpr,
+            baseUrlId: "some-base-url"
+        });
+        expect(getTextOfTsNode(result)).toBe("env");
     });
 
     it("writeToFile generates environment const and type alias", () => {

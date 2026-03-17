@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -225,14 +226,32 @@ packages = [
             if self.enable_wire_tests:
                 wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
+            # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
+            # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
+            # pair when the project still supports Python 3.8.
+            #
+            # Extract the minimum minor version from the constraint string
+            # (e.g. "^3.8" -> 8, "^3.8.1" -> 8, "^3.10" -> 10, ">=3.9" -> 9).
+            min_minor = 0
+            match = re.search(r"(\d+)\.(\d+)", self.python_version)
+            if match:
+                min_minor = int(match.group(2))
+
+            if min_minor >= 9:
+                pytest_version = "^8.2.0"
+                pytest_asyncio_version = "^1.0.0"
+            else:
+                pytest_version = "^7.4.0"
+                pytest_asyncio_version = "^0.23.5"
+
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
-pytest = "^7.4.0"
-pytest-asyncio = "^0.23.5"
+pytest = "{pytest_version}"
+pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"

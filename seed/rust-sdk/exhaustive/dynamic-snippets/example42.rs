@@ -11,9 +11,6 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_datetime(
-            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-            None,
-        )
+        .get_and_return_bool(&true, None)
         .await;
 }
