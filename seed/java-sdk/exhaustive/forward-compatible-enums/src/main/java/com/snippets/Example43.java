@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
+import java.time.OffsetDateTime;
 
 public class Example43 {
     public static void main(String[] args) {
@@ -9,6 +10,6 @@ public class Example43 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().primitive().getAndReturnDate("2023-01-15");
+        client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"));
     }
 }

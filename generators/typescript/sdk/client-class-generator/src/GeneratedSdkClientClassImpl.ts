@@ -874,16 +874,30 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             getAuthHeadersCode = "";
         }
 
-        // For multi-URL environments, this._options.environment is an object (e.g. { ec2: string; s3: string }),
-        // not a single string URL. Only pass `environment` when it resolves to a single base URL string.
-        const isMultiUrlEnvironment =
-            this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls";
-        const environmentCode = isMultiUrlEnvironment ? "" : "environment: this._options.environment,";
+        // Resolve the base URL from either the explicit baseUrl option or the environment.
+        // For multi-URL environments (e.g. { ec2: string; s3: string }), the environment is an object,
+        // so we project it to a string via its first base URL property to avoid passing an object where a string is expected.
+        // The property name is read from the IR's baseUrls definition rather than hardcoded.
+        // For single-URL or no-IR-defined environments, the environment is already a string, so we fall back to it directly.
+        const envs = this.intermediateRepresentation.environments?.environments;
+        let baseUrlCode: string;
+        if (envs != null && envs.type === "multipleBaseUrls") {
+            const firstBaseUrl = envs.baseUrls[0];
+            if (firstBaseUrl == null) {
+                throw new Error("Multi-URL environment has no base URLs defined");
+            }
+            const firstBaseUrlName = firstBaseUrl.name.camelCase.unsafeName;
+            baseUrlCode = `baseUrl: this._options.baseUrl ?? (async () => {
+        const env = await core.Supplier.get(this._options.environment);
+        return typeof env === "string" ? env : (env as Record<string, string>)?.${firstBaseUrlName};
+    }),`;
+        } else {
+            baseUrlCode = "baseUrl: this._options.baseUrl ?? this._options.environment,";
+        }
 
         const fetchMethodBody = `
 return core.makePassthroughRequest(input, init, {
-    ${environmentCode}
-    baseUrl: this._options.baseUrl,
+    ${baseUrlCode}
     headers: this._options.headers,
     timeoutInSeconds: this._options.timeoutInSeconds,
     maxRetries: this._options.maxRetries,

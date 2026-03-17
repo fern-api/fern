@@ -7,6 +7,6 @@ public class Example50 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().urls().withEndingSlash();
+        client.endpoints().urls().noEndingSlash();
     }
 }

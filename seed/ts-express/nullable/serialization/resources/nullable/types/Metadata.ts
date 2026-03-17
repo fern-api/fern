@@ -23,6 +23,6 @@ export declare namespace Metadata {
         avatar?: string | null;
         activated?: (boolean | null | undefined) | null;
         status: serializers.Status.Raw;
-        values?: Record<string, (string | null | undefined) | null | undefined> | null;
+        values?: Record<string, (string | null | undefined) | null> | null;
     }
 }

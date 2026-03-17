@@ -8,5 +8,5 @@ export interface Metadata {
     avatar: string | null;
     activated?: (boolean | null) | undefined;
     status: SeedNullable.Status;
-    values?: Record<string, (string | null) | undefined> | undefined;
+    values?: Record<string, string | null> | undefined;
 }

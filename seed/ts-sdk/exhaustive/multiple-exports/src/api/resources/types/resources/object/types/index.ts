@@ -1,5 +1,6 @@
 export * from "./DocumentedUnknownType.js";
 export * from "./DoubleOptional.js";
+export * from "./MapOfDocumentedUnknownType.js";
 export * from "./NestedObjectWithOptionalField.js";
 export * from "./NestedObjectWithRequiredField.js";
 export * from "./ObjectWithDatetimeLikeString.js";

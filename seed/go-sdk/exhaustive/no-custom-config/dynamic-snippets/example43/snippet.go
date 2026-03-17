@@ -16,10 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.MustParseDate(
-        "2023-01-15",
+    request := fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
     )
-    client.Endpoints.Primitive.GetAndReturnDate(
+    client.Endpoints.Primitive.GetAndReturnDatetime(
         context.TODO(),
         request,
     )
