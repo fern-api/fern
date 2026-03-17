@@ -3,3 +3,6 @@
 import typing
 
 NullableUserId = typing.Optional[str]
+"""
+An alias for a nullable user ID
+"""
