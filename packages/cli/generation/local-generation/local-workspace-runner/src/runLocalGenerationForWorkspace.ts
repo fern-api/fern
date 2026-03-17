@@ -220,7 +220,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                if (selfhostedGithubConfig != null) {
+                if (selfhostedGithubConfig != null && !selfhostedGithubConfig.previewMode) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
 
@@ -336,7 +336,8 @@ export async function runLocalGenerationForWorkspace({
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
                 // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
-                if (selfhostedGithubConfig != null && shouldCommit) {
+                // Skip entirely in preview mode — preview only generates files locally without pushing
+                if (selfhostedGithubConfig != null && shouldCommit && !selfhostedGithubConfig.previewMode) {
                     const pipelineLogger: PipelineLogger = {
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
