@@ -6,8 +6,9 @@ public partial class SeedIdempotencyHeadersClient : ISeedIdempotencyHeadersClien
 {
     private readonly RawClient _client;
 
-    public SeedIdempotencyHeadersClient(ClientOptions clientOptions, string? token = null)
+    public SeedIdempotencyHeadersClient(string? token = null, ClientOptions? clientOptions = null)
     {
+        clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {

@@ -191,7 +191,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
-        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
         const parameters: ast.Parameter[] = [];
         for (const param of requiredParameters) {
             parameters.push(
@@ -201,14 +200,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         reference: param.typeReference
                     }),
                     docs: param.docs
-                })
-            );
-        }
-        if (!hasDefaultEnvironment) {
-            parameters.push(
-                this.csharp.parameter({
-                    name: this.members.clientOptionsParameterName,
-                    type: this.Types.ClientOptions
                 })
             );
         }
@@ -222,15 +213,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 })
             );
         }
-        if (hasDefaultEnvironment) {
-            parameters.push(
-                this.csharp.parameter({
-                    name: this.members.clientOptionsParameterName,
-                    type: this.Types.ClientOptions.asOptional(),
-                    initializer: "null"
-                })
-            );
-        }
+
+        parameters.push(
+            this.csharp.parameter({
+                name: this.members.clientOptionsParameterName,
+                type: this.Types.ClientOptions.asOptional(),
+                initializer: "null"
+            })
+        );
 
         // Separate auth headers from platform headers
         const authHeaderEntries: ast.Dictionary.MapEntry[] = [];
@@ -325,15 +315,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
                     // Initialize clientOptions with platform headers only
-                    if (hasDefaultEnvironment) {
-                        innerWriter.write("clientOptions ??= ");
-                        innerWriter.writeNodeStatement(
-                            this.csharp.instantiateClass({
-                                classReference: this.generation.Types.ClientOptions,
-                                arguments_: []
-                            })
-                        );
-                    }
+                    innerWriter.write("clientOptions ??= ");
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.ClientOptions,
+                            arguments_: []
+                        })
+                    );
 
                     if (this.settings.includeExceptionHandler) {
                         innerWriter.write("clientOptions.ExceptionHandler = ");
@@ -545,36 +533,23 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         asSnippet?: boolean;
     }): ast.ClassInstantiation {
         const arguments_: ast.CodeBlock[] = [];
-        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
 
         // Use the same parameter ordering as the constructor
         const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const allParameters = [...requiredParameters, ...optionalParameters];
 
-        for (const param of requiredParameters) {
-            const value = param.exampleValue ?? param.name;
-            arguments_.push(this.csharp.codeblock(`"${value}"`));
-        }
-
-        // When no default environment, clientOptions is required and comes before optional params
-        if (!hasDefaultEnvironment && clientOptionsArgument != null) {
-            arguments_.push(
-                this.csharp.codeblock((writer) => {
-                    writer.write(`${this.members.clientOptionsParameterName}: `);
-                    writer.writeNode(clientOptionsArgument);
-                })
-            );
-        }
-
-        for (const param of optionalParameters) {
+        for (const param of allParameters) {
+            // Skip parameters with environment variables unless explicitly including them
             if (param.environmentVariable != null && !includeEnvVarArguments) {
                 continue;
             }
+
+            // Use example values consistently in both snippets and tests for clarity
             const value = param.exampleValue ?? param.name;
             arguments_.push(this.csharp.codeblock(`"${value}"`));
         }
 
-        // When there's a default environment, clientOptions is optional and comes last
-        if (hasDefaultEnvironment && clientOptionsArgument != null) {
+        if (clientOptionsArgument != null) {
             arguments_.push(
                 this.csharp.codeblock((writer) => {
                     writer.write(`${this.members.clientOptionsParameterName}: `);

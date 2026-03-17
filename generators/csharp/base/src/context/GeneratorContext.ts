@@ -201,10 +201,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.ir.environments?.environments.type !== "multipleBaseUrls";
     }
 
-    public hasDefaultEnvironment(): boolean {
-        return this.ir.environments?.defaultEnvironment != null;
-    }
-
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
     }

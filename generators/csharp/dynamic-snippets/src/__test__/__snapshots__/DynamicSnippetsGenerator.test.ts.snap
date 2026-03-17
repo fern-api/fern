@@ -6,9 +6,6 @@ using Acme.Service;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -32,9 +29,6 @@ using Acme.Service;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -58,9 +52,6 @@ using System.Collections.Generic;
 using Acme.Commons.Types;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -136,9 +127,6 @@ using Acme.Types;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -182,9 +170,6 @@ using System.Globalization;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -253,9 +238,6 @@ using System.Collections.Generic;
 using Acme.Types.Object;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -280,9 +262,6 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 using System.Collections.Generic;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -332,11 +311,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
+var client = new AcmeClient();
 
 await client.Service.PostAsync(
     new MyRequest {
@@ -373,11 +348,7 @@ using Acme.Service;
 using System.IO;
 using System.Text;
 
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
+var client = new AcmeClient();
 
 await client.Service.JustFileAsync(
     new JustFileRequest {
@@ -395,11 +366,7 @@ using Acme.Service;
 using System.IO;
 using System.Text;
 
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
+var client = new AcmeClient();
 
 await client.Service.JustFileWithQueryParamsAsync(
     new JustFileWithQueryParamsRequest {
@@ -417,9 +384,6 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "using Acme;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -434,9 +398,6 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 using Acme.Imdb;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -650,9 +611,6 @@ exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
 "using Acme;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>",
     tenantId: "my-tenant-id"
 );
@@ -666,9 +624,6 @@ exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
 using Acme.Plantstore;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>",
     tenantId: "my-tenant-id"
 );
@@ -750,9 +705,6 @@ using System.Collections.Generic;
 using Acme.Types.Union;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 
@@ -770,9 +722,6 @@ using System.Collections.Generic;
 using Acme.Types.Union;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    },
     token: "<YOUR_API_KEY>"
 );
 

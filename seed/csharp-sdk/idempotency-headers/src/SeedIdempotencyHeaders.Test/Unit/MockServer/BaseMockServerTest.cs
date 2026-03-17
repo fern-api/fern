@@ -27,8 +27,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedIdempotencyHeadersClient(
-            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 },
-            "TOKEN"
+            "TOKEN",
+            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }
 

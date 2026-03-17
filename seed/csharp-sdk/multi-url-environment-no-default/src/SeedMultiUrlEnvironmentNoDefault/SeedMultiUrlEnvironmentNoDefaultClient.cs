@@ -7,8 +7,12 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
 {
     private readonly RawClient _client;
 
-    public SeedMultiUrlEnvironmentNoDefaultClient(ClientOptions clientOptions, string? token = null)
+    public SeedMultiUrlEnvironmentNoDefaultClient(
+        string? token = null,
+        ClientOptions? clientOptions = null
+    )
     {
+        clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {

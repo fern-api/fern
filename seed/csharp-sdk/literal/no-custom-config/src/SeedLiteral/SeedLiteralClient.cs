@@ -6,8 +6,9 @@ public partial class SeedLiteralClient : ISeedLiteralClient
 {
     private readonly RawClient _client;
 
-    public SeedLiteralClient(ClientOptions clientOptions)
+    public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
+        clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
