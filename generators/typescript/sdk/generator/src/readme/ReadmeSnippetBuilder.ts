@@ -38,6 +38,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
     public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
     private static readonly CUSTOM_FETCH_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCH";
+    private static readonly CUSTOM_FETCHER_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCHER";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -103,6 +104,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.buildAdditionalQueryStringParametersSnippets();
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_FETCH_FEATURE_ID] = this.buildCustomFetchSnippets();
+        snippets[ReadmeSnippetBuilder.CUSTOM_FETCHER_FEATURE_ID] = this.buildCustomFetcherSnippets();
 
         if (this.isPaginationEnabled) {
             const paginationSnippets = this.buildPaginationSnippets();
@@ -544,9 +546,9 @@ const data = await response.json();
         );
     }
 
-    private buildRuntimeCompatibilitySnippets(): string[] {
+    private buildCustomFetcherSnippets(): string[] | false {
         if (!this.allowCustomFetcher) {
-            return [];
+            return false;
         }
         const snippet = this.writeCode(
             code`
@@ -559,6 +561,10 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 `
         );
         return [snippet];
+    }
+
+    private buildRuntimeCompatibilitySnippets(): string[] {
+        return [];
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {

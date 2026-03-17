@@ -54,6 +54,15 @@ const response = await client.createUser(..., {
 const data = await response.json();
 ",
   ],
+  "CUSTOM_FETCHER": [
+    "import { MySDKClient } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    fetcher: // provide your implementation here
+});
+",
+  ],
   "EXCEPTION_HANDLING": [
     "import { MySDKError } from "@acme/sdk";
 

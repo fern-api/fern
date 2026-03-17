@@ -133,8 +133,7 @@ export class ReadmeConfigBuilder {
 
     private getTemplateVariables(): Record<string, unknown> {
         return {
-            fetchSupport: this.fetchSupport,
-            allowCustomFetcher: this.allowCustomFetcher
+            fetchSupport: this.fetchSupport
         };
     }
 }

@@ -22,7 +22,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
   - [Custom Fetch](#custom-fetch)
-  - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
 ## Installation
@@ -262,34 +261,6 @@ const response = await client.fetch("/v1/custom/endpoint", {
 });
 
 const data = await response.json();
-```
-
-### Runtime Compatibility
-
-
-The SDK works in the following runtimes:
-
-
-
-- Node.js 18+
-- Vercel
-- Cloudflare Workers
-- Deno v1.25+
-- Bun 1.0+
-- React Native
-
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
-
-const client = new SeedIdempotencyHeadersClient({
-    ...
-    fetcher: // provide your implementation here
-});
 ```
 
 ## Contributing

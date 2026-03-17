@@ -407,8 +407,8 @@ describe("ReadmeSnippetBuilder", () => {
         });
     });
 
-    // ── Runtime compatibility ──────────────────────────────────────────
-    describe("runtime compatibility snippets", () => {
+    // ── Custom fetcher ──────────────────────────────────────────────────
+    describe("custom fetcher snippets", () => {
         it("generates custom fetcher snippet when allowCustomFetcher is true", () => {
             const endpoint = createEndpoint("ep1", "createUser");
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
@@ -427,14 +427,14 @@ describe("ReadmeSnippetBuilder", () => {
             });
 
             const snippets = builder.buildReadmeSnippets();
-            const runtimeSnippets = snippets.RUNTIME_COMPATIBILITY;
-            assert(Array.isArray(runtimeSnippets));
-            expect(runtimeSnippets).toHaveLength(1);
-            expect(runtimeSnippets[0]).toContain("fetcher:");
-            expect(runtimeSnippets[0]).toContain("provide your implementation here");
+            const fetcherSnippets = snippets.CUSTOM_FETCHER;
+            assert(Array.isArray(fetcherSnippets));
+            expect(fetcherSnippets).toHaveLength(1);
+            expect(fetcherSnippets[0]).toContain("fetcher:");
+            expect(fetcherSnippets[0]).toContain("provide your implementation here");
         });
 
-        it("returns empty runtime compatibility snippets when allowCustomFetcher is false", () => {
+        it("returns false for custom fetcher snippets when allowCustomFetcher is false", () => {
             const endpoint = createEndpoint("ep1", "createUser");
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
@@ -452,9 +452,7 @@ describe("ReadmeSnippetBuilder", () => {
             });
 
             const snippets = builder.buildReadmeSnippets();
-            const runtimeSnippets = snippets.RUNTIME_COMPATIBILITY;
-            assert(Array.isArray(runtimeSnippets));
-            expect(runtimeSnippets).toHaveLength(0);
+            expect(snippets.CUSTOM_FETCHER).toBe(false);
         });
     });
 
@@ -971,6 +969,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "binary-response",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1031,6 +1030,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "binary-response",
+                allowCustomFetcher: true,
                 generateSubpackageExports: false
             });
 
@@ -1420,6 +1420,7 @@ describe("ReadmeSnippetBuilder", () => {
                 context,
                 endpointSnippets: [snippet1, snippet2, snippet3],
                 fileResponseType: "binary-response",
+                allowCustomFetcher: true,
                 generateSubpackageExports: true
             });
 
