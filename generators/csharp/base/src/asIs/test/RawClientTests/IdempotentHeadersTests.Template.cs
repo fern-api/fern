@@ -142,7 +142,7 @@ public class IdempotentHeadersTests
         _server = WireMockServer.Start();
         _baseUrl = _server.Url ?? "";
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
-        _rawClient = new RawClient(new ClientOptions { HttpClient = _httpClient });
+        _rawClient = new RawClient(new ClientOptions { <% if (hasBaseUrl) { %>BaseUrl = _baseUrl, <% } else if (!hasDefaultEnvironment) { %>Environment = new <%= context.generation.names.classes.environment %>(), <% } %>HttpClient = _httpClient });
     }
 
     [Test]
