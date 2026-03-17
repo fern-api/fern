@@ -74,6 +74,9 @@ function createMockContext(): any {
                 ReconnectingWebSocket: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("ReconnectingWebSocket")
                 },
+                ReadyState: {
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("ReadyState")
+                },
                 CloseEvent: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("CloseEvent")
                 },

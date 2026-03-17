@@ -120,7 +120,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                             description: "The current state of the connection; this is one of the readyState constants."
                         }
                     ],
-                    returnType: "number",
+                    returnType: getTextOfTsNode(context.coreUtilities.websocket.ReadyState._getReferenceToType()),
                     statements: [`return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState;`]
                 }
             ],

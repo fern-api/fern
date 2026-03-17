@@ -46,7 +46,7 @@ export class RealtimeNoAuthSocket {
     }
 
     /** The current state of the connection; this is one of the readyState constants. */
-    get readyState(): number {
+    get readyState(): core.ReadyState {
         return this.socket.readyState;
     }
 
