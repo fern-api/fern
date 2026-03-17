@@ -70,6 +70,7 @@ export async function publishDocs({
     ossWorkspaces,
     context,
     preview,
+    previewId,
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
@@ -89,6 +90,7 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
+    previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
@@ -215,13 +217,19 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
-                const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
+                // previewId is passed through to the FDR server even though the current
+                // SDK type does not yet include it. Extracting to a variable bypasses
+                // TypeScript's excess-property check on object literals.
+                const previewRegisterRequest = {
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths: filepaths,
                     images,
-                    basePath
-                });
+                    basePath,
+                    previewId
+                };
+                const startDocsRegisterResponse =
+                    await fdr.docs.v2.write.startDocsPreviewRegister(previewRegisterRequest);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
