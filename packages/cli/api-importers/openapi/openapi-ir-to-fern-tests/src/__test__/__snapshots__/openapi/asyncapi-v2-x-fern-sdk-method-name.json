@@ -1,0 +1,125 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "v1Realtime.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {},
+                  "type": "publish",
+                },
+                {
+                  "body": {},
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "publish": {
+              "body": "V1RealtimePublish",
+              "method-name": "send",
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": "V1RealtimeSubscribe",
+              "method-name": "receive",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/realtime",
+          "url": undefined,
+        },
+        "types": {
+          "V1RealtimePublish": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "V1RealtimeSubscribe": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": "optional<string>",
+              "timestamp": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/realtime
+  auth: false
+  messages:
+    publish:
+      origin: client
+      body: V1RealtimePublish
+      method-name: send
+    subscribe:
+      origin: server
+      body: V1RealtimeSubscribe
+      method-name: receive
+  examples:
+    - messages:
+        - type: publish
+          body: {}
+        - type: subscribe
+          body: {}
+types:
+  V1RealtimePublish:
+    properties:
+      content: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+  V1RealtimeSubscribe:
+    properties:
+      content: optional<string>
+      timestamp: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}
