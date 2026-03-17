@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "optionalAlias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.object.OptionalAlias"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "types.object.OptionalAlias": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

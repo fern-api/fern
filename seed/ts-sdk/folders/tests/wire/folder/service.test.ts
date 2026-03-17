@@ -33,6 +33,7 @@ describe("ServiceClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/service")

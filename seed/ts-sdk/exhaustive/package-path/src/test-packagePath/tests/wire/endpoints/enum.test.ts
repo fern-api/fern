@@ -9,6 +9,7 @@ describe("EnumClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "SUNNY";
         const rawResponseBody = "SUNNY";
+
         server
             .mockEndpoint()
             .post("/enum")

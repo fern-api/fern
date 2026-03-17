@@ -5,6 +5,7 @@ using SeedExamples.Core;
 namespace SeedExamples.Test_;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FileTest
 {
     [NUnit.Framework.Test]

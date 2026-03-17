@@ -3,6 +3,7 @@
 import type * as SeedWebsocket from "../../../../../api/index.js";
 import * as core from "../../../../../core/index.js";
 import type * as serializers from "../../../../index.js";
+import { ErrorEvent } from "../../types/ErrorEvent.js";
 import { ReceiveEvent } from "../../types/ReceiveEvent.js";
 import { ReceiveEvent2 } from "../../types/ReceiveEvent2.js";
 import { ReceiveEvent3 } from "../../types/ReceiveEvent3.js";
@@ -14,8 +15,9 @@ export const RealtimeSocketResponse: core.serialization.Schema<
     | SeedWebsocket.ReceiveSnakeCase
     | SeedWebsocket.ReceiveEvent2
     | SeedWebsocket.ReceiveEvent3
-> = core.serialization.undiscriminatedUnion([ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]);
+    | SeedWebsocket.ErrorEvent
+> = core.serialization.undiscriminatedUnion([ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3, ErrorEvent]);
 
 export declare namespace RealtimeSocketResponse {
-    export type Raw = ReceiveEvent.Raw | ReceiveSnakeCase.Raw | ReceiveEvent2.Raw | ReceiveEvent3.Raw;
+    export type Raw = ReceiveEvent.Raw | ReceiveSnakeCase.Raw | ReceiveEvent2.Raw | ReceiveEvent3.Raw | ErrorEvent.Raw;
 }

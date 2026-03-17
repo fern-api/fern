@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "mode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ToolMode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "function_name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ToolMode": {
+      "type": "string",
+      "enum": [
+        "TOOL_MODE_INVALID",
+        "TOOL_MODE_AUTO",
+        "TOOL_MODE_NONE",
+        "TOOL_MODE_REQUIRED"
+      ]
+    }
+  }
+}

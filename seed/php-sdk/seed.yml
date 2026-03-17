@@ -85,6 +85,9 @@ fixtures:
       customConfig:
         packagePath: Custom/Package/Path
         namespace: Custom\Package\Path
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null

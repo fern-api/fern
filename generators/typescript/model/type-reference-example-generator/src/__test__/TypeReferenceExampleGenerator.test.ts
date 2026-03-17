@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { casingsGenerator } from "@fern-typescript/test-utils";
+import { casingsGenerator, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -694,6 +694,670 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
             const context = createMockBaseContext();
             const expr = impl.build(context, DEFAULT_OPTS);
             expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses numeric property name for double key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "1.5": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createDoubleExample(1.5),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "DOUBLE", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for negative double key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "-1.5": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createDoubleExample(-1.5),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "DOUBLE", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses numeric property name for long key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "100": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createLongExample(100),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "LONG", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for negative long key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "-100": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createLongExample(-100),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "LONG", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses numeric property name for uint key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "5": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createUintExample(5),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "UINT", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses numeric property name for uint64 key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "999": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createUint64Example(999),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "UINT_64", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses numeric property name for float key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "3.14": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createFloatExample(3.14),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "FLOAT", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for negative float key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "-3.14": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createFloatExample(-3.14),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "FLOAT", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for bigInteger key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "9999999999999999999": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createBigIntegerExample("9999999999999999999"),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "BIG_INTEGER", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for base64 key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "aGVsbG8=": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createBase64Example("aGVsbG8="),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "BASE_64", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for uuid key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "550e8400-e29b-41d4-a716-446655440000": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createUuidExample("550e8400-e29b-41d4-a716-446655440000"),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "UUID", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses string property name for date key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "2024-01-15": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createDateExample("2024-01-15"),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "DATE", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("throws for datetime key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: createDatetimeExample(new Date("2024-01-15T12:00:00Z")),
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            expect(() => impl.build(context, DEFAULT_OPTS)).toThrow("Cannot convert datetime to property name");
+        });
+
+        it("uses literal container key as property name", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { literal_key: "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "literal_key",
+                                    shape: FernIr.ExampleTypeReferenceShape.container(
+                                        FernIr.ExampleContainer.literal({
+                                            literal: FernIr.ExamplePrimitive.string({ original: "literal_key" })
+                                        })
+                                    )
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("uses computed property name for named enum key", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_Color",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("Color"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { RED: "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "RED",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.enum({
+                                            value: createNameAndWireValue("RED", "RED")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("recursively resolves named alias key", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_UserId",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("UserId"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "user-123": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "user-123",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.alias({
+                                            value: createStringExample("user-123")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("recursively resolves named undiscriminated union key", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_KeyType",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("KeyType"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: { "some-key": "val" },
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "some-key",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.undiscriminatedUnion({
+                                            index: 0,
+                                            singleUnionType: createStringExample("some-key")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("throws for named object key", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_User",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("User"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: {},
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.object({
+                                            properties: [],
+                                            extraProperties: undefined
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            expect(() => impl.build(context, DEFAULT_OPTS)).toThrow("Cannot convert object to property name");
+        });
+
+        it("throws for named union key", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_Shape",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("Shape"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: {},
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.union({
+                                            discriminant: createNameAndWireValue("type", "type"),
+                                            singleUnionType: {
+                                                wireDiscriminantValue: createNameAndWireValue("circle", "circle"),
+                                                shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
+                                            },
+                                            extendProperties: undefined,
+                                            baseProperties: undefined
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            expect(() => impl.build(context, DEFAULT_OPTS)).toThrow("Cannot convert union to property name");
+        });
+
+        it("handles container literal key via getExampleAsPropertyName", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "literal_key",
+                                    shape: FernIr.ExampleTypeReferenceShape.container(
+                                        FernIr.ExampleContainer.literal({
+                                            literal: FernIr.ExamplePrimitive.string({ original: "literal_key" })
+                                        })
+                                    )
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            // The literal wraps a primitive string, so getExampleAsPropertyName recurses:
+            // container.literal -> primitive.string -> createStringLiteral
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            expect(text).toContain("literal_key");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("handles named alias key via getExampleAsPropertyName", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_AliasKey",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("AliasKey"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "alias_val",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.alias({
+                                            value: createStringExample("alias_val")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            // alias key recurses into the alias value (a string example)
+            expect(text).toContain("alias_val");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("handles named undiscriminatedUnion key via getExampleAsPropertyName", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_UnionKey",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("UnionKey"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "union_val",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.undiscriminatedUnion({
+                                            index: 0,
+                                            singleUnionType: createStringExample("union_val")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            // undiscriminatedUnion key recurses into singleUnionType (a string example)
+            expect(text).toContain("union_val");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("throws for unknown key", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: { unknown: true },
+                                    shape: FernIr.ExampleTypeReferenceShape.unknown({ unknown: true })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            expect(() => impl.build(context, DEFAULT_OPTS)).toThrow("Cannot convert unknown to property name");
         });
     });
 });

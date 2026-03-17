@@ -6,6 +6,7 @@ using SeedExtends.Core;
 namespace SeedExtends.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DocsTest
 {
     [NUnit.Framework.Test]

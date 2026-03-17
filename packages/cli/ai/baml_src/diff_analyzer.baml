@@ -21,6 +21,9 @@ class AnalyzeCommitDiffResponse {
 
     version_bump VersionBump
         @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
+
+    version_bump_reason string
+        @description("One sentence explaining WHY this version bump was chosen. For MAJOR: name the specific breaking symbol(s). For MINOR: name the new capability. For PATCH: describe the fix. For NO_CHANGE: 'No functional changes detected.' Example: 'MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`.'")
 }
 
 // Main function that analyzes SDK diffs
@@ -612,9 +615,81 @@ function AnalyzeSdkDiff(
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person ("The SDK now supports..." not "Add support for...")
 
-    Remember again that YOU MUST return a structured JSON response with these three fields:
+    Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
     - changelog_entry: A user-facing release note (empty string for PATCH)
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
+    - version_bump_reason: One sentence explaining WHY this bump level was chosen.
+      For MAJOR, name the specific breaking symbol(s) and explain why existing callers break.
+      For MINOR, name the new capability added.
+      For PATCH, describe what was fixed or improved.
+      For NO_CHANGE, say "No functional changes detected."
+      Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
+  "#
+}
+
+class ConsolidateChangelogResponse {
+    consolidated_changelog string
+        @description("CHANGELOG.md entry in Keep a Changelog format. Group under ### Breaking Changes, ### Added, ### Changed, ### Fixed. Bold symbol names, one tight sentence per bullet. Prose only, no code fences. Append migration action inline for breaking changes.")
+
+    pr_description string
+        @description("PR description with ## Breaking Changes section (if any) containing ### per breaking change with Before/After code fences and Migration line, then ## What's New section summarizing features in prose paragraphs grouped by theme. Do NOT list every class individually — summarize repetitive changes as a single entry.")
+
+    version_bump_reason string
+        @description("One sentence explaining WHY the overall version bump was chosen. For MAJOR: name the specific breaking symbol(s). For MINOR: name the new capability. For PATCH: describe the fix. Example: 'MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`.'")
+}
+
+function ConsolidateChangelog(
+    raw_entries: string @description("Newline-separated raw changelog entries from chunked diff analysis"),
+    version_bump: string @description("The overall version bump: MAJOR, MINOR, or PATCH"),
+    language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'")
+) -> ConsolidateChangelogResponse {
+  client DefaultClient
+
+  prompt #"
+    You are a technical writer formatting release notes for a {{language}} SDK.
+
+    The raw change notes below are noisy and repetitive — many bullets describe the same
+    change across different packages. Deduplicate aggressively: if the same feature appears
+    multiple times, merge into one entry.
+
+    Raw changelog entries:
+    ---
+    {{raw_entries}}
+    ---
+
+    Overall version bump: {{version_bump}}
+
+    Produce three outputs:
+
+    ---
+
+    ## 1. CHANGELOG.md entry (Keep a Changelog format)
+
+    - Group under: `### Breaking Changes`, `### Added`, `### Changed`, `### Fixed`
+    - Only include sections with entries
+    - **Bold the symbol name** first, then one tight sentence for SDK consumers
+    - No code fences — prose only
+    - For breaking changes, append the migration action inline
+
+    ## 2. PR Description
+
+    - `## Breaking Changes` section at top (if any)
+      - One `###` per breaking change with **Before/After** code fences and a **Migration:** line
+    - `## What's New` section summarizing added/changed features in prose paragraphs,
+      grouped by theme (e.g. logging, streaming, pagination, builder improvements)
+    - Do NOT list every class that got the same method — summarize as a single entry
+
+    ## 3. Version Bump Reason
+
+    - One sentence explaining WHY the overall version bump ({{version_bump}}) was chosen
+    - For MAJOR: name the specific breaking symbol(s) and explain why existing callers break
+    - For MINOR: name the new capability added
+    - For PATCH: describe what was fixed or improved
+    - Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
+
+    ---
+
+    {{ ctx.output_format }}
   "#
 }

@@ -9,6 +9,7 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.unchecked_base_model import construct_type
+from .types.error_event import ErrorEvent
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
@@ -23,7 +24,7 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]
+RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3, ErrorEvent]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):

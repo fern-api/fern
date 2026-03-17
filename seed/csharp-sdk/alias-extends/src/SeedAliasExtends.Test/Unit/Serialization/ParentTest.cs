@@ -6,6 +6,7 @@ using SeedAliasExtends.Core;
 namespace SeedAliasExtends.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ParentTest
 {
     [NUnit.Framework.Test]

@@ -6,6 +6,7 @@ using SeedExhaustive.Types.Enum;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Enum;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnEnumTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
