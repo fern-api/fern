@@ -67,6 +67,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
                 "prefix": "ApiKey",
                 "headerEnvVar": null,
                 "key": "ApiKey",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],
@@ -215,6 +216,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                 "tokenEnvVar": null,
                 "websocketAuthFallback": null,
                 "key": "bearer",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],
@@ -17990,6 +17992,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 "passwordEnvVar": null,
                 "passwordOmit": null,
                 "key": "MyBasicAuth",
+                "websocketAuthFallback": null,
                 "docs": null
             }
         ],
