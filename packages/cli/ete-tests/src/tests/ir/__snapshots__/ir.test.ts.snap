@@ -214,7 +214,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 },
                 "tokenEnvVar": null,
-                "websocketAuthFallback": null,
                 "key": "bearer",
                 "websocketAuthFallback": null,
                 "docs": null
