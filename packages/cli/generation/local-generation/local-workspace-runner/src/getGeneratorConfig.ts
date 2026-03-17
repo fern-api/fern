@@ -203,8 +203,9 @@ export function getGeneratorConfig({
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             if (publishToRegistry === true) {
+                const publishTarget = getPublishTargetFromPublishMode(value);
                 return {
-                    ...newPublishOutputConfig(outputVersion, value, paths),
+                    ...newRealPublishOutputConfig(outputVersion, publishTarget, paths),
                     snippetFilepath: snippetPath,
                     publishingMetadata: generatorInvocation.publishMetadata
                 };
@@ -217,8 +218,9 @@ export function getGeneratorConfig({
         },
         publishV2: (value) => {
             if (publishToRegistry === true) {
+                const publishTarget = getPublishTargetFromPublishModeV2(value);
                 return {
-                    ...newPublishOutputConfigV2(outputVersion, value, paths),
+                    ...newRealPublishOutputConfig(outputVersion, publishTarget, paths),
                     snippetFilepath: snippetPath,
                     publishingMetadata: generatorInvocation.publishMetadata
                 };
@@ -365,32 +367,12 @@ function newDummyPublishOutputConfig(
     };
 }
 
-function newPublishOutputConfig(
+function newRealPublishOutputConfig(
     version: string,
-    publishOutputMode: PublishOutputMode,
+    publishTarget: FernGeneratorExec.GeneratorPublishTarget | undefined,
     paths: { outputDirectory: AbsoluteFilePath }
 ): FernGeneratorExec.GeneratorOutputConfig {
     const { outputDirectory } = paths;
-    const publishTarget = getPublishTargetFromPublishMode(publishOutputMode);
-    const { registries, registriesV2 } = buildRegistriesFromPublishTarget(publishTarget);
-    return {
-        mode: FernGeneratorExec.OutputMode.publish({
-            registries,
-            registriesV2,
-            publishTarget,
-            version
-        }),
-        path: outputDirectory
-    };
-}
-
-function newPublishOutputConfigV2(
-    version: string,
-    publishOutputModeV2: PublishOutputModeV2,
-    paths: { outputDirectory: AbsoluteFilePath }
-): FernGeneratorExec.GeneratorOutputConfig {
-    const { outputDirectory } = paths;
-    const publishTarget = getPublishTargetFromPublishModeV2(publishOutputModeV2);
     const { registries, registriesV2 } = buildRegistriesFromPublishTarget(publishTarget);
     return {
         mode: FernGeneratorExec.OutputMode.publish({

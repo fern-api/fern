@@ -38,6 +38,6 @@ describe("sanitizeBranchName", () => {
     });
 
     it("handles user-prefixed branches", () => {
-        expect(sanitizeBranchName("lifanzou/sdk-preview-research")).toBe("lifanzou-sdk-preview-research");
+        expect(sanitizeBranchName("jsmith/my-feature")).toBe("jsmith-my-feature");
     });
 });
