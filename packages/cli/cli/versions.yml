@@ -2,7 +2,7 @@
 - version: 4.32.0
   changelogEntry:
     - summary: |
-        Add `og:text-color` and `og:background-color` metadata settings for dynamic
+        Add `og:dynamic:text-color` and `og:dynamic:background-color` metadata settings for dynamic
         OG images. These allow explicit control over text and background colors in
         dynamically generated OG images, fixing visibility issues on light backgrounds.
       type: feat

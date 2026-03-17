@@ -118,8 +118,8 @@ export interface ParsedMetadataConfig
     "twitter:image": FilepathOrUrl | undefined;
     "og:dynamic": boolean | undefined;
     "og:background-image": FilepathOrUrl | undefined;
-    "og:text-color": string | undefined;
-    "og:background-color": string | undefined;
+    "og:dynamic:text-color": string | undefined;
+    "og:dynamic:background-color": string | undefined;
 }
 
 export type ColorConfiguration =

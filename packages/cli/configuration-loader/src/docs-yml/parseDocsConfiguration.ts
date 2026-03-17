@@ -1616,8 +1616,8 @@ async function convertMetadata(
         "twitter:card": metadata.twitterCard,
         "og:dynamic": metadata.ogDynamic,
         "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
-        "og:text-color": metadata.ogTextColor,
-        "og:background-color": metadata.ogBackgroundColor,
+        "og:dynamic:text-color": metadata.ogDynamicTextColor,
+        "og:dynamic:background-color": metadata.ogDynamicBackgroundColor,
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
