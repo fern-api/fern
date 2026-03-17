@@ -6,11 +6,15 @@
     },
     "user": {
       "$ref": "#/definitions/System.User"
+    },
+    "owner": {
+      "$ref": "#/definitions/User"
     }
   },
   "required": [
     "name",
-    "user"
+    "user",
+    "owner"
   ],
   "additionalProperties": false,
   "definitions": {
@@ -49,6 +53,30 @@
         "state",
         "zip",
         "country"
+      ],
+      "additionalProperties": false
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "password"
       ],
       "additionalProperties": false
     }
