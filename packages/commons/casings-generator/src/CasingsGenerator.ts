@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { replaceSpecialCharsWithWords } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
@@ -252,10 +253,13 @@ const NAME_PREPROCESSOR_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> =
 ];
 
 function preprocessName(name: string): string {
-    return NAME_PREPROCESSOR_REPLACEMENTS.reduce(
+    const withReplacements = NAME_PREPROCESSOR_REPLACEMENTS.reduce(
         (result, [pattern, replacement]) => result.replace(pattern, replacement),
         name
     );
+    // Replace special characters (like %, #, @) with word equivalents
+    // so that camelCase/snakeCase can produce valid identifiers.
+    return replaceSpecialCharsWithWords(withReplacements);
 }
 
 /**

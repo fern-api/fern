@@ -7727,6 +7727,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../cli/configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../core-utils
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../cli/fern-definition/schema
