@@ -1,15 +1,15 @@
 /**
  * Maps individual special characters to their word equivalents.
- * Only includes characters with clear semantic meaning that would
- * be lost if silently dropped by camelCase.
+ * Only includes characters that are universally invalid in
+ * identifiers across all programming languages.
  *
  * Characters like `:`, `.`, `/`, `-`, ` ` are already handled as
  * word separators by camelCase and should NOT be mapped here.
  *
- * Structural/formatting characters like backtick, parentheses,
- * brackets, and braces are intentionally excluded — they are
- * typically used for quoting or grouping in API names and should
- * just act as word separators, not be converted to words.
+ * Characters that are valid identifiers in some languages are
+ * excluded (e.g. `$` is valid in JS/Java/PHP). Structural/formatting
+ * characters like backtick, parentheses, brackets, braces, and angle
+ * brackets are also excluded — they act as word separators naturally.
  */
 const SPECIAL_CHAR_TO_WORD: Record<string, string> = {
     "%": "percent",
@@ -17,7 +17,6 @@ const SPECIAL_CHAR_TO_WORD: Record<string, string> = {
     "@": "at",
     "&": "and",
     "+": "plus",
-    $: "dollar",
     "!": "exclamation",
     "~": "tilde",
     "^": "caret",

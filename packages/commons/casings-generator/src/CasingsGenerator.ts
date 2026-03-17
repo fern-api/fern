@@ -52,12 +52,17 @@ export function constructCasingsGenerator({
                 safeAlternative: SafeAndUnsafeString | undefined
             ): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
+                // Only fall back to the safe alternative when the unsafe name
+                // is empty or not a valid identifier (e.g. camelCase dropped
+                // all meaningful chars). This avoids breaking changes for names
+                // where camelCase produces a valid result.
                 safeName:
-                    safeAlternative?.safeName ??
-                    sanitizeName({
-                        name: unsafeString,
-                        keywords: getKeywords({ generationLanguage, keywords })
-                    })
+                    safeAlternative != null && !isValidIdentifier(unsafeString)
+                        ? safeAlternative.safeName
+                        : sanitizeName({
+                              name: unsafeString,
+                              keywords: getKeywords({ generationLanguage, keywords })
+                          })
             });
 
             const preserve = opts?.preserveUnderscores === true;
@@ -190,6 +195,11 @@ function getKeywords({
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
+}
+
+const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+function isValidIdentifier(str: string): boolean {
+    return str.length > 0 && VALID_IDENTIFIER.test(str);
 }
 
 function hasAdjacentCommonInitialisms(wordList: string[]): boolean {

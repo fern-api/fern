@@ -993,19 +993,19 @@
     "originalName": "Test vnd.fern.user+json;version=1 and /application-json",
     "camelCase": {
       "unsafeName": "testVndFernUserJsonVersion1AndApplicationJson",
-      "safeName": "testVndFernUserPlusJsonVersionEquals1AndApplicationJson"
+      "safeName": "testVndFernUserJsonVersion1AndApplicationJson"
     },
     "snakeCase": {
       "unsafeName": "test_vnd_fern_user_json_version_1_and_application_json",
-      "safeName": "test_vnd_fern_user_plus_json_version_equals_1_and_application_json"
+      "safeName": "test_vnd_fern_user_json_version_1_and_application_json"
     },
     "screamingSnakeCase": {
       "unsafeName": "TEST_VND_FERN_USER_JSON_VERSION_1_AND_APPLICATION_JSON",
-      "safeName": "TEST_VND_FERN_USER_PLUS_JSON_VERSION_EQUALS_1_AND_APPLICATION_JSON"
+      "safeName": "TEST_VND_FERN_USER_JSON_VERSION_1_AND_APPLICATION_JSON"
     },
     "pascalCase": {
       "unsafeName": "TestVndFernUserJsonVersion1AndApplicationJson",
-      "safeName": "TestVndFernUserPlusJsonVersionEquals1AndApplicationJson"
+      "safeName": "TestVndFernUserJsonVersion1AndApplicationJson"
     }
   },
   "constants": {

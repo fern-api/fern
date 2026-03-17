@@ -63,19 +63,19 @@
                 "originalName": "$anchor",
                 "camelCase": {
                   "unsafeName": "anchor",
-                  "safeName": "dollarAnchor"
+                  "safeName": "anchor"
                 },
                 "snakeCase": {
                   "unsafeName": "anchor",
-                  "safeName": "dollar_anchor"
+                  "safeName": "anchor"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "ANCHOR",
-                  "safeName": "DOLLAR_ANCHOR"
+                  "safeName": "ANCHOR"
                 },
                 "pascalCase": {
                   "unsafeName": "Anchor",
-                  "safeName": "DollarAnchor"
+                  "safeName": "Anchor"
                 }
               },
               "wireValue": "$anchor"
@@ -106,19 +106,19 @@
                 "originalName": "$comment",
                 "camelCase": {
                   "unsafeName": "comment",
-                  "safeName": "dollarComment"
+                  "safeName": "comment"
                 },
                 "snakeCase": {
                   "unsafeName": "comment",
-                  "safeName": "dollar_comment"
+                  "safeName": "comment"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "COMMENT",
-                  "safeName": "DOLLAR_COMMENT"
+                  "safeName": "COMMENT"
                 },
                 "pascalCase": {
                   "unsafeName": "Comment",
-                  "safeName": "DollarComment"
+                  "safeName": "Comment"
                 }
               },
               "wireValue": "$comment"
@@ -149,19 +149,19 @@
                 "originalName": "$defs",
                 "camelCase": {
                   "unsafeName": "defs",
-                  "safeName": "dollarDefs"
+                  "safeName": "defs"
                 },
                 "snakeCase": {
                   "unsafeName": "defs",
-                  "safeName": "dollar_defs"
+                  "safeName": "defs"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "DEFS",
-                  "safeName": "DOLLAR_DEFS"
+                  "safeName": "DEFS"
                 },
                 "pascalCase": {
                   "unsafeName": "Defs",
-                  "safeName": "DollarDefs"
+                  "safeName": "Defs"
                 }
               },
               "wireValue": "$defs"
@@ -186,19 +186,19 @@
                 "originalName": "$dynamicRef",
                 "camelCase": {
                   "unsafeName": "dynamicRef",
-                  "safeName": "dollarDynamicRef"
+                  "safeName": "dynamicRef"
                 },
                 "snakeCase": {
                   "unsafeName": "dynamic_ref",
-                  "safeName": "dollar_dynamic_ref"
+                  "safeName": "dynamic_ref"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "DYNAMIC_REF",
-                  "safeName": "DOLLAR_DYNAMIC_REF"
+                  "safeName": "DYNAMIC_REF"
                 },
                 "pascalCase": {
                   "unsafeName": "DynamicRef",
-                  "safeName": "DollarDynamicRef"
+                  "safeName": "DynamicRef"
                 }
               },
               "wireValue": "$dynamicRef"
@@ -229,19 +229,19 @@
                 "originalName": "$id",
                 "camelCase": {
                   "unsafeName": "id",
-                  "safeName": "dollarID"
+                  "safeName": "id"
                 },
                 "snakeCase": {
                   "unsafeName": "id",
-                  "safeName": "dollar_id"
+                  "safeName": "id"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "ID",
-                  "safeName": "DOLLAR_ID"
+                  "safeName": "ID"
                 },
                 "pascalCase": {
                   "unsafeName": "ID",
-                  "safeName": "DollarID"
+                  "safeName": "ID"
                 }
               },
               "wireValue": "$id"
@@ -272,19 +272,19 @@
                 "originalName": "$ref",
                 "camelCase": {
                   "unsafeName": "ref",
-                  "safeName": "dollarRef"
+                  "safeName": "ref"
                 },
                 "snakeCase": {
                   "unsafeName": "ref",
-                  "safeName": "dollar_ref"
+                  "safeName": "ref"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "REF",
-                  "safeName": "DOLLAR_REF"
+                  "safeName": "REF"
                 },
                 "pascalCase": {
                   "unsafeName": "Ref",
-                  "safeName": "DollarRef"
+                  "safeName": "Ref"
                 }
               },
               "wireValue": "$ref"
@@ -315,19 +315,19 @@
                 "originalName": "$schema",
                 "camelCase": {
                   "unsafeName": "schema",
-                  "safeName": "dollarSchema"
+                  "safeName": "schema"
                 },
                 "snakeCase": {
                   "unsafeName": "schema",
-                  "safeName": "dollar_schema"
+                  "safeName": "schema"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "SCHEMA",
-                  "safeName": "DOLLAR_SCHEMA"
+                  "safeName": "SCHEMA"
                 },
                 "pascalCase": {
                   "unsafeName": "Schema",
-                  "safeName": "DollarSchema"
+                  "safeName": "Schema"
                 }
               },
               "wireValue": "$schema"
@@ -3036,19 +3036,19 @@
                 "originalName": "$anchor",
                 "camelCase": {
                   "unsafeName": "anchor",
-                  "safeName": "dollarAnchor"
+                  "safeName": "anchor"
                 },
                 "snakeCase": {
                   "unsafeName": "anchor",
-                  "safeName": "dollar_anchor"
+                  "safeName": "anchor"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "ANCHOR",
-                  "safeName": "DOLLAR_ANCHOR"
+                  "safeName": "ANCHOR"
                 },
                 "pascalCase": {
                   "unsafeName": "Anchor",
-                  "safeName": "DollarAnchor"
+                  "safeName": "Anchor"
                 }
               },
               "wireValue": "$anchor"
@@ -3067,19 +3067,19 @@
                 "originalName": "$comment",
                 "camelCase": {
                   "unsafeName": "comment",
-                  "safeName": "dollarComment"
+                  "safeName": "comment"
                 },
                 "snakeCase": {
                   "unsafeName": "comment",
-                  "safeName": "dollar_comment"
+                  "safeName": "comment"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "COMMENT",
-                  "safeName": "DOLLAR_COMMENT"
+                  "safeName": "COMMENT"
                 },
                 "pascalCase": {
                   "unsafeName": "Comment",
-                  "safeName": "DollarComment"
+                  "safeName": "Comment"
                 }
               },
               "wireValue": "$comment"
@@ -3098,19 +3098,19 @@
                 "originalName": "$defs",
                 "camelCase": {
                   "unsafeName": "defs",
-                  "safeName": "dollarDefs"
+                  "safeName": "defs"
                 },
                 "snakeCase": {
                   "unsafeName": "defs",
-                  "safeName": "dollar_defs"
+                  "safeName": "defs"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "DEFS",
-                  "safeName": "DOLLAR_DEFS"
+                  "safeName": "DEFS"
                 },
                 "pascalCase": {
                   "unsafeName": "Defs",
-                  "safeName": "DollarDefs"
+                  "safeName": "Defs"
                 }
               },
               "wireValue": "$defs"
@@ -3128,19 +3128,19 @@
                 "originalName": "$dynamicRef",
                 "camelCase": {
                   "unsafeName": "dynamicRef",
-                  "safeName": "dollarDynamicRef"
+                  "safeName": "dynamicRef"
                 },
                 "snakeCase": {
                   "unsafeName": "dynamic_ref",
-                  "safeName": "dollar_dynamic_ref"
+                  "safeName": "dynamic_ref"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "DYNAMIC_REF",
-                  "safeName": "DOLLAR_DYNAMIC_REF"
+                  "safeName": "DYNAMIC_REF"
                 },
                 "pascalCase": {
                   "unsafeName": "DynamicRef",
-                  "safeName": "DollarDynamicRef"
+                  "safeName": "DynamicRef"
                 }
               },
               "wireValue": "$dynamicRef"
@@ -3159,19 +3159,19 @@
                 "originalName": "$id",
                 "camelCase": {
                   "unsafeName": "id",
-                  "safeName": "dollarID"
+                  "safeName": "id"
                 },
                 "snakeCase": {
                   "unsafeName": "id",
-                  "safeName": "dollar_id"
+                  "safeName": "id"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "ID",
-                  "safeName": "DOLLAR_ID"
+                  "safeName": "ID"
                 },
                 "pascalCase": {
                   "unsafeName": "ID",
-                  "safeName": "DollarID"
+                  "safeName": "ID"
                 }
               },
               "wireValue": "$id"
@@ -3190,19 +3190,19 @@
                 "originalName": "$ref",
                 "camelCase": {
                   "unsafeName": "ref",
-                  "safeName": "dollarRef"
+                  "safeName": "ref"
                 },
                 "snakeCase": {
                   "unsafeName": "ref",
-                  "safeName": "dollar_ref"
+                  "safeName": "ref"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "REF",
-                  "safeName": "DOLLAR_REF"
+                  "safeName": "REF"
                 },
                 "pascalCase": {
                   "unsafeName": "Ref",
-                  "safeName": "DollarRef"
+                  "safeName": "Ref"
                 }
               },
               "wireValue": "$ref"
@@ -3221,19 +3221,19 @@
                 "originalName": "$schema",
                 "camelCase": {
                   "unsafeName": "schema",
-                  "safeName": "dollarSchema"
+                  "safeName": "schema"
                 },
                 "snakeCase": {
                   "unsafeName": "schema",
-                  "safeName": "dollar_schema"
+                  "safeName": "schema"
                 },
                 "screamingSnakeCase": {
                   "unsafeName": "SCHEMA",
-                  "safeName": "DOLLAR_SCHEMA"
+                  "safeName": "SCHEMA"
                 },
                 "pascalCase": {
                   "unsafeName": "Schema",
-                  "safeName": "DollarSchema"
+                  "safeName": "Schema"
                 }
               },
               "wireValue": "$schema"
