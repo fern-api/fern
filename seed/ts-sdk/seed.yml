@@ -346,6 +346,10 @@ fixtures:
     - outputFolder: generate-read-write-only-types
       customConfig:
         experimentalGenerateReadWriteOnlyTypes: true
+  websocket-auth-fallback:
+    - outputFolder: websockets
+      customConfig:
+        generateWebSocketClients: true
   websocket-bearer-auth:
     - outputFolder: websockets
       customConfig:

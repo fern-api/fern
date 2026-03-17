@@ -1,0 +1,11 @@
+name: websocket-auth-fallback
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: apiKey
+      env: SEED_API_KEY
+    websocket-auth-fallback:
+      in: websocket-subprotocol
+      format: "bearer.{token}"

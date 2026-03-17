@@ -19,6 +19,25 @@ import { buildUrl } from "../endpoints/utils/buildUrl.js";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 
+/**
+ * Represents WebSocket auth fallback configuration from the IR.
+ * Defined locally because the published @fern-fern/ir-sdk may not yet include these types.
+ *
+ * The raw IR JSON uses `_type` as the discriminant (wire format), but the deserialized
+ * SDK uses `type`. Since the published SDK doesn't know about this field yet, the
+ * value passes through as raw JSON with `_type`. We accept both forms.
+ */
+interface WebSocketAuthFallback {
+    type: "websocketSubprotocol" | "query";
+    format?: string;
+    name?: string;
+}
+
+interface AuthFallbackInfo {
+    scheme: FernIr.AuthScheme;
+    fallback: WebSocketAuthFallback;
+}
+
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
         intermediateRepresentation: FernIr.IntermediateRepresentation;
@@ -49,6 +68,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
     private static readonly ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
+    private static readonly AUTH_FALLBACK_HEADERS_NAME = "_authFallbackHeaders";
+    private static readonly IS_BROWSER_LIKE_NAME = "_isBrowserLike";
+    private static readonly AUTH_TOKEN_NAME = "_authToken";
+    private static readonly FALLBACK_PROTOCOLS_NAME = "_fallbackProtocols";
+    private static readonly FALLBACK_QUERY_PARAMS_NAME = "_fallbackQueryParams";
 
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -409,8 +433,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         });
 
         const mergeHeaders: ts.Expression[] = [];
-        const authProviderStatements = [];
+        const authProviderStatements: ts.Statement[] = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
+        const authFallback = this.getWebSocketAuthFallback();
         if (this.generatedSdkClientClass.hasAuthProvider() && this.channel.auth) {
             const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
                 ? ts.factory.createObjectLiteralExpression([
@@ -440,7 +465,16 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     )
                 )
             );
-            mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
+
+            if (authFallback != null) {
+                authProviderStatements.push(...this.generateAuthFallbackStatements(authFallback, context));
+            }
+
+            mergeHeaders.push(
+                authFallback != null
+                    ? ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.AUTH_FALLBACK_HEADERS_NAME)
+                    : ts.factory.createIdentifier("_authRequest.headers")
+            );
         }
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {
@@ -506,7 +540,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
-                            this.getReferenceToWebsocket(context, pathParameterLocalNames)
+                            this.getReferenceToWebsocket(context, pathParameterLocalNames, authFallback)
                         )
                     ],
                     ts.NodeFlags.Const
@@ -522,7 +556,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ];
     }
 
-    private getReferenceToWebsocket(context: SdkContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
+    private getReferenceToWebsocket(
+        context: SdkContext,
+        pathParameterLocalNames: Map<string, string>,
+        authFallback: AuthFallbackInfo | undefined
+    ): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
 
         const url = buildUrl({
@@ -555,13 +593,21 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             throw new Error(`Failed to build URL for ${this.channelId}`);
         }
 
+        const protocolsExpr =
+            authFallback != null
+                ? this.getProtocolsWithFallback(authFallback)
+                : ts.factory.createBinaryExpression(
+                      ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                      ts.factory.createArrayLiteralExpression([])
+                  );
+
+        const queryParametersExpr =
+            authFallback != null ? this.getQueryParametersWithFallback(authFallback) : this.getMergedQueryParameters();
+
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
             url: context.coreUtilities.urlUtils.join._invoke([baseUrl, url]),
-            protocols: ts.factory.createBinaryExpression(
-                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                ts.factory.createArrayLiteralExpression([])
-            ),
+            protocols: protocolsExpr,
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
                     "debug",
@@ -608,7 +654,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters: this.getMergedQueryParameters(),
+            queryParameters: queryParametersExpr,
             abortSignal: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME)
         });
     }
@@ -768,5 +814,366 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 parameterNaming: this.parameterNaming
             })
         };
+    }
+
+    /**
+     * Finds the first auth scheme that has a websocketAuthFallback defined.
+     * Returns the scheme and its fallback configuration, or undefined if none found.
+     */
+    private getWebSocketAuthFallback(): AuthFallbackInfo | undefined {
+        if (!this.channel.auth) {
+            return undefined;
+        }
+        for (const scheme of this.intermediateRepresentation.auth.schemes) {
+            // Access websocketAuthFallback from the scheme. The field is on BaseAuthScheme
+            // in the IR but may not yet be in the published @fern-fern/ir-sdk types.
+            // When the published SDK doesn't know about the field, it passes through as
+            // raw JSON (with `_type` discriminant). When the SDK does know about it,
+            // the deserialized form uses `type`.
+            const rawFallback = (scheme as unknown as { websocketAuthFallback?: Record<string, unknown> })
+                .websocketAuthFallback;
+            if (rawFallback != null) {
+                // Normalize: raw wire format uses `_type`, deserialized uses `type`
+                const fallbackType = (rawFallback.type ?? rawFallback._type) as string | undefined;
+                if (fallbackType != null) {
+                    const fallback: WebSocketAuthFallback = {
+                        type: fallbackType as WebSocketAuthFallback["type"],
+                        format: rawFallback.format as string | undefined,
+                        name: rawFallback.name as string | undefined
+                    };
+                    return { scheme, fallback };
+                }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Generates the runtime-branching statements for WebSocket auth fallback.
+     * Produces:
+     *   const _isBrowserLike = !["node", "bun", "deno"].includes(RUNTIME.type);
+     *   const _authToken = _authRequest.headers["Authorization"]?.split(" ")[1] ?? "";
+     *   const _authFallbackHeaders = _isBrowserLike ? {} : _authRequest.headers;
+     *   const _fallbackProtocols = _isBrowserLike ? [format.replace("{token}", _authToken)] : [];
+     *   // or for query fallback:
+     *   const _fallbackQueryParams = _isBrowserLike ? { [name]: _authToken } : {};
+     */
+    private generateAuthFallbackStatements(authFallback: AuthFallbackInfo, context: SdkContext): ts.Statement[] {
+        const statements: ts.Statement[] = [];
+
+        // const _isBrowserLike = !["node", "bun", "deno"].includes(RUNTIME.type);
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedDefaultWebsocketImplementation.IS_BROWSER_LIKE_NAME,
+                            undefined,
+                            undefined,
+                            ts.factory.createPrefixUnaryExpression(
+                                ts.SyntaxKind.ExclamationToken,
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createArrayLiteralExpression([
+                                            ts.factory.createStringLiteral("node"),
+                                            ts.factory.createStringLiteral("bun"),
+                                            ts.factory.createStringLiteral("deno")
+                                        ]),
+                                        "includes"
+                                    ),
+                                    undefined,
+                                    [context.coreUtilities.runtime.type._getReferenceTo()]
+                                )
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+
+        // Generate token extraction based on auth scheme type
+        const tokenExtraction = this.getTokenExtractionExpression(authFallback.scheme);
+        // const _authToken = <tokenExtraction>;
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedDefaultWebsocketImplementation.AUTH_TOKEN_NAME,
+                            undefined,
+                            undefined,
+                            tokenExtraction
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+
+        // const _authFallbackHeaders = _isBrowserLike ? {} : _authRequest.headers;
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedDefaultWebsocketImplementation.AUTH_FALLBACK_HEADERS_NAME,
+                            undefined,
+                            undefined,
+                            ts.factory.createConditionalExpression(
+                                ts.factory.createIdentifier(
+                                    GeneratedDefaultWebsocketImplementation.IS_BROWSER_LIKE_NAME
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                ts.factory.createObjectLiteralExpression([]),
+                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                ts.factory.createIdentifier("_authRequest.headers")
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+
+        // Generate fallback-specific statements based on the fallback type
+        if (authFallback.fallback.type === "websocketSubprotocol") {
+            // const _fallbackProtocols = _isBrowserLike
+            //     ? [format.replace("{token}", _authToken)]
+            //     : [];
+            const formatStr = authFallback.fallback.format ?? "";
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                GeneratedDefaultWebsocketImplementation.FALLBACK_PROTOCOLS_NAME,
+                                undefined,
+                                undefined,
+                                ts.factory.createConditionalExpression(
+                                    ts.factory.createIdentifier(
+                                        GeneratedDefaultWebsocketImplementation.IS_BROWSER_LIKE_NAME
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    ts.factory.createArrayLiteralExpression([
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createStringLiteral(formatStr),
+                                                "replace"
+                                            ),
+                                            undefined,
+                                            [
+                                                ts.factory.createStringLiteral("{token}"),
+                                                ts.factory.createIdentifier(
+                                                    GeneratedDefaultWebsocketImplementation.AUTH_TOKEN_NAME
+                                                )
+                                            ]
+                                        )
+                                    ]),
+                                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                    ts.factory.createArrayLiteralExpression([])
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+        } else if (authFallback.fallback.type === "query") {
+            // const _fallbackQueryParams = _isBrowserLike
+            //     ? { [name]: _authToken }
+            //     : {};
+            const queryParamName = authFallback.fallback.name ?? "";
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                GeneratedDefaultWebsocketImplementation.FALLBACK_QUERY_PARAMS_NAME,
+                                undefined,
+                                undefined,
+                                ts.factory.createConditionalExpression(
+                                    ts.factory.createIdentifier(
+                                        GeneratedDefaultWebsocketImplementation.IS_BROWSER_LIKE_NAME
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    ts.factory.createObjectLiteralExpression([
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createStringLiteral(queryParamName),
+                                            ts.factory.createIdentifier(
+                                                GeneratedDefaultWebsocketImplementation.AUTH_TOKEN_NAME
+                                            )
+                                        )
+                                    ]),
+                                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                    ts.factory.createObjectLiteralExpression([])
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+        }
+
+        return statements;
+    }
+
+    /**
+     * Returns an expression that extracts the raw token value from _authRequest.headers
+     * based on the auth scheme type.
+     */
+    private getTokenExtractionExpression(scheme: FernIr.AuthScheme): ts.Expression {
+        switch (scheme.type) {
+            case "bearer":
+            case "oauth":
+                // _authRequest.headers["Authorization"]?.split(" ")[1] ?? ""
+                return ts.factory.createBinaryExpression(
+                    ts.factory.createElementAccessChain(
+                        ts.factory.createCallChain(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createElementAccessExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier("_authRequest"),
+                                        "headers"
+                                    ),
+                                    ts.factory.createStringLiteral("Authorization")
+                                ),
+                                "split"
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            undefined,
+                            [ts.factory.createStringLiteral(" ")]
+                        ),
+                        undefined,
+                        ts.factory.createNumericLiteral(1)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral("")
+                );
+            case "basic":
+                // _authRequest.headers["Authorization"]?.split(" ")[1] ?? ""
+                return ts.factory.createBinaryExpression(
+                    ts.factory.createElementAccessChain(
+                        ts.factory.createCallChain(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createElementAccessExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier("_authRequest"),
+                                        "headers"
+                                    ),
+                                    ts.factory.createStringLiteral("Authorization")
+                                ),
+                                "split"
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            undefined,
+                            [ts.factory.createStringLiteral(" ")]
+                        ),
+                        undefined,
+                        ts.factory.createNumericLiteral(1)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral("")
+                );
+            case "header": {
+                // _authRequest.headers["<headerWireValue>"] ?? ""
+                const headerName = scheme.name.wireValue;
+                return ts.factory.createBinaryExpression(
+                    ts.factory.createElementAccessExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("_authRequest"),
+                            "headers"
+                        ),
+                        ts.factory.createStringLiteral(headerName)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral("")
+                );
+            }
+            case "inferred":
+                // Inferred auth schemes should not have websocketAuthFallback in practice,
+                // but handle gracefully by returning empty string
+                return ts.factory.createStringLiteral("");
+            default: {
+                const _exhaustive: never = scheme;
+                throw new Error(`Unexpected auth scheme type: ${(_exhaustive as FernIr.AuthScheme).type}`);
+            }
+        }
+    }
+
+    /**
+     * Returns the protocols expression when auth fallback is present.
+     * For websocketSubprotocol fallback: [...(protocols ?? []), ..._fallbackProtocols]
+     * For query fallback: protocols ?? [] (unchanged)
+     */
+    private getProtocolsWithFallback(authFallback: AuthFallbackInfo): ts.Expression {
+        const baseProtocols = ts.factory.createBinaryExpression(
+            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([])
+        );
+
+        if (authFallback.fallback.type === "websocketSubprotocol") {
+            // [...(protocols ?? []), ..._fallbackProtocols]
+            return ts.factory.createArrayLiteralExpression([
+                ts.factory.createSpreadElement(ts.factory.createParenthesizedExpression(baseProtocols)),
+                ts.factory.createSpreadElement(
+                    ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.FALLBACK_PROTOCOLS_NAME)
+                )
+            ]);
+        }
+
+        return baseProtocols;
+    }
+
+    /**
+     * Returns the query parameters expression when auth fallback is present.
+     * For query fallback: { ..._queryParams, ...queryParams, ..._fallbackQueryParams }
+     * For websocketSubprotocol fallback: same as normal (no query changes)
+     */
+    private getQueryParametersWithFallback(authFallback: AuthFallbackInfo): ts.Expression {
+        if (authFallback.fallback.type === "query") {
+            const additionalQueryParamsRef = ts.factory.createIdentifier(
+                GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME
+            );
+            const fallbackQueryParamsRef = ts.factory.createIdentifier(
+                GeneratedDefaultWebsocketImplementation.FALLBACK_QUERY_PARAMS_NAME
+            );
+
+            if (this.channel.queryParameters.length > 0) {
+                return ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createSpreadAssignment(
+                            ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
+                        ),
+                        ts.factory.createSpreadAssignment(additionalQueryParamsRef),
+                        ts.factory.createSpreadAssignment(fallbackQueryParamsRef)
+                    ],
+                    false
+                );
+            }
+
+            return ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createSpreadAssignment(
+                        ts.factory.createBinaryExpression(
+                            additionalQueryParamsRef,
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createObjectLiteralExpression([], false)
+                        )
+                    ),
+                    ts.factory.createSpreadAssignment(fallbackQueryParamsRef)
+                ],
+                false
+            );
+        }
+
+        return this.getMergedQueryParameters();
     }
 }

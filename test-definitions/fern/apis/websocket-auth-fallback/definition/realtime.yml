@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+channel:
+  path: /realtime/{session_id}
+  auth: true
+  path-parameters:
+    session_id: string
+  query-parameters:
+    model: optional<string>
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendEvent
+    receive:
+      display-name: Receive
+      origin: server
+      body: ReceiveEvent
+  examples:
+    - name: Default example
+      path-parameters:
+        session_id: session_123
+      messages:
+        - type: send
+          body:
+            sendText: "Hello"
+            sendParam: 1
+        - type: receive
+          body:
+            alpha: "Response"
+            beta: 42
+types:
+  SendEvent:
+    properties:
+      sendText: string
+      sendParam: integer
+  ReceiveEvent:
+    properties:
+      alpha: string
+      beta: integer
