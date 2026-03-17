@@ -128,6 +128,7 @@ export class WireTestGenerator {
             parameters: [],
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("parent::setUp()");
+                writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
 
                 // Build auth parameters
                 const authParams = this.buildAuthParamsForTest();
@@ -174,7 +175,7 @@ export class WireTestGenerator {
                                     name: "Environments"
                                 })
                             );
-                            writer.write(`::custom(${envValues.map((value) => `'${value}'`).join(", ")}),`);
+                            writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
                             if (authParams.length === 0) {
                                 writer.write("\n");
                                 writer.dedent();
@@ -190,7 +191,7 @@ export class WireTestGenerator {
                     }
                     writer.writeLine("options: [");
                     writer.indent();
-                    writer.writeLine("'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',");
+                    writer.writeLine("'baseUrl' => $wiremockUrl,");
                     writer.dedent();
                     writer.write("]");
                     if (authParams.length === 0) {
