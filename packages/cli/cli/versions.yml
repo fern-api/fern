@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.31.2
+  changelogEntry:
+    - summary: |
+        Sanitize changelog entries to wrap type references containing angle
+        brackets (e.g. `Optional<String>`, `Map<String, Object>`) in inline
+        code fences. This prevents MDX compilers from parsing these as
+        unclosed HTML/JSX tags when changelogs are rendered in documentation
+        sites. The sanitization is applied to both seed-based and
+        auto-versioned changelog generation paths, and the AI prompt now
+        instructs the model to wrap such references in backticks.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 4.31.1
   changelogEntry:
     - summary: |
