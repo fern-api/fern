@@ -3,3 +3,6 @@
 import typing
 
 OptionalUserId = typing.Optional[str]
+"""
+An alias for an optional user ID
+"""

@@ -1345,6 +1345,54 @@ client.endpoints.object.get_and_return_with_documented_unknown_type
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_map_of_documented_unknown_type</a>(request) -> Internal::Types::Hash[String, Object]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_datetime_like_string</a>(request) -> Seed::Types::Object_::Types::ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

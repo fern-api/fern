@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Urls;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class WithUnderscoresTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -1,3 +1,4 @@
+export * from "./ErrorEvent.js";
 export * from "./ReceiveEvent.js";
 export * from "./ReceiveEvent2.js";
 export * from "./ReceiveEvent3.js";

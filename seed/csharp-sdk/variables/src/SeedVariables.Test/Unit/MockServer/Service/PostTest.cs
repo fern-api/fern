@@ -4,6 +4,7 @@ using SeedVariables.Test.Unit.MockServer;
 namespace SeedVariables.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

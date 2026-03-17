@@ -6,6 +6,7 @@ using SeedUnknownAsAny.Core;
 namespace SeedUnknownAsAny.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class MyObjectTest
 {
     [NUnit.Framework.Test]

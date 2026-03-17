@@ -6,6 +6,7 @@ using SeedApi.Test.Utils;
 namespace SeedApi.Test.Unit.MockServer.Imdb;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateMovieTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

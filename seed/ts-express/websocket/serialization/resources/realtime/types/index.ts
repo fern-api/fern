@@ -1,3 +1,4 @@
+export * from "./ErrorEvent";
 export * from "./ReceiveEvent";
 export * from "./ReceiveEvent2";
 export * from "./ReceiveEvent3";

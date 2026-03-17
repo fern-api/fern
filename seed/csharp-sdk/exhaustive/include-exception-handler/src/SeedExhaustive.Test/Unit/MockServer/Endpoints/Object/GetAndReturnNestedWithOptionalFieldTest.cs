@@ -7,6 +7,7 @@ using SeedExhaustive.Types;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

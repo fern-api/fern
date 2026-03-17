@@ -15,6 +15,10 @@ export interface CachedAnalysis {
     message: string;
     /** User-facing changelog entry from the AI. Empty string for PATCH, present for MINOR/MAJOR. */
     changelogEntry: string;
+    /** PR description with breaking changes (Before/After code fences) and What's New sections. */
+    prDescription?: string;
+    /** One sentence explaining WHY the version bump was chosen. */
+    versionBumpReason?: string;
 }
 
 /**

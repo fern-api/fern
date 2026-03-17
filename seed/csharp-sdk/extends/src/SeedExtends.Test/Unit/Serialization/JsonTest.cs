@@ -6,6 +6,7 @@ using SeedExtends.Core;
 namespace SeedExtends.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class JsonTest
 {
     [NUnit.Framework.Test]

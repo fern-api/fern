@@ -4,6 +4,7 @@ using SeedTrace.Test_.Unit.MockServer;
 namespace SeedTrace.Test_.Unit.MockServer.Homepage;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SetHomepageProblemsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

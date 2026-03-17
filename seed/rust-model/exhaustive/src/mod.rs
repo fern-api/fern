@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 9 types for API operations
-//! - **Model Types**: 20 types for data representation
+//! - **Model Types**: 21 types for data representation
 
 pub mod endpoints_pagination_paginated_response;
 pub mod endpoints_put_error;
@@ -27,6 +27,7 @@ pub mod types_object_object_with_datetime_like_string;
 pub mod types_object_object_with_unknown_field;
 pub mod types_object_object_with_documented_unknown_type;
 pub mod types_object_documented_unknown_type;
+pub mod types_object_map_of_documented_unknown_type;
 pub mod types_union_animal;
 pub mod types_union_dog;
 pub mod types_union_cat;
@@ -57,6 +58,7 @@ pub use types_object_object_with_datetime_like_string::ObjectWithDatetimeLikeStr
 pub use types_object_object_with_unknown_field::ObjectWithUnknownField;
 pub use types_object_object_with_documented_unknown_type::ObjectWithDocumentedUnknownType;
 pub use types_object_documented_unknown_type::DocumentedUnknownType;
+pub use types_object_map_of_documented_unknown_type::MapOfDocumentedUnknownType;
 pub use types_union_animal::Animal;
 pub use types_union_dog::Dog;
 pub use types_union_cat::Cat;

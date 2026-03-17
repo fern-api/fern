@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-[JsonConverter(typeof(StringEnumSerializer<KeyType>))]
+[JsonConverter(typeof(KeyType.KeyTypeSerializer))]
 [Serializable]
 public readonly record struct KeyType : IStringEnum
 {
@@ -54,6 +55,32 @@ public readonly record struct KeyType : IStringEnum
     public static explicit operator string(KeyType value) => value.Value_;
 
     public static explicit operator KeyType(string value) => new(value);
+
+    internal class KeyTypeSerializer : JsonConverter<KeyType>
+    {
+        public override KeyType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new KeyType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            KeyType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value_);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

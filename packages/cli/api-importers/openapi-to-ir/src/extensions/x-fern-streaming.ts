@@ -8,6 +8,7 @@ const StreamingExtensionObjectSchema = z.object({
     "stream-condition": z.string().optional(),
     format: z.enum(["sse", "json"]).optional(),
     "stream-description": z.string().optional(),
+    "stream-request-name": z.string().optional(),
     "response-stream": z.any(),
     response: z.any(),
     terminator: z.string().optional()
@@ -27,6 +28,7 @@ type StreamConditionEndpoint = {
     terminator: string | undefined;
     streamDescription: string | undefined;
     streamConditionProperty: string;
+    streamRequestName: string | undefined;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 };
@@ -88,6 +90,7 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
                 result.data["stream-condition"],
                 REQUEST_PREFIX
             ),
+            streamRequestName: result.data["stream-request-name"],
             responseStream: result.data["response-stream"],
             response: result.data.response
         };

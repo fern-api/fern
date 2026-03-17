@@ -26,6 +26,11 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             // The well-known Protobuf types are generated separately.
             continue;
         }
+        if (context.protobufResolver.isExternalProtobufType(typeId)) {
+            // External proto types (e.g. google.rpc.Status) are used directly
+            // without generating a separate SDK wrapper type.
+            continue;
+        }
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
             alias: (aliasDeclaration) => {
                 // Generate literal struct files for named literal alias types when generateLiterals is on.

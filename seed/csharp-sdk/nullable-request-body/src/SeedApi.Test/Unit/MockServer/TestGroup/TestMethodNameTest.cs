@@ -6,6 +6,7 @@ using SeedApi.Test.Utils;
 namespace SeedApi.Test.Unit.MockServer.TestGroup;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TestMethodNameTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

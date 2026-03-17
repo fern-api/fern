@@ -4,6 +4,7 @@ using SeedTrace.Test_.Unit.MockServer;
 namespace SeedTrace.Test_.Unit.MockServer.Problem;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeleteProblemTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

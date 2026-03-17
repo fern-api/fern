@@ -5,3 +5,6 @@
 """
 
 TypeId = str
+"""
+An alias for type IDs.
+"""

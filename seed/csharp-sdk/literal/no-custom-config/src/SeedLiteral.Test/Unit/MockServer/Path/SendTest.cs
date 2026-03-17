@@ -5,6 +5,7 @@ using SeedLiteral.Test.Utils;
 namespace SeedLiteral.Test.Unit.MockServer.Path;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SendTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

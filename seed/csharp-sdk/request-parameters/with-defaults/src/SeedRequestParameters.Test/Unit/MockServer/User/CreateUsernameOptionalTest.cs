@@ -5,6 +5,7 @@ using SeedRequestParameters.Test.Unit.MockServer;
 namespace SeedRequestParameters.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateUsernameOptionalTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

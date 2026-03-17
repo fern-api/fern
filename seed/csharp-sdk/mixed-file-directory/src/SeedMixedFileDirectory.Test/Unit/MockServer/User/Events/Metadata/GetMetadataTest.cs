@@ -6,6 +6,7 @@ using SeedMixedFileDirectory.User_.Events;
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User.Events.Metadata;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetMetadataTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

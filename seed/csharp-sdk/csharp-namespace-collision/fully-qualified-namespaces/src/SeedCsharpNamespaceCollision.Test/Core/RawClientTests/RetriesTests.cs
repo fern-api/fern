@@ -1,3 +1,4 @@
+using System.Text.Json;
 using NUnit.Framework;
 using SeedCsharpNamespaceCollision.Core;
 using WireMock.Server;
@@ -320,8 +321,6 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldPreserveJsonBody_OnRetry()
     {
-        const string expectedBody = """{"key":"value"}""";
-
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
             .InScenario("RetryWithBody")
@@ -351,9 +350,10 @@ public class RetriesTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
 
-            // Verify the retried request preserved the JSON body
+            // Verify the retried request preserved the JSON body (compare parsed to ignore formatting differences)
             var retriedEntry = _server.LogEntries.ElementAt(1);
-            Assert.That(retriedEntry.RequestMessage.Body, Is.EqualTo(expectedBody));
+            using var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
+            Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
         }
     }
 
@@ -389,9 +389,10 @@ public class RetriesTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
 
-            // Verify the retried request preserved the multipart body
+            // Verify the retried request preserved the multipart body (check key/value presence to ignore formatting differences)
             var retriedEntry = _server.LogEntries.ElementAt(1);
-            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("""{"key":"value"}"""));
+            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("\"key\""));
+            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("\"value\""));
         }
     }
 

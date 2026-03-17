@@ -4,6 +4,7 @@ using SeedTrace.Test_.Unit.MockServer;
 namespace SeedTrace.Test_.Unit.MockServer.Submission;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class StopExecutionSessionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

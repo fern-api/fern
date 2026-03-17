@@ -159,6 +159,13 @@ features:
       ```
       </details>
 
+  - id: CUSTOM_FETCH
+    advanced: true
+    description: |
+      The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+      benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+      This is useful for calling API endpoints not yet supported in the SDK.
+
   - id: RUNTIME_COMPATIBILITY
     advanced: true
     description: |

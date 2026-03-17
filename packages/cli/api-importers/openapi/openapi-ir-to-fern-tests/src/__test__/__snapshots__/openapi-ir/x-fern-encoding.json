@@ -102,6 +102,45 @@
         },
         "groupName": [],
         "type": "nullable"
+      },
+      "Any": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "anyType",
+            "key": "@type",
+            "schema": {
+              "generatedName": "AnyType",
+              "description": "The type of the serialized message.",
+              "value": {
+                "description": "The type of the serialized message.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AnyType",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Any",
+        "groupName": [],
+        "additionalProperties": true,
+        "encoding": {
+          "typeName": "google.protobuf.Any",
+          "type": "protobuf"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
       }
     },
     "namespacedSchemas": {}

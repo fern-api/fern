@@ -7,6 +7,7 @@ using SeedExhaustive.Types.Object;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.HttpMethods;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TestPatchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

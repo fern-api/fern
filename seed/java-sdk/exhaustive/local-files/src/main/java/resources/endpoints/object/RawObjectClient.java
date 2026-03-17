@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.endpoints.object;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -427,26 +429,16 @@ public class RawObjectClient {
                     }
                   }
 
-                  /**
-                   * Tests that string fields containing datetime-like values are NOT reformatted.
-                   * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                   * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
-                   */
-                  public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
-                      ObjectWithDatetimeLikeString request) {
-                    return getAndReturnWithDatetimeLikeString(request,null);
+                  public SeedExhaustiveHttpResponse<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
+                      Map<String, Object> request) {
+                    return getAndReturnMapOfDocumentedUnknownType(request,null);
                   }
 
-                  /**
-                   * Tests that string fields containing datetime-like values are NOT reformatted.
-                   * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                   * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
-                   */
-                  public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
-                      ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                  public SeedExhaustiveHttpResponse<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
+                      Map<String, Object> request, RequestOptions requestOptions) {
                     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                       .addPathSegments("object")
-                      .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                      .addPathSegments("get-and-return-map-of-documented-unknown-type");if (requestOptions != null) {
                         requestOptions.getQueryParameters().forEach((_key, _value) -> {
                           httpUrl.addQueryParameter(_key, _value);
                         } );
@@ -473,7 +465,7 @@ public class RawObjectClient {
                         ResponseBody responseBody = response.body();
                         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                         if (response.isSuccessful()) {
-                          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response);
+                          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<Map<String, Object>>() {}), response);
                         }
                         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
@@ -482,4 +474,60 @@ public class RawObjectClient {
                         throw new SeedExhaustiveException("Network error executing HTTP request", e);
                       }
                     }
-                  }
+
+                    /**
+                     * Tests that string fields containing datetime-like values are NOT reformatted.
+                     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                     */
+                    public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+                        ObjectWithDatetimeLikeString request) {
+                      return getAndReturnWithDatetimeLikeString(request,null);
+                    }
+
+                    /**
+                     * Tests that string fields containing datetime-like values are NOT reformatted.
+                     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                     */
+                    public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+                        ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                        .addPathSegments("object")
+                        .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                            httpUrl.addQueryParameter(_key, _value);
+                          } );
+                        }
+                        RequestBody body;
+                        try {
+                          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        }
+                        catch(JsonProcessingException e) {
+                          throw new SeedExhaustiveException("Failed to serialize request", e);
+                        }
+                        Request okhttpRequest = new Request.Builder()
+                          .url(httpUrl.build())
+                          .method("POST", body)
+                          .headers(Headers.of(clientOptions.headers(requestOptions)))
+                          .addHeader("Content-Type", "application/json")
+                          .addHeader("Accept", "application/json")
+                          .build();
+                        OkHttpClient client = clientOptions.httpClient();
+                        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                          client = clientOptions.httpClientWithTimeout(requestOptions);
+                        }
+                        try (Response response = client.newCall(okhttpRequest).execute()) {
+                          ResponseBody responseBody = response.body();
+                          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                          if (response.isSuccessful()) {
+                            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response);
+                          }
+                          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                        }
+                        catch (IOException e) {
+                          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                        }
+                      }
+                    }

@@ -5,6 +5,7 @@ using SeedEnum.Test.Unit.MockServer;
 namespace SeedEnum.Test.Unit.MockServer.QueryParam;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SendTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

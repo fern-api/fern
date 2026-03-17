@@ -34,7 +34,8 @@ export function convertHttpOperation({
     suffix,
     streamFormat,
     streamTerminator,
-    source
+    source,
+    streamRequestNameOverride
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -43,6 +44,7 @@ export function convertHttpOperation({
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
     source: Source;
+    streamRequestNameOverride?: string;
 }): EndpointWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs, pathItem } = operationContext;
 
@@ -330,7 +332,7 @@ export function convertHttpOperation({
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
-        requestNameOverride: requestNameOverride ?? undefined,
+        requestNameOverride: streamRequestNameOverride ?? requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName(
             isMultipleRequests
                 ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })

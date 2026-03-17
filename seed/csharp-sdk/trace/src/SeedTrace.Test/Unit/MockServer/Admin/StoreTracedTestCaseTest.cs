@@ -5,6 +5,7 @@ using SeedTrace.Test_.Unit.MockServer;
 namespace SeedTrace.Test_.Unit.MockServer.Admin;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class StoreTracedTestCaseTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
