@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.2
+  changelogEntry:
+    - summary: |
+        Fix custom LICENSE files not being included in SDK output when using
+        `fern generate --local`. The license path (e.g. `../../LICENSE`) was
+        resolved relative to `fern.config.json` instead of `generators.yml`,
+        causing the file to not be found in multi-API workspace layouts where
+        these files are in different directories.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.32.1
   changelogEntry:
     - summary: |
