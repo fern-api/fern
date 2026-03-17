@@ -510,14 +510,36 @@ types:
         value: stable
       - name: GenerallyAvailable
         value: generally-available
-      - name: InDevelopment
-        value: in-development
-      - name: PreRelease
-        value: pre-release
-      - name: Deprecated
-        value: deprecated
+      - name: ReleaseCandidate
+        value: release-candidate
+      - name: PublicBeta
+        value: public-beta
       - name: Beta
         value: beta
+      - name: PrivateBeta
+        value: private-beta
+      - name: LimitedAvailability
+        value: limited-availability
+      - name: CanaryRelease
+        value: canary-release
+      - name: Preview
+        value: preview
+      - name: PreRelease
+        value: pre-release
+      - name: Alpha
+        value: alpha
+      - name: Experimental
+        value: experimental
+      - name: Internal
+        value: internal
+      - name: InDevelopment
+        value: in-development
+      - name: Sunset
+        value: sunset
+      - name: Deprecated
+        value: deprecated
+      - name: Retired
+        value: retired
 
   VersionAvailability:
     enum:
