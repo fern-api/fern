@@ -15,6 +15,15 @@ export interface RootServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    getToken(
+        req: express.Request<never, SeedApi.TokenResponse, SeedApi.TokenRequest, never>,
+        res: {
+            send: (responseBody: SeedApi.TokenResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class RootService {
@@ -65,6 +74,49 @@ export class RootService {
                     if (error instanceof errors.SeedApiError) {
                         console.warn(
                             `Endpoint 'submitFormData' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/token", async (req, res, next) => {
+            const request = serializers.TokenRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getToken(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.status(200).json(
+                                    serializers.TokenResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedApiError) {
+                        console.warn(
+                            `Endpoint 'get_token' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {

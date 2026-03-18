@@ -1,6 +1,7 @@
 import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, basename, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -16,7 +17,6 @@ import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
 import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
-
 /**
  * Runs remote generation using the legacy remote-generation infrastructure.
  */
@@ -171,7 +171,7 @@ export class LegacyRemoteGenerationRunner {
             }
             return {
                 success: false,
-                error: error instanceof Error ? error.message : String(error)
+                error: extractErrorMessage(error)
             };
         }
     }
