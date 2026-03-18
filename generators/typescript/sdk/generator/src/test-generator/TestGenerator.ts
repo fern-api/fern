@@ -176,6 +176,10 @@ export class TestGenerator {
             import { defineConfig } from "vitest/config";
             export default defineConfig({
                 test: {
+                    typecheck: {
+                        enabled: true,
+                        tsconfig: "./${this.relativeTestPath}/tsconfig.json"
+                    },
                     projects: [
                         {
                             test: {

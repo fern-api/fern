@@ -2,3 +2,4 @@
 
 export { EmptyRealtimeClient } from "./client/Client.js";
 export * from "./client/index.js";
+export { EmptyRealtimeSocket } from "./client/Socket.js";

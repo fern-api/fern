@@ -1,5 +1,5 @@
 using NUnit.Framework.Constraints;
-using <%= namespaces.root %>.Core;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+using <%= namespaces.qualifiedRoot %>.Core;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
 using OneOf;<% } %>
 
 namespace NUnit.Framework;

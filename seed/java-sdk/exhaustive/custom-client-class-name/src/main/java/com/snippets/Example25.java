@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
+import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
 import java.util.HashMap;
 
 public class Example25 {
@@ -10,11 +11,11 @@ public class Example25 {
 
         client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
             {
-                put("string", new HashMap<String, Object>() {
+                put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
                     {
                         put("key", "value");
                     }
-                });
+                }));
             }
         });
     }

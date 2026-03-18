@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 90
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
 
@@ -37,7 +37,7 @@ jobs:
       - name: Verify buf
         run: buf --version
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
           cache-dependency-path: generators/go/go.sum

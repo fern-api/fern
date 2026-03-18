@@ -1,4 +1,4 @@
-using Contoso.Net.Test.Utils;
+using global::Contoso.Net.Test.Utils;
 using NUnit.Framework;
 
 namespace Contoso.Net.Test.Unit.MockServer;
