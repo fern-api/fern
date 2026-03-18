@@ -5,6 +5,7 @@ import {
     GraphQLSpec,
     getOpenAPISettings,
     IdentifiableSource,
+    OpenAPISettings,
     OpenAPISpec,
     ProtobufSpec,
     Spec
@@ -18,7 +19,7 @@ import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } fr
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
+import { type ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -53,7 +54,7 @@ export declare namespace OSSWorkspace {
  */
 function collapseSpecBooleanSetting(
     specs: (OpenAPISpec | ProtobufSpec)[],
-    getter: (settings: ParseOpenAPIOptions | undefined) => boolean | undefined
+    getter: (settings: OpenAPISettings | undefined) => boolean | undefined
 ): boolean | undefined {
     const values = specs.map((spec) => getter(spec.settings));
     const hasAnyExplicit = values.some((v) => v != null);
@@ -139,6 +140,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
             coerceConstsTo: specs[0]?.settings?.coerceConstsTo
