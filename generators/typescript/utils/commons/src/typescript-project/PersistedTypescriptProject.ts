@@ -6,7 +6,6 @@ import { execFile } from "child_process";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
-import urlJoin from "url-join";
 import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
