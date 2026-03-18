@@ -16,7 +16,6 @@
 
 package com.fern.java.client.generators.websocket;
 
-import com.fern.ir.model.http.HttpHeader;
 import com.fern.ir.model.http.HttpPath;
 import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
@@ -219,30 +218,8 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.addStatement(
                 "$T.Builder requestBuilder = new $T.Builder().url(urlBuilder.build())", Request.class, Request.class);
 
-        // Apply authentication if needed
-        if (websocketChannel.getAuth()) {
-            builder.addStatement("$N.headers(null).forEach(requestBuilder::addHeader)", clientOptionsField);
-        }
-
-        // Add any additional headers
-        for (HttpHeader header : websocketChannel.getHeaders()) {
-            // Check if header value comes from environment variable
-            if (header.getEnv().isPresent()) {
-                String envVar = header.getEnv().get();
-                builder.addStatement("$T envValue = $T.getenv($S)", String.class, System.class, envVar);
-                builder.beginControlFlow("if (envValue != null)");
-                builder.addStatement(
-                        "requestBuilder.addHeader($S, envValue)",
-                        header.getName().getWireValue());
-                builder.endControlFlow();
-            } else {
-                // For now, skip headers without env vars as we don't support literal values yet
-                // TODO: Support literal header values when IR provides them
-                builder.addComment(
-                        "Header $L requires literal value support",
-                        header.getName().getWireValue());
-            }
-        }
+        // Apply authentication and configured headers
+        builder.addStatement("$N.headers(null).forEach(requestBuilder::addHeader)", clientOptionsField);
 
         builder.addStatement("final $T request = requestBuilder.build()", Request.class);
 
