@@ -591,7 +591,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
             String headerValue = "this." + headerName.getName().getCamelCase().getSafeName();
             if (headerPrefix.isPresent()) {
-                headerValue = String.format("\"%s\" + %s", headerPrefix.get(), headerValue);
+                headerValue = String.format("\"%s \" + %s", headerPrefix.get(), headerValue);
             }
 
             getHeadersCodeBlock
