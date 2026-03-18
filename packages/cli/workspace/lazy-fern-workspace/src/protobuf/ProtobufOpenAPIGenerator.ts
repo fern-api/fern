@@ -1,13 +1,22 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { access, cp, readFile, unlink, writeFile } from "fs/promises";
+import { access, cp, readFile, rename, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
 const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/openapi.yaml`;
+
+/**
+ * Prepared working directory for running buf generate multiple times
+ * without repeating setup (copy, which checks, dep resolution).
+ */
+interface PreparedWorkingDir {
+    cwd: AbsoluteFilePath;
+    bufLockContents: string | undefined;
+}
 
 export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
@@ -42,6 +51,139 @@ export class ProtobufOpenAPIGenerator {
             });
         }
         return this.generateRemote();
+    }
+
+    /**
+     * Prepares a reusable working directory: copies the proto root once,
+     * writes buf config files, checks for required binaries, and resolves
+     * dependencies. Returns a handle that can be passed to generateFromPrepared()
+     * for each target file — no repeated setup.
+     */
+    public async prepare({
+        absoluteFilepathToProtobufRoot,
+        relativeFilepathToProtobufRoot,
+        local,
+        deps
+    }: {
+        absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+        relativeFilepathToProtobufRoot: RelativeFilePath;
+        local: boolean;
+        deps: string[];
+    }): Promise<PreparedWorkingDir> {
+        if (!local) {
+            this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
+        }
+
+        if (deps.length > 0 && this.isAirGapped === undefined) {
+            this.isAirGapped = await detectAirGappedModeForProtobuf(
+                absoluteFilepathToProtobufRoot,
+                this.context.logger
+            );
+        }
+
+        const cwd = AbsoluteFilePath.of((await tmp.dir()).path);
+        await cp(absoluteFilepathToProtobufRoot, cwd, { recursive: true });
+        await writeFile(
+            join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_CONFIG_FILENAME)),
+            getProtobufGeneratorConfig({ relativeFilepathToProtobufRoot })
+        );
+
+        // Check required binaries once
+        const which = createLoggingExecutable("which", {
+            cwd,
+            logger: undefined,
+            doNotPipeOutput: true
+        });
+        try {
+            await which(["buf"]);
+        } catch (err) {
+            this.context.failAndThrow(
+                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
+            );
+        }
+        try {
+            await which(["protoc-gen-openapi"]);
+        } catch (err) {
+            this.context.failAndThrow(
+                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+            );
+        }
+
+        // Write buf.yaml and resolve dependencies once
+        const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
+        const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
+        await writeFile(bufYamlPath, getProtobufYamlV1(deps));
+
+        let bufLockContents: string | undefined;
+        if (deps.length > 0) {
+            if (this.isAirGapped) {
+                this.context.logger.debug("Air-gapped mode: skipping buf dep update");
+                try {
+                    await access(bufLockPath);
+                } catch {
+                    this.context.failAndThrow(
+                        "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                    );
+                }
+            } else {
+                const buf = createLoggingExecutable("buf", {
+                    cwd,
+                    logger: this.context.logger,
+                    stdout: "ignore",
+                    stderr: "pipe"
+                });
+                await buf(["dep", "update"]);
+            }
+            try {
+                bufLockContents = await readFile(bufLockPath, "utf-8");
+            } catch {
+                bufLockContents = undefined;
+            }
+        }
+
+        return { cwd, bufLockContents };
+    }
+
+    /**
+     * Generates OpenAPI output for a single proto target using a previously
+     * prepared working directory. Each call only runs `buf generate <target>`
+     * — all heavy setup was done once in prepare().
+     *
+     * Because protoc-gen-openapi writes to a fixed output path, each call
+     * renames the output to a unique temp file to avoid conflicts when called
+     * sequentially for multiple targets.
+     */
+    public async generateFromPrepared({
+        preparedDir,
+        absoluteFilepathToProtobufRoot,
+        absoluteFilepathToProtobufTarget
+    }: {
+        preparedDir: PreparedWorkingDir;
+        absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+        absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        const target = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
+        const buf = createLoggingExecutable("buf", {
+            cwd: preparedDir.cwd,
+            logger: this.context.logger,
+            stdout: "ignore",
+            stderr: "pipe"
+        });
+
+        const bufGenerateResult = await buf(["generate", target.toString()]);
+        if (bufGenerateResult.exitCode !== 0) {
+            this.context.failAndThrow(bufGenerateResult.stderr);
+        }
+
+        // Move output to a unique temp file so the next call doesn't overwrite it
+        const outputPath = join(preparedDir.cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
+        const uniqueOutput = AbsoluteFilePath.of((await tmp.file({ postfix: ".yaml" })).path);
+        await rename(outputPath, uniqueOutput);
+
+        return {
+            absoluteFilepath: uniqueOutput,
+            bufLockContents: preparedDir.bufLockContents
+        };
     }
 
     private async generateLocal({

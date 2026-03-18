@@ -32,44 +32,27 @@ export async function getAllOpenAPISpecs({
                 return [];
             }
 
-            // Process first file to get buf.lock contents for caching
-            // Safe to index — length > 0 is checked above
-            const firstFile = allProtobufTargetFilepaths[0] as AbsoluteFilePath;
-            const firstResult = await convertProtobufToOpenAPI({
-                generator,
-                protobufSpec: {
-                    ...protobufSpec,
-                    absoluteFilepathToProtobufTarget: firstFile
-                },
-                relativePathToDependency
+            // Prepare a single working directory: copies proto root, resolves
+            // dependencies, and checks binaries once for all files.
+            const preparedDir = await generator.prepare({
+                absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
+                relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
+                local: protobufSpec.generateLocally,
+                deps: protobufSpec.dependencies
             });
 
-            const bufLockContents = firstResult?.bufLockContents;
+            // Generate each file sequentially using the shared working dir.
+            // Sequential because protoc-gen-openapi writes to a fixed output
+            // path and buf generate is not safe to run concurrently in the
+            // same directory.
             const openApiSpecs: OpenAPISpec[] = [];
-            if (firstResult != null) {
-                openApiSpecs.push(firstResult.openApiSpec);
-            }
-
-            // Parallelize remaining files with cached buf.lock contents
-            if (allProtobufTargetFilepaths.length > 1) {
-                const remainingResults = await Promise.all(
-                    allProtobufTargetFilepaths.slice(1).map((file) =>
-                        convertProtobufToOpenAPI({
-                            generator,
-                            protobufSpec: {
-                                ...protobufSpec,
-                                absoluteFilepathToProtobufTarget: file
-                            },
-                            relativePathToDependency,
-                            existingBufLockContents: bufLockContents
-                        })
-                    )
-                );
-                for (const result of remainingResults) {
-                    if (result != null) {
-                        openApiSpecs.push(result.openApiSpec);
-                    }
-                }
+            for (const file of allProtobufTargetFilepaths) {
+                const result = await generator.generateFromPrepared({
+                    preparedDir,
+                    absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget: file
+                });
+                openApiSpecs.push(makeOpenApiSpec({ result, protobufSpec, relativePathToDependency, target: file }));
             }
 
             return openApiSpecs;
@@ -83,39 +66,54 @@ export async function getAllOpenAPISpecs({
 export async function convertProtobufToOpenAPI({
     generator,
     protobufSpec,
-    relativePathToDependency,
-    existingBufLockContents
+    relativePathToDependency
 }: {
     generator: ProtobufOpenAPIGenerator;
     protobufSpec: ProtobufSpec;
     relativePathToDependency?: RelativeFilePath;
-    existingBufLockContents?: string;
-}): Promise<{ bufLockContents: string | undefined; openApiSpec: OpenAPISpec } | undefined> {
+}): Promise<{ openApiSpec: OpenAPISpec } | undefined> {
     if (protobufSpec.absoluteFilepathToProtobufTarget == null) {
         return undefined;
     }
-    const openAPIAbsoluteFilePath = await generator.generate({
+    const result = await generator.generate({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
         local: protobufSpec.generateLocally,
-        deps: protobufSpec.dependencies,
-        existingBufLockContents
+        deps: protobufSpec.dependencies
     });
     return {
-        bufLockContents: openAPIAbsoluteFilePath.bufLockContents,
-        openApiSpec: {
-            type: "openapi",
-            absoluteFilepath: openAPIAbsoluteFilePath.absoluteFilepath,
-            absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
-            absoluteFilepathToOverlays: undefined,
-            settings: protobufSpec.settings,
-            source: {
-                type: "protobuf",
-                relativePathToDependency,
-                root: protobufSpec.absoluteFilepathToProtobufRoot,
-                file: protobufSpec.absoluteFilepathToProtobufTarget
-            }
+        openApiSpec: makeOpenApiSpec({
+            result,
+            protobufSpec,
+            relativePathToDependency,
+            target: protobufSpec.absoluteFilepathToProtobufTarget
+        })
+    };
+}
+
+function makeOpenApiSpec({
+    result,
+    protobufSpec,
+    relativePathToDependency,
+    target
+}: {
+    result: { absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined };
+    protobufSpec: ProtobufSpec;
+    relativePathToDependency?: RelativeFilePath;
+    target: AbsoluteFilePath;
+}): OpenAPISpec {
+    return {
+        type: "openapi",
+        absoluteFilepath: result.absoluteFilepath,
+        absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
+        absoluteFilepathToOverlays: undefined,
+        settings: protobufSpec.settings,
+        source: {
+            type: "protobuf",
+            relativePathToDependency,
+            root: protobufSpec.absoluteFilepathToProtobufRoot,
+            file: target
         }
     };
 }
