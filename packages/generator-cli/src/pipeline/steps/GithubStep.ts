@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
@@ -9,7 +10,6 @@ import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
-
 export class GithubStep extends BaseStep {
     readonly name = "github";
 
@@ -168,9 +168,7 @@ export class GithubStep extends BaseStep {
                     this.logger.debug(`Pushed ${tagName} tag for generation tracking`);
                     result.generationBaseTagSha = generationBaseSha;
                 } catch (error) {
-                    this.logger.debug(
-                        `Could not push generation tag: ${error instanceof Error ? error.message : String(error)}`
-                    );
+                    this.logger.debug(`Could not push generation tag: ${extractErrorMessage(error)}`);
                 }
             }
         }
@@ -200,9 +198,7 @@ export class GithubStep extends BaseStep {
                 });
                 this.logger.debug(`Updated PR #${existingPR.number} title and body`);
             } catch (error) {
-                this.logger.debug(
-                    `Failed to update PR title/body: ${error instanceof Error ? error.message : String(error)}`
-                );
+                this.logger.debug(`Failed to update PR title/body: ${extractErrorMessage(error)}`);
             }
         } else {
             const head = `${owner}:${prBranch}`;
@@ -221,7 +217,7 @@ export class GithubStep extends BaseStep {
                 result.prUrl = pullRequest.html_url;
                 result.prNumber = pullRequest.number;
             } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
+                const message = extractErrorMessage(error);
                 if (message.includes("A pull request already exists for")) {
                     this.logger.warn(`A pull request already exists for ${head}`);
                 } else {

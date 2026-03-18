@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
@@ -94,7 +95,7 @@ export class PostGenerationPipeline {
             } catch (error) {
                 result.success = false;
                 result.errors = result.errors ?? [];
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 result.errors.push(`${step.name} step error: ${errorMessage}`);
             }
         }

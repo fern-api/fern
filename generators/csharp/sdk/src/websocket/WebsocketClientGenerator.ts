@@ -73,6 +73,30 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns Array of factory method definitions
      */
+    /**
+     * Resolves the environment base URL expression for a WebSocket channel.
+     *
+     * When multi-URL environments are defined and the channel specifies a baseUrl,
+     * this returns the expression to access the appropriate URL property from the
+     * main client's environment (e.g., `_client.Options.Environment.Wss`).
+     *
+     * @returns The environment URL access expression, or undefined if not applicable
+     */
+    private static getEnvironmentBaseUrlExpression(
+        websocketChannel: WebSocketChannel,
+        context: SdkGeneratorContext
+    ): string | undefined {
+        if (websocketChannel.baseUrl != null && context.ir.environments?.environments.type === "multipleBaseUrls") {
+            const baseUrl = context.ir.environments.environments.baseUrls.find(
+                (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
+            );
+            if (baseUrl != null) {
+                return `_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`;
+            }
+        }
+        return undefined;
+    }
+
     static createWebSocketApiFactories(
         cls: ast.Class,
         subpackage: Subpackage,
@@ -94,6 +118,12 @@ export class WebSocketClientGenerator extends WithGeneration {
             enclosingType: websocketApiClassReference
         });
 
+        // Resolve the environment base URL from the main client's multi-URL environment
+        const environmentBaseUrlExpression = WebSocketClientGenerator.getEnvironmentBaseUrlExpression(
+            websocketChannel,
+            context
+        );
+
         // if the websocket channel has required options, we can't have a default constructor
         // nor a factory with a default options parameter
         if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
@@ -104,13 +134,22 @@ export class WebSocketClientGenerator extends WithGeneration {
                 return_: websocketApiClassReference,
                 body: context.csharp.codeblock((writer) => {
                     writer.write("return ");
+                    const optionsArguments: Array<{ name: string; assignment: ast.AstNode }> =
+                        environmentBaseUrlExpression != null
+                            ? [
+                                  {
+                                      name: "BaseUrl",
+                                      assignment: context.csharp.codeblock(environmentBaseUrlExpression)
+                                  }
+                              ]
+                            : [];
                     writer.writeNodeStatement(
                         context.csharp.instantiateClass({
                             classReference: websocketApiClassReference,
                             arguments_: [
                                 context.csharp.instantiateClass({
                                     classReference: optionsClassReference,
-                                    arguments_: []
+                                    arguments_: optionsArguments
                                 })
                             ]
                         })

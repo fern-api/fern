@@ -91,6 +91,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
+        if (this.endpoint.requestBody?.contentType === "application/x-www-form-urlencoded") {
+            return "urlencoded";
+        }
         return "json";
     }
 }

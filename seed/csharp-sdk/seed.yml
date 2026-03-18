@@ -232,6 +232,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+  url-form-encoded:
+    - customConfig: null
+      outputFolder: no-custom-config
   enum:
     - customConfig: null
       outputFolder: forward-compatible-enums
