@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
@@ -59,7 +60,7 @@ async function performAirGapDetection(url: string, logger: Logger, timeoutMs: nu
         logger.debug("Network check succeeded - not in air-gapped mode");
         return false;
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = extractErrorMessage(error);
         if (isNetworkError(errorMessage)) {
             airGapDetectionResult = true;
             logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
@@ -121,7 +122,7 @@ export async function detectAirGappedModeForProtobuf(
             logger.debug("Network check succeeded - not in air-gapped mode");
             return false;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             if (isNetworkError(errorMessage)) {
                 logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage.substring(0, 100)}`);
                 return true;

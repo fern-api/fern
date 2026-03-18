@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
 import {
     copyFromContainer,
     copyToContainer,
@@ -268,7 +268,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }).catch((e: unknown) => {
                 // Swallow "not found" errors — generator didn't produce snippet.
                 // Propagate other errors (permissions, disk space, etc.).
-                const msg = e instanceof Error ? e.message : String(e);
+                const msg = extractErrorMessage(e);
                 if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
                     logger.debug(`Snippet file not found (expected): ${msg}`);
                 } else {
@@ -287,7 +287,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }).catch((e: unknown) => {
                 // Swallow "not found" errors — generator didn't produce snippet template.
                 // Propagate other errors (permissions, disk space, etc.).
-                const msg = e instanceof Error ? e.message : String(e);
+                const msg = extractErrorMessage(e);
                 if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
                     logger.debug(`Snippet template file not found (expected): ${msg}`);
                 } else {
