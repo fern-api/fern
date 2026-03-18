@@ -1,15 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.19.5
+- version: 0.19.6
   changelogEntry:
     - summary: |
         Improve default endpoint selection for README usage snippets. The generator now
         picks the POST endpoint with the shortest snippet instead of the first POST endpoint,
         avoiding verbose examples with many optional parameters rendered as &None.
       type: fix
-  createdAt: "2026-03-17"
+  createdAt: "2026-03-18"
   irVersion: 62
 
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Fix unresolved import error when WebSocket channels exist in the API spec but
+        `enableWebsockets` is not enabled. The root client no longer emits
+        `use crate::api::websocket::...` imports when WebSocket generation is disabled,
+        preventing compilation failures on generated SDKs.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 62
 - version: 0.19.4
   changelogEntry:
     - summary: |

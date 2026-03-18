@@ -629,6 +629,8 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.createUser(
     User
         .builder()
+        .id("string")
+        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -637,6 +639,7 @@ client.createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
+                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")
@@ -664,6 +667,7 @@ client.createUser(
     User
         .builder()
         .id("id")
+        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -672,6 +676,7 @@ client.createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
+                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")

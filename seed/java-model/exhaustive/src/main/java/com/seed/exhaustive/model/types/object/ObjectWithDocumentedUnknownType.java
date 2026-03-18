@@ -19,14 +19,14 @@ import java.util.Objects;
     builder = ObjectWithDocumentedUnknownType.Builder.class
 )
 public final class ObjectWithDocumentedUnknownType {
-  private final Object documentedUnknownType;
+  private final DocumentedUnknownType documentedUnknownType;
 
-  private ObjectWithDocumentedUnknownType(Object documentedUnknownType) {
+  private ObjectWithDocumentedUnknownType(DocumentedUnknownType documentedUnknownType) {
     this.documentedUnknownType = documentedUnknownType;
   }
 
   @JsonProperty("documentedUnknownType")
-  public Object getDocumentedUnknownType() {
+  public DocumentedUnknownType getDocumentedUnknownType() {
     return documentedUnknownType;
   }
 
@@ -55,7 +55,7 @@ public final class ObjectWithDocumentedUnknownType {
   }
 
   public interface DocumentedUnknownTypeStage {
-    _FinalStage documentedUnknownType(Object documentedUnknownType);
+    _FinalStage documentedUnknownType(DocumentedUnknownType documentedUnknownType);
 
     Builder from(ObjectWithDocumentedUnknownType other);
   }
@@ -68,7 +68,7 @@ public final class ObjectWithDocumentedUnknownType {
       ignoreUnknown = true
   )
   public static final class Builder implements DocumentedUnknownTypeStage, _FinalStage {
-    private Object documentedUnknownType;
+    private DocumentedUnknownType documentedUnknownType;
 
     private Builder() {
     }
@@ -81,8 +81,8 @@ public final class ObjectWithDocumentedUnknownType {
 
     @java.lang.Override
     @JsonSetter("documentedUnknownType")
-    public _FinalStage documentedUnknownType(Object documentedUnknownType) {
-      this.documentedUnknownType = documentedUnknownType;
+    public _FinalStage documentedUnknownType(DocumentedUnknownType documentedUnknownType) {
+      this.documentedUnknownType = Objects.requireNonNull(documentedUnknownType, "documentedUnknownType must not be null");
       return this;
     }
 

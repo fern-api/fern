@@ -11,6 +11,7 @@ export interface DocumentV3 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<string, ChannelMessage>;
+        securitySchemes?: Record<string, OpenAPIV3.SecuritySchemeObject>;
     };
 }
 
@@ -23,6 +24,7 @@ export interface ServerV3 {
     name: string;
     host: string;
     protocol: string;
+    security?: Array<OpenAPIV3.ReferenceObject | Record<string, string[]>>;
 }
 
 export interface ChannelV3 {
