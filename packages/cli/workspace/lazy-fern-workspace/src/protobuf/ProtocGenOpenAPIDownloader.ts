@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { writeFileSync } from "fs";
 import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
@@ -200,8 +199,8 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
     const downloadUrl = getDownloadUrl();
     logger.debug(`Downloading protoc-gen-openapi from ${downloadUrl}`);
 
+    const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
-        const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
         const response = await fetch(downloadUrl, { redirect: "follow" });
         if (!response.ok) {
             logger.debug(`Failed to download protoc-gen-openapi: ${response.status} ${response.statusText}`);
@@ -209,7 +208,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        writeFileSync(tmpDownloadPath, new Uint8Array(arrayBuffer));
+        await writeFile(tmpDownloadPath, Buffer.from(arrayBuffer));
         await chmod(tmpDownloadPath, 0o755);
 
         // Atomic rename to versioned path
@@ -225,6 +224,12 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         logger.debug(
             `Failed to download protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
         );
+        // Clean up partial download if it exists
+        try {
+            await rm(tmpDownloadPath, { force: true });
+        } catch {
+            // ignore cleanup errors
+        }
         return undefined;
     }
 }

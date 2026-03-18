@@ -53,6 +53,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
     });
 
     afterEach(async () => {
+        vi.unstubAllGlobals();
         vi.restoreAllMocks();
         await rm(tempHomeDir, { recursive: true, force: true });
     });
