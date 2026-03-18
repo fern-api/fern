@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.32.1
+  changelogEntry:
+    - summary: |
+        Fix referenced request bodies with `application/x-www-form-urlencoded` content type
+        to generate `FormRequest` instead of `JsonRequest`. Previously, endpoints using a
+        `$ref` schema with form-urlencoded content type would incorrectly send JSON-serialized
+        bodies, causing auth token requests (e.g., OAuth) to fail.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 2.32.0
   changelogEntry:
     - summary: |
