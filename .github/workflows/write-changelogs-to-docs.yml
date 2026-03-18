@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch of fern repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
 
@@ -40,7 +40,7 @@ jobs:
           pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
 
       - name: Checkout main branch of docs repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: fern-api/docs
           ref: main
@@ -78,7 +78,7 @@ jobs:
 
       - name: create PR
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "update changelogs"

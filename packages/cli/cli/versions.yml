@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.32.0
+- version: 4.34.0
   changelogEntry:
     - summary: |
         Add `og:dynamic:text-color` and `og:dynamic:background-color` metadata settings for dynamic
@@ -9,6 +9,50 @@
   createdAt: "2026-03-17"
   irVersion: 65
 
+- version: 4.33.0
+  changelogEntry:
+    - summary: |
+        Add `enums-coerceable-to-literals` option for `coerce-consts-to`, and make
+        it the new default. This behaves like `enums` (const values become
+        single-element enums) but allows `coerce-enums-to-literals` to transitively
+        coerce them to literals, which is consistent with past default behavior. The
+        existing `enums` option continues to block this transitive coercion.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.32.2
+  changelogEntry:
+    - summary: |
+        Fix custom LICENSE files not being included in SDK output when using
+        `fern generate --local`. The license path (e.g. `../../LICENSE`) was
+        resolved relative to `fern.config.json` instead of `generators.yml`,
+        causing the file to not be found in multi-API workspace layouts where
+        these files are in different directories.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.32.1
+  changelogEntry:
+    - summary: |
+        Downgrade the `no-openapi-v2-in-docs` validation rule from an error to a
+        warning. Fern supports OpenAPI 2.0 (Swagger) specs in docs generation, so
+        `fern check` no longer fails when Swagger 2.0 specs are present.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-sdk-method-name` extension on AsyncAPI v2
+        `publish` and `subscribe` operations. Users can now customize the
+        generated SDK method name (e.g., changing `sendPublish` to `send`)
+        without migrating to AsyncAPI v3.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
 - version: 4.31.3
   changelogEntry:
     - summary: |
@@ -19,7 +63,6 @@
       type: fix
   createdAt: "2026-03-17"
   irVersion: 65
-
 - version: 4.31.2
   changelogEntry:
     - summary: |

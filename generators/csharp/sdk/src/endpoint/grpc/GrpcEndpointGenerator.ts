@@ -211,7 +211,9 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         grpcClientInfo: GrpcClientInfo;
     }): ast.CodeBlock {
         const mapToProtoRequest =
-            request != null ? this.getToProtoMethodInvocation({ request }) : this.csharp.codeblock("null");
+            request != null
+                ? this.getToProtoMethodInvocation({ request })
+                : this.csharp.codeblock("new Google.Protobuf.WellKnownTypes.Empty()");
         return this.csharp.codeblock((writer) => {
             writer.write("var call = ");
             writer.writeNode(
