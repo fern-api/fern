@@ -220,15 +220,14 @@ export async function publishDocs({
                 // The FdrClient still routes through the old Fern-generated client whose
                 // StartDocsPreviewRegisterRequestV2 type doesn't include previewId yet.
                 // The server accepts the field via the oRPC schema, so we use a cast here.
-                const startDocsRegisterResponse =
-                    await fdr.docs.v2.write.startDocsPreviewRegister({
-                        orgId: CjsFdrSdk.OrgId(organization),
-                        authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                        filepaths: filepaths,
-                        images,
-                        basePath,
-                        previewId
-                    } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
+                const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
+                    filepaths: filepaths,
+                    images,
+                    basePath,
+                    previewId
+                } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
