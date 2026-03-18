@@ -111,13 +111,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     while (Date.now() < deadline) {
         try {
             await mkdir(lockPath, { recursive: false });
-            return async () => {
-                try {
-                    await rm(lockPath, { recursive: true });
-                } catch {
-                    // Lock directory already removed; harmless
-                }
-            };
+            return createLockReleaser(lockPath, logger);
         } catch {
             logger.debug(`Waiting for lock on ${lockPath}...`);
             await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
@@ -128,15 +122,26 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     logger.debug(`Lock timed out after ${LOCK_TIMEOUT_MS}ms, breaking stale lock`);
     try {
         await rm(lockPath, { recursive: true });
-    } catch {
-        // Ignore — another process may have already removed it
+    } catch (err) {
+        logger.debug(`Failed to remove stale lock: ${err instanceof Error ? err.message : String(err)}`);
     }
-    await mkdir(lockPath, { recursive: false });
+    try {
+        await mkdir(lockPath, { recursive: false });
+    } catch (err) {
+        // Another process grabbed the lock between our rm and mkdir — wait briefly and retry
+        logger.debug(`Failed to re-acquire lock after break: ${err instanceof Error ? err.message : String(err)}`);
+        await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+        await mkdir(lockPath, { recursive: false });
+    }
+    return createLockReleaser(lockPath, logger);
+}
+
+function createLockReleaser(lockPath: string, logger: Logger): () => Promise<void> {
     return async () => {
         try {
             await rm(lockPath, { recursive: true });
-        } catch {
-            // Lock directory already removed; harmless
+        } catch (err) {
+            logger.debug(`Failed to release lock: ${err instanceof Error ? err.message : String(err)}`);
         }
     };
 }
