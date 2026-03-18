@@ -1,14 +1,14 @@
 import { Octokit } from "octokit";
+import semver from "semver";
 
 import { parseRepository } from "./parseRepository.js";
 
 /**
- * Returns true if the tag looks like a semver prerelease version.
- * Matches patterns like "1.0.0-beta", "v0.0.0-dev-abc123", etc.
+ * Returns true if the tag is a semver prerelease version.
+ * e.g. "1.0.0-beta", "v0.0.0-dev-abc123" → true; "1.0.0", "v2.3.4" → false.
  */
 function isSemverPrerelease(tag: string): boolean {
-    const bare = tag.startsWith("v") ? tag.slice(1) : tag;
-    return /^\d+\.\d+\.\d+-.+/.test(bare);
+    return semver.prerelease(tag) != null;
 }
 
 /**
