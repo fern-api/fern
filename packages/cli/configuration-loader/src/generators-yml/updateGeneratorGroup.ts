@@ -13,7 +13,9 @@ export async function updateGeneratorGroup({
     update: (draft: generatorsYml.GeneratorGroupSchema, groupName: string) => Promise<void>;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     if (groupName == null) {
-        return context.failAndThrow("No group specified.");
+        const availableGroups = Object.keys(generatorsConfiguration.groups ?? {});
+        const groupsList = availableGroups.length > 0 ? `. Available groups: ${availableGroups.join(", ")}` : "";
+        return context.failAndThrow(`No group specified${groupsList}`);
     }
     const groups = (generatorsConfiguration.groups ??= {});
 

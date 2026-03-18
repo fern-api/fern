@@ -71,8 +71,9 @@ export async function generateWorkspace({
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
     if (groupNameOrDefault == null) {
+        const availableGroups = workspace.generatorsConfiguration.groups.map((g) => g.groupName).join(", ");
         return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}. Available groups: ${availableGroups}`
         );
     }
 
