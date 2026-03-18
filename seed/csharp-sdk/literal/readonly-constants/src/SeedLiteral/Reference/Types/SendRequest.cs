@@ -82,7 +82,7 @@ public record SendRequest : IJsonOnDeserialized
         public override string ToString() => Value;
 
         public override int GetHashCode() =>
-            Value.GetHashCode(global::System.StringComparison.Ordinal);
+            global::System.StringComparer.Ordinal.GetHashCode(Value);
 
         public override bool Equals(object? obj) => obj is PromptLiteral;
 
@@ -171,7 +171,7 @@ public record SendRequest : IJsonOnDeserialized
         public override string ToString() => Value;
 
         public override int GetHashCode() =>
-            Value.GetHashCode(global::System.StringComparison.Ordinal);
+            global::System.StringComparer.Ordinal.GetHashCode(Value);
 
         public override bool Equals(object? obj) => obj is EndingLiteral;
 
