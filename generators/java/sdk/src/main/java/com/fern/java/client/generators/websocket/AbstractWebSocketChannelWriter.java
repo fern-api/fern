@@ -583,6 +583,31 @@ public abstract class AbstractWebSocketChannelWriter {
         return baseName;
     }
 
+    /**
+     * Gets the method name for resolving the environment URL for this WebSocket channel.
+     * For single-URL environments, uses getUrl(). For multi-URL environments, uses the
+     * URL getter corresponding to the channel's baseUrl.
+     */
+    protected String getEnvironmentUrlMethodName() {
+        if (generatedEnvironmentsClass.info() instanceof GeneratedEnvironmentsClass.SingleUrlEnvironmentClass) {
+            return ((GeneratedEnvironmentsClass.SingleUrlEnvironmentClass) generatedEnvironmentsClass.info())
+                    .getUrlMethod()
+                    .name;
+        } else if (generatedEnvironmentsClass.info() instanceof GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass) {
+            GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass multiUrl =
+                    (GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass) generatedEnvironmentsClass.info();
+            if (websocketChannel.getBaseUrl().isPresent()) {
+                MethodSpec urlMethod = multiUrl.urlGetterMethods().get(websocketChannel.getBaseUrl().get());
+                if (urlMethod != null) {
+                    return urlMethod.name;
+                }
+            }
+            // Fallback: use the first available URL method
+            return multiUrl.urlGetterMethods().values().iterator().next().name;
+        }
+        throw new RuntimeException("Unknown environment class type: " + generatedEnvironmentsClass.info());
+    }
+
     protected CodeBlock generateClassJavadoc() {
         return CodeBlock.builder()
                 .add(

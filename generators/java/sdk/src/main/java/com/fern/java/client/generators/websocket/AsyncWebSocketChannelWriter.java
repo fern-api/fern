@@ -164,7 +164,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         // Build WebSocket URL
         builder.addStatement("$N = new $T<>()", connectionFutureField, CompletableFuture.class);
-        builder.addStatement("String baseUrl = $N.environment().getUrl()", clientOptionsField);
+        builder.addStatement("String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
         builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
