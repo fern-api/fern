@@ -161,14 +161,21 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
  * @returns The directory containing the binary (for PATH injection), or `undefined` if download fails.
  */
 export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteFilePath | undefined> {
-    const cacheDir = getCacheDir();
-    await mkdir(cacheDir, { recursive: true });
-
-    const releaseLock = await acquireLock(logger);
     try {
-        return await resolveUnderLock(logger);
-    } finally {
-        await releaseLock();
+        const cacheDir = getCacheDir();
+        await mkdir(cacheDir, { recursive: true });
+
+        const releaseLock = await acquireLock(logger);
+        try {
+            return await resolveUnderLock(logger);
+        } finally {
+            await releaseLock();
+        }
+    } catch (error) {
+        logger.debug(
+            `Failed to resolve protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
+        );
+        return undefined;
     }
 }
 
