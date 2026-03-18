@@ -897,8 +897,13 @@ export class LocalTaskHandler {
         // This is a no-op for files that are already staged.
         await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
 
+        // Use 20 lines of context (-U20) instead of the default 3 so that
+        // availability markers (@beta, @Experimental, docstring warnings, etc.)
+        // placed above a method signature are included in the diff even when
+        // only the method body changes.  This is critical for the AI to detect
+        // pre-release/beta annotations and correctly downgrade breaking changes.
         await this.runGitCommand(
-            ["diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+            ["diff", "HEAD", "-U20", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
             this.absolutePathToLocalOutput
         );
 
