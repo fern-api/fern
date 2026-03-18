@@ -33,9 +33,9 @@ export const NoOpenApiV2InDocsRule: Rule = {
                                     (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
                                 if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                     violations.push({
-                                        severity: "error",
-                                        name: "OpenAPI v2.0 not supported",
-                                        message: `OpenAPI version 2.0 (Swagger) is not supported in docs generation. Please upgrade to OpenAPI 3.0 or later.`,
+                                        severity: "warning",
+                                        name: "OpenAPI v2.0 detected",
+                                        message: `OpenAPI version 2.0 (Swagger) detected. Consider upgrading to OpenAPI 3.0 or later.`,
                                         relativeFilepath: relativePath
                                     });
                                 }

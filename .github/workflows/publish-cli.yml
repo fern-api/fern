@@ -39,7 +39,7 @@ jobs:
       is_release_bump: ${{ steps.check_versions_yml.outputs.is_release_bump }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 2
 
@@ -63,7 +63,7 @@ jobs:
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -119,7 +119,7 @@ jobs:
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 20
@@ -164,7 +164,7 @@ jobs:
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-tags: true
 
@@ -195,7 +195,7 @@ jobs:
       AUTOPILOT_HOST: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Get CLI version
         id: get_version

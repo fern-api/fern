@@ -3,6 +3,7 @@ package com.seed.exhaustive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
@@ -899,11 +900,11 @@ public class EndpointsObjectWireTest {
         ObjectWithDocumentedUnknownType response = client.endpoints()
                 .object()
                 .getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType.builder()
-                        .documentedUnknownType(new HashMap<String, Object>() {
+                        .documentedUnknownType(DocumentedUnknownType.of(new HashMap<String, Object>() {
                             {
                                 put("key", "value");
                             }
-                        })
+                        }))
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -982,11 +983,11 @@ public class EndpointsObjectWireTest {
                 .object()
                 .getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
                     {
-                        put("string", new HashMap<String, Object>() {
+                        put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
                             {
                                 put("key", "value");
                             }
-                        });
+                        }));
                     }
                 });
         RecordedRequest request = server.takeRequest();

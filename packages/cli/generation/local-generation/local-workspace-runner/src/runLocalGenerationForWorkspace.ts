@@ -305,7 +305,8 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningVersionBumpReason
                 } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
-                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    absolutePathToFernConfig:
+                        workspace.generatorsConfiguration?.absolutePathToConfiguration ?? projectConfig._absolutePath,
                     workspace: fernWorkspace,
                     generatorInvocation,
                     absolutePathToLocalOutput,

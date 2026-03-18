@@ -50,7 +50,7 @@ export class CreateCommand {
     }
 }
 
-export function addCreateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addCreateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new CreateCommand();
     command(
         cli,
@@ -65,7 +65,6 @@ export function addCreateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                     demandOption: true,
                     description: "Organization name"
                 })
-                .example("$0 org create acme", "# Create the 'acme' organization"),
-        parentPath
+                .example("$0 org create acme", "# Create the 'acme' organization")
     );
 }

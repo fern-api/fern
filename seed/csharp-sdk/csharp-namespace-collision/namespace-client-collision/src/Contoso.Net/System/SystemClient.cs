@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Contoso.Net;
-using Contoso.Net.Core;
+using global::Contoso.Net;
+using global::Contoso.Net.Core;
 
 namespace Contoso.Net.System;
 
@@ -19,7 +19,7 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
+        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
@@ -85,7 +85,7 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
+        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
@@ -151,7 +151,7 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new Contoso.Net.Core.HeadersBuilder.Builder()
+        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)

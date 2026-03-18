@@ -255,7 +255,7 @@ export class PublishCommand {
     }
 }
 
-export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addPublishCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new PublishCommand();
     command(
         cli,
@@ -291,7 +291,6 @@ export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     default: false,
                     description: "Generate a preview link instead of publishing to production",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }

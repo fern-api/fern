@@ -94,7 +94,7 @@ export interface APIDefinitionSettings {
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
     inferForwardCompatible: boolean | undefined;
-    coerceConstsTo: "literals" | "enums" | undefined;
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
 }
 
 export interface APIDefinitionLocation {
