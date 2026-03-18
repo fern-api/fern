@@ -21,46 +21,62 @@ export async function getAllOpenAPISpecs({
             return { ...spec, relativePathToDependency };
         });
     const protobufSpecs: ProtobufSpec[] = specs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf");
-    const openApiSpecsFromProto = await Promise.all(
-        protobufSpecs.map(async (protobufSpec) => {
-            if (protobufSpec.absoluteFilepathToProtobufTarget != null) {
-                const result = await convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
-                return result ? [result.openApiSpec] : [];
-            }
-            const allProtobufTargetFilepaths = await listFiles(protobufSpec.absoluteFilepathToProtobufRoot, "proto");
-            if (allProtobufTargetFilepaths.length === 0) {
-                return [];
-            }
 
-            // Prepare a single working directory: copies proto root, resolves
-            // dependencies, and checks binaries once for all files.
-            const preparedDir = await generator.prepare({
-                absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
-                relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
-                local: protobufSpec.generateLocally,
-                deps: protobufSpec.dependencies
+    // Group protobuf specs by their proto root so we can prepare a single
+    // working directory per root, then generate each target from it.
+    const specsByRoot = new Map<string, ProtobufSpec[]>();
+    for (const spec of protobufSpecs) {
+        const key = spec.absoluteFilepathToProtobufRoot;
+        const group = specsByRoot.get(key) ?? [];
+        group.push(spec);
+        specsByRoot.set(key, group);
+    }
+
+    const openApiSpecsFromProto: OpenAPISpec[] = [];
+
+    for (const group of specsByRoot.values()) {
+        // Use the first spec in the group for the shared prepare() call.
+        const representative = group[0];
+        if (representative == null) {
+            continue;
+        }
+
+        const preparedDir = await generator.prepare({
+            absoluteFilepathToProtobufRoot: representative.absoluteFilepathToProtobufRoot,
+            relativeFilepathToProtobufRoot: representative.relativeFilepathToProtobufRoot,
+            local: representative.generateLocally,
+            deps: representative.dependencies
+        });
+
+        // Collect all targets: explicit targets from specs + discovered files
+        // for specs without a target.
+        const targetEntries: Array<{ target: AbsoluteFilePath; spec: ProtobufSpec }> = [];
+        for (const spec of group) {
+            if (spec.absoluteFilepathToProtobufTarget != null) {
+                targetEntries.push({ target: spec.absoluteFilepathToProtobufTarget, spec });
+            } else {
+                const files = await listFiles(spec.absoluteFilepathToProtobufRoot, "proto");
+                for (const file of files) {
+                    targetEntries.push({ target: file, spec });
+                }
+            }
+        }
+
+        // Generate each target sequentially using the shared working dir.
+        // Sequential because protoc-gen-openapi writes to a fixed output
+        // path and buf generate is not safe to run concurrently in the
+        // same directory.
+        for (const { target, spec } of targetEntries) {
+            const result = await generator.generateFromPrepared({
+                preparedDir,
+                absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
+                absoluteFilepathToProtobufTarget: target
             });
+            openApiSpecsFromProto.push(makeOpenApiSpec({ result, protobufSpec: spec, relativePathToDependency, target }));
+        }
+    }
 
-            // Generate each file sequentially using the shared working dir.
-            // Sequential because protoc-gen-openapi writes to a fixed output
-            // path and buf generate is not safe to run concurrently in the
-            // same directory.
-            const openApiSpecs: OpenAPISpec[] = [];
-            for (const file of allProtobufTargetFilepaths) {
-                const result = await generator.generateFromPrepared({
-                    preparedDir,
-                    absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
-                    absoluteFilepathToProtobufTarget: file
-                });
-                openApiSpecs.push(makeOpenApiSpec({ result, protobufSpec, relativePathToDependency, target: file }));
-            }
-
-            return openApiSpecs;
-        })
-    );
-
-    const flattenedSpecs = openApiSpecsFromProto.flat().filter((spec) => isNonNullish(spec));
-    return [...openApiSpecs, ...flattenedSpecs];
+    return [...openApiSpecs, ...openApiSpecsFromProto];
 }
 
 export async function convertProtobufToOpenAPI({
