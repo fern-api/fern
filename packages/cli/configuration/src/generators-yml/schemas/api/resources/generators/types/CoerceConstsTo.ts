@@ -4,5 +4,6 @@
 export const CoerceConstsTo = {
     Literals: "literals",
     Enums: "enums",
+    EnumsCoerceableToLiterals: "enums-coerceable-to-literals",
 } as const;
 export type CoerceConstsTo = (typeof CoerceConstsTo)[keyof typeof CoerceConstsTo];

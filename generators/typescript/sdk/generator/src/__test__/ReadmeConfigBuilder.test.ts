@@ -203,6 +203,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -239,6 +240,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -279,6 +281,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -310,6 +313,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -335,6 +339,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -368,6 +373,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -393,6 +399,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -430,6 +437,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -461,6 +469,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -492,6 +501,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "node-fetch",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -523,6 +533,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -573,6 +584,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -602,6 +614,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -636,6 +649,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 
@@ -679,6 +693,7 @@ describe("ReadmeConfigBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 fetchSupport: "native",
+                allowCustomFetcher: false,
                 generateSubpackageExports: false
             });
 

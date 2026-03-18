@@ -261,19 +261,6 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedPropertyAccessClient } from "@fern/property-access";
-
-const client = new SeedPropertyAccessClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 

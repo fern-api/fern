@@ -560,6 +560,7 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
+                allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
