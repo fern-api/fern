@@ -183,7 +183,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
 
     // Fast path: versioned binary already downloaded
     if (await fileExists(versionedPath)) {
-        const currentMarker = await readVersionMarker(versionMarkerPath);
+        const currentMarker = await readVersionMarker(versionMarkerPath, logger);
         if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
             logger.debug(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
             return getCacheDir();
@@ -227,17 +227,18 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         // Clean up partial download if it exists
         try {
             await rm(tmpDownloadPath, { force: true });
-        } catch {
-            // ignore cleanup errors
+        } catch (cleanupErr) {
+            logger.debug(`Failed to clean up partial download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`);
         }
         return undefined;
     }
 }
 
-async function readVersionMarker(markerPath: AbsoluteFilePath): Promise<string | undefined> {
+async function readVersionMarker(markerPath: AbsoluteFilePath, logger: Logger): Promise<string | undefined> {
     try {
         return (await readFile(markerPath, "utf-8")).trim();
-    } catch {
+    } catch (err) {
+        logger.debug(`Failed to read version marker: ${err instanceof Error ? err.message : String(err)}`);
         return undefined;
     }
 }
