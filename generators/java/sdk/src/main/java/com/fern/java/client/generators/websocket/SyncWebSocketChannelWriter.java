@@ -36,6 +36,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -282,6 +283,16 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
         builder.addCode("    @Override\n");
         builder.addCode(
+                "    protected void onWebSocketBinaryMessage($T webSocket, $T bytes) {\n",
+                ClassName.get("okhttp3", "WebSocket"),
+                ClassName.get("okio", "ByteString"));
+        builder.beginControlFlow("        if ($N != null)", onBinaryMessageHandlerField);
+        builder.addStatement("            $N.accept(bytes)", onBinaryMessageHandlerField);
+        builder.endControlFlow();
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
                 "    protected void onWebSocketFailure($T webSocket, Throwable t, $T response) {\n",
                 ClassName.get("okhttp3", "WebSocket"),
                 ClassName.get("okhttp3", "Response"));
@@ -388,6 +399,21 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                         IllegalStateException.class,
                         "WebSocket is not open. Current state: ",
                         readyStateField)
+                .endControlFlow()
+                .build();
+    }
+
+    @Override
+    protected MethodSpec generateSendBinaryMethod() {
+        return MethodSpec.methodBuilder("sendBinary")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(ClassName.get("okio", "ByteString"), "data")
+                .addJavadoc("Sends binary data to the server.\n")
+                .addJavadoc("@param data the binary data to send\n")
+                .addJavadoc("@throws RuntimeException if send fails\n")
+                .addStatement("assertSocketIsOpen()")
+                .beginControlFlow("if (!$N.sendBinary(data))", reconnectingListenerField)
+                .addStatement("throw new $T($S)", RuntimeException.class, "Failed to send binary data")
                 .endControlFlow()
                 .build();
     }

@@ -35,6 +35,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -285,6 +286,16 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         builder.addCode("    @Override\n");
         builder.addCode(
+                "    protected void onWebSocketBinaryMessage($T webSocket, $T bytes) {\n",
+                ClassName.get("okhttp3", "WebSocket"),
+                ClassName.get("okio", "ByteString"));
+        builder.beginControlFlow("        if ($N != null)", onBinaryMessageHandlerField);
+        builder.addStatement("            $N.accept(bytes)", onBinaryMessageHandlerField);
+        builder.endControlFlow();
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
                 "    protected void onWebSocketFailure($T webSocket, Throwable t, $T response) {\n",
                 ClassName.get("okhttp3", "WebSocket"),
                 ClassName.get("okhttp3", "Response"));
@@ -396,6 +407,37 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         "WebSocket is not open. Current state: ",
                         readyStateField)
                 .endControlFlow()
+                .build();
+    }
+
+    @Override
+    protected MethodSpec generateSendBinaryMethod() {
+        return MethodSpec.methodBuilder("sendBinary")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
+                .addParameter(ClassName.get("okio", "ByteString"), "data")
+                .addJavadoc("Sends binary data to the server asynchronously.\n")
+                .addJavadoc("@param data the binary data to send\n")
+                .addJavadoc("@return a CompletableFuture that completes when the data is sent\n")
+                .addStatement(
+                        "$T<$T> future = new $T<>()",
+                        CompletableFuture.class,
+                        TypeName.VOID.box(),
+                        CompletableFuture.class)
+                .beginControlFlow("try")
+                .addStatement("assertSocketIsOpen()")
+                .addStatement("boolean sent = $N.sendBinary(data)", reconnectingListenerField)
+                .beginControlFlow("if (sent)")
+                .addStatement("future.complete(null)")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("future.completeExceptionally(new $T($S))", RuntimeException.class, "Failed to send binary data")
+                .endControlFlow()
+                .endControlFlow()
+                .beginControlFlow("catch ($T e)", Exception.class)
+                .addStatement("future.completeExceptionally(new $T($S, e))", RuntimeException.class, "Failed to send binary data")
+                .endControlFlow()
+                .addStatement("return future")
                 .build();
     }
 

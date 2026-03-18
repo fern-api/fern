@@ -137,9 +137,11 @@ public class ReconnectingWebSocketListenerGenerator {
         methods.add(generateConnect());
         methods.add(generateDisconnect());
         methods.add(generateSend());
+        methods.add(generateSendBinary());
         methods.add(generateGetWebSocket()); // Add getter for thread-safe WebSocket access
         methods.add(generateOnOpen());
         methods.add(generateOnMessage());
+        methods.add(generateOnBinaryMessage());
         methods.add(generateOnFailure());
         methods.add(generateOnClosed());
         methods.add(generateGetNextDelay());
@@ -322,6 +324,23 @@ public class ReconnectingWebSocketListenerGenerator {
                 .build();
     }
 
+    private MethodSpec generateSendBinary() {
+        return MethodSpec.methodBuilder("sendBinary")
+                .addModifiers(Modifier.PUBLIC, Modifier.SYNCHRONIZED)
+                .returns(TypeName.BOOLEAN)
+                .addParameter(ClassName.get("okio", "ByteString"), "data")
+                .addJavadoc("Sends binary data or queues it if not connected.\n"
+                        + "\n"
+                        + "@param data The binary data to send\n"
+                        + "@return true if sent immediately, false otherwise\n")
+                .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
+                .beginControlFlow("if (ws != null)")
+                .addStatement("return ws.send(data)")
+                .endControlFlow()
+                .addStatement("return false")
+                .build();
+    }
+
     private MethodSpec generateGetWebSocket() {
         return MethodSpec.methodBuilder("getWebSocket")
                 .addModifiers(Modifier.PUBLIC)
@@ -357,6 +376,17 @@ public class ReconnectingWebSocketListenerGenerator {
                 .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
                 .addParameter(String.class, "text")
                 .addStatement("onWebSocketMessage(webSocket, text)")
+                .build();
+    }
+
+    private MethodSpec generateOnBinaryMessage() {
+        return MethodSpec.methodBuilder("onMessage")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.VOID)
+                .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                .addParameter(ClassName.get("okio", "ByteString"), "bytes")
+                .addStatement("onWebSocketBinaryMessage(webSocket, bytes)")
                 .build();
     }
 
@@ -505,6 +535,12 @@ public class ReconnectingWebSocketListenerGenerator {
                     .returns(TypeName.VOID)
                     .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
                     .addParameter(String.class, "text")
+                    .build(),
+            MethodSpec.methodBuilder("onWebSocketBinaryMessage")
+                    .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)
+                    .returns(TypeName.VOID)
+                    .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                    .addParameter(ClassName.get("okio", "ByteString"), "bytes")
                     .build(),
             MethodSpec.methodBuilder("onWebSocketFailure")
                     .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)

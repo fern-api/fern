@@ -69,6 +69,9 @@ public abstract class AbstractWebSocketChannelWriter {
     // Message handlers map
     protected final Map<String, FieldSpec> messageHandlerFields = new HashMap<>();
 
+    // Binary message handler field
+    protected final FieldSpec onBinaryMessageHandlerField;
+
     // Lifecycle handler fields
     protected final FieldSpec onConnectedHandlerField;
     protected final FieldSpec onDisconnectedHandlerField;
@@ -123,6 +126,15 @@ public abstract class AbstractWebSocketChannelWriter {
                 ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
         this.readyStateField = FieldSpec.builder(readyStateClassName, "readyState", Modifier.PRIVATE, Modifier.VOLATILE)
                 .initializer("$T.CLOSED", readyStateClassName)
+                .build();
+
+        // Initialize binary message handler field
+        this.onBinaryMessageHandlerField = FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Consumer.class),
+                                ClassName.get("okio", "ByteString")),
+                        "onBinaryMessageHandler",
+                        Modifier.PRIVATE)
                 .build();
 
         // Initialize lifecycle handler fields
@@ -181,6 +193,10 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
 
+        // Add binary message handler and send methods
+        classBuilder.addMethod(generateOnBinaryMessageMethod());
+        classBuilder.addMethod(generateSendBinaryMethod());
+
         // Add lifecycle handler methods
         classBuilder.addMethod(generateOnConnectedMethod());
         classBuilder.addMethod(generateOnDisconnectedMethod());
@@ -219,6 +235,9 @@ public abstract class AbstractWebSocketChannelWriter {
         for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
             classBuilder.addField(generateQueryParameterField(queryParam));
         }
+
+        // Add binary message handler field
+        classBuilder.addField(onBinaryMessageHandlerField);
 
         // Add lifecycle handler fields
         classBuilder.addField(onConnectedHandlerField);
@@ -337,6 +356,23 @@ public abstract class AbstractWebSocketChannelWriter {
                 .addStatement("this.$N = handler", onErrorHandlerField)
                 .build();
     }
+
+    protected MethodSpec generateOnBinaryMessageMethod() {
+        return MethodSpec.methodBuilder("onBinaryMessage")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(ParameterSpec.builder(
+                                ParameterizedTypeName.get(
+                                        ClassName.get(Consumer.class),
+                                        ClassName.get("okio", "ByteString")),
+                                "handler")
+                        .build())
+                .addJavadoc("Registers a handler for binary messages from the server.\n")
+                .addJavadoc("@param handler the handler to invoke when binary data is received\n")
+                .addStatement("this.$N = handler", onBinaryMessageHandlerField)
+                .build();
+    }
+
+    protected abstract MethodSpec generateSendBinaryMethod();
 
     // Note: assertSocketIsOpen must be implemented by subclasses
     // since they have access to reconnectingListenerField
