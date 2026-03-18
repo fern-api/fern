@@ -7,9 +7,8 @@ public partial class SeedBearerTokenEnvironmentVariableClient
 {
     private readonly RawClient _client;
 
-    public SeedBearerTokenEnvironmentVariableClient(ClientOptions? clientOptions = null)
+    public SeedBearerTokenEnvironmentVariableClient(ClientOptions clientOptions)
     {
-        clientOptions ??= new ClientOptions();
         clientOptions.ApiKey ??= GetFromEnvironmentOrThrow(
             "COURIER_API_KEY",
             "Please pass in apiKey or set the environment variable COURIER_API_KEY."

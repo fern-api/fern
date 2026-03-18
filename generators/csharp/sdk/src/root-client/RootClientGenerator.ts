@@ -194,6 +194,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const unified = this.settings.unifiedClientOptions;
         const parameters: ast.Parameter[] = [];
 
+        // In unified mode, check if any ClientOptions fields are truly required.
+        // This includes auth params (non-optional, no env var) and BaseUrl when there's no default environment.
+        // If so, ClientOptions itself must be required (non-nullable, no default).
+        const hasRequiredUnifiedFields =
+            unified &&
+            (requiredParameters.some((p) => p.environmentVariable == null) ||
+                this.context.ir.environments?.defaultEnvironment == null);
+
         if (!unified) {
             for (const param of requiredParameters) {
                 parameters.push(
@@ -218,13 +226,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         }
 
-        parameters.push(
-            this.csharp.parameter({
-                name: this.members.clientOptionsParameterName,
-                type: this.Types.ClientOptions.asOptional(),
-                initializer: "null"
-            })
-        );
+        if (hasRequiredUnifiedFields) {
+            parameters.push(
+                this.csharp.parameter({
+                    name: this.members.clientOptionsParameterName,
+                    type: this.Types.ClientOptions
+                })
+            );
+        } else {
+            parameters.push(
+                this.csharp.parameter({
+                    name: this.members.clientOptionsParameterName,
+                    type: this.Types.ClientOptions.asOptional(),
+                    initializer: "null"
+                })
+            );
+        }
 
         /**
          * Returns the expression to access a parameter value.
@@ -317,9 +334,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             parameters,
             body: this.csharp.codeblock((writer) => {
                 const writeConstructorBody = (innerWriter: typeof writer) => {
-                    if (unified) {
+                    if (unified && !hasRequiredUnifiedFields) {
                         // In unified mode, initialize clientOptions BEFORE env var fallbacks
-                        // so we can write to clientOptions.Property
+                        // so we can write to clientOptions.Property.
+                        // Skip when there are required fields — the parameter is already non-nullable.
                         innerWriter.write("clientOptions ??= ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({

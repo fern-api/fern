@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable;
@@ -5,6 +6,20 @@ namespace SeedBearerTokenEnvironmentVariable;
 [Serializable]
 public partial class ClientOptions
 {
+    public ClientOptions() { }
+
+    [SetsRequiredMembers]
+    internal ClientOptions(ClientOptions other)
+    {
+        BaseUrl = other.BaseUrl;
+        HttpClient = other.HttpClient;
+        MaxRetries = other.MaxRetries;
+        Timeout = other.Timeout;
+        Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
+        AdditionalHeaders = other.AdditionalHeaders;
+        ApiKey = other.ApiKey;
+    }
+
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
@@ -13,13 +28,13 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get;
+    public required string BaseUrl { get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = "";
+    }
 
     /// <summary>
     /// The http client used to make requests.
@@ -84,15 +99,6 @@ public partial class ClientOptions
     /// </summary>
     internal ClientOptions Clone()
     {
-        return new ClientOptions
-        {
-            BaseUrl = BaseUrl,
-            HttpClient = HttpClient,
-            MaxRetries = MaxRetries,
-            Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
-            AdditionalHeaders = AdditionalHeaders,
-            ApiKey = ApiKey,
-        };
+        return new ClientOptions(this);
     }
 }
