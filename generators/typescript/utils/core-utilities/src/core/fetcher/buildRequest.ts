@@ -1,7 +1,6 @@
 import { createRequestUrl } from "./createRequestUrl";
 import type { EndpointMetadata } from "./EndpointMetadata";
 import { EndpointSupplier } from "./EndpointSupplier";
-import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 
 export declare namespace BuildRequest {
