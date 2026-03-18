@@ -75,13 +75,14 @@ export async function generateWorkspace({
         const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
         const longestGroupName = Math.max(...groupNames.map((name) => name.length));
         const currentArgs = process.argv.slice(2).join(" ");
-        let message = `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n`;
-        message += groupNames
-            .map((name) => {
-                const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
-                return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
-            })
-            .join("\n");
+        const message =
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n` +
+            groupNames
+                .map((name) => {
+                    const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
+                    return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
+                })
+                .join("\n");
         return context.failAndThrow(message);
     }
 
