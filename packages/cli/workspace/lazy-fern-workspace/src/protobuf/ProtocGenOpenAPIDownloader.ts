@@ -228,7 +228,9 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         try {
             await rm(tmpDownloadPath, { force: true });
         } catch (cleanupErr) {
-            logger.debug(`Failed to clean up partial download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`);
+            logger.debug(
+                `Failed to clean up partial download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`
+            );
         }
         return undefined;
     }
