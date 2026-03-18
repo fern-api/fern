@@ -7,4 +7,10 @@ public partial interface ISeedApiClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    WithRawResponseTask<TokenResponse> GetTokenAsync(
+        TokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

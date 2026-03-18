@@ -7,6 +7,8 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.PostSubmitRequest;
 import com.seed.api.types.PostSubmitResponse;
+import com.seed.api.types.TokenRequest;
+import com.seed.api.types.TokenResponse;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
@@ -31,6 +33,14 @@ public class SeedApiClient {
 
     public PostSubmitResponse submitFormData(PostSubmitRequest request, RequestOptions requestOptions) {
         return this.rawClient.submitFormData(request, requestOptions).body();
+    }
+
+    public TokenResponse getToken(TokenRequest request) {
+        return this.rawClient.getToken(request).body();
+    }
+
+    public TokenResponse getToken(TokenRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getToken(request, requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

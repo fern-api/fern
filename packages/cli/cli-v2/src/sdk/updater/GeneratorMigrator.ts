@@ -1,4 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -361,7 +362,7 @@ export class GeneratorMigrator {
 
             return module;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
 
             if (errorMessage.includes("404") || errorMessage.includes("E404")) {
                 this.logger.debug(`No migration package found for ${generatorName}.`);
@@ -445,7 +446,7 @@ export class GeneratorMigrator {
                 });
                 appliedVersions.push(migration.version);
             } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 throw new Error(
                     `Failed to apply migration for version ${migration.version}.\n\n` +
                         `Reason: ${errorMessage}\n\n` +
