@@ -80,42 +80,13 @@ export async function getAllOpenAPISpecs({
     return [...openApiSpecs, ...openApiSpecsFromProto];
 }
 
-export async function convertProtobufToOpenAPI({
-    generator,
-    protobufSpec,
-    relativePathToDependency
-}: {
-    generator: ProtobufOpenAPIGenerator;
-    protobufSpec: ProtobufSpec;
-    relativePathToDependency?: RelativeFilePath;
-}): Promise<{ openApiSpec: OpenAPISpec } | undefined> {
-    if (protobufSpec.absoluteFilepathToProtobufTarget == null) {
-        return undefined;
-    }
-    const result = await generator.generate({
-        absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
-        absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
-        relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
-        local: protobufSpec.generateLocally,
-        deps: protobufSpec.dependencies
-    });
-    return {
-        openApiSpec: makeOpenApiSpec({
-            result,
-            protobufSpec,
-            relativePathToDependency,
-            target: protobufSpec.absoluteFilepathToProtobufTarget
-        })
-    };
-}
-
 function makeOpenApiSpec({
     result,
     protobufSpec,
     relativePathToDependency,
     target
 }: {
-    result: { absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined };
+    result: { absoluteFilepath: AbsoluteFilePath };
     protobufSpec: ProtobufSpec;
     relativePathToDependency?: RelativeFilePath;
     target: AbsoluteFilePath;

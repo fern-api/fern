@@ -187,7 +187,7 @@ export class ProtobufOpenAPIGenerator {
         preparedDir: PreparedWorkingDir;
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
-    }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+    }): Promise<{ absoluteFilepath: AbsoluteFilePath }> {
         const target = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
         const buf = createLoggingExecutable("buf", {
             cwd: preparedDir.cwd,
@@ -207,10 +207,7 @@ export class ProtobufOpenAPIGenerator {
         const uniqueOutput = AbsoluteFilePath.of((await tmp.file({ postfix: ".yaml" })).path);
         await rename(outputPath, uniqueOutput);
 
-        return {
-            absoluteFilepath: uniqueOutput,
-            bufLockContents: preparedDir.bufLockContents
-        };
+        return { absoluteFilepath: uniqueOutput };
     }
 
     private async generateLocal({
