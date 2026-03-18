@@ -180,6 +180,32 @@ export function convertObject({
                 return property;
             });
 
+            // Merge base property schemas from referenced allOf parents into inline
+            // override properties. This handles cases like allOf narrowing array items
+            // without redeclaring type: array — the base schema's type/structure is
+            // carried forward so the property is correctly recognized.
+            if (allOfElement.properties != null) {
+                for (const previousAllOfElement of allOf) {
+                    if (previousAllOfElement === allOfElement || !isReferenceObject(previousAllOfElement)) {
+                        continue;
+                    }
+                    const resolvedParent = context.resolveSchemaReference(previousAllOfElement);
+                    if (resolvedParent.properties == null) {
+                        continue;
+                    }
+                    for (const [key, overridePropSchema] of Object.entries(allOfElement.properties)) {
+                        const basePropSchema = resolvedParent.properties[key];
+                        if (
+                            basePropSchema != null &&
+                            !isReferenceObject(basePropSchema) &&
+                            !isReferenceObject(overridePropSchema)
+                        ) {
+                            allOfElement.properties[key] = { ...basePropSchema, ...overridePropSchema };
+                        }
+                    }
+                }
+            }
+
             // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
             // extract properties from each variant and make them optional.
             // This handles patterns like allOf + oneOf used for mutual exclusion (e.g. content vs templateId).
