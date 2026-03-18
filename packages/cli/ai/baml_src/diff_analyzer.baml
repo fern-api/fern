@@ -63,7 +63,7 @@ function AnalyzeSdkDiff(
     - Python: docstring warnings like `WARNING: This endpoint is in beta and may change.`
     - Java/Kotlin: `@Beta` or `@Experimental` annotations, or Javadoc `@apiNote` with beta/pre-release warnings
     - Go: doc comments like `// Beta: this endpoint is in pre-release and may change.`
-    - C#: `[Obsolete]` or XML doc `<remarks>` with beta/pre-release warnings
+    - C#: `[Experimental]` attribute (from `System.Diagnostics.CodeAnalysis`), or XML doc `<remarks>` with beta/pre-release warnings
     - Ruby: `# @note Beta` or doc comments with pre-release warnings
     - Any language: comments/docs containing "beta", "alpha", "pre-release", "in development",
       "experimental", or "may change"

@@ -801,7 +801,8 @@ export class AutoVersioningService {
         /@apiNote.*(?:beta|pre-release|in development|experimental)/i,
         // Go: doc comments
         /\/\/\s*Beta:/,
-        // C#: remarks with beta/pre-release
+        // C#: [Experimental] attribute or remarks with beta/pre-release
+        /\[Experimental\b/,
         /<remarks>.*(?:beta|pre-release|in development|experimental)/i,
         // Ruby: @note Beta
         /@note\s+Beta\b/i
@@ -839,8 +840,9 @@ export class AutoVersioningService {
             let content: string;
             try {
                 content = await readFile(fullPath, "utf-8");
-            } catch {
+            } catch (err) {
                 // File may have been deleted in this diff; skip it
+                this.logger.debug(`Skipping file ${filePath}: ${err instanceof Error ? err.message : String(err)}`);
                 continue;
             }
 

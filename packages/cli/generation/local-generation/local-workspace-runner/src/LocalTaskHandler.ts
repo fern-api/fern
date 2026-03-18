@@ -237,10 +237,9 @@ export class LocalTaskHandler {
                 cleanedDiff,
                 this.absolutePathToLocalOutput
             );
-            const diffWithAvailability = availabilityContext + cleanedDiff;
 
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
-            const cleanedDiffBytes = Buffer.byteLength(diffWithAvailability, "utf-8");
+            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
                 this.context.logger.warn(
                     `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
@@ -256,8 +255,11 @@ export class LocalTaskHandler {
                 };
             }
 
-            // Split diff into chunks and analyze each one with the AI
-            const chunks = autoVersioningService.chunkDiff(diffWithAvailability, MAX_AI_DIFF_BYTES);
+            // Split diff into chunks and analyze each one with the AI.
+            // Chunk the cleanedDiff (without the availability header) so that
+            // parseFileSections sees only real diff sections. The availability
+            // context header is prepended to each chunk individually below.
+            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
 
             // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
             // Chunks are ranked by semantic priority, so skipped chunks are
@@ -280,7 +282,7 @@ export class LocalTaskHandler {
                 if (cappedChunks.length <= 1) {
                     // Single chunk (or small diff): use normal path with caching
                     analysis = await this.getAnalysis(
-                        diffWithAvailability,
+                        availabilityContext + cleanedDiff,
                         this.generatorLanguage ?? "unknown",
                         previousVersion ?? "0.0.0",
                         priorChangelog,
@@ -307,7 +309,7 @@ export class LocalTaskHandler {
                         );
 
                         const chunkAnalysis = await this.getAnalysis(
-                            chunk,
+                            availabilityContext + chunk,
                             this.generatorLanguage ?? "unknown",
                             previousVersion ?? "0.0.0",
                             priorChangelog,
