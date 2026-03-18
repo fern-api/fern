@@ -13,11 +13,8 @@ vi.mock("octokit", () => {
                     listReleases: mockListReleases
                 }
             };
-            paginate = async (
-                method: (...args: never) => Promise<{ data: unknown[] }>,
-                params: Record<string, unknown>
-            ) => {
-                const response = await method(params as never);
+            paginate = async (method: (p: unknown) => Promise<{ data: unknown[] }>, params: unknown) => {
+                const response = await method(params);
                 return response.data;
             };
         }
