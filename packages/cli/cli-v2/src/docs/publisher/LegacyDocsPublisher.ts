@@ -1,4 +1,5 @@
 import type { FernToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import type { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
@@ -7,7 +8,6 @@ import type { DocsWorkspace } from "@fern-api/workspace-loader";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
-
 export declare namespace LegacyDocsPublisher {
     export interface PublishResult {
         success: boolean;
@@ -88,7 +88,7 @@ export class LegacyDocsPublisher {
         } catch (error) {
             return {
                 success: false,
-                error: error instanceof Error ? error.message : String(error)
+                error: extractErrorMessage(error)
             };
         }
     }

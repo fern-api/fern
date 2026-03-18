@@ -9,7 +9,7 @@ import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
 import { cloneRepository, parseRepository } from "@fern-api/github";
@@ -277,7 +277,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
-                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`
                         );
                     }
                 }

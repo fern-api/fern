@@ -132,7 +132,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 context.logger.warn(stderr);
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
             throw new Error(`Failed to publish crate: ${errorMessage}`);
         }

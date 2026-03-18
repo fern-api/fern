@@ -35,6 +35,7 @@
     "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "octokit": "^4.1.4",
     "simple-git": "catalog:",
     "tmp-promise": "catalog:"
