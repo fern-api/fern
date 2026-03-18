@@ -70,6 +70,7 @@ export async function publishDocs({
     ossWorkspaces,
     context,
     preview,
+    previewId,
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
@@ -89,6 +90,7 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
+    previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
@@ -215,13 +217,17 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
+                // previewId is defined in the oRPC contract but not yet exposed
+                // on the FdrClient's Fern-generated StartDocsPreviewRegisterRequestV2 type.
+                // The server accepts it, so we use a cast here until the client is migrated.
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths: filepaths,
                     images,
-                    basePath
-                });
+                    basePath,
+                    previewId
+                } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;

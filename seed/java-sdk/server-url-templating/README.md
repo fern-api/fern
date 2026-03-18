@@ -57,23 +57,14 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.TokenRequest;
 
-public class Example {
-    public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
-            .builder()
-            .build();
+SeedApiClient client = SeedApiClient
+    .builder()
+    .region("YOUR_REGION")
+    .environment("YOUR_ENVIRONMENT")
+    .build();
 
-        client.getToken(
-            TokenRequest
-                .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
-                .build()
-        );
-    }
-}
+client.getToken(...);
 ```
 
 ## Environments
@@ -217,7 +208,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-GetTokenHttpResponse response = client.withRawResponse().getToken(...);
+SeedApiHttpResponse response = client.withRawResponse().getToken(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));
