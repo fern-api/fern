@@ -183,8 +183,8 @@ vi.mock("../AutoVersioningService.js", () => ({
         replaceMagicVersion() {
             return Promise.resolve(undefined);
         }
-        extractAvailabilityContext() {
-            return Promise.resolve("");
+        annotateHunksWithAvailability() {
+            return Promise.resolve({ annotatedDiff: "cleaned diff content", allChangesBeta: false });
         }
     },
     AutoVersioningException: class AutoVersioningException extends Error {

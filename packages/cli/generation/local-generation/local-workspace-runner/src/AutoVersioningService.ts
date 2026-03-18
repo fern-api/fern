@@ -43,6 +43,13 @@ export interface AutoVersionResult {
     versionBumpReason?: string;
 }
 
+export interface AvailabilityAnnotation {
+    /** The diff with # [BETA] annotations inserted before beta hunks */
+    annotatedDiff: string;
+    /** True if every changed line in the diff is within a beta/pre-release method */
+    allChangesBeta: boolean;
+}
+
 /**
  * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
  * Uses indexOf-based scanning instead of regex to avoid O(n) regex overhead on large diffs.
@@ -803,92 +810,325 @@ export class AutoVersioningService {
     ];
 
     /**
-     * Scans the generated source files referenced in the diff for availability
-     * markers (beta, alpha, pre-release, etc.) and returns a compact text header
-     * that can be prepended to the diff so the AI knows which symbols are
-     * pre-release — even if the marker is outside the diff context window.
+     * Patterns that identify method/function declarations in source files.
+     * Used to find method boundaries when scanning for availability markers.
+     */
+    private static readonly SOURCE_METHOD_PATTERNS: RegExp[] = [
+        // TypeScript/JavaScript: class methods and exported functions
+        /^\s*(export\s+)?(public|private|protected)\s+(static\s+)?(async\s+)?\w+\s*\(/,
+        /^\s*export\s+(async\s+)?function\s+/,
+        // Python
+        /^\s*(async\s+)?def\s+\w+\s*\(/,
+        // Java/C#/Kotlin
+        /^\s*(public|private|protected|internal)\s+[\w<>,.\s]+\s+\w+\s*\(/,
+        // Go
+        /^\s*func\s+/,
+        // Ruby
+        /^\s*def\s+\w+/,
+        // Rust
+        /^\s*(pub\s+)?(async\s+)?fn\s+/,
+        // PHP
+        /^\s*(public|private|protected)\s+(static\s+)?function\s+/
+    ];
+
+    /**
+     * Annotates each diff hunk with a `# [BETA]` tag if ALL changed lines in
+     * the hunk belong to a beta/alpha/pre-release method. Also returns whether
+     * every change in the entire diff is beta (for deterministic post-processing).
      *
-     * Only files that appear in the diff are scanned, keeping I/O bounded.
+     * For each hunk, two strategies are used:
+     * 1. Direct scan: check if changed lines themselves contain availability markers
+     * 2. Backward scan: for `+` lines, read the source file and scan backward from
+     *    the line's position to find the enclosing method's availability annotation
+     *
+     * This avoids cross-contamination: if a file has both a @beta method and a GA
+     * method, only hunks touching the @beta method are tagged.
      *
      * @param cleanedDiff The cleaned diff content (output of cleanDiffForAI)
      * @param outputDir Absolute path to the generated SDK output directory
-     * @return A header string listing files with beta/alpha markers, or empty string if none found
      */
-    public async extractAvailabilityContext(cleanedDiff: string, outputDir: string): Promise<string> {
-        const lines = cleanedDiff.split("\n");
-        const fileSections = this.parseFileSections(lines);
+    public async annotateHunksWithAvailability(
+        cleanedDiff: string,
+        outputDir: string
+    ): Promise<AvailabilityAnnotation> {
+        const diffLines = cleanedDiff.split("\n");
+        const fileSections = this.parseFileSections(diffLines);
 
-        // Collect unique file paths from the diff
-        const filePaths: string[] = [];
+        let hasBetaChanges = false;
+        let hasStableChanges = false;
+        const annotatedSections: string[] = [];
+
         for (const section of fileSections) {
             const filePath = this.extractFilePathFromSection(section);
+
+            // Read the source file for backward scanning
+            let sourceLines: string[] | undefined;
             if (filePath != null) {
-                filePaths.push(filePath);
+                try {
+                    const content = await readFile(pathJoin(outputDir, filePath), "utf-8");
+                    sourceLines = content.split("\n");
+                } catch (err) {
+                    this.logger.debug(
+                        `Skipping source read for ${filePath}: ${err instanceof Error ? err.message : String(err)}`
+                    );
+                }
             }
+
+            // Split section into file header lines and individual hunks
+            const fileHeaderLines: string[] = [];
+            const hunks: { headerLine: string; bodyLines: string[] }[] = [];
+            let currentHunkBody: string[] | undefined;
+            let currentHunkHeader: string | undefined;
+
+            for (const line of section.lines) {
+                if (line.startsWith("@@")) {
+                    if (currentHunkHeader != null && currentHunkBody != null) {
+                        hunks.push({ headerLine: currentHunkHeader, bodyLines: currentHunkBody });
+                    }
+                    currentHunkHeader = line;
+                    currentHunkBody = [];
+                } else if (currentHunkBody != null) {
+                    currentHunkBody.push(line);
+                } else {
+                    fileHeaderLines.push(line);
+                }
+            }
+            if (currentHunkHeader != null && currentHunkBody != null) {
+                hunks.push({ headerLine: currentHunkHeader, bodyLines: currentHunkBody });
+            }
+
+            // Annotate each hunk
+            const sectionOutput: string[] = [...fileHeaderLines];
+
+            for (const hunk of hunks) {
+                const allHunkLines = [hunk.headerLine, ...hunk.bodyLines];
+                const { isBeta, hasChanges } = this.classifyHunkAvailability(allHunkLines, sourceLines);
+
+                if (hasChanges) {
+                    if (isBeta) {
+                        hasBetaChanges = true;
+                    } else {
+                        hasStableChanges = true;
+                    }
+                }
+
+                if (isBeta && hasChanges) {
+                    sectionOutput.push(
+                        "# [BETA] This hunk modifies a pre-release/beta API. " +
+                            "Breaking changes here should be MINOR, not MAJOR."
+                    );
+                }
+                sectionOutput.push(hunk.headerLine);
+                sectionOutput.push(...hunk.bodyLines);
+            }
+
+            annotatedSections.push(sectionOutput.join("\n"));
         }
 
-        const markersByFile: Map<string, string[]> = new Map();
+        if (hasBetaChanges) {
+            this.logger.info(
+                `Found beta/pre-release hunks in diff — ` +
+                    (hasStableChanges
+                        ? "diff contains both beta and stable changes"
+                        : "all changes are beta/pre-release")
+            );
+        }
 
-        for (const filePath of filePaths) {
-            const fullPath = pathJoin(outputDir, filePath);
-            let content: string;
-            try {
-                content = await readFile(fullPath, "utf-8");
-            } catch (err) {
-                // File may have been deleted in this diff; skip it
-                this.logger.debug(`Skipping file ${filePath}: ${err instanceof Error ? err.message : String(err)}`);
+        return {
+            annotatedDiff: annotatedSections.join("\n"),
+            allChangesBeta: hasBetaChanges && !hasStableChanges
+        };
+    }
+
+    /**
+     * Classifies a single diff hunk as beta or stable.
+     *
+     * For each changed line (+/-), checks:
+     * 1. Whether the line content itself contains an availability marker
+     * 2. Whether the line's position in the source file is within a beta method
+     *    (determined by scanning backward to the enclosing method declaration
+     *    and checking its annotation/comment block)
+     *
+     * A hunk is beta only if it has changes AND all changed lines are beta.
+     */
+    private classifyHunkAvailability(
+        hunkLines: string[],
+        sourceLines: string[] | undefined
+    ): { isBeta: boolean; hasChanges: boolean } {
+        const hunkHeader = hunkLines[0];
+        if (hunkHeader == null) {
+            return { isBeta: false, hasChanges: false };
+        }
+
+        const newStart = AutoVersioningService.parseHunkNewStart(hunkHeader);
+        let currentNewLine = newStart;
+        let hasChanges = false;
+        let hasBetaLines = false;
+        let hasStableLines = false;
+
+        for (let i = 1; i < hunkLines.length; i++) {
+            const line = hunkLines[i];
+            if (line == null) {
                 continue;
             }
 
-            const fileLines = content.split("\n");
-            const markers: string[] = [];
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
+            const isContext = line.startsWith(" ");
 
-            for (let i = 0; i < fileLines.length; i++) {
-                const line = fileLines[i];
-                if (line == null) {
-                    continue;
-                }
+            if (isAddition || isDeletion) {
+                hasChanges = true;
+
+                // Strategy 1: Check line content directly for availability markers
+                const content = line.substring(1);
+                let markerInContent = false;
                 for (const pattern of AutoVersioningService.AVAILABILITY_PATTERNS) {
-                    if (pattern.test(line)) {
-                        markers.push(`  line ${i + 1}: ${line.trim()}`);
+                    if (pattern.test(content)) {
+                        markerInContent = true;
                         break;
                     }
                 }
+
+                if (markerInContent) {
+                    hasBetaLines = true;
+                } else if (sourceLines != null && currentNewLine > 0) {
+                    // Strategy 2: Backward scan in source file
+                    if (this.isSourceLineBeta(sourceLines, currentNewLine - 1)) {
+                        hasBetaLines = true;
+                    } else {
+                        hasStableLines = true;
+                    }
+                } else {
+                    // No source file available and no marker in content: conservative = stable
+                    hasStableLines = true;
+                }
             }
 
-            if (markers.length > 0) {
-                markersByFile.set(filePath, markers);
-            }
-        }
-
-        if (markersByFile.size === 0) {
-            return "";
-        }
-
-        // Build a compact header
-        const headerLines: string[] = [
-            "# AVAILABILITY CONTEXT: The following files contain beta/alpha/pre-release markers.",
-            "# Methods or types near these markers should NOT be treated as stable API surface.",
-            "# Breaking changes to these symbols should be MINOR, not MAJOR.",
-            "#"
-        ];
-
-        for (const [filePath, markers] of markersByFile) {
-            headerLines.push(`# ${filePath}:`);
-            for (const marker of markers) {
-                headerLines.push(`#${marker}`);
+            // Advance new-file line counter for context and addition lines
+            if (isContext || isAddition) {
+                currentNewLine++;
             }
         }
 
-        headerLines.push("#");
-        headerLines.push("");
+        return {
+            isBeta: hasBetaLines && !hasStableLines,
+            hasChanges
+        };
+    }
 
-        this.logger.info(
-            `Found availability markers in ${markersByFile.size} file(s) — ` +
-                `prepending context header for AI analysis`
-        );
+    /**
+     * Parses the new-file start line from a unified diff hunk header.
+     * E.g., `@@ -100,10 +205,8 @@` → 205
+     */
+    private static parseHunkNewStart(hunkHeader: string): number {
+        const match = hunkHeader.match(/@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+        return match != null && match[1] != null ? parseInt(match[1], 10) : 0;
+    }
 
-        return headerLines.join("\n");
+    /**
+     * Scans backward from `lineIndex` in the source file to determine if that
+     * position is within a beta/alpha/pre-release method.
+     *
+     * The scan works by walking backward until it finds:
+     * 1. An availability marker → the line is in a beta method
+     * 2. A method declaration → scan backward through the method's annotation/
+     *    comment header looking for an availability marker. If found → beta.
+     *    If a non-header line (e.g., `}` from the previous method) is reached
+     *    first → stable.
+     * 3. Start of file with no marker found → stable
+     */
+    private isSourceLineBeta(sourceLines: string[], lineIndex: number): boolean {
+        for (let i = Math.min(lineIndex, sourceLines.length - 1); i >= 0; i--) {
+            const line = sourceLines[i];
+            if (line == null) {
+                continue;
+            }
+
+            // Check if this line contains an availability marker
+            for (const pattern of AutoVersioningService.AVAILABILITY_PATTERNS) {
+                if (pattern.test(line)) {
+                    return true;
+                }
+            }
+
+            // Check if this line is a method/function declaration
+            if (AutoVersioningService.isMethodDeclaration(line)) {
+                // Found the enclosing method. Scan backward through its
+                // annotation/comment header to check for availability markers.
+                for (let j = i - 1; j >= 0; j--) {
+                    const above = sourceLines[j];
+                    if (above == null) {
+                        continue;
+                    }
+
+                    for (const pattern of AutoVersioningService.AVAILABILITY_PATTERNS) {
+                        if (pattern.test(above)) {
+                            return true;
+                        }
+                    }
+
+                    if (!AutoVersioningService.isPartOfMethodHeader(above)) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the line matches a method/function declaration pattern.
+     */
+    private static isMethodDeclaration(line: string): boolean {
+        for (const pattern of AutoVersioningService.SOURCE_METHOD_PATTERNS) {
+            if (pattern.test(line)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the line is part of a method's "header" — the comments,
+     * annotations, decorators, or whitespace that appear above a method
+     * declaration. Used by isSourceLineBeta to scan backward through the
+     * header without crossing into the previous method's body.
+     */
+    private static isPartOfMethodHeader(line: string): boolean {
+        const trimmed = line.trim();
+        if (trimmed === "") {
+            return true;
+        }
+        if (trimmed.startsWith("//")) {
+            return true;
+        }
+        if (trimmed.startsWith("#") && !trimmed.startsWith("#!")) {
+            return true;
+        }
+        if (trimmed.startsWith("*")) {
+            return true;
+        }
+        if (trimmed.startsWith("/**")) {
+            return true;
+        }
+        if (trimmed.startsWith("/*")) {
+            return true;
+        }
+        if (trimmed.startsWith("*/")) {
+            return true;
+        }
+        if (trimmed.startsWith("@")) {
+            return true;
+        }
+        // C# attributes like [Experimental]
+        if (/^\[[\w.]+/.test(trimmed)) {
+            return true;
+        }
+        if (trimmed === '"""' || trimmed === "'''") {
+            return true;
+        }
+        return false;
     }
 
     /**

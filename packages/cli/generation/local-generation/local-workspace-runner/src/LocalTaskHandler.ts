@@ -230,10 +230,11 @@ export class LocalTaskHandler {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
-            // Scan generated files for beta/alpha/pre-release availability markers
-            // and prepend a compact header so the AI knows which symbols are pre-release,
-            // even if the marker falls outside the default 3-line diff context window.
-            const availabilityContext = await autoVersioningService.extractAvailabilityContext(
+            // Annotate each diff hunk with [BETA] if all its changes are within a
+            // beta/alpha/pre-release method. This is per-hunk (not per-file) to avoid
+            // cross-contamination between beta and GA methods in the same file.
+            // Also tracks whether ALL changes in the diff are beta for deterministic fallback.
+            const { annotatedDiff, allChangesBeta } = await autoVersioningService.annotateHunksWithAvailability(
                 cleanedDiff,
                 this.absolutePathToLocalOutput
             );
@@ -255,11 +256,9 @@ export class LocalTaskHandler {
                 };
             }
 
-            // Split diff into chunks and analyze each one with the AI.
-            // Chunk the cleanedDiff (without the availability header) so that
-            // parseFileSections sees only real diff sections. The availability
-            // context header is prepended to each chunk individually below.
-            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+            // Split the annotated diff into chunks for AI analysis.
+            // The # [BETA] annotations are inside file sections and preserved by chunking.
+            const chunks = autoVersioningService.chunkDiff(annotatedDiff, MAX_AI_DIFF_BYTES);
 
             // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
             // Chunks are ranked by semantic priority, so skipped chunks are
@@ -282,7 +281,7 @@ export class LocalTaskHandler {
                 if (cappedChunks.length <= 1) {
                     // Single chunk (or small diff): use normal path with caching
                     analysis = await this.getAnalysis(
-                        availabilityContext + cleanedDiff,
+                        annotatedDiff,
                         this.generatorLanguage ?? "unknown",
                         previousVersion ?? "0.0.0",
                         priorChangelog,
@@ -309,7 +308,7 @@ export class LocalTaskHandler {
                         );
 
                         const chunkAnalysis = await this.getAnalysis(
-                            availabilityContext + chunk,
+                            chunk,
                             this.generatorLanguage ?? "unknown",
                             previousVersion ?? "0.0.0",
                             priorChangelog,
@@ -409,6 +408,25 @@ export class LocalTaskHandler {
             if (analysis == null) {
                 this.context.logger.info("AI detected no semantic changes");
                 return null;
+            }
+
+            // Deterministic safety net: if ALL changes are within beta/pre-release
+            // methods and the AI returned MAJOR, force-downgrade to MINOR.
+            // This ensures beta breaking changes are never classified as MAJOR
+            // regardless of LLM behavior.
+            if (allChangesBeta && analysis.versionBump === VersionBump.MAJOR) {
+                this.context.logger.info(
+                    "All changes are within beta/pre-release APIs — " +
+                        "downgrading MAJOR to MINOR (deterministic override)"
+                );
+                analysis = {
+                    ...analysis,
+                    versionBump: VersionBump.MINOR,
+                    versionBumpReason:
+                        `Downgraded from MAJOR to MINOR: all breaking changes affect ` +
+                        `beta/pre-release APIs (x-fern-availability). ` +
+                        `Original reason: ${analysis.versionBumpReason ?? "not provided"}`
+                };
             }
 
             const finalBump = analysis.versionBump;
