@@ -1,6 +1,8 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
+import { createFdrService } from "@fern-api/core";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
@@ -10,11 +12,38 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
 
+const DOMAIN_SUFFIX = "docs.buildwithfern.com";
+const SUBDOMAIN_LIMIT = 62;
+
+/**
+ * Replicates the server-side truncateDomainName logic so the CLI can predict
+ * the preview URL for a given previewId before calling the FDR API.
+ */
+function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: string }): string {
+    const fullDomain = `${orgId}-preview-${previewId}.${DOMAIN_SUFFIX}`;
+    if (fullDomain.length <= SUBDOMAIN_LIMIT) {
+        return fullDomain;
+    }
+
+    const prefix = `${orgId}-preview-`;
+    const availableSpace = SUBDOMAIN_LIMIT - prefix.length;
+
+    const minIdLength = 8;
+    if (availableSpace < minIdLength) {
+        throw new Error(`Organization name "${orgId}" is too long to generate a valid preview URL`);
+    }
+
+    const truncatedId = previewId.slice(0, availableSpace).replace(/-+$/, "");
+    return `${prefix}${truncatedId}.${DOMAIN_SUFFIX}`;
+}
+
 export async function generateDocsWorkspace({
     project,
     cliContext,
     instance,
     preview,
+    previewId,
+    force,
     brokenLinks,
     strictBrokenLinks,
     disableTemplates,
@@ -25,6 +54,8 @@ export async function generateDocsWorkspace({
     cliContext: CliContext;
     instance: string | undefined;
     preview: boolean;
+    previewId: string | undefined;
+    force: boolean;
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
@@ -79,6 +110,24 @@ export async function generateDocsWorkspace({
         }
     }
 
+    // When --id is provided and we're not in CI and not --force, check if the preview already exists
+    if (previewId != null && !isCI() && !force) {
+        const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
+        const fdr = createFdrService({ token: token.value });
+
+        const metadataResponse = await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
+        if (metadataResponse.ok) {
+            const shouldOverwrite = await cliContext.confirmPrompt(
+                `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
+                false
+            );
+            if (!shouldOverwrite) {
+                cliContext.logger.info("Docs generation cancelled.");
+                return;
+            }
+        }
+    }
+
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern generate --docs"
@@ -114,6 +163,7 @@ export async function generateDocsWorkspace({
             token,
             instanceUrl: instance,
             preview,
+            previewId,
             disableTemplates,
             skipUpload,
             cliVersion: cliContext.environment.packageVersion

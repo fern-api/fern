@@ -73,6 +73,7 @@ export class LegacyDocsPublisher {
                 token: this.token,
                 instanceUrl,
                 preview,
+                previewId: undefined,
                 disableTemplates: undefined,
                 skipUpload,
                 cliVersion: process.env.CLI_VERSION

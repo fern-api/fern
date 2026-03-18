@@ -71,7 +71,7 @@ runs:
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

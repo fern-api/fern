@@ -11,6 +11,31 @@
   createdAt: "2026-03-18"
   irVersion: 65
 
+- version: 3.59.3
+  changelogEntry:
+    - summary: |
+        Fix npm publish authentication failing when the registry URL includes a port number.
+        The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
+        instead of `URL.host` (which preserves it). For example, a registry at
+        `http://host.docker.internal:4873` would write the token under
+        `//host.docker.internal/:_authToken` instead of the correct
+        `//host.docker.internal:4873/:_authToken`.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.59.2
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method failing when no environment is explicitly set on
+        multi-URL environment SDKs. When the user relies on the default environment,
+        `Supplier.get(undefined)` returned `undefined` and the IIFE produced no base URL.
+        The generated code now derives the correct base URL property from the IR (using the
+        same base URL that HTTP endpoints resolve to) and falls back to the IR-defined
+        default environment, matching how regular endpoint methods resolve their base URL.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
 - version: 3.59.1
   changelogEntry:
     - summary: |

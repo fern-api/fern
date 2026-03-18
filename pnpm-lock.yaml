@@ -5258,12 +5258,6 @@ importers:
         specifier: ^17.4.1
         version: 17.7.2
 
-  packages/cli/cli/dist/prod-unminified:
-    dependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
-
   packages/cli/config:
     devDependencies:
       '@fern-api/configs':

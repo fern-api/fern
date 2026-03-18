@@ -6,7 +6,6 @@ import { execFile } from "child_process";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
-import urlJoin from "url-join";
 import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
@@ -442,7 +441,7 @@ export class PersistedTypescriptProject {
         });
 
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
-        const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
+        const registryUrlWithoutProtocol = `${parsedRegistryUrl.host}${parsedRegistryUrl.pathname}`;
 
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
