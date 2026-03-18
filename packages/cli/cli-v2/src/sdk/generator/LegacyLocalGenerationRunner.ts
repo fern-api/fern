@@ -4,6 +4,7 @@ import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -23,7 +24,6 @@ import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
 import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
-
 /**
  * Runs generation using the legacy local-generation infrastructure.
  */
@@ -141,7 +141,7 @@ export class LegacyLocalGenerationRunner {
             }
             return {
                 success: false,
-                error: error instanceof Error ? error.message : String(error)
+                error: extractErrorMessage(error)
             };
         }
     }

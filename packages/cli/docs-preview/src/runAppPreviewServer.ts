@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
@@ -13,7 +14,6 @@ import path from "path";
 import { type Duplex } from "stream";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
-
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
@@ -614,9 +614,7 @@ export async function runAppPreviewServer({
                 .catch((err) => {
                     const validationTime = Date.now() - validationStartTime;
                     void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(
-                        `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
-                    );
+                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
                     // Still log validation errors to help developers
                     if (err instanceof Error && err.stack) {
                         context.logger.debug(`Validation error stack: ${err.stack}`);
@@ -655,7 +653,7 @@ export async function runAppPreviewServer({
             // Log CLI reload finish even on error
             void debugLogger.logCliReloadFinish(totalTime, {
                 error: true,
-                errorMessage: err instanceof Error ? err.message : String(err)
+                errorMessage: extractErrorMessage(err)
             });
             void debugLogger.logCliMemory();
 

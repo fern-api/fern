@@ -12,6 +12,18 @@
                 "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.SubmitFormDataAsync(\n    new PostSubmitRequest { Username = \"johndoe\", Email = \"john@example.com\" }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_.get_token"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetTokenAsync(\n    new TokenRequest { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\n"
+            }
         }
     ]
 }

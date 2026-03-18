@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import { runExeca } from "@fern-api/logging-execa";
 import path from "path";
@@ -180,8 +181,8 @@ export async function runGeneration(
     } catch (error) {
         const duration = Date.now() - startTime;
         logger.error(`✗ ${generationMode} generation failed after ${duration}ms`);
-        logger.error(`  Error: ${error instanceof Error ? error.message : String(error)}`);
-        return { success: false, error: error instanceof Error ? error.message : String(error) };
+        logger.error(`  Error: ${extractErrorMessage(error)}`);
+        return { success: false, error: extractErrorMessage(error) };
     }
 }
 

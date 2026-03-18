@@ -12,7 +12,13 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    extractErrorMessage,
+    haveSameNullishness,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
@@ -2250,9 +2256,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     cliContext.logger.info("\nDry run complete. No changes made.");
                 }
             } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2324,7 +2328,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
             }
         }
     );

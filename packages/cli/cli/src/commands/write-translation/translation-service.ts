@@ -7,6 +7,7 @@ const DEFAULT_MAX_DELAY = 30000; // 30 seconds
 const DEFAULT_TIMEOUT = 30000; // 30 seconds
 
 import { getToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { CliContext } from "../../cli-context/CliContext.js";
 
 // todo: replace with an SDK
@@ -218,14 +219,14 @@ export async function translateText({
 
             // Check if this is a retriable error
             if (error instanceof Error && !isRetriableError(error as NetworkError)) {
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 cliContext.logger.debug(`[TRANSLATE] Non-retriable error: ${errorMessage}`);
                 return text;
             }
 
             // If this is our final attempt, don't retry
             if (attempt > config.maxRetries) {
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 cliContext.logger.debug(
                     `[TRANSLATE] All ${config.maxRetries + 1} attempts failed. Final error: ${errorMessage}`
                 );
@@ -233,7 +234,7 @@ export async function translateText({
             }
 
             // Log retry attempt and wait before retrying
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             cliContext.logger.debug(`[TRANSLATE] Attempt ${attempt} failed: ${errorMessage}. Retrying...`);
             const delay = calculateDelay(attempt, config.baseDelay, config.maxDelay);
             await new Promise((resolve) => setTimeout(resolve, delay));
