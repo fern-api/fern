@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.33.0
+  changelogEntry:
+    - summary: |
+        WebSocket factory methods now resolve the base URL from the main client's
+        multi-URL environment when the channel specifies a `baseUrl`. This allows
+        WebSocket clients to use environments defined on the root client (e.g.,
+        `Environment.Wss`) instead of requiring separate per-WebSocket environment
+        classes.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 2.32.2
   changelogEntry:
     - summary: |
