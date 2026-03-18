@@ -39,3 +39,41 @@ paths:
                   message:
                     type: string
                     example: "Data received successfully."
+  /token:
+    post:
+      operationId: get_token
+      summary: "Get OAuth token"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        "200":
+          description: "Token issued successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+components:
+  schemas:
+    TokenRequest:
+      type: object
+      required:
+        - client_id
+        - client_secret
+      properties:
+        client_id:
+          type: string
+          description: "Client identifier"
+        client_secret:
+          type: string
+          description: "Client secret"
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
