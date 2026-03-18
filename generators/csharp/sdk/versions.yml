@@ -20,6 +20,7 @@
       type: fix
   createdAt: "2026-03-18"
   irVersion: 65
+
 - version: 2.32.1
   changelogEntry:
     - summary: |
@@ -30,6 +31,7 @@
       type: fix
   createdAt: "2026-03-18"
   irVersion: 65
+
 - version: 2.32.0
   changelogEntry:
     - summary: |

@@ -63,8 +63,8 @@ export class ReadmeConfigBuilder {
         if (outputMode.type === "github" && outputMode.publishInfo?.type === "nuget") {
             return outputMode.publishInfo.packageName;
         }
-        if (outputMode.type === "publish" && outputMode.registriesV2.nuget != null) {
-            return outputMode.registriesV2.nuget.packageName;
+        if (outputMode.type === "publish" && outputMode.publishTarget?.type === "nuget") {
+            return outputMode.publishTarget.packageName;
         }
         return context.generation.names.project.packageId;
     }
