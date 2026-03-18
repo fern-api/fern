@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.2
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method failing when no environment is explicitly set on
+        multi-URL environment SDKs. When the user relies on the default environment,
+        `Supplier.get(undefined)` returned `undefined` and the IIFE produced no base URL.
+        The generated code now derives the correct base URL property from the IR (using the
+        same base URL that HTTP endpoints resolve to) and falls back to the IR-defined
+        default environment, matching how regular endpoint methods resolve their base URL.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 3.59.1
   changelogEntry:
     - summary: |

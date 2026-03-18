@@ -205,7 +205,10 @@ export class SeedApiClient {
                     this._options.baseUrl ??
                     (async () => {
                         const env = await core.Supplier.get(this._options.environment);
-                        return typeof env === "string" ? env : (env as Record<string, string>)?.base;
+                        return typeof env === "string"
+                            ? env
+                            : ((env as Record<string, string>)?.base ??
+                                  environments.SeedApiEnvironment.RegionalApiServer.base);
                     }),
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
