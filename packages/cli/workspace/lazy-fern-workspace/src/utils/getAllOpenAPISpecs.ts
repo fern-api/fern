@@ -1,5 +1,4 @@
 import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
-import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, listFiles, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -72,7 +71,9 @@ export async function getAllOpenAPISpecs({
                 absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget: target
             });
-            openApiSpecsFromProto.push(makeOpenApiSpec({ result, protobufSpec: spec, relativePathToDependency, target }));
+            openApiSpecsFromProto.push(
+                makeOpenApiSpec({ result, protobufSpec: spec, relativePathToDependency, target })
+            );
         }
     }
 
