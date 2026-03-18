@@ -217,9 +217,9 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
-                // previewId is passed through to the FDR server even though the current
-                // SDK type does not yet include it. Extracting to a variable bypasses
-                // TypeScript's excess-property check on object literals.
+                // TODO: Remove this cast once @fern-api/fdr-sdk is republished with previewId
+                // in StartDocsPreviewRegisterRequestV2. The server already accepts the field
+                // (via the oRPC schema update), but the installed SDK type doesn't include it yet.
                 const previewRegisterRequest = {
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
@@ -227,7 +227,7 @@ export async function publishDocs({
                     images,
                     basePath,
                     previewId
-                };
+                } as DocsV2Write.StartDocsPreviewRegisterRequestV2;
                 const startDocsRegisterResponse =
                     await fdr.docs.v2.write.startDocsPreviewRegister(previewRegisterRequest);
                 if (startDocsRegisterResponse.ok) {
