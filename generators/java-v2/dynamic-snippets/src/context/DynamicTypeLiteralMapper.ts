@@ -25,17 +25,12 @@ export class DynamicTypeLiteralMapper {
         this.context = context;
     }
 
-    private isNopTypeLiteral(value: java.TypeLiteral): boolean {
-        const valueWithInternal = value as unknown as { internalType?: { type?: string } };
-        return valueWithInternal.internalType?.type === "nop";
-    }
-
     private usesOptionalNullable(): boolean {
         return this.context.customConfig?.["collapse-optional-nullable"] === true;
     }
 
     private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
-        if (this.isNopTypeLiteral(value)) {
+        if (java.TypeLiteral.isNop(value)) {
             return value;
         }
         if (this.usesOptionalNullable()) {
@@ -316,7 +311,7 @@ export class DynamicTypeLiteralMapper {
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
-                return this.convertObject({ object_: named, value, as });
+                return this.convertObject({ object_: named, value, as, inUndiscriminatedUnion });
             case "undiscriminatedUnion":
                 // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
                 // not within it. The flag should only apply to the variants within the union.
@@ -401,36 +396,167 @@ export class DynamicTypeLiteralMapper {
     private convertObject({
         object_,
         value,
-        as
+        as,
+        inUndiscriminatedUnion
     }: {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        inUndiscriminatedUnion?: boolean;
     }): java.TypeLiteral {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        // Add missing required properties with default values to ensure valid staged builder code.
+        // Java uses type-state staged builders where required fields must be set before build() can
+        // be called. Without this, an empty value like {} would generate .builder().build() which
+        // fails to compile when the builder has required stages.
+        //
+        // When inside undiscriminated union matching, throw on missing required properties instead
+        // of adding defaults. This allows the matching to reject incorrect variants and try others.
+        const existingWireValues = new Set(properties.map((p) => p.name.wireValue));
+        for (const param of object_.properties) {
+            if (!existingWireValues.has(param.name.wireValue) && !this.context.isOptional(param.typeReference)) {
+                if (inUndiscriminatedUnion === true) {
+                    throw new Error(`Required property "${param.name.wireValue}" is missing from value`);
+                }
+                const defaultValue = this.getDefaultValueForTypeReference(param.typeReference);
+                if (defaultValue !== undefined) {
+                    properties.push({
+                        name: param.name,
+                        typeReference: param.typeReference,
+                        value: defaultValue
+                    });
+                }
+            }
+        }
+        // Re-sort all properties (including newly added defaults) to match schema declaration order.
+        // Java staged builders require method calls in the exact order defined by the schema.
+        const paramOrderMap = new Map<string, number>();
+        object_.properties.forEach((param, index) => {
+            paramOrderMap.set(param.name.wireValue, index);
+        });
+        properties.sort(
+            (a, b) => (paramOrderMap.get(a.name.wireValue) ?? 0) - (paramOrderMap.get(b.name.wireValue) ?? 0)
+        );
         const filteredProperties =
             as === "request"
                 ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
                 : properties;
+        const builderParameters: java.BuilderParameter[] = [];
+        for (const property of filteredProperties) {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                const convertedValue = this.convert({
+                    typeReference: property.typeReference,
+                    value: property.value,
+                    as,
+                    inUndiscriminatedUnion
+                });
+                // If a required property converts to nop (e.g., invalid enum value for the wrong
+                // union variant), throw to reject this variant during undiscriminated union matching.
+                // Outside of union matching, just skip the nop value to produce best-effort output.
+                if (java.TypeLiteral.isNop(convertedValue) && !this.context.isOptional(property.typeReference)) {
+                    if (inUndiscriminatedUnion === true) {
+                        throw new Error(`Required property "${property.name.wireValue}" could not be converted`);
+                    }
+                    continue;
+                }
+                builderParameters.push({
+                    name: this.context.getMethodName(property.name.name),
+                    value: convertedValue
+                });
+            } finally {
+                this.context.errors.unscope();
+            }
+        }
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
-            parameters: filteredProperties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
-                    return {
-                        name: this.context.getMethodName(property.name.name),
-                        value: this.convert({ typeReference: property.typeReference, value: property.value, as })
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
+            parameters: builderParameters
         });
+    }
+
+    private getDefaultValueForTypeReference(typeReference: FernIr.dynamic.TypeReference): unknown {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.getDefaultPrimitiveValue(typeReference.value);
+            case "nullable":
+                return null;
+            case "optional":
+                return undefined;
+            case "list":
+            case "set":
+                return [];
+            case "map":
+                return {};
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return {};
+                }
+                switch (named.type) {
+                    case "enum":
+                        if (named.values.length > 0) {
+                            const firstValue = named.values[0];
+                            return firstValue != null ? firstValue.wireValue : undefined;
+                        }
+                        return undefined;
+                    case "object":
+                    case "alias":
+                        return {};
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                        // Cannot synthesize valid defaults for union types
+                        return undefined;
+                    default:
+                        return {};
+                }
+            }
+            case "literal":
+                return typeReference.value.value;
+            case "unknown":
+                return {};
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private getDefaultPrimitiveValue(primitive: FernIr.dynamic.PrimitiveTypeV1): unknown {
+        switch (primitive) {
+            case "STRING":
+                return "string";
+            case "INTEGER":
+            case "UINT":
+                return 1;
+            case "LONG":
+            case "UINT_64":
+                return 1000000;
+            case "FLOAT":
+            case "DOUBLE":
+                return 1.1;
+            case "BOOLEAN":
+                return true;
+            case "DATE":
+                return "2024-01-15";
+            case "DATE_TIME":
+                return "2024-01-15T09:30:00Z";
+            case "UUID":
+                return "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
+            case "BASE_64":
+                return "SGVsbG8gd29ybGQh";
+            case "BIG_INTEGER":
+                return "123456789";
+            default: {
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    return "Tue, 15 Jan 2024 09:30:00 +0000";
+                }
+                return "string";
+            }
+        }
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): java.TypeLiteral {

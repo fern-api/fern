@@ -26,6 +26,9 @@ export class WebSocketChannelGenerator {
         moduleName: string;
         channel: FernIr.WebSocketChannel;
     }> {
+        if (!this.context.hasWebSocketChannels()) {
+            return [];
+        }
         const websocketChannels = this.context.ir.websocketChannels;
         if (!websocketChannels) {
             return [];
