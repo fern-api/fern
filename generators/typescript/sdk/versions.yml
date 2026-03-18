@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix generated README.md including the "Customizing Fetch Client" section
+        under "Runtime Compatibility" even when `allowCustomFetcher` is `false`.
+        The section and its code snippet are now conditionally omitted when the
+        custom fetcher option is disabled.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 3.59.0
   changelogEntry:
     - summary: |
