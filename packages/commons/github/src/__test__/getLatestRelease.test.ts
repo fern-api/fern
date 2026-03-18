@@ -85,7 +85,7 @@ describe("getLatestRelease", () => {
 
         const result = await getLatestRelease("owner/repo");
         expect(result).toEqual("v0.0.33450");
-        expect(mockListReleases).toHaveBeenCalledWith({ owner: "owner", repo: "repo", per_page: 15 });
+        expect(mockListReleases).toHaveBeenCalledWith({ owner: "owner", repo: "repo", per_page: 100 });
     });
 
     it("skips GitHub drafts and prereleases when falling back", async () => {
