@@ -296,7 +296,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "type": "unknown"
+                  "container": {
+                    "list": {
+                      "name": {
+                        "originalName": "Item",
+                        "camelCase": {
+                          "unsafeName": "item",
+                          "safeName": "item"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "item",
+                          "safeName": "item"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ITEM",
+                          "safeName": "ITEM"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Item",
+                          "safeName": "Item"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:Item",
+                      "type": "named"
+                    },
+                    "type": "list"
+                  },
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -573,7 +603,11 @@
             },
             "typeReference": {
               "value": {
-                "type": "unknown"
+                "value": {
+                  "value": "type_:Item",
+                  "type": "named"
+                },
+                "type": "list"
               },
               "type": "optional"
             }
