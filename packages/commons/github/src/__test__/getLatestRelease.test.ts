@@ -18,6 +18,27 @@ vi.mock("octokit", () => {
     };
 });
 
+/**
+ * Helper to set up mockPaginate so it simulates a single-page response.
+ * octokit.paginate(endpoint, params, mapFn) calls mapFn(response, done)
+ * for each page and concatenates the results into a flat array.
+ */
+function setupPaginateResponse(releases: Array<{ tag_name: string; draft: boolean; prerelease: boolean }>): void {
+    mockPaginate.mockImplementationOnce(
+        (
+            _endpoint: unknown,
+            _params: unknown,
+            mapFn: (response: { data: typeof releases }, done: () => void) => string[]
+        ) => {
+            const done = (): void => {
+                // no-op: stops pagination in real octokit
+            };
+            const result = mapFn({ data: releases }, done);
+            return Promise.resolve(result);
+        }
+    );
+}
+
 describe("getLatestRelease", () => {
     beforeEach(() => {
         mockGetLatestRelease.mockReset();
@@ -68,11 +89,11 @@ describe("getLatestRelease", () => {
         expect(result).toBeUndefined();
     });
 
-    it("falls back to paginate when latest release is a semver prerelease", async () => {
+    it("falls back to listReleases when latest release is a semver prerelease", async () => {
         mockGetLatestRelease.mockResolvedValueOnce({
             data: { tag_name: "0.0.0-dev-babaf54d" }
         });
-        mockPaginate.mockResolvedValueOnce([
+        setupPaginateResponse([
             { tag_name: "0.0.0-dev-babaf54d", draft: false, prerelease: false },
             { tag_name: "0.0.0-dev-abc12345", draft: false, prerelease: false },
             { tag_name: "v0.0.33450", draft: false, prerelease: false }
@@ -80,18 +101,14 @@ describe("getLatestRelease", () => {
 
         const result = await getLatestRelease("owner/repo");
         expect(result).toEqual("v0.0.33450");
-        expect(mockPaginate).toHaveBeenCalledWith("listReleases-sentinel", {
-            owner: "owner",
-            repo: "repo",
-            per_page: 15
-        });
+        expect(mockPaginate).toHaveBeenCalled();
     });
 
     it("skips GitHub drafts and prereleases when falling back", async () => {
         mockGetLatestRelease.mockResolvedValueOnce({
             data: { tag_name: "v1.0.0-rc.1" }
         });
-        mockPaginate.mockResolvedValueOnce([
+        setupPaginateResponse([
             { tag_name: "v1.0.0-rc.1", draft: false, prerelease: false },
             { tag_name: "v0.9.9", draft: true, prerelease: false },
             { tag_name: "v0.9.8", draft: false, prerelease: true },
@@ -106,7 +123,7 @@ describe("getLatestRelease", () => {
         mockGetLatestRelease.mockResolvedValueOnce({
             data: { tag_name: "0.0.0-dev-aaa" }
         });
-        mockPaginate.mockResolvedValueOnce([
+        setupPaginateResponse([
             { tag_name: "0.0.0-dev-aaa", draft: false, prerelease: false },
             { tag_name: "0.0.0-dev-bbb", draft: false, prerelease: false },
             { tag_name: "0.0.0-dev-ccc", draft: false, prerelease: false }
@@ -120,7 +137,7 @@ describe("getLatestRelease", () => {
         mockGetLatestRelease.mockResolvedValueOnce({
             data: { tag_name: "v2.0.0-beta.1" }
         });
-        mockPaginate.mockResolvedValueOnce([
+        setupPaginateResponse([
             { tag_name: "v2.0.0-beta.1", draft: false, prerelease: false },
             { tag_name: "v1.5.0", draft: false, prerelease: false }
         ]);

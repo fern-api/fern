@@ -51,22 +51,30 @@ export async function getLatestRelease(
 
         // The "latest" release is a semver prerelease — scan recent releases
         // for the first stable (non-semver-prerelease, non-draft, non-GitHub-prerelease) tag.
-        const releases = await octokit.paginate(octokit.rest.repos.listReleases, {
-            owner,
-            repo,
-            per_page: 15
-        });
-
-        for (const release of releases) {
-            if (release.draft || release.prerelease) {
-                continue;
+        // uses pagination which may cause a lot of API calls if there are many recent prerelease/draft versions,
+        //  but this is a rare edge case and the GitHub API doesn't provide a better way to do this
+        const results = await octokit.paginate(
+            octokit.rest.repos.listReleases,
+            {
+                owner,
+                repo,
+                per_page: 15
+            },
+            (response, done) => {
+                for (const release of response.data) {
+                    if (release.draft || release.prerelease) {
+                        continue;
+                    }
+                    if (!isSemverPrerelease(release.tag_name)) {
+                        done();
+                        return [release.tag_name];
+                    }
+                }
+                return [];
             }
-            if (!isSemverPrerelease(release.tag_name)) {
-                return release.tag_name;
-            }
-        }
+        );
 
-        return undefined;
+        return results[0];
     } catch {
         // No releases found (404) or other error — return undefined
         return undefined;
