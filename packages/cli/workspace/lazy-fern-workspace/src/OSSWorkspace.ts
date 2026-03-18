@@ -13,7 +13,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { isNonNullish } from "@fern-api/core-utils";
+import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
@@ -209,7 +209,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             } catch (error) {
                 context.logger.error(
                     `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                    error instanceof Error ? error.message : String(error)
+                    extractErrorMessage(error)
                 );
             }
         }
