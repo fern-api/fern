@@ -284,9 +284,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         );
 
         statements.push(
-            ts.factory.createReturnStatement(
-                context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs)
-            )
+            ts.factory.createReturnStatement(context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs))
         );
 
         return statements;

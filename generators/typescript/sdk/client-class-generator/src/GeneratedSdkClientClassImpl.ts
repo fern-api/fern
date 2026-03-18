@@ -810,9 +810,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isAsync: true,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [
-                        ts.factory.createTypeReferenceNode("Request")
-                    ])
+                    ts.factory.createTypeReferenceNode("Promise", [ts.factory.createTypeReferenceNode("Request")])
                 ),
                 statements: buildRequestStatements.map(getTextOfTsNode)
             };

@@ -760,9 +760,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const buildRequestArgs = this.buildBuildRequestArgs(context);
         statements.push(
-            ts.factory.createReturnStatement(
-                context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs)
-            )
+            ts.factory.createReturnStatement(context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs))
         );
 
         return statements;
