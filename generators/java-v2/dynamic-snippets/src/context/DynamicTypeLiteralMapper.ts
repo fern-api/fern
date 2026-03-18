@@ -421,11 +421,14 @@ export class DynamicTypeLiteralMapper {
                 if (inUndiscriminatedUnion === true) {
                     throw new Error(`Required property "${param.name.wireValue}" is missing from value`);
                 }
-                properties.push({
-                    name: param.name,
-                    typeReference: param.typeReference,
-                    value: this.getDefaultValueForTypeReference(param.typeReference)
-                });
+                const defaultValue = this.getDefaultValueForTypeReference(param.typeReference);
+                if (defaultValue !== undefined) {
+                    properties.push({
+                        name: param.name,
+                        typeReference: param.typeReference,
+                        value: defaultValue
+                    });
+                }
             }
         }
         // Re-sort all properties (including newly added defaults) to match schema declaration order.
@@ -491,11 +494,26 @@ export class DynamicTypeLiteralMapper {
                 return {};
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: typeReference.value });
-                if (named != null && named.type === "enum" && named.values.length > 0) {
-                    const firstValue = named.values[0];
-                    return firstValue != null ? firstValue.wireValue : undefined;
+                if (named == null) {
+                    return {};
                 }
-                return {};
+                switch (named.type) {
+                    case "enum":
+                        if (named.values.length > 0) {
+                            const firstValue = named.values[0];
+                            return firstValue != null ? firstValue.wireValue : undefined;
+                        }
+                        return undefined;
+                    case "object":
+                    case "alias":
+                        return {};
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                        // Cannot synthesize valid defaults for union types
+                        return undefined;
+                    default:
+                        return {};
+                }
             }
             case "literal":
                 return typeReference.value.value;
