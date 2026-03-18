@@ -207,3 +207,27 @@ components:
                   type: string
                 templateId:
                   not: {}
+
+    # Reproduces allOf narrowing array items without redeclaring type: array
+    PaginatedList:
+      type: object
+      properties:
+        results:
+          type: array
+          items: {}
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    ItemList:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedList"
+        - properties:
+            results:
+              items:
+                $ref: "#/components/schemas/Item"
