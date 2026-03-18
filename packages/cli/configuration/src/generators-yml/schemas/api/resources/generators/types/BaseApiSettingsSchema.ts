@@ -32,6 +32,8 @@ export interface BaseApiSettingsSchema {
      * - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
      */
     "group-environments-by-host"?: boolean;
+    /** Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL. */
+    "infer-default-environment"?: boolean;
     /**
      * If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
      * If `never`, keep discriminant properties in schemas when generating types.
