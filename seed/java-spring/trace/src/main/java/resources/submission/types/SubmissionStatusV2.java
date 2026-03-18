@@ -123,6 +123,7 @@ public final class SubmissionStatusV2 {
   @JsonIgnoreProperties("type")
   private static final class TestValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private TestSubmissionStatusV2 value;
 
     @JsonCreator(
@@ -165,6 +166,7 @@ public final class SubmissionStatusV2 {
   @JsonIgnoreProperties("type")
   private static final class WorkspaceValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private WorkspaceSubmissionStatusV2 value;
 
     @JsonCreator(

@@ -141,6 +141,7 @@ public final class NotificationMethod {
   @JsonIgnoreProperties("type")
   private static final class EmailValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private EmailNotification value;
 
     @JsonCreator(
@@ -183,6 +184,7 @@ public final class NotificationMethod {
   @JsonIgnoreProperties("type")
   private static final class SmsValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private SmsNotification value;
 
     @JsonCreator(
@@ -225,6 +227,7 @@ public final class NotificationMethod {
   @JsonIgnoreProperties("type")
   private static final class PushValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private PushNotification value;
 
     @JsonCreator(

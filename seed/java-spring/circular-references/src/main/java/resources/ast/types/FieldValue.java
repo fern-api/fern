@@ -180,6 +180,7 @@ public final class FieldValue {
   @JsonIgnoreProperties("type")
   private static final class ObjectValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private ObjectValue value;
 
     @JsonCreator(
