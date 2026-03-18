@@ -92,7 +92,7 @@ export class GeneratorMigrator {
             return undefined;
         }
 
-        this.applyConfigChanges({ target, editor, migratedConfig: result.config.config });
+        await this.applyConfigChanges({ target, editor, migratedConfig: result.config.config });
 
         return {
             migrationsApplied: result.migrationsApplied,
@@ -117,7 +117,7 @@ export class GeneratorMigrator {
      * the editor. If the migration removed config entirely, the key is
      * deleted from the target.
      */
-    private applyConfigChanges({
+    private async applyConfigChanges({
         target,
         editor,
         migratedConfig
@@ -125,13 +125,13 @@ export class GeneratorMigrator {
         target: Target;
         editor: FernYmlEditor;
         migratedConfig: unknown;
-    }): void {
+    }): Promise<void> {
         if (migratedConfig != null && typeof migratedConfig === "object") {
-            editor.setTargetConfig(target.name, migratedConfig as Record<string, unknown>);
+            await editor.setTargetConfig(target.name, migratedConfig as Record<string, unknown>);
             return;
         }
         if (target.config != null && migratedConfig == null) {
-            editor.deleteTargetConfig(target.name);
+            await editor.deleteTargetConfig(target.name);
         }
     }
 

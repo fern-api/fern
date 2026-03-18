@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.1
+  changelogEntry:
+    - summary: |
+        Fix Wire test files to read `WIREMOCK_URL` environment variable instead of
+        hardcoding `http://localhost:8080`. The `setUp()` method now declares a
+        `$wiremockUrl` variable that reads from the environment with a fallback,
+        enabling tests to work with dynamically assigned Docker ports in local
+        development and CI/CD environments.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 62
+
 - version: 2.2.0
   changelogEntry:
     - summary: |

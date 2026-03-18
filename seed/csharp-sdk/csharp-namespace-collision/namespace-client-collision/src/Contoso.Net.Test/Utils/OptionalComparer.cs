@@ -1,4 +1,4 @@
-using Contoso.Net.Core;
+using global::Contoso.Net.Core;
 using NUnit.Framework.Constraints;
 using OneOf;
 

@@ -1,4 +1,4 @@
-using Contoso.Net.Core;
+using global::Contoso.Net.Core;
 using global::System.Text.Json;
 using NUnit.Framework;
 

@@ -27,7 +27,7 @@ export class PreviewCommand {
     }
 }
 
-export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new PreviewCommand();
     commandWithSubcommands(
         cli,
