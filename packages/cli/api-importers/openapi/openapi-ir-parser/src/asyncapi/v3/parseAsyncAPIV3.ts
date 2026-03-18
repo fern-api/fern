@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -414,7 +415,7 @@ export function parseAsyncAPIV3({
                 }
             } catch (error) {
                 context.logger.warn(
-                    `Failed to build examples for channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                    `Failed to build examples for channel ${channelPath}: ${extractErrorMessage(error)}`
                 );
             }
 
@@ -597,7 +598,7 @@ function convertMessageReferencesToWebsocketSchemas({
             }
         } catch (error) {
             context.logger.warn(
-                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${extractErrorMessage(error)}`
             );
         }
     });

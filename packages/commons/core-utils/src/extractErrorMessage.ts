@@ -8,5 +8,5 @@ export function extractErrorMessage(e: unknown): string {
     if (typeof e === "object" && e !== null && "message" in e && typeof e["message"] === "string") {
         return e["message"];
     }
-    return "Unknown error";
+    return String(e);
 }

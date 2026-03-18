@@ -5,6 +5,7 @@ import {
     getOrganizationNameValidationError,
     verifyAndDecodeJwt
 } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
@@ -700,7 +701,7 @@ export class Wizard {
             try {
                 return await this.fetchApiFromUrl(url, specFormat);
             } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
+                const message = extractErrorMessage(error);
                 this.context.stderr.info(`  ${Icons.error} Could not fetch ${url}: ${message}\n`);
                 // Loop back to re-prompt.
             }
