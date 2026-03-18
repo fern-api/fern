@@ -4,7 +4,7 @@ import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from 
 import os from "os";
 import path from "path";
 
-const PROTOC_GEN_OPENAPI_VERSION = "v0.1.12";
+const PROTOC_GEN_OPENAPI_VERSION = "v0.1.13";
 const GITHUB_RELEASE_URL_BASE = "https://github.com/fern-api/protoc-gen-openapi/releases/download";
 const BINARY_NAME = "protoc-gen-openapi";
 const CACHE_DIR_NAME = ".fern";
@@ -148,7 +148,7 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
 /**
  * Resolves the protoc-gen-openapi binary, downloading it from GitHub Releases if needed.
  *
- * **Versioning**: Binaries are cached with a versioned filename (e.g. `protoc-gen-openapi-v0.1.12`).
+ * **Versioning**: Binaries are cached with a versioned filename (e.g. `protoc-gen-openapi-v0.1.13`).
  * A `.version` marker file tracks which version the canonical `protoc-gen-openapi` binary corresponds to.
  * When `PROTOC_GEN_OPENAPI_VERSION` is bumped, the canonical binary is atomically replaced on the
  * next invocation.

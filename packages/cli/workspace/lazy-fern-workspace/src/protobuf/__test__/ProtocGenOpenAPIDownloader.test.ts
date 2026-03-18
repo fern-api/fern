@@ -95,7 +95,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(fetchUrl).toContain("github.com/fern-api/protoc-gen-openapi/releases/download");
 
             // Versioned binary should exist
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.12"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.13"));
             expect(await fileExists(versionedPath)).toBe(true);
 
             // Canonical binary should exist
@@ -106,7 +106,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const markerPath = path.join(getCacheDir(), "protoc-gen-openapi.version");
             expect(await fileExists(markerPath)).toBe(true);
             const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v0.1.12");
+            expect(markerContent.trim()).toBe("v0.1.13");
 
             // Lock directory should be cleaned up
             const lockPath = path.join(getCacheDir(), "protoc-gen-openapi.lock");
@@ -122,7 +122,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.12"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
@@ -131,7 +131,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             await chmod(canonicalPath, 0o755);
 
             const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
-            await writeFile(markerPath, "v0.1.12");
+            await writeFile(markerPath, "v0.1.13");
 
             // fetch should NOT be called
             const mockFetch = vi.fn();
@@ -156,7 +156,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.12"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
             const newContent = "new-binary-content";
             await writeFile(versionedPath, newContent);
             await chmod(versionedPath, 0o755);
@@ -184,7 +184,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
 
             // Marker should be updated
             const updatedMarker = await readFile(markerPath, "utf-8");
-            expect(updatedMarker.trim()).toBe("v0.1.12");
+            expect(updatedMarker.trim()).toBe("v0.1.13");
 
             // Should log the update
             expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Updated canonical"));
@@ -196,13 +196,13 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.12"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
             // Marker is correct but canonical is missing
             const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
-            await writeFile(markerPath, "v0.1.12");
+            await writeFile(markerPath, "v0.1.13");
 
             const mockFetch = vi.fn();
             vi.stubGlobal("fetch", mockFetch);
@@ -308,7 +308,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             // Version marker should be correct
             const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
             const marker = await readFile(markerPath, "utf-8");
-            expect(marker.trim()).toBe("v0.1.12");
+            expect(marker.trim()).toBe("v0.1.13");
 
             // Lock should be released
             const lockPath = path.join(cacheDir, "protoc-gen-openapi.lock");
@@ -363,7 +363,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(canonicalStat.mode & 0o100).toBeTruthy();
 
             // Versioned binary should also be executable
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.12"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.13"));
             const versionedStat = await stat(versionedPath);
             expect(versionedStat.mode & 0o100).toBeTruthy();
 
