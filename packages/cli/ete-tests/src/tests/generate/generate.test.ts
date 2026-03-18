@@ -120,6 +120,19 @@ describe("fern generate", () => {
         });
         expect(stdout).toContain("No docs.yml file found. Please make sure your project has one.");
     }, 180_000);
+
+    it.concurrent("lists available groups when no group specified", async ({ signal }) => {
+        const { stdout, failed } = await runFernCli(["generate", "--local"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("no-default-group")),
+            reject: false,
+            signal
+        });
+        expect(failed).toBe(true);
+        const stripped = stripAnsi(stdout);
+        expect(stripped).toContain("No group specified");
+        expect(stripped).toContain("--group sdk");
+        expect(stripped).toContain("--group docs");
+    }, 90_000);
 });
 
 function extractFilepath(logLine: string): string | null {
