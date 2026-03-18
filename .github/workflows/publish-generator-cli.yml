@@ -32,6 +32,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          filter: blob:none
 
       - name: Install
         uses: ./.github/actions/install

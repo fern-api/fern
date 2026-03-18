@@ -66,6 +66,7 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
+          filter: blob:none
 
       - name: Install
         uses: ./.github/actions/install
@@ -121,6 +122,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 20
+          filter: blob:none
 
       - name: Install
         uses: ./.github/actions/install
