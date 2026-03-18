@@ -208,7 +208,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        await writeFile(tmpDownloadPath, Buffer.from(arrayBuffer));
+        await writeFile(tmpDownloadPath, new Uint8Array(arrayBuffer));
         await chmod(tmpDownloadPath, 0o755);
 
         // Atomic rename to versioned path
