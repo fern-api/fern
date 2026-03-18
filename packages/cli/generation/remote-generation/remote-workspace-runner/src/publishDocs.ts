@@ -217,9 +217,9 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
-                // The FdrClient still routes through the old Fern-generated client whose
-                // StartDocsPreviewRegisterRequestV2 type doesn't include previewId yet.
-                // The server accepts the field via the oRPC schema, so we use a cast here.
+                // previewId is defined in the oRPC contract but not yet exposed
+                // on the FdrClient's Fern-generated StartDocsPreviewRegisterRequestV2 type.
+                // The server accepts it, so we use a cast here until the client is migrated.
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
