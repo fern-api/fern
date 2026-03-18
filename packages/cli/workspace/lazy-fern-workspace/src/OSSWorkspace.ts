@@ -94,6 +94,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
     private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
+    // Cache for protobuf → OpenAPI generation results, keyed by relativePathToDependency.
+    // This avoids running buf generate twice when both toFernWorkspace() and
+    // validateOSSWorkspace() need the same OpenAPI specs.
+    private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
@@ -214,6 +219,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
     }
 
+    /**
+     * Returns cached OpenAPI specs (including protobuf → OpenAPI conversions).
+     * The expensive buf generate work is performed once per unique
+     * relativePathToDependency and reused across getOpenAPIIr(),
+     * getIntermediateRepresentation(), and workspace validation.
+     */
+    public getOpenAPISpecsCached({
+        context,
+        relativePathToDependency
+    }: {
+        context: TaskContext;
+        relativePathToDependency?: RelativeFilePath;
+    }): Promise<OpenAPISpec[]> {
+        const key = relativePathToDependency ?? "";
+        let cached = this.openApiSpecsCache.get(key);
+        if (cached == null) {
+            cached = getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+            this.openApiSpecsCache.set(key, cached);
+        }
+        return cached;
+    }
+
     public async getOpenAPIIr(
         {
             context,
@@ -226,7 +253,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
-        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        const openApiSpecs = await this.getOpenAPISpecsCached({ context, relativePathToDependency });
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -261,7 +288,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
-        const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
         const authOverrides =
