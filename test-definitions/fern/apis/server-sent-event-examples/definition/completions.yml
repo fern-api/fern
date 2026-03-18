@@ -97,6 +97,7 @@ service:
             query: "query"
           response:
             stream:
+              - event: ignored-field
               - data:
                   event: completion
                   content: "content"
