@@ -192,12 +192,7 @@ export class WebSocketChannelGenerator {
 
         const rawDeclarations: string[] = [];
 
-        // The IR message type IDs always use the full channel-derived prefix
-        // (e.g. "ListenV2Connected"), even when collision resolution shortens the
-        // Rust enum prefix (e.g. "V2"). Derive wirePrefix from the channel ID
-        // so we can strip it correctly.
-        const wirePrefix = this.deriveNameFromChannelId(channelId).pascalCase;
-        const serverEnum = this.generateServerMessageEnum(enumPrefix, jsonServerMessages, wirePrefix);
+        const serverEnum = this.generateServerMessageEnum(enumPrefix, jsonServerMessages);
         if (serverEnum) {
             rawDeclarations.push(serverEnum);
         }
@@ -261,8 +256,7 @@ export class WebSocketChannelGenerator {
      */
     private generateServerMessageEnum(
         enumPrefix: string,
-        jsonServerMessages: FernIr.WebSocketMessage[],
-        wirePrefix: string
+        jsonServerMessages: FernIr.WebSocketMessage[]
     ): string | undefined {
         if (jsonServerMessages.length === 0) {
             return undefined;
@@ -273,28 +267,16 @@ export class WebSocketChannelGenerator {
         const variants = jsonServerMessages
             .map((msg) => {
                 const variantName = this.getMessageVariantName(msg);
-                // The IR msg.type (from AsyncAPI operationId) includes the channel name
-                // as a prefix (e.g. "ListenV2Connected"), but the actual API sends just
-                // the short discriminant (e.g. "Connected"). Strip the wire prefix.
-                // wirePrefix comes from channel.displayName (the original channel name),
-                // which may differ from enumPrefix when collision resolution renames it.
-                let wireValue = msg.type;
-                if (wireValue.startsWith(wirePrefix)) {
-                    wireValue = wireValue.slice(wirePrefix.length);
-                } else if (wireValue.startsWith(enumPrefix)) {
-                    wireValue = wireValue.slice(enumPrefix.length);
-                }
                 const bodyType = this.getMessageBodyType(msg);
-                const renameAttr = `    #[serde(rename = "${wireValue}")]\n`;
                 if (bodyType) {
-                    return `${renameAttr}    ${variantName}(${bodyType}),`;
+                    return `    ${variantName}(${bodyType}),`;
                 }
-                return `${renameAttr}    ${variantName},`;
+                return `    ${variantName},`;
             })
             .join("\n");
 
         return `#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum ${enumName} {
 ${variants}
 }`;
