@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { getMarkdownFormat, parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
@@ -6,9 +7,7 @@ import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
-
 import { Rule } from "../../Rule.js";
-
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: ({ logger, workspace }) => {
@@ -131,7 +130,7 @@ async function parseMarkdown({
             type: "success"
         };
     } catch (err) {
-        logger.trace(`Markdown parse failed with error: ${err instanceof Error ? err.message : String(err)}`);
+        logger.trace(`Markdown parse failed with error: ${extractErrorMessage(err)}`);
         return {
             type: "failure",
             message: err instanceof Error ? err.message : undefined

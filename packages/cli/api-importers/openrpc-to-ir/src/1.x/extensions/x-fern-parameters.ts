@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractExtension } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
@@ -52,7 +53,7 @@ export class FernParametersExtension extends AbstractExtension<FernParametersExt
             return parsedValue as OpenAPIV3.ParameterObject[];
         } catch (error) {
             this.context.errorCollector.collect({
-                message: `Failed to parse x-fern-parameters extension: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Failed to parse x-fern-parameters extension: ${extractErrorMessage(error)}`,
                 path: this.breadcrumbs
             });
             return undefined;
