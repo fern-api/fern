@@ -254,6 +254,21 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             boolean sendContentType,
             String contentType) {
 
+        // Handle octet-stream content type — send raw bytes, not JSON-encoded
+        if (contentType.equals("application/octet-stream")) {
+            requestBodyCodeBlock.addStatement(
+                    "$T $L = $T.create($T.valueOf($L).getBytes($T.UTF_8), $T.parse($S))",
+                    RequestBody.class,
+                    variables.getOkhttpRequestBodyName(),
+                    RequestBody.class,
+                    String.class,
+                    variableToJsonify,
+                    ClassName.get("java.nio.charset", "StandardCharsets"),
+                    MediaType.class,
+                    "application/octet-stream");
+            return;
+        }
+
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
             isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
