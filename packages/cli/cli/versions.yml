@@ -9,7 +9,7 @@
         without breaking syntax highlighting. The existing `name` field
         continues to work the same way.
       type: feat
-  createdAt: "2026-03-13"
+  createdAt: "2026-03-18"
   irVersion: 65
 
 - version: 4.34.0
