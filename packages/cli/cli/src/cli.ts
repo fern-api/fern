@@ -627,6 +627,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Whether to generate a preview link for the docs"
                 })
+                .option("id", {
+                    type: "string",
+                    description:
+                        "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate"
@@ -735,6 +740,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             }
+            if (argv.id != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.");
+            }
+            if (argv.id != null && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.");
+            }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
             }
@@ -817,6 +828,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     instance: argv.instance,
                     preview: argv.preview,
+                    previewId: argv.id,
+                    force: argv.force,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,

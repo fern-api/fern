@@ -114,7 +114,7 @@ For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nul
 - **PRESENT**: Field has a non-null value
 
 ```java
-import com.seed.api.core.OptionalNullable;
+import com.seed.nullableOptional.core.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -255,7 +255,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-CreateUserHttpResponse response = client.nullableOptional().withRawResponse().createUser(...);
+SeedNullableOptionalHttpResponse response = client.nullableOptional().withRawResponse().createUser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

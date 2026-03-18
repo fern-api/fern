@@ -1,4 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet compilation errors for objects with required fields
+        in staged builders. When an endpoint example omits a required property,
+        the snippet generator now fills in a type-appropriate default value
+        instead of producing an invalid `.builder().build()` call that skips
+        mandatory builder stages.
+      type: fix
+    - summary: |
+        Fix dynamic snippet builder ordering when default values are added for
+        missing required properties. Properties are now re-sorted to match schema
+        declaration order after defaults are injected, ensuring Java staged
+        builder method calls follow the correct sequence.
+      type: fix
+    - summary: |
+        Fix undiscriminated union variant matching selecting incorrect variants
+        when example data doesn't match. Required properties and their nested
+        types are now validated during matching, so variants with mismatched
+        enum values or missing required fields are correctly rejected.
+      type: fix
+    - summary: |
+        Fix hardcoded `com.seed.api.core.OptionalNullable` import in generated
+        README OptionalNullable documentation. The import now uses the correct
+        dynamic package name for the SDK being generated.
+      type: fix
+    - summary: |
+        Fix incorrect raw response type name in generated README. The "Access
+        Raw Response Data" section now uses the correct `{BaseNamePrefix}HttpResponse`
+        class name (e.g., `Auth0ApiHttpResponse`) instead of the endpoint-derived
+        name (e.g., `CreateHttpResponse`).
+      type: fix
+    - summary: |
+        Fix missing environment URL variables in generated README Usage example.
+        Builder parameters like `tenantDomain` from OpenAPI server URL templates
+        are now included in the Usage snippet alongside auth parameters.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 3.44.3
   changelogEntry:
     - summary: |
