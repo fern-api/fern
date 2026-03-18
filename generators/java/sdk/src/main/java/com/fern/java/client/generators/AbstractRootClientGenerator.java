@@ -2187,7 +2187,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
                         "builder.addHeader($S, $S + this.$L)",
                         header.getName().getWireValue(),
-                        header.getPrefix().get(),
+                        header.getPrefix().get() + " ",
                         fieldName);
             } else {
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
