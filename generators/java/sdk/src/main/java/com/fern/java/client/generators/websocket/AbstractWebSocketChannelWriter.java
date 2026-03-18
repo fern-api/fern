@@ -25,6 +25,8 @@ import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketMessageBodyReference;
 import com.fern.ir.model.websocket.WebSocketMessageOrigin;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -178,8 +180,9 @@ public abstract class AbstractWebSocketChannelWriter {
         }
 
         // Add message handler registration methods (one per server message)
+        // Binary server messages are skipped — they're handled by onBinaryMessage()
         for (WebSocketMessage message : websocketChannel.getMessages()) {
-            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 classBuilder.addMethod(generateOnMessageMethod(message));
                 // Add handler field for this message
                 TypeName messageType = getMessageBodyType(message);
@@ -303,9 +306,7 @@ public abstract class AbstractWebSocketChannelWriter {
         TypeName messageBodyType = getMessageBodyType(message);
         String handlerFieldName = getHandlerFieldName(message);
 
-        // Convert message type to valid Java method name
-        String messageTypeStr = message.getType().get();
-        String methodName = getMessageMethodName(messageTypeStr);
+        String methodName = getMessageMethodName(message);
         return MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
@@ -402,9 +403,9 @@ public abstract class AbstractWebSocketChannelWriter {
                 .addStatement("String type = typeNode.asText()")
                 .beginControlFlow("switch (type)");
 
-        // Add cases for each server message
+        // Add cases for each non-binary server message (binary messages are handled by onBinaryMessage)
         for (WebSocketMessage message : websocketChannel.getMessages()) {
-            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 TypeName messageType = getMessageBodyType(message);
                 String handlerFieldName = getHandlerFieldName(message);
 
@@ -530,6 +531,9 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected TypeName getMessageBodyType(WebSocketMessage message) {
+        if (isMessageBodyBinary(message)) {
+            return ClassName.get("okio", "ByteString");
+        }
         return message.getBody().visit(new WebSocketMessageBody.Visitor<TypeName>() {
             @Override
             public TypeName visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
@@ -550,26 +554,97 @@ public abstract class AbstractWebSocketChannelWriter {
         });
     }
 
+    /**
+     * Returns true if the message body is a primitive string with format "binary",
+     * indicating it should be sent/received as raw bytes rather than JSON text.
+     */
+    protected boolean isMessageBodyBinary(WebSocketMessage message) {
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<Boolean>() {
+            @Override
+            public Boolean visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitReference(WebSocketMessageBodyReference reference) {
+                TypeReference bodyType = reference.getBodyType();
+                if (bodyType.isPrimitive()) {
+                    PrimitiveType primitive = bodyType.getPrimitive().get();
+                    if (primitive.getV2().isPresent()) {
+                        return primitive.getV2().get().visit(new com.fern.ir.model.types.PrimitiveTypeV2.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitInteger(com.fern.ir.model.types.IntegerType value) { return false; }
+                            @Override
+                            public Boolean visitLong(com.fern.ir.model.types.LongType value) { return false; }
+                            @Override
+                            public Boolean visitUint(com.fern.ir.model.types.UintType value) { return false; }
+                            @Override
+                            public Boolean visitUint64(com.fern.ir.model.types.Uint64Type value) { return false; }
+                            @Override
+                            public Boolean visitFloat(com.fern.ir.model.types.FloatType value) { return false; }
+                            @Override
+                            public Boolean visitDouble(com.fern.ir.model.types.DoubleType value) { return false; }
+                            @Override
+                            public Boolean visitBoolean(com.fern.ir.model.types.BooleanType value) { return false; }
+                            @Override
+                            public Boolean visitString(com.fern.ir.model.types.StringType value) {
+                                return value.getValidation().isPresent()
+                                        && "binary".equals(value.getValidation().get().getFormat().orElse(null));
+                            }
+                            @Override
+                            public Boolean visitDate(com.fern.ir.model.types.DateType value) { return false; }
+                            @Override
+                            public Boolean visitDateTime(com.fern.ir.model.types.DateTimeType value) { return false; }
+                            @Override
+                            public Boolean visitDateTimeRfc2822(com.fern.ir.model.types.DateTimeRfc2822Type value) { return false; }
+                            @Override
+                            public Boolean visitUuid(com.fern.ir.model.types.UuidType value) { return false; }
+                            @Override
+                            public Boolean visitBase64(com.fern.ir.model.types.Base64Type value) { return true; }
+                            @Override
+                            public Boolean visitBigInteger(com.fern.ir.model.types.BigIntegerType value) { return false; }
+                            @Override
+                            public Boolean _visitUnknown(Object unknown) { return false; }
+                        });
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public Boolean _visitUnknown(Object unknown) {
+                return false;
+            }
+        });
+    }
+
     protected String getHandlerFieldName(WebSocketMessage message) {
-        // Convert message type to valid Java identifier (handle snake_case)
-        String messageType = message.getType().get();
-        String[] parts = messageType.split("_");
-        StringBuilder fieldName = new StringBuilder();
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (!part.isEmpty()) {
-                if (i == 0) {
-                    fieldName.append(part.toLowerCase());
-                } else {
-                    fieldName.append(Character.toUpperCase(part.charAt(0)));
-                    if (part.length() > 1) {
-                        fieldName.append(part.substring(1).toLowerCase());
+        // Use custom methodName if available, otherwise fall back to message type
+        String baseName;
+        if (message.getMethodName().isPresent()) {
+            // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
+            baseName = toCamelCase(message.getMethodName().get());
+        } else {
+            // Fall back to converting message type from snake_case to camelCase
+            String messageType = message.getType().get();
+            String[] parts = messageType.split("_");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < parts.length; i++) {
+                String part = parts[i];
+                if (!part.isEmpty()) {
+                    if (i == 0) {
+                        sb.append(part.toLowerCase());
+                    } else {
+                        sb.append(Character.toUpperCase(part.charAt(0)));
+                        if (part.length() > 1) {
+                            sb.append(part.substring(1).toLowerCase());
+                        }
                     }
                 }
             }
+            baseName = sb.toString();
         }
-        fieldName.append("Handler");
-        return fieldName.toString();
+        return baseName + "Handler";
     }
 
     protected String capitalize(String str) {
@@ -599,12 +674,54 @@ public abstract class AbstractWebSocketChannelWriter {
         return capitalize(str);
     }
 
+    protected String toCamelCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        // Handle snake_case: first part lowercase, rest capitalized
+        String[] parts = str.split("_");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            if (!part.isEmpty()) {
+                if (i == 0) {
+                    // Keep first character's case from source (handles camelCase input)
+                    result.append(part);
+                } else {
+                    result.append(Character.toUpperCase(part.charAt(0)));
+                    if (part.length() > 1) {
+                        result.append(part.substring(1));
+                    }
+                }
+            }
+        }
+        return result.toString();
+    }
+
     /**
-     * Returns the method name for a server message handler, avoiding collisions with lifecycle methods that share the
-     * same erasure ({@code Consumer<?>}).
+     * Returns the method name for a send operation. Uses the custom methodName from
+     * the IR if available (e.g., x-fern-sdk-method-name) as-is, otherwise falls back to
+     * "send" + capitalize(messageType).
      */
-    protected String getMessageMethodName(String messageType) {
-        String baseName = "on" + toPascalCase(messageType);
+    protected String getSendMethodName(WebSocketMessage message) {
+        if (message.getMethodName().isPresent()) {
+            return toCamelCase(message.getMethodName().get());
+        }
+        return "send" + capitalize(message.getType().get());
+    }
+
+    /**
+     * Returns the method name for a server message handler. Uses the custom methodName
+     * from the IR if available as-is, otherwise falls back to "on" + toPascalCase(messageType).
+     * Avoids collisions with lifecycle methods that share the same erasure ({@code Consumer<?>}).
+     */
+    protected String getMessageMethodName(WebSocketMessage message) {
+        String baseName;
+        if (message.getMethodName().isPresent()) {
+            baseName = toCamelCase(message.getMethodName().get());
+        } else {
+            baseName = "on" + toPascalCase(message.getType().get());
+        }
         if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
             return baseName + "Message";
         }

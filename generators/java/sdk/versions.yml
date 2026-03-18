@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Add binary WebSocket frame support. Generated WebSocket clients now include
+        `sendBinary(ByteString data)` and `onBinaryMessage(Consumer<ByteString> handler)`
+        methods, and the underlying `ReconnectingWebSocketListener` overrides
+        `onMessage(WebSocket, ByteString)` so binary frames are no longer silently dropped.
+      type: feat
+    - summary: |
+        Fix WebSocket `connect()` crashing with `NullPointerException` when the
+        environment URL uses `wss://` or `ws://` schemes. OkHttp's `HttpUrl.parse()`
+        only supports `http`/`https`, so the generated client now converts
+        `wss://` to `https://` and `ws://` to `http://` before parsing, with a
+        null-safety check on the result.
+      type: fix
+    - summary: |
+        Fix WebSocket clients using `getUrl()` in multi-URL environments where
+        no such method exists. The generator now resolves the correct per-URL getter
+        (e.g. `getAgentURL()`, `getProductionURL()`) based on the channel's
+        `baseUrl` field in the IR, matching the pattern used by REST endpoints.
+      type: fix
+    - summary: |
+        Fix WebSocket clients not sending authentication headers. The generated
+        `connect()` method now unconditionally calls
+        `clientOptions.headers(null).forEach(requestBuilder::addHeader)`, ensuring
+        auth and configured headers are always applied regardless of how the API
+        defines its authentication scheme.
+      type: fix
+    - summary: |
+        Fix WebSocket message protocol using `{"type", "body"}` envelope format
+        instead of flat JSON. Outgoing messages are now serialized directly (the
+        discriminated union already contains the `type` field), and incoming
+        messages are deserialized from the root JSON node rather than extracting
+        a `body` sub-field.
+      type: fix
+    - summary: |
+        Fix binary file upload endpoints JSON-encoding the request body. Wrapped
+        requests with `application/octet-stream` content type now send raw bytes
+        instead of passing the body through `ObjectMappers.JSON_MAPPER.writeValueAsBytes()`,
+        which previously corrupted binary data by adding JSON string escaping.
+      type: fix
+    - summary: |
+        Support `x-fern-sdk-method-name` for WebSocket operations. Generated
+        WebSocket client methods now use the custom method name from the IR when
+        set, producing clean names like `sendSettings()` and `sendMedia()` instead
+        of type-derived names like `sendAgentV1Settings()` and `sendAgentV1Media()`.
+      type: feat
+
 - version: 3.44.3
   changelogEntry:
     - summary: |

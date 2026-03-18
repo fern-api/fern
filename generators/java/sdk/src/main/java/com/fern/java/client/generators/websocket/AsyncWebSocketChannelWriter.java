@@ -331,11 +331,10 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
     @Override
     protected MethodSpec generateSendMethod(WebSocketMessage message) {
         TypeName messageType = getMessageBodyType(message);
-        // Convert message type to valid Java method name
-        String messageTypeStr = message.getType().get();
-        String methodName = "send" + capitalize(messageTypeStr);
+        String methodName = getSendMethodName(message);
+        boolean isBinary = isMessageBodyBinary(message);
 
-        return MethodSpec.methodBuilder(methodName)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
                 .addParameter(messageType, "message")
@@ -343,10 +342,40 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         "Sends a $L message to the server asynchronously.\n",
                         message.getType().get())
                 .addJavadoc("@param message the message to send\n")
-                .addJavadoc("@return a CompletableFuture that completes when the message is sent\n")
-                .addStatement(
-                        "return sendMessage($S, message)", message.getType().get())
-                .build();
+                .addJavadoc("@return a CompletableFuture that completes when the message is sent\n");
+
+        if (isBinary) {
+            builder.addStatement(
+                    "$T<$T> future = new $T<>()",
+                    CompletableFuture.class,
+                    TypeName.VOID.box(),
+                    CompletableFuture.class)
+                    .beginControlFlow("try")
+                    .addStatement("assertSocketIsOpen()")
+                    .addStatement("boolean sent = $N.sendBinary(message)", reconnectingListenerField)
+                    .beginControlFlow("if (sent)")
+                    .addStatement("future.complete(null)")
+                    .endControlFlow()
+                    .beginControlFlow("else")
+                    .addStatement(
+                            "future.completeExceptionally(new $T($S))",
+                            RuntimeException.class,
+                            "Failed to send binary data")
+                    .endControlFlow()
+                    .endControlFlow()
+                    .beginControlFlow("catch ($T e)", Exception.class)
+                    .addStatement(
+                            "future.completeExceptionally(new $T($S, e))",
+                            RuntimeException.class,
+                            "Failed to send binary data")
+                    .endControlFlow()
+                    .addStatement("return future");
+        } else {
+            builder.addStatement(
+                    "return sendMessage($S, message)", message.getType().get());
+        }
+
+        return builder.build();
     }
 
     @Override

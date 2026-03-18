@@ -339,19 +339,27 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
     @Override
     protected MethodSpec generateSendMethod(WebSocketMessage message) {
         TypeName messageType = getMessageBodyType(message);
-        // Convert message type to valid Java method name
-        String messageTypeStr = message.getType().get();
-        String methodName = "send" + capitalize(messageTypeStr);
+        String methodName = getSendMethodName(message);
+        boolean isBinary = isMessageBodyBinary(message);
 
-        return MethodSpec.methodBuilder(methodName)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(messageType, "message")
                 .addJavadoc(
                         "Sends a $L message to the server.\n", message.getType().get())
                 .addJavadoc("@param message the message to send\n")
-                .addJavadoc("@throws RuntimeException if send fails\n")
-                .addStatement("sendMessage($S, message)", message.getType().get())
-                .build();
+                .addJavadoc("@throws RuntimeException if send fails\n");
+
+        if (isBinary) {
+            builder.addStatement("assertSocketIsOpen()")
+                    .beginControlFlow("if (!$N.sendBinary(message))", reconnectingListenerField)
+                    .addStatement("throw new $T($S)", RuntimeException.class, "Failed to send binary data")
+                    .endControlFlow();
+        } else {
+            builder.addStatement("sendMessage($S, message)", message.getType().get());
+        }
+
+        return builder.build();
     }
 
     @Override

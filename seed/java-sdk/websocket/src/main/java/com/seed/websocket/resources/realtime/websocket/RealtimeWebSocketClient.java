@@ -247,7 +247,7 @@ public class RealtimeWebSocketClient {
      * @param message the message to send
      * @return a CompletableFuture that completes when the message is sent
      */
-    public CompletableFuture<Void> sendSend2(SendEvent2 message) {
+    public CompletableFuture<Void> customSend(SendEvent2 message) {
         return sendMessage("send2", message);
     }
 
