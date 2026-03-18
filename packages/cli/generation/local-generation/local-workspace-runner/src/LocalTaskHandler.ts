@@ -230,8 +230,17 @@ export class LocalTaskHandler {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
+            // Scan generated files for beta/alpha/pre-release availability markers
+            // and prepend a compact header so the AI knows which symbols are pre-release,
+            // even if the marker falls outside the default 3-line diff context window.
+            const availabilityContext = await autoVersioningService.extractAvailabilityContext(
+                cleanedDiff,
+                this.absolutePathToLocalOutput
+            );
+            const diffWithAvailability = availabilityContext + cleanedDiff;
+
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
-            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            const cleanedDiffBytes = Buffer.byteLength(diffWithAvailability, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
                 this.context.logger.warn(
                     `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
@@ -248,7 +257,7 @@ export class LocalTaskHandler {
             }
 
             // Split diff into chunks and analyze each one with the AI
-            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+            const chunks = autoVersioningService.chunkDiff(diffWithAvailability, MAX_AI_DIFF_BYTES);
 
             // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
             // Chunks are ranked by semantic priority, so skipped chunks are
@@ -271,7 +280,7 @@ export class LocalTaskHandler {
                 if (cappedChunks.length <= 1) {
                     // Single chunk (or small diff): use normal path with caching
                     analysis = await this.getAnalysis(
-                        cleanedDiff,
+                        diffWithAvailability,
                         this.generatorLanguage ?? "unknown",
                         previousVersion ?? "0.0.0",
                         priorChangelog,
@@ -897,13 +906,8 @@ export class LocalTaskHandler {
         // This is a no-op for files that are already staged.
         await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
 
-        // Use 20 lines of context (-U20) instead of the default 3 so that
-        // availability markers (@beta, @Experimental, docstring warnings, etc.)
-        // placed above a method signature are included in the diff even when
-        // only the method body changes.  This is critical for the AI to detect
-        // pre-release/beta annotations and correctly downgrade breaking changes.
         await this.runGitCommand(
-            ["diff", "HEAD", "-U20", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+            ["diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
             this.absolutePathToLocalOutput
         );
 

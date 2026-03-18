@@ -1,5 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import { join as pathJoin } from "path";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -782,6 +784,117 @@ export class AutoVersioningService {
      * @param lineWithMagicVersion A line from git diff containing the magic version
      * @return The inferred previous version if found, or undefined if the version cannot be parsed
      */
+    /**
+     * Regex patterns that match availability markers in generated SDK source files.
+     * These are the annotations Fern generators emit for endpoints/types with
+     * x-fern-availability set to beta, alpha, pre-release, or in-development.
+     */
+    private static readonly AVAILABILITY_PATTERNS: RegExp[] = [
+        // TypeScript/JavaScript: @beta JSDoc tag
+        /@beta\b/,
+        // Python: docstring warnings
+        /WARNING:.*(?:beta|pre-release|in development|experimental)/i,
+        // Java/Kotlin: @Beta or @Experimental annotations
+        /@Beta\b/,
+        /@Experimental\b/,
+        // Java/Kotlin: @apiNote with beta/pre-release
+        /@apiNote.*(?:beta|pre-release|in development|experimental)/i,
+        // Go: doc comments
+        /\/\/\s*Beta:/,
+        // C#: remarks with beta/pre-release
+        /<remarks>.*(?:beta|pre-release|in development|experimental)/i,
+        // Ruby: @note Beta
+        /@note\s+Beta\b/i
+    ];
+
+    /**
+     * Scans the generated source files referenced in the diff for availability
+     * markers (beta, alpha, pre-release, etc.) and returns a compact text header
+     * that can be prepended to the diff so the AI knows which symbols are
+     * pre-release — even if the marker is outside the diff context window.
+     *
+     * Only files that appear in the diff are scanned, keeping I/O bounded.
+     *
+     * @param cleanedDiff The cleaned diff content (output of cleanDiffForAI)
+     * @param outputDir Absolute path to the generated SDK output directory
+     * @return A header string listing files with beta/alpha markers, or empty string if none found
+     */
+    public async extractAvailabilityContext(cleanedDiff: string, outputDir: string): Promise<string> {
+        const lines = cleanedDiff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        // Collect unique file paths from the diff
+        const filePaths: string[] = [];
+        for (const section of fileSections) {
+            const filePath = this.extractFilePathFromSection(section);
+            if (filePath != null) {
+                filePaths.push(filePath);
+            }
+        }
+
+        const markersByFile: Map<string, string[]> = new Map();
+
+        for (const filePath of filePaths) {
+            const fullPath = pathJoin(outputDir, filePath);
+            let content: string;
+            try {
+                content = await readFile(fullPath, "utf-8");
+            } catch {
+                // File may have been deleted in this diff; skip it
+                continue;
+            }
+
+            const fileLines = content.split("\n");
+            const markers: string[] = [];
+
+            for (let i = 0; i < fileLines.length; i++) {
+                const line = fileLines[i];
+                if (line == null) {
+                    continue;
+                }
+                for (const pattern of AutoVersioningService.AVAILABILITY_PATTERNS) {
+                    if (pattern.test(line)) {
+                        markers.push(`  line ${i + 1}: ${line.trim()}`);
+                        break;
+                    }
+                }
+            }
+
+            if (markers.length > 0) {
+                markersByFile.set(filePath, markers);
+            }
+        }
+
+        if (markersByFile.size === 0) {
+            return "";
+        }
+
+        // Build a compact header
+        const headerLines: string[] = [
+            "# AVAILABILITY CONTEXT: The following files contain beta/alpha/pre-release markers.",
+            "# Methods or types near these markers should NOT be treated as stable API surface.",
+            "# Breaking changes to these symbols should be MINOR, not MAJOR.",
+            "#"
+        ];
+
+        for (const [filePath, markers] of markersByFile) {
+            headerLines.push(`# ${filePath}:`);
+            for (const marker of markers) {
+                headerLines.push(`#${marker}`);
+            }
+        }
+
+        headerLines.push("#");
+        headerLines.push("");
+
+        this.logger.info(
+            `Found availability markers in ${markersByFile.size} file(s) — ` +
+                `prepending context header for AI analysis`
+        );
+
+        return headerLines.join("\n");
+    }
+
     private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);

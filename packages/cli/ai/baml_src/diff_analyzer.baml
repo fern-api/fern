@@ -68,8 +68,14 @@ function AnalyzeSdkDiff(
     - Any language: comments/docs containing "beta", "alpha", "pre-release", "in development",
       "experimental", or "may change"
 
+    Additionally, the diff may be preceded by an "AVAILABILITY CONTEXT" header (lines starting
+    with #) that lists files and line numbers where beta/alpha/pre-release markers were found
+    in the generated source code. This header is provided when the marker may fall outside the
+    diff context window. Use this header to identify which files contain pre-release symbols.
+
     If a method, endpoint, type, or class is annotated with ANY of these pre-release/beta/alpha
-    markers (either in the removed lines, the added lines, or the surrounding context of the diff),
+    markers (either in the removed lines, the added lines, the surrounding context of the diff,
+    or the AVAILABILITY CONTEXT header),
     then breaking changes to that symbol MUST NOT be classified as MAJOR. Instead:
     - Downgrade what would be MAJOR to MINOR for pre-release/beta/alpha symbols
     - The rationale is that consumers of beta/alpha APIs have no stability guarantee, so
