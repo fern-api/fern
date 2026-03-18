@@ -37,6 +37,9 @@ describe("ProtocGenOpenAPIDownloader", () => {
         tempHomeDir = (await tmp.dir({ unsafeCleanup: true })).path;
         logger = createMockLogger();
 
+        // Reset module registry so vi.doMock takes effect on next dynamic import
+        vi.resetModules();
+
         // Mock os.homedir() to use our temp directory
         vi.doMock("os", async () => {
             const actual = await vi.importActual<typeof import("os")>("os");
