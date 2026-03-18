@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Fix unresolved import error when WebSocket channels exist in the API spec but
+        `enableWebsockets` is not enabled. The root client no longer emits
+        `use crate::api::websocket::...` imports when WebSocket generation is disabled,
+        preventing compilation failures on generated SDKs.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 62
+
 - version: 0.19.4
   changelogEntry:
     - summary: |
