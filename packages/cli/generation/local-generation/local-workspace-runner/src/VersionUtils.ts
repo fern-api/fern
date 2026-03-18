@@ -40,7 +40,7 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
 }
 
 export const AUTO_VERSION = "AUTO";
-export const MAGIC_VERSION = "505.503.4455";
+export const MAGIC_VERSION = "0.0.0-fern-placeholder";
 
 /**
  * Maximum byte size for a single AI analysis call.
@@ -160,7 +160,7 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
 
 /**
  * Extracts the previous version from a line containing the magic version.
- * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
+ * Assumes the line format is like: "version = '0.0.0-fern-placeholder'" or "version: 0.0.0-fern-placeholder"
  *
  * @param lineWithMagicVersion A line from git diff containing the magic version
  * @return The inferred previous version if found, or undefined if the version cannot be parsed

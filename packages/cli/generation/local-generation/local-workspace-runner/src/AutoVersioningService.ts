@@ -176,10 +176,10 @@ export class AutoVersioningService {
 
     /**
      * Extracts the previous version from a git diff by finding lines with the magic version.
-     * The diff should contain lines like: -version = '1.2.3'  +version = '505.503.4455'
+     * The diff should contain lines like: -version = '1.2.3'  +version = '0.0.0-fern-placeholder'
      *
      * @param diffContent The git diff content
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @return The previous version if found, or undefined if all magic version occurrences are in new files
      * @throws AutoVersioningException if the magic version is not found at all in the diff
      */
@@ -295,7 +295,7 @@ export class AutoVersioningService {
      * 3. Remove entire file sections that have no remaining content changes (no + or - lines)
      *
      * @param diffContent The git diff content
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @return Cleaned diff content
      */
     public cleanDiffForAI(diffContent: string, mappedMagicVersion: string): string {
@@ -731,7 +731,7 @@ export class AutoVersioningService {
      * Replaces all occurrences of the magic version with the final version in generated files.
      *
      * @param workingDirectory The directory containing generated files
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @param finalVersion The final version to use
      * @throws Error if file operations fail or find/sed command fails
      */
@@ -990,7 +990,7 @@ export class AutoVersioningService {
 
     /**
      * Extracts the previous version from a line containing the magic version.
-     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
+     * Assumes the line format is like: "version = '0.0.0-fern-placeholder'" or "version: 0.0.0-fern-placeholder"
      *
      * @param lineWithMagicVersion A line from git diff containing the magic version
      * @return The inferred previous version if found, or undefined if the version cannot be parsed

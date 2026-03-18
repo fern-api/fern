@@ -194,7 +194,7 @@ export class LocalTaskHandler {
             }
 
             // Extract previous version and clean diff
-            // Note: this.version is the mapped magic version (e.g., "v505.503.4455" for Go)
+            // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
             if (!this.version) {
                 throw new Error("Version is required for auto versioning");
             }
