@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.34.1
+  changelogEntry:
+    - summary: |
+        Include available group names in the error message when no group is
+        specified and no default-group is set. The error now lists all groups
+        defined in generators.yml so users can quickly pick the right
+        `--group` value.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 4.34.0
   changelogEntry:
     - summary: |
