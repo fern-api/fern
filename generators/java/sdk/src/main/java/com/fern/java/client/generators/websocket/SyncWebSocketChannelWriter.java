@@ -191,8 +191,19 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.beginControlFlow("else if (!baseUrl.endsWith(\"/\") && !fullPath.startsWith(\"/\"))");
         builder.addStatement("fullPath = \"/\" + fullPath");
         builder.endControlFlow();
-        builder.addStatement(
-                "$T.Builder urlBuilder = $T.parse(baseUrl + fullPath).newBuilder()", HttpUrl.class, HttpUrl.class);
+        // Convert WebSocket schemes to HTTP schemes for OkHttp's HttpUrl parser
+        builder.addComment("OkHttp's HttpUrl only supports http/https schemes; convert wss/ws for URL parsing");
+        builder.beginControlFlow("if (baseUrl.startsWith($S))", "wss://");
+        builder.addStatement("baseUrl = $S + baseUrl.substring(6)", "https://");
+        builder.endControlFlow();
+        builder.beginControlFlow("else if (baseUrl.startsWith($S))", "ws://");
+        builder.addStatement("baseUrl = $S + baseUrl.substring(5)", "http://");
+        builder.endControlFlow();
+        builder.addStatement("$T parsedUrl = $T.parse(baseUrl + fullPath)", HttpUrl.class, HttpUrl.class);
+        builder.beginControlFlow("if (parsedUrl == null)");
+        builder.addStatement("throw new $T($S + baseUrl + fullPath)", IllegalArgumentException.class, "Invalid WebSocket URL: ");
+        builder.endControlFlow();
+        builder.addStatement("$T.Builder urlBuilder = parsedUrl.newBuilder()", HttpUrl.class);
 
         // Add query parameters
         for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
