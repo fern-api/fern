@@ -9,6 +9,10 @@ pub enum RealtimeNoAuthServerMessage {
     #[serde(rename = "receive")]
     NoAuthReceiveEvent(NoAuthReceiveEvent),
 }
+#[derive(Debug, Clone, Default)]
+pub struct RealtimeNoAuthConnectOptions {
+    pub model: Option<String>,
+}
 pub struct RealtimeNoAuthClient {
     ws: WebSocketClient,
     incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
@@ -17,17 +21,17 @@ impl RealtimeNoAuthClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
-        model: Option<&str>,
+        options: &RealtimeNoAuthConnectOptions,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime-no-auth/{session_id}", url);
-        let mut options = WebSocketOptions::default();
+        let mut ws_options = WebSocketOptions::default();
 
-        if let Some(v) = model {
-            options
+        if let Some(ref v) = options.model {
+            ws_options
                 .query_params
                 .push(("model".to_string(), v.to_string()));
         }
-        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
+        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
         Ok(Self { ws, incoming_rx })
     }
 
@@ -71,8 +75,8 @@ impl RealtimeNoAuthConnector {
     pub async fn connect(
         &self,
         session_id: &str,
-        model: Option<&str>,
+        options: &RealtimeNoAuthConnectOptions,
     ) -> Result<RealtimeNoAuthClient, ApiError> {
-        RealtimeNoAuthClient::connect(&self.base_url, session_id, model).await
+        RealtimeNoAuthClient::connect(&self.base_url, session_id, options).await
     }
 }

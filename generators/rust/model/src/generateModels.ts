@@ -1,5 +1,6 @@
 import { RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias/index.js";
+import { BytesRequestGenerator } from "./bytes-request/index.js";
 import { EnumGenerator } from "./enum/index.js";
 import { FileUploadRequestBodyGenerator } from "./file-upload-request-body/index.js";
 import { InlinedRequestBodyGenerator } from "./inlined-request-body/index.js";
@@ -59,6 +60,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     // Generate request types for endpoints with referenced body + query parameters
     const referencedRequestWithQueryGenerator = new ReferencedRequestWithQueryGenerator(context);
     files.push(...referencedRequestWithQueryGenerator.generateFiles());
+
+    // Generate request structs for bytes endpoints with query parameters
+    const bytesRequestGenerator = new BytesRequestGenerator(context);
+    files.push(...bytesRequestGenerator.generateFiles());
 
     // Deduplicate files by filename to prevent file collisions
     // This is a safety net for tracing logs - ideally generators shouldn't create duplicates

@@ -729,6 +729,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add request types for bytes endpoints with query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const uniqueRequestName = context.getBytesRequestTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForBytesRequest(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,

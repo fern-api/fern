@@ -15,6 +15,11 @@ pub enum RealtimeServerMessage {
     #[serde(rename = "receive3")]
     ReceiveEvent3(ReceiveEvent3),
 }
+#[derive(Debug, Clone, Default)]
+pub struct RealtimeConnectOptions {
+    pub model: Option<String>,
+    pub temperature: Option<String>,
+}
 pub struct RealtimeClient {
     ws: WebSocketClient,
     incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
@@ -23,23 +28,22 @@ impl RealtimeClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
-        model: Option<&str>,
-        temperature: Option<&str>,
+        options: &RealtimeConnectOptions,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime/{session_id}", url);
-        let mut options = WebSocketOptions::default();
+        let mut ws_options = WebSocketOptions::default();
 
-        if let Some(v) = model {
-            options
+        if let Some(ref v) = options.model {
+            ws_options
                 .query_params
                 .push(("model".to_string(), v.to_string()));
         }
-        if let Some(v) = temperature {
-            options
+        if let Some(ref v) = options.temperature {
+            ws_options
                 .query_params
                 .push(("temperature".to_string(), v.to_string()));
         }
-        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
+        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
         Ok(Self { ws, incoming_rx })
     }
 
@@ -91,9 +95,8 @@ impl RealtimeConnector {
     pub async fn connect(
         &self,
         session_id: &str,
-        model: Option<&str>,
-        temperature: Option<&str>,
+        options: &RealtimeConnectOptions,
     ) -> Result<RealtimeClient, ApiError> {
-        RealtimeClient::connect(&self.base_url, session_id, model, temperature).await
+        RealtimeClient::connect(&self.base_url, session_id, options).await
     }
 }

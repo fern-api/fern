@@ -147,6 +147,12 @@ export class WebSocketChannelGenerator {
             reExports.push(`pub use ${names.moduleName}::${names.clientName};`);
             reExports.push(`pub use ${names.moduleName}::${this.getConnectorName(names.clientName)};`);
 
+            // Export options struct if channel has query parameters
+            if (channel.queryParameters.length > 0) {
+                const optionsStructName = this.getOptionsStructName(names.enumPrefix);
+                reExports.push(`pub use ${names.moduleName}::${optionsStructName};`);
+            }
+
             const serverMessages = channel.messages.filter((m) => m.origin === "server");
             const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
             const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
@@ -203,13 +209,19 @@ export class WebSocketChannelGenerator {
             rawDeclarations.push(this.generateEventEnum(enumPrefix));
         }
 
+        // Generate options struct for channels with query parameters
+        const optionsStructName = this.getOptionsStructName(enumPrefix);
+        if (channel.queryParameters.length > 0) {
+            rawDeclarations.push(this.generateConnectOptionsStruct(optionsStructName, channel));
+        }
+
         rawDeclarations.push(this.generateClientStruct(clientName));
         rawDeclarations.push(
             this.generateImplBlock(clientName, enumPrefix, channel, clientMessages, jsonServerMessages, hasBinaryServerMessages)
         );
 
         // Generate connector struct that wraps base_url and delegates to the client's connect()
-        rawDeclarations.push(this.generateConnectorStruct(clientName, channel));
+        rawDeclarations.push(this.generateConnectorStruct(clientName, enumPrefix, channel));
 
         const hasJsonServerMessages = jsonServerMessages.length > 0;
         const useStatements = this.generateImports(hasJsonServerMessages);
@@ -328,7 +340,7 @@ pub enum ${enumName} {
     ): string {
         const pathExpression = this.buildPathExpression(channel);
 
-        const connectMethod = this.generateConnectMethod(clientName, channel, pathExpression);
+        const connectMethod = this.generateConnectMethod(clientName, enumPrefix, channel, pathExpression);
         const sendMethods = clientMessages.map((msg) => this.generateSendMethod(msg)).join("\n\n");
         const receiveMethod = this.generateReceiveMethod(enumPrefix, jsonServerMessages, hasBinaryServerMessages);
         const closeMethod = this.generateCloseMethod();
@@ -349,8 +361,14 @@ ${methods.join("\n\n")}
      * Builds the shared connect parameter list from a WebSocket channel's IR definition.
      * Used by both generateConnectMethod() and generateConnectorStruct() to ensure
      * parameter signatures stay in sync.
+     *
+     * When a channel has query parameters, they are bundled into a ConnectOptions struct
+     * instead of being passed as individual positional parameters.
      */
-    private buildConnectParams(channel: FernIr.WebSocketChannel): Array<{ name: string; type: string }> {
+    private buildConnectParams(
+        channel: FernIr.WebSocketChannel,
+        enumPrefix: string
+    ): Array<{ name: string; type: string }> {
         const params: Array<{ name: string; type: string }> = [];
 
         for (const pathParam of channel.pathParameters) {
@@ -361,12 +379,10 @@ ${methods.join("\n\n")}
             params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
         }
 
-        for (const qp of channel.queryParameters) {
-            const isOptional = this.isOptionalType(qp.valueType);
-            params.push({
-                name: qp.name.name.snakeCase.safeName,
-                type: isOptional ? "Option<&str>" : "&str"
-            });
+        // Bundle query parameters into options struct instead of individual params
+        if (channel.queryParameters.length > 0) {
+            const optionsStructName = this.getOptionsStructName(enumPrefix);
+            params.push({ name: "options", type: `&${optionsStructName}` });
         }
 
         return params;
@@ -383,45 +399,46 @@ ${methods.join("\n\n")}
 
     private generateConnectMethod(
         clientName: string,
+        enumPrefix: string,
         channel: FernIr.WebSocketChannel,
         pathExpression: string
     ): string {
-        const connectParams = this.buildConnectParams(channel);
+        const connectParams = this.buildConnectParams(channel, enumPrefix);
         const params: string[] = ["url: &str", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
 
         const headerInserts = channel.headers
             .map((header) => {
                 const paramName = header.name.name.snakeCase.safeName;
                 const wireValue = header.name.wireValue;
-                return `        options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`;
+                return `        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`;
             })
             .join("\n");
 
         const queryLines: string[] = [];
         if (channel.queryParameters.length > 0) {
             for (const qp of channel.queryParameters) {
-                const paramName = qp.name.name.snakeCase.safeName;
+                const fieldName = qp.name.name.snakeCase.safeName;
                 const wireValue = qp.name.wireValue;
                 const isOptional = this.isOptionalType(qp.valueType);
                 if (isOptional) {
-                    queryLines.push(`        if let Some(v) = ${paramName} {`);
-                    queryLines.push(`            options.query_params.push(("${wireValue}".to_string(), v.to_string()));`);
+                    queryLines.push(`        if let Some(ref v) = options.${fieldName} {`);
+                    queryLines.push(`            ws_options.query_params.push(("${wireValue}".to_string(), v.to_string()));`);
                     queryLines.push(`        }`);
                 } else {
-                    queryLines.push(`        options.query_params.push(("${wireValue}".to_string(), ${paramName}.to_string()));`);
+                    queryLines.push(`        ws_options.query_params.push(("${wireValue}".to_string(), options.${fieldName}.to_string()));`);
                 }
             }
         }
 
         const needsMut = channel.headers.length > 0 || channel.queryParameters.length > 0;
-        const optionsBinding = needsMut ? "let mut options" : "let options";
+        const wsOptionsBinding = needsMut ? "let mut ws_options" : "let ws_options";
 
         return `    pub async fn connect(${params.join(", ")}) -> Result<Self, ApiError> {
         let full_url = format!("{}${pathExpression}", url);
-        ${optionsBinding} = WebSocketOptions::default();
+        ${wsOptionsBinding} = WebSocketOptions::default();
 ${headerInserts}
 ${queryLines.join("\n")}
-        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
+        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
         Ok(Self { ws, incoming_rx })
     }`;
     }
@@ -503,11 +520,11 @@ ${queryLines.join("\n")}
      * client's connect() method. This allows WebSocket clients to be accessed
      * through the root client (e.g., `client.realtime.connect(...)`).
      */
-    private generateConnectorStruct(clientName: string, channel: FernIr.WebSocketChannel): string {
+    private generateConnectorStruct(clientName: string, enumPrefix: string, channel: FernIr.WebSocketChannel): string {
         const connectorName = this.getConnectorName(clientName);
 
         // Reuse shared parameter list — same order and types as generateConnectMethod()
-        const connectParams = this.buildConnectParams(channel);
+        const connectParams = this.buildConnectParams(channel, enumPrefix);
         const params: string[] = ["&self", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
         const forwardArgs: string[] = ["&self.base_url", ...connectParams.map((p) => p.name)];
 
@@ -525,6 +542,39 @@ impl ${connectorName} {
     pub async fn connect(${params.join(", ")}) -> Result<${clientName}, ApiError> {
         ${clientName}::connect(${forwardArgs.join(", ")}).await
     }
+}`;
+    }
+
+    /**
+     * Derives the options struct name from the enum prefix.
+     * e.g., "ListenV1" → "ListenV1ConnectOptions"
+     */
+    private getOptionsStructName(enumPrefix: string): string {
+        return `${enumPrefix}ConnectOptions`;
+    }
+
+    /**
+     * Generates a Rust struct that bundles all query parameters for a WebSocket
+     * connect() call into a single options struct with Default support.
+     */
+    private generateConnectOptionsStruct(
+        structName: string,
+        channel: FernIr.WebSocketChannel
+    ): string {
+        const fields = channel.queryParameters.map((qp) => {
+            const fieldName = qp.name.name.snakeCase.safeName;
+            const wireValue = qp.name.wireValue;
+            const isOptional = this.isOptionalType(qp.valueType);
+            const fieldType = isOptional ? "Option<String>" : "String";
+            const renameAttr = fieldName !== wireValue
+                ? `    #[serde(rename = "${wireValue}")]\n`
+                : "";
+            return `${renameAttr}    pub ${fieldName}: ${fieldType},`;
+        });
+
+        return `#[derive(Debug, Clone, Default)]
+pub struct ${structName} {
+${fields.join("\n")}
 }`;
     }
 

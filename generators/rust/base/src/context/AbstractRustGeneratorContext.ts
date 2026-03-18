@@ -540,6 +540,39 @@ export abstract class AbstractRustGeneratorContext<
         }
         this.logger.debug(`Registered ${queryRequestCount} query request filenames and type names`);
 
+        // Priority 3.25: Bytes request types (bytes body + query parameters)
+        let bytesRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only bytes endpoints with query parameters
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerBytesRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerBytesRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Bytes request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    bytesRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${bytesRequestCount} bytes request filenames and type names`);
+
         // Priority 3.5: Referenced request with query parameters
         let referencedRequestWithQueryCount = 0;
         for (const service of Object.values(ir.services)) {
@@ -1035,6 +1068,30 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get filename for bytes request (bytes body + query params) using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getFilenameForBytesRequest(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestFilenameOrThrow(endpointId);
+    }
+
+    /**
+     * Get module name for bytes request from filename.
+     */
+    public getModuleNameForBytesRequest(endpointId: string): string {
+        const filename = this.getFilenameForBytesRequest(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for bytes request using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getBytesRequestTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {
@@ -1105,6 +1162,23 @@ export abstract class AbstractRustGeneratorContext<
             }
         }
         return "api_key";
+    }
+
+    /**
+     * Get the API key value prefix from the IR auth schemes.
+     * Returns the prefix (e.g., "Token") with a trailing space if defined, or empty string.
+     * This allows the generated code to format the header value as "{prefix} {key}".
+     */
+    public getApiKeyPrefix(): string {
+        if (this.ir.auth?.schemes) {
+            for (const scheme of this.ir.auth.schemes) {
+                const schemeAsUnion = scheme as { type?: string; prefix?: string };
+                if (schemeAsUnion.type === "header" && schemeAsUnion.prefix) {
+                    return `${schemeAsUnion.prefix} `;
+                }
+            }
+        }
+        return "";
     }
 
     /**

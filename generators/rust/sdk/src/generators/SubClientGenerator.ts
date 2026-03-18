@@ -901,8 +901,9 @@ export class SubClientGenerator {
     }
 
     private buildMethodParameters(params: EndpointParameter[], _endpoint: FernIr.HttpEndpoint): string[] {
-        // Separate path parameters from request body
-        const pathParams = params.filter((p) => p.name !== "request");
+        // Separate path parameters from body/request params
+        const pathParams = params.filter((p) => p.name !== "request" && p.name !== "body");
+        const bodyParam = params.find((p) => p.name === "body");
         const requestBodyParam = params.find((p) => p.name === "request");
 
         const methodParams: string[] = [];
@@ -921,6 +922,15 @@ export class SubClientGenerator {
 
             methodParams.push(`${param.name}: ${paramType}`);
         });
+
+        // Add bytes body parameter if present (for bytes+query endpoints)
+        if (bodyParam) {
+            let paramType = bodyParam.type.toString();
+            if (bodyParam.isRef) {
+                paramType = `&${paramType}`;
+            }
+            methodParams.push(`${bodyParam.name}: ${paramType}`);
+        }
 
         // Add request body parameter if it exists (structured request type)
         if (requestBodyParam) {
@@ -950,9 +960,9 @@ export class SubClientGenerator {
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
             if (this.isBytesEndpoint(endpoint)) {
-                // BYTES + QUERY: bytes body can't hold query fields, add them separately
-                this.addRequestBodyParameter(endpoint, params);
-                this.addIndividualQueryParameters(endpoint, params);
+                // BYTES + QUERY: Use bytes body + request struct for query params
+                this.addBytesBodyParameter(endpoint, params);
+                this.addBytesRequestParameter(endpoint, params);
             } else {
                 // MIXED: Request body contains both body + query fields
                 this.addRequestBodyParameter(endpoint, params);
@@ -970,16 +980,23 @@ export class SubClientGenerator {
         return params;
     }
 
-    private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
-        for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
-            params.push({
-                name: paramName,
-                type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
-                isRef: this.shouldPassByReference(queryParam.valueType),
-                optional: false
-            });
-        }
+    private addBytesBodyParameter(_endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
+        params.push({
+            name: "body",
+            type: rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+            isRef: true,
+            optional: false
+        });
+    }
+
+    private addBytesRequestParameter(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
+        const requestTypeName = this.context.getBytesRequestTypeName(endpoint.id);
+        params.push({
+            name: "request",
+            type: rust.Type.reference(rust.reference({ name: requestTypeName })),
+            isRef: true,
+            optional: false
+        });
     }
 
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
@@ -1321,8 +1338,8 @@ export class SubClientGenerator {
         const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
         if (endpoint && this.isBytesEndpoint(endpoint)) {
-            // BYTES body: query params are individual method parameters
-            return `${fieldName}.clone()`;
+            // BYTES body: query params are in the request struct
+            return `request.${fieldName}.clone()`;
         } else if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
@@ -1484,6 +1501,12 @@ export class SubClientGenerator {
     }
 
     private getRequestBody(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): string {
+        // For bytes+query endpoints, the body is a separate "body" parameter
+        const bodyParam = params.find((param) => param.name === "body");
+        if (bodyParam && this.isBytesEndpoint(endpoint)) {
+            return "Some(serde_json::to_value(body).unwrap_or_default())";
+        }
+
         const requestBodyParam = params.find((param) => param.name === "request");
         if (requestBodyParam && endpoint.requestBody) {
             // For referenced body with query parameters, serialize request.body

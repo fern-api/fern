@@ -8,9 +8,9 @@ pub struct EmptyRealtimeClient {
 impl EmptyRealtimeClient {
     pub async fn connect(url: &str) -> Result<Self, ApiError> {
         let full_url = format!("{}/empty/realtime/", url);
-        let options = WebSocketOptions::default();
+        let ws_options = WebSocketOptions::default();
 
-        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
+        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
         Ok(Self { ws, incoming_rx })
     }
 
