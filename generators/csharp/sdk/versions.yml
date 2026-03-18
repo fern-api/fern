@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.32.2
+  changelogEntry:
+    - summary: |
+        Fix CS1501 build error for literal struct `GetHashCode` on `netstandard2.0` and
+        `net462` targets. `string.GetHashCode(StringComparison)` is only available in
+        .NET Core 2.1+ / .NET Standard 2.1+. The generated code now uses
+        `StringComparer.Ordinal.GetHashCode(Value)` which is available on all frameworks.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 2.32.1
   changelogEntry:
     - summary: |
