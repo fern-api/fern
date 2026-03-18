@@ -97,7 +97,7 @@ service:
             query: "query"
           response:
             stream:
-              - event: ignored-field
+              - event: ignoredField
               - data:
                   event: completion
                   content: "content"
@@ -133,7 +133,7 @@ service:
                   content: "content"
               - event: event
                 data:
-                  event: "event"
+                  event: "something-completely-different"
         - name: "Bad request"
           request:
             query: ""
