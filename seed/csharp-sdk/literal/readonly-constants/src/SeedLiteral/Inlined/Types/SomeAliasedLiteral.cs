@@ -12,7 +12,7 @@ public readonly struct SomeAliasedLiteral
 
     public override string ToString() => Value;
 
-    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
+    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
 
     public override bool Equals(object? obj) => obj is SomeAliasedLiteral;
 
