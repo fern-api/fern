@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { writeFileSync } from "fs";
-import { access, chmod, copyFile, mkdir, rename } from "fs/promises";
+import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 
@@ -10,6 +10,8 @@ const GITHUB_RELEASE_URL_BASE = "https://github.com/fern-api/protoc-gen-openapi/
 const BINARY_NAME = "protoc-gen-openapi";
 const CACHE_DIR_NAME = ".fern";
 const BIN_DIR_NAME = "bin";
+const LOCK_TIMEOUT_MS = 120_000;
+const LOCK_RETRY_INTERVAL_MS = 200;
 
 interface PlatformInfo {
     os: string;
@@ -60,16 +62,26 @@ function getCacheDir(): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.join(homeDir, CACHE_DIR_NAME, BIN_DIR_NAME));
 }
 
-function getCachedBinaryPath(): AbsoluteFilePath {
+function getVersionedBinaryPath(): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
     const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}-${PROTOC_GEN_OPENAPI_VERSION}${extension}`));
 }
 
-function getSymlinkPath(): AbsoluteFilePath {
+function getCanonicalBinaryPath(): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
     const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}${extension}`));
+}
+
+function getVersionMarkerPath(): AbsoluteFilePath {
+    const cacheDir = getCacheDir();
+    return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}.version`));
+}
+
+function getLockDirPath(): string {
+    const cacheDir = getCacheDir();
+    return path.join(cacheDir, `${BINARY_NAME}.lock`);
 }
 
 function getDownloadUrl(): string {
@@ -87,28 +99,99 @@ async function fileExists(filePath: AbsoluteFilePath): Promise<boolean> {
 }
 
 /**
- * Returns the directory containing the protoc-gen-openapi binary.
- * If the binary is not cached, downloads it from GitHub Releases.
- * Returns undefined if the download fails.
+ * Acquires an exclusive filesystem lock using mkdir (atomic on all platforms).
+ * Returns a release function that removes the lock directory.
+ * If the lock cannot be acquired within LOCK_TIMEOUT_MS, force-breaks it
+ * (assumes the holder crashed) and retries once.
+ */
+async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
+    const lockPath = getLockDirPath();
+    const deadline = Date.now() + LOCK_TIMEOUT_MS;
+
+    while (Date.now() < deadline) {
+        try {
+            await mkdir(lockPath, { recursive: false });
+            return async () => {
+                try {
+                    await rm(lockPath, { recursive: true });
+                } catch {
+                    // Lock directory already removed; harmless
+                }
+            };
+        } catch {
+            logger.debug(`Waiting for lock on ${lockPath}...`);
+            await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+        }
+    }
+
+    // Timeout — force-break the presumed-stale lock and retry once
+    logger.debug(`Lock timed out after ${LOCK_TIMEOUT_MS}ms, breaking stale lock`);
+    try {
+        await rm(lockPath, { recursive: true });
+    } catch {
+        // Ignore — another process may have already removed it
+    }
+    await mkdir(lockPath, { recursive: false });
+    return async () => {
+        try {
+            await rm(lockPath, { recursive: true });
+        } catch {
+            // Lock directory already removed; harmless
+        }
+    };
+}
+
+/**
+ * Resolves the protoc-gen-openapi binary, downloading it from GitHub Releases if needed.
+ *
+ * **Versioning**: Binaries are cached with a versioned filename (e.g. `protoc-gen-openapi-v0.1.12`).
+ * A `.version` marker file tracks which version the canonical `protoc-gen-openapi` binary corresponds to.
+ * When `PROTOC_GEN_OPENAPI_VERSION` is bumped, the canonical binary is atomically replaced on the
+ * next invocation.
+ *
+ * **Race conditions**: An exclusive filesystem lock (mkdir-based) is held during download and
+ * file operations to prevent concurrent processes from corrupting the cache. All file replacements
+ * use write-to-temp + atomic rename.
+ *
+ * @returns The directory containing the binary (for PATH injection), or `undefined` if download fails.
  */
 export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteFilePath | undefined> {
-    const cachedBinaryPath = getCachedBinaryPath();
-    const symlinkPath = getSymlinkPath();
+    const cacheDir = getCacheDir();
+    await mkdir(cacheDir, { recursive: true });
 
-    if (await fileExists(cachedBinaryPath)) {
-        logger.debug(`Using cached protoc-gen-openapi at ${cachedBinaryPath}`);
-        await copyBinaryFile(cachedBinaryPath, symlinkPath);
+    const releaseLock = await acquireLock(logger);
+    try {
+        return await resolveUnderLock(logger);
+    } finally {
+        await releaseLock();
+    }
+}
+
+async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | undefined> {
+    const versionedPath = getVersionedBinaryPath();
+    const canonicalPath = getCanonicalBinaryPath();
+    const versionMarkerPath = getVersionMarkerPath();
+
+    // Fast path: versioned binary already downloaded
+    if (await fileExists(versionedPath)) {
+        const currentMarker = await readVersionMarker(versionMarkerPath);
+        if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
+            logger.debug(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+            return getCacheDir();
+        }
+        // Version marker is stale or canonical binary is missing — refresh atomically
+        await atomicCopyBinary(versionedPath, canonicalPath);
+        await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
+        logger.debug(`Updated canonical protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     }
 
+    // Download the binary
     const downloadUrl = getDownloadUrl();
     logger.debug(`Downloading protoc-gen-openapi from ${downloadUrl}`);
 
     try {
-        const cacheDir = getCacheDir();
-        await mkdir(cacheDir, { recursive: true });
-
-        const tmpPath = AbsoluteFilePath.of(`${cachedBinaryPath}.tmp`);
+        const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
         const response = await fetch(downloadUrl, { redirect: "follow" });
         if (!response.ok) {
             logger.debug(`Failed to download protoc-gen-openapi: ${response.status} ${response.statusText}`);
@@ -116,16 +199,18 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        writeFileSync(tmpPath, new Uint8Array(arrayBuffer));
+        writeFileSync(tmpDownloadPath, new Uint8Array(arrayBuffer));
+        await chmod(tmpDownloadPath, 0o755);
 
-        await chmod(tmpPath, 0o755);
-        await rename(tmpPath, cachedBinaryPath);
+        // Atomic rename to versioned path
+        await rename(tmpDownloadPath, versionedPath);
 
-        // Create the unversioned copy so buf can find it as "protoc-gen-openapi"
-        await copyBinaryFile(cachedBinaryPath, symlinkPath);
+        // Atomic copy to canonical path + update version marker
+        await atomicCopyBinary(versionedPath, canonicalPath);
+        await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
 
-        logger.debug(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION} to ${cachedBinaryPath}`);
-        return cacheDir;
+        logger.debug(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+        return getCacheDir();
     } catch (error) {
         logger.debug(
             `Failed to download protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
@@ -134,7 +219,22 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
     }
 }
 
-async function copyBinaryFile(src: AbsoluteFilePath, dest: AbsoluteFilePath): Promise<void> {
-    await copyFile(src, dest);
-    await chmod(dest, 0o755);
+async function readVersionMarker(markerPath: AbsoluteFilePath): Promise<string | undefined> {
+    try {
+        return (await readFile(markerPath, "utf-8")).trim();
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Atomically copies src to dest by writing to a temp file first, then renaming.
+ * rename() is atomic on the same filesystem, so no other process can observe a
+ * partially-written binary.
+ */
+async function atomicCopyBinary(src: AbsoluteFilePath, dest: AbsoluteFilePath): Promise<void> {
+    const tmpDest = AbsoluteFilePath.of(`${dest}.tmp`);
+    await copyFile(src, tmpDest);
+    await chmod(tmpDest, 0o755);
+    await rename(tmpDest, dest);
 }
