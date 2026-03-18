@@ -1,11 +1,9 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { createWriteStream } from "fs";
-import { access, chmod, mkdir, rename } from "fs/promises";
+import { writeFileSync } from "fs";
+import { access, chmod, copyFile, mkdir, rename } from "fs/promises";
 import os from "os";
 import path from "path";
-import { Readable } from "stream";
-import { pipeline } from "stream/promises";
 
 const PROTOC_GEN_OPENAPI_VERSION = "v0.1.12";
 const GITHUB_RELEASE_URL_BASE = "https://github.com/fern-api/protoc-gen-openapi/releases/download";
@@ -99,10 +97,7 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
 
     if (await fileExists(cachedBinaryPath)) {
         logger.debug(`Using cached protoc-gen-openapi at ${cachedBinaryPath}`);
-        // Ensure the unversioned symlink/copy exists
-        if (!(await fileExists(symlinkPath))) {
-            await copyBinaryFile(cachedBinaryPath, symlinkPath);
-        }
+        await copyBinaryFile(cachedBinaryPath, symlinkPath);
         return getCacheDir();
     }
 
@@ -120,13 +115,8 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
             return undefined;
         }
 
-        if (response.body == null) {
-            logger.debug("Failed to download protoc-gen-openapi: empty response body");
-            return undefined;
-        }
-
-        const fileStream = createWriteStream(tmpPath);
-        await pipeline(Readable.fromWeb(response.body as ReadableStream), fileStream);
+        const arrayBuffer = await response.arrayBuffer();
+        writeFileSync(tmpPath, new Uint8Array(arrayBuffer));
 
         await chmod(tmpPath, 0o755);
         await rename(tmpPath, cachedBinaryPath);
@@ -145,7 +135,6 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
 }
 
 async function copyBinaryFile(src: AbsoluteFilePath, dest: AbsoluteFilePath): Promise<void> {
-    const { copyFile: fsCopyFile } = await import("fs/promises");
-    await fsCopyFile(src, dest);
+    await copyFile(src, dest);
     await chmod(dest, 0o755);
 }

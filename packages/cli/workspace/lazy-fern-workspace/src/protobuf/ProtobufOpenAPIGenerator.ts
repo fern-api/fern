@@ -2,6 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
 import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
@@ -128,7 +129,9 @@ export class ProtobufOpenAPIGenerator {
             await which(["protoc-gen-openapi"]);
             protocGenOpenAPIOnPath = true;
         } catch (err) {
-            // Not on PATH — try auto-downloading
+            this.context.logger.debug(
+                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
+            );
         }
 
         if (!protocGenOpenAPIOnPath) {
@@ -151,7 +154,7 @@ export class ProtobufOpenAPIGenerator {
         // If we downloaded protoc-gen-openapi, prepend its directory to PATH so buf can find it
         const envOverride =
             this.protocGenOpenAPIBinDir != null
-                ? { PATH: `${this.protocGenOpenAPIBinDir}:${process.env.PATH ?? ""}` }
+                ? { PATH: `${this.protocGenOpenAPIBinDir}${path.delimiter}${process.env.PATH ?? ""}` }
                 : undefined;
 
         const buf = createLoggingExecutable("buf", {
