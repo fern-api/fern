@@ -1,14 +1,15 @@
-import { execSync } from "child_process";
+import { exec } from "child_process";
 import { randomBytes } from "crypto";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 const MAX_PREVIEW_ID_LENGTH = 40;
 
-export function getPreviewId(): string {
+export async function getPreviewId(): Promise<string> {
     try {
-        const branch = execSync("git rev-parse --abbrev-ref HEAD", {
-            encoding: "utf-8",
-            stdio: ["pipe", "pipe", "pipe"]
-        }).trim();
+        const { stdout } = await execAsync("git rev-parse --abbrev-ref HEAD");
+        const branch = stdout.trim();
 
         if (branch === "HEAD" || branch === "") {
             return generateRandomId();

@@ -11,8 +11,8 @@ import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVer
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
 
-interface SdkPreviewResult {
-    status: "success" | "error";
+interface SdkPreviewSuccess {
+    status: "success";
     org: string;
     previews: Array<{
         preview_id: string;
@@ -22,6 +22,13 @@ interface SdkPreviewResult {
         registry_url: string;
     }>;
 }
+
+interface SdkPreviewError {
+    status: "error";
+    message: string;
+}
+
+type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
 
 export async function sdkPreview({
     cliContext,
@@ -61,110 +68,129 @@ export async function sdkPreview({
     }
 
     // 3. Resolve preview ID
-    const previewId = getPreviewId();
+    const previewId = await getPreviewId();
     cliContext.logger.info(`Preview ID: ${previewId}`);
 
-    const previews: SdkPreviewResult["previews"] = [];
+    const previews: SdkPreviewSuccess["previews"] = [];
 
-    // 4. Process each workspace
-    for (const workspace of project.apiWorkspaces) {
-        if (workspace.generatorsConfiguration == null) {
-            cliContext.logger.warn(
-                `Workspace "${workspace.workspaceName}" has no ${GENERATORS_CONFIGURATION_FILENAME}`
-            );
-            continue;
-        }
+    try {
+        // 4. Process each workspace
+        for (const workspace of project.apiWorkspaces) {
+            if (workspace.generatorsConfiguration == null) {
+                cliContext.logger.warn(
+                    `Workspace "${workspace.workspaceName}" has no ${GENERATORS_CONFIGURATION_FILENAME}`
+                );
+                continue;
+            }
 
-        // Resolve group
-        const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
-        if (groupNameOrDefault == null) {
-            return cliContext.failAndThrow(
-                `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
-            );
-        }
-
-        const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
-        if (group == null) {
-            return cliContext.failAndThrow(
-                `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
-            );
-        }
-
-        // Filter to a specific generator if --generator is provided
-        const generators =
-            generatorFilter != null ? group.generators.filter((g) => g.name === generatorFilter) : group.generators;
-
-        if (generatorFilter != null && generators.length === 0) {
-            return cliContext.failAndThrow(
-                `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
-            );
-        }
-
-        for (const generator of generators) {
-            // SDK preview v1 only supports TypeScript/npm generators
-            if (!isNpmGenerator(generator.name)) {
+            // Resolve group
+            const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+            if (groupNameOrDefault == null) {
                 return cliContext.failAndThrow(
-                    `SDK preview currently only supports TypeScript/npm generators. ` +
-                        `Generator '${generator.name}' is not supported.`
+                    `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
                 );
             }
 
-            const packageName = getPackageNameFromGeneratorConfig(generator);
-            if (packageName == null) {
+            const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
+            if (group == null) {
                 return cliContext.failAndThrow(
-                    `Could not determine package name for generator '${generator.name}'. ` +
-                        `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
+                    `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
                 );
             }
 
-            const previewVersion = await computePreviewVersion({ packageName, previewId });
-            cliContext.logger.info(`Preview version: ${previewVersion}`);
+            // Filter to a specific generator if --generator is provided
+            const generators =
+                generatorFilter != null ? group.generators.filter((g) => g.name === generatorFilter) : group.generators;
 
-            // Override group output to publish to preview registry.
-            // token.value is the Fern org token (FERN_TOKEN) — the preview registry
-            // must accept this token for publish authentication.
-            const modifiedGroup = overrideGroupOutputForPreview({
-                group: { ...group, generators: [generator] },
-                packageName,
-                token: token.value
-            });
+            if (generatorFilter != null && generators.length === 0) {
+                return cliContext.failAndThrow(
+                    `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
+                );
+            }
 
-            // Run generation locally via Docker. We use local generation (not remote/Fiddle)
-            // because we programmatically override the output config, which requires direct
-            // control over the generator invocation. Docker must be installed.
-            // absolutePathToPreview is undefined — this is NOT preview-to-disk mode,
-            // we want the generator to actually publish to the preview registry.
-            await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                await runLocalGenerationForWorkspace({
-                    token,
-                    projectConfig: project.config,
-                    workspace,
-                    generatorGroup: modifiedGroup,
-                    version: previewVersion,
-                    keepDocker: false,
-                    context,
-                    absolutePathToPreview: undefined,
-                    runner: undefined,
-                    inspect: false,
-                    ai: workspace.generatorsConfiguration?.ai,
-                    replay: undefined,
-                    noReplay: true,
-                    validateWorkspace: true,
-                    publishToRegistry: true
+            // Filter to npm-only generators (SDK preview v1 limitation)
+            const npmGenerators = generators.filter((g) => isNpmGenerator(g.name));
+            const skippedGenerators = generators.filter((g) => !isNpmGenerator(g.name));
+            for (const skipped of skippedGenerators) {
+                cliContext.logger.warn(
+                    `Skipping '${skipped.name}' — SDK preview currently only supports TypeScript/npm generators. ` +
+                        `Use --generator to target a specific generator.`
+                );
+            }
+            if (npmGenerators.length === 0) {
+                return cliContext.failAndThrow(
+                    `No supported generators found in group '${groupNameOrDefault}'. ` +
+                        `SDK preview currently only supports TypeScript/npm generators.`
+                );
+            }
+
+            for (const generator of npmGenerators) {
+                const packageName = getPackageNameFromGeneratorConfig(generator);
+                if (packageName == null) {
+                    return cliContext.failAndThrow(
+                        `Could not determine package name for generator '${generator.name}'. ` +
+                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
+                    );
+                }
+
+                const previewVersion = await computePreviewVersion({ packageName, previewId });
+                cliContext.logger.info(`Preview version: ${previewVersion}`);
+
+                // Override group output to publish to preview registry.
+                // token.value is the Fern org token (FERN_TOKEN) — the preview registry
+                // must accept this token for publish authentication.
+                const modifiedGroup = overrideGroupOutputForPreview({
+                    group: { ...group, generators: [generator] },
+                    packageName,
+                    token: token.value
                 });
-            });
 
-            const installCommand = `npm install ${packageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
-            cliContext.logger.info(`→ ${installCommand}`);
+                // Run generation locally via Docker. We use local generation (not remote/Fiddle)
+                // because we programmatically override the output config, which requires direct
+                // control over the generator invocation. Docker must be installed.
+                // absolutePathToPreview is undefined — this is NOT preview-to-disk mode,
+                // we want the generator to actually publish to the preview registry.
+                await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                    await runLocalGenerationForWorkspace({
+                        token,
+                        projectConfig: project.config,
+                        workspace,
+                        generatorGroup: modifiedGroup,
+                        version: previewVersion,
+                        keepDocker: false,
+                        context,
+                        absolutePathToPreview: undefined,
+                        runner: undefined,
+                        inspect: false,
+                        ai: workspace.generatorsConfiguration?.ai,
+                        replay: undefined,
+                        noReplay: true,
+                        validateWorkspace: true,
+                        publishToRegistry: true
+                    });
+                });
 
-            previews.push({
-                preview_id: previewId,
-                install: installCommand,
-                version: previewVersion,
-                package_name: packageName,
-                registry_url: PREVIEW_REGISTRY_URL
-            });
+                const installCommand = `npm install ${packageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
+                cliContext.logger.info(`→ ${installCommand}`);
+
+                previews.push({
+                    preview_id: previewId,
+                    install: installCommand,
+                    version: previewVersion,
+                    package_name: packageName,
+                    registry_url: PREVIEW_REGISTRY_URL
+                });
+            }
         }
+    } catch (error) {
+        if (json) {
+            const result: SdkPreviewResult = {
+                status: "error",
+                message: error instanceof Error ? error.message : String(error)
+            };
+            process.stdout.write(JSON.stringify(result, null, 2));
+        }
+        throw error;
     }
 
     // 5. Output result
