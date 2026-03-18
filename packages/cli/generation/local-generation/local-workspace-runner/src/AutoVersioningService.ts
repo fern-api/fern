@@ -778,13 +778,6 @@ export class AutoVersioningService {
     }
 
     /**
-     * Extracts the previous version from a line containing the magic version.
-     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
-     *
-     * @param lineWithMagicVersion A line from git diff containing the magic version
-     * @return The inferred previous version if found, or undefined if the version cannot be parsed
-     */
-    /**
      * Regex patterns that match availability markers in generated SDK source files.
      * These are the annotations Fern generators emit for endpoints/types with
      * x-fern-availability set to beta, alpha, pre-release, or in-development.
@@ -898,6 +891,13 @@ export class AutoVersioningService {
         return headerLines.join("\n");
     }
 
+    /**
+     * Extracts the previous version from a line containing the magic version.
+     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
+     *
+     * @param lineWithMagicVersion A line from git diff containing the magic version
+     * @return The inferred previous version if found, or undefined if the version cannot be parsed
+     */
     private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);
