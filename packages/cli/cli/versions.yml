@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.33.0
+  changelogEntry:
+    - summary: |
+        Add `enums-coerceable-to-literals` option for `coerce-consts-to`, and make
+        it the new default. This behaves like `enums` (const values become
+        single-element enums) but allows `coerce-enums-to-literals` to transitively
+        coerce them to literals, which is consistent with past default behavior. The
+        existing `enums` option continues to block this transitive coercion.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.32.2
   changelogEntry:
     - summary: |

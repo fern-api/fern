@@ -25,7 +25,7 @@ export declare namespace BaseOpenAPIWorkspace {
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-        coerceConstsTo: "literals" | "enums" | undefined;
+        coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -49,7 +49,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-    public readonly coerceConstsTo: "literals" | "enums" | undefined;
+    public readonly coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -140,7 +140,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
-    public coerceConstsTo: "literals" | "enums" | undefined;
+    public coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
