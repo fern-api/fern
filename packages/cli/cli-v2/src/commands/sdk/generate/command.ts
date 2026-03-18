@@ -587,7 +587,7 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new GenerateCommand();
     command(
         cli,
@@ -668,7 +668,6 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }

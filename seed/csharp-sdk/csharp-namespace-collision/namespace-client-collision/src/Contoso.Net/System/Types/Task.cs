@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Contoso.Net;
-using Contoso.Net.Core;
+using global::Contoso.Net;
+using global::Contoso.Net.Core;
 
 namespace Contoso.Net.System;
 

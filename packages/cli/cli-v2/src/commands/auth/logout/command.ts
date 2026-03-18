@@ -127,7 +127,7 @@ export class LogoutCommand {
     }
 }
 
-export function addLogoutCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addLogoutCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new LogoutCommand();
     command(
         cli,
@@ -149,7 +149,6 @@ export function addLogoutCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                     type: "boolean",
                     default: false,
                     description: "Skip confirmation prompt"
-                }),
-        parentPath
+                })
     );
 }

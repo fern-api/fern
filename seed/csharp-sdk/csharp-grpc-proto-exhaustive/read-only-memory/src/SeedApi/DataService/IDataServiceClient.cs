@@ -2,6 +2,11 @@ namespace SeedApi;
 
 public partial interface IDataServiceClient
 {
+    Task<CheckResponse> CheckAsync(
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task<CreateResponse> CreateAsync(
         CreateRequest request,
         GrpcRequestOptions? options = null,
