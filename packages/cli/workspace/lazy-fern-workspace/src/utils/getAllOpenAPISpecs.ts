@@ -1,6 +1,6 @@
 import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import { isNonNullish } from "@fern-api/core-utils";
-import { listFiles, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator.js";
@@ -28,26 +28,50 @@ export async function getAllOpenAPISpecs({
                 return result ? [result.openApiSpec] : [];
             }
             const allProtobufTargetFilepaths = await listFiles(protobufSpec.absoluteFilepathToProtobufRoot, "proto");
-            let accumulatedBufLockContents: string | undefined;
-            const openApiSpecs: OpenAPISpec[] = [];
+            if (allProtobufTargetFilepaths.length === 0) {
+                return [];
+            }
 
-            for (const file of allProtobufTargetFilepaths) {
-                const result = await convertProtobufToOpenAPI({
-                    generator,
-                    protobufSpec: {
-                        ...protobufSpec,
-                        absoluteFilepathToProtobufTarget: file
-                    },
-                    relativePathToDependency,
-                    existingBufLockContents: accumulatedBufLockContents
-                });
-                if (result != null) {
-                    openApiSpecs.push(result.openApiSpec);
-                    if (result.bufLockContents != null) {
-                        accumulatedBufLockContents = result.bufLockContents;
+            // Process first file to get buf.lock contents for caching
+            // Safe to index — length > 0 is checked above
+            const firstFile = allProtobufTargetFilepaths[0] as AbsoluteFilePath;
+            const firstResult = await convertProtobufToOpenAPI({
+                generator,
+                protobufSpec: {
+                    ...protobufSpec,
+                    absoluteFilepathToProtobufTarget: firstFile
+                },
+                relativePathToDependency
+            });
+
+            const bufLockContents = firstResult?.bufLockContents;
+            const openApiSpecs: OpenAPISpec[] = [];
+            if (firstResult != null) {
+                openApiSpecs.push(firstResult.openApiSpec);
+            }
+
+            // Parallelize remaining files with cached buf.lock contents
+            if (allProtobufTargetFilepaths.length > 1) {
+                const remainingResults = await Promise.all(
+                    allProtobufTargetFilepaths.slice(1).map((file) =>
+                        convertProtobufToOpenAPI({
+                            generator,
+                            protobufSpec: {
+                                ...protobufSpec,
+                                absoluteFilepathToProtobufTarget: file
+                            },
+                            relativePathToDependency,
+                            existingBufLockContents: bufLockContents
+                        })
+                    )
+                );
+                for (const result of remainingResults) {
+                    if (result != null) {
+                        openApiSpecs.push(result.openApiSpec);
                     }
                 }
             }
+
             return openApiSpecs;
         })
     );
