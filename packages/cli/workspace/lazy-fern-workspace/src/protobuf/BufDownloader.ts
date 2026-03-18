@@ -134,7 +134,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
         await mkdir(lockPath, { recursive: false });
     } catch {
         // Another process grabbed the lock between our rm and mkdir — retry with remaining time
-        const remaining = Math.max(0, deadline - Date.now());
+        const remaining = Math.max(LOCK_RETRY_INTERVAL_MS * 5, deadline - Date.now());
         const retryDeadline = Date.now() + remaining;
         while (Date.now() < retryDeadline) {
             try {
