@@ -31,7 +31,7 @@ jobs:
     runs-on: Seed
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -102,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -116,7 +116,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
 
@@ -130,7 +130,7 @@ jobs:
       - name: Verify buf
         run: buf --version
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
           cache-dependency-path: generators/go/go.sum
@@ -174,7 +174,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -186,7 +186,7 @@ jobs:
       - name: Verify buf
         run: buf --version
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
           cache-dependency-path: generators/go/go.sum
@@ -241,7 +241,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -263,15 +263,16 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20.x"
+          package-manager-cache: false
 
       - name: Assert docs are generated
         env:
@@ -299,15 +300,16 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20.x"
+          package-manager-cache: false
 
       - name: Check API definition is valid
         env:
