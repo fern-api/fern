@@ -54,7 +54,7 @@ export async function getLatestRelease(
         const releases = await octokit.rest.repos.listReleases({
             owner,
             repo,
-            per_page: 15
+            per_page: 100
         });
 
         for (const release of releases.data) {
