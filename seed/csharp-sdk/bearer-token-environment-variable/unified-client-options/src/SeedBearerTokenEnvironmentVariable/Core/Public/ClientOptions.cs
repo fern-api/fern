@@ -77,13 +77,7 @@ public partial class ClientOptions
     /// <summary>
     /// The apiKey to use for authentication.
     /// </summary>
-    public string? ApiKey { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public string? ApiKey { get; set; }
 
     /// <summary>
     /// Clones this and returns a new instance

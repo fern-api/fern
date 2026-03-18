@@ -206,7 +206,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                         origin: class_.explicit(field.name),
                         access: ast.Access.Public,
                         get: true,
-                        init: true,
+                        set: true,
                         type: field.type.asOptional(),
                         summary: field.docs
                     });
@@ -233,7 +233,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     origin: class_.explicit(name),
                     access: ast.Access.Public,
                     get: true,
-                    init: true,
+                    set: true,
                     type: type.asOptional(),
                     summary: header.docs
                 });
