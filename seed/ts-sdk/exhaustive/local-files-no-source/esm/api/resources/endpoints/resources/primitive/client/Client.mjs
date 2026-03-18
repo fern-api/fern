@@ -60,6 +60,25 @@ export class PrimitiveClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnString endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnString(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/string"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -99,6 +118,25 @@ export class PrimitiveClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/integer");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnInt endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnInt(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/integer"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -144,6 +182,25 @@ export class PrimitiveClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnLong endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnLong(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/long"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -183,6 +240,25 @@ export class PrimitiveClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/double");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnDouble endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDouble(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/double"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -228,6 +304,25 @@ export class PrimitiveClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnBool endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnBool(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/boolean"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -267,6 +362,25 @@ export class PrimitiveClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/datetime");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnDatetime endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDatetime(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/datetime"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -312,6 +426,25 @@ export class PrimitiveClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnDate endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDate(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/date"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -354,6 +487,25 @@ export class PrimitiveClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnUuid endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnUuid(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/uuid"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -393,6 +545,25 @@ export class PrimitiveClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/base64");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnBase64 endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnBase64(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/base64"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
 }

@@ -56,6 +56,22 @@ export class UrlsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the withMixedCase endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithMixedCase(requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/urls/MixedCase"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
+        });
+    }
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -91,6 +107,22 @@ export class UrlsClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/no-ending-slash");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the noEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForNoEndingSlash(requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/urls/no-ending-slash"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
         });
     }
     /**
@@ -132,6 +164,22 @@ export class UrlsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the withEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithEndingSlash(requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/urls/with-ending-slash/"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
+        });
+    }
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -167,6 +215,22 @@ export class UrlsClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/with_underscores");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the withUnderscores endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithUnderscores(requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/urls/with_underscores"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
         });
     }
 }

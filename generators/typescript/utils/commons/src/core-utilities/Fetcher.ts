@@ -142,6 +142,11 @@ export interface Fetcher {
         fromPromise: (promise: ts.Expression) => ts.Expression;
         interceptFunction: (fn: ts.Expression) => ts.Expression;
     };
+
+    readonly buildRequest: {
+        _getReferenceTo: () => ts.Expression;
+        _invoke: (args: ts.Expression) => ts.Expression;
+    };
 }
 
 export declare namespace Fetcher {
@@ -568,6 +573,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
         }
     };
+    public readonly buildRequest = {
+        _getReferenceTo: this.withExportedName("buildRequest", (buildRequest) => () => buildRequest.getExpression()),
+        _invoke: this.withExportedName(
+            "buildRequest",
+            (buildRequestFn) => (args: ts.Expression) =>
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(buildRequestFn.getExpression(), undefined, [args])
+                )
+        )
+    };
+
     public readonly HttpResponsePromise = {
         _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
             return this.withExportedName(

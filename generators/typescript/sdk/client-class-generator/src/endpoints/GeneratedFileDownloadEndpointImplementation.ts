@@ -188,6 +188,68 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return this.request.getBuildRequestStatements(context);
     }
 
+    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+        const statements: ts.Statement[] = [];
+
+        if (this.generateEndpointMetadata) {
+            statements.push(
+                ...generateEndpointMetadata({
+                    httpEndpoint: this.endpoint,
+                    context
+                })
+            );
+        }
+
+        statements.push(...this.request.getBuildRequestStatements(context));
+
+        const requestArgs = this.request.getFetcherRequestArgs(context);
+        const args: Record<string, ts.Expression> = {
+            url: this.getReferenceToBaseUrl(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method)
+        };
+
+        if (requestArgs.headers != null) {
+            args.headers = requestArgs.headers;
+        }
+        if (requestArgs.queryParameters != null) {
+            args.queryParameters = requestArgs.queryParameters;
+        }
+        if (requestArgs.body != null) {
+            args.body = requestArgs.body;
+        }
+        if (requestArgs.contentType != null) {
+            args.contentType =
+                typeof requestArgs.contentType === "string"
+                    ? ts.factory.createStringLiteral(requestArgs.contentType)
+                    : requestArgs.contentType;
+        }
+        if (requestArgs.requestType != null) {
+            args.requestType = ts.factory.createStringLiteral(requestArgs.requestType);
+        }
+
+        if (this.generateEndpointMetadata) {
+            const metadata = this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier();
+            if (metadata != null) {
+                args.endpointMetadata = metadata;
+            }
+        }
+
+        const buildRequestArgs = ts.factory.createObjectLiteralExpression(
+            Object.entries(args).map(([key, value]) =>
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)
+            ),
+            true
+        );
+
+        statements.push(
+            ts.factory.createReturnStatement(
+                context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs)
+            )
+        );
+
+        return statements;
+    }
+
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
         const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({

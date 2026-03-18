@@ -19,4 +19,8 @@ export declare class EnumClient {
      */
     getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: EnumClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport>;
     private __getAndReturnEnum;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnEnum endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: EnumClient.RequestOptions): Promise<Request>;
 }

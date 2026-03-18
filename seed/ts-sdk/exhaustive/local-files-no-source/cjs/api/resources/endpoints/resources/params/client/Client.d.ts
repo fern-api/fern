@@ -22,6 +22,10 @@ export declare class ParamsClient {
     getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getWithPath;
     /**
+     * Build a standard Fetch `Request` object for the getWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
+    /**
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
@@ -34,6 +38,10 @@ export declare class ParamsClient {
      */
     getWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getWithInlinePath;
+    /**
+     * Build a standard Fetch `Request` object for the getWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
     /**
      * GET with query param
      *
@@ -49,6 +57,10 @@ export declare class ParamsClient {
     getWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithQuery;
     /**
+     * Build a standard Fetch `Request` object for the getWithQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
+    /**
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
@@ -62,6 +74,10 @@ export declare class ParamsClient {
      */
     getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithAllowMultipleQuery;
+    /**
+     * Build a standard Fetch `Request` object for the getWithAllowMultipleQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
     /**
      * GET with path and query params
      *
@@ -77,6 +93,10 @@ export declare class ParamsClient {
     getWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithPathAndQuery;
     /**
+     * Build a standard Fetch `Request` object for the getWithPathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
+    /**
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
@@ -91,6 +111,10 @@ export declare class ParamsClient {
     getWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithInlinePathAndQuery;
     /**
+     * Build a standard Fetch `Request` object for the getWithInlinePathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
+    /**
      * PUT to update with path param
      *
      * @param {string} param
@@ -102,6 +126,10 @@ export declare class ParamsClient {
      */
     modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithPath;
+    /**
+     * Build a standard Fetch `Request` object for the modifyWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForModifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
     /**
      * PUT to update with path param
      *
@@ -117,6 +145,10 @@ export declare class ParamsClient {
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
     /**
+     * Build a standard Fetch `Request` object for the modifyWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForModifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
+    /**
      * POST bytes with path param returning object
      *
      * @param {core.file.Uploadable} uploadable
@@ -129,4 +161,8 @@ export declare class ParamsClient {
      */
     uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
     private __uploadWithPath;
+    /**
+     * Build a standard Fetch `Request` object for the uploadWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForUploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): Promise<Request>;
 }

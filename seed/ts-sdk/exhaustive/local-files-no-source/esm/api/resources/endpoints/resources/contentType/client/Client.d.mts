@@ -36,6 +36,10 @@ export declare class ContentTypeClient {
     postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentType;
     /**
+     * Build a standard Fetch `Request` object for the postJsonPatchContentType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForPostJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): Promise<Request>;
+    /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -60,4 +64,8 @@ export declare class ContentTypeClient {
      */
     postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentWithCharsetType;
+    /**
+     * Build a standard Fetch `Request` object for the postJsonPatchContentWithCharsetType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForPostJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): Promise<Request>;
 }

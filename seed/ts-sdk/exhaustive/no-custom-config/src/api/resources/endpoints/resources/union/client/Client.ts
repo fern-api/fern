@@ -81,4 +81,32 @@ export class UnionClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/union");
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnUnion endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnUnion(
+        request: SeedExhaustive.types.Animal,
+        requestOptions?: UnionClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/union",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
 }

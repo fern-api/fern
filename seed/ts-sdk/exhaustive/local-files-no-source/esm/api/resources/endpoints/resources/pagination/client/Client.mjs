@@ -78,4 +78,25 @@ export class PaginationClient {
             });
         });
     }
+    /**
+     * Build a standard Fetch `Request` object for the listItems endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForListItems() {
+        return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
+            var _a, _b;
+            const { cursor, limit } = request;
+            const _queryParams = {
+                cursor,
+                limit,
+            };
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/pagination"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            });
+        });
+    }
 }

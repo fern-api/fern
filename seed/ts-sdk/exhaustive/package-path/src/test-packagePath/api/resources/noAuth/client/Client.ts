@@ -86,4 +86,27 @@ export class NoAuthClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/no-auth");
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the postWithNoAuth endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForPostWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuthClient.RequestOptions,
+    ): Promise<Request> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-auth",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
 }

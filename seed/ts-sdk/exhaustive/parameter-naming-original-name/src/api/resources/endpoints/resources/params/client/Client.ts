@@ -75,6 +75,31 @@ export class ParamsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithPath(
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
+
+    /**
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
@@ -131,6 +156,32 @@ export class ParamsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithInlinePath(
+        request: SeedExhaustive.endpoints.GetWithInlinePath,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { param } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
     }
 
     /**
@@ -198,6 +249,36 @@ export class ParamsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getWithQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithQuery(
+        request: SeedExhaustive.endpoints.GetWithQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { query, number: number_ } = request;
+        const _queryParams: Record<string, unknown> = {
+            query,
+            number: number_,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+        });
+    }
+
+    /**
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
@@ -259,6 +340,36 @@ export class ParamsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getWithAllowMultipleQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithAllowMultipleQuery(
+        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { query, number: number_ } = request;
+        const _queryParams: Record<string, unknown> = {
+            query,
+            number: number_,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+        });
     }
 
     /**
@@ -327,6 +438,36 @@ export class ParamsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getWithPathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithPathAndQuery(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { query } = request;
+        const _queryParams: Record<string, unknown> = {
+            query,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path-query/${core.url.encodePathParam(param)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+        });
+    }
+
+    /**
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
@@ -387,6 +528,35 @@ export class ParamsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path-query/{param}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getWithInlinePathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithInlinePathAndQuery(
+        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { param, query } = request;
+        const _queryParams: Record<string, unknown> = {
+            query,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path-query/${core.url.encodePathParam(param)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+        });
     }
 
     /**
@@ -452,6 +622,35 @@ export class ParamsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the modifyWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForModifyWithPath(
+        param: string,
+        request: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "PUT",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * PUT to update with path param
      *
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
@@ -512,6 +711,35 @@ export class ParamsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the modifyWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForModifyWithInlinePath(
+        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const { param, body: _body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "PUT",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: _body,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -580,5 +808,35 @@ export class ParamsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the uploadWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForUploadWithPath(
+        uploadable: core.file.Uploadable,
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<Request> {
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            _binaryUploadRequest.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: _binaryUploadRequest.body,
+            requestType: "bytes",
+        });
     }
 }

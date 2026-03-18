@@ -68,6 +68,28 @@ export class UrlsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the withMixedCase endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForWithMixedCase(requestOptions?: UrlsClient.RequestOptions): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/urls/MixedCase",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
+
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -112,6 +134,28 @@ export class UrlsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/no-ending-slash");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the noEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForNoEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/urls/no-ending-slash",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
     }
 
     /**
@@ -162,6 +206,28 @@ export class UrlsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the withEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForWithEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/urls/with-ending-slash/",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
+
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -206,5 +272,27 @@ export class UrlsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/with_underscores");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the withUnderscores endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForWithUnderscores(requestOptions?: UrlsClient.RequestOptions): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/urls/with_underscores",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
     }
 }

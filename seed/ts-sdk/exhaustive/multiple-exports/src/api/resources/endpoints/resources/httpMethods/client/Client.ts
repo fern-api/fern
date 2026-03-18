@@ -73,6 +73,31 @@ export class HttpMethodsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the testGet endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForTestGet(
+        id: string,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
+
+    /**
      * @deprecated
      *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
@@ -134,6 +159,34 @@ export class HttpMethodsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/http-methods");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the testPost endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForTestPost(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/http-methods",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -201,6 +254,35 @@ export class HttpMethodsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/http-methods/{id}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the testPut endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForTestPut(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "PUT",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -285,6 +367,35 @@ export class HttpMethodsClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the testPatch endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForTestPatch(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @beta This endpoint is in development and may change.
      *
      * @param {string} id
@@ -338,5 +449,30 @@ export class HttpMethodsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/http-methods/{id}");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the testDelete endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForTestDelete(
+        id: string,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
     }
 }

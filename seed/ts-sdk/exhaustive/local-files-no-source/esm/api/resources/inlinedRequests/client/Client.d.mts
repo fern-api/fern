@@ -43,4 +43,8 @@ export declare class InlinedRequestsClient {
      */
     postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
+    /**
+     * Build a standard Fetch `Request` object for the postWithObjectBodyandResponse endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForPostWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): Promise<Request>;
 }

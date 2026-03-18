@@ -23,4 +23,8 @@ export declare class ReqWithHeadersClient {
      */
     getWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeadersClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithCustomHeader;
+    /**
+     * Build a standard Fetch `Request` object for the getWithCustomHeader endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeadersClient.RequestOptions): Promise<Request>;
 }

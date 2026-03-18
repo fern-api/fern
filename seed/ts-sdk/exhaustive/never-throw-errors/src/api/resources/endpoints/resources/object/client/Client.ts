@@ -112,6 +112,34 @@ export class ObjectClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithOptionalField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithOptionalField(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-optional-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -187,6 +215,34 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithRequiredField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithRequiredField(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-required-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -269,6 +325,34 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithMapOfMap endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithMapOfMap(
+        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-map-of-map",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -371,6 +455,34 @@ export class ObjectClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithOptionalField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnNestedWithOptionalField(
+        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-nested-with-optional-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -470,6 +582,35 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithRequiredField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnNestedWithRequiredField(
+        string: string,
+        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -591,6 +732,34 @@ export class ObjectClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithRequiredFieldAsList endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnNestedWithRequiredFieldAsList(
+        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-nested-with-required-field-list",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @param {SeedExhaustive.types.ObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -668,6 +837,34 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithUnknownField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-unknown-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -755,6 +952,34 @@ export class ObjectClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithDocumentedUnknownType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithDocumentedUnknownType(
+        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-documented-unknown-type",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -836,6 +1061,34 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnMapOfDocumentedUnknownType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnMapOfDocumentedUnknownType(
+        request: SeedExhaustive.types.MapOfDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-map-of-documented-unknown-type",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 
     /**
@@ -921,5 +1174,33 @@ export class ObjectClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithDatetimeLikeString endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetAndReturnWithDatetimeLikeString(
+        request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-datetime-like-string",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
     }
 }

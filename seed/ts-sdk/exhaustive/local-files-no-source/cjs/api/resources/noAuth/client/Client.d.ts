@@ -24,4 +24,8 @@ export declare class NoAuthClient {
      */
     postWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __postWithNoAuth;
+    /**
+     * Build a standard Fetch `Request` object for the postWithNoAuth endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForPostWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): Promise<Request>;
 }

@@ -23,4 +23,8 @@ export declare class PaginationClient {
      *     })
      */
     listItems(request?: SeedExhaustive.endpoints.ListItemsRequest, requestOptions?: PaginationClient.RequestOptions): Promise<core.Page<SeedExhaustive.types.ObjectWithRequiredField, SeedExhaustive.endpoints.PaginatedResponse>>;
+    /**
+     * Build a standard Fetch `Request` object for the listItems endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForListItems(request?: SeedExhaustive.endpoints.ListItemsRequest, requestOptions?: PaginationClient.RequestOptions): Promise<Request>;
 }

@@ -95,6 +95,22 @@ class ParamsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithPath(param, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
+        });
+    }
+    /**
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
@@ -136,6 +152,23 @@ class ParamsClient {
                 });
             }
             return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithInlinePath(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { param } = request;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
         });
     }
     /**
@@ -188,6 +221,27 @@ class ParamsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getWithQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithQuery(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { query, number: number_ } = request;
+            const _queryParams = {
+                query,
+                number: number_,
+            };
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            });
+        });
+    }
+    /**
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
@@ -234,6 +288,27 @@ class ParamsClient {
                 });
             }
             return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getWithAllowMultipleQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithAllowMultipleQuery(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { query, number: number_ } = request;
+            const _queryParams = {
+                query,
+                number: number_,
+            };
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
+                method: "GET",
+                headers: _headers,
+                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            });
         });
     }
     /**
@@ -285,6 +360,26 @@ class ParamsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getWithPathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithPathAndQuery(param, request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { query } = request;
+            const _queryParams = {
+                query,
+            };
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
+                method: "GET",
+                headers: _headers,
+                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            });
+        });
+    }
+    /**
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
@@ -333,6 +428,26 @@ class ParamsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getWithInlinePathAndQuery endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithInlinePathAndQuery(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { param, query } = request;
+            const _queryParams = {
+                query,
+            };
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
+                method: "GET",
+                headers: _headers,
+                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            });
+        });
+    }
+    /**
      * PUT to update with path param
      *
      * @param {string} param
@@ -375,6 +490,25 @@ class ParamsClient {
                 });
             }
             return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the modifyWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForModifyWithPath(param, request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                method: "PUT",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -426,6 +560,26 @@ class ParamsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the modifyWithInlinePath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForModifyWithInlinePath(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const { param, body: _body } = request;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                method: "PUT",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: _body,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * POST bytes with path param returning object
      *
      * @param {core.file.Uploadable} uploadable
@@ -473,6 +627,25 @@ class ParamsClient {
                 });
             }
             return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the uploadWithPath endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForUploadWithPath(uploadable, param, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _binaryUploadRequest = yield core.file.toBinaryUploadRequest(uploadable);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, _binaryUploadRequest.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: _binaryUploadRequest.body,
+                requestType: "bytes",
+            });
         });
     }
 }

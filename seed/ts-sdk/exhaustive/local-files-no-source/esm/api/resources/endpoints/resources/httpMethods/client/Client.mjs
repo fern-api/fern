@@ -57,6 +57,22 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the testGet endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestGet(id, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
+        });
+    }
+    /**
      * @deprecated
      *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
@@ -103,6 +119,25 @@ export class HttpMethodsClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/http-methods");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the testPost endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPost(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/http-methods"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -153,6 +188,25 @@ export class HttpMethodsClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/http-methods/{id}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the testPut endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPut(id, request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
+                method: "PUT",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -220,6 +274,25 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the testPatch endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPatch(id, request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
+                method: "PATCH",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @beta This endpoint is in development and may change.
      *
      * @param {string} id
@@ -258,6 +331,22 @@ export class HttpMethodsClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/http-methods/{id}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the testDelete endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestDelete(id, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
+                method: "DELETE",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            });
         });
     }
 }

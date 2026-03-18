@@ -19,6 +19,10 @@ export declare class PrimitiveClient {
     getAndReturnString(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnString;
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnString endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnString(request: string, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
+    /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -27,6 +31,10 @@ export declare class PrimitiveClient {
      */
     getAndReturnInt(request: number, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<number>;
     private __getAndReturnInt;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnInt endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnInt(request: number, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
     /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -37,6 +45,10 @@ export declare class PrimitiveClient {
     getAndReturnLong(request: number, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<number>;
     private __getAndReturnLong;
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnLong endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnLong(request: number, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
+    /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -45,6 +57,10 @@ export declare class PrimitiveClient {
      */
     getAndReturnDouble(request: number, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<number>;
     private __getAndReturnDouble;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnDouble endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDouble(request: number, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
     /**
      * @param {boolean} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -55,6 +71,10 @@ export declare class PrimitiveClient {
     getAndReturnBool(request: boolean, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __getAndReturnBool;
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnBool endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnBool(request: boolean, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -63,6 +83,10 @@ export declare class PrimitiveClient {
      */
     getAndReturnDatetime(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnDatetime;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnDatetime endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDatetime(request: string, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
     /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -73,6 +97,10 @@ export declare class PrimitiveClient {
     getAndReturnDate(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnDate;
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnDate endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnDate(request: string, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -82,6 +110,10 @@ export declare class PrimitiveClient {
     getAndReturnUuid(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnUuid;
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnUuid endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnUuid(request: string, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
+    /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -90,4 +122,8 @@ export declare class PrimitiveClient {
      */
     getAndReturnBase64(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnBase64;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnBase64 endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnBase64(request: string, requestOptions?: PrimitiveClient.RequestOptions): Promise<Request>;
 }

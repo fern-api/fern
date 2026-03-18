@@ -18,6 +18,10 @@ export declare class UrlsClient {
     withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __withMixedCase;
     /**
+     * Build a standard Fetch `Request` object for the withMixedCase endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithMixedCase(requestOptions?: UrlsClient.RequestOptions): Promise<Request>;
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -25,6 +29,10 @@ export declare class UrlsClient {
      */
     noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __noEndingSlash;
+    /**
+     * Build a standard Fetch `Request` object for the noEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForNoEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<Request>;
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -34,6 +42,10 @@ export declare class UrlsClient {
     withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __withEndingSlash;
     /**
+     * Build a standard Fetch `Request` object for the withEndingSlash endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<Request>;
+    /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -41,4 +53,8 @@ export declare class UrlsClient {
      */
     withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __withUnderscores;
+    /**
+     * Build a standard Fetch `Request` object for the withUnderscores endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForWithUnderscores(requestOptions?: UrlsClient.RequestOptions): Promise<Request>;
 }

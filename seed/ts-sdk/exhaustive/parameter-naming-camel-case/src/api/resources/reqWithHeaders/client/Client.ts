@@ -86,4 +86,37 @@ export class ReqWithHeadersClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/test-headers/custom-header");
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the getWithCustomHeader endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeadersClient.RequestOptions,
+    ): Promise<Request> {
+        const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }),
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/test-headers/custom-header",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: _body,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
 }

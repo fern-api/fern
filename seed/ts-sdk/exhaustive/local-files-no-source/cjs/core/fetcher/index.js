@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Supplier = exports.unknownRawResponse = exports.toRawResponse = exports.abortRawResponse = exports.makePassthroughRequest = exports.HttpResponsePromise = exports.getHeader = exports.fetcher = exports.EndpointSupplier = void 0;
+exports.Supplier = exports.unknownRawResponse = exports.toRawResponse = exports.abortRawResponse = exports.makePassthroughRequest = exports.HttpResponsePromise = exports.getHeader = exports.fetcher = exports.EndpointSupplier = exports.buildRequest = void 0;
+var buildRequest_js_1 = require("./buildRequest.js");
+Object.defineProperty(exports, "buildRequest", { enumerable: true, get: function () { return buildRequest_js_1.buildRequest; } });
 var EndpointSupplier_js_1 = require("./EndpointSupplier.js");
 Object.defineProperty(exports, "EndpointSupplier", { enumerable: true, get: function () { return EndpointSupplier_js_1.EndpointSupplier; } });
 var Fetcher_js_1 = require("./Fetcher.js");

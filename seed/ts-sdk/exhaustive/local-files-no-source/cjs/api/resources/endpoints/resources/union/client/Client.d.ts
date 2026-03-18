@@ -23,4 +23,8 @@ export declare class UnionClient {
      */
     getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.Animal>;
     private __getAndReturnUnion;
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnUnion endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): Promise<Request>;
 }

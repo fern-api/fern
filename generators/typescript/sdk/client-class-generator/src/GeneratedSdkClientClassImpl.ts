@@ -799,6 +799,28 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 serviceClass.methods.push(publicMethod);
                 serviceClass.methods.push(internalMethod);
             }
+
+            // Generate buildRequest method for this endpoint
+            const buildRequestMethodName = `buildRequestFor${endpoint.endpoint.name.pascalCase.unsafeName}`;
+            const buildRequestStatements = endpoint.getBuildRequestStatements(context);
+            const buildRequestMethod: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
+                scope: Scope.Public,
+                name: buildRequestMethodName,
+                isAsync: true,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [
+                        ts.factory.createTypeReferenceNode("Request")
+                    ])
+                ),
+                statements: buildRequestStatements.map(getTextOfTsNode)
+            };
+            maybeAddDocsStructure(
+                buildRequestMethod,
+                `Build a standard Fetch \`Request\` object for the ${endpoint.endpoint.name.camelCase.unsafeName} endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.`
+            );
+            serviceClass.methods.push(buildRequestMethod);
         }
 
         if (this.generatedWebsocketImplementation != null) {

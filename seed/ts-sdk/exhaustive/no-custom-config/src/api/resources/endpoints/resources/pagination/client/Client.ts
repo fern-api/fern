@@ -95,4 +95,34 @@ export class PaginationClient {
             },
         });
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the listItems endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForListItems(
+        request: SeedExhaustive.endpoints.ListItemsRequest = {},
+        requestOptions?: PaginationClient.RequestOptions,
+    ): Promise<Request> {
+        const { cursor, limit } = request;
+        const _queryParams: Record<string, unknown> = {
+            cursor,
+            limit,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/pagination",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+        });
+    }
 }

@@ -79,6 +79,25 @@ export class ObjectClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithOptionalField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithOptionalField(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-optional-field"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -123,6 +142,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-required-field");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithRequiredField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithRequiredField(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-required-field"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -174,6 +212,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-map-of-map");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithMapOfMap endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithMapOfMap(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-map-of-map"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -241,6 +298,25 @@ export class ObjectClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithOptionalField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnNestedWithOptionalField(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-optional-field"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -303,6 +379,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-required-field/{string}");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithRequiredField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnNestedWithRequiredField(string, request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -389,6 +484,25 @@ export class ObjectClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnNestedWithRequiredFieldAsList endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-required-field-list"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {SeedExhaustive.types.ObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -435,6 +549,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-unknown-field");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithUnknownField endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithUnknownField(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-unknown-field"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -487,6 +620,25 @@ export class ObjectClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithDocumentedUnknownType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithDocumentedUnknownType(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-documented-unknown-type"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -533,6 +685,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-map-of-documented-unknown-type");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnMapOfDocumentedUnknownType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnMapOfDocumentedUnknownType(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-map-of-documented-unknown-type"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -585,6 +756,25 @@ export class ObjectClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-datetime-like-string");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnWithDatetimeLikeString endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnWithDatetimeLikeString(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-datetime-like-string"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
 }

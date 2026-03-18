@@ -60,6 +60,25 @@ export class ContainerClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnListOfPrimitives endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnListOfPrimitives(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/list-of-primitives"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -109,6 +128,25 @@ export class ContainerClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnListOfObjects endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnListOfObjects(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/list-of-objects"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -148,6 +186,25 @@ export class ContainerClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/container/set-of-primitives");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnSetOfPrimitives endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnSetOfPrimitives(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/set-of-primitives"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -198,6 +255,25 @@ export class ContainerClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnSetOfObjects endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnSetOfObjects(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/set-of-objects"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {Record<string, string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -239,6 +315,25 @@ export class ContainerClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/container/map-prim-to-prim");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnMapPrimToPrim endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnMapPrimToPrim(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/map-prim-to-prim"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
     /**
@@ -291,6 +386,25 @@ export class ContainerClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnMapOfPrimToObject endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnMapOfPrimToObject(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/map-prim-to-object"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {Record<string, SeedExhaustive.types.MixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -338,6 +452,25 @@ export class ContainerClient {
         });
     }
     /**
+     * Build a standard Fetch `Request` object for the getAndReturnMapOfPrimToUndiscriminatedUnion endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/map-prim-to-union"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
+        });
+    }
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -382,6 +515,25 @@ export class ContainerClient {
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/container/opt-objects");
+        });
+    }
+    /**
+     * Build a standard Fetch `Request` object for the getAndReturnOptional endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetAndReturnOptional(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            return yield core.buildRequest({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/container/opt-objects"),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                body: request,
+                contentType: "application/json",
+                requestType: "json",
+            });
         });
     }
 }

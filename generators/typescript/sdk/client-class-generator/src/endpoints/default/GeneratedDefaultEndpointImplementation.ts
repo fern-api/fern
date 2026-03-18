@@ -744,6 +744,71 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return body;
     }
 
+    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+        const statements: ts.Statement[] = [];
+
+        if (this.generateEndpointMetadata) {
+            statements.push(
+                ...generateEndpointMetadata({
+                    httpEndpoint: this.endpoint,
+                    context
+                })
+            );
+        }
+
+        statements.push(...this.request.getBuildRequestStatements(context));
+
+        const buildRequestArgs = this.buildBuildRequestArgs(context);
+        statements.push(
+            ts.factory.createReturnStatement(
+                context.coreUtilities.fetcher.buildRequest._invoke(buildRequestArgs)
+            )
+        );
+
+        return statements;
+    }
+
+    private buildBuildRequestArgs(context: SdkContext): ts.Expression {
+        const requestArgs = this.request.getFetcherRequestArgs(context);
+        const args: Record<string, ts.Expression> = {
+            url: this.getReferenceToBaseUrl(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method)
+        };
+
+        if (requestArgs.headers != null) {
+            args.headers = requestArgs.headers;
+        }
+        if (requestArgs.queryParameters != null) {
+            args.queryParameters = requestArgs.queryParameters;
+        }
+        if (requestArgs.body != null) {
+            args.body = requestArgs.body;
+        }
+        if (requestArgs.contentType != null) {
+            args.contentType =
+                typeof requestArgs.contentType === "string"
+                    ? ts.factory.createStringLiteral(requestArgs.contentType)
+                    : requestArgs.contentType;
+        }
+        if (requestArgs.requestType != null) {
+            args.requestType = ts.factory.createStringLiteral(requestArgs.requestType);
+        }
+
+        if (this.generateEndpointMetadata) {
+            const metadata = this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier();
+            if (metadata != null) {
+                args.endpointMetadata = metadata;
+            }
+        }
+
+        return ts.factory.createObjectLiteralExpression(
+            Object.entries(args).map(([key, value]) =>
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)
+            ),
+            true
+        );
+    }
+
     private buildFetcherArgs(context: SdkContext): ts.Expression {
         const requestArgs = this.request.getFetcherRequestArgs(context);
         const fetcherArgs: Record<string, ts.Expression> = {

@@ -83,6 +83,30 @@ export class NoReqBodyClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the getWithNoRequestBody endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForGetWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
+
+    /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -138,5 +162,29 @@ export class NoReqBodyClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/no-req-body");
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the postWithNoRequestBody endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForPostWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
     }
 }

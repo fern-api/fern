@@ -127,4 +127,27 @@ export class InlinedRequestsClient {
             rawResponse: _response.rawResponse,
         };
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the postWithObjectBodyandResponse endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForPostWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
+    ): Promise<Request> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/req-bodies/object",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+        });
+    }
 }

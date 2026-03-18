@@ -20,6 +20,10 @@ export declare class HttpMethodsClient {
     testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __testGet;
     /**
+     * Build a standard Fetch `Request` object for the testGet endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): Promise<Request>;
+    /**
      * @deprecated
      *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
@@ -32,6 +36,10 @@ export declare class HttpMethodsClient {
      */
     testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPost;
+    /**
+     * Build a standard Fetch `Request` object for the testPost endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<Request>;
     /**
      * @deprecated Use testPatch instead.
      *
@@ -46,6 +54,10 @@ export declare class HttpMethodsClient {
      */
     testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPut;
+    /**
+     * Build a standard Fetch `Request` object for the testPut endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<Request>;
     /**
      * @beta This endpoint is in pre-release and may change.
      *
@@ -75,6 +87,10 @@ export declare class HttpMethodsClient {
     testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPatch;
     /**
+     * Build a standard Fetch `Request` object for the testPatch endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<Request>;
+    /**
      * @beta This endpoint is in development and may change.
      *
      * @param {string} id
@@ -85,4 +101,8 @@ export declare class HttpMethodsClient {
      */
     testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __testDelete;
+    /**
+     * Build a standard Fetch `Request` object for the testDelete endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForTestDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): Promise<Request>;
 }

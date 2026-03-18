@@ -21,4 +21,8 @@ export declare class PutClient {
      */
     add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
     private __add;
+    /**
+     * Build a standard Fetch `Request` object for the add endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForAdd(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): Promise<Request>;
 }

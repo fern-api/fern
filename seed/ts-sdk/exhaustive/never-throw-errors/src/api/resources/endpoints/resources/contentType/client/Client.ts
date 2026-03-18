@@ -106,6 +106,34 @@ export class ContentTypeClient {
     }
 
     /**
+     * Build a standard Fetch `Request` object for the postJsonPatchContentType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForPostJsonPatchContentType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentTypeClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/bar",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json-patch+json",
+            requestType: "json",
+        });
+    }
+
+    /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -193,5 +221,33 @@ export class ContentTypeClient {
             },
             rawResponse: _response.rawResponse,
         };
+    }
+
+    /**
+     * Build a standard Fetch `Request` object for the postJsonPatchContentWithCharsetType endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForPostJsonPatchContentWithCharsetType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentTypeClient.RequestOptions,
+    ): Promise<Request> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/baz",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            body: request,
+            contentType: "application/json-patch+json; charset=utf-8",
+            requestType: "json",
+        });
     }
 }

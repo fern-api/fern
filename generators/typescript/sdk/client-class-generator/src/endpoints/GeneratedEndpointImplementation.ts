@@ -14,6 +14,7 @@ export interface GeneratedEndpointImplementation {
     endpoint: FernIr.HttpEndpoint;
     response: GeneratedEndpointResponse;
     getStatements: (context: SdkContext) => ts.Statement[];
+    getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
     getOverloads: (context: SdkContext) => EndpointSignature[];
     getSignature: (context: SdkContext) => EndpointSignature;
     getDocs: (context: SdkContext) => string | undefined;

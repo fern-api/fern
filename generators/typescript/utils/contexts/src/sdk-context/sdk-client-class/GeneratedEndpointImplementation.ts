@@ -14,6 +14,7 @@ export namespace GeneratedEndpointImplementation {
 export interface GeneratedEndpointImplementation {
     endpoint: FernIr.HttpEndpoint;
     getStatements: (context: SdkContext) => ts.Statement[];
+    getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
     getOverloads: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature[];
     getSignature: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature;
     getDocs: (context: SdkContext) => string | undefined;

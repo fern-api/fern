@@ -88,4 +88,30 @@ export class PutClient {
             rawResponse: _response.rawResponse,
         };
     }
+
+    /**
+     * Build a standard Fetch `Request` object for the add endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    public async buildRequestForAdd(
+        request: SeedExhaustive.endpoints.PutRequest,
+        requestOptions?: PutClient.RequestOptions,
+    ): Promise<Request> {
+        const { id } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        return await core.buildRequest({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `${core.url.encodePathParam(id)}`,
+            ),
+            method: "PUT",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+        });
+    }
 }

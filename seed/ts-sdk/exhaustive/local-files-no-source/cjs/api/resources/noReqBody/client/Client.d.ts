@@ -19,6 +19,10 @@ export declare class NoReqBodyClient {
     getWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __getWithNoRequestBody;
     /**
+     * Build a standard Fetch `Request` object for the getWithNoRequestBody endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForGetWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): Promise<Request>;
+    /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -26,4 +30,8 @@ export declare class NoReqBodyClient {
      */
     postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string>;
     private __postWithNoRequestBody;
+    /**
+     * Build a standard Fetch `Request` object for the postWithNoRequestBody endpoint. The returned request has auth, headers, query parameters, and body fully resolved — the caller is responsible for sending it.
+     */
+    buildRequestForPostWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): Promise<Request>;
 }
