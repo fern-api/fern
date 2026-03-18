@@ -55,9 +55,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         try {
             endpointSnippets = this.generateSnippets({ context });
         } catch (error) {
-            context.logger.debug(
-                `Failed to generate snippets: ${error instanceof Error ? error.message : String(error)}`
-            );
+            context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
         }
 
         // Generate README.md
@@ -135,7 +133,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
                     });
                 } catch (error) {
                     context.logger.debug(
-                        `Failed to generate snippet for endpoint ${endpointId}: ${error instanceof Error ? error.message : String(error)}`
+                        `Failed to generate snippet for endpoint ${endpointId}: ${extractErrorMessage(error)}`
                     );
                 }
             }

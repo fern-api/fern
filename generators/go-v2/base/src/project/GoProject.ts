@@ -1,5 +1,5 @@
 import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -91,7 +91,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 });
             } catch (error) {
                 this.context.logger.warn(
-                    `Failed to format Go files with 'go fmt': ${error instanceof Error ? error.message : String(error)}. ` +
+                    `Failed to format Go files with 'go fmt': ${extractErrorMessage(error)}. ` +
                         "The generated files have been written but may not be properly formatted."
                 );
             }
@@ -249,7 +249,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             } else {
                 // Log other errors for debugging while maintaining backwards compatibility
                 this.context.logger.warn(
-                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${error instanceof Error ? error.message : String(error)}`
+                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${extractErrorMessage(error)}`
                 );
             }
         }

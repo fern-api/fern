@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedVersion)](https://nuget.org/packages/SeedVersion)
+[![nuget shield](https://img.shields.io/nuget/v/Fernversion)](https://nuget.org/packages/Fernversion)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -27,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedVersion
+dotnet add package Fernversion
 ```
 
 ## Reference

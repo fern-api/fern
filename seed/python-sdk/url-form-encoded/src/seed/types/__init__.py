@@ -7,7 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .post_submit_response import PostSubmitResponse
-_dynamic_imports: typing.Dict[str, str] = {"PostSubmitResponse": ".post_submit_response"}
+    from .token_request import TokenRequest
+    from .token_response import TokenResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "PostSubmitResponse": ".post_submit_response",
+    "TokenRequest": ".token_request",
+    "TokenResponse": ".token_response",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["PostSubmitResponse"]
+__all__ = ["PostSubmitResponse", "TokenRequest", "TokenResponse"]
