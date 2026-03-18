@@ -1115,9 +1115,18 @@
             "schema": {
               "generatedName": "ItemListResults",
               "value": {
+                "value": {
+                  "generatedName": "ItemListResultsItem",
+                  "schema": "Item",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
                 "generatedName": "ItemListResults",
                 "groupName": [],
-                "type": "unknown"
+                "type": "array"
               },
               "groupName": [],
               "type": "optional"

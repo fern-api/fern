@@ -215,7 +215,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": "optional<unknown>",
+              "results": "optional<list<Item>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -555,7 +555,7 @@ types:
       openapi: ../openapi.yml
   ItemList:
     properties:
-      results: optional<unknown>
+      results: optional<list<Item>>
     source:
       openapi: ../openapi.yml
 ",
