@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.36.1
+  changelogEntry:
+    - summary: |
+        Fix `getLatestRelease` returning semver prerelease tags (e.g.
+        `0.0.0-dev-babaf54d`) as the latest release. When GitHub's "latest
+        release" API returns a tag that is a semver prerelease, the CLI now
+        falls back to scanning recent releases for the first stable
+        (non-prerelease, non-draft) version. This prevents
+        `computeSemanticVersion` from computing incorrect next versions.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 4.36.0
   changelogEntry:
     - summary: |

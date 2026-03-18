@@ -37,12 +37,14 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "octokit": "^4.1.4",
+    "semver": "^7.7.3",
     "simple-git": "catalog:",
     "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "catalog:",
+    "@types/semver": "^7.5.8",
     "simple-git": "catalog:",
     "stylelint": "^16.1.0",
     "typescript": "catalog:",
