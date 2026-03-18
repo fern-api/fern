@@ -1003,6 +1003,137 @@
           "type": "openapi"
         },
         "type": "object"
+      },
+      "PaginatedList": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paginatedListResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "PaginatedListResults",
+              "value": {
+                "value": {
+                  "generatedName": "PaginatedListResultsItem",
+                  "groupName": [],
+                  "type": "unknown"
+                },
+                "generatedName": "PaginatedListResults",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaginatedList",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Item": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "itemId",
+            "key": "id",
+            "schema": {
+              "generatedName": "ItemId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ItemId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "itemName",
+            "key": "name",
+            "schema": {
+              "generatedName": "ItemName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ItemName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Item",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ItemList": {
+        "allOf": [
+          {
+            "generatedName": "PaginatedList",
+            "schema": "PaginatedList",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PaginatedList": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "itemListResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "ItemListResults",
+              "value": {
+                "generatedName": "ItemListResults",
+                "groupName": [],
+                "type": "unknown"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ItemList",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
       }
     },
     "namespacedSchemas": {}

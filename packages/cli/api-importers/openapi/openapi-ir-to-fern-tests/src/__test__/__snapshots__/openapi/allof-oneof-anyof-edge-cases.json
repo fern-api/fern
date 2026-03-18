@@ -200,6 +200,27 @@
               "openapi": "../openapi.yml",
             },
           },
+          "Item": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ItemList": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<unknown>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Level1": {
             "docs": undefined,
             "inline": undefined,
@@ -248,6 +269,16 @@
               "string",
               "double",
             ],
+          },
+          "PaginatedList": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<list<unknown>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "Pet": {
             "availability": undefined,
@@ -509,6 +540,22 @@ types:
       content:
         type: optional<string>
         docs: Content of the message
+    source:
+      openapi: ../openapi.yml
+  PaginatedList:
+    properties:
+      results: optional<list<unknown>>
+    source:
+      openapi: ../openapi.yml
+  Item:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ItemList:
+    properties:
+      results: optional<unknown>
     source:
       openapi: ../openapi.yml
 ",
