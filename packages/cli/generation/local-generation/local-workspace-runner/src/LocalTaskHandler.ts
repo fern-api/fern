@@ -150,6 +150,18 @@ export class LocalTaskHandler {
                 this.version,
                 autoVersionResult.version
             );
+
+            // For Go generators, add /vN suffix to module paths and imports
+            // when the computed version is v2+. The magic version uses major 0
+            // so generated code has no /vN suffix; we add the correct one now.
+            if (this.generatorLanguage === "go") {
+                this.context.logger.info("Adding Go major version suffix to module paths");
+                await autoVersioningService.addGoMajorVersionSuffix(
+                    this.absolutePathToLocalOutput,
+                    autoVersionResult.version
+                );
+            }
+
             return {
                 shouldCommit: true,
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,

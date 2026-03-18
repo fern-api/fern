@@ -1,5 +1,8 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { existsSync } from "fs";
+import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { extname, join } from "path";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -656,9 +659,15 @@ export class AutoVersioningService {
     }
 
     /**
-     * Checks if two lines form a version change pair where the only difference is the magic version.
+     * Checks if two lines form a version change pair where the only difference is the magic version,
+     * or where the only difference is a Go module path /vN suffix.
      */
     private isVersionChangePair(minusLine: string, plusLine: string, mappedMagicVersion: string): boolean {
+        // Check for Go module path suffix changes (e.g., /v2 added or removed)
+        if (this.isGoModulePathSuffixChange(minusLine, plusLine)) {
+            return true;
+        }
+
         if (!plusLine.includes(mappedMagicVersion)) {
             return false;
         }
@@ -693,6 +702,29 @@ export class AutoVersioningService {
         }
 
         return /.*\d+.*/.test(minusVersion);
+    }
+
+    /**
+     * Detects when two diff lines differ only by a Go module path /vN suffix.
+     * For example:
+     *   -  core "github.com/org/repo/core"
+     *   +  core "github.com/org/repo/v2/core"
+     * These are artifacts of the major version bump and should be filtered from AI analysis.
+     */
+    private isGoModulePathSuffixChange(minusLine: string, plusLine: string): boolean {
+        const suffixPattern = /\/v\d+/g;
+        const minusContent = minusLine.substring(1);
+        const plusContent = plusLine.substring(1);
+
+        const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
+        const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
+
+        if (minusWithoutSuffix !== plusWithoutSuffix) {
+            return false;
+        }
+
+        // At least one line must actually contain a /vN suffix for this to be a suffix change
+        return /\/v\d+/.test(minusContent) || /\/v\d+/.test(plusContent);
     }
 
     /**
@@ -740,6 +772,187 @@ export class AutoVersioningService {
         });
 
         this.logger.debug("Placeholder version replaced successfully");
+    }
+
+    /**
+     * Adds /vN suffix to Go module paths and import statements when the computed
+     * version is v2+. Go requires a /vN suffix on module paths for major versions >= 2.
+     *
+     * When using the safe magic version (major 0), the generated code has no /vN suffix.
+     * After auto-versioning determines the real version, this method adds the correct suffix.
+     *
+     * @param workingDirectory The directory containing generated Go files
+     * @param finalVersion The final computed version (e.g., "v2.0.0", "v3.1.0")
+     */
+    public async addGoMajorVersionSuffix(workingDirectory: string, finalVersion: string): Promise<void> {
+        const major = this.extractMajorVersion(finalVersion);
+        if (major == null || major < 2) {
+            this.logger.debug(
+                `Version ${finalVersion} has major ${major ?? "unknown"}, no Go module path suffix needed`
+            );
+            return;
+        }
+
+        const goModPath = join(workingDirectory, "go.mod");
+        if (!existsSync(goModPath)) {
+            this.logger.debug(`No go.mod found in ${workingDirectory}, skipping Go module path update`);
+            return;
+        }
+
+        const modulePath = await this.readGoModulePath(goModPath);
+        if (modulePath == null) {
+            this.logger.warn(`Could not read module path from go.mod in ${workingDirectory}`);
+            return;
+        }
+
+        const suffix = `/v${major}`;
+
+        // Don't add suffix if it's already present
+        if (/\/v\d+$/.test(modulePath)) {
+            this.logger.debug(`Module path ${modulePath} already has a version suffix, skipping`);
+            return;
+        }
+
+        // Update go.mod module line
+        await this.addSuffixToGoMod(goModPath, modulePath, suffix);
+
+        // Update all .go files: add suffix to import paths
+        await this.addSuffixToGoFiles(workingDirectory, modulePath, suffix);
+
+        this.logger.info(`Added ${suffix} to Go module path ${modulePath} and all import paths`);
+    }
+
+    /**
+     * Extracts the major version number from a version string.
+     * Handles versions with or without 'v' prefix.
+     */
+    private extractMajorVersion(version: string): number | undefined {
+        const match = version.match(/^v?(\d+)\./);
+        if (match?.[1] != null) {
+            return parseInt(match[1], 10);
+        }
+        return undefined;
+    }
+
+    /**
+     * Reads the module path from a go.mod file.
+     */
+    private async readGoModulePath(goModPath: string): Promise<string | undefined> {
+        const content = await readFile(goModPath, "utf-8");
+        for (const line of content.split("\n")) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("module ")) {
+                return trimmed.substring("module ".length).trim();
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Adds a version suffix to the module line in go.mod.
+     */
+    private async addSuffixToGoMod(goModPath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(goModPath, "utf-8");
+        const lines = content.split("\n");
+        let changed = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line != null && line.trim().startsWith("module ") && line.includes(modulePath)) {
+                lines[i] = line.replace(modulePath, modulePath + suffix);
+                changed = true;
+                break;
+            }
+        }
+
+        if (changed) {
+            await writeFile(goModPath, lines.join("\n"), "utf-8");
+            this.logger.debug(`Updated go.mod: added ${suffix} to module path`);
+        }
+    }
+
+    /**
+     * Recursively walks a directory and returns all file paths matching a filter.
+     */
+    private async walkDirectory(dir: string, filter: (filePath: string) => boolean): Promise<string[]> {
+        const results: string[] = [];
+        const entries = await readdir(dir);
+
+        for (const entry of entries) {
+            const fullPath = join(dir, entry);
+            const entryStat = await stat(fullPath);
+
+            if (entryStat.isDirectory()) {
+                // Skip .git and vendor directories
+                if (entry === ".git" || entry === "vendor") {
+                    continue;
+                }
+                const subResults = await this.walkDirectory(fullPath, filter);
+                results.push(...subResults);
+            } else if (filter(fullPath)) {
+                results.push(fullPath);
+            }
+        }
+
+        return results;
+    }
+
+    /**
+     * Adds a version suffix to import paths in all .go files in the repository.
+     */
+    private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
+        const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
+
+        for (const filePath of goFiles) {
+            await this.addSuffixToGoFile(filePath, modulePath, suffix);
+        }
+    }
+
+    /**
+     * Adds a version suffix to import paths in a single .go file.
+     * Replaces occurrences of the module path with modulePath + suffix in import statements.
+     */
+    private async addSuffixToGoFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(filePath, "utf-8");
+        const lines = content.split("\n");
+        let changed = false;
+        let inImportBlock = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line == null) {
+                continue;
+            }
+            const trimmed = line.trim();
+
+            // Track import block state
+            if (trimmed.startsWith("import (")) {
+                inImportBlock = true;
+            } else if (inImportBlock && trimmed === ")") {
+                inImportBlock = false;
+            }
+
+            // Only process import lines
+            const isImportLine = inImportBlock || trimmed.startsWith('import "') || trimmed.startsWith('import\t"');
+            if (!isImportLine) {
+                continue;
+            }
+
+            if (!line.includes(modulePath)) {
+                continue;
+            }
+
+            const newLine = line.replace(modulePath, modulePath + suffix);
+            if (newLine !== line) {
+                lines[i] = newLine;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            await writeFile(filePath, lines.join("\n"), "utf-8");
+            this.logger.debug(`Updated Go imports in ${filePath}`);
+        }
     }
 
     /**

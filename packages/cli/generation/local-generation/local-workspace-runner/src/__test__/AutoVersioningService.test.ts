@@ -2395,6 +2395,294 @@ describe("countFilesInDiff", () => {
     });
 });
 
+describe("addGoMajorVersionSuffix", () => {
+    it("adds /v2 suffix to go.mod and .go files for v2", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("adds /v3 suffix for v3", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n\tinternal "github.com/org/repo/internal"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v3.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v3");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v3/core"');
+            expect(goFile).toContain('"github.com/org/repo/v3/internal"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("does nothing for v1", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            const goModContent = "module github.com/org/repo\n\ngo 1.21\n";
+            const goFileContent = 'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n';
+            await fs.writeFile(path.join(tempDir, "go.mod"), goModContent);
+            await fs.writeFile(path.join(tempDir, "client.go"), goFileContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v1.5.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toBe(goModContent);
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toBe(goFileContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("does nothing for v0", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            const goModContent = "module github.com/org/repo\n\ngo 1.21\n";
+            await fs.writeFile(path.join(tempDir, "go.mod"), goModContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v0.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toBe(goModContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips when no go.mod exists", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            // Should not throw
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            // .go file should be unchanged since no go.mod to determine module path
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/core"');
+            expect(goFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips when suffix already present", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo/v2\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/v2/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            // Should NOT have /v2/v2
+            expect(goMod).toContain("module github.com/org/repo/v2");
+            expect(goMod).not.toContain("/v2/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+            expect(goFile).not.toContain("/v2/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles multiple subpackages", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+
+            const coreDir = path.join(tempDir, "core");
+            const optionDir = path.join(tempDir, "option");
+            await fs.mkdir(coreDir, { recursive: true });
+            await fs.mkdir(optionDir, { recursive: true });
+
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n\toption "github.com/org/repo/option"\n)\n'
+            );
+            await fs.writeFile(path.join(coreDir, "core.go"), 'package core\n\nimport (\n\t"fmt"\n)\n');
+            await fs.writeFile(
+                path.join(optionDir, "option.go"),
+                'package option\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const clientFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(clientFile).toContain('"github.com/org/repo/v2/core"');
+            expect(clientFile).toContain('"github.com/org/repo/v2/option"');
+
+            const optionFile = await fs.readFile(path.join(optionDir, "option.go"), "utf-8");
+            expect(optionFile).toContain('"github.com/org/repo/v2/core"');
+
+            // core.go has no imports from the module, should be unchanged
+            const coreFile = await fs.readFile(path.join(coreDir, "core.go"), "utf-8");
+            expect(coreFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips vendor directory", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+
+            const vendorDir = path.join(tempDir, "vendor", "other");
+            await fs.mkdir(vendorDir, { recursive: true });
+
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+            await fs.writeFile(
+                path.join(vendorDir, "vendored.go"),
+                'package other\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const clientFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(clientFile).toContain('"github.com/org/repo/v2/core"');
+
+            // Vendor files should NOT be modified
+            const vendoredFile = await fs.readFile(path.join(vendorDir, "vendored.go"), "utf-8");
+            expect(vendoredFile).toContain('"github.com/org/repo/core"');
+            expect(vendoredFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles version without v prefix", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "2.0.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles single-line import statements", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "simple.go"),
+                'package sdk\n\nimport "github.com/org/repo/core"\n\nfunc main() {}\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "simple.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+});
+
+describe("cleanDiffForAI - Go module path suffix changes", () => {
+    it("filters Go module path suffix changes from diff", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,7 +3,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/repo/core"\n' +
+            '+\tcore "github.com/org/repo/v2/core"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        expect(cleaned).not.toContain("github.com/org/repo/core");
+        expect(cleaned).not.toContain("github.com/org/repo/v2/core");
+    });
+
+    it("preserves unrelated changes alongside Go module path changes", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,9 +3,10 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/repo/core"\n' +
+            '+\tcore "github.com/org/repo/v2/core"\n' +
+            " )\n" +
+            " \n" +
+            "+func NewFeature() {}\n" +
+            " \n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        expect(cleaned).toContain("NewFeature");
+        expect(cleaned).not.toContain("github.com/org/repo/core");
+    });
+
+    it("does not filter lines that differ by more than just /vN suffix", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,7 +3,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/old-repo/core"\n' +
+            '+\tcore "github.com/org/new-repo/v2/core"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        // These should be preserved since the repo name also changed
+        expect(cleaned).toContain("old-repo");
+        expect(cleaned).toContain("new-repo");
+    });
+});
+
 describe("formatSizeKB", () => {
     it("formats zero", () => {
         expect(formatSizeKB(0)).toBe("0.0");
