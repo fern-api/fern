@@ -790,22 +790,23 @@ export class AutoVersioningService {
      * x-fern-availability set to beta, alpha, pre-release, or in-development.
      */
     private static readonly AVAILABILITY_PATTERNS: RegExp[] = [
-        // TypeScript/JavaScript: @beta JSDoc tag
+        // TypeScript/JavaScript: @beta or @alpha JSDoc tag
         /@beta\b/,
+        /@alpha\b/,
         // Python: docstring warnings
-        /WARNING:.*(?:beta|pre-release|in development|experimental)/i,
+        /WARNING:.*(?:beta|alpha|pre-release|in development|experimental)/i,
         // Java/Kotlin: @Beta or @Experimental annotations
         /@Beta\b/,
         /@Experimental\b/,
-        // Java/Kotlin: @apiNote with beta/pre-release
-        /@apiNote.*(?:beta|pre-release|in development|experimental)/i,
+        // Java/Kotlin: @apiNote with beta/alpha/pre-release
+        /@apiNote.*(?:beta|alpha|pre-release|in development|experimental)/i,
         // Go: doc comments
-        /\/\/\s*Beta:/,
-        // C#: [Experimental] attribute or remarks with beta/pre-release
+        /\/\/\s*(?:Beta|Alpha):/,
+        // C#: [Experimental] attribute or remarks with beta/alpha/pre-release
         /\[Experimental\b/,
-        /<remarks>.*(?:beta|pre-release|in development|experimental)/i,
-        // Ruby: @note Beta
-        /@note\s+Beta\b/i
+        /<remarks>.*(?:beta|alpha|pre-release|in development|experimental)/i,
+        // Ruby: @note Beta or @note Alpha
+        /@note\s+(?:Beta|Alpha)\b/i
     ];
 
     /**
