@@ -7,7 +7,7 @@
         Bytes endpoints with query parameters now generate a dedicated request struct instead
         of 30+ positional Option parameters. WebSocket connect() methods bundle query parameters
         into a ConnectOptions struct with Default support. Auth header now uses dynamic prefix
-        from IR (e.g., "Token <api_key>") instead of sending raw key.
+        from IR (e.g., "Token `<api_key>`") instead of sending raw key.
       type: feat
   createdAt: "2026-03-18"
   irVersion: 62
