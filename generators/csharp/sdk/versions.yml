@@ -1,4 +1,64 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.34.0
+  changelogEntry:
+    - summary: |
+        Add `unified-client-options` configuration flag. When enabled, all auth parameters,
+        global headers, and `BaseUrl` are consolidated into `ClientOptions` so the client
+        constructor takes a single argument with no positional parameters:
+
+        ```yaml
+        # generators.yml
+        groups:
+          dotnet-sdk:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                config:
+                  unified-client-options: true
+        ```
+
+        **Before** (default):
+        ```csharp
+        var client = new MyClient(
+            "my-api-key",
+            clientOptions: new ClientOptions { BaseUrl = "..." }
+        );
+        ```
+
+        **After** (with `unified-client-options: true`):
+        ```csharp
+        var client = new MyClient(
+            new ClientOptions
+            {
+                ApiKey = "my-api-key",
+                BaseUrl = "https://api.example.com",
+            }
+        );
+        ```
+
+        Supported auth schemes: bearer token, basic auth (username/password), header auth,
+        OAuth client credentials (clientId/clientSecret + custom params), and inferred auth.
+        Global headers (non-literal) are also included.
+
+        Properties on `ClientOptions` use the appropriate C# semantics based on the
+        parameter's characteristics:
+
+        - **Has environment variable fallback** — `public string? ApiKey { get; set; }`.
+          Nullable and mutable so the constructor can apply the fallback via
+          `clientOptions.ApiKey ??= GetFromEnvironmentOrThrow(...)`.
+        - **Optional (no environment variable)** — `public string? ApiKey { get; init; }`.
+          Nullable, immutable after construction.
+        - **Required (no environment variable, not optional)** — `public required string ApiKey { get; init; }`.
+          Non-nullable, enforced at the call site by the compiler. `BaseUrl` is also
+          `required` when no default environment is configured, replacing the previous
+          behavior of silently defaulting to `""`.
+
+        When any `ClientOptions` field is `required`, the constructor parameter becomes
+        non-nullable (`ClientOptions clientOptions` instead of `ClientOptions? clientOptions = null`),
+        and `Clone()` uses an internal copy constructor annotated with `[SetsRequiredMembers]`.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 2.33.1
   changelogEntry:
     - summary: |
@@ -53,7 +113,6 @@
       type: fix
   createdAt: "2026-03-17"
   irVersion: 65
-
 - version: 2.31.1
   changelogEntry:
     - summary: |
