@@ -208,7 +208,7 @@ export class AddCommand {
             newTarget.group = [group];
         }
 
-        editor.addTarget(language, newTarget);
+        await editor.addTarget(language, newTarget);
         await editor.save();
     }
 
@@ -252,7 +252,7 @@ export class AddCommand {
     }
 }
 
-export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addAddCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new AddCommand();
     command(
         cli,
@@ -282,7 +282,6 @@ export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void 
                     type: "boolean",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

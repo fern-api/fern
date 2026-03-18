@@ -25,6 +25,31 @@ await client.PostFooAsync();
 </details>
 
 ## DataService
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">CheckAsync</a>() -> WithRawResponseTask&lt;CheckResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.DataService.CheckAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">CreateAsync</a>(CreateRequest { ... }) -> WithRawResponseTask&lt;CreateResponse&gt;</code></summary>
 <dl>
 <dd>

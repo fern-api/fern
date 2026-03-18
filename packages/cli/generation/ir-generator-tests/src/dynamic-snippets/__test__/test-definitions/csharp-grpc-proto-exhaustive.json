@@ -142,6 +142,105 @@
                 }
             ]
         },
+        "type_:CheckResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CheckResponse",
+                    "camelCase": {
+                        "unsafeName": "checkResponse",
+                        "safeName": "checkResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "check_response",
+                        "safeName": "check_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CHECK_RESPONSE",
+                        "safeName": "CHECK_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CheckResponse",
+                        "safeName": "CheckResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "created_at",
+                            "camelCase": {
+                                "unsafeName": "createdAt",
+                                "safeName": "createdAt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "created_at",
+                                "safeName": "created_at"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CREATED_AT",
+                                "safeName": "CREATED_AT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CreatedAt",
+                                "safeName": "CreatedAt"
+                            }
+                        },
+                        "wireValue": "created_at"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updated_at",
+                            "camelCase": {
+                                "unsafeName": "updatedAt",
+                                "safeName": "updatedAt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_at",
+                                "safeName": "updated_at"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_AT",
+                                "safeName": "UPDATED_AT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedAt",
+                                "safeName": "UpdatedAt"
+                            }
+                        },
+                        "wireValue": "updated_at"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:Column": {
             "type": "object",
             "declaration": {
@@ -3208,6 +3307,86 @@
     },
     "headers": [],
     "endpoints": {
+        "endpoint_dataService.Check": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "Check",
+                    "camelCase": {
+                        "unsafeName": "check",
+                        "safeName": "check"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "check",
+                        "safeName": "check"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CHECK",
+                        "safeName": "CHECK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Check",
+                        "safeName": "Check"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "dataService",
+                            "camelCase": {
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "dataService",
+                        "camelCase": {
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/data.v1.DataService/Check"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_dataService.Create": {
             "auth": null,
             "declaration": {

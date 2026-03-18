@@ -18,6 +18,7 @@ import {
     countFilesInDiff,
     formatSizeKB
 } from "./AutoVersioningService.js";
+import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
@@ -411,7 +412,9 @@ export class LocalTaskHandler {
             const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
-            const changelogEntry = finalChangelogEntry?.trim() || undefined;
+            const changelogEntry = finalChangelogEntry?.trim()
+                ? sanitizeChangelogEntry(finalChangelogEntry.trim())
+                : undefined;
             const prDescription = finalPrDescription?.trim() || undefined;
             const versionBumpReason = finalVersionBumpReason?.trim() || undefined;
 

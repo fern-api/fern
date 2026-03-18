@@ -1056,9 +1056,9 @@ public class MultipartFormTests
             ?? throw new global::System.Exception("Boundary not found");
     }
 
-    private static Contoso.Net.Core.MultipartFormRequest CreateMultipartFormRequest()
+    private static global::Contoso.Net.Core.MultipartFormRequest CreateMultipartFormRequest()
     {
-        return new Contoso.Net.Core.MultipartFormRequest
+        return new global::Contoso.Net.Core.MultipartFormRequest
         {
             BaseUrl = "https://localhost",
             Method = HttpMethod.Post,

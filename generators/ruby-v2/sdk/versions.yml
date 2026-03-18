@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.1
+  changelogEntry:
+    - summary: |
+        Strip zero-millisecond datetime values from WireMock stub query parameters.
+        Ruby's DateTime/Time ISO 8601 serialization omits zero fractional seconds
+        (e.g., `2024-09-08T12:00:00Z`), but mock-utils generates values with `.000Z`
+        (e.g., `2024-09-08T12:00:00.000Z`). WireMock's `equalTo` matcher is exact-match,
+        so the stubs never fired for datetime query parameters. This follows the same
+        pattern used by the Python and PHP generators.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 61
+
 - version: 1.1.0
   changelogEntry:
     - summary: |

@@ -38,7 +38,7 @@ public record UpdateResponse : IJsonOnDeserialized
     {
         return new UpdateResponse
         {
-            UpdatedAt = value.UpdatedAt.ToDateTime(),
+            UpdatedAt = value.UpdatedAt?.ToDateTime(),
             IndexType = value.IndexType switch
             {
                 ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,

@@ -3526,6 +3526,123 @@
                 "type": "unknown"
             }
         },
+        "type_types/object:MapOfDocumentedUnknownType": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "MapOfDocumentedUnknownType",
+                    "camelCase": {
+                        "unsafeName": "mapOfDocumentedUnknownType",
+                        "safeName": "mapOfDocumentedUnknownType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "map_of_documented_unknown_type",
+                        "safeName": "map_of_documented_unknown_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MAP_OF_DOCUMENTED_UNKNOWN_TYPE",
+                        "safeName": "MAP_OF_DOCUMENTED_UNKNOWN_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MapOfDocumentedUnknownType",
+                        "safeName": "MapOfDocumentedUnknownType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        },
+                        {
+                            "originalName": "object",
+                            "camelCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT",
+                                "safeName": "OBJECT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Object",
+                                "safeName": "Object"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "object",
+                        "camelCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OBJECT",
+                            "safeName": "OBJECT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Object",
+                            "safeName": "Object"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "map",
+                "key": {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                "value": {
+                    "type": "named",
+                    "value": "type_types/object:DocumentedUnknownType"
+                }
+            }
+        },
         "type_types/union:Animal": {
             "type": "discriminatedUnion",
             "declaration": {
@@ -7858,6 +7975,152 @@
                     "value": {
                         "type": "named",
                         "value": "type_types/object:ObjectWithDocumentedUnknownType"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getAndReturnMapOfDocumentedUnknownType",
+                    "camelCase": {
+                        "unsafeName": "getAndReturnMapOfDocumentedUnknownType",
+                        "safeName": "getAndReturnMapOfDocumentedUnknownType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_and_return_map_of_documented_unknown_type",
+                        "safeName": "get_and_return_map_of_documented_unknown_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_AND_RETURN_MAP_OF_DOCUMENTED_UNKNOWN_TYPE",
+                        "safeName": "GET_AND_RETURN_MAP_OF_DOCUMENTED_UNKNOWN_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetAndReturnMapOfDocumentedUnknownType",
+                        "safeName": "GetAndReturnMapOfDocumentedUnknownType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "object",
+                            "camelCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT",
+                                "safeName": "OBJECT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Object",
+                                "safeName": "Object"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "object",
+                        "camelCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OBJECT",
+                            "safeName": "OBJECT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Object",
+                            "safeName": "Object"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/object/get-and-return-map-of-documented-unknown-type"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_types/object:MapOfDocumentedUnknownType"
                     }
                 }
             },
