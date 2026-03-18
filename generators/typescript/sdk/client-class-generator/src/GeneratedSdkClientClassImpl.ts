@@ -876,20 +876,49 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         // Resolve the base URL from either the explicit baseUrl option or the environment.
         // For multi-URL environments (e.g. { ec2: string; s3: string }), the environment is an object,
-        // so we project it to a string via its first base URL property to avoid passing an object where a string is expected.
-        // The property name is read from the IR's baseUrls definition rather than hardcoded.
+        // so we project it to a string via the base URL property that HTTP endpoints use.
+        // This is the same logic regular endpoint methods use (via endpoint.baseUrl → getReferenceToEnvironmentUrl),
+        // ensuring the passthrough fetch resolves to the REST base URL, not a WebSocket or other URL.
+        // If the IR defines a default environment, we also fall back to it (matching regular endpoint behavior).
         // For single-URL or no-IR-defined environments, the environment is already a string, so we fall back to it directly.
         const envs = this.intermediateRepresentation.environments?.environments;
         let baseUrlCode: string;
         if (envs != null && envs.type === "multipleBaseUrls") {
-            const firstBaseUrl = envs.baseUrls[0];
-            if (firstBaseUrl == null) {
+            // Find the base URL ID used by the first HTTP endpoint — this is the REST URL.
+            // Falls back to baseUrls[0] if no HTTP endpoints exist (e.g. WebSocket-only APIs).
+            let httpBaseUrlId: string | undefined;
+            for (const service of Object.values(this.intermediateRepresentation.services)) {
+                for (const endpoint of service.endpoints) {
+                    if (endpoint.baseUrl != null) {
+                        httpBaseUrlId = endpoint.baseUrl;
+                        break;
+                    }
+                }
+                if (httpBaseUrlId != null) {
+                    break;
+                }
+            }
+
+            const targetBaseUrl =
+                httpBaseUrlId != null
+                    ? (envs.baseUrls.find((bu) => bu.id === httpBaseUrlId) ?? envs.baseUrls[0])
+                    : envs.baseUrls[0];
+            if (targetBaseUrl == null) {
                 throw new Error("Multi-URL environment has no base URLs defined");
             }
-            const firstBaseUrlName = firstBaseUrl.name.camelCase.unsafeName;
+            const baseUrlName = targetBaseUrl.name.camelCase.unsafeName;
+
+            // Get the default environment reference (e.g. environments.SdkEnvironment.Production) if one exists.
+            // This mirrors getEnvironment() which does: this._options.environment ?? defaultEnvironment
+            const defaultEnvExpr = context.environments
+                .getGeneratedEnvironments()
+                .getReferenceToDefaultEnvironment(context);
+            const defaultEnvFallback =
+                defaultEnvExpr != null ? ` ?? ${getTextOfTsNode(defaultEnvExpr)}.${baseUrlName}` : "";
+
             baseUrlCode = `baseUrl: this._options.baseUrl ?? (async () => {
         const env = await core.Supplier.get(this._options.environment);
-        return typeof env === "string" ? env : (env as Record<string, string>)?.${firstBaseUrlName};
+        return typeof env === "string" ? env : (env as Record<string, string>)?.${baseUrlName}${defaultEnvFallback};
     }),`;
         } else {
             baseUrlCode = "baseUrl: this._options.baseUrl ?? this._options.environment,";

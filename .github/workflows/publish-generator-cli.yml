@@ -17,7 +17,6 @@ env:
   TURBO_DAEMON: "false"
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
-  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 permissions:
   id-token: write # Required for OIDC
@@ -91,8 +90,6 @@ jobs:
         run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Publish generator-cli
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
         run: |
           cd packages/generator-cli/dist
           pnpm publish --access public --tag latest --no-git-checks
