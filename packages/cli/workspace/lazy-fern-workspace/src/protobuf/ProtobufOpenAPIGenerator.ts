@@ -136,7 +136,8 @@ export class ProtobufOpenAPIGenerator {
             }
             try {
                 bufLockContents = await readFile(bufLockPath, "utf-8");
-            } catch {
+            } catch (err) {
+                this.context.logger.debug(`Failed to read buf.lock: ${err}`);
                 bufLockContents = undefined;
             }
         }
