@@ -11,8 +11,6 @@ types:
   EventEvent:
     properties:
       event: string
-      data: string
-      unixtime: optional<integer>
 
   ErrorEvent:
     properties:
@@ -28,13 +26,12 @@ types:
       error: ErrorEvent
       event: EventEvent
 
-  StreamEventContextDefault:
+  StreamEvent:
     discriminant:
       value: event
     union:
       completion: CompletionEvent
       error: ErrorEvent
-      event: EventEvent
 
 errors:
   BadRequestError:
@@ -100,9 +97,42 @@ service:
             query: "query"
           response:
             stream:
+              - data:
+                  event: completion
+                  content: "content"
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"
+
+    streamEventsContextProtocol:
+      method: POST
+      path: /stream-events-context-protocol
+      request:
+        name: StreamEventsRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEventContextProtocol
+        format: sse
+        terminator: "[DONE]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
               - event: completion
                 data:
                   content: "content"
+              - event: event
+                data:
+                  event: "event"
         - name: "Bad request"
           request:
             query: ""
