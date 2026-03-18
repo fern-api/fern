@@ -2,7 +2,9 @@ import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, rename, unlink, writeFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
+import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
 import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
@@ -16,11 +18,13 @@ const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/op
 interface PreparedWorkingDir {
     cwd: AbsoluteFilePath;
     bufLockContents: string | undefined;
+    envOverride: Record<string, string> | undefined;
 }
 
 export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
+    private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -101,13 +105,33 @@ export class ProtobufOpenAPIGenerator {
                 "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
             );
         }
+
+        let protocGenOpenAPIOnPath = false;
         try {
             await which(["protoc-gen-openapi"]);
+            protocGenOpenAPIOnPath = true;
         } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+            this.context.logger.debug(
+                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
             );
         }
+
+        if (!protocGenOpenAPIOnPath) {
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
+            }
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+                );
+            }
+        }
+
+        // If we downloaded protoc-gen-openapi, prepend its directory to PATH so buf can find it
+        const envOverride =
+            this.protocGenOpenAPIBinDir != null
+                ? { PATH: `${this.protocGenOpenAPIBinDir}${path.delimiter}${process.env.PATH ?? ""}` }
+                : undefined;
 
         // Write buf.yaml and resolve dependencies once
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
@@ -130,7 +154,8 @@ export class ProtobufOpenAPIGenerator {
                     cwd,
                     logger: this.context.logger,
                     stdout: "ignore",
-                    stderr: "pipe"
+                    stderr: "pipe",
+                    ...(envOverride != null ? { env: { ...process.env, ...envOverride } } : {})
                 });
                 await buf(["dep", "update"]);
             }
@@ -142,7 +167,7 @@ export class ProtobufOpenAPIGenerator {
             }
         }
 
-        return { cwd, bufLockContents };
+        return { cwd, bufLockContents, envOverride };
     }
 
     /**
@@ -168,7 +193,8 @@ export class ProtobufOpenAPIGenerator {
             cwd: preparedDir.cwd,
             logger: this.context.logger,
             stdout: "ignore",
-            stderr: "pipe"
+            stderr: "pipe",
+            ...(preparedDir.envOverride != null ? { env: { ...process.env, ...preparedDir.envOverride } } : {})
         });
 
         const bufGenerateResult = await buf(["generate", target.toString()]);
@@ -264,12 +290,25 @@ export class ProtobufOpenAPIGenerator {
             );
         }
 
+        let protocGenOpenAPIOnPath = false;
         try {
             await which(["protoc-gen-openapi"]);
+            protocGenOpenAPIOnPath = true;
         } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+            this.context.logger.debug(
+                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
             );
+        }
+
+        if (!protocGenOpenAPIOnPath) {
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
+            }
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+                );
+            }
         }
 
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
@@ -278,11 +317,18 @@ export class ProtobufOpenAPIGenerator {
 
         const configContent = getProtobufYamlV1(deps);
 
+        // If we downloaded protoc-gen-openapi, prepend its directory to PATH so buf can find it
+        const envOverride =
+            this.protocGenOpenAPIBinDir != null
+                ? { PATH: `${this.protocGenOpenAPIBinDir}${path.delimiter}${process.env.PATH ?? ""}` }
+                : undefined;
+
         const buf = createLoggingExecutable("buf", {
             cwd,
             logger: this.context.logger,
             stdout: "ignore",
-            stderr: "pipe"
+            stderr: "pipe",
+            ...(envOverride != null ? { env: { ...process.env, ...envOverride } } : {})
         });
 
         try {
