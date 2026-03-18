@@ -461,36 +461,37 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return [];
         }
 
-        const results = await Promise.all(
-            protobufSpecs.map(async (spec) => {
-                try {
-                    const protobufIRGenerator = new ProtobufIRGenerator({ context });
-                    const protobufIRFilepath = await protobufIRGenerator.generate({
-                        absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
-                        absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
-                        local: true,
-                        deps: spec.dependencies
+        // Process specs sequentially because ProtobufIRGenerator.generate()
+        // runs `npm install -g` which is not safe to invoke concurrently.
+        const results: IntermediateRepresentation[] = [];
+        for (const spec of protobufSpecs) {
+            try {
+                const protobufIRGenerator = new ProtobufIRGenerator({ context });
+                const protobufIRFilepath = await protobufIRGenerator.generate({
+                    absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
+                    local: true,
+                    deps: spec.dependencies
+                });
+
+                const result = await readFile(protobufIRFilepath, "utf-8");
+                if (result != null) {
+                    const serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true
                     });
-
-                    const result = await readFile(protobufIRFilepath, "utf-8");
-                    if (result != null) {
-                        const serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true
-                        });
-                        if (serializedIr.ok) {
-                            return serializedIr.value;
-                        }
-                        context.logger.log("error", "Failed to parse protobuf IR");
+                    if (serializedIr.ok) {
+                        results.push(serializedIr.value);
+                        continue;
                     }
-                } catch (error) {
-                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+                    context.logger.log("error", "Failed to parse protobuf IR");
                 }
-                return undefined;
-            })
-        );
+            } catch (error) {
+                context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+            }
+        }
 
-        return results.filter((ir): ir is IntermediateRepresentation => ir != null);
+        return results;
     }
 
     public async toFernWorkspace(
