@@ -1,10 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.35.0
+- version: 4.36.0
   changelogEntry:
     - summary: |
         Add `og:dynamic:text-color` and `og:dynamic:background-color` metadata settings for dynamic
         OG images. These allow explicit control over text and background colors in
         dynamically generated OG images, fixing visibility issues on light backgrounds.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.35.0
+  changelogEntry:
+    - summary: |
+        Add `--id` flag to `fern generate --docs --preview` for stable preview
+        URLs. When `--id <name>` is provided, the preview domain uses the given
+        identifier instead of a random UUID, so subsequent runs with the same ID
+        overwrite the previous preview and the URL stays constant. In non-CI
+        environments the CLI checks whether the preview already exists and
+        prompts for confirmation before overwriting (skip with `--force`).
       type: feat
   createdAt: "2026-03-17"
   irVersion: 65
@@ -61,7 +74,6 @@
       type: fix
   createdAt: "2026-03-17"
   irVersion: 65
-
 - version: 4.32.1
   changelogEntry:
     - summary: |

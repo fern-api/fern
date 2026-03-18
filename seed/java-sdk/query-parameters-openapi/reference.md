@@ -35,7 +35,7 @@ client.search(
             SearchRequestNeighborRequired.of(
                 User
                     .builder()
-                    .name("name")
+                    .name(Optional.of("name"))
                     .tags(
                         Optional.of(
                             Arrays.asList("tags", "tags")
@@ -118,7 +118,7 @@ client.search(
             SearchRequestNeighbor.of(
                 User
                     .builder()
-                    .name("name")
+                    .name(Optional.of("name"))
                     .tags(
                         Optional.of(
                             Arrays.asList("tags", "tags")

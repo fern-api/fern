@@ -20,6 +20,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     token,
     instanceUrl,
     preview,
+    previewId,
     disableTemplates,
     skipUpload,
     cliVersion
@@ -32,6 +33,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     token: FernToken;
     instanceUrl: string | undefined;
     preview: boolean;
+    previewId: string | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     cliVersion?: string;
@@ -105,6 +107,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 apiWorkspaces,
                 ossWorkspaces,
                 preview,
+                previewId,
                 editThisPage: maybeInstance.editThisPage,
                 isPrivate: maybeInstance.private,
                 disableTemplates,
