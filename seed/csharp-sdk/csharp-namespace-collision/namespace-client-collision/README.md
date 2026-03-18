@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using Contoso.Net;
 
-var client = new Contoso();
+
+var client = new global::Contoso.Net.Contoso();
 await client.CreateUserAsync(
     new global::Contoso.Net.User
     {

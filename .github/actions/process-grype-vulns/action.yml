@@ -48,7 +48,7 @@ runs:
   steps:
     - name: Process vulnerabilities and create PR
       id: process-vulns
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       env:
         CONTAINER_NAME: ${{ inputs.container_name }}
         IGNORED_CVES: ${{ inputs.ignored_cves }}

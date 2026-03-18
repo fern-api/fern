@@ -1353,9 +1353,9 @@ client.endpoints().object().getAndReturnWithDocumentedUnknownType(
 ```java
 client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
     new HashMap<String, Object>() {{
-        put("string", new 
+        put("string", DocumentedUnknownType.of(new 
         HashMap<String, Object>() {{put("key", "value");
-        }});
+        }}));
     }}
 );
 ```

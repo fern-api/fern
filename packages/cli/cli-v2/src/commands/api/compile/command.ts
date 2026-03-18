@@ -137,7 +137,7 @@ export class CompileCommand {
     }
 }
 
-export function addCompileCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addCompileCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new CompileCommand();
     command(
         cli,
@@ -178,7 +178,6 @@ export function addCompileCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     type: "string",
                     nargs: 1,
                     description: 'Path to write IR output. Use "-" for stdout.'
-                }),
-        parentPath
+                })
     );
 }

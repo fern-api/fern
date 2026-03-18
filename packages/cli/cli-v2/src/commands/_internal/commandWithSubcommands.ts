@@ -4,7 +4,7 @@ import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { withContext } from "../../context/withContext.js";
 
 type CommandHandler<T extends GlobalArgs = GlobalArgs> = (context: Context, args: T) => Promise<void>;
-type CommandAdder = (cli: Argv<GlobalArgs>, parentPath?: string) => void;
+type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 
 /**
  * Registers a command that has both a default handler and subcommands.
@@ -37,7 +37,7 @@ export function commandWithSubcommands<T extends GlobalArgs = GlobalArgs>(
 ): void {
     cli.command(name, description, (yargs) => {
         for (const add of subcommands) {
-            add(yargs, name);
+            add(yargs);
         }
 
         // Register the default command ($0) so that `fern docs preview [options]`

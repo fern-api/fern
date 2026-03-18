@@ -466,8 +466,11 @@ export function convertSchemaObject(
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
-        const isFromConst = "const" in schema;
-        if (isFromConst) {
+        const hasConst = "const" in schema;
+        // When coerceConstsTo is "enums", block the coerceEnumsToLiterals path
+        // so const-derived enums stay as enums. "enums-coerceable-to-literals" allows it.
+        const blockConstCoercionToLiteral = hasConst && context.options.coerceConstsTo === "enums";
+        if (hasConst) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any -- `const` is an OpenAPI 3.1 attribute not in the V3 types
             const constValue = (schema as Record<string, unknown>).const;
             if (context.options.coerceConstsTo === "literals") {
@@ -487,7 +490,7 @@ export function convertSchemaObject(
                     });
                 }
             }
-            // Default: coerce to enum (current behavior)
+            // "enums" and "enums-coerceable-to-literals": coerce to enum
             schema.enum = [constValue];
         }
 
@@ -527,7 +530,7 @@ export function convertSchemaObject(
 
             if (
                 context.options.coerceEnumsToLiterals &&
-                !isFromConst &&
+                !blockConstCoercionToLiteral &&
                 schema.enum.length === 1 &&
                 schema.enum[0] != null &&
                 fernEnum == null

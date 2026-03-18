@@ -337,6 +337,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
+                        authOverrides,
                         enableUniqueErrorsPerEndpoint,
                         settings: getOpenAPISettings({ options: document.settings }),
                         generateV1Examples
