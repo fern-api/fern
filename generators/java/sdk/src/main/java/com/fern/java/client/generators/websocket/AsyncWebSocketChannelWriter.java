@@ -33,8 +33,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import javax.lang.model.element.Modifier;
@@ -354,10 +352,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         CompletableFuture.class)
                 .beginControlFlow("try")
                 .addStatement("assertSocketIsOpen()")
-                .addStatement("$T<String, Object> envelope = new $T<>()", Map.class, HashMap.class)
-                .addStatement("envelope.put($S, type)", "type")
-                .addStatement("envelope.put($S, body)", "body")
-                .addStatement("String json = $N.writeValueAsString(envelope)", objectMapperField)
+                .addStatement("String json = $N.writeValueAsString(body)", objectMapperField)
                 .addComment("Use reconnecting listener's send method which handles queuing")
                 .addStatement("boolean sent = $N.send(json)", reconnectingListenerField)
                 .beginControlFlow("if (sent)")

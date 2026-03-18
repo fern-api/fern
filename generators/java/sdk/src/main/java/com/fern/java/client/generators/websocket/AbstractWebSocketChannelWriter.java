@@ -348,30 +348,22 @@ public abstract class AbstractWebSocketChannelWriter {
                 .addParameter(String.class, "json")
                 .beginControlFlow("try")
                 .addStatement(
-                        "$T envelope = $N.readTree(json)",
+                        "$T node = $N.readTree(json)",
                         ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
                         objectMapperField)
-                .beginControlFlow("if (envelope == null || envelope.isNull())")
+                .beginControlFlow("if (node == null || node.isNull())")
                 .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Received null or invalid JSON envelope")
+                        "throw new $T($S)", IllegalArgumentException.class, "Received null or invalid JSON message")
                 .endControlFlow()
                 .addStatement(
-                        "$T typeNode = envelope.get($S)",
+                        "$T typeNode = node.get($S)",
                         ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
                         "type")
                 .beginControlFlow("if (typeNode == null || typeNode.isNull())")
                 .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Message envelope missing 'type' field")
+                        "throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
                 .endControlFlow()
                 .addStatement("String type = typeNode.asText()")
-                .addStatement(
-                        "$T body = envelope.get($S)",
-                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
-                        "body")
-                .beginControlFlow("if (body == null)")
-                .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Message envelope missing 'body' field")
-                .endControlFlow()
                 .beginControlFlow("switch (type)");
 
         // Add cases for each server message
@@ -383,7 +375,7 @@ public abstract class AbstractWebSocketChannelWriter {
                 builder.addCode("case $S:\n", message.getType().get())
                         .beginControlFlow("if ($L != null)", handlerFieldName)
                         .addStatement(
-                                "$T event = $N.treeToValue(body, $T.class)",
+                                "$T event = $N.treeToValue(node, $T.class)",
                                 messageType,
                                 objectMapperField,
                                 messageType)
