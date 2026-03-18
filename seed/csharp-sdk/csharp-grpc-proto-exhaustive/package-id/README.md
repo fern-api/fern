@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.DataService.CreateAsync(new CreateRequest { Name = "name" });
+await client.DataService.CheckAsync();
 ```
 
 ## Exception Handling
@@ -53,7 +53,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.DataService.CreateAsync(...);
+    var response = await client.DataService.CheckAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -77,7 +77,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.CreateAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -90,7 +90,7 @@ var response = await client.DataService.CreateAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.CreateAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -103,7 +103,7 @@ var response = await client.DataService.CreateAsync(
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.DataService.CreateAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>

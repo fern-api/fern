@@ -1,4 +1,4 @@
-using Contoso.Net.System;
+using global::Contoso.Net.System;
 
 namespace Contoso.Net;
 

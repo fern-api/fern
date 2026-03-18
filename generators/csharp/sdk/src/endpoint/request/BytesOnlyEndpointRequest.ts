@@ -36,7 +36,7 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
             code: this.csharp.codeblock((writer) => {
                 // Start with HeadersBuilder.Builder instance
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
 

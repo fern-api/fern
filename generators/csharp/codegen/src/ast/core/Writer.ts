@@ -130,10 +130,17 @@ ${this.buffer}`;
                     !this.isCurrentNamespace(ns) && // filter out the current namespace.
                     !this.generation.registry.isNamespaceImplicit(ns) // filter out implicitly imported namespaces.
             )
-            .map(
-                ([ns, refs]) =>
-                    `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${refs.length > 0 ? (refs[0] as ClassReference).resolveNamespace() : ns};`
-            )
+            .map(([ns, refs]) => {
+                const resolvedNs = refs.length > 0 ? (refs[0] as ClassReference).resolveNamespace() : ns;
+                const firstSegment = resolvedNs.split(".")[0];
+                // Add global:: prefix when:
+                // 1. Any ref explicitly requires global qualification, OR
+                // 2. The first segment of the namespace is both a type name and a namespace root,
+                //    which would cause CS0426 in C# (e.g., class "Candid" shadowing namespace "Candid.Net")
+                const needsGlobal =
+                    refs.some((ref) => ref?.global) || this.generation.registry.hasTypeNamespaceConflict(firstSegment);
+                return `using ${needsGlobal ? "global::" : ""}${resolvedNs};`;
+            })
             .join("\n");
 
         if (result.length > 0) {

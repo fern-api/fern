@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Contoso.Net;
-using Contoso.Net.Core;
+using global::Contoso.Net;
+using global::Contoso.Net.Core;
 using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework;
