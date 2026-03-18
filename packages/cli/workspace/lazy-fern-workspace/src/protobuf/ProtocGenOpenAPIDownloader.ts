@@ -185,19 +185,19 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
     if (await fileExists(versionedPath)) {
         const currentMarker = await readVersionMarker(versionMarkerPath, logger);
         if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
-            logger.debug(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+            logger.info(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
             return getCacheDir();
         }
         // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
-        logger.debug(`Updated canonical protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
+        logger.info(`Updated protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     }
 
     // Download the binary
     const downloadUrl = getDownloadUrl();
-    logger.debug(`Downloading protoc-gen-openapi from ${downloadUrl}`);
+    logger.info(`Downloading protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}...`);
 
     const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
@@ -218,7 +218,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
 
-        logger.debug(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+        logger.info(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     } catch (error) {
         logger.debug(

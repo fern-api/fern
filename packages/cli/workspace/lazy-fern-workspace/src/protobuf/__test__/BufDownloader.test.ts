@@ -142,8 +142,8 @@ describe("BufDownloader", () => {
             expect(result).toBe(AbsoluteFilePath.of(canonicalPath));
             expect(mockFetch).not.toHaveBeenCalled();
 
-            // Debug log should indicate cache hit
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Using cached buf"));
+            // Info log should indicate cache hit
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Using cached buf"));
 
             vi.unstubAllGlobals();
         });
@@ -185,7 +185,7 @@ describe("BufDownloader", () => {
             expect(updatedMarker.trim()).toBe("v1.66.1");
 
             // Should log the update
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Updated canonical buf"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Updated buf"));
 
             vi.unstubAllGlobals();
         });
@@ -468,8 +468,8 @@ describe("BufDownloader (real e2e)", () => {
             expect(result1).toBe(AbsoluteFilePath.of(expectedPath));
 
             // Verify download log messages
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Downloading buf from"));
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Downloaded buf"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading buf"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded buf"));
 
             // Verify cache structure
             const cacheDir = getCacheDir();
@@ -498,14 +498,14 @@ describe("BufDownloader (real e2e)", () => {
             expect(await fileExists(lockPath)).toBe(false);
 
             // --- Second call: should use cache (no re-download) ---
-            const debugCallsBefore = (logger.debug as ReturnType<typeof vi.fn>).mock.calls.length;
+            const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
             const result2 = await resolveBuf(logger);
 
             expect(result2).toBe(AbsoluteFilePath.of(expectedPath));
 
             // Should log cache hit, not download
-            const debugCallsAfter = (logger.debug as ReturnType<typeof vi.fn>).mock.calls;
-            const newCalls = debugCallsAfter.slice(debugCallsBefore);
+            const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
+            const newCalls = infoCallsAfter.slice(infoCallsBefore);
             const newMessages = newCalls.map((call) => call[0] as string);
             expect(newMessages.some((msg) => msg.includes("Using cached buf"))).toBe(true);
             expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);

@@ -16,6 +16,7 @@ export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
     private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
+    private protocGenOpenAPIResolved = false;
     private resolvedBufCommand: string | undefined;
 
     constructor({ context }: { context: TaskContext }) {
@@ -62,8 +63,9 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
-        // Resolve buf once at the start: check PATH first, then auto-download
+        // Resolve buf and protoc-gen-openapi once at the start
         await this.ensureBufResolved();
+        await this.ensureProtocGenOpenAPIResolved();
 
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
@@ -115,33 +117,6 @@ export class ProtobufOpenAPIGenerator {
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
         let bufLockContents: string | undefined = existingBufLockContents;
-
-        const which = createLoggingExecutable("which", {
-            cwd,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        let protocGenOpenAPIOnPath = false;
-        try {
-            await which(["protoc-gen-openapi"]);
-            protocGenOpenAPIOnPath = true;
-        } catch (err) {
-            this.context.logger.debug(
-                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
-            );
-        }
-
-        if (!protocGenOpenAPIOnPath) {
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
-            }
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
-                );
-            }
-        }
 
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
         const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
@@ -213,6 +188,32 @@ export class ProtobufOpenAPIGenerator {
             absoluteFilepath: join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH)),
             bufLockContents
         };
+    }
+
+    private async ensureProtocGenOpenAPIResolved(): Promise<void> {
+        if (this.protocGenOpenAPIResolved) {
+            return;
+        }
+
+        const which = createLoggingExecutable("which", {
+            cwd: AbsoluteFilePath.of(process.cwd()),
+            logger: undefined,
+            doNotPipeOutput: true
+        });
+
+        try {
+            await which(["protoc-gen-openapi"]);
+            this.protocGenOpenAPIResolved = true;
+        } catch {
+            this.context.logger.debug("protoc-gen-openapi not found on PATH, attempting auto-download");
+            this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+                );
+            }
+            this.protocGenOpenAPIResolved = true;
+        }
     }
 
     private async ensureBufResolved(): Promise<void> {

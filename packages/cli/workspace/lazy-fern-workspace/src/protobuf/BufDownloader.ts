@@ -191,19 +191,19 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
     if (await fileExists(versionedPath)) {
         const currentMarker = await readVersionMarker(versionMarkerPath, logger);
         if (currentMarker === BUF_VERSION && (await fileExists(canonicalPath))) {
-            logger.debug(`Using cached buf ${BUF_VERSION}`);
+            logger.info(`Using cached buf ${BUF_VERSION}`);
             return canonicalPath;
         }
         // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, BUF_VERSION);
-        logger.debug(`Updated canonical buf to ${BUF_VERSION}`);
+        logger.info(`Updated buf to ${BUF_VERSION}`);
         return canonicalPath;
     }
 
     // Download the binary
     const downloadUrl = getDownloadUrl();
-    logger.debug(`Downloading buf from ${downloadUrl}`);
+    logger.info(`Downloading buf ${BUF_VERSION}...`);
 
     const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
@@ -224,7 +224,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, BUF_VERSION);
 
-        logger.debug(`Downloaded buf ${BUF_VERSION}`);
+        logger.info(`Downloaded buf ${BUF_VERSION}`);
         return canonicalPath;
     } catch (error) {
         logger.debug(`Failed to download buf: ${error instanceof Error ? error.message : String(error)}`);
