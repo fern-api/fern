@@ -172,9 +172,7 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
             await releaseLock();
         }
     } catch (error) {
-        logger.debug(
-            `Failed to resolve protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
-        );
+        logger.debug(`Failed to resolve protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`);
         return undefined;
     }
 }
