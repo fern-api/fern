@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+import { resolveBuf } from "./BufDownloader.js";
 
 import {
     detectAirGappedModeForProtobuf,
@@ -21,6 +22,7 @@ import {
 export class ProtobufIRGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
+    private resolvedBufCommand: string | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -56,11 +58,15 @@ export class ProtobufIRGenerator {
         absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
         deps: string[];
     }): Promise<AbsoluteFilePath> {
+        // Resolve buf once at the start: check PATH first, then auto-download
+        await this.ensureBufResolved();
+
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
             this.isAirGapped = await detectAirGappedModeForProtobuf(
                 absoluteFilepathToProtobufRoot,
-                this.context.logger
+                this.context.logger,
+                this.resolvedBufCommand
             );
         }
 
@@ -122,20 +128,7 @@ export class ProtobufIRGenerator {
             return;
         }
 
-        // Use buf export to get all relevant .proto files
-        const which = createLoggingExecutable("which", {
-            cwd: protobufGeneratorConfigPath,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
+        const bufCommand = this.resolvedBufCommand ?? "buf";
 
         // Create a temporary buf config file to prevent conflicts
         // Try buf export with v1 first, then fall back to v2 if it fails
@@ -149,7 +142,7 @@ export class ProtobufIRGenerator {
             try {
                 const result = await runExeca(
                     this.context.logger,
-                    "buf",
+                    bufCommand,
                     [
                         "export",
                         "--path",
@@ -236,25 +229,12 @@ export class ProtobufIRGenerator {
     }
 
     private async doGenerateLocal({ cwd, deps }: { cwd: AbsoluteFilePath; deps: string[] }): Promise<AbsoluteFilePath> {
-        const which = createLoggingExecutable("which", {
-            cwd,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
-
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
 
         const configContent = getProtobufYamlV1(deps);
 
-        const buf = createLoggingExecutable("buf", {
+        const bufCommand = this.resolvedBufCommand ?? "buf";
+        const buf = createLoggingExecutable(bufCommand, {
             cwd,
             logger: undefined,
             stdout: "ignore",
@@ -294,6 +274,33 @@ export class ProtobufIRGenerator {
         }
 
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
+    }
+
+    private async ensureBufResolved(): Promise<void> {
+        if (this.resolvedBufCommand != null) {
+            return;
+        }
+
+        const which = createLoggingExecutable("which", {
+            cwd: AbsoluteFilePath.of(process.cwd()),
+            logger: undefined,
+            doNotPipeOutput: true
+        });
+
+        try {
+            await which(["buf"]);
+            this.resolvedBufCommand = "buf";
+        } catch {
+            this.context.logger.debug("buf not found on PATH, attempting auto-download");
+            const downloadedBufPath = await resolveBuf(this.context.logger);
+            if (downloadedBufPath != null) {
+                this.resolvedBufCommand = downloadedBufPath;
+            } else {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
+                );
+            }
+        }
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {

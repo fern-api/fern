@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+import { resolveBuf } from "./BufDownloader.js";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
 import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
 
@@ -15,6 +16,7 @@ export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
     private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
+    private resolvedBufCommand: string | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -60,11 +62,15 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        // Resolve buf once at the start: check PATH first, then auto-download
+        await this.ensureBufResolved();
+
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
             this.isAirGapped = await detectAirGappedModeForProtobuf(
                 absoluteFilepathToProtobufRoot,
-                this.context.logger
+                this.context.logger,
+                this.resolvedBufCommand
             );
         }
 
@@ -116,14 +122,6 @@ export class ProtobufOpenAPIGenerator {
             doNotPipeOutput: true
         });
 
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
-
         let protocGenOpenAPIOnPath = false;
         try {
             await which(["protoc-gen-openapi"]);
@@ -157,7 +155,8 @@ export class ProtobufOpenAPIGenerator {
                 ? { PATH: `${this.protocGenOpenAPIBinDir}${path.delimiter}${process.env.PATH ?? ""}` }
                 : undefined;
 
-        const buf = createLoggingExecutable("buf", {
+        const bufCommand = this.resolvedBufCommand ?? "buf";
+        const buf = createLoggingExecutable(bufCommand, {
             cwd,
             logger: this.context.logger,
             stdout: "ignore",
@@ -214,6 +213,33 @@ export class ProtobufOpenAPIGenerator {
             absoluteFilepath: join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH)),
             bufLockContents
         };
+    }
+
+    private async ensureBufResolved(): Promise<void> {
+        if (this.resolvedBufCommand != null) {
+            return;
+        }
+
+        const which = createLoggingExecutable("which", {
+            cwd: AbsoluteFilePath.of(process.cwd()),
+            logger: undefined,
+            doNotPipeOutput: true
+        });
+
+        try {
+            await which(["buf"]);
+            this.resolvedBufCommand = "buf";
+        } catch {
+            this.context.logger.debug("buf not found on PATH, attempting auto-download");
+            const downloadedBufPath = await resolveBuf(this.context.logger);
+            if (downloadedBufPath != null) {
+                this.resolvedBufCommand = downloadedBufPath;
+            } else {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
+                );
+            }
+        }
     }
 
     private async generateRemote(): Promise<{

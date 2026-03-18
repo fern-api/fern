@@ -76,7 +76,8 @@ async function performAirGapDetection(url: string, logger: Logger, timeoutMs: nu
  */
 export async function detectAirGappedModeForProtobuf(
     absoluteFilepathToProtobufRoot: AbsoluteFilePath,
-    logger: Logger
+    logger: Logger,
+    bufCommand: string = "buf"
 ): Promise<boolean> {
     const bufLockPath = join(absoluteFilepathToProtobufRoot, RelativeFilePath.of("buf.lock"));
 
@@ -110,7 +111,7 @@ export async function detectAirGappedModeForProtobuf(
 
         // Try buf dep update with a timeout (30 seconds)
         try {
-            await runExeca(logger, "buf", ["dep", "update"], {
+            await runExeca(logger, bufCommand, ["dep", "update"], {
                 cwd: tmpDir,
                 stdio: "pipe",
                 timeout: 30000 // 30 second timeout for detection
