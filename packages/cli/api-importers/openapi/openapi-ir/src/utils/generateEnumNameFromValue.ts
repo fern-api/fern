@@ -14,8 +14,12 @@ export function generateEnumNameFromValue(value: string): string {
         if (value.toLowerCase() === "n/a") {
             return "NOT_APPLICABLE";
         }
-        // Replace special characters with word equivalents before applying casing
-        const withWords = replaceSpecialCharsWithWords(value);
-        return upperFirst(camelCase(withWords));
+        // Only fall back to word replacement when camelCase drops all chars
+        const basic = upperFirst(camelCase(value));
+        if (basic === "") {
+            const withWords = replaceSpecialCharsWithWords(value);
+            return upperFirst(camelCase(withWords));
+        }
+        return basic;
     }
 }
