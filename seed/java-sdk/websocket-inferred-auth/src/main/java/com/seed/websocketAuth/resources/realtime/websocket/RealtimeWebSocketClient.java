@@ -15,8 +15,6 @@ import com.seed.websocketAuth.resources.realtime.types.ReceiveSnakeCase;
 import com.seed.websocketAuth.resources.realtime.types.SendEvent;
 import com.seed.websocketAuth.resources.realtime.types.SendEvent2;
 import com.seed.websocketAuth.resources.realtime.types.SendSnakeCase;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
+import okio.ByteString;
 
 /**
  * WebSocket client for the realtime channel.
@@ -47,6 +46,8 @@ public class RealtimeWebSocketClient {
     private final Optional<String> model;
 
     private final Optional<Integer> temperature;
+
+    private Consumer<ByteString> onBinaryMessageHandler;
 
     private Runnable onConnectedHandler;
 
@@ -99,7 +100,17 @@ public class RealtimeWebSocketClient {
         } else if (!baseUrl.endsWith("/") && !fullPath.startsWith("/")) {
             fullPath = "/" + fullPath;
         }
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl + fullPath).newBuilder();
+        // OkHttp's HttpUrl only supports http/https schemes; convert wss/ws for URL parsing
+        if (baseUrl.startsWith("wss://")) {
+            baseUrl = "https://" + baseUrl.substring(6);
+        } else if (baseUrl.startsWith("ws://")) {
+            baseUrl = "http://" + baseUrl.substring(5);
+        }
+        HttpUrl parsedUrl = HttpUrl.parse(baseUrl + fullPath);
+        if (parsedUrl == null) {
+            throw new IllegalArgumentException("Invalid WebSocket URL: " + baseUrl + fullPath);
+        }
+        HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
         if (model != null && model.isPresent()) {
             urlBuilder.addQueryParameter("model", String.valueOf(model.get()));
         }
@@ -132,6 +143,13 @@ public class RealtimeWebSocketClient {
                     @Override
                     protected void onWebSocketMessage(WebSocket webSocket, String text) {
                         handleIncomingMessage(text);
+                    }
+
+                    @Override
+                    protected void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes) {
+                        if (onBinaryMessageHandler != null) {
+                            onBinaryMessageHandler.accept(bytes);
+                        }
                     }
 
                     @Override
@@ -252,6 +270,35 @@ public class RealtimeWebSocketClient {
     }
 
     /**
+     * Registers a handler for binary messages from the server.
+     * @param handler the handler to invoke when binary data is received
+     */
+    public void onBinaryMessage(Consumer<ByteString> handler) {
+        this.onBinaryMessageHandler = handler;
+    }
+
+    /**
+     * Sends binary data to the server asynchronously.
+     * @param data the binary data to send
+     * @return a CompletableFuture that completes when the data is sent
+     */
+    public CompletableFuture<Void> sendBinary(ByteString data) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        try {
+            assertSocketIsOpen();
+            boolean sent = reconnectingListener.sendBinary(data);
+            if (sent) {
+                future.complete(null);
+            } else {
+                future.completeExceptionally(new RuntimeException("Failed to send binary data"));
+            }
+        } catch (Exception e) {
+            future.completeExceptionally(new RuntimeException("Failed to send binary data", e));
+        }
+        return future;
+    }
+
+    /**
      * Registers a handler called when the connection is established.
      * @param handler the handler to invoke when connected
      */
@@ -292,10 +339,7 @@ public class RealtimeWebSocketClient {
         CompletableFuture<Void> future = new CompletableFuture<>();
         try {
             assertSocketIsOpen();
-            Map<String, Object> envelope = new HashMap<>();
-            envelope.put("type", type);
-            envelope.put("body", body);
-            String json = objectMapper.writeValueAsString(envelope);
+            String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
             boolean sent = reconnectingListener.send(json);
             if (sent) {
@@ -314,23 +358,19 @@ public class RealtimeWebSocketClient {
 
     private void handleIncomingMessage(String json) {
         try {
-            JsonNode envelope = objectMapper.readTree(json);
-            if (envelope == null || envelope.isNull()) {
-                throw new IllegalArgumentException("Received null or invalid JSON envelope");
+            JsonNode node = objectMapper.readTree(json);
+            if (node == null || node.isNull()) {
+                throw new IllegalArgumentException("Received null or invalid JSON message");
             }
-            JsonNode typeNode = envelope.get("type");
+            JsonNode typeNode = node.get("type");
             if (typeNode == null || typeNode.isNull()) {
-                throw new IllegalArgumentException("Message envelope missing 'type' field");
+                throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            JsonNode body = envelope.get("body");
-            if (body == null) {
-                throw new IllegalArgumentException("Message envelope missing 'body' field");
-            }
             switch (type) {
                 case "receive":
                     if (receiveHandler != null) {
-                        ReceiveEvent event = objectMapper.treeToValue(body, ReceiveEvent.class);
+                        ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
                         if (event != null) {
                             receiveHandler.accept(event);
                         }
@@ -338,7 +378,7 @@ public class RealtimeWebSocketClient {
                     break;
                 case "receive_snake_case":
                     if (receiveSnakeCaseHandler != null) {
-                        ReceiveSnakeCase event = objectMapper.treeToValue(body, ReceiveSnakeCase.class);
+                        ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
                         if (event != null) {
                             receiveSnakeCaseHandler.accept(event);
                         }
@@ -346,7 +386,7 @@ public class RealtimeWebSocketClient {
                     break;
                 case "receive2":
                     if (receive2Handler != null) {
-                        ReceiveEvent2 event = objectMapper.treeToValue(body, ReceiveEvent2.class);
+                        ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
                         if (event != null) {
                             receive2Handler.accept(event);
                         }
@@ -354,7 +394,7 @@ public class RealtimeWebSocketClient {
                     break;
                 case "receive3":
                     if (receive3Handler != null) {
-                        ReceiveEvent3 event = objectMapper.treeToValue(body, ReceiveEvent3.class);
+                        ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
                         if (event != null) {
                             receive3Handler.accept(event);
                         }

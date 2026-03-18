@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import okio.ByteString;
 
 /**
  * WebSocketListener with automatic reconnection, exponential backoff, and message queuing.
@@ -188,6 +189,20 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     }
 
     /**
+     * Sends binary data or queues it if not connected.
+     *
+     * @param data The binary data to send
+     * @return true if sent immediately, false otherwise
+     */
+    public synchronized boolean sendBinary(ByteString data) {
+        WebSocket ws = webSocket;
+        if (ws != null) {
+            return ws.send(data);
+        }
+        return false;
+    }
+
+    /**
      * Gets the current WebSocket instance.
      * Thread-safe method to access the WebSocket connection.
      * @return the WebSocket or null if not connected
@@ -211,6 +226,11 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     @Override
     public void onMessage(WebSocket webSocket, String text) {
         onWebSocketMessage(webSocket, text);
+    }
+
+    @Override
+    public void onMessage(WebSocket webSocket, ByteString bytes) {
+        onWebSocketBinaryMessage(webSocket, bytes);
     }
 
     /**
@@ -325,6 +345,8 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     protected abstract void onWebSocketOpen(WebSocket webSocket, Response response);
 
     protected abstract void onWebSocketMessage(WebSocket webSocket, String text);
+
+    protected abstract void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes);
 
     protected abstract void onWebSocketFailure(WebSocket webSocket, Throwable t, Response response);
 
