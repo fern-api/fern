@@ -453,8 +453,12 @@ export class DynamicTypeLiteralMapper {
                 });
                 // If a required property converts to nop (e.g., invalid enum value for the wrong
                 // union variant), throw to reject this variant during undiscriminated union matching.
+                // Outside of union matching, just skip the nop value to produce best-effort output.
                 if (java.TypeLiteral.isNop(convertedValue) && !this.context.isOptional(property.typeReference)) {
-                    throw new Error(`Required property "${property.name.wireValue}" could not be converted`);
+                    if (inUndiscriminatedUnion === true) {
+                        throw new Error(`Required property "${property.name.wireValue}" could not be converted`);
+                    }
+                    continue;
                 }
                 builderParameters.push({
                     name: this.context.getMethodName(property.name.name),
