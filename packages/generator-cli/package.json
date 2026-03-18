@@ -23,6 +23,7 @@
   },
   "files": ["bin", "dist", "lib"],
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/replay": "^0.7.0",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",
