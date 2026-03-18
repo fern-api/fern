@@ -145,6 +145,22 @@ impl ObjectClient {
             .await
     }
 
+    pub async fn get_and_return_map_of_documented_unknown_type(
+        &self,
+        request: &MapOfDocumentedUnknownType,
+        options: Option<RequestOptions>,
+    ) -> Result<MapOfDocumentedUnknownType, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/object/get-and-return-map-of-documented-unknown-type",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

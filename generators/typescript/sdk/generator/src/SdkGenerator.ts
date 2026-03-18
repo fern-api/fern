@@ -560,6 +560,7 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
+                allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
@@ -2135,6 +2136,16 @@ export class SdkGenerator {
                             moduleSpecifier: "./client/Client",
                             namedExports: [clientClassName]
                         });
+
+                        if (this.generateWebSocketClients && package_.websocket != null) {
+                            const socketClassName = this.websocketSocketDeclarationReferencer.getExportedName(
+                                packageId.subpackageId
+                            );
+                            sourceFile.addExportDeclaration({
+                                moduleSpecifier: "./client/Socket",
+                                namedExports: [socketClassName]
+                            });
+                        }
 
                         sourceFile.addExportDeclaration({
                             moduleSpecifier: "./client/index"

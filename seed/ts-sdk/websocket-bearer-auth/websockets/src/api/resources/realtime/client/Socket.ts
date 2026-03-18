@@ -50,7 +50,7 @@ export class RealtimeSocket {
     }
 
     /** The current state of the connection; this is one of the readyState constants. */
-    get readyState(): number {
+    get readyState(): core.ReconnectingWebSocket.ReadyState {
         return this.socket.readyState;
     }
 
@@ -109,7 +109,7 @@ export class RealtimeSocket {
 
     /** Returns a promise that resolves when the websocket is open. */
     public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
-        if (this.socket.readyState === core.ReconnectingWebSocket.OPEN) {
+        if (this.socket.readyState === core.ReconnectingWebSocket.ReadyState.OPEN) {
             return this.socket;
         }
 
@@ -130,7 +130,7 @@ export class RealtimeSocket {
             throw new Error("Socket is not connected.");
         }
 
-        if (this.socket.readyState !== core.ReconnectingWebSocket.OPEN) {
+        if (this.socket.readyState !== core.ReconnectingWebSocket.ReadyState.OPEN) {
             throw new Error("Socket is not open.");
         }
     }

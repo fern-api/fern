@@ -148,6 +148,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
+        const hasProtobufSpecs = specs.some((spec) => spec.type === "protobuf");
         this.parseOptions = {
             onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
             respectReadonlySchemas: this.respectReadonlySchemas,
@@ -167,7 +168,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
             pathParameterOrder: this.pathParameterOrder,
-            coerceConstsTo: this.coerceConstsTo
+            coerceConstsTo: this.coerceConstsTo,
+            respectByteFormat: hasProtobufSpecs
         };
     }
 
@@ -335,6 +337,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
+                        authOverrides,
                         enableUniqueErrorsPerEndpoint,
                         settings: getOpenAPISettings({ options: document.settings }),
                         generateV1Examples

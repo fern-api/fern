@@ -105,6 +105,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
@@ -112,7 +114,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
-                auth: false,
+                auth,
                 headers,
                 queryParameters,
                 pathParameters,
@@ -135,6 +137,29 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             audiences,
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    protected hasServerSecurity(): boolean {
+        const spec = this.context.spec as AsyncAPIV3.DocumentV3;
+        const servers = spec.servers ?? {};
+
+        if (this.channel.servers && this.channel.servers.length > 0) {
+            for (const serverRef of this.channel.servers) {
+                const serverName = serverRef.$ref.replace(SERVER_REFERENCE_PREFIX, "");
+                const server = servers[serverName];
+                if (server?.security && server.security.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (const server of Object.values(servers)) {
+            if (server.security && server.security.length > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private convertChannelParameters({

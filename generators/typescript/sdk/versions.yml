@@ -1,4 +1,105 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix generated README.md including the "Customizing Fetch Client" section
+        under "Runtime Compatibility" even when `allowCustomFetcher` is `false`.
+        The section and its code snippet are now conditionally omitted when the
+        custom fetcher option is disabled.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Make `readyState` on generated WebSocket socket classes return a `ReadyState`
+        enum (`CONNECTING`, `OPEN`, `CLOSING`, `CLOSED`) instead of a raw `number`,
+        improving developer experience with IDE autocompletion and self-documenting code.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.1
+  changelogEntry:
+    - summary: |
+        Export the generated Socket class from subpackage `exports.ts` when
+        WebSocket clients are enabled. Previously only the Client class was
+        exported, making the Socket class inaccessible through the public
+        exports path.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add explicit type annotation to `mockServerPool` export in generated test
+        mock-server code to satisfy `--isolatedDeclarations`.
+      type: fix
+    - summary: |
+        Enable vitest typechecking in generated vitest config so that type errors
+        in test and source files are caught when running `vitest`.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.57.2
+  changelogEntry:
+    - summary: |
+        Fix map types with unknown/any value types to not include spurious `| undefined`.
+        Previously, `map<string, UnknownType>` generated `Record<string, UnknownType | undefined>`
+        instead of `Record<string, UnknownType>`. The `| undefined` is now correctly omitted
+        from map value types.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method producing 404s when the SDK environment is an
+        object (e.g. `{ base: string; production: string }`) instead of a plain string URL.
+        The generated code now resolves the environment supplier inline and projects object
+        environments to their `.base` property, instead of passing the raw object to
+        `makePassthroughRequest` where it would be stringified as `[object Object]`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Expose an optional `protocols` field on `RealtimeClient.ConnectArgs` for WebSocket
+        subprotocol negotiation. The `ReconnectingWebSocket` constructor already accepted a
+        `protocols` parameter but it was hardcoded to an empty array. Browser callers can now
+        authenticate via subprotocols (e.g. `xai-client-secret.<token>`) where custom headers
+        are forbidden by the browser security model.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+- version: 3.56.4
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from generated `tsconfig.base.json` files. Setting `baseUrl`
+        to `src` was unnecessary alongside `rootDir` and caused unexpected module
+        resolution side effects in some project setups.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.3
+  changelogEntry:
+    - summary: |
+        Fix TypeScript SDK generator crash when generating WebSocket clients for
+        AsyncAPI specs that define a named server (e.g. `servers.production`) with
+        a single-URL environment. The `baseUrlId` assigned by the Fern IR converter
+        is now silently ignored for single-URL environments since there is only one
+        URL to resolve to.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.56.2
   changelogEntry:
     - summary: |
@@ -22,11 +123,42 @@
 - version: 3.56.0
   changelogEntry:
     - summary: |
-        Add a `naming` configuration object that allows users to independently control the
-        namespace export and PascalCase class/type names (client, error, timeout error,
-        environment, environment URLs, version). When individual overrides are not provided,
-        they are derived from the namespace value using the existing `${PascalCase(namespace)}Suffix`
-        pattern. The existing `namespaceExport` config continues to work for backwards compatibility.
+        Add a `naming` configuration object that gives you fine-grained control over the
+        exported namespace and generated class names (client, error, timeout error,
+        environment, environment URLs, version).
+
+        You can use it as a simple string shorthand to set the namespace:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming: acme
+        ```
+
+        Or as a full object to override individual names:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming:
+                    namespace: acme
+                    client: AcmeApiClient
+                    error: AcmeApiError
+                    environment: AcmeRegion
+        ```
+
+        When individual overrides are not provided, they are derived from the namespace
+        using the `PascalCase(namespace) + Suffix` pattern (e.g. `namespace: acme` produces
+        `AcmeClient`, `AcmeError`, `AcmeTimeoutError`, `AcmeEnvironment`, `AcmeEnvironmentUrls`,
+        and `AcmeVersion` by default).
+
+        The existing `namespaceExport` config continues to work for backwards compatibility.
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65

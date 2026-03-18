@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.2
+  changelogEntry:
+    - summary: |
+        Generate named Java wrapper classes for unknown type aliases. Previously,
+        when an API schema had no `type` and no `properties` (representing an
+        "any" type), the generator dropped the named type definition and inlined
+        `Object` wherever it was referenced. Unknown type aliases now generate a
+        proper wrapper class (e.g. `DocumentedUnknownType`) based on
+        `java.lang.Object`, consistent with how other alias types are handled.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
 - version: 3.44.1
   changelogEntry:
     - summary: |

@@ -2,8 +2,7 @@ namespace SeedApi;
 
 public partial interface IDataServiceClient
 {
-    Task<UploadResponse> UploadAsync(
-        UploadRequest request,
+    Task<CheckResponse> CheckAsync(
         GrpcRequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -26,6 +25,18 @@ public partial interface IDataServiceClient
         CancellationToken cancellationToken = default
     );
 
+    Task<QueryResponse> QueryAsync(
+        QueryRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<UploadResponse> UploadAsync(
+        UploadRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task<FetchResponse> FetchAsync(
         FetchRequest request,
         GrpcRequestOptions? options = null,
@@ -34,12 +45,6 @@ public partial interface IDataServiceClient
 
     Task<ListResponse> ListAsync(
         ListRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    );
-
-    Task<QueryResponse> QueryAsync(
-        QueryRequest request,
         GrpcRequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

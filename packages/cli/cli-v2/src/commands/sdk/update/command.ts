@@ -89,7 +89,7 @@ export class UpdateCommand {
         });
         const migrationInfo = new Map<string, GeneratorMigrator.MigrationInfo>();
         for (const update of selectedUpdates) {
-            editor.setTargetVersion(update.name, update.latestVersion);
+            await editor.setTargetVersion(update.name, update.latestVersion);
 
             // Run generator config migrations for this version upgrade.
             const target = targets.find((t) => t.name === update.name);
@@ -219,7 +219,7 @@ export class UpdateCommand {
     }
 }
 
-export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addUpdateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new UpdateCommand();
     command(
         cli,
@@ -246,7 +246,6 @@ export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                     type: "boolean",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

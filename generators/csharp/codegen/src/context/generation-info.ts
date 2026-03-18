@@ -328,6 +328,10 @@ export class Generation {
         root: (): string => this.settings.namespace,
         /** Internal Core namespace for SDK implementation details and utilities ({root}.Core). */
         core: (): string => `${this.namespaces.root}.Core`,
+        /** Pre-qualified root namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedRoot: (): string => this.qualifyNamespace(this.namespaces.root),
+        /** Pre-qualified Core namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedCore: (): string => this.qualifyNamespace(this.namespaces.core),
         /** Test namespace for all test-related code, canonicalized to avoid conflicts ({root}.Test). */
         test: (): string => this.registry.canonicalizeNamespace(`${this.namespaces.root}.Test`),
         /** Test utilities namespace for helper methods and fixtures ({root}.Test.Utils). */
@@ -1200,5 +1204,18 @@ export class Generation {
     /** Provides access to WireMock.Net testing/mocking library types */
     public get WireMock() {
         return this.extern.WireMock;
+    }
+
+    /**
+     * Returns a namespace string with a `global::` prefix if the first segment
+     * has a type-namespace conflict (e.g., class "Candid" shadowing namespace "Candid.Net").
+     * Use this when writing raw namespace strings in string interpolations to avoid CS0426.
+     */
+    public qualifyNamespace(ns: string): string {
+        const firstSegment = ns.split(".")[0];
+        if (firstSegment && this.registry.hasTypeNamespaceConflict(firstSegment)) {
+            return `global::${ns}`;
+        }
+        return ns;
     }
 }

@@ -34,7 +34,25 @@ export const FernAsyncAPIExtension = {
 
     /**
      * The x-fern-sdk-method-name allows you to specify the SDK method name for an AsyncAPI operation.
-     * This extension is applied to AsyncAPI v3 operations to customize the generated method names.
+     * This extension is applied to AsyncAPI v2 publish/subscribe operations and AsyncAPI v3 operations
+     * to customize the generated method names.
+     *
+     * AsyncAPI v2 example:
+     *
+     * channels:
+     *   /v1/realtime:
+     *     publish:
+     *       x-fern-sdk-method-name: send
+     *       message:
+     *         oneOf:
+     *           - $ref: "#/components/messages/SessionUpdate"
+     *     subscribe:
+     *       x-fern-sdk-method-name: receive
+     *       message:
+     *         oneOf:
+     *           - $ref: "#/components/messages/ServerEvent"
+     *
+     * AsyncAPI v3 example:
      *
      * operations:
      *   SendMessage:

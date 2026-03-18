@@ -3,6 +3,7 @@ syntax = "proto3";
 package data.v1;
 
 import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
@@ -166,13 +167,23 @@ message UpdateRequest {
   repeated IndexType index_types = 8;
   optional AspectRatio aspect_ratio = 9;
   optional google.rpc.Status status = 10;
+  // Tests bytes field mapping (string <-> ByteString conversion).
+  bytes content = 11;
 }
 
 message UpdateResponse {
+  // Nested enum to test dot-separated naming for nested proto types.
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_PENDING = 1;
+    STATUS_ACTIVE = 2;
+    STATUS_FAILED = 3;
+  }
   google.protobuf.Timestamp updated_at = 1;
   IndexType index_type = 2;
   google.protobuf.Any details = 3;
   repeated IndexType index_types = 4;
+  Status status = 5;
 }
 
 enum ToolMode {
@@ -252,20 +263,18 @@ message DescribeResponse {
   uint32 total_count = 4;
 }
 
-service DataService {
-  rpc Upload(UploadRequest) returns (UploadResponse) {
-    option (google.api.http) = {
-      post: "/data"
-      body: "*"
-    };
-  }
+message CheckResponse {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+}
 
-  rpc Delete(DeleteRequest) returns (DeleteResponse) {
-    option (google.api.http) = {
-      post: "/data/delete"
-      body: "*"
-    };
-  }
+service DataService {
+  rpc Check(google.protobuf.Empty) returns (CheckResponse);
+  rpc Upload(UploadRequest) returns (UploadResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  rpc Query(QueryRequest) returns (QueryResponse);
+  rpc Describe(DescribeRequest) returns (DescribeResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
 
   rpc Fetch(FetchRequest) returns (FetchResponse) {
     option (google.api.http) = {
@@ -279,30 +288,9 @@ service DataService {
     };
   }
 
-  rpc Query(QueryRequest) returns (QueryResponse) {
-    option (google.api.http) = {
-      post: "/data/query"
-      body: "*"
-    };
-  }
-
   rpc Update(UpdateRequest) returns (UpdateResponse) {
     option (google.api.http) = {
       post: "/data/update"
-      body: "*"
-    };
-  }
-
-  rpc Describe(DescribeRequest) returns (DescribeResponse) {
-    option (google.api.http) = {
-      post: "/data/describe"
-      body: "*"
-    };
-  }
-
-  rpc Create(CreateRequest) returns (CreateResponse) {
-    option (google.api.http) = {
-      post: "/data/create"
       body: "*"
     };
   }

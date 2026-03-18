@@ -8,6 +8,7 @@ from .enum import WeatherReport
 from .object import (
     DocumentedUnknownType,
     DoubleOptional,
+    MapOfDocumentedUnknownType,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithDatetimeLikeString,
@@ -28,6 +29,7 @@ __all__ = [
     "DocumentedUnknownType",
     "Dog",
     "DoubleOptional",
+    "MapOfDocumentedUnknownType",
     "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",

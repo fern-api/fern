@@ -6,11 +6,15 @@
     },
     "user": {
       "$ref": "#/definitions/System.User"
+    },
+    "owner": {
+      "$ref": "#/definitions/System.User"
     }
   },
   "required": [
     "name",
-    "user"
+    "user",
+    "owner"
   ],
   "additionalProperties": false,
   "definitions": {
