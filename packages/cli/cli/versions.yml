@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.34.0
+  changelogEntry:
+    - summary: |
+        Add `infer-default-environment` API definition setting. When set to `false`,
+        the OpenAPI importer will not automatically designate the first server as the
+        default environment, requiring SDK users to explicitly provide a base URL.
+        Defaults to `true` to preserve existing behavior.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                infer-default-environment: false
+        ```
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
 - version: 4.33.0
   changelogEntry:
     - summary: |
@@ -54,6 +73,7 @@
       type: fix
   createdAt: "2026-03-17"
   irVersion: 65
+
 - version: 4.31.2
   changelogEntry:
     - summary: |
@@ -67,6 +87,7 @@
       type: fix
   createdAt: "2026-03-16"
   irVersion: 65
+
 - version: 4.31.1
   changelogEntry:
     - summary: |

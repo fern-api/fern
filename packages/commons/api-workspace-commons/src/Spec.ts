@@ -1,6 +1,6 @@
-import type { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import type { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
+import type { OpenAPISettings } from "./openapi/OpenAPISettings.js";
 import type { Source } from "./Source.js";
 
 export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec | GraphQLSpec;
@@ -12,7 +12,7 @@ export interface OpenAPISpec {
     absoluteFilepathToOverlays: AbsoluteFilePath | undefined;
     source: Source;
     namespace?: string;
-    settings?: ParseOpenAPIOptions;
+    settings?: OpenAPISettings;
 }
 
 export interface OpenRPCSpec {
@@ -31,7 +31,7 @@ export interface ProtobufSpec {
     generateLocally: boolean;
     fromOpenAPI: boolean;
     dependencies: string[];
-    settings?: ParseOpenAPIOptions;
+    settings?: OpenAPISettings;
 }
 
 export interface GraphQLSpec {
