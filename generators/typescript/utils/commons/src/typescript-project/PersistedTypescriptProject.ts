@@ -442,7 +442,7 @@ export class PersistedTypescriptProject {
         });
 
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
-        const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
+        const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.host, parsedRegistryUrl.pathname);
 
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
