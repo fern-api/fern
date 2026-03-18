@@ -56,6 +56,34 @@ function AnalyzeSdkDiff(
     - PATCH: Bug fixes, documentation, internal refactoring with no observable behavioral change
     - NO_CHANGE: The diff is empty
 
+    IMPORTANT — Pre-release / Beta / Alpha Availability Override:
+    Fern-generated SDKs annotate endpoints and types with availability markers derived
+    from the OpenAPI extension `x-fern-availability`. These appear in the diff as:
+    - TypeScript/JavaScript: `@beta` JSDoc tag (e.g. `@beta This endpoint is in pre-release and may change.`)
+    - Python: docstring warnings like `WARNING: This endpoint is in beta and may change.`
+    - Java/Kotlin: `@Beta` or `@Experimental` annotations, or Javadoc `@apiNote` with beta/pre-release warnings
+    - Go: doc comments like `// Beta: this endpoint is in pre-release and may change.`
+    - C#: `[Obsolete]` or XML doc `<remarks>` with beta/pre-release warnings
+    - Ruby: `# @note Beta` or doc comments with pre-release warnings
+    - Any language: comments/docs containing "beta", "alpha", "pre-release", "in development",
+      "experimental", or "may change"
+
+    If a method, endpoint, type, or class is annotated with ANY of these pre-release/beta/alpha
+    markers (either in the removed lines, the added lines, or the surrounding context of the diff),
+    then breaking changes to that symbol MUST NOT be classified as MAJOR. Instead:
+    - Downgrade what would be MAJOR to MINOR for pre-release/beta/alpha symbols
+    - The rationale is that consumers of beta/alpha APIs have no stability guarantee, so
+      breaking changes are expected and should not trigger a major version bump
+    - In the version_bump_reason, note that the change was downgraded from MAJOR due to
+      the beta/alpha/pre-release availability status
+    - In the changelog_entry, mention that the changed API was in beta/pre-release
+
+    Example:
+    - A method marked `@beta` has its parameter type changed from `Uploadable` to `Uploadable[]`
+      → This is MINOR (not MAJOR), because the method is in beta
+    - A class marked `@Experimental` is removed entirely
+      → This is MINOR (not MAJOR), because the class was experimental
+
     --- Examples ---
 
     Examples of correct classifications:
@@ -107,6 +135,27 @@ function AnalyzeSdkDiff(
     +)
     version_bump: PATCH
     reason: Formatting change only, no functional difference.
+
+    --- MINOR (not MAJOR): breaking change to @beta TypeScript method ---
+    diff --git a/src/api/parser-client.ts b/src/api/parser-client.ts
+       /**
+        * @beta This endpoint is in pre-release and may change.
+        */
+    -  public async parserCreateJob(file: core.File.Uploadable): Promise<Job> {
+    +  public async parserCreateJob(files: core.File.Uploadable[]): Promise<Job> {
+    version_bump: MINOR
+    reason: Would be MAJOR (parameter type changed) but downgraded to MINOR because parserCreateJob is marked @beta (pre-release).
+
+    --- MINOR (not MAJOR): removed Python method marked as beta ---
+    diff --git a/client.py b/client.py
+    -    def experimental_search(self, query: str) -> SearchResult:
+    -        """Search using experimental algorithm.
+    -
+    -        WARNING: This endpoint is in beta and may change.
+    -        """
+    -        return self._request("GET", f"/search?q={query}")
+    version_bump: MINOR
+    reason: Would be MAJOR (public method removed) but downgraded to MINOR because experimental_search was marked as beta.
 
     --- End Examples ---
 
@@ -554,6 +603,9 @@ function AnalyzeSdkDiff(
     Apply these patterns to the diff below. When in doubt between MINOR and PATCH,
     prefer MINOR. When in doubt between MAJOR and MINOR, examine whether existing
     callers would break without any code changes on their side.
+    IMPORTANT: Always check for beta/alpha/pre-release availability markers before
+    classifying as MAJOR — if the affected symbol is marked as beta/alpha/pre-release,
+    downgrade to MINOR.
 
     Message Format (use this exact structure):
     ```
@@ -624,10 +676,13 @@ function AnalyzeSdkDiff(
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
     - version_bump_reason: One sentence explaining WHY this bump level was chosen.
       For MAJOR, name the specific breaking symbol(s) and explain why existing callers break.
-      For MINOR, name the new capability added.
+      For MINOR, name the new capability added. If downgraded from MAJOR due to beta/alpha
+      availability, explain: "MINOR (downgraded from MAJOR) because [symbol] is marked
+      beta/pre-release: [description of breaking change]."
       For PATCH, describe what was fixed or improved.
       For NO_CHANGE, say "No functional changes detected."
       Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
+      Example: "MINOR (downgraded from MAJOR) because `parserCreateJob` is marked @beta — parameter type changed from `Uploadable` to `Uploadable[]`."
   "#
 }
 
@@ -674,6 +729,8 @@ function ConsolidateChangelog(
     - **Bold the symbol name** first, then one tight sentence for SDK consumers
     - No code fences — prose only
     - For breaking changes, append the migration action inline
+    - If a change was downgraded from breaking due to beta/alpha/pre-release availability,
+      list it under `### Changed` (not `### Breaking Changes`) and note that the API is in beta
 
     ## 2. PR Description
 
