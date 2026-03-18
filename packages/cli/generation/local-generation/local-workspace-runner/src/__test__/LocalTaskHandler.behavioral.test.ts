@@ -183,6 +183,9 @@ vi.mock("../AutoVersioningService.js", () => ({
         replaceMagicVersion() {
             return Promise.resolve(undefined);
         }
+        extractAvailabilityContext() {
+            return Promise.resolve("");
+        }
     },
     AutoVersioningException: class AutoVersioningException extends Error {
         constructor(message: string) {
