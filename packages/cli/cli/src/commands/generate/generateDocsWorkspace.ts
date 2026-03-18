@@ -2,6 +2,7 @@ import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fer
 import { createFdrService } from "@fern-api/core";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
@@ -114,7 +115,7 @@ export async function generateDocsWorkspace({
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
-        const metadataResponse = await fdr.docs.v2.read.getDocsUrlMetadata({ url: expectedDomain });
+        const metadataResponse = await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
         if (metadataResponse.ok) {
             const shouldOverwrite = await cliContext.confirmPrompt(
                 `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
