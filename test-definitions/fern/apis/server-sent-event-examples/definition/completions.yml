@@ -8,18 +8,33 @@ types:
     properties:
       content: string
 
+  EventEvent:
+    properties:
+      event: string
+      data: string
+      unixtime: optional<integer>
+
   ErrorEvent:
     properties:
       error: string
       code: optional<integer>
 
-  StreamEvent:
+  StreamEventContextProtocol:
     discriminant:
       value: event
       context: protocol
     union:
       completion: CompletionEvent
       error: ErrorEvent
+      event: EventEvent
+
+  StreamEventContextDefault:
+    discriminant:
+      value: event
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+      event: EventEvent
 
 errors:
   BadRequestError:
