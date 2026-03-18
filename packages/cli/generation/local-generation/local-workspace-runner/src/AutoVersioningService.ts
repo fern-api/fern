@@ -965,6 +965,10 @@ export class AutoVersioningService {
         let hasChanges = false;
         let hasBetaLines = false;
         let hasStableLines = false;
+        // Deletion lines can't use new-file backward scan (they don't exist
+        // in the new file). We count them separately and resolve them after
+        // processing the whole hunk using the addition/context-derived status.
+        let pendingDeletionLines = 0;
 
         for (let i = 1; i < hunkLines.length; i++) {
             const line = hunkLines[i];
@@ -991,8 +995,15 @@ export class AutoVersioningService {
 
                 if (markerInContent) {
                     hasBetaLines = true;
+                } else if (isDeletion) {
+                    // Deletion lines don't exist in the new source file, so
+                    // backward scanning at `currentNewLine` would find the
+                    // wrong enclosing method. Defer classification: these
+                    // lines inherit the beta/stable status determined by the
+                    // addition and context lines in the same hunk.
+                    pendingDeletionLines++;
                 } else if (sourceLines != null && currentNewLine > 0) {
-                    // Strategy 2: Backward scan in source file
+                    // Strategy 2: Backward scan in source file (additions only)
                     if (this.isSourceLineBeta(sourceLines, currentNewLine - 1)) {
                         hasBetaLines = true;
                     } else {
@@ -1009,6 +1020,21 @@ export class AutoVersioningService {
                 currentNewLine++;
             }
         }
+
+        // Resolve pending deletion lines: inherit from addition/context classification.
+        // If only additions/context were classified, deletions follow suit.
+        // If there were ONLY deletion lines (pure removal hunk) with no markers,
+        // and no additions to derive status from, be conservative and treat as
+        // beta if any marker was found in the hunk, otherwise stable.
+        if (pendingDeletionLines > 0 && !hasBetaLines && !hasStableLines) {
+            // Pure deletion hunk with no availability markers found anywhere —
+            // conservative default: stable (don't accidentally downgrade).
+            hasStableLines = true;
+        }
+        // If hasBetaLines is true (from markers in deleted content) and
+        // hasStableLines is false, the pending deletions are implicitly beta.
+        // If hasStableLines is true (from additions), the pending deletions
+        // inherit that stable status — no action needed.
 
         return {
             isBeta: hasBetaLines && !hasStableLines,
