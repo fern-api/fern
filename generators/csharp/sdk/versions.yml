@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.33.1
+  changelogEntry:
+    - summary: |
+        Fix README generation to use the `package-name` field from `generator.yml` for the
+        NuGet package name in installation instructions and shields. Previously, the README
+        always used the namespace (or `package-id` custom config) instead of the configured
+        `package-name`, which is the actual NuGet package identifier.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 2.33.0
   changelogEntry:
     - summary: |
@@ -10,7 +21,6 @@
       type: feat
   createdAt: "2026-03-18"
   irVersion: 65
-
 - version: 2.32.2
   changelogEntry:
     - summary: |
