@@ -7871,6 +7871,9 @@ importers:
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
+      semver:
+        specifier: ^7.7.3
+        version: 7.7.4
       simple-git:
         specifier: 'catalog:'
         version: 3.33.0
@@ -7884,6 +7887,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.7.1
       stylelint:
         specifier: ^16.1.0
         version: 16.26.1(typescript@5.9.3)
