@@ -4,10 +4,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
-import { resolveBuf } from "./BufDownloader.js";
 
 import {
     detectAirGappedModeForProtobuf,
+    ensureBufCommand,
     getProtobufYamlV1,
     PROTOBUF_EXPORT_CONFIG_V1,
     PROTOBUF_EXPORT_CONFIG_V2,
@@ -281,25 +281,10 @@ export class ProtobufIRGenerator {
             return;
         }
 
-        const which = createLoggingExecutable("which", {
-            cwd: AbsoluteFilePath.of(process.cwd()),
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
         try {
-            await which(["buf"]);
-            this.resolvedBufCommand = "buf";
-        } catch {
-            this.context.logger.debug("buf not found on PATH, attempting auto-download");
-            const downloadedBufPath = await resolveBuf(this.context.logger);
-            if (downloadedBufPath != null) {
-                this.resolvedBufCommand = downloadedBufPath;
-            } else {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-                );
-            }
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
+        } catch (error) {
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
         }
     }
 

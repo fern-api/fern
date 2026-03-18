@@ -1,8 +1,9 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { runExeca } from "@fern-api/logging-execa";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { access, cp, rm } from "fs/promises";
 import tmp from "tmp-promise";
+import { resolveBuf } from "./BufDownloader.js";
 
 /**
  * Check if an error message indicates a network error.
@@ -135,6 +136,31 @@ export async function detectAirGappedModeForProtobuf(
         } catch {
             // Ignore cleanup errors
         }
+    }
+}
+
+/**
+ * Resolves the buf command: checks PATH first, then auto-downloads from GitHub Releases.
+ * Returns the command string to use ("buf" if on PATH, or the full path to the cached binary).
+ * Throws via failAndThrow if buf cannot be found or downloaded.
+ */
+export async function ensureBufCommand(logger: Logger): Promise<string> {
+    const which = createLoggingExecutable("which", {
+        cwd: AbsoluteFilePath.of(process.cwd()),
+        logger: undefined,
+        doNotPipeOutput: true
+    });
+
+    try {
+        await which(["buf"]);
+        return "buf";
+    } catch {
+        logger.debug("buf not found on PATH, attempting auto-download");
+        const downloadedBufPath = await resolveBuf(logger);
+        if (downloadedBufPath != null) {
+            return downloadedBufPath;
+        }
+        throw new Error("Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf').");
     }
 }
 

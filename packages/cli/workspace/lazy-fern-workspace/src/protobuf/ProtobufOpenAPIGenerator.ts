@@ -4,9 +4,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
-import { resolveBuf } from "./BufDownloader.js";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
-import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
+import { detectAirGappedModeForProtobuf, ensureBufCommand, getProtobufYamlV1 } from "./utils.js";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -221,25 +220,10 @@ export class ProtobufOpenAPIGenerator {
             return;
         }
 
-        const which = createLoggingExecutable("which", {
-            cwd: AbsoluteFilePath.of(process.cwd()),
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
         try {
-            await which(["buf"]);
-            this.resolvedBufCommand = "buf";
-        } catch {
-            this.context.logger.debug("buf not found on PATH, attempting auto-download");
-            const downloadedBufPath = await resolveBuf(this.context.logger);
-            if (downloadedBufPath != null) {
-                this.resolvedBufCommand = downloadedBufPath;
-            } else {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-                );
-            }
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
+        } catch (error) {
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
         }
     }
 
