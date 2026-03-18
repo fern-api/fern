@@ -126,11 +126,20 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     }
     try {
         await mkdir(lockPath, { recursive: false });
-    } catch (err) {
-        // Another process grabbed the lock between our rm and mkdir — wait briefly and retry
-        logger.debug(`Failed to re-acquire lock after break: ${err instanceof Error ? err.message : String(err)}`);
-        await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
-        await mkdir(lockPath, { recursive: false });
+    } catch {
+        // Another process grabbed the lock between our rm and mkdir — retry with remaining time
+        const remaining = Math.max(0, deadline + LOCK_TIMEOUT_MS - Date.now());
+        const retryDeadline = Date.now() + Math.min(remaining, LOCK_TIMEOUT_MS);
+        while (Date.now() < retryDeadline) {
+            try {
+                await mkdir(lockPath, { recursive: false });
+                return createLockReleaser(lockPath, logger);
+            } catch {
+                logger.debug(`Waiting for lock on ${lockPath} (post-break retry)...`);
+                await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+            }
+        }
+        throw new Error(`Failed to acquire lock after timeout and retry`);
     }
     return createLockReleaser(lockPath, logger);
 }
