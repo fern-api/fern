@@ -1,4 +1,110 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.0
+  changelogEntry:
+    - summary: |
+        **Breaking change for WebSocket users only.** REST-only SDKs are
+        unaffected — no code changes required.
+
+        Overhaul generated WebSocket clients. The generated API is restructured
+        around a factory → configure → connect lifecycle that separates client
+        creation from connection parameters:
+
+        ```java
+        // Create client from the service tree — no connection params yet
+        V1WebSocketClient ws = client.listen().v1WebSocket();
+
+        // Register handlers before connecting
+        ws.onListenV1Results(results ->
+            System.out.println(results.getChannel().getAlternatives()));
+        ws.onError(error -> error.printStackTrace());
+
+        // Connect with channel-specific options (required params enforced at compile time)
+        ws.connect(V1ConnectOptions.builder()
+            .model(ListenV1Model.NOVA3)
+            .encoding(ListenV1Encoding.LINEAR16)
+            .sampleRate(16000)
+            .build());
+
+        // Stream audio and disconnect
+        ws.sendMedia(audioBytes);
+        ws.disconnect();
+        ```
+
+        **Query parameters move from constructor to `connect()`**. The factory
+        method (`client.listen().v1WebSocket()`) now takes no channel-specific
+        arguments. All query parameters are passed via a builder-pattern
+        `ConnectOptions` object to `connect()`, matching the Python SDK's design.
+        Required parameters use staged builders so missing fields are caught at
+        compile time.
+
+        **`AutoCloseable`** — clients implement `AutoCloseable` for
+        try-with-resources, calling `disconnect()` automatically on scope exit.
+
+        **Configurable reconnection** — `reconnectOptions(ReconnectOptions)`
+        lets callers tune max retries, backoff delay, and queue size before
+        calling `connect()`.
+
+        **Generic `onMessage(Consumer<String>)` handler** — fires for every
+        incoming text frame with the raw JSON string, before type-specific
+        dispatch. Useful for logging or custom routing.
+
+        **Binary WebSocket support** — channels that define binary messages
+        now generate typed send and receive methods. Binary frames queue
+        when disconnected and flush on reconnect, matching text behavior.
+
+        **Shared core types** — `DisconnectReason` and `WebSocketReadyState` are
+        generated once in the core package instead of duplicated as inner classes
+        inside every WebSocket client.
+
+        **Thread safety** — all handler fields are now `volatile` so handlers
+        registered from the main thread are visible to OkHttp callback threads.
+        Previously only `readyState` was volatile.
+
+        **`x-fern-sdk-method-name` support** — WebSocket send/receive methods
+        use the custom method name from the Fern config when set.
+
+        Also removes the deprecated `hasWebSocketInstance()` method and fires
+        `onError` for unrecognized incoming message types instead of silently
+        dropping them.
+      type: feat
+    - summary: |
+        Fix WebSocket `connect()` crashing with `NullPointerException` when the
+        environment URL uses `wss://` or `ws://` schemes. OkHttp's `HttpUrl.parse()`
+        only accepts `http`/`https`, so the client now rewrites the scheme before
+        parsing and null-checks the result.
+      type: fix
+    - summary: |
+        Fix WebSocket clients always calling `environment().getUrl()`, which
+        does not exist on multi-URL environment classes. The generator now
+        resolves the correct per-URL getter (e.g. `environment().getAgentURL()`)
+        based on the channel's `baseUrl` field in the IR, matching the pattern
+        already used by REST endpoints.
+      type: fix
+    - summary: |
+        Fix WebSocket clients not sending authentication headers when the
+        channel's `auth` field is false in the IR. Previously, headers were only
+        applied when `websocketChannel.getAuth()` was true. `connect()` now
+        unconditionally applies `clientOptions.headers()` to the upgrade request,
+        ensuring bearer tokens, API keys, and custom headers are always sent
+        regardless of the channel's auth configuration.
+      type: fix
+    - summary: |
+        Fix WebSocket message serialization wrapping every outgoing message in a
+        `{"type": "...", "body": {...}}` envelope and expecting the same format
+        for incoming messages. Messages are now serialized directly as flat JSON
+        (the discriminated union already contains the `type` field), and incoming
+        messages are deserialized from the root JSON object instead of extracting
+        a nested `body` sub-field.
+      type: fix
+    - summary: |
+        Fix binary file upload endpoints (`application/octet-stream`) serializing
+        the request body through Jackson, which corrupted binary data with JSON
+        string escaping. These endpoints now send raw bytes via
+        `InputStreamRequestBody`.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 3.44.6
   changelogEntry:
     - summary: |
@@ -64,6 +170,7 @@
       type: fix
   createdAt: "2026-03-18"
   irVersion: 65
+
 - version: 3.44.3
   changelogEntry:
     - summary: |
