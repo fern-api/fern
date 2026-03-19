@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.4
+  changelogEntry:
+    - summary: |
+        Always prefer the auto-downloaded fern fork of `protoc-gen-openapi` over
+        an arbitrary `protoc-gen-openapi` binary found on PATH. Users with the
+        original Google/gnostic `protoc-gen-openapi` installed would encounter
+        `no such flag -flatten_oneofs` errors because that version does not
+        support fern-specific plugin options. The CLI now downloads the fern fork
+        first and only falls back to PATH if the download fails.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.3
   changelogEntry:
     - summary: |
