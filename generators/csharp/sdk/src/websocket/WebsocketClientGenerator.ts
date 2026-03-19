@@ -1158,10 +1158,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             namespace: this.classReference.namespace,
             access: ast.Access.Public,
             partial: true,
-            interfaceReferences: [
-                this.System.IAsyncDisposable,
-                this.System.IDisposable
-            ]
+            interfaceReferences: [this.System.IAsyncDisposable, this.System.IDisposable]
         });
 
         // Add event property declarations for server-to-client events
