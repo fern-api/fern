@@ -98,11 +98,11 @@ describe("extractLanguageFromGeneratorName integration - runGenerator.ts", () =>
     });
 
     it("imports extractLanguageFromGeneratorName in runGenerator.ts", () => {
-        expect(runGeneratorSource).toContain('extractLanguageFromGeneratorName');
+        expect(runGeneratorSource).toContain("extractLanguageFromGeneratorName");
         expect(runGeneratorSource).toContain('from "./VersionUtils.js"');
     });
 
     it("imports mapMagicVersionForLanguage in runGenerator.ts", () => {
-        expect(runGeneratorSource).toContain('mapMagicVersionForLanguage');
+        expect(runGeneratorSource).toContain("mapMagicVersionForLanguage");
     });
 });
