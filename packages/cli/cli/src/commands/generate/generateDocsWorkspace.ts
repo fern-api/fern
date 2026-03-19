@@ -24,11 +24,15 @@ const SUBDOMAIN_LIMIT = 62;
  * can accurately predict the preview URL.
  */
 function sanitizePreviewId(id: string): string {
-    return id
+    const sanitized = id
         .toLowerCase()
         .replace(/[^a-z0-9-]/g, "-")
         .replace(/-{2,}/g, "-")
         .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
 }
 
 /**
