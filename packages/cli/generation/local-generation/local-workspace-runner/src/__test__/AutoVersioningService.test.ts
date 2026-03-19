@@ -2416,3 +2416,645 @@ describe("formatSizeKB", () => {
         expect(formatSizeKB(500)).toBe("0.5");
     });
 });
+
+// ---------------------------------------------------------------------------
+// annotateHunksWithAvailability
+// ---------------------------------------------------------------------------
+
+describe("annotateHunksWithAvailability", () => {
+    /**
+     * Helper: creates a temp dir, writes source files, calls
+     * annotateHunksWithAvailability, then cleans up.
+     */
+    async function annotate(
+        diff: string,
+        files: Record<string, string>
+    ): Promise<{ annotatedDiff: string; allChangesBeta: boolean }> {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "avail-test-"));
+        try {
+            for (const [filePath, content] of Object.entries(files)) {
+                const fullPath = path.join(tempDir, filePath);
+                await fs.mkdir(path.dirname(fullPath), { recursive: true });
+                await fs.writeFile(fullPath, content);
+            }
+            const svc = new AutoVersioningService({ logger: mockLogger });
+            return await svc.annotateHunksWithAvailability(diff, tempDir);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    }
+
+    // -- Basic tagging via Strategy 1 (marker in diff content) ----------------
+
+    it("tags hunk as BETA when added line contains @beta marker", async () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -10,4 +10,6 @@\n" +
+            "     /**\n" +
+            "+     * @beta This endpoint is in pre-release.\n" +
+            "+     */\n" +
+            "-    public async parse(file: File): Promise<Job> {\n" +
+            "+    public async parse(files: File[]): Promise<Job> {\n" +
+            "     }\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts":
+                "class Client {\n" +
+                "    /**\n" +
+                "     * @beta This endpoint is in pre-release.\n" +
+                "     */\n" +
+                "    public async parse(files: File[]): Promise<Job> {\n" +
+                "        return {};\n" +
+                "    }\n" +
+                "}\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    it("does NOT tag hunk when no availability markers exist", async () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            " export class Client {\n" +
+            "-    public async getData(): Promise<string> {\n" +
+            "+    public async getData(): Promise<number> {\n" +
+            " }\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts":
+                "export class Client {\n" +
+                "    public async getData(): Promise<number> {\n" +
+                "        return 42;\n" +
+                "    }\n" +
+                "}\n"
+        });
+
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Strategy 2: backward scan in source file ----------------------------
+
+    it("tags hunk as BETA via backward scan when @beta is in JSDoc above method", async () => {
+        // The diff hunk only contains the method body change, not the JSDoc.
+        // The backward scan should find the @beta in the source file.
+        const sourceFile =
+            "export class Client {\n" + // line 1
+            "    /**\n" + // line 2
+            "     * @beta This endpoint is in pre-release.\n" + // line 3
+            "     */\n" + // line 4
+            "    public async parse(files: File[]): Promise<Job> {\n" + // line 5
+            "        return this.http.post(files);\n" + // line 6
+            "    }\n" + // line 7
+            "}\n"; // line 8
+
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -5,3 +5,3 @@\n" +
+            "     public async parse(files: File[]): Promise<Job> {\n" +
+            "-        return this.http.post(files);\n" +
+            "+        return this.http.put(files);\n" +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    it("does NOT tag hunk when backward scan finds stable method", async () => {
+        const sourceFile =
+            "export class Client {\n" +
+            "    /**\n" +
+            "     * Gets user data.\n" +
+            "     */\n" +
+            "    public async getData(): Promise<number> {\n" +
+            "        return 42;\n" +
+            "    }\n" +
+            "}\n";
+
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -5,3 +5,3 @@\n" +
+            "     public async getData(): Promise<number> {\n" +
+            "-        return 42;\n" +
+            "+        return 99;\n" +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Cross-contamination: same file has beta and GA methods ---------------
+
+    it("tags only the beta hunk in a file with both beta and GA methods", async () => {
+        const sourceFile =
+            "export class Client {\n" + // line 1
+            "    /**\n" + // line 2
+            "     * @beta Pre-release endpoint.\n" + // line 3
+            "     */\n" + // line 4
+            "    public async betaMethod(): Promise<void> {\n" + // line 5
+            "        return;\n" + // line 6
+            "    }\n" + // line 7
+            "\n" + // line 8
+            "    /**\n" + // line 9
+            "     * Stable endpoint.\n" + // line 10
+            "     */\n" + // line 11
+            "    public async stableMethod(): Promise<string> {\n" + // line 12
+            '        return "ok";\n' + // line 13
+            "    }\n" + // line 14
+            "}\n"; // line 15
+
+        // Two hunks: one in betaMethod (line 6), one in stableMethod (line 13)
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -5,3 +5,3 @@\n" +
+            "     public async betaMethod(): Promise<void> {\n" +
+            "-        return;\n" +
+            "+        return undefined;\n" +
+            "     }\n" +
+            "@@ -12,3 +12,3 @@\n" +
+            "     public async stableMethod(): Promise<string> {\n" +
+            '-        return "ok";\n' +
+            '+        return "done";\n' +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        // Only the beta hunk should have the tag
+        const lines = result.annotatedDiff.split("\n");
+        const betaTagLines = lines.filter((l) => l.includes("# [BETA]"));
+        expect(betaTagLines.length).toBe(1);
+
+        // allChangesBeta should be false because the stable hunk exists
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Deletion lines: deferred classification ------------------------------
+
+    it("classifies deletion-only hunk with @beta in deleted content as beta", async () => {
+        // The deleted lines contain @beta — Strategy 1 picks it up
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,5 +1,1 @@\n" +
+            "-    /**\n" +
+            "-     * @beta Pre-release.\n" +
+            "-     */\n" +
+            "-    public async oldMethod(): Promise<void> {}\n" +
+            " export class Client {}\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts": "export class Client {}\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    it("classifies pure deletion hunk without markers as stable (conservative)", async () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,4 +1,1 @@\n" +
+            "-    public async removedMethod(): Promise<void> {\n" +
+            "-        return;\n" +
+            "-    }\n" +
+            " export class Client {}\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts": "export class Client {}\n"
+        });
+
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    it("deletion lines inherit beta status from addition lines in same hunk", async () => {
+        // Hunk has both deletions and additions; additions are within a beta method
+        const sourceFile =
+            "export class Client {\n" + // line 1
+            "    /**\n" + // line 2
+            "     * @beta Pre-release.\n" + // line 3
+            "     */\n" + // line 4
+            "    public async betaMethod(files: File[]): Promise<Job> {\n" + // line 5
+            "        return this.http.put(files);\n" + // line 6
+            "    }\n" + // line 7
+            "}\n"; // line 8
+
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -4,4 +4,4 @@\n" +
+            "     */\n" +
+            "-    public async betaMethod(file: File): Promise<Job> {\n" +
+            "-        return this.http.post(file);\n" +
+            "+    public async betaMethod(files: File[]): Promise<Job> {\n" +
+            "+        return this.http.put(files);\n" +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    // -- allChangesBeta flag --------------------------------------------------
+
+    it("sets allChangesBeta=true when every hunk across all files is beta", async () => {
+        const sourceA = "/**\n * @beta\n */\nexport async function betaA(): Promise<void> {\n    return;\n}\n";
+        const sourceB = "/**\n * @beta\n */\nexport async function betaB(): Promise<string> {\n    return 'ok';\n}\n";
+
+        const diff =
+            "diff --git a/src/a.ts b/src/a.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/a.ts\n" +
+            "+++ b/src/a.ts\n" +
+            "@@ -4,2 +4,2 @@\n" +
+            " export async function betaA(): Promise<void> {\n" +
+            "-    return;\n" +
+            "+    return undefined;\n" +
+            "diff --git a/src/b.ts b/src/b.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/b.ts\n" +
+            "+++ b/src/b.ts\n" +
+            "@@ -4,2 +4,2 @@\n" +
+            " export async function betaB(): Promise<string> {\n" +
+            "-    return 'ok';\n" +
+            "+    return 'done';\n";
+
+        const result = await annotate(diff, { "src/a.ts": sourceA, "src/b.ts": sourceB });
+
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    it("sets allChangesBeta=false when at least one hunk is stable", async () => {
+        const sourceA = "/**\n * @beta\n */\nexport async function betaA(): Promise<void> {\n    return;\n}\n";
+        const sourceB =
+            "/**\n * Stable function.\n */\nexport async function stableB(): Promise<string> {\n    return 'ok';\n}\n";
+
+        const diff =
+            "diff --git a/src/a.ts b/src/a.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/a.ts\n" +
+            "+++ b/src/a.ts\n" +
+            "@@ -4,2 +4,2 @@\n" +
+            " export async function betaA(): Promise<void> {\n" +
+            "-    return;\n" +
+            "+    return undefined;\n" +
+            "diff --git a/src/b.ts b/src/b.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/b.ts\n" +
+            "+++ b/src/b.ts\n" +
+            "@@ -4,2 +4,2 @@\n" +
+            " export async function stableB(): Promise<string> {\n" +
+            "-    return 'ok';\n" +
+            "+    return 'done';\n";
+
+        const result = await annotate(diff, { "src/a.ts": sourceA, "src/b.ts": sourceB });
+
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Source file missing ---------------------------------------------------
+
+    it("treats changes as stable when source file does not exist (file deleted)", async () => {
+        const diff =
+            "diff --git a/src/Removed.ts b/src/Removed.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Removed.ts\n" +
+            "+++ /dev/null\n" +
+            "@@ -1,3 +1,0 @@\n" +
+            "-export class Removed {\n" +
+            "-    public async foo(): Promise<void> {}\n" +
+            "-}\n";
+
+        // No files written — source doesn't exist
+        const result = await annotate(diff, {});
+
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Multiple language markers -------------------------------------------
+
+    it("recognizes Python WARNING: beta marker", async () => {
+        const diff =
+            "diff --git a/src/client.py b/src/client.py\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/client.py\n" +
+            "+++ b/src/client.py\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    WARNING: This endpoint is in beta and may change.\n" +
+            "-    def parse(self, file):\n" +
+            "+    def parse(self, files):\n";
+
+        const result = await annotate(diff, {
+            "src/client.py":
+                "    WARNING: This endpoint is in beta and may change.\n" +
+                "    def parse(self, files):\n" +
+                "        pass\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes Java @Beta annotation", async () => {
+        const diff =
+            "diff --git a/src/Client.java b/src/Client.java\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.java\n" +
+            "+++ b/src/Client.java\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    @Beta\n" +
+            "-    public Job parse(File file) {\n" +
+            "+    public Job parse(List<File> files) {\n";
+
+        const result = await annotate(diff, {
+            "src/Client.java":
+                "    @Beta\n" + "    public Job parse(List<File> files) {\n" + "        return null;\n" + "    }\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes Java @Experimental annotation", async () => {
+        const diff =
+            "diff --git a/src/Client.java b/src/Client.java\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.java\n" +
+            "+++ b/src/Client.java\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    @Experimental\n" +
+            "-    public Job parse(File file) {\n" +
+            "+    public Job parse(List<File> files) {\n";
+
+        const result = await annotate(diff, {
+            "src/Client.java":
+                "    @Experimental\n" +
+                "    public Job parse(List<File> files) {\n" +
+                "        return null;\n" +
+                "    }\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes Go // Beta: doc comment", async () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc..def 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+// Beta: This function is pre-release.\n" +
+            "-func Parse(file string) error {\n" +
+            "+func Parse(files []string) error {\n";
+
+        const result = await annotate(diff, {
+            "client.go":
+                "// Beta: This function is pre-release.\n" +
+                "func Parse(files []string) error {\n" +
+                "    return nil\n" +
+                "}\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes C# [Experimental] attribute", async () => {
+        const diff =
+            "diff --git a/src/Client.cs b/src/Client.cs\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.cs\n" +
+            "+++ b/src/Client.cs\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    [Experimental]\n" +
+            "-    public async Task<Job> Parse(FileStream file) {\n" +
+            "+    public async Task<Job> Parse(FileStream[] files) {\n";
+
+        const result = await annotate(diff, {
+            "src/Client.cs":
+                "    [Experimental]\n" +
+                "    public async Task<Job> Parse(FileStream[] files) {\n" +
+                "        return null;\n" +
+                "    }\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes Ruby @note Beta marker", async () => {
+        const diff =
+            "diff --git a/lib/client.rb b/lib/client.rb\n" +
+            "index abc..def 100644\n" +
+            "--- a/lib/client.rb\n" +
+            "+++ b/lib/client.rb\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    # @note Beta\n" +
+            "-    def parse(file)\n" +
+            "+    def parse(files)\n";
+
+        const result = await annotate(diff, {
+            "lib/client.rb": "    # @note Beta\n" + "    def parse(files)\n" + "    end\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    it("recognizes @alpha marker", async () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "+    /** @alpha */\n" +
+            "-    public async parse(file: File): Promise<Job> {\n" +
+            "+    public async parse(files: File[]): Promise<Job> {\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts":
+                "    /** @alpha */\n" +
+                "    public async parse(files: File[]): Promise<Job> {\n" +
+                "        return {} as Job;\n" +
+                "    }\n"
+        });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+
+    // -- Empty / no-change hunks ----------------------------------------------
+
+    it("returns unchanged diff and allChangesBeta=false for context-only diff", async () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,2 +1,2 @@\n" +
+            " export class Client {\n" +
+            " }\n";
+
+        const result = await annotate(diff, {
+            "src/Client.ts": "export class Client {\n}\n"
+        });
+
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    it("handles empty diff gracefully", async () => {
+        const result = await annotate("", {});
+
+        expect(result.annotatedDiff).toBe("");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Backward scan: method header traversal -------------------------------
+
+    it("backward scan crosses blank lines and JSDoc to find @beta above method", async () => {
+        // @beta is 3 lines above the method declaration, with blank line between
+        const sourceFile =
+            "export class Client {\n" + // line 1
+            "\n" + // line 2
+            "    /**\n" + // line 3
+            "     * @beta Pre-release.\n" + // line 4
+            "     */\n" + // line 5
+            "\n" + // line 6
+            "    public async parse(files: File[]): Promise<Job> {\n" + // line 7
+            "        return {};\n" + // line 8
+            "    }\n" + // line 9
+            "}\n"; // line 10
+
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -7,3 +7,3 @@\n" +
+            "     public async parse(files: File[]): Promise<Job> {\n" +
+            "-        return {};\n" +
+            "+        return { id: 1 };\n" +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        expect(result.annotatedDiff).toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(true);
+    });
+
+    it("backward scan stops at previous method's closing brace (stable)", async () => {
+        const sourceFile =
+            "export class Client {\n" + // line 1
+            "    /**\n" + // line 2
+            "     * @beta Pre-release.\n" + // line 3
+            "     */\n" + // line 4
+            "    public async betaMethod(): Promise<void> {\n" + // line 5
+            "        return;\n" + // line 6
+            "    }\n" + // line 7
+            "\n" + // line 8
+            "    public async stableMethod(): Promise<string> {\n" + // line 9
+            '        return "ok";\n' + // line 10
+            "    }\n" + // line 11
+            "}\n"; // line 12
+
+        // The diff hunk is inside stableMethod (line 10)
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -9,3 +9,3 @@\n" +
+            "     public async stableMethod(): Promise<string> {\n" +
+            '-        return "ok";\n' +
+            '+        return "done";\n' +
+            "     }\n";
+
+        const result = await annotate(diff, { "src/Client.ts": sourceFile });
+
+        // stableMethod has no @beta above it — the `}` from betaMethod blocks the scan
+        expect(result.annotatedDiff).not.toContain("# [BETA]");
+        expect(result.allChangesBeta).toBe(false);
+    });
+
+    // -- Diff structure preservation ------------------------------------------
+
+    it("preserves original diff structure and only prepends BETA tag", async () => {
+        const sourceFile = "/**\n * @beta\n */\nexport async function betaFn(): Promise<void> {\n    return;\n}\n";
+
+        const diff =
+            "diff --git a/src/fn.ts b/src/fn.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/fn.ts\n" +
+            "+++ b/src/fn.ts\n" +
+            "@@ -4,2 +4,2 @@\n" +
+            " export async function betaFn(): Promise<void> {\n" +
+            "-    return;\n" +
+            "+    return undefined;\n";
+
+        const result = await annotate(diff, { "src/fn.ts": sourceFile });
+
+        // The BETA tag should appear before the @@ line
+        const lines = result.annotatedDiff.split("\n");
+        const betaIdx = lines.findIndex((l) => l.includes("# [BETA]"));
+        const hunkIdx = lines.findIndex((l) => l.startsWith("@@ -4,2"));
+        expect(betaIdx).toBeGreaterThan(-1);
+        expect(hunkIdx).toBeGreaterThan(-1);
+        expect(betaIdx).toBeLessThan(hunkIdx);
+
+        // Original diff content should still be present
+        expect(result.annotatedDiff).toContain("diff --git a/src/fn.ts b/src/fn.ts");
+        expect(result.annotatedDiff).toContain("+    return undefined;");
+    });
+
+    // -- Python method detection ----------------------------------------------
+
+    it("backward scan finds Python @beta via def keyword", async () => {
+        const sourceFile =
+            "class Client:\n" + // line 1
+            "    def beta_parse(self, files):\n" + // line 2
+            '        """WARNING: This endpoint is in beta and may change."""\n' + // line 3
+            "        pass\n"; // line 4
+
+        const diff =
+            "diff --git a/src/client.py b/src/client.py\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/client.py\n" +
+            "+++ b/src/client.py\n" +
+            "@@ -3,2 +3,2 @@\n" +
+            '-        """WARNING: This endpoint is in beta and may change."""\n' +
+            "+        # Updated docstring\n" +
+            "         pass\n";
+
+        const result = await annotate(diff, { "src/client.py": sourceFile });
+
+        // The deleted line contains WARNING:...beta — Strategy 1 should catch it
+        expect(result.annotatedDiff).toContain("# [BETA]");
+    });
+});
