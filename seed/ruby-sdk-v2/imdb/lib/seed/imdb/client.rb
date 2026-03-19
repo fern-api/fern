@@ -59,7 +59,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/movies/#{params[:movie_id]}",
+          path: "/movies/#{URI.encode_uri_component(params[:movie_id].to_s)}",
           request_options: request_options
         )
         begin

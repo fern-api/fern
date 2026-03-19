@@ -1,6 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples.Core;
+using SeedExamples.Test_.Utils;
 
 namespace SeedExamples.Test_;
 
@@ -25,16 +25,13 @@ public class TestTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "and",
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new SeedExamples.Test.And(true));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedExamples.Test>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -54,15 +51,12 @@ public class TestTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "or",
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new SeedExamples.Test.Or(true));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedExamples.Test>(inputJson);
     }
 }

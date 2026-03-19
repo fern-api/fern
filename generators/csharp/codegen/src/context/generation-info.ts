@@ -457,7 +457,7 @@ export class Generation {
      * - `ExceptionInterceptor`, `ExceptionHandler`: Exception processing
      *
      * ### Serialization:
-     * - `EnumSerializer`, `StringEnumSerializer`: Enum serialization
+     * - `EnumSerializer`: Enum serialization
      * - `DateTimeSerializer`: DateTime handling
      * - `JsonUtils`: JSON utilities
      * - `OneOfSerializer`: Union type serialization
@@ -815,17 +815,6 @@ export class Generation {
                 origin: this.model.staticExplicit("Closed"),
                 namespace: this.namespaces.webSocketsCore
             }),
-        /**
-         * JSON serializer for string-based enum types.
-         * @param enumClassReference - The enum type to serialize
-         */
-        StringEnumSerializer: (enumClassReference: ast.Type | ast.ClassReference): ast.ClassReference => {
-            return this.csharp.classReference({
-                origin: this.model.staticExplicit("StringEnumSerializer"),
-                namespace: this.namespaces.core,
-                generics: [enumClassReference]
-            });
-        },
         /**
          * Custom pagination class for iterating over paged results.
          * @param itemType - The type of items in each page

@@ -154,7 +154,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-nested-with-required-field/#{params[:string]}",
+            path: "/object/get-and-return-nested-with-required-field/#{URI.encode_uri_component(params[:string].to_s)}",
             body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params).to_h,
             request_options: request_options
           )
