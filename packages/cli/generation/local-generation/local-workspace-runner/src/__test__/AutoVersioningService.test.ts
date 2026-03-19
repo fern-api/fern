@@ -2826,6 +2826,26 @@ describe("cleanDiffForAI - Go module path suffix changes", () => {
         expect(cleaned).toContain("api.example.com/v2/resource");
     });
 
+    it("filters unquoted go.mod module directive suffix changes", () => {
+        const diff =
+            "diff --git a/go.mod b/go.mod\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.mod\n" +
+            "+++ b/go.mod\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "-module github.com/org/repo/v2\n" +
+            "+module github.com/org/repo\n" +
+            " \n" +
+            " go 1.21\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+        // Go module directive suffix change should be filtered
+        expect(cleaned).not.toContain("module github.com/org/repo");
+    });
+
     it("does not filter lines that differ by more than just /vN suffix", () => {
         const diff =
             "diff --git a/client.go b/client.go\n" +

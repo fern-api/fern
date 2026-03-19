@@ -718,13 +718,21 @@ export class AutoVersioningService {
         const minusContent = minusLine.substring(1);
         const plusContent = plusLine.substring(1);
 
-        // Only apply to lines containing quoted Go module paths
+        // Only apply to lines containing quoted Go module paths or go.mod module directives
         const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
-        if (!goModulePathPattern.test(minusContent) && !goModulePathPattern.test(plusContent)) {
+        const goModuleDirectivePattern = /^\s*module\s+(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/\S+/;
+        const hasGoModulePath =
+            goModulePathPattern.test(minusContent) ||
+            goModulePathPattern.test(plusContent) ||
+            goModuleDirectivePattern.test(minusContent.trim()) ||
+            goModuleDirectivePattern.test(plusContent.trim());
+        if (!hasGoModulePath) {
             return false;
         }
 
-        const suffixPattern = /\/v\d+/g;
+        // Only strip /vN when it appears as a Go module version suffix
+        // (followed by / or end of quoted string or end of line)
+        const suffixPattern = /\/v\d+(?=\/|"\s*$|$)/g;
         const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
         const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
 
@@ -733,7 +741,7 @@ export class AutoVersioningService {
         }
 
         // At least one line must actually contain a /vN suffix for this to be a suffix change
-        return /\/v\d+/.test(minusContent) || /\/v\d+/.test(plusContent);
+        return /\/v\d+(?=\/|"\s*$|$)/.test(minusContent) || /\/v\d+(?=\/|"\s*$|$)/.test(plusContent);
     }
 
     /**
@@ -951,7 +959,11 @@ export class AutoVersioningService {
                 continue;
             }
 
-            const newLine = line.replace(modulePath, modulePath + suffix);
+            // Use precise replacement to avoid corrupting paths that share a prefix
+            // e.g., "github.com/org/repo" should not match "github.com/org/repo-utils"
+            const newLine = line
+                .replace(`"${modulePath}/`, `"${modulePath}${suffix}/`)
+                .replace(`"${modulePath}"`, `"${modulePath}${suffix}"`);
             if (newLine !== line) {
                 lines[i] = newLine;
                 changed = true;
