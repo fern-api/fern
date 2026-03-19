@@ -2887,7 +2887,6 @@ describe("formatSizeKB", () => {
         expect(formatSizeKB(500)).toBe("0.5");
     });
 });
-<<<<<<< HEAD
 
 // ---------------------------------------------------------------------------
 // annotateHunksWithAvailability
