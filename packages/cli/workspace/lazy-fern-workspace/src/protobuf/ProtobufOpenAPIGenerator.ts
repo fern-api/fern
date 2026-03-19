@@ -321,6 +321,42 @@ export class ProtobufOpenAPIGenerator {
             return;
         }
 
+        // Allow users to force the local PATH version (e.g. for testing a custom build).
+        if (process.env.FERN_USE_LOCAL_PROTOC_GEN_OPENAPI === "true") {
+            this.context.logger.debug("FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set, using protoc-gen-openapi from PATH");
+            const which = createLoggingExecutable("which", {
+                cwd: AbsoluteFilePath.of(process.cwd()),
+                logger: undefined,
+                doNotPipeOutput: true
+            });
+            try {
+                const result = await which(["protoc-gen-openapi"]);
+                const resolvedPath = result.stdout?.trim();
+                if (resolvedPath) {
+                    this.context.logger.debug(`Found protoc-gen-openapi on PATH: ${resolvedPath}`);
+                }
+                this.protocGenOpenAPIResolved = true;
+                return;
+            } catch {
+                this.context.failAndThrow(
+                    "FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set but protoc-gen-openapi was not found on PATH."
+                );
+            }
+        }
+
+        // Always prefer the auto-downloaded fern fork of protoc-gen-openapi.
+        // A user may have the original Google/gnostic protoc-gen-openapi on
+        // PATH, which does not support fern-specific flags like flatten_oneofs.
+        this.context.logger.debug("Resolving protoc-gen-openapi (preferring auto-downloaded fern fork)");
+        this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
+
+        if (this.protocGenOpenAPIBinDir != null) {
+            this.protocGenOpenAPIResolved = true;
+            return;
+        }
+
+        // Auto-download failed — fall back to whatever is on PATH.
+        this.context.logger.debug("Auto-download failed, checking PATH for protoc-gen-openapi");
         const which = createLoggingExecutable("which", {
             cwd: AbsoluteFilePath.of(process.cwd()),
             logger: undefined,
@@ -331,20 +367,15 @@ export class ProtobufOpenAPIGenerator {
             const result = await which(["protoc-gen-openapi"]);
             const resolvedPath = result.stdout?.trim();
             if (resolvedPath) {
-                this.context.logger.debug(`Found protoc-gen-openapi on PATH: ${resolvedPath}`);
+                this.context.logger.debug(`Falling back to protoc-gen-openapi on PATH: ${resolvedPath}`);
             } else {
-                this.context.logger.debug("Found protoc-gen-openapi on PATH");
+                this.context.logger.debug("Falling back to protoc-gen-openapi on PATH");
             }
             this.protocGenOpenAPIResolved = true;
         } catch {
-            this.context.logger.debug("protoc-gen-openapi not found on PATH, attempting auto-download");
-            this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
-                );
-            }
-            this.protocGenOpenAPIResolved = true;
+            this.context.failAndThrow(
+                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+            );
         }
     }
 

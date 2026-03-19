@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedErrors;
 using SeedErrors.Core;
+using SeedErrors.Test.Utils;
 
 namespace SeedErrors.Test;
 
@@ -25,14 +25,11 @@ public class FooResponseTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "bar": "hello"
             }
             """;
-        var actualObj = new FooResponse { Bar = "hello" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<FooResponse>(inputJson);
     }
 }

@@ -38,7 +38,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/v2/playlist/#{params[:service_param]}/create",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/create",
           query: query_params,
           body: Seed::Playlist::Types::PlaylistCreateRequest.new(body_params).to_h,
           request_options: request_options
@@ -88,7 +88,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/v2/playlist/#{params[:service_param]}/all",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/all",
           query: query_params,
           request_options: request_options
         )
@@ -122,7 +122,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -157,7 +157,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
           body: params,
           request_options: request_options
         )
@@ -191,7 +191,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
           request_options: request_options
         )
         begin
