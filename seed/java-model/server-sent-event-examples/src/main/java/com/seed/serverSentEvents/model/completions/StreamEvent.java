@@ -123,6 +123,7 @@ public final class StreamEvent {
   @JsonIgnoreProperties("event")
   private static final class CompletionValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "event", allowSetters = true)
     private CompletionEvent value;
 
     @JsonCreator(
@@ -165,6 +166,7 @@ public final class StreamEvent {
   @JsonIgnoreProperties("event")
   private static final class ErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "event", allowSetters = true)
     private ErrorEvent value;
 
     @JsonCreator(

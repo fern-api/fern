@@ -1,4 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
@@ -15,10 +16,8 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
-
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig.js";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema.js";
-
 export declare namespace SdkGeneratorCli {
     export interface Init {
         configOverrides?: Partial<SdkCustomConfig>;
@@ -305,7 +304,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             } catch (error) {
                 // If we can't read the license file, we'll skip writing it
                 // This maintains backwards compatibility
-                logger.warn(`Failed to write LICENSE file: ${error instanceof Error ? error.message : String(error)}`);
+                logger.warn(`Failed to write LICENSE file: ${extractErrorMessage(error)}`);
             }
         }
     }
@@ -317,9 +316,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         try {
             await copyFile(dockerLicensePath, destinationPath);
         } catch (error) {
-            throw new Error(
-                `Could not copy license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
-            );
+            throw new Error(`Could not copy license file from ${dockerLicensePath}: ${extractErrorMessage(error)}`);
         }
     }
 

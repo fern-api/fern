@@ -313,6 +313,7 @@ public final class VariableType {
     @JsonIgnoreProperties("type")
     private static final class ListTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ListType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -352,6 +353,7 @@ public final class VariableType {
     @JsonIgnoreProperties("type")
     private static final class MapTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private MapType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

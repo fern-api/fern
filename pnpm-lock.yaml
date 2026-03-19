@@ -3243,6 +3243,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
@@ -4461,6 +4464,9 @@ importers:
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -5257,12 +5263,6 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
-
-  packages/cli/cli/dist/prod-unminified:
-    dependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
 
   packages/cli/config:
     devDependencies:
@@ -7627,6 +7627,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -7862,9 +7865,15 @@ importers:
 
   packages/commons/github:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../core-utils
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
+      semver:
+        specifier: ^7.7.3
+        version: 7.7.4
       simple-git:
         specifier: 'catalog:'
         version: 3.33.0
@@ -7878,6 +7887,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.7.1
       stylelint:
         specifier: ^16.1.0
         version: 16.26.1(typescript@5.9.3)
@@ -8090,6 +8102,9 @@ importers:
 
   packages/generator-cli:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@fern-api/replay':
         specifier: ^0.7.0
         version: 0.7.0

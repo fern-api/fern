@@ -29,6 +29,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
+    private cachedEnvironmentUrlVariables?: FernIr.ServerVariable[];
 
     constructor({
         context,
@@ -153,7 +154,7 @@ For PATCH requests, the SDK uses \`OptionalNullable<T>\` to handle three-state n
 - **PRESENT**: Field has a non-null value
 
 \`\`\`java
-import com.seed.api.core.OptionalNullable;
+import ${this.context.getCorePackageName()}.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -211,9 +212,15 @@ ${clientClassName} client = ${clientClassName}.builder()
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true,
         backupRenderer: (endpoint: EndpointWithFilepath) => string
     ): string[] {
+        // For Usage snippets, always use the backup renderer when environment URL variables
+        // exist, since prerendered snippets from the dynamic generator don't include them.
+        const hasUrlVariables = this.getEnvironmentUrlVariables().length > 0;
         return this.getEndpointsForFeature(featureId)
             .filter(predicate)
             .map((endpoint) => {
+                if (hasUrlVariables && featureId === FernGeneratorCli.StructuredFeatureId.Usage) {
+                    return backupRenderer(endpoint);
+                }
                 const prerendered = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 return prerendered ?? backupRenderer(endpoint);
             });
@@ -232,15 +239,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
         const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
-        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
-            for (const variable of this.context.ir.variables) {
-                const variableName = variable.name.camelCase.unsafeName;
-                builderParameters.push({
-                    name: variableName,
-                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
-                });
-            }
-        }
+        this.addClientBuilderParameters(builderParameters);
 
         const clientBuilder = java.TypeLiteral.builder({
             classReference: clientClassReference,
@@ -515,9 +514,8 @@ ${clientClassName} client = ${clientClassName}.builder()
             arguments_: [ReadmeSnippetBuilder.ELLIPSES]
         });
 
-        // Get the endpoint name for the response type
-        const endpointMethodName = this.getEndpointMethodName(endpoint.endpoint);
-        const responseTypeName = this.capitalizeFirstLetter(endpointMethodName) + "HttpResponse";
+        // Get the HttpResponse class name (matches v1's naming: {BaseNamePrefix}HttpResponse)
+        const responseTypeName = this.context.getHttpResponseClassName();
 
         const snippet = java.codeblock((writer) => {
             writer.write(responseTypeName);
@@ -894,6 +892,105 @@ ${clientClassName} client = ${clientClassName}.builder()
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    /**
+     * Adds all common client builder parameters: auth, IR variables, path parameters, and URL variables.
+     */
+    private addClientBuilderParameters(builderParameters: Array<{ name: string; value: java.TypeLiteral }>): void {
+        // Auth parameters
+        if (this.context.ir.auth.schemes.length > 0) {
+            const authScheme = this.context.ir.auth.schemes[0];
+            if (authScheme?.type === "bearer") {
+                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
+                builderParameters.push({
+                    name: tokenName,
+                    value: java.TypeLiteral.string("<token>")
+                });
+            } else if (authScheme?.type === "basic") {
+                builderParameters.push({
+                    name: "username",
+                    value: java.TypeLiteral.string("<username>")
+                });
+                builderParameters.push({
+                    name: "password",
+                    value: java.TypeLiteral.string("<password>")
+                });
+            } else if (authScheme?.type === "header") {
+                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
+                builderParameters.push({
+                    name: headerName,
+                    value: java.TypeLiteral.string("<api-key>")
+                });
+            }
+        }
+        // IR variables
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                builderParameters.push({
+                    name: variable.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+        // Path parameters
+        if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
+            for (const param of this.context.ir.pathParameters.filter((p) => p.variable == null)) {
+                builderParameters.push({
+                    name: param.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${param.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+        // Environment URL variables (e.g., tenantDomain)
+        for (const urlVariable of this.getEnvironmentUrlVariables()) {
+            builderParameters.push({
+                name: urlVariable.name.camelCase.unsafeName,
+                value: java.TypeLiteral.string(`YOUR_${urlVariable.name.screamingSnakeCase.unsafeName}`)
+            });
+        }
+    }
+
+    /**
+     * Extracts URL variables from the first environment definition (e.g., tenantDomain from
+     * server URL templates like "https://{tenantDomain}/my-org").
+     */
+    private getEnvironmentUrlVariables(): FernIr.ServerVariable[] {
+        if (this.cachedEnvironmentUrlVariables != null) {
+            return this.cachedEnvironmentUrlVariables;
+        }
+        const result = this.computeEnvironmentUrlVariables();
+        this.cachedEnvironmentUrlVariables = result;
+        return result;
+    }
+
+    private computeEnvironmentUrlVariables(): FernIr.ServerVariable[] {
+        const environments = this.context.ir.environments;
+        if (environments == null) {
+            return [];
+        }
+        const envType = environments.environments;
+        if (envType.type === "singleBaseUrl") {
+            const firstEnv = envType.environments[0];
+            return firstEnv?.urlVariables ?? [];
+        }
+        if (envType.type === "multipleBaseUrls") {
+            const firstEnv = envType.environments[0];
+            if (firstEnv?.urlVariables != null) {
+                const seenIds = new Set<string>();
+                const variables: FernIr.ServerVariable[] = [];
+                for (const vars of Object.values(firstEnv.urlVariables)) {
+                    for (const v of vars) {
+                        if (!seenIds.has(v.id)) {
+                            seenIds.add(v.id);
+                            variables.push(v);
+                        }
+                    }
+                }
+                return variables;
+            }
+        }
+        return [];
+    }
+
     private hasWebSocketChannels(): boolean {
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
@@ -943,44 +1040,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         // Build client initialization with auth if needed
         const clientClassReference = this.context.getRootClientClassReference();
         const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
-
-        // Add auth parameters if auth is configured
-        if (this.context.ir.auth.schemes.length > 0) {
-            const authScheme = this.context.ir.auth.schemes[0];
-            if (authScheme?.type === "bearer") {
-                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
-                builderParameters.push({
-                    name: tokenName,
-                    value: java.TypeLiteral.string("<token>")
-                });
-            } else if (authScheme?.type === "basic") {
-                builderParameters.push({
-                    name: "username",
-                    value: java.TypeLiteral.string("<username>")
-                });
-                builderParameters.push({
-                    name: "password",
-                    value: java.TypeLiteral.string("<password>")
-                });
-            } else if (authScheme?.type === "header") {
-                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
-                builderParameters.push({
-                    name: headerName,
-                    value: java.TypeLiteral.string("<api-key>")
-                });
-            }
-        }
-
-        // Add environment variables if any
-        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
-            for (const variable of this.context.ir.variables) {
-                const variableName = variable.name.camelCase.unsafeName;
-                builderParameters.push({
-                    name: variableName,
-                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
-                });
-            }
-        }
+        this.addClientBuilderParameters(builderParameters);
 
         const clientBuilder = java.TypeLiteral.builder({
             classReference: clientClassReference,

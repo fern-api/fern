@@ -103,6 +103,7 @@ public final class CreateProblemError {
   @JsonIgnoreProperties("_type")
   private static final class GenericValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "_type", allowSetters = true)
     private GenericCreateProblemError value;
 
     @JsonCreator(

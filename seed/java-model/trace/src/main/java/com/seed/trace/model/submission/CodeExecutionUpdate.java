@@ -285,6 +285,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class BuildingExecutorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private BuildingExecutorResponse value;
 
     @JsonCreator(
@@ -327,6 +328,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RunningValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private RunningResponse value;
 
     @JsonCreator(
@@ -369,6 +371,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class ErroredValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private ErroredResponse value;
 
     @JsonCreator(
@@ -411,6 +414,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class StoppedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private StoppedResponse value;
 
     @JsonCreator(
@@ -453,6 +457,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class GradedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private GradedResponse value;
 
     @JsonCreator(
@@ -495,6 +500,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class GradedV2Value implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private GradedResponseV2 value;
 
     @JsonCreator(
@@ -537,6 +543,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class WorkspaceRanValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private WorkspaceRanResponse value;
 
     @JsonCreator(
@@ -579,6 +586,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RecordingValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private RecordingResponseNotification value;
 
     @JsonCreator(
@@ -621,6 +629,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RecordedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private RecordedResponseNotification value;
 
     @JsonCreator(
@@ -663,6 +672,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class InvalidRequestValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private InvalidRequestResponse value;
 
     @JsonCreator(
@@ -705,6 +715,7 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class FinishedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private FinishedResponse value;
 
     @JsonCreator(
