@@ -814,14 +814,19 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
+            // Check if the SSE payload is a protocol-discriminated union
+            let protocolUnionInfo: { discriminantWireValue: string; types: FernIr.SingleUnionType[] } | undefined;
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
-                sse: (sse) => ({
-                    type: "sse" as const,
-                    ...(sse.terminator != null
-                        ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
-                        : {}),
-                    ...this.getEventDiscriminator(sse.payload, context)
-                }),
+                sse: (sse) => {
+                    protocolUnionInfo = this.getProtocolDiscriminatedUnionInfo(sse.payload, context);
+                    return {
+                        type: "sse" as const,
+                        ...(sse.terminator != null
+                            ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
+                            : {}),
+                        ...this.getEventDiscriminator(sse.payload, context)
+                    };
+                },
                 json: (json) => ({
                     type: "json",
                     messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")
@@ -834,6 +839,62 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     throw new Error(`Unknown response type: ${type}`);
                 }
             });
+
+            // Generate parse function: use protocol-discriminated switch if applicable
+            let parseFunction: ts.Expression;
+            if (protocolUnionInfo != null && context.includeSerdeLayer) {
+                parseFunction = this.generateProtocolDiscriminatedParseFunction(context, protocolUnionInfo);
+            } else if (context.includeSerdeLayer) {
+                parseFunction = ts.factory.createArrowFunction(
+                    [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                        )
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createReturnStatement(
+                                context.sdkEndpointTypeSchemas
+                                    .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
+                                    .deserializeStreamData({
+                                        context,
+                                        referenceToRawStreamData: ts.factory.createIdentifier(
+                                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                        )
+                                    })
+                            )
+                        ],
+                        true
+                    )
+                );
+            } else {
+                parseFunction = ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                        )
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createAsExpression(
+                        ts.factory.createIdentifier(
+                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                        ),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                    )
+                );
+            }
+
             return [
                 ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
@@ -856,57 +917,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
-                                    parse: context.includeSerdeLayer
-                                        ? ts.factory.createArrowFunction(
-                                              [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                                              undefined,
-                                              [
-                                                  ts.factory.createParameterDeclaration(
-                                                      undefined,
-                                                      undefined,
-                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                  )
-                                              ],
-                                              undefined,
-                                              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                                              ts.factory.createBlock(
-                                                  [
-                                                      ts.factory.createReturnStatement(
-                                                          context.sdkEndpointTypeSchemas
-                                                              .getGeneratedEndpointTypeSchemas(
-                                                                  this.packageId,
-                                                                  this.endpoint.name
-                                                              )
-                                                              .deserializeStreamData({
-                                                                  context,
-                                                                  referenceToRawStreamData: ts.factory.createIdentifier(
-                                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                                  )
-                                                              })
-                                                      )
-                                                  ],
-                                                  true
-                                              )
-                                          )
-                                        : ts.factory.createArrowFunction(
-                                              undefined,
-                                              undefined,
-                                              [
-                                                  ts.factory.createParameterDeclaration(
-                                                      undefined,
-                                                      undefined,
-                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                  )
-                                              ],
-                                              undefined,
-                                              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                                              ts.factory.createAsExpression(
-                                                  ts.factory.createIdentifier(
-                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                  ),
-                                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                                              )
-                                          )
+                                    parse: parseFunction
                                 })
                             ),
                             ts.factory.createPropertyAssignment(
@@ -1236,5 +1247,123 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         return {
             eventDiscriminator: ts.factory.createStringLiteral(typeDeclaration.shape.discriminant.wireValue)
         };
+    }
+
+    private getProtocolDiscriminatedUnionInfo(
+        payload: FernIr.TypeReference,
+        context: SdkContext
+    ): { discriminantWireValue: string; types: FernIr.SingleUnionType[] } | undefined {
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = context.type.getTypeDeclaration(payload);
+        if (typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return undefined;
+        }
+        return {
+            discriminantWireValue: typeDeclaration.shape.discriminant.wireValue,
+            types: typeDeclaration.shape.types
+        };
+    }
+
+    private generateProtocolDiscriminatedParseFunction(
+        context: SdkContext,
+        unionInfo: { discriminantWireValue: string; types: FernIr.SingleUnionType[] }
+    ): ts.Expression {
+        const EVENT_TYPE_PARAM = "_eventType";
+        const DATA_PARAM = GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME;
+
+        // Generate switch cases for each variant
+        const cases: ts.CaseClause[] = unionInfo.types.map((singleUnionType) => {
+            const wireValue = singleUnionType.discriminantValue.wireValue;
+            let deserializedData: ts.Expression;
+
+            if (singleUnionType.shape.type === "samePropertiesAsObject" && singleUnionType.shape.typeId != null) {
+                // Deserialize data using the variant's named type schema
+                deserializedData = context.typeSchema
+                    .getSchemaOfNamedType(singleUnionType.shape, { isGeneratingSchema: false })
+                    .parseOrThrow(ts.factory.createIdentifier(DATA_PARAM), {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipResponseValidation,
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
+                    });
+            } else if (singleUnionType.shape.type === "singleProperty") {
+                deserializedData = ts.factory.createIdentifier(DATA_PARAM);
+            } else {
+                deserializedData = ts.factory.createIdentifier(DATA_PARAM);
+            }
+
+            // Return { discriminantWireValue: wireValue, ...deserializedData }
+            return ts.factory.createCaseClause(
+                ts.factory.createStringLiteral(wireValue),
+                [
+                    ts.factory.createReturnStatement(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(unionInfo.discriminantWireValue),
+                                    ts.factory.createStringLiteral(wireValue)
+                                ),
+                                ts.factory.createSpreadAssignment(deserializedData)
+                            ],
+                            false
+                        )
+                    )
+                ]
+            );
+        });
+
+        // Add default case that returns data as-is with the eventType
+        const defaultClause = ts.factory.createDefaultClause([
+            ts.factory.createReturnStatement(
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(unionInfo.discriminantWireValue),
+                            ts.factory.createIdentifier(EVENT_TYPE_PARAM)
+                        ),
+                        ts.factory.createSpreadAssignment(
+                            ts.factory.createAsExpression(
+                                ts.factory.createIdentifier(DATA_PARAM),
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                            )
+                        )
+                    ],
+                    false
+                )
+            )
+        ]);
+
+        const switchStatement = ts.factory.createSwitchStatement(
+            ts.factory.createIdentifier(EVENT_TYPE_PARAM),
+            ts.factory.createCaseBlock([...cases, defaultClause])
+        );
+
+        return ts.factory.createArrowFunction(
+            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+            undefined,
+            [
+                ts.factory.createParameterDeclaration(undefined, undefined, DATA_PARAM),
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    EVENT_TYPE_PARAM,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken)
+                )
+            ],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createBlock([switchStatement], true)
+        );
+    }
+
+    private get skipResponseValidation(): boolean {
+        return false;
     }
 }
