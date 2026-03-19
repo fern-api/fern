@@ -81,6 +81,32 @@ public record TranscriptEvent : IJsonOnDeserialized
                 TypeLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(TypeLiteral.Value);
+
+            public override TypeLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != TypeLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + TypeLiteral.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new TypeLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                TypeLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(TypeLiteral.Value);
         }
     }
 }

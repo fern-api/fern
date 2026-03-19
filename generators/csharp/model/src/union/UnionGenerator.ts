@@ -770,6 +770,61 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 writer.writeTextStatement("json.WriteTo(writer, options)");
             })
         });
+        // ReadAsPropertyName method - for dictionary key deserialization
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: unionReference,
+            name: "ReadAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.System.Text.Json.Utf8JsonReader
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement(
+                    `var stringValue = reader.GetString() ?? throw new JsonException("The JSON property name could not be read as a string.")`
+                );
+                writer.write("return new ");
+                writer.writeNode(unionReference);
+                writer.writeTextStatement(`(stringValue, stringValue)`);
+            })
+        });
+
+        // WriteAsPropertyName method - for dictionary key serialization
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "WriteAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.System.Text.Json.Utf8JsonWriter
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: unionReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement(`writer.WritePropertyName(value.${discriminant.name})`);
+            })
+        });
+
         enclosingClass.addNestedClass(class_);
         return class_;
     }

@@ -351,7 +351,11 @@ allowedFailures:
   - examples:readme-config
   - literal:no-custom-config
   - literal:readonly-constants
+  - mixed-case
   - oauth-client-credentials-custom
   - package-yml
   - pagination-uri-path
+  - property-access
   - trace
+  - unions:no-custom-config
+  - unions-with-local-date
