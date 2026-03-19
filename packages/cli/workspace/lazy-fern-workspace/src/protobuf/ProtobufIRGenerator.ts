@@ -40,18 +40,18 @@ async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath): Promise<void>
     if (fernGlobalInstallPromise) {
         return fernGlobalInstallPromise;
     }
-    fernGlobalInstallPromise = runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
-        cwd,
-        stdout: "ignore",
-        stderr: "pipe"
-    })
-        .then(() => {
-            // Resolve to void (runExeca returns a richer object we don't need).
-        })
-        .catch((err) => {
+    fernGlobalInstallPromise = (async () => {
+        try {
+            await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
+                cwd,
+                stdout: "ignore",
+                stderr: "pipe"
+            });
+        } catch (err) {
             fernGlobalInstallPromise = undefined; // allow retry on transient failure
             throw err;
-        });
+        }
+    })();
     return fernGlobalInstallPromise;
 }
 
