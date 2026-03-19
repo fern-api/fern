@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SeedUnions;
+using SeedUnions.Core;
 using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
@@ -8,6 +9,20 @@ namespace SeedUnions.Test;
 [Parallelizable(ParallelScope.Self)]
 public class FooExtendedTest
 {
+    [NUnit.Framework.Test]
+    public void TestDeserialization_1()
+    {
+        var json = """
+            {
+              "name": "example1",
+              "age": 5
+            }
+            """;
+        var expectedObject = new FooExtended { Name = "example1", Age = 5 };
+        var deserializedObject = JsonUtils.Deserialize<FooExtended>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
@@ -18,6 +33,20 @@ public class FooExtendedTest
             }
             """;
         JsonAssert.Roundtrips<FooExtended>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "name": "example2",
+              "age": 10
+            }
+            """;
+        var expectedObject = new FooExtended { Name = "example2", Age = 10 };
+        var deserializedObject = JsonUtils.Deserialize<FooExtended>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

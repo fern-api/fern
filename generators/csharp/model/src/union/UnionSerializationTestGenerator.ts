@@ -12,6 +12,7 @@ import TestInput = TestClass.TestInput;
 
 export declare namespace TestClass {
     interface TestInput {
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
@@ -35,6 +36,29 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
         });
         this.testInputs.forEach((testInput, index) => {
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
+            testClass.addTestMethod({
+                name: `TestDeserialization${testNumber}`,
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine("var json = ");
+                    writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                    writer.write("var expectedObject  = ");
+                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
+                    writer.write("var deserializedObject = ");
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.Types.JsonUtils,
+                            method: "Deserialize",
+                            generics: [this.classReference],
+                            arguments_: [this.csharp.codeblock("json")]
+                        })
+                    );
+                    writer.writeTextStatement(
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
+                    );
+                }),
+                isAsync: false
+            });
+
             testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
                 body: this.csharp.codeblock((writer) => {
