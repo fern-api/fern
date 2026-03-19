@@ -13,5 +13,5 @@ pub struct SearchUsersQueryRequest {
     pub role: Option<String>,
     #[serde(rename = "isActive")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub is_active: Option<Option<bool>>,
+    pub is_active: Option<bool>,
 }

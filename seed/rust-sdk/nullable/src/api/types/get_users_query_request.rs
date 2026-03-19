@@ -12,7 +12,7 @@ pub struct GetUsersQueryRequest {
     #[serde(default)]
     pub activated: Vec<Option<bool>>,
     #[serde(default)]
-    pub tags: Vec<Option<Option<String>>>,
+    pub tags: Vec<Option<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub extra: Option<Option<bool>>,
+    pub extra: Option<bool>,
 }
