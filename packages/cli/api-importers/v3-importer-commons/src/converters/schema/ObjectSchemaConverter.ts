@@ -1,9 +1,9 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
-import { pickStructuralFields } from "../../utils/pickStructuralFields.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 
 export declare namespace ObjectSchemaConverter {
@@ -211,7 +211,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
             for (const [key, propSchema] of Object.entries(allOfSchema.properties ?? {})) {
                 const parentProp = resolvedParentProperties[key];
                 if (parentProp != null && !this.context.isReferenceObject(propSchema)) {
-                    mergedProperties[key] = { ...pickStructuralFields(parentProp), ...propSchema };
+                    mergedProperties[key] = { ...parentProp, ...propSchema };
                 } else {
                     mergedProperties[key] = propSchema;
                 }
