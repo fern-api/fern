@@ -4,9 +4,9 @@ import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from 
 import os from "os";
 import path from "path";
 
-const PROTOC_GEN_OPENAPI_VERSION = "v0.1.13";
-const GITHUB_RELEASE_URL_BASE = "https://github.com/fern-api/protoc-gen-openapi/releases/download";
-const BINARY_NAME = "protoc-gen-openapi";
+const BUF_VERSION = "v1.66.1";
+const GITHUB_RELEASE_URL_BASE = "https://github.com/bufbuild/buf/releases/download";
+const BINARY_NAME = "buf";
 const CACHE_DIR_NAME = ".fern";
 const BIN_DIR_NAME = "bin";
 const LOCK_TIMEOUT_MS = 120_000;
@@ -18,6 +18,11 @@ interface PlatformInfo {
     extension: string;
 }
 
+/**
+ * Returns platform info matching buf's GitHub Release asset naming convention:
+ * - OS: Darwin, Linux, Windows (capitalized)
+ * - Arch: x86_64 (Intel), arm64 (macOS ARM), aarch64 (Linux ARM)
+ */
 function getPlatformInfo(): PlatformInfo {
     const platform = os.platform();
     const arch = os.arch();
@@ -25,13 +30,13 @@ function getPlatformInfo(): PlatformInfo {
     let osName: string;
     switch (platform) {
         case "linux":
-            osName = "linux";
+            osName = "Linux";
             break;
         case "darwin":
-            osName = "darwin";
+            osName = "Darwin";
             break;
         case "win32":
-            osName = "windows";
+            osName = "Windows";
             break;
         default:
             throw new Error(`Unsupported platform: ${platform}`);
@@ -40,10 +45,11 @@ function getPlatformInfo(): PlatformInfo {
     let archName: string;
     switch (arch) {
         case "x64":
-            archName = "amd64";
+            archName = "x86_64";
             break;
         case "arm64":
-            archName = "arm64";
+            // buf uses "arm64" for macOS but "aarch64" for Linux
+            archName = platform === "linux" ? "aarch64" : "arm64";
             break;
         default:
             throw new Error(`Unsupported architecture: ${arch}`);
@@ -52,7 +58,7 @@ function getPlatformInfo(): PlatformInfo {
     return {
         os: osName,
         arch: archName,
-        extension: osName === "windows" ? ".exe" : ""
+        extension: osName === "Windows" ? ".exe" : ""
     };
 }
 
@@ -64,7 +70,7 @@ function getCacheDir(): AbsoluteFilePath {
 function getVersionedBinaryPath(): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
     const cacheDir = getCacheDir();
-    return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}-${PROTOC_GEN_OPENAPI_VERSION}${extension}`));
+    return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}-${BUF_VERSION}${extension}`));
 }
 
 function getCanonicalBinaryPath(): AbsoluteFilePath {
@@ -85,7 +91,7 @@ function getLockDirPath(): string {
 
 function getDownloadUrl(): string {
     const { os: osName, arch, extension } = getPlatformInfo();
-    return `${GITHUB_RELEASE_URL_BASE}/${PROTOC_GEN_OPENAPI_VERSION}/${BINARY_NAME}-${osName}-${arch}${extension}`;
+    return `${GITHUB_RELEASE_URL_BASE}/${BUF_VERSION}/${BINARY_NAME}-${osName}-${arch}${extension}`;
 }
 
 async function fileExists(filePath: AbsoluteFilePath): Promise<boolean> {
@@ -112,17 +118,17 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
             await mkdir(lockPath, { recursive: false });
             return createLockReleaser(lockPath, logger);
         } catch {
-            logger.debug(`Waiting for lock on ${lockPath}...`);
+            logger.debug(`Waiting for buf lock on ${lockPath}...`);
             await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
         }
     }
 
     // Timeout — force-break the presumed-stale lock and retry once
-    logger.debug(`Lock timed out after ${LOCK_TIMEOUT_MS}ms, breaking stale lock`);
+    logger.debug(`Buf lock timed out after ${LOCK_TIMEOUT_MS}ms, breaking stale lock`);
     try {
         await rm(lockPath, { recursive: true });
     } catch (err) {
-        logger.debug(`Failed to remove stale lock: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to remove stale buf lock: ${err instanceof Error ? err.message : String(err)}`);
     }
     try {
         await mkdir(lockPath, { recursive: false });
@@ -135,11 +141,11 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
                 await mkdir(lockPath, { recursive: false });
                 return createLockReleaser(lockPath, logger);
             } catch {
-                logger.debug(`Waiting for lock on ${lockPath} (post-break retry)...`);
+                logger.debug(`Waiting for buf lock on ${lockPath} (post-break retry)...`);
                 await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
             }
         }
-        throw new Error(`Failed to acquire lock after timeout and retry`);
+        throw new Error(`Failed to acquire buf lock after timeout and retry`);
     }
     return createLockReleaser(lockPath, logger);
 }
@@ -149,26 +155,26 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
         try {
             await rm(lockPath, { recursive: true });
         } catch (err) {
-            logger.debug(`Failed to release lock: ${err instanceof Error ? err.message : String(err)}`);
+            logger.debug(`Failed to release buf lock: ${err instanceof Error ? err.message : String(err)}`);
         }
     };
 }
 
 /**
- * Resolves the protoc-gen-openapi binary, downloading it from GitHub Releases if needed.
+ * Resolves the buf binary, downloading it from GitHub Releases if needed.
  *
- * **Versioning**: Binaries are cached with a versioned filename (e.g. `protoc-gen-openapi-v0.1.13`).
- * A `.version` marker file tracks which version the canonical `protoc-gen-openapi` binary corresponds to.
- * When `PROTOC_GEN_OPENAPI_VERSION` is bumped, the canonical binary is atomically replaced on the
+ * **Versioning**: Binaries are cached with a versioned filename (e.g. `buf-v1.66.1`).
+ * A `.version` marker file tracks which version the canonical `buf` binary corresponds to.
+ * When `BUF_VERSION` is bumped, the canonical binary is atomically replaced on the
  * next invocation.
  *
  * **Race conditions**: An exclusive filesystem lock (mkdir-based) is held during download and
  * file operations to prevent concurrent processes from corrupting the cache. All file replacements
  * use write-to-temp + atomic rename.
  *
- * @returns The directory containing the binary (for PATH injection), or `undefined` if download fails.
+ * @returns The absolute path to the buf binary, or `undefined` if download fails.
  */
-export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteFilePath | undefined> {
+export async function resolveBuf(logger: Logger): Promise<AbsoluteFilePath | undefined> {
     try {
         const cacheDir = getCacheDir();
         await mkdir(cacheDir, { recursive: true });
@@ -180,7 +186,7 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
             await releaseLock();
         }
     } catch (error) {
-        logger.debug(`Failed to resolve protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Failed to resolve buf: ${error instanceof Error ? error.message : String(error)}`);
         return undefined;
     }
 }
@@ -193,26 +199,26 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
     // Fast path: versioned binary already downloaded
     if (await fileExists(versionedPath)) {
         const currentMarker = await readVersionMarker(versionMarkerPath, logger);
-        if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
-            logger.info(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
-            return getCacheDir();
+        if (currentMarker === BUF_VERSION && (await fileExists(canonicalPath))) {
+            logger.info(`Using cached buf ${BUF_VERSION}`);
+            return canonicalPath;
         }
         // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
-        await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
-        logger.info(`Updated protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
-        return getCacheDir();
+        await writeFile(versionMarkerPath, BUF_VERSION);
+        logger.info(`Updated buf to ${BUF_VERSION}`);
+        return canonicalPath;
     }
 
     // Download the binary
     const downloadUrl = getDownloadUrl();
-    logger.info(`Downloading protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}...`);
+    logger.info(`Downloading buf ${BUF_VERSION}...`);
 
     const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
         const response = await fetch(downloadUrl, { redirect: "follow" });
         if (!response.ok) {
-            logger.debug(`Failed to download protoc-gen-openapi: ${response.status} ${response.statusText}`);
+            logger.debug(`Failed to download buf: ${response.status} ${response.statusText}`);
             return undefined;
         }
 
@@ -225,20 +231,18 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
 
         // Atomic copy to canonical path + update version marker
         await atomicCopyBinary(versionedPath, canonicalPath);
-        await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
+        await writeFile(versionMarkerPath, BUF_VERSION);
 
-        logger.info(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
-        return getCacheDir();
+        logger.info(`Downloaded buf ${BUF_VERSION}`);
+        return canonicalPath;
     } catch (error) {
-        logger.debug(
-            `Failed to download protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
-        );
+        logger.debug(`Failed to download buf: ${error instanceof Error ? error.message : String(error)}`);
         // Clean up partial download if it exists
         try {
             await rm(tmpDownloadPath, { force: true });
         } catch (cleanupErr) {
             logger.debug(
-                `Failed to clean up partial download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`
+                `Failed to clean up partial buf download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`
             );
         }
         return undefined;
@@ -249,7 +253,7 @@ async function readVersionMarker(markerPath: AbsoluteFilePath, logger: Logger): 
     try {
         return (await readFile(markerPath, "utf-8")).trim();
     } catch (err) {
-        logger.debug(`Failed to read version marker: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to read buf version marker: ${err instanceof Error ? err.message : String(err)}`);
         return undefined;
     }
 }

@@ -5,7 +5,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const FAKE_BINARY_CONTENT = "#!/bin/sh\necho fake-protoc-gen-openapi\n";
+const FAKE_BINARY_CONTENT = "#!/bin/sh\necho fake-buf\n";
 
 function createMockLogger(): Logger {
     return {
@@ -29,7 +29,7 @@ async function fileExists(filePath: string): Promise<boolean> {
     }
 }
 
-describe("ProtocGenOpenAPIDownloader", () => {
+describe("BufDownloader", () => {
     let tempHomeDir: string;
     let logger: Logger;
 
@@ -66,17 +66,16 @@ describe("ProtocGenOpenAPIDownloader", () => {
     }
 
     function getBinaryName(): string {
-        return process.platform === "win32" ? "protoc-gen-openapi.exe" : "protoc-gen-openapi";
+        return process.platform === "win32" ? "buf.exe" : "buf";
     }
 
     function getVersionedBinaryName(version: string): string {
         const ext = process.platform === "win32" ? ".exe" : "";
-        return `protoc-gen-openapi-${version}${ext}`;
+        return `buf-${version}${ext}`;
     }
 
     describe("fresh download", () => {
         it("downloads and caches binary on first invocation", async () => {
-            // Mock fetch to return our fake binary
             const mockFetch = vi.fn().mockResolvedValue({
                 ok: true,
                 status: 200,
@@ -85,20 +84,20 @@ describe("ProtocGenOpenAPIDownloader", () => {
             });
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
-            // Should return the cache directory
-            expect(result).toBe(AbsoluteFilePath.of(getCacheDir()));
+            // Should return the full path to the canonical binary
+            const expectedPath = path.join(getCacheDir(), getBinaryName());
+            expect(result).toBe(AbsoluteFilePath.of(expectedPath));
 
             // Should have called fetch once
             expect(mockFetch).toHaveBeenCalledOnce();
             const fetchUrl = mockFetch.mock.calls[0]?.[0] as string;
-            expect(fetchUrl).toContain("protoc-gen-openapi");
-            expect(fetchUrl).toContain("github.com/fern-api/protoc-gen-openapi/releases/download");
+            expect(fetchUrl).toContain("bufbuild/buf/releases/download");
 
             // Versioned binary should exist
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.13"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.66.1"));
             expect(await fileExists(versionedPath)).toBe(true);
 
             // Canonical binary should exist
@@ -106,13 +105,13 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(await fileExists(canonicalPath)).toBe(true);
 
             // Version marker should exist with correct content
-            const markerPath = path.join(getCacheDir(), "protoc-gen-openapi.version");
+            const markerPath = path.join(getCacheDir(), "buf.version");
             expect(await fileExists(markerPath)).toBe(true);
             const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v0.1.13");
+            expect(markerContent.trim()).toBe("v1.66.1");
 
             // Lock directory should be cleaned up
-            const lockPath = path.join(getCacheDir(), "protoc-gen-openapi.lock");
+            const lockPath = path.join(getCacheDir(), "buf.lock");
             expect(await fileExists(lockPath)).toBe(false);
 
             vi.unstubAllGlobals();
@@ -125,7 +124,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
@@ -133,21 +132,21 @@ describe("ProtocGenOpenAPIDownloader", () => {
             await writeFile(canonicalPath, FAKE_BINARY_CONTENT);
             await chmod(canonicalPath, 0o755);
 
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
-            await writeFile(markerPath, "v0.1.13");
+            const markerPath = path.join(cacheDir, "buf.version");
+            await writeFile(markerPath, "v1.66.1");
 
             // fetch should NOT be called
             const mockFetch = vi.fn();
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
-            expect(result).toBe(AbsoluteFilePath.of(cacheDir));
+            expect(result).toBe(AbsoluteFilePath.of(canonicalPath));
             expect(mockFetch).not.toHaveBeenCalled();
 
             // Info log should indicate cache hit
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Using cached"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Using cached buf"));
 
             vi.unstubAllGlobals();
         });
@@ -155,11 +154,10 @@ describe("ProtocGenOpenAPIDownloader", () => {
 
     describe("version upgrade", () => {
         it("refreshes canonical binary when version marker is stale", async () => {
-            // Pre-populate cache with "old" version marker but current versioned binary
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
             const newContent = "new-binary-content";
             await writeFile(versionedPath, newContent);
             await chmod(versionedPath, 0o755);
@@ -169,16 +167,16 @@ describe("ProtocGenOpenAPIDownloader", () => {
             await chmod(canonicalPath, 0o755);
 
             // Marker says old version
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
-            await writeFile(markerPath, "v0.1.11");
+            const markerPath = path.join(cacheDir, "buf.version");
+            await writeFile(markerPath, "v1.65.0");
 
             const mockFetch = vi.fn();
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
-            expect(result).toBe(AbsoluteFilePath.of(cacheDir));
+            expect(result).toBe(AbsoluteFilePath.of(canonicalPath));
             expect(mockFetch).not.toHaveBeenCalled();
 
             // Canonical binary should now have the new content
@@ -187,10 +185,10 @@ describe("ProtocGenOpenAPIDownloader", () => {
 
             // Marker should be updated
             const updatedMarker = await readFile(markerPath, "utf-8");
-            expect(updatedMarker.trim()).toBe("v0.1.13");
+            expect(updatedMarker.trim()).toBe("v1.66.1");
 
             // Should log the update
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Updated protoc-gen-openapi"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Updated buf"));
 
             vi.unstubAllGlobals();
         });
@@ -199,25 +197,25 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
             // Marker is correct but canonical is missing
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
-            await writeFile(markerPath, "v0.1.13");
+            const markerPath = path.join(cacheDir, "buf.version");
+            await writeFile(markerPath, "v1.66.1");
 
             const mockFetch = vi.fn();
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
-            expect(result).toBe(AbsoluteFilePath.of(cacheDir));
+            const canonicalPath = path.join(cacheDir, getBinaryName());
+            expect(result).toBe(AbsoluteFilePath.of(canonicalPath));
             expect(mockFetch).not.toHaveBeenCalled();
 
             // Canonical should now exist
-            const canonicalPath = path.join(cacheDir, getBinaryName());
             expect(await fileExists(canonicalPath)).toBe(true);
 
             vi.unstubAllGlobals();
@@ -233,11 +231,11 @@ describe("ProtocGenOpenAPIDownloader", () => {
             });
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
             expect(result).toBeUndefined();
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Failed to download"));
+            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Failed to download buf"));
 
             vi.unstubAllGlobals();
         });
@@ -246,8 +244,8 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const mockFetch = vi.fn().mockRejectedValue(new Error("network error"));
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
             expect(result).toBeUndefined();
             expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("network error"));
@@ -261,11 +259,11 @@ describe("ProtocGenOpenAPIDownloader", () => {
             const mockFetch = vi.fn().mockRejectedValue(new Error("download failed"));
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            await resolveBuf(logger);
 
             // Lock directory should be cleaned up
-            const lockPath = path.join(getCacheDir(), "protoc-gen-openapi.lock");
+            const lockPath = path.join(getCacheDir(), "buf.lock");
             expect(await fileExists(lockPath)).toBe(false);
 
             vi.unstubAllGlobals();
@@ -287,34 +285,29 @@ describe("ProtocGenOpenAPIDownloader", () => {
             });
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
+            const { resolveBuf } = await import("../BufDownloader.js");
 
             // Run 3 concurrent resolves
-            const results = await Promise.all([
-                resolveProtocGenOpenAPI(logger),
-                resolveProtocGenOpenAPI(logger),
-                resolveProtocGenOpenAPI(logger)
-            ]);
+            const results = await Promise.all([resolveBuf(logger), resolveBuf(logger), resolveBuf(logger)]);
 
             // All should succeed
-            const cacheDir = getCacheDir();
+            const canonicalPath = path.join(getCacheDir(), getBinaryName());
             for (const result of results) {
-                expect(result).toBe(AbsoluteFilePath.of(cacheDir));
+                expect(result).toBe(AbsoluteFilePath.of(canonicalPath));
             }
 
             // Canonical binary should exist and be valid
-            const canonicalPath = path.join(cacheDir, getBinaryName());
             expect(await fileExists(canonicalPath)).toBe(true);
             const content = await readFile(canonicalPath, "utf-8");
             expect(content).toContain("binary-content");
 
             // Version marker should be correct
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
+            const markerPath = path.join(getCacheDir(), "buf.version");
             const marker = await readFile(markerPath, "utf-8");
-            expect(marker.trim()).toBe("v0.1.13");
+            expect(marker.trim()).toBe("v1.66.1");
 
             // Lock should be released
-            const lockPath = path.join(cacheDir, "protoc-gen-openapi.lock");
+            const lockPath = path.join(getCacheDir(), "buf.lock");
             expect(await fileExists(lockPath)).toBe(false);
 
             vi.unstubAllGlobals();
@@ -334,10 +327,11 @@ describe("ProtocGenOpenAPIDownloader", () => {
             });
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            const result = await resolveProtocGenOpenAPI(logger);
+            const { resolveBuf } = await import("../BufDownloader.js");
+            const result = await resolveBuf(logger);
 
-            expect(result).toBe(AbsoluteFilePath.of(cacheDir));
+            const expectedPath = path.join(cacheDir, getBinaryName());
+            expect(result).toBe(AbsoluteFilePath.of(expectedPath));
             expect(await fileExists(cacheDir)).toBe(true);
 
             vi.unstubAllGlobals();
@@ -354,10 +348,8 @@ describe("ProtocGenOpenAPIDownloader", () => {
             });
             vi.stubGlobal("fetch", mockFetch);
 
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-            await resolveProtocGenOpenAPI(logger);
-
-            const { stat } = await import("fs/promises");
+            const { resolveBuf } = await import("../BufDownloader.js");
+            await resolveBuf(logger);
 
             // Canonical binary should be executable
             const canonicalPath = path.join(getCacheDir(), getBinaryName());
@@ -366,16 +358,61 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(canonicalStat.mode & 0o100).toBeTruthy();
 
             // Versioned binary should also be executable
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v0.1.13"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.66.1"));
             const versionedStat = await stat(versionedPath);
             expect(versionedStat.mode & 0o100).toBeTruthy();
 
             vi.unstubAllGlobals();
         });
     });
+
+    describe("download URL format", () => {
+        it("constructs correct URL for the current platform", async () => {
+            const mockFetch = vi.fn().mockResolvedValue({
+                ok: true,
+                status: 200,
+                statusText: "OK",
+                arrayBuffer: () => Promise.resolve(new TextEncoder().encode(FAKE_BINARY_CONTENT).buffer)
+            });
+            vi.stubGlobal("fetch", mockFetch);
+
+            const { resolveBuf } = await import("../BufDownloader.js");
+            await resolveBuf(logger);
+
+            expect(mockFetch).toHaveBeenCalledOnce();
+            const fetchUrl = mockFetch.mock.calls[0]?.[0] as string;
+
+            // URL should match buf's release naming convention
+            expect(fetchUrl).toContain("github.com/bufbuild/buf/releases/download/v1.66.1/buf-");
+
+            // OS name should be capitalized (Darwin, Linux, Windows)
+            const platform = process.platform;
+            if (platform === "darwin") {
+                expect(fetchUrl).toContain("buf-Darwin-");
+            } else if (platform === "linux") {
+                expect(fetchUrl).toContain("buf-Linux-");
+            } else if (platform === "win32") {
+                expect(fetchUrl).toContain("buf-Windows-");
+            }
+
+            // Arch should use buf's naming convention
+            const arch = process.arch;
+            if (arch === "x64") {
+                expect(fetchUrl).toContain("x86_64");
+            } else if (arch === "arm64") {
+                if (platform === "linux") {
+                    expect(fetchUrl).toContain("aarch64");
+                } else {
+                    expect(fetchUrl).toContain("arm64");
+                }
+            }
+
+            vi.unstubAllGlobals();
+        });
+    });
 });
 
-describe("ProtocGenOpenAPIDownloader (real e2e)", () => {
+describe("BufDownloader (real e2e)", () => {
     let tempHomeDir: string;
     let logger: Logger;
 
@@ -412,81 +449,81 @@ describe("ProtocGenOpenAPIDownloader (real e2e)", () => {
     }
 
     function getBinaryName(): string {
-        return process.platform === "win32" ? "protoc-gen-openapi.exe" : "protoc-gen-openapi";
+        return process.platform === "win32" ? "buf.exe" : "buf";
     }
 
     function getVersionedBinaryName(version: string): string {
         const ext = process.platform === "win32" ? ".exe" : "";
-        return `protoc-gen-openapi-${version}${ext}`;
+        return `buf-${version}${ext}`;
     }
 
     it(
-        "downloads real binary from GitHub Releases, caches it, and reuses on second call",
-        { timeout: 60_000 },
+        "downloads real buf binary from GitHub Releases, caches it, and reuses on second call",
+        { timeout: 120_000 },
         async () => {
             // Do NOT mock fetch — use the real network
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
+            const { resolveBuf } = await import("../BufDownloader.js");
 
             // --- First call: should download from GitHub Releases ---
-            const result1 = await resolveProtocGenOpenAPI(logger);
+            const result1 = await resolveBuf(logger);
 
-            expect(result1).toBe(AbsoluteFilePath.of(getCacheDir()));
+            const expectedPath = path.join(getCacheDir(), getBinaryName());
+            expect(result1).toBe(AbsoluteFilePath.of(expectedPath));
 
             // Verify download log messages
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading protoc-gen-openapi"));
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded protoc-gen-openapi"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading buf"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded buf"));
 
             // Verify cache structure
             const cacheDir = getCacheDir();
             const canonicalPath = path.join(cacheDir, getBinaryName());
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
+            const markerPath = path.join(cacheDir, "buf.version");
 
             // All cache files should exist
             expect(await fileExists(canonicalPath)).toBe(true);
             expect(await fileExists(versionedPath)).toBe(true);
             expect(await fileExists(markerPath)).toBe(true);
 
-            // Version marker should contain v0.1.13
+            // Version marker should contain v1.66.1
             const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v0.1.13");
+            expect(markerContent.trim()).toBe("v1.66.1");
 
-            // Binary should be a real executable (not empty or truncated)
+            // Binary should be a real executable (buf is ~47-52MB)
             const binaryStat = await stat(canonicalPath);
-            expect(binaryStat.size).toBeGreaterThan(1_000_000); // Real binary is ~11MB
+            expect(binaryStat.size).toBeGreaterThan(10_000_000);
 
             // Binary should have executable permissions
             expect(binaryStat.mode & 0o100).toBeTruthy();
 
             // Lock should be cleaned up
-            const lockPath = path.join(cacheDir, "protoc-gen-openapi.lock");
+            const lockPath = path.join(cacheDir, "buf.lock");
             expect(await fileExists(lockPath)).toBe(false);
 
             // --- Second call: should use cache (no re-download) ---
             const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
-            const result2 = await resolveProtocGenOpenAPI(logger);
+            const result2 = await resolveBuf(logger);
 
-            expect(result2).toBe(AbsoluteFilePath.of(cacheDir));
+            expect(result2).toBe(AbsoluteFilePath.of(expectedPath));
 
             // Should log cache hit, not download
             const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
             const newCalls = infoCallsAfter.slice(infoCallsBefore);
             const newMessages = newCalls.map((call) => call[0] as string);
-            expect(newMessages.some((msg) => msg.includes("Using cached"))).toBe(true);
+            expect(newMessages.some((msg) => msg.includes("Using cached buf"))).toBe(true);
             expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
         }
     );
 
-    it("downloaded binary is a valid ELF/Mach-O executable", { timeout: 60_000 }, async () => {
-        const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
-        const result = await resolveProtocGenOpenAPI(logger);
+    it("downloaded binary is a valid ELF/Mach-O executable", { timeout: 120_000 }, async () => {
+        const { resolveBuf } = await import("../BufDownloader.js");
+        const result = await resolveBuf(logger);
         expect(result).toBeDefined();
 
         const canonicalPath = path.join(getCacheDir(), getBinaryName());
 
         // Read first 4 bytes to verify it's a real binary (ELF or Mach-O magic)
-        const { readFile: readFileFn } = await import("fs/promises");
-        const buffer = await readFileFn(canonicalPath);
+        const buffer = await readFile(canonicalPath);
         expect(buffer.length).toBeGreaterThan(4);
 
         // ELF magic: 0x7f 'E' 'L' 'F'  |  Mach-O magic: 0xFEEDFACE/0xFEEDFACF/0xCFFA..
