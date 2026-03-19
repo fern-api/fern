@@ -153,12 +153,19 @@ export async function ensureBufCommand(logger: Logger): Promise<string> {
     });
 
     try {
-        await which(["buf"]);
+        const result = await which(["buf"]);
+        const bufPath = result.stdout?.trim();
+        if (bufPath) {
+            logger.debug(`Found buf on PATH: ${bufPath}`);
+        } else {
+            logger.debug("Found buf on PATH");
+        }
         return "buf";
     } catch {
         logger.debug("buf not found on PATH, attempting auto-download");
         const downloadedBufPath = await resolveBuf(logger);
         if (downloadedBufPath != null) {
+            logger.debug(`Using auto-downloaded buf: ${downloadedBufPath}`);
             return downloadedBufPath;
         }
         throw new Error("Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf').");
