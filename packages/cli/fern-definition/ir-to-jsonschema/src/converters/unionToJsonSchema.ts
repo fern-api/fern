@@ -54,7 +54,7 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
                     [discriminant]: { const: member.discriminantValue.wireValue },
                     ...properties
                 },
-                required: [discriminant, ...required]
+                required: [...new Set([discriminant, ...required])]
             };
         })
     };
