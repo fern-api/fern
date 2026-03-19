@@ -609,6 +609,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class NormalSweetValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private NormalSweet value;
 
     @JsonCreator(
@@ -651,6 +655,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class ThankfulFactorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private ThankfulFactor value;
 
     @JsonCreator(
@@ -693,6 +701,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class JumboEndValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private JumboEnd value;
 
     @JsonCreator(
@@ -735,6 +747,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class HastyPainValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private HastyPain value;
 
     @JsonCreator(
@@ -777,6 +793,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class MistySnowValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private MistySnow value;
 
     @JsonCreator(
@@ -819,6 +839,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class DistinctFailureValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DistinctFailure value;
 
     @JsonCreator(
@@ -861,6 +885,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class PracticalPrincipleValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private PracticalPrinciple value;
 
     @JsonCreator(
@@ -903,6 +931,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class LimpingStepValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private LimpingStep value;
 
     @JsonCreator(
@@ -945,6 +977,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class VibrantExcitementValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private VibrantExcitement value;
 
     @JsonCreator(
@@ -987,6 +1023,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class ActiveDiamondValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private ActiveDiamond value;
 
     @JsonCreator(
@@ -1029,6 +1069,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class PopularLimitValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private PopularLimit value;
 
     @JsonCreator(
@@ -1071,6 +1115,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class FalseMirrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private FalseMirror value;
 
     @JsonCreator(
@@ -1113,6 +1161,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class PrimaryBlockValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private PrimaryBlock value;
 
     @JsonCreator(
@@ -1155,6 +1207,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class RotatingRatioValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RotatingRatio value;
 
     @JsonCreator(
@@ -1197,6 +1253,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class ColorfulCoverValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private ColorfulCover value;
 
     @JsonCreator(
@@ -1239,6 +1299,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class DisloyalValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DisloyalValue value;
 
     @JsonCreator(
@@ -1281,6 +1345,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class GruesomeCoachValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GruesomeCoach value;
 
     @JsonCreator(
@@ -1323,6 +1391,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class TotalWorkValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TotalWork value;
 
     @JsonCreator(
@@ -1365,6 +1437,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class HarmoniousPlayValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private HarmoniousPlay value;
 
     @JsonCreator(
@@ -1407,6 +1483,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class UniqueStressValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private UniqueStress value;
 
     @JsonCreator(
@@ -1449,6 +1529,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class UnwillingSmokeValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private UnwillingSmoke value;
 
     @JsonCreator(
@@ -1491,6 +1575,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class FrozenSleepValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private FrozenSleep value;
 
     @JsonCreator(
@@ -1533,6 +1621,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class DiligentDealValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DiligentDeal value;
 
     @JsonCreator(
@@ -1575,6 +1667,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class AttractiveScriptValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private AttractiveScript value;
 
     @JsonCreator(
@@ -1617,6 +1713,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class HoarseMouseValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private HoarseMouse value;
 
     @JsonCreator(
@@ -1659,6 +1759,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class CircularCardValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private CircularCard value;
 
     @JsonCreator(
@@ -1701,6 +1805,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class PotableBadValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private PotableBad value;
 
     @JsonCreator(
@@ -1743,6 +1851,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class TriangularRepairValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TriangularRepair value;
 
     @JsonCreator(
@@ -1785,6 +1897,10 @@ public final class BigUnion {
   @JsonIgnoreProperties("type")
   private static final class GaseousRoadValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GaseousRoad value;
 
     @JsonCreator(

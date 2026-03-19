@@ -37,6 +37,9 @@ describe("ProtocGenOpenAPIDownloader", () => {
         tempHomeDir = (await tmp.dir({ unsafeCleanup: true })).path;
         logger = createMockLogger();
 
+        // Reset module registry so vi.doMock takes effect on next dynamic import
+        vi.resetModules();
+
         // Mock os.homedir() to use our temp directory
         vi.doMock("os", async () => {
             const actual = await vi.importActual<typeof import("os")>("os");
@@ -143,8 +146,8 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(result).toBe(AbsoluteFilePath.of(cacheDir));
             expect(mockFetch).not.toHaveBeenCalled();
 
-            // Debug log should indicate cache hit
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Using cached"));
+            // Info log should indicate cache hit
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Using cached"));
 
             vi.unstubAllGlobals();
         });
@@ -187,7 +190,7 @@ describe("ProtocGenOpenAPIDownloader", () => {
             expect(updatedMarker.trim()).toBe("v0.1.13");
 
             // Should log the update
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Updated canonical"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Updated protoc-gen-openapi"));
 
             vi.unstubAllGlobals();
         });
@@ -430,8 +433,8 @@ describe("ProtocGenOpenAPIDownloader (real e2e)", () => {
             expect(result1).toBe(AbsoluteFilePath.of(getCacheDir()));
 
             // Verify download log messages
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Downloading protoc-gen-openapi from"));
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Downloaded protoc-gen-openapi"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading protoc-gen-openapi"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded protoc-gen-openapi"));
 
             // Verify cache structure
             const cacheDir = getCacheDir();
@@ -460,14 +463,14 @@ describe("ProtocGenOpenAPIDownloader (real e2e)", () => {
             expect(await fileExists(lockPath)).toBe(false);
 
             // --- Second call: should use cache (no re-download) ---
-            const debugCallsBefore = (logger.debug as ReturnType<typeof vi.fn>).mock.calls.length;
+            const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
             const result2 = await resolveProtocGenOpenAPI(logger);
 
             expect(result2).toBe(AbsoluteFilePath.of(cacheDir));
 
             // Should log cache hit, not download
-            const debugCallsAfter = (logger.debug as ReturnType<typeof vi.fn>).mock.calls;
-            const newCalls = debugCallsAfter.slice(debugCallsBefore);
+            const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
+            const newCalls = infoCallsAfter.slice(infoCallsBefore);
             const newMessages = newCalls.map((call) => call[0] as string);
             expect(newMessages.some((msg) => msg.includes("Using cached"))).toBe(true);
             expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
