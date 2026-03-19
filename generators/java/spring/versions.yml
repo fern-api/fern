@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix floating-point serialization of integer-valued doubles. Values like
+        `24000.0` are now serialized as `24000` instead of `24000.0` in JSON
+        output.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 63
+  version: 2.0.0-rc8
+
+- changelogEntry:
+    - summary: |
         Generate `WrappedAlias.java` in the Spring generator output when
         `wrapped-aliases` is enabled (the default). `NullableNonemptyFilter`
         references `WrappedAlias` for alias-of-optional empty checks, causing
