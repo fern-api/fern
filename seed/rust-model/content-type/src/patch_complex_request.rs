@@ -14,14 +14,14 @@ pub struct PatchComplexRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tags: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub email: Option<Option<String>>,
+    pub email: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nickname: Option<Option<String>>,
+    pub nickname: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub bio: Option<Option<String>>,
+    pub bio: Option<String>,
     #[serde(rename = "profileImageUrl")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub profile_image_url: Option<Option<String>>,
+    pub profile_image_url: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub settings: Option<Option<HashMap<String, serde_json::Value>>>,
+    pub settings: Option<HashMap<String, serde_json::Value>>,
 }

@@ -45,10 +45,28 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
+    /// Event handler for TranscriptEvent.
+    /// Use TranscriptEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<TranscriptEvent> TranscriptEvent = new();
+
+    /// <summary>
+    /// Event handler for FlushedEvent.
+    /// Use FlushedEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<FlushedEvent> FlushedEvent = new();
+
+    /// <summary>
     /// Event handler for ErrorEvent.
     /// Use ErrorEvent.Subscribe(...) to receive messages.
     /// </summary>
     public readonly Event<ErrorEvent> ErrorEvent = new();
+
+    /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public readonly Event<JsonElement> UnknownMessage = new();
 
     /// <summary>
     /// Constructor with options
@@ -97,7 +115,10 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         ReceiveSnakeCase.Dispose();
         ReceiveEvent2.Dispose();
         ReceiveEvent3.Dispose();
+        TranscriptEvent.Dispose();
+        FlushedEvent.Dispose();
         ErrorEvent.Dispose();
+        UnknownMessage.Dispose();
     }
 
     /// <summary>
@@ -148,6 +169,22 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         }
 
         {
+            if (JsonUtils.TryDeserialize(json, out TranscriptEvent? message))
+            {
+                await TranscriptEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out FlushedEvent? message))
+            {
+                await FlushedEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
             if (JsonUtils.TryDeserialize(json, out ErrorEvent? message))
             {
                 await ErrorEvent.RaiseEvent(message!).ConfigureAwait(false);
@@ -155,9 +192,15 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             }
         }
 
-        await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
-            .ConfigureAwait(false);
+        await UnknownMessage.RaiseEvent(json.RootElement.Clone()).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Serializes and sends a JSON message to the server
+    /// </summary>
+    private async Task SendJsonAsync(object message)
+    {
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -201,7 +244,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -209,7 +252,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendSnakeCase message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -217,7 +260,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent2 message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>

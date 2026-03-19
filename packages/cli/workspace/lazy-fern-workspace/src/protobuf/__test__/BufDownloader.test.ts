@@ -97,7 +97,7 @@ describe("BufDownloader", () => {
             expect(fetchUrl).toContain("bufbuild/buf/releases/download");
 
             // Versioned binary should exist
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.50.0"));
             expect(await fileExists(versionedPath)).toBe(true);
 
             // Canonical binary should exist
@@ -108,7 +108,7 @@ describe("BufDownloader", () => {
             const markerPath = path.join(getCacheDir(), "buf.version");
             expect(await fileExists(markerPath)).toBe(true);
             const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v1.66.1");
+            expect(markerContent.trim()).toBe("v1.50.0");
 
             // Lock directory should be cleaned up
             const lockPath = path.join(getCacheDir(), "buf.lock");
@@ -124,7 +124,7 @@ describe("BufDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
@@ -133,7 +133,7 @@ describe("BufDownloader", () => {
             await chmod(canonicalPath, 0o755);
 
             const markerPath = path.join(cacheDir, "buf.version");
-            await writeFile(markerPath, "v1.66.1");
+            await writeFile(markerPath, "v1.50.0");
 
             // fetch should NOT be called
             const mockFetch = vi.fn();
@@ -157,7 +157,7 @@ describe("BufDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
             const newContent = "new-binary-content";
             await writeFile(versionedPath, newContent);
             await chmod(versionedPath, 0o755);
@@ -185,7 +185,7 @@ describe("BufDownloader", () => {
 
             // Marker should be updated
             const updatedMarker = await readFile(markerPath, "utf-8");
-            expect(updatedMarker.trim()).toBe("v1.66.1");
+            expect(updatedMarker.trim()).toBe("v1.50.0");
 
             // Should log the update
             expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Updated buf"));
@@ -197,13 +197,13 @@ describe("BufDownloader", () => {
             const cacheDir = getCacheDir();
             await mkdir(cacheDir, { recursive: true });
 
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
             await writeFile(versionedPath, FAKE_BINARY_CONTENT);
             await chmod(versionedPath, 0o755);
 
             // Marker is correct but canonical is missing
             const markerPath = path.join(cacheDir, "buf.version");
-            await writeFile(markerPath, "v1.66.1");
+            await writeFile(markerPath, "v1.50.0");
 
             const mockFetch = vi.fn();
             vi.stubGlobal("fetch", mockFetch);
@@ -304,7 +304,7 @@ describe("BufDownloader", () => {
             // Version marker should be correct
             const markerPath = path.join(getCacheDir(), "buf.version");
             const marker = await readFile(markerPath, "utf-8");
-            expect(marker.trim()).toBe("v1.66.1");
+            expect(marker.trim()).toBe("v1.50.0");
 
             // Lock should be released
             const lockPath = path.join(getCacheDir(), "buf.lock");
@@ -358,7 +358,7 @@ describe("BufDownloader", () => {
             expect(canonicalStat.mode & 0o100).toBeTruthy();
 
             // Versioned binary should also be executable
-            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(getCacheDir(), getVersionedBinaryName("v1.50.0"));
             const versionedStat = await stat(versionedPath);
             expect(versionedStat.mode & 0o100).toBeTruthy();
 
@@ -383,7 +383,7 @@ describe("BufDownloader", () => {
             const fetchUrl = mockFetch.mock.calls[0]?.[0] as string;
 
             // URL should match buf's release naming convention
-            expect(fetchUrl).toContain("github.com/bufbuild/buf/releases/download/v1.66.1/buf-");
+            expect(fetchUrl).toContain("github.com/bufbuild/buf/releases/download/v1.50.0/buf-");
 
             // OS name should be capitalized (Darwin, Linux, Windows)
             const platform = process.platform;
@@ -477,7 +477,7 @@ describe("BufDownloader (real e2e)", () => {
             // Verify cache structure
             const cacheDir = getCacheDir();
             const canonicalPath = path.join(cacheDir, getBinaryName());
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.66.1"));
+            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
             const markerPath = path.join(cacheDir, "buf.version");
 
             // All cache files should exist
@@ -485,9 +485,9 @@ describe("BufDownloader (real e2e)", () => {
             expect(await fileExists(versionedPath)).toBe(true);
             expect(await fileExists(markerPath)).toBe(true);
 
-            // Version marker should contain v1.66.1
+            // Version marker should contain v1.50.0
             const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v1.66.1");
+            expect(markerContent.trim()).toBe("v1.50.0");
 
             // Binary should be a real executable (buf is ~47-52MB)
             const binaryStat = await stat(canonicalPath);

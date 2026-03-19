@@ -55,8 +55,8 @@ pub struct UserProfile {
     pub optional_map: Option<HashMap<String, String>>,
     #[serde(rename = "optionalNullableString")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_nullable_string: Option<Option<String>>,
+    pub optional_nullable_string: Option<String>,
     #[serde(rename = "optionalNullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_nullable_object: Option<Option<Address>>,
+    pub optional_nullable_object: Option<Address>,
 }
