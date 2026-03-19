@@ -144,8 +144,9 @@ export class RawClient {
                 if (reference == null) {
                     rubyPath += `#{${part.tail}}`;
                 } else {
-                    // Insert Ruby interpolation for the path parameter
-                    rubyPath += `#{${reference}}${part.tail}`;
+                    // Insert Ruby interpolation for the path parameter, URI-encoding to handle
+                    // special characters (e.g. auth0|abc123 in Auth0 user IDs)
+                    rubyPath += `#{URI.encode_uri_component(${reference}.to_s)}${part.tail}`;
                 }
             } else {
                 rubyPath += part.tail;

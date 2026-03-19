@@ -27,7 +27,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -95,7 +95,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/users/#{params[:user_id]}",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h,
           request_options: request_options
         )
@@ -252,7 +252,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/profiles/complex/#{params[:profile_id]}",
+          path: "/api/profiles/complex/#{URI.encode_uri_component(params[:profile_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -290,7 +290,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/profiles/complex/#{params[:profile_id]}",
+          path: "/api/profiles/complex/#{URI.encode_uri_component(params[:profile_id].to_s)}",
           body: body,
           request_options: request_options
         )
@@ -401,7 +401,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}/notifications",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}/notifications",
           request_options: request_options
         )
         begin
@@ -437,7 +437,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "/api/users/#{params[:user_id]}/tags",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}/tags",
           body: body,
           request_options: request_options
         )
