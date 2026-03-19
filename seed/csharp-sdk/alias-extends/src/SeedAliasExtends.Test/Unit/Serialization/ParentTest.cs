@@ -1,7 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedAliasExtends;
-using SeedAliasExtends.Core;
+using SeedAliasExtends.Test.Utils;
 
 namespace SeedAliasExtends.Test;
 
@@ -10,29 +9,13 @@ namespace SeedAliasExtends.Test;
 public class ParentTest
 {
     [NUnit.Framework.Test]
-    public void TestDeserialization()
-    {
-        var json = """
-            {
-              "parent": "Property from the parent"
-            }
-            """;
-        var expectedObject = new Parent { Parent_ = "Property from the parent" };
-        var deserializedObject = JsonUtils.Deserialize<Parent>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
-    }
-
-    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "parent": "Property from the parent"
             }
             """;
-        var actualObj = new Parent { Parent_ = "Property from the parent" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Parent>(inputJson);
     }
 }

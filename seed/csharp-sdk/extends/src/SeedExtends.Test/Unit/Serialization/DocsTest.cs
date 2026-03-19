@@ -1,7 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExtends;
-using SeedExtends.Core;
+using SeedExtends.Test.Utils;
 
 namespace SeedExtends.Test;
 
@@ -10,32 +9,13 @@ namespace SeedExtends.Test;
 public class DocsTest
 {
     [NUnit.Framework.Test]
-    public void TestDeserialization()
-    {
-        var json = """
-            {
-              "docs": "Types extend this type to include a docs property."
-            }
-            """;
-        var expectedObject = new Docs
-        {
-            Docs_ = "Types extend this type to include a docs property.",
-        };
-        var deserializedObject = JsonUtils.Deserialize<Docs>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
-    }
-
-    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "docs": "Types extend this type to include a docs property."
             }
             """;
-        var actualObj = new Docs { Docs_ = "Types extend this type to include a docs property." };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Docs>(inputJson);
     }
 }

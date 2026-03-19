@@ -1,7 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
-using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -10,56 +9,24 @@ namespace SeedUnions.Test;
 public class BarTest
 {
     [NUnit.Framework.Test]
-    public void TestDeserialization_1()
-    {
-        var json = """
-            {
-              "name": "example1"
-            }
-            """;
-        var expectedObject = new Bar { Name = "example1" };
-        var deserializedObject = JsonUtils.Deserialize<Bar>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
-    }
-
-    [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "example1"
             }
             """;
-        var actualObj = new Bar { Name = "example1" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
-    }
-
-    [NUnit.Framework.Test]
-    public void TestDeserialization_2()
-    {
-        var json = """
-            {
-              "name": "example2"
-            }
-            """;
-        var expectedObject = new Bar { Name = "example2" };
-        var deserializedObject = JsonUtils.Deserialize<Bar>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.Roundtrips<Bar>(inputJson);
     }
 
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "example2"
             }
             """;
-        var actualObj = new Bar { Name = "example2" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Bar>(inputJson);
     }
 }
