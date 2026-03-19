@@ -51,13 +51,13 @@ export async function getLatestRelease(
 
         // The "latest" release is a semver prerelease — scan recent releases
         // for the first stable (non-semver-prerelease, non-draft, non-GitHub-prerelease) tag.
-        const releases = await octokit.paginate(octokit.rest.repos.listReleases, {
+        const releasesResponse = await octokit.rest.repos.listReleases({
             owner,
             repo,
             per_page: 100
         });
 
-        for (const release of releases) {
+        for (const release of releasesResponse.data) {
             if (release.draft || release.prerelease) {
                 continue;
             }
