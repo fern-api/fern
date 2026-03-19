@@ -6,5 +6,6 @@ pub struct TestCaseResult {
     pub expected_result: VariableValue,
     #[serde(rename = "actualResult")]
     pub actual_result: ActualResult,
+    #[serde(default)]
     pub passed: bool,
 }

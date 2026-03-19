@@ -4,9 +4,8 @@ use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum RealtimeNoAuthServerMessage {
-    #[serde(rename = "receive")]
     NoAuthReceiveEvent(NoAuthReceiveEvent),
 }
 pub struct RealtimeNoAuthClient {
@@ -17,11 +16,14 @@ impl RealtimeNoAuthClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
+        authorization: &str,
         model: Option<&str>,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime-no-auth/{session_id}", url);
         let mut options = WebSocketOptions::default();
-
+        options
+            .headers
+            .insert("Authorization".to_string(), authorization.to_string());
         if let Some(v) = model {
             options
                 .query_params
@@ -61,11 +63,12 @@ impl RealtimeNoAuthClient {
 /// Provides access to the WebSocket channel through the root client.
 pub struct RealtimeNoAuthConnector {
     base_url: String,
+    token: Option<String>,
 }
 
 impl RealtimeNoAuthConnector {
-    pub fn new(base_url: String) -> Self {
-        Self { base_url }
+    pub fn new(base_url: String, token: Option<String>) -> Self {
+        Self { base_url, token }
     }
 
     pub async fn connect(
@@ -73,6 +76,11 @@ impl RealtimeNoAuthConnector {
         session_id: &str,
         model: Option<&str>,
     ) -> Result<RealtimeNoAuthClient, ApiError> {
-        RealtimeNoAuthClient::connect(&self.base_url, session_id, model).await
+        let auth_header = self
+            .token
+            .as_ref()
+            .map(|t| format!("Bearer {}", t))
+            .unwrap_or_default();
+        RealtimeNoAuthClient::connect(&self.base_url, session_id, &auth_header, model).await
     }
 }
