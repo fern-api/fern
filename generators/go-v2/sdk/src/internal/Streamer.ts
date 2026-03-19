@@ -421,9 +421,7 @@ export class Streamer {
             writer.writeLine(`default:`);
             writer.indent();
             writer.write(`return nil, `);
-            writer.writeNode(
-                go.typeReference({ name: "Errorf", importPath: "fmt" })
-            );
+            writer.writeNode(go.typeReference({ name: "Errorf", importPath: "fmt" }));
             writer.writeLine(`("unknown SSE event type: %s", eventType)`);
             writer.dedent();
             writer.writeLine(`}`);
