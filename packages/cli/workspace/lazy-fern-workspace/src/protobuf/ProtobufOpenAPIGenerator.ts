@@ -17,7 +17,6 @@ const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/op
  */
 interface PreparedWorkingDir {
     cwd: AbsoluteFilePath;
-    bufLockContents: string | undefined;
     envOverride: Record<string, string> | undefined;
 }
 
@@ -80,10 +79,15 @@ export class ProtobufOpenAPIGenerator {
             this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
         }
 
+        // Resolve buf and protoc-gen-openapi binaries once
+        await this.ensureBufResolved();
+        await this.ensureProtocGenOpenAPIResolved();
+
         if (deps.length > 0 && this.isAirGapped === undefined) {
             this.isAirGapped = await detectAirGappedModeForProtobuf(
                 absoluteFilepathToProtobufRoot,
-                this.context.logger
+                this.context.logger,
+                this.resolvedBufCommand
             );
         }
 
@@ -93,41 +97,6 @@ export class ProtobufOpenAPIGenerator {
             join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_CONFIG_FILENAME)),
             getProtobufGeneratorConfig({ relativeFilepathToProtobufRoot })
         );
-
-        // Check required binaries once
-        const which = createLoggingExecutable("which", {
-            cwd,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
-
-        let protocGenOpenAPIOnPath = false;
-        try {
-            await which(["protoc-gen-openapi"]);
-            protocGenOpenAPIOnPath = true;
-        } catch (err) {
-            this.context.logger.debug(
-                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
-            );
-        }
-
-        if (!protocGenOpenAPIOnPath) {
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
-            }
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
-                );
-            }
-        }
 
         // If we downloaded protoc-gen-openapi, prepend its directory to PATH so buf can find it
         const envOverride =
@@ -140,7 +109,6 @@ export class ProtobufOpenAPIGenerator {
         const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
         await writeFile(bufYamlPath, getProtobufYamlV1(deps));
 
-        let bufLockContents: string | undefined;
         if (deps.length > 0) {
             if (this.isAirGapped) {
                 this.context.logger.debug("Air-gapped mode: skipping buf dep update");
@@ -152,7 +120,8 @@ export class ProtobufOpenAPIGenerator {
                     );
                 }
             } else {
-                const buf = createLoggingExecutable("buf", {
+                const bufCommand = this.resolvedBufCommand ?? "buf";
+                const buf = createLoggingExecutable(bufCommand, {
                     cwd,
                     logger: this.context.logger,
                     stdout: "ignore",
@@ -161,15 +130,9 @@ export class ProtobufOpenAPIGenerator {
                 });
                 await buf(["dep", "update"]);
             }
-            try {
-                bufLockContents = await readFile(bufLockPath, "utf-8");
-            } catch (err) {
-                this.context.logger.debug(`Failed to read buf.lock: ${err}`);
-                bufLockContents = undefined;
-            }
         }
 
-        return { cwd, bufLockContents, envOverride };
+        return { cwd, envOverride };
     }
 
     /**
@@ -191,7 +154,8 @@ export class ProtobufOpenAPIGenerator {
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath }> {
         const target = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
-        const buf = createLoggingExecutable("buf", {
+        const bufCommand = this.resolvedBufCommand ?? "buf";
+        const buf = createLoggingExecutable(bufCommand, {
             cwd: preparedDir.cwd,
             logger: this.context.logger,
             stdout: "ignore",
