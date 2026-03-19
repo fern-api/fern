@@ -535,32 +535,51 @@ export class AutoVersioningService {
      * Returns null if the file section should be completely removed.
      */
     private cleanFileSection(section: FileSection, mappedMagicVersion: string): FileSection | undefined {
-        const headerLines: string[] = [];
-        const contentLines: string[] = [];
+        // Separate file-level header lines (diff --git, index, ---, +++) from hunks
+        const fileHeaderLines: string[] = [];
+        const hunks: { hunkHeader: string; bodyLines: string[] }[] = [];
+        let currentHunkBody: string[] | undefined;
+        let currentHunkHeader: string | undefined;
 
-        let inContent = false;
         for (const line of section.lines) {
             if (line.startsWith("@@")) {
-                inContent = true;
-                headerLines.push(line);
-            } else if (!inContent) {
-                headerLines.push(line);
+                if (currentHunkHeader != null && currentHunkBody != null) {
+                    hunks.push({ hunkHeader: currentHunkHeader, bodyLines: currentHunkBody });
+                }
+                currentHunkHeader = line;
+                currentHunkBody = [];
+            } else if (currentHunkBody != null) {
+                currentHunkBody.push(line);
             } else {
-                contentLines.push(line);
+                fileHeaderLines.push(line);
             }
         }
+        if (currentHunkHeader != null && currentHunkBody != null) {
+            hunks.push({ hunkHeader: currentHunkHeader, bodyLines: currentHunkBody });
+        }
 
-        let processedContent = this.removeVersionChangePairs(contentLines, mappedMagicVersion);
-
-        processedContent = this.removeRemainingMagicVersionLines(processedContent, mappedMagicVersion);
-
+        // Process each hunk independently to preserve interleaved structure
+        const cleanedLines: string[] = [...fileHeaderLines];
         let hasChanges = false;
-        for (const line of processedContent) {
-            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
-            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
-            if (isAddition || isDeletion) {
+
+        for (const hunk of hunks) {
+            let processedBody = this.removeVersionChangePairs(hunk.bodyLines, mappedMagicVersion);
+            processedBody = this.removeRemainingMagicVersionLines(processedBody, mappedMagicVersion);
+
+            let hunkHasChanges = false;
+            for (const line of processedBody) {
+                const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+                const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
+                if (isAddition || isDeletion) {
+                    hunkHasChanges = true;
+                    break;
+                }
+            }
+
+            if (hunkHasChanges) {
                 hasChanges = true;
-                break;
+                cleanedLines.push(hunk.hunkHeader);
+                cleanedLines.push(...processedBody);
             }
         }
 
@@ -568,10 +587,7 @@ export class AutoVersioningService {
             return undefined;
         }
 
-        const cleaned: FileSection = { lines: [] };
-        cleaned.lines.push(...headerLines);
-        cleaned.lines.push(...processedContent);
-        return cleaned;
+        return { lines: cleanedLines };
     }
 
     /**
