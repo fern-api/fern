@@ -127,7 +127,9 @@ jobs:
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
       - name: Install protobuf dependencies (buf + protoc-gen-openapi)
-        run: node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: Stop any stale turbo daemon
         run: pnpm turbo daemon stop || true
@@ -174,7 +176,9 @@ jobs:
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
       - name: Install protobuf dependencies (buf + protoc-gen-openapi)
-        run: node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: Stop any stale turbo daemon
         run: pnpm turbo daemon stop || true
