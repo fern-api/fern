@@ -66,7 +66,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns A PascalCase interface name with "I" prefix and "Api" suffix
      */
-    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel) {
+    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
         return `I${websocketChannel.name.pascalCase.safeName}Api`;
     }
 
