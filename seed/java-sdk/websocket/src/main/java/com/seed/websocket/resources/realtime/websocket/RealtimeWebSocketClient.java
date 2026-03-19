@@ -11,6 +11,7 @@ import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
 import com.seed.websocket.core.WebSocketReadyState;
 import com.seed.websocket.resources.realtime.types.ErrorEvent;
+import com.seed.websocket.resources.realtime.types.FlushedEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent2;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent3;
@@ -18,6 +19,7 @@ import com.seed.websocket.resources.realtime.types.ReceiveSnakeCase;
 import com.seed.websocket.resources.realtime.types.SendEvent;
 import com.seed.websocket.resources.realtime.types.SendEvent2;
 import com.seed.websocket.resources.realtime.types.SendSnakeCase;
+import com.seed.websocket.resources.realtime.types.TranscriptEvent;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
@@ -66,6 +68,10 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     private volatile Consumer<ReceiveEvent2> receive2Handler;
 
     private volatile Consumer<ReceiveEvent3> receive3Handler;
+
+    private volatile Consumer<TranscriptEvent> receiveTranscriptHandler;
+
+    private volatile Consumer<FlushedEvent> receiveFlushedHandler;
 
     private volatile Consumer<ErrorEvent> errorHandler;
 
@@ -264,6 +270,22 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
+     * Registers a handler for receive_transcript messages from the server.
+     * @param handler the handler to invoke when a message is received
+     */
+    public void onReceiveTranscript(Consumer<TranscriptEvent> handler) {
+        this.receiveTranscriptHandler = handler;
+    }
+
+    /**
+     * Registers a handler for receive_flushed messages from the server.
+     * @param handler the handler to invoke when a message is received
+     */
+    public void onReceiveFlushed(Consumer<FlushedEvent> handler) {
+        this.receiveFlushedHandler = handler;
+    }
+
+    /**
      * Registers a handler for error messages from the server.
      * @param handler the handler to invoke when a message is received
      */
@@ -400,6 +422,22 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                         ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
                         if (event != null) {
                             receive3Handler.accept(event);
+                        }
+                    }
+                    break;
+                case "receive_transcript":
+                    if (receiveTranscriptHandler != null) {
+                        TranscriptEvent event = objectMapper.treeToValue(node, TranscriptEvent.class);
+                        if (event != null) {
+                            receiveTranscriptHandler.accept(event);
+                        }
+                    }
+                    break;
+                case "receive_flushed":
+                    if (receiveFlushedHandler != null) {
+                        FlushedEvent event = objectMapper.treeToValue(node, FlushedEvent.class);
+                        if (event != null) {
+                            receiveFlushedHandler.accept(event);
                         }
                     }
                     break;
