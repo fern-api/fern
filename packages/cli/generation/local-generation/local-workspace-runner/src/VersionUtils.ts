@@ -9,7 +9,7 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
     if (name.includes("typescript") || name.includes("ts-sdk") || name.includes("node-sdk")) {
         return "typescript";
     }
-    if (name.includes("python")) {
+    if (name.includes("python") || name.includes("pydantic") || name.includes("fastapi")) {
         return "python";
     }
     if (name.includes("java") && !name.includes("javascript")) {
@@ -41,6 +41,33 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
 
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "0.0.0-fern-placeholder";
+
+/**
+ * PEP 440-compatible magic version for Python generators.
+ * Poetry validates versions during generation (poetry lock / poetry install),
+ * and PEP 440 does not allow hyphens in pre-release tags. We use "0.0.0.dev0"
+ * which is a valid PEP 440 dev release that will never collide with real versions.
+ */
+export const MAGIC_VERSION_PYTHON = "0.0.0.dev0";
+
+/**
+ * Maps the canonical magic version to a language-specific format.
+ * - Go: adds "v" prefix ("v0.0.0-fern-placeholder") so semver.Major() returns "v0" (no /vN suffix)
+ * - Python: maps to PEP 440 compatible "0.0.0.dev0" (Poetry rejects hyphens in pre-release tags)
+ * - Others: returns the canonical magic version as-is
+ */
+export function mapMagicVersionForLanguage(magicVersion: string, language: string): string {
+    if (magicVersion !== MAGIC_VERSION) {
+        return magicVersion;
+    }
+    if (language === "go") {
+        return `v${magicVersion}`;
+    }
+    if (language === "python") {
+        return MAGIC_VERSION_PYTHON;
+    }
+    return magicVersion;
+}
 
 /**
  * Maximum byte size for a single AI analysis call.
