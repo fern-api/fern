@@ -1,11 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.37.0
+- version: 4.38.0
   changelogEntry:
     - summary: |
         Expand the set of supported availability tags for docs navigation from 6
         to 17. New values: release-candidate, public-beta, private-beta,
         limited-availability, canary-release, preview, alpha, experimental,
         internal, sunset, and retired.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Auto-download `buf` CLI binary from GitHub Releases when it is not found
+        on PATH. This eliminates the need for users to pre-install `buf` before
+        running proto-based SDK generation. The binary is cached at `~/.fern/bin/`
+        with versioning, filesystem locking, and atomic file operations.
       type: feat
   createdAt: "2026-03-18"
   irVersion: 65
@@ -22,7 +33,6 @@
       type: fix
   createdAt: "2026-03-18"
   irVersion: 65
-
 - version: 4.36.0
   changelogEntry:
     - summary: |
