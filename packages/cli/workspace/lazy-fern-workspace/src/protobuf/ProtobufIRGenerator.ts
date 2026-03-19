@@ -19,6 +19,42 @@ import {
     PROTOBUF_SHELL_PROXY_FILENAME
 } from "./utils.js";
 
+let fernGlobalInstallPromise: Promise<void> | undefined;
+
+async function isFernOnPath(): Promise<boolean> {
+    try {
+        await runExeca(undefined, "fern", ["--version"], {
+            stdout: "ignore",
+            stderr: "ignore"
+        });
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath): Promise<void> {
+    if (await isFernOnPath()) {
+        return;
+    }
+    if (fernGlobalInstallPromise) {
+        return fernGlobalInstallPromise;
+    }
+    fernGlobalInstallPromise = runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
+        cwd,
+        stdout: "ignore",
+        stderr: "pipe"
+    })
+        .then(() => {
+            // Resolve to void (runExeca returns a richer object we don't need).
+        })
+        .catch((err) => {
+            fernGlobalInstallPromise = undefined; // allow retry on transient failure
+            throw err;
+        });
+    return fernGlobalInstallPromise;
+}
+
 export class ProtobufIRGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
@@ -210,11 +246,7 @@ export class ProtobufIRGenerator {
             stderr: "pipe"
         });
 
-        await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
+        await ensureFernGloballyInstalled(protobufGeneratorConfigPath);
 
         // Write buf config
         await writeFile(
