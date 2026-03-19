@@ -2539,125 +2539,6 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:Status": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "Status",
-                    "camelCase": {
-                        "unsafeName": "status",
-                        "safeName": "status"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "status",
-                        "safeName": "status"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STATUS",
-                        "safeName": "STATUS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Status",
-                        "safeName": "Status"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "name": {
-                        "originalName": "STATUS_UNSPECIFIED",
-                        "camelCase": {
-                            "unsafeName": "statusUnspecified",
-                            "safeName": "statusUnspecified"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "status_unspecified",
-                            "safeName": "status_unspecified"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STATUS_UNSPECIFIED",
-                            "safeName": "STATUS_UNSPECIFIED"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "StatusUnspecified",
-                            "safeName": "StatusUnspecified"
-                        }
-                    },
-                    "wireValue": "STATUS_UNSPECIFIED"
-                },
-                {
-                    "name": {
-                        "originalName": "STATUS_PENDING",
-                        "camelCase": {
-                            "unsafeName": "statusPending",
-                            "safeName": "statusPending"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "status_pending",
-                            "safeName": "status_pending"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STATUS_PENDING",
-                            "safeName": "STATUS_PENDING"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "StatusPending",
-                            "safeName": "StatusPending"
-                        }
-                    },
-                    "wireValue": "STATUS_PENDING"
-                },
-                {
-                    "name": {
-                        "originalName": "STATUS_ACTIVE",
-                        "camelCase": {
-                            "unsafeName": "statusActive",
-                            "safeName": "statusActive"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "status_active",
-                            "safeName": "status_active"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STATUS_ACTIVE",
-                            "safeName": "STATUS_ACTIVE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "StatusActive",
-                            "safeName": "StatusActive"
-                        }
-                    },
-                    "wireValue": "STATUS_ACTIVE"
-                },
-                {
-                    "name": {
-                        "originalName": "STATUS_FAILED",
-                        "camelCase": {
-                            "unsafeName": "statusFailed",
-                            "safeName": "statusFailed"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "status_failed",
-                            "safeName": "status_failed"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STATUS_FAILED",
-                            "safeName": "STATUS_FAILED"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "StatusFailed",
-                            "safeName": "StatusFailed"
-                        }
-                    },
-                    "wireValue": "STATUS_FAILED"
-                }
-            ]
-        },
         "type_:ToolChoice": {
             "type": "object",
             "declaration": {
@@ -3067,7 +2948,7 @@
                         "type": "optional",
                         "value": {
                             "type": "named",
-                            "value": "type_:Status"
+                            "value": "type_:UpdateResponse_Status"
                         }
                     },
                     "propertyAccess": null,
@@ -3076,6 +2957,125 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_:UpdateResponse_Status": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "UpdateResponse_Status",
+                    "camelCase": {
+                        "unsafeName": "updateResponseStatus",
+                        "safeName": "updateResponseStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_response_status",
+                        "safeName": "update_response_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_RESPONSE_STATUS",
+                        "safeName": "UPDATE_RESPONSE_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateResponseStatus",
+                        "safeName": "UpdateResponseStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "STATUS_UNSPECIFIED",
+                        "camelCase": {
+                            "unsafeName": "statusUnspecified",
+                            "safeName": "statusUnspecified"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status_unspecified",
+                            "safeName": "status_unspecified"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS_UNSPECIFIED",
+                            "safeName": "STATUS_UNSPECIFIED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StatusUnspecified",
+                            "safeName": "StatusUnspecified"
+                        }
+                    },
+                    "wireValue": "STATUS_UNSPECIFIED"
+                },
+                {
+                    "name": {
+                        "originalName": "STATUS_PENDING",
+                        "camelCase": {
+                            "unsafeName": "statusPending",
+                            "safeName": "statusPending"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status_pending",
+                            "safeName": "status_pending"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS_PENDING",
+                            "safeName": "STATUS_PENDING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StatusPending",
+                            "safeName": "StatusPending"
+                        }
+                    },
+                    "wireValue": "STATUS_PENDING"
+                },
+                {
+                    "name": {
+                        "originalName": "STATUS_ACTIVE",
+                        "camelCase": {
+                            "unsafeName": "statusActive",
+                            "safeName": "statusActive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status_active",
+                            "safeName": "status_active"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS_ACTIVE",
+                            "safeName": "STATUS_ACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StatusActive",
+                            "safeName": "StatusActive"
+                        }
+                    },
+                    "wireValue": "STATUS_ACTIVE"
+                },
+                {
+                    "name": {
+                        "originalName": "STATUS_FAILED",
+                        "camelCase": {
+                            "unsafeName": "statusFailed",
+                            "safeName": "statusFailed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status_failed",
+                            "safeName": "status_failed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS_FAILED",
+                            "safeName": "STATUS_FAILED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StatusFailed",
+                            "safeName": "StatusFailed"
+                        }
+                    },
+                    "wireValue": "STATUS_FAILED"
+                }
+            ]
         },
         "type_:UploadResponse": {
             "type": "object",
@@ -5924,7 +5924,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "primitive",
-                                    "value": "STRING"
+                                    "value": "BASE_64"
                                 }
                             },
                             "propertyAccess": null,
