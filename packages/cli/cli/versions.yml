@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.2
+  changelogEntry:
+    - summary: |
+        Remove `cli-progress` from the published `fern-api` package's runtime
+        dependencies. The package is a pure JS library that is already bundled
+        into the CLI output by tsup, so it does not need to be installed
+        separately at runtime.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.1
   changelogEntry:
     - summary: |
