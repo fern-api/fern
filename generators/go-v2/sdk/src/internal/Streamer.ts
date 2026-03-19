@@ -303,19 +303,19 @@ export class Streamer {
         return go.TypeInstantiation.string(union.discriminant.wireValue);
     }
 
-    private getProtocolDiscriminatedUnionInfo(
-        streamingResponse: FernIr.StreamingResponse
-    ): {
-        unionTypeName: string;
-        unionTypeImportPath: string;
-        discriminantFieldName: string;
-        variants: Array<{
-            wireValue: string;
-            fieldName: string;
-            variantType: FernIr.SingleUnionTypeProperties;
-            typeId?: FernIr.TypeId;
-        }>;
-    } | undefined {
+    private getProtocolDiscriminatedUnionInfo(streamingResponse: FernIr.StreamingResponse):
+        | {
+              unionTypeName: string;
+              unionTypeImportPath: string;
+              discriminantFieldName: string;
+              variants: Array<{
+                  wireValue: string;
+                  fieldName: string;
+                  variantType: FernIr.SingleUnionTypeProperties;
+                  typeId?: FernIr.TypeId;
+              }>;
+          }
+        | undefined {
         if (streamingResponse.type !== "sse") {
             return undefined;
         }
@@ -343,7 +343,10 @@ export class Streamer {
                 wireValue: singleUnionType.discriminantValue.wireValue,
                 fieldName: this.context.getFieldName(singleUnionType.discriminantValue.name),
                 variantType: singleUnionType.shape,
-                typeId: singleUnionType.shape.propertiesType === "samePropertiesAsObject" ? singleUnionType.shape.typeId : undefined
+                typeId:
+                    singleUnionType.shape.propertiesType === "samePropertiesAsObject"
+                        ? singleUnionType.shape.typeId
+                        : undefined
             }))
         };
     }
@@ -383,9 +386,7 @@ export class Streamer {
                     writer.writeNode(variantTypeRef);
                     writer.writeLine(``);
                     writer.write(`if err := `);
-                    writer.writeNode(
-                        go.typeReference({ name: "Unmarshal", importPath: "encoding/json" })
-                    );
+                    writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
                     writer.writeLine(`(data, &value); err != nil {`);
                     writer.indent();
                     writer.writeLine(`return nil, err`);
@@ -393,7 +394,9 @@ export class Streamer {
                     writer.writeLine(`}`);
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
-                    writer.writeLine(`{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`);
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
                 } else if (variant.variantType.propertiesType === "noProperties") {
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
@@ -401,9 +404,7 @@ export class Streamer {
                 } else if (variant.variantType.propertiesType === "singleProperty") {
                     writer.writeLine(`var value ${variant.fieldName}`);
                     writer.write(`if err := `);
-                    writer.writeNode(
-                        go.typeReference({ name: "Unmarshal", importPath: "encoding/json" })
-                    );
+                    writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
                     writer.writeLine(`(data, &value); err != nil {`);
                     writer.indent();
                     writer.writeLine(`return nil, err`);
@@ -411,7 +412,9 @@ export class Streamer {
                     writer.writeLine(`}`);
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
-                    writer.writeLine(`{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`);
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
                 }
                 writer.dedent();
             }
