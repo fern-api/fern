@@ -5,7 +5,7 @@ pub use crate::prelude::*;
 pub enum WeirdNumber {
     Integer(i64),
 
-    Nullable1(Option<f64>),
+    NullableFloat(Option<f64>),
 
     Optional2(Option<String>),
 
@@ -17,8 +17,8 @@ impl WeirdNumber {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_nullable1(&self) -> bool {
-        matches!(self, Self::Nullable1(_))
+    pub fn is_nullablefloat(&self) -> bool {
+        matches!(self, Self::NullableFloat(_))
     }
 
     pub fn is_optional2(&self) -> bool {
@@ -43,16 +43,16 @@ impl WeirdNumber {
         }
     }
 
-    pub fn as_nullable1(&self) -> Option<&Option<f64>> {
+    pub fn as_nullablefloat(&self) -> Option<&Option<f64>> {
         match self {
-            Self::Nullable1(value) => Some(value),
+            Self::NullableFloat(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nullable1(self) -> Option<Option<f64>> {
+    pub fn into_nullablefloat(self) -> Option<Option<f64>> {
         match self {
-            Self::Nullable1(value) => Some(value),
+            Self::NullableFloat(value) => Some(value),
             _ => None,
         }
     }
