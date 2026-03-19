@@ -1099,14 +1099,29 @@ ${clientClassName} client = ${clientClassName}.builder()
             }
         }
 
+        // Build the factory method name: <channelName>WebSocket()
+        const channelName = channel.name.camelCase.safeName;
+        const wsFactoryMethod = `${channelName}WebSocket`;
+
+        // Build connect options class name: <PascalName>ConnectOptions
+        const channelPascalName = channel.name.pascalCase.safeName;
+        const connectOptionsClass = `${channelPascalName}ConnectOptions`;
+
+        // Check if there are required query parameters for the connect options
+        const hasRequiredQueryParams = channel.queryParameters.some((qp) => !qp.allowMultiple);
+
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(" client = ");
             writer.writeNodeStatement(clientBuilder);
             writer.newLine();
-            writer.writeLine("// Connect to the WebSocket");
-            writer.writeLine(`var ws = ${wsClientAccess};`);
-            writer.writeLine("ws.connect().join();");
+            writer.writeLine("// Create the WebSocket client and connect");
+            writer.writeLine(`var ws = ${wsClientAccess}.${wsFactoryMethod}();`);
+            if (hasRequiredQueryParams) {
+                writer.writeLine(`ws.connect(${connectOptionsClass}.builder()...build()).join();`);
+            } else {
+                writer.writeLine(`ws.connect(${connectOptionsClass}.builder().build()).join();`);
+            }
             writer.newLine();
 
             if (firstReceiveMessageName) {
