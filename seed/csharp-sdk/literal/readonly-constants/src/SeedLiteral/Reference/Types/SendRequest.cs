@@ -117,6 +117,32 @@ public record SendRequest : IJsonOnDeserialized
                 PromptLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(PromptLiteral.Value);
+
+            public override PromptLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != PromptLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + PromptLiteral.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new PromptLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                PromptLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(PromptLiteral.Value);
         }
     }
 
@@ -158,6 +184,28 @@ public record SendRequest : IJsonOnDeserialized
                 StreamLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteBooleanValue(StreamLiteral.Value);
+
+            public override StreamLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (!bool.TryParse(value, out var boolValue) || boolValue != StreamLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected false for type discriminator but got \"" + value + "\"."
+                    );
+                }
+                return new StreamLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                StreamLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(StreamLiteral.Value.ToString());
         }
     }
 
@@ -206,6 +254,32 @@ public record SendRequest : IJsonOnDeserialized
                 EndingLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(EndingLiteral.Value);
+
+            public override EndingLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != EndingLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + EndingLiteral.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new EndingLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                EndingLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(EndingLiteral.Value);
         }
     }
 }
