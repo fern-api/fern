@@ -710,12 +710,21 @@ export class AutoVersioningService {
      *   -  core "github.com/org/repo/core"
      *   +  core "github.com/org/repo/v2/core"
      * These are artifacts of the major version bump and should be filtered from AI analysis.
+     *
+     * Only matches lines that contain a quoted Go-style module path (e.g., "github.com/..."),
+     * so non-Go diffs like API URL version changes are not affected.
      */
     private isGoModulePathSuffixChange(minusLine: string, plusLine: string): boolean {
-        const suffixPattern = /\/v\d+/g;
         const minusContent = minusLine.substring(1);
         const plusContent = plusLine.substring(1);
 
+        // Only apply to lines containing quoted Go module paths
+        const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
+        if (!goModulePathPattern.test(minusContent) && !goModulePathPattern.test(plusContent)) {
+            return false;
+        }
+
+        const suffixPattern = /\/v\d+/g;
         const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
         const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
 

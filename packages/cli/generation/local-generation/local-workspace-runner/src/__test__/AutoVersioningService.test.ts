@@ -2805,6 +2805,24 @@ describe("cleanDiffForAI - Go module path suffix changes", () => {
         expect(cleaned).not.toContain("github.com/org/repo/core");
     });
 
+    it("does not filter non-Go URL version changes like API base URLs", () => {
+        const diff =
+            "diff --git a/config.json b/config.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/config.json\n" +
+            "+++ b/config.json\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            ' {\n' +
+            '-  "baseUrl": "https://api.example.com/v1/resource"\n' +
+            '+  "baseUrl": "https://api.example.com/v2/resource"\n' +
+            ' }\n';
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.0.0-fern-placeholder");
+        // Non-Go URL version changes should be preserved, not filtered
+        expect(cleaned).toContain("api.example.com/v1/resource");
+        expect(cleaned).toContain("api.example.com/v2/resource");
+    });
+
     it("does not filter lines that differ by more than just /vN suffix", () => {
         const diff =
             "diff --git a/client.go b/client.go\n" +
