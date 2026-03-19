@@ -285,6 +285,7 @@ public final class TestSubmissionUpdateInfo {
   @JsonIgnoreProperties("type")
   private static final class GradedTestCaseValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private GradedTestCaseUpdate value;
 
     @JsonCreator(
@@ -327,6 +328,7 @@ public final class TestSubmissionUpdateInfo {
   @JsonIgnoreProperties("type")
   private static final class RecordedTestCaseValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private RecordedTestCaseUpdate value;
 
     @JsonCreator(

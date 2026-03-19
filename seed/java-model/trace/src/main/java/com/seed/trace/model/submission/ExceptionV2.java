@@ -116,6 +116,7 @@ public final class ExceptionV2 {
   @JsonIgnoreProperties("type")
   private static final class GenericValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private ExceptionInfo value;
 
     @JsonCreator(

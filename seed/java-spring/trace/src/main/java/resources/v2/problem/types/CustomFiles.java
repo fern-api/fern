@@ -125,6 +125,7 @@ public final class CustomFiles {
   @JsonIgnoreProperties("type")
   private static final class BasicValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private BasicCustomFiles value;
 
     @JsonCreator(

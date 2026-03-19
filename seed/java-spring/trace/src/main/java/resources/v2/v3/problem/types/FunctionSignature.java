@@ -143,6 +143,7 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class VoidValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private VoidFunctionSignature value;
 
     @JsonCreator(
@@ -185,6 +186,7 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class NonVoidValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private NonVoidFunctionSignature value;
 
     @JsonCreator(
@@ -227,6 +229,7 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class VoidThatTakesActualResultValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(value = "type", allowSetters = true)
     private VoidFunctionSignatureThatTakesActualResult value;
 
     @JsonCreator(

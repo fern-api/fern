@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.6
+  changelogEntry:
+    - summary: |
+        Fix duplicate discriminator keys in union serialization. When a
+        discriminated union variant uses `@JsonUnwrapped` and the wrapped
+        object already contains the discriminant property (e.g., "type"),
+        the serialized JSON previously contained the key twice. The
+        generator now adds a field-level `@JsonIgnoreProperties` annotation
+        with `allowSetters = true` on `@JsonUnwrapped` fields to suppress
+        the duplicate during serialization while preserving deserialization.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 3.44.5
   changelogEntry:
     - summary: |
