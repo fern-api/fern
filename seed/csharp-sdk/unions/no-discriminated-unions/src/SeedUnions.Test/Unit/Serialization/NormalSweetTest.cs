@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -25,15 +25,12 @@ public class NormalSweetTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "value": "example1"
             }
             """;
-        var actualObj = new NormalSweet { Value = "example1" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<NormalSweet>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -52,15 +49,12 @@ public class NormalSweetTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "value": "example2"
             }
             """;
-        var actualObj = new NormalSweet { Value = "example2" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<NormalSweet>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -79,14 +73,11 @@ public class NormalSweetTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "value": "example3"
             }
             """;
-        var actualObj = new NormalSweet { Value = "example3" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<NormalSweet>(inputJson);
     }
 }
