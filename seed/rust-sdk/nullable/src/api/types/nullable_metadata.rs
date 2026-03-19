@@ -13,8 +13,8 @@ pub struct Metadata {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub avatar: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub activated: Option<Option<bool>>,
+    pub activated: Option<bool>,
     pub status: Status,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub values: Option<HashMap<String, Option<Option<String>>>>,
+    pub values: Option<HashMap<String, Option<String>>>,
 }

@@ -13,7 +13,7 @@ pub struct Address {
     #[serde(default)]
     pub zip_code: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub country: Option<Option<String>>,
+    pub country: Option<String>,
     #[serde(rename = "buildingId")]
     #[serde(default)]
     pub building_id: NullableUserId,

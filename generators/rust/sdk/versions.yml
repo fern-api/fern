@@ -12,6 +12,13 @@
   createdAt: "2026-03-18"
   irVersion: 62
 
+- version: 0.19.8
+  changelogEntry:
+    - summary: |
+        Fixes an issue where redundant, duplicative `Option<T>` type references were generated.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
 - version: 0.19.7
   changelogEntry:
     - summary: |
