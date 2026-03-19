@@ -30,7 +30,6 @@ import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
-import { MaybeValid } from "./protobuf/utils.js";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
 export declare namespace OSSWorkspace {
@@ -94,6 +93,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
     private graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
     private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+
+    // Cache for protobuf → OpenAPI generation results, keyed by relativePathToDependency.
+    // This avoids running buf generate twice when both toFernWorkspace() and
+    // validateOSSWorkspace() need the same OpenAPI specs.
+    private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
@@ -215,6 +219,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
     }
 
+    /**
+     * Returns cached OpenAPI specs (including protobuf → OpenAPI conversions).
+     * The expensive buf generate work is performed once per unique
+     * relativePathToDependency and reused across getOpenAPIIr(),
+     * getIntermediateRepresentation(), and workspace validation.
+     */
+    public getOpenAPISpecsCached({
+        context,
+        relativePathToDependency
+    }: {
+        context: TaskContext;
+        relativePathToDependency?: RelativeFilePath;
+    }): Promise<OpenAPISpec[]> {
+        const key = relativePathToDependency ?? "";
+        let cached = this.openApiSpecsCache.get(key);
+        if (cached == null) {
+            cached = getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+            this.openApiSpecsCache.set(key, cached);
+        }
+        return cached;
+    }
+
     public async getOpenAPIIr(
         {
             context,
@@ -227,7 +253,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
-        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        const openApiSpecs = await this.getOpenAPISpecsCached({ context, relativePathToDependency });
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -259,7 +285,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         generateV1Examples: boolean;
         logWarnings: boolean;
     }): Promise<IntermediateRepresentation> {
-        const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        // Start protobuf IR generation in parallel with OpenAPI processing
+        const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
+
+        const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
         const authOverrides =
@@ -409,52 +438,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
                 }
-            } else if (spec.type === "protobuf") {
-                // Handle protobuf specs by calling buf generate with protoc-gen-fern
-                try {
-                    const protobufIRGenerator = new ProtobufIRGenerator({ context });
-                    const protobufIRFilepath = await protobufIRGenerator.generate({
-                        absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
-                        absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
-                        local: true,
-                        deps: spec.dependencies
-                    });
-
-                    const result = await readFile(protobufIRFilepath, "utf-8");
-
-                    const casingsGenerator = constructCasingsGenerator({
-                        generationLanguage: "typescript",
-                        keywords: undefined,
-                        smartCasing: false
-                    });
-
-                    if (result != null) {
-                        let serializedIr: MaybeValid<IntermediateRepresentation>;
-                        try {
-                            serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
-                                allowUnrecognizedEnumValues: true,
-                                skipValidation: true
-                            });
-                            if (serializedIr.ok) {
-                                mergedIr =
-                                    mergedIr === undefined
-                                        ? serializedIr.value
-                                        : mergeIntermediateRepresentation(
-                                              mergedIr,
-                                              serializedIr.value,
-                                              casingsGenerator
-                                          );
-                            } else {
-                                throw new Error();
-                            }
-                        } catch (error) {
-                            context.logger.log("error", "Failed to parse protobuf IR: ");
-                        }
-                    }
-                } catch (error) {
-                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
-                }
             }
+        }
+
+        // Await and merge protobuf IR results (generated in parallel with OpenAPI processing)
+        const protobufIRResults = await protobufIRResultsPromise;
+        const protobufCasingsGenerator = constructCasingsGenerator({
+            generationLanguage: "typescript",
+            keywords: undefined,
+            smartCasing: false
+        });
+        for (const ir of protobufIRResults) {
+            mergedIr =
+                mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, protobufCasingsGenerator);
         }
 
         for (const errorCollector of errorCollectors) {
@@ -484,6 +480,45 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             throw new Error("Failed to generate intermediate representation");
         }
         return mergedIr;
+    }
+
+    private async generateAllProtobufIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
+        const protobufSpecs = this.allSpecs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf");
+        if (protobufSpecs.length === 0) {
+            return [];
+        }
+
+        // Process specs sequentially because ProtobufIRGenerator.generate()
+        // runs `npm install -g` which is not safe to invoke concurrently.
+        const results: IntermediateRepresentation[] = [];
+        for (const spec of protobufSpecs) {
+            try {
+                const protobufIRGenerator = new ProtobufIRGenerator({ context });
+                const protobufIRFilepath = await protobufIRGenerator.generate({
+                    absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
+                    local: true,
+                    deps: spec.dependencies
+                });
+
+                const result = await readFile(protobufIRFilepath, "utf-8");
+                if (result != null) {
+                    const serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true
+                    });
+                    if (serializedIr.ok) {
+                        results.push(serializedIr.value);
+                        continue;
+                    }
+                    context.logger.log("error", "Failed to parse protobuf IR");
+                }
+            } catch (error) {
+                context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+            }
+        }
+
+        return results;
     }
 
     public async toFernWorkspace(
