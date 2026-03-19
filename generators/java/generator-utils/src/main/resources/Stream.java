@@ -4,6 +4,7 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.function.BiFunction;
 
 /**
  * The {@code Stream} class implements {@link Iterable} to provide a simple mechanism for reading and parsing
@@ -34,6 +35,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final String streamTerminator;
     private final Reader sseReader;
     private final String discriminatorProperty;
+    private final BiFunction<String, String, T> eventParser;
     private boolean isClosed = false;
 
     /**
@@ -58,9 +60,14 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     }
 
     private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator, String discriminatorProperty) {
+        this(valueType, type, reader, terminator, discriminatorProperty, null);
+    }
+
+    private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator, String discriminatorProperty, BiFunction<String, String, T> eventParser) {
         this.valueType = valueType;
         this.streamType = type;
         this.discriminatorProperty = discriminatorProperty;
+        this.eventParser = eventParser;
         if (type == StreamType.JSON) {
             this.scanner = new Scanner(reader).useDelimiter(terminator);
             this.messageTerminator = terminator;
@@ -119,6 +126,37 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     public static <T> Stream<T> fromSseWithEventDiscrimination(
             Class<T> valueType, Reader sseReader, String discriminatorProperty, String streamTerminator) {
         return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, streamTerminator, discriminatorProperty);
+    }
+
+    /**
+     * Creates a stream from SSE data with a code-gen time event parser function.
+     * The event parser function takes (eventType, data) and returns the parsed object.
+     * This avoids runtime reflection by generating the variant-specific parsing at code-gen time.
+     *
+     * @param valueType    The class of the objects in the stream.
+     * @param sseReader    The reader that provides the SSE data.
+     * @param eventParser  A function that takes (eventType, data) and returns the parsed object.
+     * @param <T>          The type of objects in the stream.
+     * @return A new Stream instance configured for SSE with generated event parsing.
+     */
+    public static <T> Stream<T> fromSseWithEventParser(
+            Class<T> valueType, Reader sseReader, BiFunction<String, String, T> eventParser) {
+        return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, null, null, eventParser);
+    }
+
+    /**
+     * Creates a stream from SSE data with a code-gen time event parser function and a stream terminator.
+     *
+     * @param valueType        The class of the objects in the stream.
+     * @param sseReader        The reader that provides the SSE data.
+     * @param eventParser      A function that takes (eventType, data) and returns the parsed object.
+     * @param streamTerminator The terminator string that signals end of stream (e.g., "[DONE]").
+     * @param <T>              The type of objects in the stream.
+     * @return A new Stream instance configured for SSE with generated event parsing.
+     */
+    public static <T> Stream<T> fromSseWithEventParser(
+            Class<T> valueType, Reader sseReader, BiFunction<String, String, T> eventParser, String streamTerminator) {
+        return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, streamTerminator, null, eventParser);
     }
 
     @Override
@@ -404,14 +442,19 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                     if (line.trim().isEmpty()) {
                         if (eventDataBuffer.length() > 0 || currentEventType != null) {
                             try {
-                                // Use SseEventParser for event-level discrimination
-                                nextItem = SseEventParser.parseEventLevelUnion(
-                                        currentEventType,
-                                        eventDataBuffer.toString(),
-                                        currentEventId,
-                                        currentRetry,
-                                        valueType,
-                                        discriminatorProperty);
+                                if (eventParser != null) {
+                                    // Use code-gen time event parser (no reflection)
+                                    nextItem = eventParser.apply(currentEventType, eventDataBuffer.toString());
+                                } else {
+                                    // Fall back to SseEventParser for backward compatibility
+                                    nextItem = SseEventParser.parseEventLevelUnion(
+                                            currentEventType,
+                                            eventDataBuffer.toString(),
+                                            currentEventId,
+                                            currentRetry,
+                                            valueType,
+                                            discriminatorProperty);
+                                }
                                 hasNextItem = true;
                                 resetEventState();
                                 return true;
@@ -469,13 +512,17 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 // Handle any remaining buffered data at end of stream
                 if (eventDataBuffer.length() > 0 || currentEventType != null) {
                     try {
-                        nextItem = SseEventParser.parseEventLevelUnion(
-                                currentEventType,
-                                eventDataBuffer.toString(),
-                                currentEventId,
-                                currentRetry,
-                                valueType,
-                                discriminatorProperty);
+                        if (eventParser != null) {
+                            nextItem = eventParser.apply(currentEventType, eventDataBuffer.toString());
+                        } else {
+                            nextItem = SseEventParser.parseEventLevelUnion(
+                                    currentEventType,
+                                    eventDataBuffer.toString(),
+                                    currentEventId,
+                                    currentRetry,
+                                    valueType,
+                                    discriminatorProperty);
+                        }
                         hasNextItem = true;
                         resetEventState();
                         return true;

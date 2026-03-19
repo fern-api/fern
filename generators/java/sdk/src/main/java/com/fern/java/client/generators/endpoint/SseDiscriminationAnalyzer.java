@@ -5,24 +5,19 @@ import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
+import com.fern.ir.model.types.UnionDiscriminatorContext;
 import com.fern.ir.model.types.UnionTypeDeclaration;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Analyzes SSE payload types to determine if event-level or data-level discrimination is needed.
  *
- * <p>Following Python's approach from PR #11726: - If the union's discriminator property name matches an SSE envelope
- * field (event, id, retry, data), it's event-level discrimination. - Otherwise, it's data-level discrimination where
- * the discriminator is inside the JSON data payload.
+ * <p>Uses the {@code discriminatorContext} field from the IR to determine discrimination strategy:
+ * - {@code protocol}: The discriminator is at the protocol level (e.g., SSE event field).
+ * - {@code data} (or absent): The discriminator is inside the JSON data payload.
  */
 public final class SseDiscriminationAnalyzer {
-
-    /** SSE envelope fields that indicate event-level discrimination when used as a discriminator. */
-    private static final Set<String> SSE_ENVELOPE_FIELDS = new HashSet<>(Arrays.asList("event", "id", "retry", "data"));
 
     /** Type of discrimination for SSE events. */
     public enum DiscriminationType {
@@ -72,6 +67,10 @@ public final class SseDiscriminationAnalyzer {
     /**
      * Analyzes the SSE payload type to determine what type of discrimination is needed.
      *
+     * <p>Uses the {@code discriminatorContext} field from the IR to determine discrimination strategy.
+     * If {@code discriminatorContext} is {@code protocol}, it's event-level discrimination.
+     * Otherwise (absent or {@code data}), it's data-level discrimination.
+     *
      * @param payloadType The SSE payload type reference from the IR
      * @param typeDeclarations Map of all type declarations
      * @return The discrimination info indicating how to handle SSE parsing
@@ -90,21 +89,23 @@ public final class SseDiscriminationAnalyzer {
         // Get the discriminant property name
         String discriminatorProperty = unionDeclaration.get().getDiscriminant().getWireValue();
 
-        // Check if the discriminator is an SSE envelope field
-        if (isEventLevelDiscriminator(discriminatorProperty)) {
+        // Check discriminatorContext from the IR
+        Optional<UnionDiscriminatorContext> discriminatorContext =
+                unionDeclaration.get().getDiscriminatorContext();
+
+        if (discriminatorContext.isPresent()
+                && discriminatorContext
+                        .get()
+                        .getEnumValue()
+                        .equals(UnionDiscriminatorContext.Value.PROTOCOL)) {
             return SseDiscriminationInfo.eventLevel(discriminatorProperty);
         } else {
             return SseDiscriminationInfo.dataLevel(discriminatorProperty);
         }
     }
 
-    /** Checks if the discriminator property indicates event-level discrimination. */
-    public static boolean isEventLevelDiscriminator(String discriminatorProperty) {
-        return SSE_ENVELOPE_FIELDS.contains(discriminatorProperty);
-    }
-
     /** Resolves a TypeReference to its UnionTypeDeclaration, following aliases if necessary. */
-    private static Optional<UnionTypeDeclaration> resolveUnionType(
+    public static Optional<UnionTypeDeclaration> resolveUnionType(
             TypeReference typeReference, Map<TypeId, TypeDeclaration> typeDeclarations) {
 
         return typeReference.visit(new TypeReference.Visitor<Optional<UnionTypeDeclaration>>() {
