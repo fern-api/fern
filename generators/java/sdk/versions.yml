@@ -44,7 +44,7 @@
         lets callers tune max retries, backoff delay, and queue size before
         calling `connect()`.
 
-        **Generic onMessage(Consumer<String>) handler** — fires for every
+        **Generic `onMessage(Consumer<String>)` handler** — fires for every
         incoming text frame with the raw JSON string, before type-specific
         dispatch. Useful for logging or custom routing.
 
