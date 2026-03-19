@@ -298,21 +298,18 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            switch (type) {
-                case "receive":
-                    if (receiveHandler != null) {
-                        NoAuthReceiveEvent event = objectMapper.treeToValue(node, NoAuthReceiveEvent.class);
-                        if (event != null) {
-                            receiveHandler.accept(event);
-                        }
+            if ("receive".equals(type)) {
+                if (receiveHandler != null) {
+                    NoAuthReceiveEvent event = objectMapper.treeToValue(node, NoAuthReceiveEvent.class);
+                    if (event != null) {
+                        receiveHandler.accept(event);
                     }
-                    break;
-                default:
-                    if (onErrorHandler != null) {
-                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                                + "'. Update your SDK version to support new message types."));
-                    }
-                    break;
+                }
+            } else {
+                if (onErrorHandler != null) {
+                    onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                            + "'. Update your SDK version to support new message types."));
+                }
             }
         } catch (IllegalArgumentException e) {
             if (onErrorHandler != null) {

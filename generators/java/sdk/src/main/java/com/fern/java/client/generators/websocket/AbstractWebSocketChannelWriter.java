@@ -18,9 +18,17 @@ package com.fern.java.client.generators.websocket;
 
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.EnumValue;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.websocket.InlinedWebSocketMessageBody;
+import com.fern.ir.model.websocket.InlinedWebSocketMessageBodyProperty;
 import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
@@ -89,6 +97,8 @@ public abstract class AbstractWebSocketChannelWriter {
     // produces the same method name, Java type-erasure makes the two
     // overloads ambiguous. We append "Message" to disambiguate.
     private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
+
+    private static final String DISCRIMINANT_FIELD = "type";
 
     // Connect options class name (present when channel has query parameters)
     protected final Optional<ClassName> connectOptionsClassName;
@@ -431,17 +441,25 @@ public abstract class AbstractWebSocketChannelWriter {
                 .beginControlFlow("if (typeNode == null || typeNode.isNull())")
                 .addStatement("throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
                 .endControlFlow()
-                .addStatement("String type = typeNode.asText()")
-                .beginControlFlow("switch (type)");
+                .addStatement("String type = typeNode.asText()");
 
-        // Add cases for each non-binary server message (binary messages are handled by onBinaryMessage)
+        // Iterate over each non-binary server message type, trying to match the discriminant value.
+        // This matches Python's approach of iterating over all possible message types to find the
+        // correct one, using the wire discriminant value from the body's literal type property.
+        boolean first = true;
         for (WebSocketMessage message : websocketChannel.getMessages()) {
             if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 TypeName messageType = getMessageBodyType(message);
                 String handlerFieldName = getHandlerFieldName(message);
+                String wireDiscriminantValue = getWireDiscriminantValue(message);
 
-                builder.addCode("case $S:\n", message.getType().get())
-                        .beginControlFlow("if ($L != null)", handlerFieldName)
+                if (first) {
+                    builder.beginControlFlow("if ($S.equals(type))", wireDiscriminantValue);
+                    first = false;
+                } else {
+                    builder.nextControlFlow("else if ($S.equals(type))", wireDiscriminantValue);
+                }
+                builder.beginControlFlow("if ($L != null)", handlerFieldName)
                         .addStatement(
                                 "$T event = $N.treeToValue(node, $T.class)",
                                 messageType,
@@ -450,24 +468,19 @@ public abstract class AbstractWebSocketChannelWriter {
                         .beginControlFlow("if (event != null)")
                         .addStatement("$L.accept(event)", handlerFieldName)
                         .endControlFlow()
-                        .endControlFlow()
-                        .addStatement("break");
+                        .endControlFlow();
             }
         }
 
-        builder.addCode("default:\n")
-                .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                .addStatement(
-                        "$N.accept(new $T($S + type + $S))",
-                        onErrorHandlerField,
-                        RuntimeException.class,
-                        "Unknown WebSocket message type: '",
-                        "'. Update your SDK version to support new message types.")
-                .endControlFlow()
-                .addStatement("break");
+        if (!first) {
+            builder.nextControlFlow("else");
+        }
+        addUnknownTypeErrorHandler(builder);
+        if (!first) {
+            builder.endControlFlow(); // end if-else chain
+        }
 
-        builder.endControlFlow() // end switch
-                .endControlFlow() // end try
+        builder.endControlFlow() // end try
                 .beginControlFlow("catch ($T e)", IllegalArgumentException.class)
                 .beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement("$N.accept(e)", onErrorHandlerField)
@@ -480,6 +493,135 @@ public abstract class AbstractWebSocketChannelWriter {
                 .endControlFlow(); // end catch
 
         return builder.build();
+    }
+
+    private void addUnknownTypeErrorHandler(MethodSpec.Builder builder) {
+        builder.beginControlFlow("if ($N != null)", onErrorHandlerField)
+                .addStatement(
+                        "$N.accept(new $T($S + type + $S))",
+                        onErrorHandlerField,
+                        RuntimeException.class,
+                        "Unknown WebSocket message type: '",
+                        "'. Update your SDK version to support new message types.")
+                .endControlFlow();
+    }
+
+    /**
+     * Extracts the wire discriminant value for a WebSocket message by examining the body's
+     * literal "type" property. Falls back to the message ID if no literal type is found.
+     *
+     * For inlined bodies, looks for a property with wire name "type" that has a literal value.
+     * For reference bodies, resolves the type declaration and checks its object properties.
+     */
+    protected String getWireDiscriminantValue(WebSocketMessage message) {
+        String messageId = message.getType().get();
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<String>() {
+            @Override
+            public String visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
+                for (InlinedWebSocketMessageBodyProperty property : inlinedBody.getProperties()) {
+                    if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                        Optional<String> value = extractDiscriminantFromTypeProperty(
+                                property.getValueType(), messageId);
+                        if (value.isPresent()) {
+                            return value.get();
+                        }
+                    }
+                }
+                return messageId;
+            }
+
+            @Override
+            public String visitReference(WebSocketMessageBodyReference reference) {
+                Optional<String> value = extractTypeLiteralFromReference(reference.getBodyType(), messageId);
+                if (value.isPresent()) {
+                    return value.get();
+                }
+                return messageId;
+            }
+
+            @Override
+            public String _visitUnknown(Object unknown) {
+                return messageId;
+            }
+        });
+    }
+
+    /**
+     * Extracts the wire discriminant string from a TypeReference for the "type" property.
+     * First checks for a literal container, then for an enum type where one value matches
+     * the message ID suffix.
+     */
+    private Optional<String> extractDiscriminantFromTypeProperty(TypeReference typeReference, String messageId) {
+        // Check for literal container (e.g., literal<"Welcome">)
+        Optional<String> literal = typeReference
+                .getContainer()
+                .flatMap(ContainerType::getLiteral)
+                .flatMap(Literal::getString);
+        if (literal.isPresent()) {
+            return literal;
+        }
+        // Check for enum type where a value matches the message ID suffix
+        return extractMatchingEnumValue(typeReference, messageId);
+    }
+
+    /**
+     * For an enum-typed property, finds the enum value whose wire value matches the
+     * message ID. Tries exact match first, then suffix match (e.g., message ID
+     * "SpeakV1Flushed" with enum values ["Flushed", "Cleared"] → returns "Flushed").
+     */
+    private Optional<String> extractMatchingEnumValue(TypeReference typeReference, String messageId) {
+        if (!typeReference.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration =
+                    clientGeneratorContext.getTypeDeclaration(typeReference.getNamed().get().getTypeId());
+            if (!typeDeclaration.getShape().isEnum()) {
+                return Optional.empty();
+            }
+            // Prefer exact match over suffix match to avoid ambiguity
+            Optional<String> suffixMatch = Optional.empty();
+            for (EnumValue enumValue : typeDeclaration.getShape().getEnum().get().getValues()) {
+                String wireValue = enumValue.getName().getWireValue();
+                if (messageId.equals(wireValue)) {
+                    return Optional.of(wireValue);
+                }
+                if (suffixMatch.isEmpty() && messageId.endsWith(wireValue)) {
+                    suffixMatch = Optional.of(wireValue);
+                }
+            }
+            return suffixMatch;
+        } catch (IllegalArgumentException e) {
+            // Type not found in IR declarations, fall back to message ID
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * For a reference body type, resolves the type declaration and looks for a literal or
+     * enum-based "type" property in the object's properties.
+     */
+    private Optional<String> extractTypeLiteralFromReference(TypeReference bodyType, String messageId) {
+        if (!bodyType.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration =
+                    clientGeneratorContext.getTypeDeclaration(bodyType.getNamed().get().getTypeId());
+            Type shape = typeDeclaration.getShape();
+            if (!shape.isObject()) {
+                return Optional.empty();
+            }
+            ObjectTypeDeclaration objectType = shape.getObject().get();
+            for (ObjectProperty property : objectType.getProperties()) {
+                if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                    return extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            // Type not found in declarations, fall back
+        }
+        return Optional.empty();
     }
 
     protected FieldSpec generatePathParameterField(PathParameter pathParam) {
