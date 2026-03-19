@@ -1,4 +1,4 @@
-import { mergeWithOverrides } from "@fern-api/core-utils";
+import { extractErrorMessage, mergeWithOverrides } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 import { execFile } from "child_process";
@@ -238,7 +238,7 @@ export class SplitCommand {
             });
             return stdout;
         } catch (error: unknown) {
-            const detail = error instanceof Error ? error.message : String(error);
+            const detail = extractErrorMessage(error);
             throw new CliError({
                 message: `Failed to get file from git HEAD: ${absolutePath}. Is the file tracked by git and has at least one commit?\n  Cause: ${detail}`
             });

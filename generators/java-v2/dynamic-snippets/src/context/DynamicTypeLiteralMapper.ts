@@ -1,5 +1,5 @@
 import { Severity } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
@@ -659,9 +659,7 @@ export class DynamicTypeLiteralMapper {
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 this.context.errors.truncate(errorsBefore);
-                variantErrors.push(
-                    `Type ${JSON.stringify(typeReference)}: ${e instanceof Error ? e.message : String(e)}`
-                );
+                variantErrors.push(`Type ${JSON.stringify(typeReference)}: ${extractErrorMessage(e)}`);
                 continue;
             }
         }

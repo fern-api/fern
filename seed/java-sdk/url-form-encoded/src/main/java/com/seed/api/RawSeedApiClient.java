@@ -11,12 +11,16 @@ import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.PostSubmitRequest;
 import com.seed.api.types.PostSubmitResponse;
+import com.seed.api.types.TokenRequest;
+import com.seed.api.types.TokenResponse;
 import java.io.IOException;
+import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -65,6 +69,58 @@ public class RawSeedApiClient {
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PostSubmitResponse.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<TokenResponse> getToken(TokenRequest request) {
+        return getToken(request, null);
+    }
+
+    public SeedApiHttpResponse<TokenResponse> getToken(TokenRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("token");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        FormBody.Builder bodyBuilder = new FormBody.Builder();
+        try {
+            Map<String, Object> formParams = ObjectMappers.JSON_MAPPER.convertValue(
+                    request, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
+            for (Map.Entry<String, Object> entry : formParams.entrySet()) {
+                if (entry.getValue() != null) {
+                    bodyBuilder.add(entry.getKey(), String.valueOf(entry.getValue()));
+                }
+            }
+        } catch (Exception e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        RequestBody body = bodyBuilder.build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(

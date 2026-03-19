@@ -1,0 +1,43 @@
+using NUnit.Framework;
+using SeedBasicAuth;
+using WireMock.Logging;
+using WireMock.Server;
+using WireMock.Settings;
+
+namespace SeedBasicAuth.Test.Unit.MockServer;
+
+public class BaseMockServerTest
+{
+    protected WireMockServer Server { get; set; } = null!;
+
+    protected SeedBasicAuthClient Client { get; set; } = null!;
+
+    protected RequestOptions RequestOptions { get; set; } = new();
+
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
+        );
+
+        // Initialize the Client
+        Client = new SeedBasicAuthClient(
+            clientOptions: new ClientOptions
+            {
+                Username = "USERNAME",
+                Password = "PASSWORD",
+                BaseUrl = Server.Urls[0],
+                MaxRetries = 0,
+            }
+        );
+    }
+
+    [OneTimeTearDown]
+    public void GlobalTeardown()
+    {
+        Server.Stop();
+        Server.Dispose();
+    }
+}
