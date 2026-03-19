@@ -58,6 +58,7 @@
     "environments": undefined,
     "generatorConfig": undefined,
     "headers": [],
+    "inlineTypes": undefined,
     "pathParameters": [],
     "types": {
       "type_types:Order": {
