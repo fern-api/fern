@@ -349,9 +349,7 @@ export class Streamer {
                         ? singleUnionType.shape.typeId
                         : undefined,
                 singlePropertyType:
-                    singleUnionType.shape.propertiesType === "singleProperty"
-                        ? singleUnionType.shape.type
-                        : undefined
+                    singleUnionType.shape.propertiesType === "singleProperty" ? singleUnionType.shape.type : undefined
             }))
         };
     }
