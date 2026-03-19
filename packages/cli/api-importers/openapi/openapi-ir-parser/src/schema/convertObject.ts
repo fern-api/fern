@@ -257,7 +257,15 @@ export function convertObject({
                     }
                 }
             } else {
-                const allOfSchema = convertSchema(mergedAllOfElement, false, false, context, breadcrumbs, source, namespace);
+                const allOfSchema = convertSchema(
+                    mergedAllOfElement,
+                    false,
+                    false,
+                    context,
+                    breadcrumbs,
+                    source,
+                    namespace
+                );
                 if (allOfSchema.type === "object") {
                     inlinedParentProperties.push(...allOfSchema.properties);
                 }
