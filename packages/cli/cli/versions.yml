@@ -12,6 +12,13 @@
   createdAt: "2026-03-18"
   irVersion: 65
 
+- version: 4.37.4
+  changelogEntry:
+    - summary: |
+        Sanitize preview IDs before sending to FDR API to ensure valid DNS subdomains.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
 - version: 4.37.3
   changelogEntry:
     - summary: |

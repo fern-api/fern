@@ -32,6 +32,23 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+/**
+ * Sanitizes a preview ID to be valid in a DNS subdomain label.
+ * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
+ * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
+ */
+function sanitizePreviewId(id: string): string {
+    const sanitized = id
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-{2,}/g, "-")
+        .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
+}
+
 export class DocsPublishConflictError extends Error {
     constructor() {
         super("Another docs publish is currently in progress for this domain.");
@@ -226,7 +243,7 @@ export async function publishDocs({
                     filepaths: filepaths,
                     images,
                     basePath,
-                    previewId
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                 } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
