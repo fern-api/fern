@@ -47,7 +47,7 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
 
     private volatile Consumer<String> onMessageHandler;
 
-    private ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
+    private volatile ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
 
     private CompletableFuture<Void> connectionFuture;
 
@@ -150,6 +150,14 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
                 };
         reconnectingListener.connect();
         return connectionFuture;
+    }
+
+    /**
+     * Establishes the WebSocket connection asynchronously with default options.
+     * @return a CompletableFuture that completes when the connection is established
+     */
+    public CompletableFuture<Void> connect() {
+        return connect(RealtimeNoAuthConnectOptions.builder().build());
     }
 
     /**

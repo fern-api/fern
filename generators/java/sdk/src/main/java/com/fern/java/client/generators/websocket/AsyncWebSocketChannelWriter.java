@@ -339,6 +339,31 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
     }
 
     @Override
+    protected Optional<MethodSpec> generateConnectNoArgOverload() {
+        if (!connectOptionsClassName.isPresent()) {
+            return Optional.empty();
+        }
+        // Only generate no-arg overload when all query params are optional (no required builder stages)
+        boolean hasRequiredQueryParam = websocketChannel.getQueryParameters().stream()
+                .anyMatch(qp -> {
+                    boolean isOptional = qp.getValueType().getContainer().isPresent()
+                            && qp.getValueType().getContainer().get().isOptional();
+                    return !isOptional && !qp.getAllowMultiple();
+                });
+        if (hasRequiredQueryParam) {
+            return Optional.empty();
+        }
+        ClassName optionsClass = connectOptionsClassName.get();
+        return Optional.of(MethodSpec.methodBuilder("connect")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
+                .addJavadoc("Establishes the WebSocket connection asynchronously with default options.\n")
+                .addJavadoc("@return a CompletableFuture that completes when the connection is established\n")
+                .addStatement("return connect($T.builder().build())", optionsClass)
+                .build());
+    }
+
+    @Override
     protected MethodSpec generateSendMethod(WebSocketMessage message) {
         TypeName messageType = getMessageBodyType(message);
         String methodName = getSendMethodName(message);

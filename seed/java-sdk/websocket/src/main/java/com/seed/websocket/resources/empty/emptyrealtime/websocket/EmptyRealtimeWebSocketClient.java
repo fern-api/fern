@@ -43,7 +43,7 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
 
     private volatile Consumer<String> onMessageHandler;
 
-    private ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
+    private volatile ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
 
     private CompletableFuture<Void> connectionFuture;
 

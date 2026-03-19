@@ -177,7 +177,8 @@ public abstract class AbstractWebSocketChannelWriter {
                         .packageName(),
                 "ReconnectingWebSocketListener",
                 "ReconnectOptions");
-        this.reconnectOptionsField = FieldSpec.builder(reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE)
+        this.reconnectOptionsField = FieldSpec.builder(
+                        reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE, Modifier.VOLATILE)
                 .build();
     }
 
@@ -195,6 +196,7 @@ public abstract class AbstractWebSocketChannelWriter {
 
         // Add connection management methods
         classBuilder.addMethod(generateConnectMethod());
+        generateConnectNoArgOverload().ifPresent(classBuilder::addMethod);
         classBuilder.addMethod(generateDisconnectMethod());
         classBuilder.addMethod(generateGetReadyStateMethod());
 
@@ -268,6 +270,8 @@ public abstract class AbstractWebSocketChannelWriter {
     protected abstract MethodSpec generateConstructor();
 
     protected abstract MethodSpec generateConnectMethod();
+
+    protected abstract Optional<MethodSpec> generateConnectNoArgOverload();
 
     protected abstract MethodSpec generateSendMethod(WebSocketMessage message);
 
