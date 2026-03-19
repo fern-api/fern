@@ -345,6 +345,10 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  server-sent-event-examples:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   server-sent-events:
     - customConfig:
         enable_wire_tests: true
