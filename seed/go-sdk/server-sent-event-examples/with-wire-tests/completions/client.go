@@ -167,7 +167,7 @@ func (c *Client) StreamEventsContextProtocol(
                 if err := json.Unmarshal(data, &value); err != nil {
                     return nil, err
                 }
-                return &sse.StreamEventContextProtocol{Event: "event", Event: value}, nil
+                return &sse.StreamEventContextProtocol{Event: value}, nil
             default:
                 return nil, fmt.Errorf("unknown SSE event type: %s", eventType)
             }
