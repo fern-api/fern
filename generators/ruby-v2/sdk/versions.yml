@@ -9,8 +9,8 @@
       type: fix
     - summary: |
         URI-encode path parameters before interpolation into URL paths. Resource IDs
-        containing special characters (e.g., `auth0|abc123`) now work correctly instead
-        of raising `URI::InvalidURIError`.
+        containing reserved URI characters (e.g., pipes, spaces) now work correctly
+        instead of raising `URI::InvalidURIError`.
       type: fix
   createdAt: "2026-03-19"
   irVersion: 61
