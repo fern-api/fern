@@ -41,7 +41,9 @@ async function isFernOnPath(logger: Logger): Promise<boolean> {
     } catch (error) {
         const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
         if (!isNotFound) {
-            logger.debug(`Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`);
+            logger.debug(
+                `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
+            );
         }
         return false;
     }
