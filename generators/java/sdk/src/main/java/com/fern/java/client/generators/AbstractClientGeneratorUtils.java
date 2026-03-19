@@ -318,41 +318,12 @@ public abstract class AbstractClientGeneratorUtils {
                                             + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
                 }
 
-                // Add query parameters
-                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-                    TypeName paramType =
-                            generatorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-                    String paramName =
-                            queryParam.getName().getName().getCamelCase().getSafeName();
-
-                    // Check if already optional
-                    if (!queryParam.getValueType().getContainer().isPresent()
-                            || !queryParam.getValueType().getContainer().get().isOptional()) {
-                        paramType = ParameterizedTypeName.get(ClassName.get(Optional.class), paramType);
-                    }
-
-                    webSocketFactoryMethod.addParameter(paramType, paramName);
-                    webSocketFactoryMethod.addJavadoc(
-                            "@param $L $L\n",
-                            paramName,
-                            queryParam.getDocs().orElse("Optional " + paramName + " query parameter"));
-                }
-
                 // Build the return statement with all parameters
                 StringBuilder returnStatement = new StringBuilder("return new $T($N");
                 for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
                     returnStatement
                             .append(", ")
                             .append(pathParam.getName().getCamelCase().getSafeName());
-                }
-                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-                    returnStatement
-                            .append(", ")
-                            .append(queryParam
-                                    .getName()
-                                    .getName()
-                                    .getCamelCase()
-                                    .getSafeName());
                 }
                 returnStatement.append(")");
 
