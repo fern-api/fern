@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -26,16 +26,13 @@ public class UnionWithPrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "integer",
               "value": 9
             }
             """;
-        var actualObj = new UnionWithPrimitive(new UnionWithPrimitive.Integer(9));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithPrimitive>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -55,15 +52,12 @@ public class UnionWithPrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "string",
               "value": "bar"
             }
             """;
-        var actualObj = new UnionWithPrimitive(new UnionWithPrimitive.String("bar"));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithPrimitive>(inputJson);
     }
 }

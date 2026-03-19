@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
+using SeedExamples.Test_.Utils;
 
 namespace SeedExamples.Test_;
 
@@ -39,7 +39,7 @@ public class TreeTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "nodes": [
                 {
@@ -51,16 +51,6 @@ public class TreeTest
               ]
             }
             """;
-        var actualObj = new Tree
-        {
-            Nodes = new List<Node>()
-            {
-                new Node { Name = "left" },
-                new Node { Name = "right" },
-            },
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Tree>(inputJson);
     }
 }

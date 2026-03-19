@@ -1,6 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.Test.Utils;
 
 namespace SeedObjectsWithImports.Test;
 
@@ -31,22 +31,14 @@ public class FileTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "file.txt",
               "contents": "...",
               "info": "REGULAR"
             }
             """;
-        var actualObj = new SeedObjectsWithImports.File
-        {
-            Name = "file.txt",
-            Contents = "...",
-            Info = SeedObjectsWithImports.FileInfo.Regular,
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedObjectsWithImports.File>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -72,21 +64,13 @@ public class FileTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "another_file.txt",
               "contents": "...",
               "info": "REGULAR"
             }
             """;
-        var actualObj = new SeedObjectsWithImports.File
-        {
-            Name = "another_file.txt",
-            Contents = "...",
-            Info = SeedObjectsWithImports.FileInfo.Regular,
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedObjectsWithImports.File>(inputJson);
     }
 }
