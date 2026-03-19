@@ -10,6 +10,7 @@ import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
 from .types.error_event import ErrorEvent
+from .types.flushed_event import FlushedEvent
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
@@ -17,6 +18,7 @@ from .types.receive_snake_case import ReceiveSnakeCase
 from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
 from .types.send_snake_case import SendSnakeCase
+from .types.transcript_event import TranscriptEvent
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -24,7 +26,9 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3, ErrorEvent]
+RealtimeSocketClientResponse = typing.Union[
+    ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3, TranscriptEvent, FlushedEvent, ErrorEvent
+]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):
