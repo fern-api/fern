@@ -1,7 +1,5 @@
 using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using SeedWebsocket.Core;
 using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket.Empty;
@@ -76,11 +74,8 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var message = await JsonSerializer.DeserializeAsync<IncomingMessage>(
-            stream,
-            JsonOptions.JsonSerializerOptions
-        );
-        if (message == null)
+        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        if (json == null)
         {
             await ExceptionOccurred
                 .RaiseEvent(new Exception("Invalid message - Not valid JSON"))
@@ -88,7 +83,8 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
             return;
         }
 
-        await UnknownMessage.RaiseEvent((JsonElement)message.Value!).ConfigureAwait(false);
+        // deserialize the message to find the correct event
+        await UnknownMessage.RaiseEvent(json.RootElement.Clone()).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -125,72 +121,6 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         _client.Dispose();
         DisposeEvents();
         GC.SuppressFinalize(this);
-    }
-
-    [JsonConverter(typeof(EmptyRealtimeApi.IncomingMessage.JsonConverter))]
-    internal class IncomingMessage
-    {
-        /// <summary>
-        /// Sentinel value for unknown/unrecognized event types
-        /// </summary>
-        internal static readonly string _unknownType = "_unknown";
-
-        private IncomingMessage(string type, object? value)
-        {
-            Type = type;
-            Value = value;
-        }
-
-        /// <summary>
-        /// Type discriminator
-        /// </summary>
-        internal string Type { get; }
-
-        /// <summary>
-        /// Union value
-        /// </summary>
-        internal object? Value { get; }
-
-        internal sealed class JsonConverter : JsonConverter<EmptyRealtimeApi.IncomingMessage>
-        {
-            public override EmptyRealtimeApi.IncomingMessage? Read(
-                ref Utf8JsonReader reader,
-                System.Type typeToConvert,
-                JsonSerializerOptions options
-            )
-            {
-                var document = JsonDocument.ParseValue(ref reader);
-
-                var types = new (string Key, System.Type Type)[] { };
-
-                foreach (var (key, type) in types)
-                {
-                    try
-                    {
-                        var value = document.Deserialize(type, options);
-                        if (value != null)
-                        {
-                            return new IncomingMessage(key, value);
-                        }
-                    }
-                    catch (JsonException) { }
-                }
-
-                return new IncomingMessage(_unknownType, document.RootElement.Clone());
-            }
-
-            public override void Write(
-                Utf8JsonWriter writer,
-                EmptyRealtimeApi.IncomingMessage value,
-                JsonSerializerOptions options
-            )
-            {
-                if (value.Value != null)
-                {
-                    JsonSerializer.Serialize(writer, value.Value, value.Value.GetType(), options);
-                }
-            }
-        }
     }
 
     /// <summary>

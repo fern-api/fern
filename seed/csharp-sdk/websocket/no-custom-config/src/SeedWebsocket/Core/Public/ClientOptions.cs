@@ -19,7 +19,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = SeedWebsocketEnvironment.Production;
+    } = "";
 
     /// <summary>
     /// The http client used to make requests.
