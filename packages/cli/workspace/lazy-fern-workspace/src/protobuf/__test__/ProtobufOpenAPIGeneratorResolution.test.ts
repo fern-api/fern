@@ -37,7 +37,7 @@ vi.mock("tmp-promise", () => ({
     }
 }));
 
-import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { createLoggingExecutable, LoggingExecutable } from "@fern-api/logging-execa";
 import { ProtobufOpenAPIGenerator } from "../ProtobufOpenAPIGenerator.js";
 import { resolveProtocGenOpenAPI } from "../ProtocGenOpenAPIDownloader.js";
 import { ensureBufCommand } from "../utils.js";
@@ -89,12 +89,9 @@ describe("ProtobufOpenAPIGenerator resolution order", () => {
         // Default mock for createLoggingExecutable
         mockWhichExecutable = vi.fn();
         mockBufExecutable = vi.fn().mockResolvedValue({ exitCode: 0, stdout: "", stderr: "" });
-        vi.mocked(createLoggingExecutable).mockImplementation((cmd: string) => {
-            if (cmd === "which") {
-                return mockWhichExecutable;
-            }
-            return mockBufExecutable;
-        });
+        vi.mocked(createLoggingExecutable).mockImplementation(
+            (cmd: string) => (cmd === "which" ? mockWhichExecutable : mockBufExecutable) as unknown as LoggingExecutable
+        );
     });
 
     afterEach(() => {
