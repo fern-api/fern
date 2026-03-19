@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.9
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 parser to read WebSocket query parameters and headers
+        from `channel.bindings.ws.query` and `channel.bindings.ws.headers`, which
+        is the standard location per the AsyncAPI WebSocket bindings spec.
+        Previously the v3 parser only read from `channel.parameters`, which the
+        AsyncAPI spec reserves for path parameters. This caused WebSocket connect
+        options classes (e.g. `ConnectOptions`) to be missing from generated SDKs
+        when specs used the standard bindings location.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.8
   changelogEntry:
     - summary: |
@@ -20,6 +34,7 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
+
 - version: 4.37.6
   changelogEntry:
     - summary: |
