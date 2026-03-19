@@ -123,7 +123,10 @@ public final class EventInfo {
   @JsonIgnoreProperties("type")
   private static final class MetadataValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Metadata value;
 
     @JsonCreator(

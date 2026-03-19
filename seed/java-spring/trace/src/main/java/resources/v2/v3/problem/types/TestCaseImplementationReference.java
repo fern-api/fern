@@ -162,7 +162,10 @@ public final class TestCaseImplementationReference {
   @JsonIgnoreProperties("type")
   private static final class ImplementationValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseImplementation value;
 
     @JsonCreator(
