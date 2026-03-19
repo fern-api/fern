@@ -26,7 +26,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/http-methods/#{params[:id]}",
+            path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
             request_options: request_options
           )
           begin
@@ -88,7 +88,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
-            path: "/http-methods/#{params[:id]}",
+            path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
             body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
             request_options: request_options
           )
@@ -121,7 +121,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PATCH",
-            path: "/http-methods/#{params[:id]}",
+            path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
             body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
             request_options: request_options
           )
@@ -154,7 +154,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
-            path: "/http-methods/#{params[:id]}",
+            path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
             request_options: request_options
           )
           begin

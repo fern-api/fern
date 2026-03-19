@@ -1,4 +1,3 @@
-use crate::Environment;
 use std::collections::HashMap;
 use std::time::Duration;
 
@@ -19,7 +18,7 @@ pub struct ClientConfig {
 impl Default for ClientConfig {
     fn default() -> Self {
         Self {
-            base_url: Environment::default().url().to_string(),
+            base_url: String::new(),
             api_key: None,
             token: None,
             username: None,
