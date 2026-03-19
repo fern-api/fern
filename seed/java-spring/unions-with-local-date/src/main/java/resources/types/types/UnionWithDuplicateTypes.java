@@ -123,7 +123,10 @@ public final class UnionWithDuplicateTypes {
   @JsonIgnoreProperties("type")
   private static final class Foo1Value implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Foo value;
 
     @JsonCreator(
@@ -166,7 +169,10 @@ public final class UnionWithDuplicateTypes {
   @JsonIgnoreProperties("type")
   private static final class Foo2Value implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Foo value;
 
     @JsonCreator(

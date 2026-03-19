@@ -123,7 +123,10 @@ public final class TestCaseGrade {
   @JsonIgnoreProperties("type")
   private static final class HiddenValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseHiddenGrade value;
 
     @JsonCreator(
@@ -166,7 +169,10 @@ public final class TestCaseGrade {
   @JsonIgnoreProperties("type")
   private static final class NonHiddenValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseNonHiddenGrade value;
 
     @JsonCreator(

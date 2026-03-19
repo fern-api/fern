@@ -508,7 +508,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class MapValueValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DebugMapValue value;
 
     @JsonCreator(
@@ -590,7 +593,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class BinaryTreeNodeValueValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private BinaryTreeNodeAndTreeValue value;
 
     @JsonCreator(
@@ -633,7 +639,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class SinglyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SinglyLinkedListNodeAndListValue value;
 
     @JsonCreator(
@@ -676,7 +685,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class DoublyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DoublyLinkedListNodeAndListValue value;
 
     @JsonCreator(
@@ -771,7 +783,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class GenericValueValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GenericValue value;
 
     @JsonCreator(
