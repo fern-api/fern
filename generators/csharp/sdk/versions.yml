@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.36.0
+  changelogEntry:
+    - summary: |
+        Add `UsingObjectDictionaryComparer` to test comparers for handling
+        `Dictionary<string, object?>` fields. System.Text.Json deserializes
+        `object?` values as `JsonElement`, so structural equality comparisons
+        need to serialize both sides before comparing. The `UsingDefaults()`
+        chain now includes this comparer automatically.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.35.1
   changelogEntry:
     - summary: |
@@ -10,7 +22,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.35.0
   changelogEntry:
     - summary: |

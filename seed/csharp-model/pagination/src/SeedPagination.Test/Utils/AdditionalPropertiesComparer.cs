@@ -51,6 +51,48 @@ public static class AdditionalPropertiesComparerExtensions
         return constraint;
     }
 
+
+    /// <summary>
+    /// Modifies the EqualConstraint to handle Dictionary&lt;string, object?&gt; values by comparing
+    /// their serialized JSON representations. This handles the type mismatch between native C# types
+    /// and JsonElement values that occur when comparing manually constructed objects with
+    /// deserialized objects.
+    /// </summary>
+    /// <param name="constraint">The EqualConstraint to modify.</param>
+    /// <returns>The same constraint instance for method chaining.</returns>
+    public static EqualConstraint UsingObjectDictionaryComparer(this EqualConstraint constraint)
+    {
+        constraint.Using<Dictionary<string, object?>>(
+            (x, y) =>
+            {
+                if (x.Count != y.Count)
+                {
+                    return false;
+                }
+
+                foreach (var key in x.Keys)
+                {
+                    if (!y.ContainsKey(key))
+                    {
+                        return false;
+                    }
+
+                    var xElement = JsonUtils.SerializeToElement(x[key]);
+                    var yElement = JsonUtils.SerializeToElement(y[key]);
+
+                    if (!JsonElementsAreEqual(xElement, yElement))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        return constraint;
+    }
+
     private static bool JsonElementsAreEqual(JsonElement x, JsonElement y)
     {
         if (x.ValueKind != y.ValueKind)
