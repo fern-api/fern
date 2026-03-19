@@ -117,9 +117,9 @@ SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .build();
 
-// Connect to the WebSocket
-var ws = client.realtime();
-ws.connect().join();
+// Create the WebSocket client and connect
+var ws = client.realtime().realtimeWebSocket();
+ws.connect(RealtimeConnectOptions.builder()...build()).join();
 
 // Register message handlers to receive server messages
 ws.onReceive(message -> {

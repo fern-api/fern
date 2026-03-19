@@ -403,6 +403,15 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                             new com.fern.java.client.generators.websocket.ReconnectingWebSocketListenerGenerator(
                                     corePackageName);
             this.addGeneratedFile(reconnectingListenerGenerator.generateListener());
+
+            // Generate shared WebSocket types in core package
+            com.fern.java.client.generators.websocket.DisconnectReasonGenerator disconnectReasonGenerator =
+                    new com.fern.java.client.generators.websocket.DisconnectReasonGenerator(corePackageName);
+            this.addGeneratedFile(disconnectReasonGenerator.generateFile());
+
+            com.fern.java.client.generators.websocket.WebSocketReadyStateGenerator webSocketReadyStateGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketReadyStateGenerator(corePackageName);
+            this.addGeneratedFile(webSocketReadyStateGenerator.generateFile());
         }
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
@@ -614,33 +623,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .get()
                         .get(subpackage.getWebsocket().get());
                 if (websocketChannel != null) {
-                    // Generate sync WebSocket client
-                    SyncWebSocketChannelWriter syncWebSocketWriter = new SyncWebSocketChannelWriter(
+                    generateWebSocketChannelClients(
                             websocketChannel,
+                            Optional.of(subpackage),
                             context,
                             generatedClientOptions,
                             generatedEnvironmentsClass,
-                            objectMapper,
-                            FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
-                                    .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
-                                    .build(),
-                            Optional.of(subpackage));
-                    GeneratedJavaFile syncWebSocketClient = syncWebSocketWriter.generateFile();
-                    this.addGeneratedFile(syncWebSocketClient);
-
-                    // Generate async WebSocket client
-                    AsyncWebSocketChannelWriter asyncWebSocketWriter = new AsyncWebSocketChannelWriter(
-                            websocketChannel,
-                            context,
-                            generatedClientOptions,
-                            generatedEnvironmentsClass,
-                            objectMapper,
-                            FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
-                                    .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
-                                    .build(),
-                            Optional.of(subpackage));
-                    GeneratedJavaFile asyncWebSocketClient = asyncWebSocketWriter.generateFile();
-                    this.addGeneratedFile(asyncWebSocketClient);
+                            objectMapper);
                 }
             }
         });
@@ -652,33 +641,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     .get()
                     .get(ir.getRootPackage().getWebsocket().get());
             if (websocketChannel != null) {
-                // Generate sync WebSocket client
-                SyncWebSocketChannelWriter syncWebSocketWriter = new SyncWebSocketChannelWriter(
+                generateWebSocketChannelClients(
                         websocketChannel,
+                        Optional.empty(),
                         context,
                         generatedClientOptions,
                         generatedEnvironmentsClass,
-                        objectMapper,
-                        FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
-                                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
-                                .build(),
-                        Optional.empty()); // Root-level, no subpackage
-                GeneratedJavaFile syncWebSocketClient = syncWebSocketWriter.generateFile();
-                this.addGeneratedFile(syncWebSocketClient);
-
-                // Generate async WebSocket client
-                AsyncWebSocketChannelWriter asyncWebSocketWriter = new AsyncWebSocketChannelWriter(
-                        websocketChannel,
-                        context,
-                        generatedClientOptions,
-                        generatedEnvironmentsClass,
-                        objectMapper,
-                        FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
-                                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
-                                .build(),
-                        Optional.empty()); // Root-level, no subpackage
-                GeneratedJavaFile asyncWebSocketClient = asyncWebSocketWriter.generateFile();
-                this.addGeneratedFile(asyncWebSocketClient);
+                        objectMapper);
             }
         }
 
@@ -735,6 +704,57 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             }
         });
         return generatedAsyncRootClient;
+    }
+
+    private void generateWebSocketChannelClients(
+            WebSocketChannel websocketChannel,
+            Optional<Subpackage> subpackage,
+            ClientGeneratorContext context,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedObjectMapper objectMapper) {
+        // Generate connect options class if channel has query params
+        Optional<ClassName> connectOptionsClassName = Optional.empty();
+        if (!websocketChannel.getQueryParameters().isEmpty()) {
+            ClassName wsClientClassName =
+                    context.getPoetClassNameFactory().getWebSocketClientClassName(websocketChannel, subpackage);
+            ClassName optionsClassName = ClassName.get(
+                    wsClientClassName.packageName(),
+                    websocketChannel.getName().get().getPascalCase().getSafeName() + "ConnectOptions");
+            com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator optionsGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator(
+                            websocketChannel, context, optionsClassName);
+            this.addGeneratedFile(optionsGenerator.generateFile());
+            connectOptionsClassName = Optional.of(optionsClassName);
+        }
+
+        FieldSpec clientOptionsFieldSpec = FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
+                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
+                .build();
+
+        // Generate sync WebSocket client
+        SyncWebSocketChannelWriter syncWebSocketWriter = new SyncWebSocketChannelWriter(
+                websocketChannel,
+                context,
+                generatedClientOptions,
+                generatedEnvironmentsClass,
+                objectMapper,
+                clientOptionsFieldSpec,
+                subpackage,
+                connectOptionsClassName);
+        this.addGeneratedFile(syncWebSocketWriter.generateFile());
+
+        // Generate async WebSocket client
+        AsyncWebSocketChannelWriter asyncWebSocketWriter = new AsyncWebSocketChannelWriter(
+                websocketChannel,
+                context,
+                generatedClientOptions,
+                generatedEnvironmentsClass,
+                objectMapper,
+                clientOptionsFieldSpec,
+                subpackage,
+                connectOptionsClassName);
+        this.addGeneratedFile(asyncWebSocketWriter.generateFile());
     }
 
     @Override
