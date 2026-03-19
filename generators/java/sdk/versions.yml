@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.5
+  changelogEntry:
+    - summary: |
+        Fix floating-point serialization of integer-valued doubles. Values like
+        `24000.0` are now serialized as `24000` instead of `24000.0` in JSON
+        output. This prevents API rejections for fields defined as `type: number`
+        when the value happens to be a whole number. Non-integer double values
+        like `3.14` continue to serialize normally.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 3.44.4
   changelogEntry:
     - summary: |
@@ -38,7 +50,6 @@
       type: fix
   createdAt: "2026-03-18"
   irVersion: 65
-
 - version: 3.44.3
   changelogEntry:
     - summary: |
