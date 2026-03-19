@@ -170,7 +170,10 @@ public final class SubmissionRequest {
   @JsonIgnoreProperties("type")
   private static final class InitializeProblemRequestValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private InitializeProblemRequest value;
 
     @JsonCreator(
@@ -239,7 +242,10 @@ public final class SubmissionRequest {
   @JsonIgnoreProperties("type")
   private static final class SubmitV2Value implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SubmitRequestV2 value;
 
     @JsonCreator(
@@ -282,7 +288,10 @@ public final class SubmissionRequest {
   @JsonIgnoreProperties("type")
   private static final class WorkspaceSubmitValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private WorkspaceSubmitRequest value;
 
     @JsonCreator(
@@ -325,7 +334,10 @@ public final class SubmissionRequest {
   @JsonIgnoreProperties("type")
   private static final class StopValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private StopRequest value;
 
     @JsonCreator(
