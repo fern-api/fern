@@ -5,5 +5,6 @@ pub use crate::prelude::*;
 pub struct StoreTracedTestCaseRequest {
     pub result: TestCaseResultWithStdout,
     #[serde(rename = "traceResponses")]
+    #[serde(default)]
     pub trace_responses: Vec<TraceResponse>,
 }

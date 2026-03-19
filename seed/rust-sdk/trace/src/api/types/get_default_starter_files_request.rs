@@ -4,6 +4,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetDefaultStarterFilesRequest {
     #[serde(rename = "inputParams")]
+    #[serde(default)]
     pub input_params: Vec<VariableTypeAndName>,
     #[serde(rename = "outputType")]
     pub output_type: VariableType,
@@ -14,5 +15,6 @@ pub struct GetDefaultStarterFilesRequest {
     /// - Equals `=`
     /// - Period `.`
     #[serde(rename = "methodName")]
+    #[serde(default)]
     pub method_name: String,
 }

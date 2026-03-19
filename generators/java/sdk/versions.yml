@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.1
+  changelogEntry:
+    - summary: |
+        Fix generated snippets producing `OptionalNullable.of(...)` for fields
+        that are only optional (not nullable) when `collapse-optional-nullable`
+        is enabled.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.0.0
   changelogEntry:
     - summary: |

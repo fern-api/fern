@@ -85,36 +85,24 @@ client.nullableOptional().createUser(
     CreateUserRequest
         .builder()
         .username("username")
-        .email(
-            OptionalNullable.of("email")
-        )
-        .phone(
-            OptionalNullable.of("phone")
-        )
         .address(
             OptionalNullable.of(
                 Address
                     .builder()
                     .street("street")
-                    .city(
-                        OptionalNullable.of("city")
-                    )
-                    .state(
-                        OptionalNullable.of("state")
-                    )
                     .zipCode("zipCode")
                     .country(
                         OptionalNullable.of("country")
                     )
-                    .buildingId(
-                        OptionalNullable.of("buildingId")
-                    )
-                    .tenantId(
-                        OptionalNullable.of("tenantId")
-                    )
+                    .city("city")
+                    .state("state")
+                    .buildingId("buildingId")
+                    .tenantId("tenantId")
                     .build()
             )
         )
+        .email("email")
+        .phone("phone")
         .build()
 );
 ```
@@ -174,39 +162,27 @@ client.nullableOptional().updateUser(
     "userId",
     UpdateUserRequest
         .builder()
-        .username(
-            OptionalNullable.of("username")
-        )
         .email(
             OptionalNullable.of("email")
-        )
-        .phone(
-            OptionalNullable.of("phone")
         )
         .address(
             OptionalNullable.of(
                 Address
                     .builder()
                     .street("street")
-                    .city(
-                        OptionalNullable.of("city")
-                    )
-                    .state(
-                        OptionalNullable.of("state")
-                    )
                     .zipCode("zipCode")
                     .country(
                         OptionalNullable.of("country")
                     )
-                    .buildingId(
-                        OptionalNullable.of("buildingId")
-                    )
-                    .tenantId(
-                        OptionalNullable.of("tenantId")
-                    )
+                    .city("city")
+                    .state("state")
+                    .buildingId("buildingId")
+                    .tenantId("tenantId")
                     .build()
             )
         )
+        .username("username")
+        .phone("phone")
         .build()
 );
 ```
@@ -273,18 +249,12 @@ List all users
 client.nullableOptional().listUsers(
     ListUsersRequest
         .builder()
-        .limit(
-            OptionalNullable.of(1)
-        )
-        .offset(
-            OptionalNullable.of(1)
-        )
-        .includeDeleted(
-            OptionalNullable.of(true)
-        )
         .sortBy(
             OptionalNullable.of("sortBy")
         )
+        .limit(1)
+        .offset(1)
+        .includeDeleted(true)
         .build()
 );
 ```
@@ -368,15 +338,11 @@ client.nullableOptional().searchUsers(
     SearchUsersRequest
         .builder()
         .query("query")
-        .department(
-            OptionalNullable.of("department")
-        )
-        .role(
-            OptionalNullable.of("role")
-        )
         .isActive(
             OptionalNullable.of(true)
         )
+        .department("department")
+        .role("role")
         .build()
 );
 ```
@@ -460,51 +426,11 @@ client.nullableOptional().createComplexProfile(
     ComplexProfile
         .builder()
         .id("id")
-        .nullableRole(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
-        .optionalRole(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
         .optionalNullableRole(
             OptionalNullable.of(UserRole.ADMIN)
         )
-        .nullableStatus(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
-        .optionalStatus(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
         .optionalNullableStatus(
             OptionalNullable.of(UserStatus.ACTIVE)
-        )
-        .nullableNotification(
-            OptionalNullable.of(
-                NotificationMethod.email(
-                    EmailNotification
-                        .builder()
-                        .emailAddress("emailAddress")
-                        .subject("subject")
-                        .htmlContent(
-                            OptionalNullable.of("htmlContent")
-                        )
-                        .build()
-                )
-            )
-        )
-        .optionalNotification(
-            OptionalNullable.of(
-                NotificationMethod.email(
-                    EmailNotification
-                        .builder()
-                        .emailAddress("emailAddress")
-                        .subject("subject")
-                        .htmlContent(
-                            OptionalNullable.of("htmlContent")
-                        )
-                        .build()
-                )
-            )
         )
         .optionalNullableNotification(
             OptionalNullable.of(
@@ -513,111 +439,9 @@ client.nullableOptional().createComplexProfile(
                         .builder()
                         .emailAddress("emailAddress")
                         .subject("subject")
-                        .htmlContent(
-                            OptionalNullable.of("htmlContent")
-                        )
+                        .htmlContent("htmlContent")
                         .build()
                 )
-            )
-        )
-        .nullableSearchResult(
-            OptionalNullable.of(
-                SearchResult.user(
-                    UserResponse
-                        .builder()
-                        .id("id")
-                        .username("username")
-                        .email(
-                            OptionalNullable.of("email")
-                        )
-                        .phone(
-                            OptionalNullable.of("phone")
-                        )
-                        .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .updatedAt(
-                            OptionalNullable.of(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        )
-                        .address(
-                            OptionalNullable.of(
-                                Address
-                                    .builder()
-                                    .street("street")
-                                    .city(
-                                        OptionalNullable.of("city")
-                                    )
-                                    .state(
-                                        OptionalNullable.of("state")
-                                    )
-                                    .zipCode("zipCode")
-                                    .country(
-                                        OptionalNullable.of("country")
-                                    )
-                                    .buildingId(
-                                        OptionalNullable.of("buildingId")
-                                    )
-                                    .tenantId(
-                                        OptionalNullable.of("tenantId")
-                                    )
-                                    .build()
-                            )
-                        )
-                        .build()
-                )
-            )
-        )
-        .optionalSearchResult(
-            OptionalNullable.of(
-                SearchResult.user(
-                    UserResponse
-                        .builder()
-                        .id("id")
-                        .username("username")
-                        .email(
-                            OptionalNullable.of("email")
-                        )
-                        .phone(
-                            OptionalNullable.of("phone")
-                        )
-                        .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .updatedAt(
-                            OptionalNullable.of(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        )
-                        .address(
-                            OptionalNullable.of(
-                                Address
-                                    .builder()
-                                    .street("street")
-                                    .city(
-                                        OptionalNullable.of("city")
-                                    )
-                                    .state(
-                                        OptionalNullable.of("state")
-                                    )
-                                    .zipCode("zipCode")
-                                    .country(
-                                        OptionalNullable.of("country")
-                                    )
-                                    .buildingId(
-                                        OptionalNullable.of("buildingId")
-                                    )
-                                    .tenantId(
-                                        OptionalNullable.of("tenantId")
-                                    )
-                                    .build()
-                            )
-                        )
-                        .build()
-                )
-            )
-        )
-        .nullableArray(
-            OptionalNullable.of(
-                Arrays.asList("nullableArray", "nullableArray")
-            )
-        )
-        .optionalArray(
-            OptionalNullable.of(
-                Arrays.asList("optionalArray", "optionalArray")
             )
         )
         .optionalNullableArray(
@@ -625,53 +449,126 @@ client.nullableOptional().createComplexProfile(
                 Arrays.asList("optionalNullableArray", "optionalNullableArray")
             )
         )
-        .nullableListOfNullables(
-            OptionalNullable.of(
-                Arrays.asList(
-                    OptionalNullable.of("nullableListOfNullables"),
-                    OptionalNullable.of("nullableListOfNullables")
-                )
+        .nullableRole(UserRole.ADMIN)
+        .optionalRole(UserRole.ADMIN)
+        .nullableStatus(UserStatus.ACTIVE)
+        .optionalStatus(UserStatus.ACTIVE)
+        .nullableNotification(
+            NotificationMethod.email(
+                EmailNotification
+                    .builder()
+                    .emailAddress("emailAddress")
+                    .subject("subject")
+                    .htmlContent("htmlContent")
+                    .build()
             )
         )
-        .nullableMapOfNullables(
-            OptionalNullable.of(
-                new HashMap<String, Optional<Address>>() {{
-                    put("nullableMapOfNullables", OptionalNullable.of(
+        .optionalNotification(
+            NotificationMethod.email(
+                EmailNotification
+                    .builder()
+                    .emailAddress("emailAddress")
+                    .subject("subject")
+                    .htmlContent("htmlContent")
+                    .build()
+            )
+        )
+        .nullableSearchResult(
+            SearchResult.user(
+                UserResponse
+                    .builder()
+                    .id("id")
+                    .username("username")
+                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .email("email")
+                    .phone("phone")
+                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .address(
                         Address
                             .builder()
                             .street("street")
-                            .city(
-                                OptionalNullable.of("city")
-                            )
-                            .state(
-                                OptionalNullable.of("state")
-                            )
                             .zipCode("zipCode")
                             .country(
                                 OptionalNullable.of("country")
                             )
-                            .buildingId(
-                                OptionalNullable.of("buildingId")
-                            )
-                            .tenantId(
-                                OptionalNullable.of("tenantId")
-                            )
+                            .city("city")
+                            .state("state")
+                            .buildingId("buildingId")
+                            .tenantId("tenantId")
                             .build()
-                    ));
-                }}
+                    )
+                    .build()
             )
         )
+        .optionalSearchResult(
+            SearchResult.user(
+                UserResponse
+                    .builder()
+                    .id("id")
+                    .username("username")
+                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .email("email")
+                    .phone("phone")
+                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .address(
+                        Address
+                            .builder()
+                            .street("street")
+                            .zipCode("zipCode")
+                            .country(
+                                OptionalNullable.of("country")
+                            )
+                            .city("city")
+                            .state("state")
+                            .buildingId("buildingId")
+                            .tenantId("tenantId")
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .nullableArray(
+            Optional.of(
+                Arrays.asList("nullableArray", "nullableArray")
+            )
+        )
+        .optionalArray(
+            Optional.of(
+                Arrays.asList("optionalArray", "optionalArray")
+            )
+        )
+        .nullableListOfNullables(
+            Optional.of(
+                Arrays.asList(Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))
+            )
+        )
+        .nullableMapOfNullables(
+            new HashMap<String, Optional<Address>>() {{
+                put("nullableMapOfNullables", Optional.of(
+                    Address
+                        .builder()
+                        .street("street")
+                        .zipCode("zipCode")
+                        .country(
+                            OptionalNullable.of("country")
+                        )
+                        .city(Optional.of("city"))
+                        .state(Optional.of("state"))
+                        .buildingId(Optional.of("buildingId"))
+                        .tenantId(Optional.of("tenantId"))
+                        .build()
+                ));
+            }}
+        )
         .nullableListOfUnions(
-            OptionalNullable.of(
+            Optional.of(
                 Arrays.asList(
                     NotificationMethod.email(
                         EmailNotification
                             .builder()
                             .emailAddress("emailAddress")
                             .subject("subject")
-                            .htmlContent(
-                                OptionalNullable.of("htmlContent")
-                            )
+                            .htmlContent("htmlContent")
                             .build()
                     ),
                     NotificationMethod.email(
@@ -679,20 +576,16 @@ client.nullableOptional().createComplexProfile(
                             .builder()
                             .emailAddress("emailAddress")
                             .subject("subject")
-                            .htmlContent(
-                                OptionalNullable.of("htmlContent")
-                            )
+                            .htmlContent("htmlContent")
                             .build()
                     )
                 )
             )
         )
         .optionalMapOfEnums(
-            OptionalNullable.of(
-                new HashMap<String, UserRole>() {{
-                    put("optionalMapOfEnums", UserRole.ADMIN);
-                }}
-            )
+            new HashMap<String, UserRole>() {{
+                put("optionalMapOfEnums", UserRole.ADMIN);
+            }}
         )
         .build()
 );
@@ -820,9 +713,7 @@ client.nullableOptional().updateComplexProfile(
                         .builder()
                         .emailAddress("emailAddress")
                         .subject("subject")
-                        .htmlContent(
-                            OptionalNullable.of("htmlContent")
-                        )
+                        .htmlContent("htmlContent")
                         .build()
                 )
             )
@@ -834,39 +725,23 @@ client.nullableOptional().updateComplexProfile(
                         .builder()
                         .id("id")
                         .username("username")
-                        .email(
-                            OptionalNullable.of("email")
-                        )
-                        .phone(
-                            OptionalNullable.of("phone")
-                        )
                         .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .updatedAt(
-                            OptionalNullable.of(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        )
+                        .email("email")
+                        .phone("phone")
+                        .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                         .address(
-                            OptionalNullable.of(
-                                Address
-                                    .builder()
-                                    .street("street")
-                                    .city(
-                                        OptionalNullable.of("city")
-                                    )
-                                    .state(
-                                        OptionalNullable.of("state")
-                                    )
-                                    .zipCode("zipCode")
-                                    .country(
-                                        OptionalNullable.of("country")
-                                    )
-                                    .buildingId(
-                                        OptionalNullable.of("buildingId")
-                                    )
-                                    .tenantId(
-                                        OptionalNullable.of("tenantId")
-                                    )
-                                    .build()
-                            )
+                            Address
+                                .builder()
+                                .street("street")
+                                .zipCode("zipCode")
+                                .country(
+                                    OptionalNullable.of("country")
+                                )
+                                .city("city")
+                                .state("state")
+                                .buildingId("buildingId")
+                                .tenantId("tenantId")
+                                .build()
                         )
                         .build()
                 )
@@ -976,130 +851,82 @@ client.nullableOptional().testDeserialization(
     DeserializationTestRequest
         .builder()
         .requiredString("requiredString")
-        .nullableString(
-            OptionalNullable.of("nullableString")
-        )
-        .optionalString(
-            OptionalNullable.of("optionalString")
-        )
         .optionalNullableString(
             OptionalNullable.of("optionalNullableString")
         )
-        .nullableEnum(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
-        .optionalEnum(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
+        .nullableString("nullableString")
+        .optionalString("optionalString")
+        .nullableEnum(UserRole.ADMIN)
+        .optionalEnum(UserStatus.ACTIVE)
         .nullableUnion(
-            OptionalNullable.of(
-                NotificationMethod.email(
-                    EmailNotification
-                        .builder()
-                        .emailAddress("emailAddress")
-                        .subject("subject")
-                        .htmlContent(
-                            OptionalNullable.of("htmlContent")
-                        )
-                        .build()
-                )
+            NotificationMethod.email(
+                EmailNotification
+                    .builder()
+                    .emailAddress("emailAddress")
+                    .subject("subject")
+                    .htmlContent("htmlContent")
+                    .build()
             )
         )
         .optionalUnion(
-            OptionalNullable.of(
-                SearchResult.user(
-                    UserResponse
-                        .builder()
-                        .id("id")
-                        .username("username")
-                        .email(
-                            OptionalNullable.of("email")
-                        )
-                        .phone(
-                            OptionalNullable.of("phone")
-                        )
-                        .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .updatedAt(
-                            OptionalNullable.of(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        )
-                        .address(
-                            OptionalNullable.of(
-                                Address
-                                    .builder()
-                                    .street("street")
-                                    .city(
-                                        OptionalNullable.of("city")
-                                    )
-                                    .state(
-                                        OptionalNullable.of("state")
-                                    )
-                                    .zipCode("zipCode")
-                                    .country(
-                                        OptionalNullable.of("country")
-                                    )
-                                    .buildingId(
-                                        OptionalNullable.of("buildingId")
-                                    )
-                                    .tenantId(
-                                        OptionalNullable.of("tenantId")
-                                    )
-                                    .build()
+            SearchResult.user(
+                UserResponse
+                    .builder()
+                    .id("id")
+                    .username("username")
+                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .email("email")
+                    .phone("phone")
+                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .address(
+                        Address
+                            .builder()
+                            .street("street")
+                            .zipCode("zipCode")
+                            .country(
+                                OptionalNullable.of("country")
                             )
-                        )
-                        .build()
-                )
+                            .city("city")
+                            .state("state")
+                            .buildingId("buildingId")
+                            .tenantId("tenantId")
+                            .build()
+                    )
+                    .build()
             )
         )
         .nullableList(
-            OptionalNullable.of(
+            Optional.of(
                 Arrays.asList("nullableList", "nullableList")
             )
         )
         .nullableMap(
-            OptionalNullable.of(
-                new HashMap<String, Integer>() {{
-                    put("nullableMap", 1);
-                }}
-            )
+            new HashMap<String, Integer>() {{
+                put("nullableMap", 1);
+            }}
         )
         .nullableObject(
-            OptionalNullable.of(
-                Address
-                    .builder()
-                    .street("street")
-                    .city(
-                        OptionalNullable.of("city")
-                    )
-                    .state(
-                        OptionalNullable.of("state")
-                    )
-                    .zipCode("zipCode")
-                    .country(
-                        OptionalNullable.of("country")
-                    )
-                    .buildingId(
-                        OptionalNullable.of("buildingId")
-                    )
-                    .tenantId(
-                        OptionalNullable.of("tenantId")
-                    )
-                    .build()
-            )
+            Address
+                .builder()
+                .street("street")
+                .zipCode("zipCode")
+                .country(
+                    OptionalNullable.of("country")
+                )
+                .city("city")
+                .state("state")
+                .buildingId("buildingId")
+                .tenantId("tenantId")
+                .build()
         )
         .optionalObject(
-            OptionalNullable.of(
-                Organization
-                    .builder()
-                    .id("id")
-                    .name("name")
-                    .domain(
-                        OptionalNullable.of("domain")
-                    )
-                    .employeeCount(
-                        OptionalNullable.of(1)
-                    )
-                    .build()
-            )
+            Organization
+                .builder()
+                .id("id")
+                .name("name")
+                .domain("domain")
+                .employeeCount(1)
+                .build()
         )
         .build()
 );
@@ -1159,15 +986,11 @@ Filter users by role with nullable enum
 client.nullableOptional().filterByRole(
     FilterByRoleRequest
         .builder()
-        .role(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
-        .status(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
         .secondaryRole(
             OptionalNullable.of(UserRole.ADMIN)
         )
+        .role(UserRole.ADMIN)
+        .status(UserStatus.ACTIVE)
         .build()
 );
 ```
@@ -1297,19 +1120,19 @@ client.nullableOptional().updateTags(
     "userId",
     UpdateTagsRequest
         .builder()
-        .tags(
+        .labels(
             OptionalNullable.of(
+                Arrays.asList("labels", "labels")
+            )
+        )
+        .tags(
+            Optional.of(
                 Arrays.asList("tags", "tags")
             )
         )
         .categories(
-            OptionalNullable.of(
+            Optional.of(
                 Arrays.asList("categories", "categories")
-            )
-        )
-        .labels(
-            OptionalNullable.of(
-                Arrays.asList("labels", "labels")
             )
         )
         .build()
@@ -1396,16 +1219,14 @@ client.nullableOptional().getSearchResults(
         .builder()
         .query("query")
         .includeTypes(
-            OptionalNullable.of(
+            Optional.of(
                 Arrays.asList("includeTypes", "includeTypes")
             )
         )
         .filters(
-            OptionalNullable.of(
-                new HashMap<String, Optional<String>>() {{
-                    put("filters", OptionalNullable.of("filters"));
-                }}
-            )
+            new HashMap<String, Optional<String>>() {{
+                put("filters", Optional.of("filters"));
+            }}
         )
         .build()
 );

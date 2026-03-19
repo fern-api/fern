@@ -1,11 +1,12 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct WorkspaceRunDetails {
     #[serde(rename = "exceptionV2")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exception_v_2: Option<ExceptionV2>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exception: Option<ExceptionInfo>,
+    #[serde(default)]
     pub stdout: String,
 }
