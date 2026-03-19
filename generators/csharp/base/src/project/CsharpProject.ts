@@ -627,10 +627,61 @@ dotnet_diagnostic.IDE0005.severity = error
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
                 }
             })
         );
+    }
+
+    private cachedClientOptionsRequiredDefaults: string | undefined;
+
+    /**
+     * When unified-client-options is enabled and auth fields are required,
+     * returns a string of extra initializer assignments for ClientOptions in tests
+     * (e.g. ', ClientId = "test", ClientSecret = "test"'). Otherwise returns "".
+     */
+    private getClientOptionsRequiredDefaults(): string {
+        if (this.cachedClientOptionsRequiredDefaults !== undefined) {
+            return this.cachedClientOptionsRequiredDefaults;
+        }
+        return (this.cachedClientOptionsRequiredDefaults = this.computeClientOptionsRequiredDefaults());
+    }
+
+    private computeClientOptionsRequiredDefaults(): string {
+        if (!this.context.generation.settings.unifiedClientOptions) {
+            return "";
+        }
+        const parts: string[] = [];
+
+        // BaseUrl is required when there's no default environment
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+        if (!hasDefaultEnvironment) {
+            parts.push(`BaseUrl = "http://localhost"`);
+        }
+
+        // Auth fields are required when isAuthMandatory is false (confusingly named)
+        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        if (!isOptional) {
+            for (const scheme of this.context.ir.auth.schemes) {
+                if (scheme.type === "bearer") {
+                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "basic") {
+                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
+                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "header") {
+                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "oauth") {
+                    parts.push(`ClientId = "test"`);
+                    parts.push(`ClientSecret = "test"`);
+                }
+            }
+        }
+
+        if (parts.length === 0) {
+            return "";
+        }
+        return ", " + parts.join(", ");
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {

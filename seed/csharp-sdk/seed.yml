@@ -226,6 +226,24 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
       disableDynamicSnippetTests: true
+  basic-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  bearer-token-environment-variable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config

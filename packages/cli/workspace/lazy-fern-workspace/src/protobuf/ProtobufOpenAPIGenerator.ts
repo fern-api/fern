@@ -5,7 +5,7 @@ import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
-import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
+import { detectAirGappedModeForProtobuf, ensureBufCommand, getProtobufYamlV1 } from "./utils.js";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -15,6 +15,8 @@ export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
     private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
+    private protocGenOpenAPIResolved = false;
+    private resolvedBufCommand: string | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -60,11 +62,16 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        // Resolve buf and protoc-gen-openapi once at the start
+        await this.ensureBufResolved();
+        await this.ensureProtocGenOpenAPIResolved();
+
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
             this.isAirGapped = await detectAirGappedModeForProtobuf(
                 absoluteFilepathToProtobufRoot,
-                this.context.logger
+                this.context.logger,
+                this.resolvedBufCommand
             );
         }
 
@@ -110,41 +117,6 @@ export class ProtobufOpenAPIGenerator {
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
         let bufLockContents: string | undefined = existingBufLockContents;
 
-        const which = createLoggingExecutable("which", {
-            cwd,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
-
-        let protocGenOpenAPIOnPath = false;
-        try {
-            await which(["protoc-gen-openapi"]);
-            protocGenOpenAPIOnPath = true;
-        } catch (err) {
-            this.context.logger.debug(
-                `protoc-gen-openapi not found on PATH: ${err instanceof Error ? err.message : String(err)}`
-            );
-        }
-
-        if (!protocGenOpenAPIOnPath) {
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
-            }
-            if (this.protocGenOpenAPIBinDir == null) {
-                this.context.failAndThrow(
-                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
-                );
-            }
-        }
-
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
         const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
         let cleanupBufLock = false;
@@ -157,7 +129,8 @@ export class ProtobufOpenAPIGenerator {
                 ? { PATH: `${this.protocGenOpenAPIBinDir}${path.delimiter}${process.env.PATH ?? ""}` }
                 : undefined;
 
-        const buf = createLoggingExecutable("buf", {
+        const bufCommand = this.resolvedBufCommand ?? "buf";
+        const buf = createLoggingExecutable(bufCommand, {
             cwd,
             logger: this.context.logger,
             stdout: "ignore",
@@ -214,6 +187,44 @@ export class ProtobufOpenAPIGenerator {
             absoluteFilepath: join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH)),
             bufLockContents
         };
+    }
+
+    private async ensureProtocGenOpenAPIResolved(): Promise<void> {
+        if (this.protocGenOpenAPIResolved) {
+            return;
+        }
+
+        const which = createLoggingExecutable("which", {
+            cwd: AbsoluteFilePath.of(process.cwd()),
+            logger: undefined,
+            doNotPipeOutput: true
+        });
+
+        try {
+            await which(["protoc-gen-openapi"]);
+            this.protocGenOpenAPIResolved = true;
+        } catch {
+            this.context.logger.debug("protoc-gen-openapi not found on PATH, attempting auto-download");
+            this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
+            if (this.protocGenOpenAPIBinDir == null) {
+                this.context.failAndThrow(
+                    "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+                );
+            }
+            this.protocGenOpenAPIResolved = true;
+        }
+    }
+
+    private async ensureBufResolved(): Promise<void> {
+        if (this.resolvedBufCommand != null) {
+            return;
+        }
+
+        try {
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
+        } catch (error) {
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
+        }
     }
 
     private async generateRemote(): Promise<{

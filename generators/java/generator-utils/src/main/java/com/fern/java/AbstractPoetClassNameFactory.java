@@ -69,6 +69,10 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "Rfc2822DateTimeDeserializer");
     }
 
+    public final ClassName getDoubleSerializerClassName() {
+        return ClassName.get(getCorePackage(), "DoubleSerializer");
+    }
+
     public final ClassName getStreamClassName() {
         return ClassName.get(getCorePackage(), "Stream");
     }
