@@ -20,7 +20,7 @@ buildCli({
         CLI_NAME: "fern",
         CLI_PACKAGE_NAME: "fern-api"
     },
-    runtimeDependencies: ["@boundaryml/baml", "cli-progress"],
+    runtimeDependencies: ["@boundaryml/baml"],
     packageJsonOverrides: {
         name: "fern-api",
         bin: { fern: "cli.cjs" }

@@ -107,6 +107,7 @@ public final class Shape {
     @JsonIgnoreProperties("type")
     private static final class CircleValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Circle value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -146,6 +147,7 @@ public final class Shape {
     @JsonIgnoreProperties("type")
     private static final class SquareValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Square value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

@@ -111,6 +111,7 @@ public final class Resource {
     @JsonIgnoreProperties("resource_type")
     private static final class UserValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "resource_type", allowSetters = true)
         private User value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -150,6 +151,7 @@ public final class Resource {
     @JsonIgnoreProperties("resource_type")
     private static final class OrganizationValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "resource_type", allowSetters = true)
         private Organization value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

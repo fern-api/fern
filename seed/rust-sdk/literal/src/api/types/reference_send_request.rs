@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendRequest {
     pub prompt: String,
+    #[serde(default)]
     pub query: String,
     pub stream: bool,
     pub ending: String,
@@ -11,5 +12,6 @@ pub struct SendRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_context: Option<SomeLiteral>,
     #[serde(rename = "containerObject")]
+    #[serde(default)]
     pub container_object: ContainerObject,
 }

@@ -4,9 +4,8 @@ use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum RealtimeNoAuthServerMessage {
-    #[serde(rename = "receive")]
     NoAuthReceiveEvent(NoAuthReceiveEvent),
 }
 pub struct RealtimeNoAuthClient {

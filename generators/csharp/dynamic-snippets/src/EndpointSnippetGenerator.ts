@@ -204,6 +204,37 @@ export class EndpointSnippetGenerator extends WithGeneration {
         }
         this.context.errors.unscope();
 
+        if (this.settings.unifiedClientOptions) {
+            // In unified mode, all auth/header args become properties inside ClientOptions
+            const allClientOptionsArgs = [
+                ...authArgs.map((arg) => ({
+                    name: upperFirst(arg.name),
+                    assignment: arg.assignment
+                })),
+                ...headerArgs.map((arg) => ({
+                    name: upperFirst(arg.name),
+                    assignment: arg.assignment
+                })),
+                ...optionArgs.map((arg) => ({
+                    name: arg.name,
+                    assignment: arg.assignment
+                }))
+            ];
+            if (allClientOptionsArgs.length === 0) {
+                return [];
+            }
+            return [
+                {
+                    name: "clientOptions",
+                    assignment: this.csharp.instantiateClass({
+                        classReference: this.Types.ClientOptions,
+                        arguments_: allClientOptionsArgs,
+                        multiline: true
+                    })
+                }
+            ];
+        }
+
         if (optionArgs.length === 0) {
             return [...authArgs, ...headerArgs];
         }

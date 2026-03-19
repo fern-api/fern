@@ -1,9 +1,11 @@
 pub use crate::prelude::*;
 
 /// Test object with nullable and optional fields
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct UserProfile {
+    #[serde(default)]
     pub id: String,
+    #[serde(default)]
     pub username: String,
     #[serde(rename = "nullableString")]
     #[serde(skip_serializing_if = "Option::is_none")]

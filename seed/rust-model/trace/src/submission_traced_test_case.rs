@@ -4,5 +4,6 @@ pub use crate::prelude::*;
 pub struct TracedTestCase {
     pub result: TestCaseResultWithStdout,
     #[serde(rename = "traceResponsesSize")]
+    #[serde(default)]
     pub trace_responses_size: i64,
 }

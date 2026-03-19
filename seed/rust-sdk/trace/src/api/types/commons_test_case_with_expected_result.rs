@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseWithExpectedResult {
     #[serde(rename = "testCase")]
+    #[serde(default)]
     pub test_case: TestCase,
     #[serde(rename = "expectedResult")]
     pub expected_result: VariableValue,
