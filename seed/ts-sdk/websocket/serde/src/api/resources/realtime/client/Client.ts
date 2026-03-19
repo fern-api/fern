@@ -3,7 +3,6 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
@@ -34,7 +33,7 @@ export declare namespace RealtimeClient {
 export class RealtimeClient {
     protected readonly _options: NormalizedClientOptions<RealtimeClient.Options>;
 
-    constructor(options: RealtimeClient.Options = {}) {
+    constructor(options: RealtimeClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -61,8 +60,7 @@ export class RealtimeClient {
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedWebsocketEnvironment.Production,
+                    (await core.Supplier.get(this._options.environment)),
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
             protocols: protocols ?? [],
