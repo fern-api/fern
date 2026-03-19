@@ -5,7 +5,6 @@ package com.seed.websocketBearerAuth.resources.realtimenoauth;
 
 import com.seed.websocketBearerAuth.core.ClientOptions;
 import com.seed.websocketBearerAuth.resources.realtimenoauth.websocket.RealtimeNoAuthWebSocketClient;
-import java.util.Optional;
 
 public class AsyncRealtimeNoAuthClient {
     protected final ClientOptions clientOptions;
@@ -17,9 +16,8 @@ public class AsyncRealtimeNoAuthClient {
     /**
      * Creates a new WebSocket client for the realtimeNoAuth channel.
      * @param sessionId the sessionId path parameter
-     * @param model Optional model query parameter
      */
-    public RealtimeNoAuthWebSocketClient realtimeNoAuthWebSocket(String sessionId, Optional<String> model) {
-        return new RealtimeNoAuthWebSocketClient(clientOptions, sessionId, model);
+    public RealtimeNoAuthWebSocketClient realtimeNoAuthWebSocket(String sessionId) {
+        return new RealtimeNoAuthWebSocketClient(clientOptions, sessionId);
     }
 }
