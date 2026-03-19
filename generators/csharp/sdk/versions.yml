@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.0
+  changelogEntry:
+    - summary: |
+        Replace separate deserialization and serialization tests with a single round-trip
+        serialization test using `JsonAssert.Roundtrips<T>(inputJson)`. The helper deserializes
+        JSON to `T`, re-serializes, and compares to the original JSON via `JsonElement` deep
+        equality, producing diff-reportable failures.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.36.0
   changelogEntry:
     - summary: |
@@ -10,7 +21,6 @@
       type: feat
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.35.1
   changelogEntry:
     - summary: |
