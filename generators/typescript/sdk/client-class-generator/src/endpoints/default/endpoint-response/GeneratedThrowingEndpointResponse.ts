@@ -1281,7 +1281,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const wireValue = singleUnionType.discriminantValue.wireValue;
             let deserializedData: ts.Expression;
 
-            if (singleUnionType.shape.type === "samePropertiesAsObject" && singleUnionType.shape.typeId != null) {
+            if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
                 // Deserialize data using the variant's named type schema
                 deserializedData = context.typeSchema
                     .getSchemaOfNamedType(singleUnionType.shape, { isGeneratingSchema: false })
@@ -1293,7 +1293,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         breadcrumbsPrefix: ["response"],
                         omitUndefined: false
                     });
-            } else if (singleUnionType.shape.type === "singleProperty") {
+            } else if (singleUnionType.shape.propertiesType === "singleProperty") {
                 deserializedData = ts.factory.createIdentifier(DATA_PARAM);
             } else {
                 deserializedData = ts.factory.createIdentifier(DATA_PARAM);
