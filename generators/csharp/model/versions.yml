@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.5.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to all remaining
+        custom `JsonConverter` types: `EnumSerializer<TEnum>` (native C# enums),
+        `DateTimeSerializer`, `DateAsDateTimeConverter`, discriminated union converters,
+        and literal type converters. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` when any of these types is used as a `Dictionary<TKey, TValue>`
+        key. This complements the `IStringEnum` fix in 0.3.2.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 0.5.0
   changelogEntry:
     - summary: |
@@ -21,6 +34,7 @@
       type: feat
   createdAt: "2026-03-19"
   irVersion: 65
+
 - version: 0.3.2
   changelogEntry:
     - summary: |

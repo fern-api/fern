@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
@@ -18,6 +19,57 @@ import {
     PROTOBUF_SHELL_PROXY,
     PROTOBUF_SHELL_PROXY_FILENAME
 } from "./utils.js";
+
+// Coalesces concurrent `npm install -g fern-api` calls into a single execution.
+// Multiple ProtobufIRGenerator instances may call ensureFernGloballyInstalled()
+// concurrently (e.g. during `fern docs dev` with multiple protobuf-sourced API tabs).
+// Without this, parallel npm global installs race on the same node_modules/fern-api
+// directory rename and produce ENOTEMPTY errors. The first caller creates the promise;
+// subsequent callers await the same one. On failure the promise is cleared to allow retry.
+// Safety: the check-and-assign after `await isFernOnPath()` is synchronous within a
+// single tick, so Node's single-threaded event loop guarantees no two callers can both
+// create the install promise.
+let fernGlobalInstallPromise: Promise<void> | undefined;
+
+async function isFernOnPath(logger: Logger): Promise<boolean> {
+    try {
+        await runExeca(undefined, "fern", ["--version"], {
+            stdout: "ignore",
+            stderr: "ignore"
+        });
+        return true;
+    } catch (error) {
+        const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
+        if (!isNotFound) {
+            logger.debug(
+                `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+        return false;
+    }
+}
+
+async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath, logger: Logger): Promise<void> {
+    if (await isFernOnPath(logger)) {
+        return;
+    }
+    if (fernGlobalInstallPromise) {
+        return fernGlobalInstallPromise;
+    }
+    fernGlobalInstallPromise = (async () => {
+        try {
+            await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
+                cwd,
+                stdout: "ignore",
+                stderr: "pipe"
+            });
+        } catch (err) {
+            fernGlobalInstallPromise = undefined; // allow retry on transient failure
+            throw err;
+        }
+    })();
+    return fernGlobalInstallPromise;
+}
 
 export class ProtobufIRGenerator {
     private context: TaskContext;
@@ -210,11 +262,7 @@ export class ProtobufIRGenerator {
             stderr: "pipe"
         });
 
-        await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
+        await ensureFernGloballyInstalled(protobufGeneratorConfigPath, this.context.logger);
 
         // Write buf config
         await writeFile(
