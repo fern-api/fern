@@ -887,9 +887,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     undefined,
                     ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                     ts.factory.createAsExpression(
-                        ts.factory.createIdentifier(
-                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                        ),
+                        ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     )
                 );
@@ -1300,23 +1298,20 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             }
 
             // Return { discriminantWireValue: wireValue, ...deserializedData }
-            return ts.factory.createCaseClause(
-                ts.factory.createStringLiteral(wireValue),
-                [
-                    ts.factory.createReturnStatement(
-                        ts.factory.createObjectLiteralExpression(
-                            [
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier(unionInfo.discriminantWireValue),
-                                    ts.factory.createStringLiteral(wireValue)
-                                ),
-                                ts.factory.createSpreadAssignment(deserializedData)
-                            ],
-                            false
-                        )
+            return ts.factory.createCaseClause(ts.factory.createStringLiteral(wireValue), [
+                ts.factory.createReturnStatement(
+                    ts.factory.createObjectLiteralExpression(
+                        [
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier(unionInfo.discriminantWireValue),
+                                ts.factory.createStringLiteral(wireValue)
+                            ),
+                            ts.factory.createSpreadAssignment(deserializedData)
+                        ],
+                        false
                     )
-                ]
-            );
+                )
+            ]);
         });
 
         // Add default case that returns data as-is with the eventType
