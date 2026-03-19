@@ -68,6 +68,9 @@
         `go install protoc-gen-openapi`, removing the Go toolchain dependency
         from CI.
       type: chore
+    - summary: |
+        Guard concurrent `npm install -g fern-api` invocations with an async lock to prevent race conditions during protobuf toolchain setup
+      type: fix
   createdAt: "2026-03-19"
   irVersion: 65
 
