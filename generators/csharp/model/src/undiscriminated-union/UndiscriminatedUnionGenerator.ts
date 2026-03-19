@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, is, Writer, writeObjectDeserializationLoop } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -1635,21 +1635,40 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             return;
         }
 
-        writeObjectDeserializationLoop(writer, {
-            entries: objectMembers.map((member) => ({
-                key: member.discriminator,
-                writeType: (w) => w.write(member.csharpTypeForTypeof.asNonOptional())
-            })),
-            onMatch: (w) => {
-                w.writeNode(unionReference);
-                w.writeTextStatement(" result = new(key, value)");
-                w.writeTextStatement("return result");
-            },
-            exceptionType: "JsonException",
-            onCatch: (w) => {
-                w.writeTextStatement("// Try next type");
+        // Generate dictionary of discriminator -> type mappings (most specific first)
+        writer.writeTextStatement("var document = JsonDocument.ParseValue(ref reader)");
+        writer.writeLine();
+        writer.write("var types = new (string Key, System.Type Type)[] { ");
+        objectMembers.forEach((member, index) => {
+            const isLast = index === objectMembers.length - 1;
+            writer.write(`("${member.discriminator}", typeof(`);
+            writer.write(member.csharpTypeForTypeof.asNonOptional());
+            writer.write("))");
+            if (!isLast) {
+                writer.write(", ");
             }
         });
+        writer.writeTextStatement(" }");
+        writer.writeLine();
+
+        // Iterate through types and try deserializing
+        writer.writeLine("foreach (var (key, type) in types)");
+        writer.pushScope();
+        writer.writeLine("try");
+        writer.pushScope();
+        writer.writeTextStatement("var value = document.Deserialize(type, options)");
+        writer.writeLine("if (value != null)");
+        writer.pushScope();
+        writer.writeNode(unionReference);
+        writer.writeTextStatement(" result = new(key, value)");
+        writer.writeTextStatement("return result");
+        writer.popScope();
+        writer.popScope();
+        writer.writeLine("catch (JsonException)");
+        writer.pushScope();
+        writer.writeTextStatement("// Try next type");
+        writer.popScope();
+        writer.popScope();
     }
 
     protected getFilepath(): RelativeFilePath {

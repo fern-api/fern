@@ -1,5 +1,1 @@
 name: websocket
-environments:
-  Production: https://production.example.com
-  Staging: https://staging.example.com
-default-environment: Production

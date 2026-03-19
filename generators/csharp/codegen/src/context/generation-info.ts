@@ -656,12 +656,6 @@ export class Generation {
                 origin: this.model.staticExplicit("JsonUtils"),
                 namespace: this.namespaces.core
             }),
-        /** JSON serializer options configuration */
-        JsonOptions: () =>
-            this.csharp.classReference({
-                origin: this.model.staticExplicit("JsonOptions"),
-                namespace: this.namespaces.core
-            }),
         /** Test assertion helper for JSON comparison */
         JsonAssert: () =>
             this.csharp.classReference({
