@@ -3823,6 +3823,19 @@
         },
         "body": {
           "$ref": "#/definitions/websocket.WebSocketChannelMessageBodySchema"
+        },
+        "discriminant-values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
