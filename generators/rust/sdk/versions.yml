@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.9
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant naming for container types with primitive inner types.
+        Previously, variants like `Vec<f64>` produced index-based names (e.g. `List1`). Now they
+        derive meaningful names from the inner type (e.g. `DoubleList`). Also applies to set, map,
+        optional, and nullable containers.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
 - version: 0.19.8
   changelogEntry:
     - summary: |
