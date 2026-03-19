@@ -8,5 +8,5 @@ pub struct UpdateTagsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub categories: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub labels: Option<Option<Vec<String>>>,
+    pub labels: Option<Vec<String>>,
 }

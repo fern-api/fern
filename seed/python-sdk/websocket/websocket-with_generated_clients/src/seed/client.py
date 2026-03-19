@@ -7,6 +7,7 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
+from .environment import SeedWebsocketEnvironment
 
 if typing.TYPE_CHECKING:
     from .realtime.client import AsyncRealtimeClient, RealtimeClient
@@ -18,8 +19,17 @@ class SeedWebsocket:
 
     Parameters
     ----------
-    base_url : str
+    base_url : typing.Optional[str]
         The base url to use for requests from the client.
+
+    environment : SeedWebsocketEnvironment
+        The environment to use for requests from the client. from .environment import SeedWebsocketEnvironment
+
+
+
+        Defaults to SeedWebsocketEnvironment.PRODUCTION
+
+
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -40,15 +50,14 @@ class SeedWebsocket:
     --------
     from seed import SeedWebsocket
 
-    client = SeedWebsocket(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedWebsocket()
     """
 
     def __init__(
         self,
         *,
-        base_url: str,
+        base_url: typing.Optional[str] = None,
+        environment: SeedWebsocketEnvironment = SeedWebsocketEnvironment.PRODUCTION,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -59,7 +68,7 @@ class SeedWebsocket:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -86,8 +95,17 @@ class AsyncSeedWebsocket:
 
     Parameters
     ----------
-    base_url : str
+    base_url : typing.Optional[str]
         The base url to use for requests from the client.
+
+    environment : SeedWebsocketEnvironment
+        The environment to use for requests from the client. from .environment import SeedWebsocketEnvironment
+
+
+
+        Defaults to SeedWebsocketEnvironment.PRODUCTION
+
+
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -108,15 +126,14 @@ class AsyncSeedWebsocket:
     --------
     from seed import AsyncSeedWebsocket
 
-    client = AsyncSeedWebsocket(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedWebsocket()
     """
 
     def __init__(
         self,
         *,
-        base_url: str,
+        base_url: typing.Optional[str] = None,
+        environment: SeedWebsocketEnvironment = SeedWebsocketEnvironment.PRODUCTION,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -127,7 +144,7 @@ class AsyncSeedWebsocket:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -146,3 +163,12 @@ class AsyncSeedWebsocket:
 
             self._realtime = AsyncRealtimeClient(client_wrapper=self._client_wrapper)
         return self._realtime
+
+
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedWebsocketEnvironment) -> str:
+    if base_url is not None:
+        return base_url
+    elif environment is not None:
+        return environment.value
+    else:
+        raise Exception("Please pass in either base_url or environment to construct the client")
