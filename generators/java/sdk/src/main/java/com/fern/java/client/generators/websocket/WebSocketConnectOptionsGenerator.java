@@ -27,7 +27,6 @@ import com.fern.java.client.generators.endpoint.DefaultValueExtractor;
 import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
-import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
@@ -39,9 +38,9 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Generates a connect options class with a builder for WebSocket channel query parameters.
- * Uses the existing ObjectGenerator pipeline to produce staged builders (for required params)
- * or default builders (for all-optional params).
+ * Generates a connect options class with a builder for WebSocket channel query parameters. Uses the existing
+ * ObjectGenerator pipeline to produce staged builders (for required params) or default builders (for all-optional
+ * params).
  */
 public class WebSocketConnectOptionsGenerator {
 
@@ -58,9 +57,7 @@ public class WebSocketConnectOptionsGenerator {
     private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = Collections.emptyMap();
 
     public WebSocketConnectOptionsGenerator(
-            WebSocketChannel websocketChannel,
-            ClientGeneratorContext generatorContext,
-            ClassName className) {
+            WebSocketChannel websocketChannel, ClientGeneratorContext generatorContext, ClassName className) {
         this.websocketChannel = websocketChannel;
         this.generatorContext = generatorContext;
         this.className = className;
@@ -118,26 +115,21 @@ public class WebSocketConnectOptionsGenerator {
                 .build();
     }
 
-    /**
-     * Returns the list of regular query parameter ObjectProperties.
-     * Valid after generateFile() has been called.
-     */
+    /** Returns the list of regular query parameter ObjectProperties. Valid after generateFile() has been called. */
     public List<ObjectProperty> getQueryParameterProperties() {
         return queryParameterObjectProperties;
     }
 
     /**
-     * Returns the list of allow-multiple query parameter ObjectProperties.
-     * Valid after generateFile() has been called.
+     * Returns the list of allow-multiple query parameter ObjectProperties. Valid after generateFile() has been called.
      */
     public List<ObjectProperty> getAllowMultipleProperties() {
         return queryParameterAllowMultipleProperties;
     }
 
     /**
-     * Returns the mapping from ObjectProperty to EnrichedObjectProperty,
-     * which provides getter method names and JavaPoet type names.
-     * Valid after generateFile() has been called.
+     * Returns the mapping from ObjectProperty to EnrichedObjectProperty, which provides getter method names and
+     * JavaPoet type names. Valid after generateFile() has been called.
      */
     public Map<ObjectProperty, EnrichedObjectProperty> getObjectPropertyGetters() {
         return objectPropertyGetters;

@@ -35,7 +35,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -145,7 +144,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         // Build WebSocket URL
         builder.addStatement("$N = new $T<>()", connectionFutureField, CompletableFuture.class);
-        builder.addStatement("String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
+        builder.addStatement(
+                "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
         builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
@@ -185,15 +185,17 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.endControlFlow();
         builder.addStatement("$T parsedUrl = $T.parse(baseUrl + fullPath)", HttpUrl.class, HttpUrl.class);
         builder.beginControlFlow("if (parsedUrl == null)");
-        builder.addStatement("throw new $T($S + baseUrl + fullPath)", IllegalArgumentException.class, "Invalid WebSocket URL: ");
+        builder.addStatement(
+                "throw new $T($S + baseUrl + fullPath)", IllegalArgumentException.class, "Invalid WebSocket URL: ");
         builder.endControlFlow();
         builder.addStatement("$T.Builder urlBuilder = parsedUrl.newBuilder()", HttpUrl.class);
 
         // Add query parameters from connect options
         if (connectOptionsClassName.isPresent()) {
             for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-                String getterName = "get" + capitalize(
-                        queryParam.getName().getName().getCamelCase().getSafeName());
+                String getterName = "get"
+                        + capitalize(
+                                queryParam.getName().getName().getCamelCase().getSafeName());
                 String wireValue = queryParam.getName().getWireValue();
 
                 boolean isOptional = queryParam.getValueType().getContainer().isPresent()
@@ -213,9 +215,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                     builder.endControlFlow();
                 } else {
                     builder.addStatement(
-                            "urlBuilder.addQueryParameter($S, String.valueOf(options.$L()))",
-                            wireValue,
-                            getterName);
+                            "urlBuilder.addQueryParameter($S, String.valueOf(options.$L()))", wireValue, getterName);
                 }
             }
         }
@@ -356,14 +356,13 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         if (isBinary) {
             builder.addStatement(
-                    "$T<$T> future = new $T<>()",
-                    CompletableFuture.class,
-                    TypeName.VOID.box(),
-                    CompletableFuture.class)
+                            "$T<$T> future = new $T<>()",
+                            CompletableFuture.class,
+                            TypeName.VOID.box(),
+                            CompletableFuture.class)
                     .beginControlFlow("try")
                     .addStatement("assertSocketIsOpen()")
-                    .addComment(
-                            "Use reconnecting listener's sendBinary method which handles queuing")
+                    .addComment("Use reconnecting listener's sendBinary method which handles queuing")
                     .addStatement("$N.sendBinary(message)", reconnectingListenerField)
                     .addStatement("future.complete(null)")
                     .endControlFlow()

@@ -18,14 +18,14 @@ package com.fern.java.client.generators.websocket;
 
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.websocket.InlinedWebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketMessageBodyReference;
 import com.fern.ir.model.websocket.WebSocketMessageOrigin;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -134,21 +134,19 @@ public abstract class AbstractWebSocketChannelWriter {
                         ScheduledExecutorService.class, "timeoutExecutor", Modifier.PRIVATE)
                 .build();
 
-        ClassName readyStateClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getCoreClassName("WebSocketReadyState");
+        ClassName readyStateClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
         this.readyStateField = FieldSpec.builder(readyStateClassName, "readyState", Modifier.PRIVATE, Modifier.VOLATILE)
                 .initializer("$T.CLOSED", readyStateClassName)
                 .build();
 
         // Initialize lifecycle handler fields
-        this.onConnectedHandlerField =
-                FieldSpec.builder(Runnable.class, "onConnectedHandler", Modifier.PRIVATE, Modifier.VOLATILE)
-                        .build();
+        this.onConnectedHandlerField = FieldSpec.builder(
+                        Runnable.class, "onConnectedHandler", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
 
-        ClassName disconnectReasonClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getCoreClassName("DisconnectReason");
+        ClassName disconnectReasonClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("DisconnectReason");
         this.onDisconnectedHandlerField = FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(Consumer.class), disconnectReasonClassName),
                         "onDisconnectedHandler",
@@ -179,8 +177,7 @@ public abstract class AbstractWebSocketChannelWriter {
                         .packageName(),
                 "ReconnectingWebSocketListener",
                 "ReconnectOptions");
-        this.reconnectOptionsField = FieldSpec.builder(
-                        reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE)
+        this.reconnectOptionsField = FieldSpec.builder(reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE)
                 .build();
     }
 
@@ -281,9 +278,8 @@ public abstract class AbstractWebSocketChannelWriter {
     protected abstract MethodSpec generateDisconnectMethod();
 
     protected MethodSpec generateGetReadyStateMethod() {
-        ClassName readyStateClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getCoreClassName("WebSocketReadyState");
+        ClassName readyStateClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
         return MethodSpec.methodBuilder("getReadyState")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(readyStateClassName)
@@ -325,9 +321,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected MethodSpec generateOnDisconnectedMethod() {
-        ClassName disconnectReasonClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getCoreClassName("DisconnectReason");
+        ClassName disconnectReasonClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("DisconnectReason");
         return MethodSpec.methodBuilder("onDisconnected")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
@@ -352,9 +347,7 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    /**
-     * Generates the onMessage(Consumer&lt;String&gt;) method for receiving all raw text messages.
-     */
+    /** Generates the onMessage(Consumer&lt;String&gt;) method for receiving all raw text messages. */
     protected MethodSpec generateOnMessageMethod() {
         return MethodSpec.methodBuilder("onMessage")
                 .addModifiers(Modifier.PUBLIC)
@@ -369,9 +362,7 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    /**
-     * Generates the reconnectOptions(ReconnectOptions) setter method.
-     */
+    /** Generates the reconnectOptions(ReconnectOptions) setter method. */
     protected MethodSpec generateReconnectOptionsMethod() {
         return MethodSpec.methodBuilder("reconnectOptions")
                 .addModifiers(Modifier.PUBLIC)
@@ -383,9 +374,7 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    /**
-     * Generates the close() method for AutoCloseable support.
-     */
+    /** Generates the close() method for AutoCloseable support. */
     protected MethodSpec generateCloseMethod() {
         return MethodSpec.methodBuilder("close")
                 .addAnnotation(Override.class)
@@ -401,8 +390,8 @@ public abstract class AbstractWebSocketChannelWriter {
     protected abstract MethodSpec generateAssertSocketIsOpen();
 
     /**
-     * Returns the handler field names for binary server messages, used by subclasses
-     * to wire up the onWebSocketBinaryMessage override.
+     * Returns the handler field names for binary server messages, used by subclasses to wire up the
+     * onWebSocketBinaryMessage override.
      */
     protected java.util.List<String> getBinaryServerMessageHandlerFieldNames() {
         java.util.List<String> result = new java.util.ArrayList<>();
@@ -436,8 +425,7 @@ public abstract class AbstractWebSocketChannelWriter {
                         ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
                         "type")
                 .beginControlFlow("if (typeNode == null || typeNode.isNull())")
-                .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
                 .endControlFlow()
                 .addStatement("String type = typeNode.asText()")
                 .beginControlFlow("switch (type)");
@@ -523,8 +511,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns true if the message body is a primitive string with format "binary",
-     * indicating it should be sent/received as raw bytes rather than JSON text.
+     * Returns true if the message body is a primitive string with format "binary", indicating it should be
+     * sent/received as raw bytes rather than JSON text.
      */
     protected boolean isMessageBodyBinary(WebSocketMessage message) {
         return message.getBody().visit(new WebSocketMessageBody.Visitor<Boolean>() {
@@ -539,41 +527,91 @@ public abstract class AbstractWebSocketChannelWriter {
                 if (bodyType.isPrimitive()) {
                     PrimitiveType primitive = bodyType.getPrimitive().get();
                     if (primitive.getV2().isPresent()) {
-                        return primitive.getV2().get().visit(new com.fern.ir.model.types.PrimitiveTypeV2.Visitor<Boolean>() {
-                            @Override
-                            public Boolean visitInteger(com.fern.ir.model.types.IntegerType value) { return false; }
-                            @Override
-                            public Boolean visitLong(com.fern.ir.model.types.LongType value) { return false; }
-                            @Override
-                            public Boolean visitUint(com.fern.ir.model.types.UintType value) { return false; }
-                            @Override
-                            public Boolean visitUint64(com.fern.ir.model.types.Uint64Type value) { return false; }
-                            @Override
-                            public Boolean visitFloat(com.fern.ir.model.types.FloatType value) { return false; }
-                            @Override
-                            public Boolean visitDouble(com.fern.ir.model.types.DoubleType value) { return false; }
-                            @Override
-                            public Boolean visitBoolean(com.fern.ir.model.types.BooleanType value) { return false; }
-                            @Override
-                            public Boolean visitString(com.fern.ir.model.types.StringType value) {
-                                return value.getValidation().isPresent()
-                                        && "binary".equals(value.getValidation().get().getFormat().orElse(null));
-                            }
-                            @Override
-                            public Boolean visitDate(com.fern.ir.model.types.DateType value) { return false; }
-                            @Override
-                            public Boolean visitDateTime(com.fern.ir.model.types.DateTimeType value) { return false; }
-                            @Override
-                            public Boolean visitDateTimeRfc2822(com.fern.ir.model.types.DateTimeRfc2822Type value) { return false; }
-                            @Override
-                            public Boolean visitUuid(com.fern.ir.model.types.UuidType value) { return false; }
-                            @Override
-                            public Boolean visitBase64(com.fern.ir.model.types.Base64Type value) { return true; }
-                            @Override
-                            public Boolean visitBigInteger(com.fern.ir.model.types.BigIntegerType value) { return false; }
-                            @Override
-                            public Boolean _visitUnknown(Object unknown) { return false; }
-                        });
+                        return primitive
+                                .getV2()
+                                .get()
+                                .visit(new com.fern.ir.model.types.PrimitiveTypeV2.Visitor<Boolean>() {
+                                    @Override
+                                    public Boolean visitInteger(com.fern.ir.model.types.IntegerType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitLong(com.fern.ir.model.types.LongType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUint(com.fern.ir.model.types.UintType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUint64(com.fern.ir.model.types.Uint64Type value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitFloat(com.fern.ir.model.types.FloatType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDouble(com.fern.ir.model.types.DoubleType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBoolean(com.fern.ir.model.types.BooleanType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitString(com.fern.ir.model.types.StringType value) {
+                                        return value.getValidation().isPresent()
+                                                && "binary"
+                                                        .equals(value.getValidation()
+                                                                .get()
+                                                                .getFormat()
+                                                                .orElse(null));
+                                    }
+
+                                    @Override
+                                    public Boolean visitDate(com.fern.ir.model.types.DateType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDateTime(com.fern.ir.model.types.DateTimeType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDateTimeRfc2822(
+                                            com.fern.ir.model.types.DateTimeRfc2822Type value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUuid(com.fern.ir.model.types.UuidType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBase64(com.fern.ir.model.types.Base64Type value) {
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBigInteger(com.fern.ir.model.types.BigIntegerType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean _visitUnknown(Object unknown) {
+                                        return false;
+                                    }
+                                });
                     }
                 }
                 return false;
@@ -667,9 +705,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns the method name for a send operation. Uses the custom methodName from
-     * the IR if available (e.g., x-fern-sdk-method-name) as-is, otherwise falls back to
-     * "send" + capitalize(messageType).
+     * Returns the method name for a send operation. Uses the custom methodName from the IR if available (e.g.,
+     * x-fern-sdk-method-name) as-is, otherwise falls back to "send" + capitalize(messageType).
      */
     protected String getSendMethodName(WebSocketMessage message) {
         if (message.getMethodName().isPresent()) {
@@ -679,9 +716,9 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns the method name for a server message handler. Uses the custom methodName
-     * from the IR if available as-is, otherwise falls back to "on" + toPascalCase(messageType).
-     * Avoids collisions with lifecycle methods that share the same erasure ({@code Consumer<?>}).
+     * Returns the method name for a server message handler. Uses the custom methodName from the IR if available as-is,
+     * otherwise falls back to "on" + toPascalCase(messageType). Avoids collisions with lifecycle methods that share the
+     * same erasure ({@code Consumer<?>}).
      */
     protected String getMessageMethodName(WebSocketMessage message) {
         String baseName;
@@ -697,9 +734,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Gets the method name for resolving the environment URL for this WebSocket channel.
-     * For single-URL environments, uses getUrl(). For multi-URL environments, uses the
-     * URL getter corresponding to the channel's baseUrl.
+     * Gets the method name for resolving the environment URL for this WebSocket channel. For single-URL environments,
+     * uses getUrl(). For multi-URL environments, uses the URL getter corresponding to the channel's baseUrl.
      */
     protected String getEnvironmentUrlMethodName() {
         if (generatedEnvironmentsClass.info() instanceof GeneratedEnvironmentsClass.SingleUrlEnvironmentClass) {
@@ -710,7 +746,8 @@ public abstract class AbstractWebSocketChannelWriter {
             GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass multiUrl =
                     (GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass) generatedEnvironmentsClass.info();
             if (websocketChannel.getBaseUrl().isPresent()) {
-                MethodSpec urlMethod = multiUrl.urlGetterMethods().get(websocketChannel.getBaseUrl().get());
+                MethodSpec urlMethod = multiUrl.urlGetterMethods()
+                        .get(websocketChannel.getBaseUrl().get());
                 if (urlMethod != null) {
                     return urlMethod.name;
                 }

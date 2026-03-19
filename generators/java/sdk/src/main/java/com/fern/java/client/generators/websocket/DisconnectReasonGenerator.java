@@ -10,9 +10,8 @@ import com.squareup.javapoet.TypeSpec;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generator for the DisconnectReason class used by WebSocket clients.
- * Generates a top-level class in the core package so it can be shared
- * across all WebSocket channel clients.
+ * Generator for the DisconnectReason class used by WebSocket clients. Generates a top-level class in the core package
+ * so it can be shared across all WebSocket channel clients.
  */
 public class DisconnectReasonGenerator {
 

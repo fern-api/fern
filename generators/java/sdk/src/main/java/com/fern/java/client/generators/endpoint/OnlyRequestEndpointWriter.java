@@ -18,8 +18,8 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpService;
@@ -227,8 +227,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     });
 
             if (isBytes) {
-                BytesRequest bytesRequest =
-                        endpoint.getRequestBody().get().visit(new HttpRequestBody.Visitor<BytesRequest>() {
+                BytesRequest bytesRequest = endpoint.getRequestBody()
+                        .get()
+                        .visit(new HttpRequestBody.Visitor<BytesRequest>() {
                             @Override
                             public BytesRequest visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
                                 return null;
@@ -494,8 +495,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
             String bodySource;
             if (requestBodyGetterName.isPresent()) {
-                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName()
-                        + "." + requestBodyGetterName.get() + "()";
+                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName() + "."
+                        + requestBodyGetterName.get() + "()";
             } else {
                 bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
             }
