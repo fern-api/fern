@@ -942,7 +942,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         for (const each of this.events) {
             cls.addField({
                 origin: cls.explicit(`${each.name}`),
-                get: true,
+                readonly: true,
                 initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
                 access: ast.Access.Public,
                 doc: this.csharp.xmlDocBlockOf({
@@ -954,7 +954,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         cls.addField({
             origin: cls.explicit("UnknownMessage"),
-            get: true,
+            readonly: true,
             initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
             access: ast.Access.Public,
             doc: this.csharp.xmlDocBlockOf({
@@ -1159,26 +1159,6 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             partial: true,
             interfaceReferences: [this.System.IAsyncDisposable, this.System.IDisposable]
-        });
-
-        // Add event property declarations for server-to-client events
-        for (const each of this.events) {
-            interface_.addField({
-                name: each.name ?? "",
-                enclosingType: interface_,
-                access: ast.Access.Public,
-                get: true,
-                type: each.eventType
-            });
-        }
-
-        // UnknownMessage event
-        interface_.addField({
-            name: "UnknownMessage",
-            enclosingType: interface_,
-            access: ast.Access.Public,
-            get: true,
-            type: this.Types.WebSocketEvent(this.System.Text.Json.JsonElement)
         });
 
         // Connected event
