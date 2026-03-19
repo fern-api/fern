@@ -38,7 +38,6 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     asyncApiMessageNaming: "asyncApiNaming",
     shouldUseOptionalAdditionalProperties: "optionalAdditionalProperties",
     coerceEnumsToLiterals: "coerceEnumsToLiterals",
-    coerceConstToLiteral: "coerceConstToLiteral",
     objectQueryParameters: "objectQueryParameters",
     respectReadonlySchemas: "respectReadonlySchemas",
     respectNullableSchemas: "respectNullableSchemas",
