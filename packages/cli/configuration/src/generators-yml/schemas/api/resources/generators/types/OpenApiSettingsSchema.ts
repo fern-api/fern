@@ -9,8 +9,6 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
     "inline-path-parameters"?: boolean;
     /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
     "prefer-undiscriminated-unions-with-literals"?: boolean;
-    /** Whether to convert OpenAPI/AsyncAPI `const` string schemas to Fern literal types. Defaults to false. */
-    "coerce-const-to-literal"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */

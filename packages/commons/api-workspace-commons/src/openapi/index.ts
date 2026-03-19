@@ -3,8 +3,7 @@ export { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "./constants.js";
 export {
     type APIDefinitionSettings,
     getAPIDefinitionSettings,
-    getAPIDefinitionSettingsDefaults,
-    getPartialAPIDefinitionSettings
+    getAPIDefinitionSettingsDefaults
 } from "./getAPIDefinitionSettings.js";
 export { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "./getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation.js";
 export { isOpenAPIV2 } from "./isOpenAPIV2.js";

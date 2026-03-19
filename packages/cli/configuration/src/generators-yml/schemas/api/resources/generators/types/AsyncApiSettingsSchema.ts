@@ -5,6 +5,4 @@ import type * as GeneratorsYml from "../../../index.js";
 export interface AsyncApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSchema {
     /** What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1. */
     "message-naming"?: GeneratorsYml.MessageNamingSettingsSchema;
-    /** Whether to convert const string schemas to literal types. Defaults to false. */
-    "coerce-const-to-literal"?: boolean;
 }

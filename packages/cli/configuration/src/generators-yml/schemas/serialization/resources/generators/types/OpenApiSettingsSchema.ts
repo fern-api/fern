@@ -18,7 +18,6 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "only-include-referenced-schemas": core.serialization.boolean().optional(),
         "inline-path-parameters": core.serialization.boolean().optional(),
         "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
-        "coerce-const-to-literal": core.serialization.boolean().optional(),
         "object-query-parameters": core.serialization.boolean().optional(),
         "respect-readonly-schemas": core.serialization.boolean().optional(),
         "respect-forward-compatible-enums": core.serialization.boolean().optional(),
@@ -41,7 +40,6 @@ export declare namespace OpenApiSettingsSchema {
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;
-        "coerce-const-to-literal"?: boolean | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
         "respect-forward-compatible-enums"?: boolean | null;
