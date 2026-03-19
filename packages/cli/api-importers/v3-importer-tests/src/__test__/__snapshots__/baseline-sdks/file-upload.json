@@ -1791,7 +1791,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:UploadWithContentTypeRequestData"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

@@ -879,7 +879,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:ExampleResponseStatus"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

@@ -14473,5 +14473,14 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
-    "generatorConfig": null
+    "generatorConfig": null,
+    "inlineTypes": [
+        "type_complex:SearchRequestQuery",
+        "type_complex:MultipleFilterSearchRequestOperator",
+        "type_complex:MultipleFilterSearchRequestValue",
+        "type_complex:SingleFilterSearchRequestOperator",
+        "type_inline-users/inline-users:NextPage",
+        "type_inline-users/inline-users:Users",
+        "type_inline-users/inline-users:User"
+    ]
 }

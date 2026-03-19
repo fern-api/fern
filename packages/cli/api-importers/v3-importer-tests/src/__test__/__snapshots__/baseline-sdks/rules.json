@@ -998,7 +998,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:GetExampleResponseMessage"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

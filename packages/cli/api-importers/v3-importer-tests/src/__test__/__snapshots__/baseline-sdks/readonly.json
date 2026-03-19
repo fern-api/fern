@@ -4254,7 +4254,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:UserStatsAccountStatus"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

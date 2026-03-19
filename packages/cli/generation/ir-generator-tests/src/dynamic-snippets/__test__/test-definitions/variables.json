@@ -145,5 +145,6 @@
             }
         }
     ],
-    "generatorConfig": null
+    "generatorConfig": null,
+    "inlineTypes": null
 }

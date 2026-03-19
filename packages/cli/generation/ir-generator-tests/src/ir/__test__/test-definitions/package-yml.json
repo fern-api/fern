@@ -1736,7 +1736,8 @@
         ],
         "environments": null,
         "variables": null,
-        "generatorConfig": null
+        "generatorConfig": null,
+        "inlineTypes": null
     },
     "audiences": null,
     "generationMetadata": null,

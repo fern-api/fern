@@ -1021,7 +1021,11 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:PaymentRequestAmount",
+      "type_:PaymentResponseAmount"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

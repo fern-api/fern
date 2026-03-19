@@ -1019,7 +1019,12 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:PostTestOneOfDisplayNameRequestFieldsItemId",
+      "type_:PostTestOneOfDisplayNameRequestFieldsItemName",
+      "type_:PostTestOneOfDisplayNameRequestFieldsItem"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

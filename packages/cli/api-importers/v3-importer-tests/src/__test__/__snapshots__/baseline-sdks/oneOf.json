@@ -3299,7 +3299,18 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:UserRequestNoSummaryOrTitle",
+      "type_:UserRequestNoSummaryAndTitle",
+      "type_:UserRequestSummaryAndTitle",
+      "type_:UserRequestInlinedOneOfNoNamesEmail",
+      "type_:UserRequestInlinedOneOfNoNamesPhoneNumber",
+      "type_:UserRequestInlinedOneOfNoNames",
+      "type_:UserRequestInlinedOneOfWithNamesEmail",
+      "type_:UserRequestInlinedOneOfWithNamesPhoneNumber",
+      "type_:UserRequestInlinedOneOfWithNames"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

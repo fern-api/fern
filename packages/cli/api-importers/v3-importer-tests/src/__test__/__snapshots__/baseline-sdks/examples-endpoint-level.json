@@ -3483,7 +3483,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:TreeCreateLocation"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

@@ -1353,7 +1353,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:ListItemsRequestFilterStatus"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

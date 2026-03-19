@@ -1263,7 +1263,11 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:CircleType",
+      "type_:SquareType"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

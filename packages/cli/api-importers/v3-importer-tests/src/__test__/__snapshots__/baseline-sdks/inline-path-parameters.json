@@ -2288,7 +2288,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_organizations:SearchRequestAccess"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {

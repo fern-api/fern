@@ -3955,7 +3955,11 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:CreateSucculentsRequestSucculentsItem",
+      "type_:TreeCreateLocation"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

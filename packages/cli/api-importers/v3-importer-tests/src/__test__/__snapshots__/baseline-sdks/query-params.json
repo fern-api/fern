@@ -1827,7 +1827,11 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_:SearchRequestFilterLocationCoordinates",
+      "type_:SearchRequestFilterLocation"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {},

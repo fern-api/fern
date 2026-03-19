@@ -4794,7 +4794,14 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_petowners:PetownersSubscribeParamsChannel",
+      "type_petowners:PetownersSubscribeParamsData",
+      "type_petowners:PetownersSubscribeParams",
+      "type_:PetStatus",
+      "type_:OrderStatus"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {

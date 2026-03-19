@@ -1366,7 +1366,10 @@
         "examples": []
       }
     },
-    "pathParameters": []
+    "pathParameters": [],
+    "inlineTypes": [
+      "type_link:BulkTriggerHistoricalPullRequestTeamIdOne"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {

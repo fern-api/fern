@@ -2000,7 +2000,10 @@
         ],
         "type": "singleBaseUrl"
       }
-    }
+    },
+    "inlineTypes": [
+      "type_auth:GetTokenAuthRequestGrantType"
+    ]
   },
   "apiPlayground": true,
   "subpackages": {
