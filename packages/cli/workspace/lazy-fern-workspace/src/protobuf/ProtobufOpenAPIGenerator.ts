@@ -328,7 +328,13 @@ export class ProtobufOpenAPIGenerator {
         });
 
         try {
-            await which(["protoc-gen-openapi"]);
+            const result = await which(["protoc-gen-openapi"]);
+            const resolvedPath = result.stdout?.trim();
+            if (resolvedPath) {
+                this.context.logger.debug(`Found protoc-gen-openapi on PATH: ${resolvedPath}`);
+            } else {
+                this.context.logger.debug("Found protoc-gen-openapi on PATH");
+            }
             this.protocGenOpenAPIResolved = true;
         } catch {
             this.context.logger.debug("protoc-gen-openapi not found on PATH, attempting auto-download");
