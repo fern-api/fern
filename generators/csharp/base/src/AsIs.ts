@@ -75,8 +75,7 @@ export const AsIsFiles = {
         Nullable: "NullableAttribute.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
         Optional: "Optional.Template.cs",
-        OptionalAttribute: "OptionalAttribute.Template.cs",
-        StringEnumSerializer: "StringEnumSerializer.Template.cs"
+        OptionalAttribute: "OptionalAttribute.Template.cs"
     },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
