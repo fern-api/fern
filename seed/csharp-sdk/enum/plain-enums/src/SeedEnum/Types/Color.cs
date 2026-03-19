@@ -68,9 +68,8 @@ internal class ColorSerializer : global::System.Text.Json.Serialization.JsonConv
         global::System.Text.Json.JsonSerializerOptions options
     )
     {
-        if (_enumToString.TryGetValue(value, out var stringValue))
-        {
-            writer.WritePropertyName(stringValue);
-        }
+        writer.WritePropertyName(
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
+        );
     }
 }

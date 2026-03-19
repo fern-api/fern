@@ -71,9 +71,6 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
         JsonSerializerOptions options
     )
     {
-        if (_enumToString.TryGetValue(value, out var stringValue))
-        {
-            writer.WritePropertyName(stringValue);
-        }
+        writer.WritePropertyName(_enumToString[value]);
     }
 }

@@ -198,10 +198,9 @@ export class Enum extends Node {
             `public override void WriteAsPropertyName(global::System.Text.Json.Utf8JsonWriter writer, ${this.name} value, global::System.Text.Json.JsonSerializerOptions options)`
         );
         writer.pushScope();
-        writer.writeLine(`if (_enumToString.TryGetValue(value, out var stringValue))`);
-        writer.pushScope();
-        writer.writeLine(`writer.WritePropertyName(stringValue);`);
-        writer.popScope();
+        writer.writeLine(
+            `writer.WritePropertyName(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString());`
+        );
         writer.popScope();
 
         writer.popScope();
