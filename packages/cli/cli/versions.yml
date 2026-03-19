@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.1
+  changelogEntry:
+    - summary: |
+        Optimize protobuf buf generate to reuse a single working directory
+        across all proto files. Instead of creating a new temp dir, copying
+        the proto root, checking binaries, and resolving deps for every file,
+        setup is done once and only `buf generate <target>` runs per file.
+        The two buf generate passes (protoc-gen-openapi and protoc-gen-fern)
+        also now run concurrently.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 4.37.0
   changelogEntry:
     - summary: |
