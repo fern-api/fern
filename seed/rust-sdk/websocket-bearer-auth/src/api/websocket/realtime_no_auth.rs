@@ -20,11 +20,14 @@ impl RealtimeNoAuthClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
+        authorization: &str,
         options: &RealtimeNoAuthConnectOptions,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime-no-auth/{session_id}", url);
         let mut ws_options = WebSocketOptions::default();
-
+        ws_options
+            .headers
+            .insert("Authorization".to_string(), authorization.to_string());
         if let Some(ref v) = options.model {
             ws_options
                 .query_params
@@ -64,11 +67,12 @@ impl RealtimeNoAuthClient {
 /// Provides access to the WebSocket channel through the root client.
 pub struct RealtimeNoAuthConnector {
     base_url: String,
+    token: Option<String>,
 }
 
 impl RealtimeNoAuthConnector {
-    pub fn new(base_url: String) -> Self {
-        Self { base_url }
+    pub fn new(base_url: String, token: Option<String>) -> Self {
+        Self { base_url, token }
     }
 
     pub async fn connect(
@@ -76,6 +80,11 @@ impl RealtimeNoAuthConnector {
         session_id: &str,
         options: &RealtimeNoAuthConnectOptions,
     ) -> Result<RealtimeNoAuthClient, ApiError> {
-        RealtimeNoAuthClient::connect(&self.base_url, session_id, options).await
+        let auth_header = self
+            .token
+            .as_ref()
+            .map(|t| format!("Bearer {}", t))
+            .unwrap_or_default();
+        RealtimeNoAuthClient::connect(&self.base_url, session_id, &auth_header, options).await
     }
 }

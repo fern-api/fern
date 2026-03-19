@@ -12,6 +12,16 @@
   createdAt: "2026-03-18"
   irVersion: 62
 
+- version: 0.19.7
+  changelogEntry:
+    - summary: |
+        Add root-level service endpoint support on the main client struct. WebSocket
+        connectors now support implicit Bearer auth, auto-injecting the token from
+        ClientConfig when no explicit Authorization header is defined.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
 - version: 0.19.6
   changelogEntry:
     - summary: |

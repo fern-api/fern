@@ -350,6 +350,18 @@ ${methods.join("\n\n")}
      * When a channel has query parameters, they are bundled into a ConnectOptions struct
      * instead of being passed as individual positional parameters.
      */
+    /**
+     * Returns true if the channel does not already have an explicit Authorization
+     * header in its IR definition.  When true, the connector will automatically
+     * inject a Bearer token from the stored ClientConfig token.
+     */
+    private needsImplicitAuth(channel: FernIr.WebSocketChannel): boolean {
+        const hasExplicitAuth = channel.headers.some(
+            (h) => h.name.wireValue.toLowerCase() === "authorization"
+        );
+        return !hasExplicitAuth;
+    }
+
     private buildConnectParams(
         channel: FernIr.WebSocketChannel,
         enumPrefix: string
@@ -358,6 +370,11 @@ ${methods.join("\n\n")}
 
         for (const pathParam of channel.pathParameters) {
             params.push({ name: pathParam.name.snakeCase.safeName, type: "&str" });
+        }
+
+        // If auth is required but no explicit Authorization header, add it
+        if (this.needsImplicitAuth(channel)) {
+            params.push({ name: "authorization", type: "&str" });
         }
 
         for (const header of channel.headers) {
@@ -391,13 +408,19 @@ ${methods.join("\n\n")}
         const connectParams = this.buildConnectParams(channel, enumPrefix);
         const params: string[] = ["url: &str", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
 
-        const headerInserts = channel.headers
-            .map((header) => {
-                const paramName = header.name.name.snakeCase.safeName;
-                const wireValue = header.name.wireValue;
-                return `        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`;
-            })
-            .join("\n");
+        const headerLines: string[] = [];
+
+        // If auth is required but no explicit Authorization header, inject it
+        if (this.needsImplicitAuth(channel)) {
+            headerLines.push(`        ws_options.headers.insert("Authorization".to_string(), authorization.to_string());`);
+        }
+
+        for (const header of channel.headers) {
+            const paramName = header.name.name.snakeCase.safeName;
+            const wireValue = header.name.wireValue;
+            headerLines.push(`        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
+        }
+        const headerInserts = headerLines.join("\n");
 
         const queryLines: string[] = [];
         if (channel.queryParameters.length > 0) {
@@ -415,7 +438,7 @@ ${methods.join("\n\n")}
             }
         }
 
-        const needsMut = channel.headers.length > 0 || channel.queryParameters.length > 0;
+        const needsMut = this.needsImplicitAuth(channel) || channel.headers.length > 0 || channel.queryParameters.length > 0;
         const wsOptionsBinding = needsMut ? "let mut ws_options" : "let ws_options";
 
         return `    pub async fn connect(${params.join(", ")}) -> Result<Self, ApiError> {
@@ -507,25 +530,57 @@ ${queryLines.join("\n")}
      */
     private generateConnectorStruct(clientName: string, enumPrefix: string, channel: FernIr.WebSocketChannel): string {
         const connectorName = this.getConnectorName(clientName);
+        const implicitAuth = this.needsImplicitAuth(channel);
 
-        // Reuse shared parameter list — same order and types as generateConnectMethod()
-        const connectParams = this.buildConnectParams(channel, enumPrefix);
+        // Build the user-facing connector connect() params — exclude the implicit auth param
+        // since it is auto-injected from the stored token.
+        const connectParams = this.buildConnectParams(channel, enumPrefix)
+            .filter((p) => !(implicitAuth && p.name === "authorization"));
         const params: string[] = ["&self", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
-        const forwardArgs: string[] = ["&self.base_url", ...connectParams.map((p) => p.name)];
+
+        // Build the forward args for the underlying client::connect() call.
+        // Insert the auto-constructed Bearer token where the authorization param goes.
+        const allClientParams = this.buildConnectParams(channel, enumPrefix);
+        const forwardArgs: string[] = ["&self.base_url"];
+        for (const p of allClientParams) {
+            if (implicitAuth && p.name === "authorization") {
+                forwardArgs.push("&auth_header");
+            } else {
+                forwardArgs.push(p.name);
+            }
+        }
+
+        const structFields = implicitAuth
+            ? `    base_url: String,\n    token: Option<String>,`
+            : `    base_url: String,`;
+
+        const newParams = implicitAuth
+            ? `base_url: String, token: Option<String>`
+            : `base_url: String`;
+
+        const newBody = implicitAuth
+            ? `Self { base_url, token }`
+            : `Self { base_url }`;
+
+        const authSetup = implicitAuth
+            ? `        let auth_header = self.token.as_ref()
+            .map(|t| format!("Bearer {}", t))
+            .unwrap_or_default();\n`
+            : "";
 
         return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
 /// Provides access to the WebSocket channel through the root client.
 pub struct ${connectorName} {
-    base_url: String,
+${structFields}
 }
 
 impl ${connectorName} {
-    pub fn new(base_url: String) -> Self {
-        Self { base_url }
+    pub fn new(${newParams}) -> Self {
+        ${newBody}
     }
 
     pub async fn connect(${params.join(", ")}) -> Result<${clientName}, ApiError> {
-        ${clientName}::connect(${forwardArgs.join(", ")}).await
+${authSetup}        ${clientName}::connect(${forwardArgs.join(", ")}).await
     }
 }`;
     }

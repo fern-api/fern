@@ -119,6 +119,23 @@ export class SubClientGenerator {
         };
     }
 
+    /**
+     * Returns just the endpoint methods for this service, without the client struct wrapper.
+     * Used by RootClientGenerator to add root-level endpoint methods directly on the main client.
+     */
+    public getEndpointMethods(): rust.Client.SimpleMethod[] {
+        const endpoints = this.service?.endpoints || [];
+        return this.convertEndpointsToHttpMethods(endpoints);
+    }
+
+    /**
+     * Returns the imports required by this service's endpoint methods.
+     * Used by RootClientGenerator to merge root-level endpoint imports.
+     */
+    public getEndpointImports(): UseStatement[] {
+        return this.generateImports();
+    }
+
     public generateModFile(): RustFile | null {
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
         if (!fernFilepathDir) {
