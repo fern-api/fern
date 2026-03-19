@@ -38,7 +38,7 @@ export class DynamicTypeMapper extends WithGeneration {
                 if (named == null) {
                     return this.convertUnknown();
                 }
-                return this.convertNamed({ named });
+                return this.convertNamed({ named, typeId: args.typeReference.value });
             }
             case "optional":
             case "nullable": {
@@ -58,39 +58,51 @@ export class DynamicTypeMapper extends WithGeneration {
         }
     }
 
-    convertToClassReference(named: FernIr.dynamic.NamedType): ast.ClassReference {
+    convertToClassReference(named: FernIr.dynamic.NamedType, typeId?: string): ast.ClassReference {
+        // When inline types are enabled and this type is inline, nest it inside
+        // the parent type's `Types` static class: ParentType.Types.InlineTypeName
+        if (typeId != null && this.context.isInlineType(typeId)) {
+            const parentTypeId = this.context.getInlineTypeParent(typeId);
+            if (parentTypeId != null) {
+                const parentNamedType = this.context.ir.types[parentTypeId];
+                if (parentNamedType != null) {
+                    const parentClassRef = this.convertToClassReference(parentNamedType, parentTypeId);
+                    const typesClassName = this.context.getInlineTypesClassName(parentTypeId);
+                    const typesClassRef = this.csharp.classReference({
+                        name: typesClassName,
+                        enclosingType: parentClassRef
+                    });
+                    return this.csharp.classReference({
+                        origin: named.declaration,
+                        enclosingType: typesClassRef
+                    });
+                }
+            }
+        }
+
         return this.csharp.classReference({
             origin: named.declaration,
             namespace: this.context.getNamespace(named.declaration.fernFilepath)
         });
     }
 
-    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): ast.Type {
+    private convertNamed({ named, typeId }: { named: FernIr.dynamic.NamedType; typeId?: string }): ast.Type {
         switch (named.type) {
             case "alias":
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "object":
-                return this.csharp.classReference({
-                    origin: named.declaration,
-                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                });
+                return this.convertToClassReference(named, typeId);
 
             case "discriminatedUnion":
                 if (!this.settings.shouldGeneratedDiscriminatedUnions) {
                     return this.Primitive.object;
                 }
-                return this.csharp.classReference({
-                    origin: named.declaration,
-                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                });
+                return this.convertToClassReference(named, typeId);
 
             case "undiscriminatedUnion":
                 if (this.settings.shouldGenerateUndiscriminatedUnions) {
-                    return this.csharp.classReference({
-                        origin: named.declaration,
-                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                    });
+                    return this.convertToClassReference(named, typeId);
                 }
                 return this.OneOf.OneOf(
                     named.types.map((typeReference) => {

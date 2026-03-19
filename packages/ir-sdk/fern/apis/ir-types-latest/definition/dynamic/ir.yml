@@ -39,6 +39,12 @@ types:
           referenced in path parameters and other contexts.
         type: optional<list<variables.VariableDeclaration>>
       generatorConfig: optional<GeneratorConfig>
+      inlineTypes:
+        docs: |
+          The set of type IDs that are marked as inline in the full IR.
+          Generators that support inline types use this to determine which
+          types should be generated as nested classes within their parent type.
+        type: optional<set<commons.TypeId>>
 
   GeneratorConfig:
     docs: |

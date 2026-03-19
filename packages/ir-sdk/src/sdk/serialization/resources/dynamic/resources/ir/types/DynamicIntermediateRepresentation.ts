@@ -24,6 +24,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     pathParameters: core.serialization.list(NamedParameter).optional(),
     variables: core.serialization.list(VariableDeclaration).optional(),
     generatorConfig: GeneratorConfig.optional(),
+    inlineTypes: core.serialization.list(TypeId).optional(),
 });
 
 export declare namespace DynamicIntermediateRepresentation {
@@ -36,5 +37,6 @@ export declare namespace DynamicIntermediateRepresentation {
         pathParameters?: NamedParameter.Raw[] | null;
         variables?: VariableDeclaration.Raw[] | null;
         generatorConfig?: GeneratorConfig.Raw | null;
+        inlineTypes?: TypeId.Raw[] | null;
     }
 }

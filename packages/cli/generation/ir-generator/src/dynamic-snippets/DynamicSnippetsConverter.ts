@@ -109,8 +109,19 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments,
             variables: this.convertVariables(),
-            generatorConfig: this.generatorConfig
+            generatorConfig: this.generatorConfig,
+            inlineTypes: this.collectInlineTypes()
         };
+    }
+
+    private collectInlineTypes(): TypeId[] | undefined {
+        const inlineTypeIds: TypeId[] = [];
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            if (typeDeclaration.inline) {
+                inlineTypeIds.push(typeId);
+            }
+        }
+        return inlineTypeIds.length > 0 ? inlineTypeIds : undefined;
     }
 
     private convertNamedTypes(): Record<TypeId, DynamicSnippets.NamedType> {

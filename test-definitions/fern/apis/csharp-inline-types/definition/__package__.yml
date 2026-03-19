@@ -484,3 +484,57 @@ types:
     inline: true
     properties:
       foo: string
+
+  # Test collision avoidance: parent inherits a "Types" property from a base type via extends,
+  # so the nested static class should be named "InnerTypes" instead.
+  TypesPropertyCollisionBaseParent:
+    properties:
+      types:
+        type: string
+        docs: This inherited property collides with the default nested class name "Types"
+
+  TypesPropertyCollisionExtendsParent:
+    extends: TypesPropertyCollisionBaseParent
+    properties:
+      child:
+        type: TypesPropertyCollisionExtendsChild
+        docs: This inline child should be nested inside InnerTypes since "Types" is inherited
+
+  TypesPropertyCollisionExtendsChild:
+    inline: true
+    properties:
+      foo: string
+
+  # Test collision avoidance: discriminated union has a variant named "Types",
+  # which generates a nested struct that collides with the inline Types class.
+  UnionWithTypesVariant:
+    docs: A union with a variant named "types" that could collide with the inline Types class
+    union:
+      types:
+        type: UnionWithTypesVariantInlineType1
+        docs: This variant name collides with the default nested class name "Types"
+      otherVariant:
+        type: UnionWithTypesVariantOtherInlineType1
+        docs: This is a non-colliding variant
+
+  UnionWithTypesVariantInlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UnionWithTypesVariantOtherInlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      bar:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum

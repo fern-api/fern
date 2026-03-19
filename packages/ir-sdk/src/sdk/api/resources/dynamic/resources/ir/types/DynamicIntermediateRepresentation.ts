@@ -34,4 +34,10 @@ export interface DynamicIntermediateRepresentation {
      */
     variables: FernIr.dynamic.VariableDeclaration[] | undefined;
     generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
+    /**
+     * The set of type IDs that are marked as inline in the full IR.
+     * Generators that support inline types use this to determine which
+     * types should be generated as nested classes within their parent type.
+     */
+    inlineTypes: FernIr.dynamic.TypeId[] | undefined;
 }
