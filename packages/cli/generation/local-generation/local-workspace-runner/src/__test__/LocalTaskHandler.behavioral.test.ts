@@ -105,7 +105,7 @@ vi.mock("fs/promises", async () => {
                     "--- a/src/client.ts\n" +
                     "+++ b/src/client.ts\n" +
                     '-  "version": "1.0.0"\n' +
-                    '+  "version": "505.503.4455"\n' +
+                    '+  "version": "0.0.0-fern-placeholder"\n' +
                     "+  const MAX_RETRIES = 5;\n"
             ),
         rm: vi.fn().mockResolvedValue(undefined),
@@ -285,7 +285,7 @@ describe("LocalTaskHandler - Unified Behavioral Analysis", () => {
             absolutePathToLocalOutput: "/tmp/local-output" as any,
             absolutePathToLocalSnippetJSON: undefined,
             absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
+            version: "0.0.0-fern-placeholder",
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
@@ -456,7 +456,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
                 absolutePathToLocalOutput: "/tmp/local-output" as any,
                 absolutePathToLocalSnippetJSON: undefined,
                 absolutePathToTmpSnippetTemplatesJSON: undefined,
-                version: "505.503.4455",
+                version: "0.0.0-fern-placeholder",
                 ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
                 isWhitelabel: false,
                 generatorLanguage: "typescript",
@@ -485,7 +485,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
                 absolutePathToLocalOutput: "/tmp/local-output" as any,
                 absolutePathToLocalSnippetJSON: undefined,
                 absolutePathToTmpSnippetTemplatesJSON: undefined,
-                version: "505.503.4455",
+                version: "0.0.0-fern-placeholder",
                 ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
                 isWhitelabel: false,
                 generatorLanguage: "typescript",
@@ -563,7 +563,7 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
             absolutePathToLocalOutput: "/tmp/local-output" as any,
             absolutePathToLocalSnippetJSON: undefined,
             absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
+            version: "0.0.0-fern-placeholder",
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
