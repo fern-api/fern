@@ -1112,14 +1112,18 @@ public abstract class AbstractHttpResponseParserGenerator {
         UnionTypeDeclaration unionDecl = maybeUnion.get();
         List<SingleUnionType> variants = unionDecl.getTypes();
 
-        // Build the lambda body as a separate CodeBlock
-        CodeBlock.Builder bodyBuilder = CodeBlock.builder();
-        bodyBuilder.beginControlFlow("try");
+        // Build the lambda body using string-based CodeBlock construction to avoid
+        // JavaPoet's control flow statement nesting issues when embedding in a lambda.
+        StringBuilder sb = new StringBuilder();
+        sb.append("(eventType, data) -> {\n");
+        sb.append("  try {\n");
 
         boolean first = true;
+        // Collect format args for CodeBlock.of()
+        List<Object> formatArgs = new ArrayList<>();
+
         for (SingleUnionType variant : variants) {
             String wireValue = variant.getDiscriminantValue().getWireValue();
-            // Factory method name: discriminantValue.getName().getCamelCase().getSafeName()
             String factoryMethodName = variant.getDiscriminantValue()
                     .getName()
                     .getCamelCase()
@@ -1160,57 +1164,44 @@ public abstract class AbstractHttpResponseParserGenerator {
                     });
 
             if (first) {
-                bodyBuilder.beginControlFlow("if ($S.equals(eventType))", wireValue);
+                sb.append("    if (\"").append(wireValue).append("\".equals(eventType)) {\n");
                 first = false;
             } else {
-                bodyBuilder.nextControlFlow("else if ($S.equals(eventType))", wireValue);
+                sb.append("    } else if (\"").append(wireValue).append("\".equals(eventType)) {\n");
             }
 
             if (variantTypeName != null) {
-                // Deserialize data into the variant's inner type, then wrap via factory method
-                bodyBuilder.addStatement(
-                        "$T variantValue = $T.JSON_MAPPER.readValue(data, $T.class)",
-                        variantTypeName,
-                        clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                        variantTypeName);
-                bodyBuilder.addStatement(
-                        "return $T.$L(variantValue)",
-                        bodyTypeName,
-                        factoryMethodName);
+                sb.append("      $T variantValue = $T.JSON_MAPPER.readValue(data, $T.class);\n");
+                formatArgs.add(variantTypeName);
+                formatArgs.add(clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName());
+                formatArgs.add(variantTypeName);
+                sb.append("      return $T.$L(variantValue);\n");
+                formatArgs.add(bodyTypeName);
+                formatArgs.add(factoryMethodName);
             } else {
-                // noProperties variant - call factory method with no args
-                bodyBuilder.addStatement(
-                        "return $T.$L()",
-                        bodyTypeName,
-                        factoryMethodName);
+                sb.append("      return $T.$L();\n");
+                formatArgs.add(bodyTypeName);
+                formatArgs.add(factoryMethodName);
             }
         }
 
         if (!first) {
-            bodyBuilder.endControlFlow();
+            sb.append("    }\n");
         }
 
         // Default: try to parse as the union type directly for unknown event types
-        bodyBuilder.addStatement(
-                "return $T.JSON_MAPPER.readValue(data, $T.class)",
-                clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                bodyTypeName);
+        sb.append("    return $T.JSON_MAPPER.readValue(data, $T.class);\n");
+        formatArgs.add(clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName());
+        formatArgs.add(bodyTypeName);
 
-        bodyBuilder.nextControlFlow("catch ($T e)", Exception.class);
-        bodyBuilder.addStatement(
-                "throw new $T(\"Failed to parse SSE event: \" + eventType, e)",
-                RuntimeException.class);
-        bodyBuilder.endControlFlow();
+        sb.append("  } catch ($T e) {\n");
+        formatArgs.add(Exception.class);
+        sb.append("    throw new $T(\"Failed to parse SSE event: \" + eventType, e);\n");
+        formatArgs.add(RuntimeException.class);
+        sb.append("  }\n");
+        sb.append("}");
 
-        // Wrap the body in a lambda expression
-        CodeBlock.Builder lambdaBuilder = CodeBlock.builder();
-        lambdaBuilder.add("(eventType, data) -> {\n");
-        lambdaBuilder.indent();
-        lambdaBuilder.add(bodyBuilder.build());
-        lambdaBuilder.unindent();
-        lambdaBuilder.add("}");
-
-        return lambdaBuilder.build();
+        return CodeBlock.of(sb.toString(), formatArgs.toArray());
     }
 
     private SnippetAndResultType getNestedPropertySnippet(
