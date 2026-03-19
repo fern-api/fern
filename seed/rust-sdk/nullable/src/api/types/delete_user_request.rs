@@ -5,5 +5,5 @@ pub use crate::prelude::*;
 pub struct DeleteUserRequest {
     /// The user to delete.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub username: Option<Option<String>>,
+    pub username: Option<String>,
 }

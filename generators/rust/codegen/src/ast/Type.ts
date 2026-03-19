@@ -13,6 +13,9 @@ export abstract class Type extends AstNode {
     }
 
     public static option(inner: Type): Type {
+        if (this.isAlreadyOptional(inner)) {
+            return inner;
+        }
         return new OptionType(inner);
     }
 
@@ -74,6 +77,10 @@ export abstract class Type extends AstNode {
 
     public static never(): Type {
         return new NeverType();
+    }
+
+    private static isAlreadyOptional(value: Type): boolean {
+        return value instanceof OptionType;
     }
 }
 
