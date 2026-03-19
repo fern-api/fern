@@ -60,7 +60,7 @@ impl OptionalClient {
         &self,
         action_id: &String,
         id: &String,
-        request: &Option<Option<DeployParams>>,
+        request: &Option<DeployParams>,
         options: Option<RequestOptions>,
     ) -> Result<DeployResponse, ApiError> {
         self.http_client
