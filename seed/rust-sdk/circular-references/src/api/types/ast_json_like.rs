@@ -5,7 +5,7 @@ pub use crate::prelude::*;
 pub enum JsonLike {
     JsonLikeList(Vec<JsonLike>),
 
-    Map1(HashMap<String, JsonLike>),
+    StringToJsonLikeMap(HashMap<String, JsonLike>),
 
     String(String),
 
@@ -19,8 +19,8 @@ impl JsonLike {
         matches!(self, Self::JsonLikeList(_))
     }
 
-    pub fn is_map1(&self) -> bool {
-        matches!(self, Self::Map1(_))
+    pub fn is_stringtojsonlikemap(&self) -> bool {
+        matches!(self, Self::StringToJsonLikeMap(_))
     }
 
     pub fn is_string(&self) -> bool {
@@ -49,16 +49,16 @@ impl JsonLike {
         }
     }
 
-    pub fn as_map1(&self) -> Option<&HashMap<String, JsonLike>> {
+    pub fn as_stringtojsonlikemap(&self) -> Option<&HashMap<String, JsonLike>> {
         match self {
-            Self::Map1(value) => Some(value),
+            Self::StringToJsonLikeMap(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_map1(self) -> Option<HashMap<String, JsonLike>> {
+    pub fn into_stringtojsonlikemap(self) -> Option<HashMap<String, JsonLike>> {
         match self {
-            Self::Map1(value) => Some(value),
+            Self::StringToJsonLikeMap(value) => Some(value),
             _ => None,
         }
     }
