@@ -104,6 +104,8 @@ export class HttpEndpointGenerator {
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
         const requestOptionsDocs = this.generateRequestOptionsDocs();
 
+        // Pagination blocks use string keys for query_params to match initialization
+        // in WrappedEndpointRequest (e.g. query_params["page"], not query_params[:page])
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom": {
@@ -159,9 +161,8 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
                                     )
                                 })
                             ],
@@ -169,8 +170,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_cursor`
                                     ),
                                     ...requestStatements
                                 ]
@@ -190,9 +190,8 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -220,8 +219,7 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_page`
                                     ),
                                     ...requestStatements
                                 ]

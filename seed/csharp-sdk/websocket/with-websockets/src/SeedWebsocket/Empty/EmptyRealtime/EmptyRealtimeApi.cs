@@ -20,6 +20,12 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public readonly Event<JsonElement> UnknownMessage = new();
+
+    /// <summary>
     /// Default constructor
     /// </summary>
     public EmptyRealtimeApi() { }
@@ -58,7 +64,10 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
-    private void DisposeEvents() { }
+    private void DisposeEvents()
+    {
+        UnknownMessage.Dispose();
+    }
 
     /// <summary>
     /// Dispatches incoming WebSocket messages
@@ -75,9 +84,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         }
 
         // deserialize the message to find the correct event
-        await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
-            .ConfigureAwait(false);
+        await UnknownMessage.RaiseEvent(json.RootElement.Clone()).ConfigureAwait(false);
     }
 
     /// <summary>

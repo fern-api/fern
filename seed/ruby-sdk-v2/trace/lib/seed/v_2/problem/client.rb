@@ -90,7 +90,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problem_id]}",
+            path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}",
             request_options: request_options
           )
           begin
@@ -125,7 +125,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problem_id]}/version/#{params[:problem_version]}",
+            path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}/version/#{URI.encode_uri_component(params[:problem_version].to_s)}",
             request_options: request_options
           )
           begin
