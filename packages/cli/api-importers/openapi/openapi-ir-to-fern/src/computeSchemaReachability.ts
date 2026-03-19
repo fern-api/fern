@@ -138,6 +138,13 @@ export function computeSchemaReachability(ir: OpenApiIntermediateRepresentation)
                 case "streamingSse":
                     seedReachable(endpoint.response.schema, groupedSchemas, responseReachable);
                     break;
+                case "multipart":
+                    for (const part of endpoint.response.parts) {
+                        if (part.schema != null) {
+                            seedReachable(part.schema, groupedSchemas, responseReachable);
+                        }
+                    }
+                    break;
                 case "file":
                 case "text":
                 case "bytes":
