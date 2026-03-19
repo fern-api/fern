@@ -3,6 +3,6 @@
 # isort: skip_file
 
 from .service import PostSubmitRequest
-from .types import PostSubmitResponse
+from .types import PostSubmitResponse, TokenRequest, TokenResponse
 
-__all__ = ["PostSubmitRequest", "PostSubmitResponse"]
+__all__ = ["PostSubmitRequest", "PostSubmitResponse", "TokenRequest", "TokenResponse"]

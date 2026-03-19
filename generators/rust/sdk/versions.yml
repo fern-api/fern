@@ -1,15 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.19.6
+- version: 0.19.7
   changelogEntry:
     - summary: |
         Improve default endpoint selection for README usage snippets. The generator now
         picks the POST endpoint with the shortest snippet instead of the first POST endpoint,
         avoiding verbose examples with many optional parameters rendered as &None.
       type: fix
-  createdAt: "2026-03-18"
+  createdAt: "2026-03-19"
   irVersion: 62
 
+- version: 0.19.6
+  changelogEntry:
+    - summary: |
+        Handle empty HTTP response bodies by returning an ApiError::Http instead of
+        attempting JSON deserialization. Normalize HTTP(S) URLs to WS(S) schemes for
+        WebSocket connections. Switch WebSocket server message enums to untagged serde
+        representation.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
 - version: 0.19.5
   changelogEntry:
     - summary: |

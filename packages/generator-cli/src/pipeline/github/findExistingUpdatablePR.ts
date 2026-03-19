@@ -1,8 +1,7 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { Octokit } from "@octokit/rest";
-
 import type { PipelineLogger } from "../PipelineLogger";
 import { FERN_BOT_LOGIN } from "./constants";
-
 export interface ExistingPullRequest {
     number: number;
     headBranch: string;
@@ -66,7 +65,7 @@ export async function findExistingUpdatablePR(
 
         return undefined;
     } catch (error) {
-        logger.debug(`Error finding existing PRs: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Error finding existing PRs: ${extractErrorMessage(error)}`);
         return undefined;
     }
 }
@@ -110,7 +109,7 @@ export async function checkPRHasOnlyGenerationCommits(
 
         return true;
     } catch (error) {
-        logger.debug(`Error checking PR commits: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Error checking PR commits: ${extractErrorMessage(error)}`);
         return false;
     }
 }

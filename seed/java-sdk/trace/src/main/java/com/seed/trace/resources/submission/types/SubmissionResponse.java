@@ -251,6 +251,7 @@ public final class SubmissionResponse {
     @JsonIgnoreProperties("type")
     private static final class ServerErroredValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ExceptionInfo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -327,6 +328,7 @@ public final class SubmissionResponse {
     @JsonIgnoreProperties("type")
     private static final class TerminatedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TerminatedResponse value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

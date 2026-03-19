@@ -7,7 +7,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -228,9 +228,7 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
-            );
+            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -309,7 +307,7 @@ export async function runRemoteGenerationForGenerator({
             });
         } catch (error) {
             interactiveTaskContext.logger.warn(
-                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+                `Failed to upload dynamic IR for SDK generation: ${extractErrorMessage(error)}`
             );
         }
     }
