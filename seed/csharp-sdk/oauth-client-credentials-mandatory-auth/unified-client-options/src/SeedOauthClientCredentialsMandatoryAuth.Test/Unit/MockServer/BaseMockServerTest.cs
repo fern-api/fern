@@ -1,0 +1,100 @@
+using NUnit.Framework;
+using SeedOauthClientCredentialsMandatoryAuth;
+using WireMock.Logging;
+using WireMock.Server;
+using WireMock.Settings;
+
+namespace SeedOauthClientCredentialsMandatoryAuth.Test.Unit.MockServer;
+
+public class BaseMockServerTest
+{
+    protected WireMockServer Server { get; set; } = null!;
+
+    protected SeedOauthClientCredentialsMandatoryAuthClient Client { get; set; } = null!;
+
+    protected RequestOptions RequestOptions { get; set; } = new();
+
+    private void MockOAuthEndpoint()
+    {
+        const string requestJson_0 = """
+            {
+              "client_id": "client_id",
+              "client_secret": "client_secret",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials",
+              "scope": "scope"
+            }
+            """;
+
+        const string mockResponse_0 = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse_0)
+            );
+        const string requestJson_1 = """
+            {
+              "client_id": "my_oauth_app_123",
+              "client_secret": "sk_live_abcdef123456789",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials",
+              "scope": "read:users"
+            }
+            """;
+
+        const string mockResponse_1 = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse_1)
+            );
+    }
+
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
+        );
+
+        // Initialize the Client
+        Client = new SeedOauthClientCredentialsMandatoryAuthClient(
+            clientOptions: new ClientOptions
+            {
+                ClientId = "client_id",
+                ClientSecret = "client_secret",
+                BaseUrl = Server.Urls[0],
+                MaxRetries = 0,
+            }
+        );
+        MockOAuthEndpoint();
+    }
+
+    [OneTimeTearDown]
+    public void GlobalTeardown()
+    {
+        Server.Stop();
+        Server.Dispose();
+    }
+}
