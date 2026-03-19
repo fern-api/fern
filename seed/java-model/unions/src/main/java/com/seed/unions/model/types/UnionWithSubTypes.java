@@ -123,7 +123,10 @@ public final class UnionWithSubTypes {
   @JsonIgnoreProperties("type")
   private static final class FooValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Foo value;
 
     @JsonCreator(
@@ -166,7 +169,10 @@ public final class UnionWithSubTypes {
   @JsonIgnoreProperties("type")
   private static final class FooExtendedValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private FooExtended value;
 
     @JsonCreator(
