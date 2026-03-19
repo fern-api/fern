@@ -716,7 +716,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             body: this.csharp.codeblock((writer) => {
-                writer.write(`var json = await `);
+                writer.write(`using var json = await `);
                 writer.writeNode(this.System.Text.Json.JsonSerializer);
                 writer.write(`.DeserializeAsync<`);
                 writer.writeNode(this.System.Text.Json.JsonDocument);
