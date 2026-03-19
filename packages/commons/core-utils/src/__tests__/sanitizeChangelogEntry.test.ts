@@ -74,4 +74,23 @@ describe("sanitizeChangelogEntry", () => {
         const expected = "Added `Optional<String>` support.\nAlso changed `Map<String, Object>` handling.";
         expect(sanitizeChangelogEntry(input)).toBe(expected);
     });
+
+    it("preserves inline code spans after triple-backtick code fences", () => {
+        const input =
+            "Example:\n\n```java\nList<String> items = new ArrayList<>();\n```\n\n**Generic `onMessage(Consumer<String>)` handler** — fires.";
+        const expected =
+            "Example:\n\n```java\nList<String> items = new ArrayList<>();\n```\n\n**Generic `onMessage(Consumer<String>)` handler** — fires.";
+        expect(sanitizeChangelogEntry(input)).toBe(expected);
+    });
+
+    it("wraps bare angle-bracket types after triple-backtick code fences", () => {
+        const input = "Example:\n\n```java\nfoo();\n```\n\nReturns Optional<String> now.";
+        const expected = "Example:\n\n```java\nfoo();\n```\n\nReturns `Optional<String>` now.";
+        expect(sanitizeChangelogEntry(input)).toBe(expected);
+    });
+
+    it("handles triple-backtick code fences without angle brackets", () => {
+        const input = "Example:\n\n```java\nSystem.out.println();\n```\n\nDone.";
+        expect(sanitizeChangelogEntry(input)).toBe(input);
+    });
 });
