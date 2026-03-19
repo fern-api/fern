@@ -51,7 +51,7 @@ impl UserClient {
 
     pub async fn create_username_optional(
         &self,
-        request: &Option<Option<CreateUsernameBodyOptionalProperties>>,
+        request: &Option<CreateUsernameBodyOptionalProperties>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

@@ -10,6 +10,8 @@ pub enum RealtimeServerMessage {
     ReceiveSnakeCase(ReceiveSnakeCase),
     ReceiveEvent2(ReceiveEvent2),
     ReceiveEvent3(ReceiveEvent3),
+    TranscriptEvent(TranscriptEvent),
+    FlushedEvent(FlushedEvent),
     ErrorEvent(ErrorEvent),
 }
 pub struct RealtimeClient {

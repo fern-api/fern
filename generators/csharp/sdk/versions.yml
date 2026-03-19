@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.35.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary message sending. Binary messages (e.g. audio bytes) are now
+        sent as raw bytes instead of being JSON-serialized, which caused servers to reject
+        them with CONFIG_DENIED.
+      type: fix
+    - summary: |
+        Fix WebSocket incoming message deserialization. `TryDeserialize` now passes
+        `JsonSerializerOptions` so the generated literal property setters correctly
+        validate const discriminator fields (e.g. `type: "transcript"` vs `type: "flushed"`)
+        during deserialization.
+      type: fix
+    - summary: |
+        Add forward-compatible `UnknownMessage` event to WebSocket clients. When the server
+        sends an event type not recognized by the SDK, it is now dispatched to the
+        `UnknownMessage` event handler (as a `JsonElement`) instead of raising an exception.
+        This allows SDKs to gracefully handle new server event types without requiring
+        regeneration.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.34.0
   changelogEntry:
     - summary: |
