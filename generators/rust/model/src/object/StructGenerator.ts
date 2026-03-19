@@ -97,6 +97,11 @@ export class StructGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
+        // Default - add if all fields support Default
+        if (this.canDeriveDefault()) {
+            derives.push("Default");
+        }
+
         // PartialEq - for equality comparisons
         if (this.needsPartialEq()) {
             derives.push("PartialEq");
@@ -196,5 +201,66 @@ export class StructGenerator {
             );
         });
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
+    }
+
+    private canDeriveDefault(): boolean {
+        // Check if all properties support Default
+        const propertiesSupport = this.objectTypeDeclaration.properties.every((property) => {
+            return this.typeSupportsDefault(property.valueType, new Set());
+        });
+        // Check if all inherited types support Default
+        const extendsSupport = this.objectTypeDeclaration.extends.every((parentType) => {
+            return this.namedTypeSupportsDefault(parentType.typeId, new Set());
+        });
+        return propertiesSupport && extendsSupport;
+    }
+
+    private typeSupportsDefault(typeRef: FernIr.TypeReference, visited: Set<string>): boolean {
+        if (typeRef.type === "primitive") {
+            return true; // All Rust primitives implement Default
+        }
+        if (typeRef.type === "container") {
+            return typeRef.container._visit({
+                list: () => true,
+                map: () => true,
+                set: () => true,
+                optional: () => true,
+                nullable: () => true,
+                literal: () => false,
+                _other: () => false
+            });
+        }
+        if (typeRef.type === "named") {
+            return this.namedTypeSupportsDefault(typeRef.typeId, visited);
+        }
+        if (typeRef.type === "unknown") {
+            return true; // serde_json::Value implements Default
+        }
+        return false;
+    }
+
+    private namedTypeSupportsDefault(typeId: string, visited: Set<string>): boolean {
+        if (visited.has(typeId)) {
+            return false; // Prevent infinite recursion, be conservative
+        }
+        visited.add(typeId);
+        const typeDecl = this.context.ir.types[typeId];
+        if (!typeDecl) {
+            return false;
+        }
+        if (typeDecl.shape.type === "object") {
+            // Object supports Default if all its fields support Default
+            return typeDecl.shape.properties.every((prop) =>
+                this.typeSupportsDefault(prop.valueType, visited)
+            );
+        }
+        if (typeDecl.shape.type === "enum") {
+            return false; // Enums don't derive Default (no #[default] variant)
+        }
+        if (typeDecl.shape.type === "alias") {
+            return this.typeSupportsDefault(typeDecl.shape.aliasOf, visited);
+        }
+        // Unions don't derive Default
+        return false;
     }
 }
