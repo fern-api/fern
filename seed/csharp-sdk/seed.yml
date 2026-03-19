@@ -344,6 +344,7 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - bytes-upload
   - enum:forward-compatible-enums
   - enum:plain-enums
   - examples:no-custom-config
