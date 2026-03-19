@@ -242,12 +242,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public override getAsIsTestUtils(): string[] {
-        // When use-undiscriminated-unions is false, include OneOfComparer for OneOf type comparisons
-        if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
-            return Object.values(AsIsFiles.Test.Utils);
-        }
-        // Exclude OneOfComparer when using custom undiscriminated unions
-        return Object.values(AsIsFiles.Test.Utils).filter((file) => file !== AsIsFiles.Test.Utils.OneOfComparer);
+        return Object.values(AsIsFiles.Test.Utils);
     }
 
     public getAsyncCoreAsIsFiles(): string[] {
