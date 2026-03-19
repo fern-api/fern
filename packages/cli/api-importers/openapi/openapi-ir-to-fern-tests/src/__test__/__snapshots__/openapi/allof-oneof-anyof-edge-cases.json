@@ -221,6 +221,16 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ItemListExplicitType": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<list<Item>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Level1": {
             "docs": undefined,
             "inline": undefined,
@@ -326,6 +336,28 @@
               "data": "optional<string>",
               "success": "optional<boolean>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleConfig": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "executionContext": "optional<RuleExecutionContext>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleExecutionContext": {
+            "enum": [
+              "prod",
+              "staging",
+              "dev",
+            ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -542,6 +574,19 @@ types:
         docs: Content of the message
     source:
       openapi: ../openapi.yml
+  RuleExecutionContext:
+    enum:
+      - prod
+      - staging
+      - dev
+    source:
+      openapi: ../openapi.yml
+  RuleConfig:
+    properties:
+      name: optional<string>
+      executionContext: optional<RuleExecutionContext>
+    source:
+      openapi: ../openapi.yml
   PaginatedList:
     properties:
       results: optional<list<unknown>>
@@ -554,6 +599,11 @@ types:
     source:
       openapi: ../openapi.yml
   ItemList:
+    properties:
+      results: optional<list<Item>>
+    source:
+      openapi: ../openapi.yml
+  ItemListExplicitType:
     properties:
       results: optional<list<Item>>
     source:

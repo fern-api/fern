@@ -1004,6 +1004,86 @@
         },
         "type": "object"
       },
+      "RuleExecutionContext": {
+        "generatedName": "RuleExecutionContext",
+        "values": [
+          {
+            "generatedName": "prod",
+            "value": "prod",
+            "casing": {}
+          },
+          {
+            "generatedName": "staging",
+            "value": "staging",
+            "casing": {}
+          },
+          {
+            "generatedName": "dev",
+            "value": "dev",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "RuleConfig": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "ruleConfigName",
+            "key": "name",
+            "schema": {
+              "generatedName": "RuleConfigName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RuleConfigName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "ruleConfigExecutionContext",
+            "key": "executionContext",
+            "schema": {
+              "generatedName": "RuleConfigExecutionContext",
+              "value": {
+                "generatedName": "RuleConfigExecutionContext",
+                "schema": "RuleExecutionContext",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RuleConfig",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
       "PaginatedList": {
         "allOf": [],
         "properties": [
@@ -1136,6 +1216,59 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ItemList",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ItemListExplicitType": {
+        "allOf": [
+          {
+            "generatedName": "PaginatedList",
+            "schema": "PaginatedList",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PaginatedList": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "itemListExplicitTypeResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "ItemListExplicitTypeResults",
+              "value": {
+                "value": {
+                  "generatedName": "ItemListExplicitTypeResultsItem",
+                  "schema": "Item",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ItemListExplicitTypeResults",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ItemListExplicitType",
         "groupName": [],
         "additionalProperties": false,
         "source": {
