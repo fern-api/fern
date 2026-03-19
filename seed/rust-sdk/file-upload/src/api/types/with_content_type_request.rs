@@ -2,9 +2,12 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct WithContentTypeRequest {
+    #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
+    #[serde(default)]
     pub foo: String,
+    #[serde(default)]
     pub bar: MyObject,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub foo_bar: Option<MyObject>,

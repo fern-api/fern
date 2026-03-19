@@ -13,17 +13,17 @@ public class Example1 {
         client.nullableOptional()
                 .createUser(CreateUserRequest.builder()
                         .username("username")
-                        .email(OptionalNullable.of("email"))
-                        .phone(OptionalNullable.of("phone"))
                         .address(OptionalNullable.of(Address.builder()
                                 .street("street")
-                                .city(OptionalNullable.of("city"))
-                                .state(OptionalNullable.of("state"))
                                 .zipCode("zipCode")
                                 .country(OptionalNullable.of("country"))
-                                .buildingId(OptionalNullable.of("buildingId"))
-                                .tenantId(OptionalNullable.of("tenantId"))
+                                .city("city")
+                                .state("state")
+                                .buildingId("buildingId")
+                                .tenantId("tenantId")
                                 .build()))
+                        .email("email")
+                        .phone("phone")
                         .build());
     }
 }
