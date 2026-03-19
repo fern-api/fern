@@ -14,7 +14,7 @@ public final class WebsocketClient: Sendable {
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
-        baseURL: String,
+        baseURL: String = WebsocketEnvironment.production.rawValue,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,

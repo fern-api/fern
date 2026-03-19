@@ -4,6 +4,10 @@
 package com.seed.websocket.core;
 
 public final class Environment {
+    public static final Environment PRODUCTION = new Environment("https://production.example.com");
+
+    public static final Environment STAGING = new Environment("https://staging.example.com");
+
     private final String url;
 
     private Environment(String url) {

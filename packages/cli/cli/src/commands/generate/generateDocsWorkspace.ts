@@ -16,11 +16,32 @@ const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
 
 /**
+ * Sanitizes a preview ID to be valid in a DNS subdomain label.
+ * Replaces invalid characters with hyphens, collapses consecutive hyphens,
+ * strips leading/trailing hyphens, and lowercases.
+ *
+ * This MUST match the server-side sanitizePreviewId in FDR so the CLI
+ * can accurately predict the preview URL.
+ */
+function sanitizePreviewId(id: string): string {
+    const sanitized = id
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-{2,}/g, "-")
+        .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
+}
+
+/**
  * Replicates the server-side truncateDomainName logic so the CLI can predict
  * the preview URL for a given previewId before calling the FDR API.
  */
 function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: string }): string {
-    const fullDomain = `${orgId}-preview-${previewId}.${DOMAIN_SUFFIX}`;
+    const sanitizedId = sanitizePreviewId(previewId);
+    const fullDomain = `${orgId}-preview-${sanitizedId}.${DOMAIN_SUFFIX}`;
     if (fullDomain.length <= SUBDOMAIN_LIMIT) {
         return fullDomain;
     }
@@ -33,7 +54,7 @@ function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: st
         throw new Error(`Organization name "${orgId}" is too long to generate a valid preview URL`);
     }
 
-    const truncatedId = previewId.slice(0, availableSpace).replace(/-+$/, "");
+    const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");
     return `${prefix}${truncatedId}.${DOMAIN_SUFFIX}`;
 }
 

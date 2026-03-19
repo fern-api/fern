@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.19.8
+- version: 0.19.9
   changelogEntry:
     - summary: |
         Improve default endpoint selection for README usage snippets. The generator now
@@ -10,6 +10,13 @@
   createdAt: "2026-03-19"
   irVersion: 62
 
+- version: 0.19.8
+  changelogEntry:
+    - summary: |
+        Fixes an issue where redundant, duplicative `Option<T>` type references were generated.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
 - version: 0.19.7
   changelogEntry:
     - summary: |

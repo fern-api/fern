@@ -7,7 +7,7 @@ pub enum WeirdNumber {
 
     Nullable1(Option<f64>),
 
-    Optional2(Option<Option<String>>),
+    Optional2(Option<String>),
 
     Double(f64),
 }
@@ -57,14 +57,14 @@ impl WeirdNumber {
         }
     }
 
-    pub fn as_optional2(&self) -> Option<&Option<Option<String>>> {
+    pub fn as_optional2(&self) -> Option<&Option<String>> {
         match self {
             Self::Optional2(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_optional2(self) -> Option<Option<Option<String>>> {
+    pub fn into_optional2(self) -> Option<Option<String>> {
         match self {
             Self::Optional2(value) => Some(value),
             _ => None,
