@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -28,18 +28,13 @@ public class UnionWithMultipleNoPropertiesTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "foo",
               "name": "example"
             }
             """;
-        var actualObj = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Foo(new Foo { Name = "example" })
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithMultipleNoProperties>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -60,17 +55,12 @@ public class UnionWithMultipleNoPropertiesTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "empty1"
             }
             """;
-        var actualObj = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Empty1()
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithMultipleNoProperties>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -91,16 +81,11 @@ public class UnionWithMultipleNoPropertiesTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "empty2"
             }
             """;
-        var actualObj = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Empty2()
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithMultipleNoProperties>(inputJson);
     }
 }
