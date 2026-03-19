@@ -1106,6 +1106,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                   : [];
         const propertyNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
 
+        // Also check union variant struct names since discriminated unions generate
+        // nested structs for each variant (e.g. `public struct Status { }`).
+        if (typeDeclaration.shape.type === "union") {
+            for (const variant of typeDeclaration.shape.types) {
+                propertyNames.add(variant.discriminantValue.name.pascalCase.safeName);
+            }
+        }
+
         // Iteratively find a non-colliding name: Types → InnerTypes → InnerTypes2 → ...
         let candidate = "Types";
         if (propertyNames.has(candidate)) {
