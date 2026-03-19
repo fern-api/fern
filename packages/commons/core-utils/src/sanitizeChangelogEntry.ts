@@ -12,7 +12,7 @@ export function sanitizeChangelogEntry(entry: string): string {
     // First, split on triple-backtick fenced code blocks so they are never
     // processed by the inline-backtick logic (which only understands single
     // backtick pairs and gets confused by the three-backtick delimiters).
-    const fenceParts = entry.split(/(```[\s\S]*?```)/g);
+    const fenceParts = entry.split(/(```[^\n]*\n[\s\S]*?\n```)/g);
     return fenceParts
         .map((part) => {
             // Fenced code blocks are preserved verbatim.
