@@ -128,6 +128,7 @@ public final class DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class Type1Value implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private DiscriminatedUnion1InlineType1 value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -167,6 +168,7 @@ public final class DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class Type2Value implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private DiscriminatedUnion1InlineType2 value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -206,6 +208,7 @@ public final class DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class RefValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ReferenceType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
