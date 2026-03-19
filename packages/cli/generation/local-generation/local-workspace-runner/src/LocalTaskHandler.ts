@@ -252,7 +252,7 @@ export class LocalTaskHandler {
             );
 
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
-            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            const cleanedDiffBytes = Buffer.byteLength(annotatedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
                 this.context.logger.warn(
                     `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
