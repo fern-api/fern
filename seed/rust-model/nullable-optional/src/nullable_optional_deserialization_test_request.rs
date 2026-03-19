@@ -1,9 +1,10 @@
 pub use crate::prelude::*;
 
 /// Request body for testing deserialization of null values
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct DeserializationTestRequest {
     #[serde(rename = "requiredString")]
+    #[serde(default)]
     pub required_string: String,
     #[serde(rename = "nullableString")]
     #[serde(skip_serializing_if = "Option::is_none")]

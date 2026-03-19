@@ -7,6 +7,8 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.PostSubmitRequest;
 import com.seed.api.types.PostSubmitResponse;
+import com.seed.api.types.TokenRequest;
+import com.seed.api.types.TokenResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedApiClient {
@@ -33,6 +35,14 @@ public class AsyncSeedApiClient {
     public CompletableFuture<PostSubmitResponse> submitFormData(
             PostSubmitRequest request, RequestOptions requestOptions) {
         return this.rawClient.submitFormData(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TokenResponse> getToken(TokenRequest request) {
+        return this.rawClient.getToken(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TokenResponse> getToken(TokenRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedApiClientBuilder builder() {

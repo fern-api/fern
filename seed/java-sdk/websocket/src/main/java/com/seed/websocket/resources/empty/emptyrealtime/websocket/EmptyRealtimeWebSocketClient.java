@@ -6,10 +6,10 @@ package com.seed.websocket.resources.empty.emptyrealtime.websocket;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.websocket.core.ClientOptions;
+import com.seed.websocket.core.DisconnectReason;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
-import java.util.HashMap;
-import java.util.Map;
+import com.seed.websocket.core.WebSocketReadyState;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
@@ -18,12 +18,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
+import okio.ByteString;
 
 /**
  * WebSocket client for the emptyRealtime channel.
  * Provides real-time bidirectional communication with strongly-typed messages.
  */
-public class EmptyRealtimeWebSocketClient {
+public class EmptyRealtimeWebSocketClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final ObjectMapper objectMapper;
@@ -34,11 +35,15 @@ public class EmptyRealtimeWebSocketClient {
 
     private volatile WebSocketReadyState readyState = WebSocketReadyState.CLOSED;
 
-    private Runnable onConnectedHandler;
+    private volatile Runnable onConnectedHandler;
 
-    private Consumer<DisconnectReason> onDisconnectedHandler;
+    private volatile Consumer<DisconnectReason> onDisconnectedHandler;
 
-    private Consumer<Exception> onErrorHandler;
+    private volatile Consumer<Exception> onErrorHandler;
+
+    private volatile Consumer<String> onMessageHandler;
+
+    private volatile ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
 
     private CompletableFuture<Void> connectionFuture;
 
@@ -68,14 +73,26 @@ public class EmptyRealtimeWebSocketClient {
         } else if (!baseUrl.endsWith("/") && !fullPath.startsWith("/")) {
             fullPath = "/" + fullPath;
         }
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl + fullPath).newBuilder();
+        // OkHttp's HttpUrl only supports http/https schemes; convert wss/ws for URL parsing
+        if (baseUrl.startsWith("wss://")) {
+            baseUrl = "https://" + baseUrl.substring(6);
+        } else if (baseUrl.startsWith("ws://")) {
+            baseUrl = "http://" + baseUrl.substring(5);
+        }
+        HttpUrl parsedUrl = HttpUrl.parse(baseUrl + fullPath);
+        if (parsedUrl == null) {
+            throw new IllegalArgumentException("Invalid WebSocket URL: " + baseUrl + fullPath);
+        }
+        HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
+        clientOptions.headers(null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
-        ReconnectingWebSocketListener.ReconnectOptions reconnectOptions =
-                ReconnectingWebSocketListener.ReconnectOptions.builder().build();
+        ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null
+                ? this.reconnectOptions
+                : ReconnectingWebSocketListener.ReconnectOptions.builder().build();
         this.reconnectingListener =
-                new ReconnectingWebSocketListener(reconnectOptions, () -> {
+                new ReconnectingWebSocketListener(reconnectOpts, () -> {
                     if (clientOptions.webSocketFactory().isPresent()) {
                         return clientOptions.webSocketFactory().get().create(request, this.reconnectingListener);
                     } else {
@@ -95,6 +112,9 @@ public class EmptyRealtimeWebSocketClient {
                     protected void onWebSocketMessage(WebSocket webSocket, String text) {
                         handleIncomingMessage(text);
                     }
+
+                    @Override
+                    protected void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes) {}
 
                     @Override
                     protected void onWebSocketFailure(WebSocket webSocket, Throwable t, Response response) {
@@ -126,21 +146,6 @@ public class EmptyRealtimeWebSocketClient {
             timeoutExecutor.shutdownNow();
             timeoutExecutor = null;
         }
-    }
-
-    /**
-     * Checks if a WebSocket instance exists (not necessarily connected).
-     *
-     * This method only verifies that a WebSocket object has been created, not whether
-     * it's actively connected. For actual connection state, use getReadyState().
-     *
-     * @return true if a WebSocket instance exists, false otherwise
-     * @deprecated Use getReadyState() for accurate connection status
-     */
-    @Deprecated
-    public boolean hasWebSocketInstance() {
-        // Check if WebSocket connection is open based on ready state
-        return readyState == WebSocketReadyState.OPEN || readyState == WebSocketReadyState.CONNECTING;
     }
 
     /**
@@ -179,6 +184,33 @@ public class EmptyRealtimeWebSocketClient {
     }
 
     /**
+     * Registers a handler called for every incoming text message.
+     * The handler receives the raw JSON string before type-specific dispatch.
+     * @param handler the handler to invoke with the raw message JSON
+     */
+    public void onMessage(Consumer<String> handler) {
+        this.onMessageHandler = handler;
+    }
+
+    /**
+     * Configures reconnection behavior. Must be called before {@link #connect}.
+     *
+     * @param options the reconnection options (backoff, retries, queue size)
+     */
+    public void reconnectOptions(ReconnectingWebSocketListener.ReconnectOptions options) {
+        this.reconnectOptions = options;
+    }
+
+    /**
+     * Closes this WebSocket client, releasing all resources.
+     * Equivalent to calling {@link #disconnect()}.
+     */
+    @Override
+    public void close() {
+        disconnect();
+    }
+
+    /**
      * Ensures the WebSocket is connected and ready to send messages.
      * @throws IllegalStateException if the socket is not connected or not open
      */
@@ -191,14 +223,11 @@ public class EmptyRealtimeWebSocketClient {
         }
     }
 
-    private CompletableFuture<Void> sendMessage(String type, Object body) {
+    private CompletableFuture<Void> sendMessage(Object body) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         try {
             assertSocketIsOpen();
-            Map<String, Object> envelope = new HashMap<>();
-            envelope.put("type", type);
-            envelope.put("body", body);
-            String json = objectMapper.writeValueAsString(envelope);
+            String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
             boolean sent = reconnectingListener.send(json);
             if (sent) {
@@ -217,22 +246,24 @@ public class EmptyRealtimeWebSocketClient {
 
     private void handleIncomingMessage(String json) {
         try {
-            JsonNode envelope = objectMapper.readTree(json);
-            if (envelope == null || envelope.isNull()) {
-                throw new IllegalArgumentException("Received null or invalid JSON envelope");
+            if (onMessageHandler != null) {
+                onMessageHandler.accept(json);
             }
-            JsonNode typeNode = envelope.get("type");
+            JsonNode node = objectMapper.readTree(json);
+            if (node == null || node.isNull()) {
+                throw new IllegalArgumentException("Received null or invalid JSON message");
+            }
+            JsonNode typeNode = node.get("type");
             if (typeNode == null || typeNode.isNull()) {
-                throw new IllegalArgumentException("Message envelope missing 'type' field");
+                throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            JsonNode body = envelope.get("body");
-            if (body == null) {
-                throw new IllegalArgumentException("Message envelope missing 'body' field");
-            }
             switch (type) {
                 default:
-                    // Unknown message type - log or ignore;
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
                     break;
             }
         } catch (IllegalArgumentException e) {
@@ -244,52 +275,5 @@ public class EmptyRealtimeWebSocketClient {
                 onErrorHandler.accept(e);
             }
         }
-    }
-
-    /**
-     * Reason for WebSocket disconnection.
-     */
-    public static class DisconnectReason {
-        private final int code;
-
-        private final String reason;
-
-        public DisconnectReason(int code, String reason) {
-            this.code = code;
-            this.reason = reason;
-        }
-
-        public int getCode() {
-            return code;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-    }
-
-    /**
-     * WebSocket connection ready state, based on the W3C WebSocket API.
-     */
-    public enum WebSocketReadyState {
-        /**
-         * The connection is being established.
-         */
-        CONNECTING,
-
-        /**
-         * The connection is open and ready to communicate.
-         */
-        OPEN,
-
-        /**
-         * The connection is in the process of closing.
-         */
-        CLOSING,
-
-        /**
-         * The connection is closed.
-         */
-        CLOSED
     }
 }

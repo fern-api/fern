@@ -5,15 +5,22 @@ pub use crate::prelude::*;
 /// Request type for the GetUsernameQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetUsernameQueryRequest {
+    #[serde(default)]
     pub limit: i64,
+    #[serde(default)]
     pub id: Uuid,
+    #[serde(default)]
     pub date: NaiveDate,
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub deadline: DateTime<FixedOffset>,
+    #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub bytes: Vec<u8>,
+    #[serde(default)]
     pub user: User,
     #[serde(rename = "userList")]
+    #[serde(default)]
     pub user_list: Vec<User>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -21,16 +28,20 @@ pub struct GetUsernameQueryRequest {
     #[serde(with = "crate::core::flexible_datetime::offset::option")]
     pub optional_deadline: Option<DateTime<FixedOffset>>,
     #[serde(rename = "keyValue")]
+    #[serde(default)]
     pub key_value: HashMap<String, String>,
     #[serde(rename = "optionalString")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_string: Option<String>,
     #[serde(rename = "nestedUser")]
+    #[serde(default)]
     pub nested_user: NestedUser,
     #[serde(rename = "optionalUser")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_user: Option<User>,
     #[serde(rename = "excludeUser")]
+    #[serde(default)]
     pub exclude_user: Vec<User>,
+    #[serde(default)]
     pub filter: Vec<String>,
 }

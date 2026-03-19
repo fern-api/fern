@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -11,7 +12,6 @@ import { GeneratorMigrator } from "../../../sdk/updater/GeneratorMigrator.js";
 import { SdkUpdater } from "../../../sdk/updater/SdkUpdater.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
-
 export declare namespace UpdateCommand {
     export interface Args extends GlobalArgs {
         /** The SDK target to update (e.g. typescript, python, go). */
@@ -105,7 +105,7 @@ export class UpdateCommand {
                         migrationInfo.set(update.name, result);
                     }
                 } catch (error) {
-                    const message = error instanceof Error ? error.message : String(error);
+                    const message = extractErrorMessage(error);
                     context.stderr.warn(chalk.yellow(`  Warning: migrations failed for ${target.name}: ${message}`));
                 }
             }

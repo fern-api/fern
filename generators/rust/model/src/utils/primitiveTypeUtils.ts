@@ -185,6 +185,57 @@ export function isUnknownType(typeRef: FernIr.TypeReference): boolean {
     return typeRef.type === "unknown";
 }
 
+/**
+ * Check if a type has a natural Default implementation in Rust.
+ * Primitives (String, bool, i64, f64, etc.) and containers (Vec, HashMap, HashSet)
+ * all implement Default. Named types (enums, structs) may not.
+ * Used to add #[serde(default)] so missing fields get zero-values during deserialization.
+ */
+export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGeneratorContext): boolean {
+    if (typeRef.type === "primitive") {
+        return true;
+    }
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            list: () => true,
+            map: () => true,
+            set: () => true,
+            optional: () => true,
+            nullable: () => true,
+            literal: () => false,
+            _other: () => false
+        });
+    }
+    if (typeRef.type === "named" && context) {
+        return namedTypeSupportsDefault(typeRef.typeId, context, new Set());
+    }
+    return false;
+}
+
+/**
+ * Check if a named type (object) supports Default by checking if all its fields
+ * have types that implement Default. Enums and unions don't derive Default.
+ */
+function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext, visited: Set<string>): boolean {
+    if (visited.has(typeId)) {
+        return false;
+    }
+    visited.add(typeId);
+    const typeDecl = context.ir.types[typeId];
+    if (!typeDecl) {
+        return false;
+    }
+    if (typeDecl.shape.type === "object") {
+        return typeDecl.shape.properties.every((prop) =>
+            hasDefaultImpl(prop.valueType, context)
+        );
+    }
+    if (typeDecl.shape.type === "alias") {
+        return hasDefaultImpl(typeDecl.shape.aliasOf, context);
+    }
+    return false;
+}
+
 export function isOptionalType(typeReference: FernIr.TypeReference): boolean {
     return typeReference._visit<boolean>({
         container: (container) => {

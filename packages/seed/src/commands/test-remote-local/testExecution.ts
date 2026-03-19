@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { cp, mkdir, rm, stat, writeFile } from "fs/promises";
@@ -23,7 +24,6 @@ import {
 } from "./constants.js";
 import { runGeneration } from "./generation.js";
 import type { GenerationResult, GenerationResultSuccess, RemoteVsLocalTestCase, TestCaseResult } from "./types.js";
-
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<TestCaseResult> {
     const { generator, fixture, outputMode, localGeneratorVersions, remoteGeneratorVersions, context } = testCase;
     const { fernRepoDirectory, workingDirectory, logger } = context;
@@ -261,6 +261,6 @@ async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<
         }
     } catch (error) {
         // Non-fatal - log warning but don't fail the test
-        logger.warn(`Failed to clean up .git folders: ${error instanceof Error ? error.message : String(error)}`);
+        logger.warn(`Failed to clean up .git folders: ${extractErrorMessage(error)}`);
     }
 }

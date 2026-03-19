@@ -121,6 +121,7 @@ public final class UserOrAdminDiscriminated {
     @JsonIgnoreProperties("type")
     private static final class UserValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private User value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

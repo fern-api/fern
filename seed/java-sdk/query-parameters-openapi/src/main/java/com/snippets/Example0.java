@@ -27,7 +27,7 @@ public class Example0 {
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
                 .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
-                        .name("name")
+                        .name(Optional.of("name"))
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build()))
                 .userList(Arrays.asList(User.builder()
@@ -60,7 +60,7 @@ public class Example0 {
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
                 .neighbor(SearchRequestNeighbor.of(User.builder()
-                        .name("name")
+                        .name(Optional.of("name"))
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build()))
                 .build());

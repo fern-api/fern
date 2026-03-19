@@ -12,7 +12,13 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    extractErrorMessage,
+    haveSameNullishness,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
@@ -627,6 +633,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Whether to generate a preview link for the docs"
                 })
+                .option("id", {
+                    type: "string",
+                    description:
+                        "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate"
@@ -735,6 +746,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             }
+            if (argv.id != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.");
+            }
+            if (argv.id != null && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.");
+            }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
             }
@@ -817,6 +834,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     instance: argv.instance,
                     preview: argv.preview,
+                    previewId: argv.id,
+                    force: argv.force,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
@@ -2237,9 +2256,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     cliContext.logger.info("\nDry run complete. No changes made.");
                 }
             } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2311,7 +2328,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
             }
         }
     );

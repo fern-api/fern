@@ -141,6 +141,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class CompileErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private CompileError value;
 
     @JsonCreator(
@@ -183,6 +187,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class RuntimeErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RuntimeError value;
 
     @JsonCreator(
@@ -225,6 +233,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class InternalErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private InternalError value;
 
     @JsonCreator(

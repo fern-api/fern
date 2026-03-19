@@ -129,6 +129,7 @@ public final class SubmissionStatusForTestCase {
     @JsonIgnoreProperties("type")
     private static final class GradedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TestCaseResultWithStdout value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -205,6 +206,7 @@ public final class SubmissionStatusForTestCase {
     @JsonIgnoreProperties("type")
     private static final class TracedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TracedTestCase value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

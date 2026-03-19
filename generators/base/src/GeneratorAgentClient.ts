@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import {
     type GenerateReadmeParams,
     type GenerateReferenceParams,
@@ -8,7 +9,6 @@ import {
     githubPush
 } from "@fern-api/generator-cli";
 import { Logger } from "@fern-api/logger";
-
 export class GeneratorAgentClient {
     private logger: Logger;
 
@@ -23,7 +23,7 @@ export class GeneratorAgentClient {
             this.logger.debug(`Generated readme (${result.length} bytes)`);
             return result;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`Failed to generate readme: ${errorMessage}`);
             throw error;
         }
@@ -42,7 +42,7 @@ export class GeneratorAgentClient {
             }
             return "";
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`Failed to push to GitHub: ${errorMessage}`);
             throw error;
         }
@@ -55,7 +55,7 @@ export class GeneratorAgentClient {
             this.logger.debug(`Generated reference (${result.length} bytes)`);
             return result;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`Failed to generate reference: ${errorMessage}`);
             throw error;
         }
