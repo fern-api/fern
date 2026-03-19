@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.35.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to the generated
+        `IStringEnum` JsonConverter. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` at runtime when serializing or deserializing a
+        `Dictionary<TStringEnum, TValue>`. This is applied to all generated `IStringEnum`
+        types so dictionary-key usage works without requiring regeneration.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.35.0
   changelogEntry:
     - summary: |
