@@ -7,5 +7,6 @@ pub use crate::prelude::*;
 pub struct GetMetadataQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shallow: Option<bool>,
+    #[serde(default)]
     pub tag: Vec<Option<String>>,
 }

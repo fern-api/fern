@@ -3,9 +3,11 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
     #[serde(rename = "createdAt")]
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub created_at: DateTime<FixedOffset>,
     #[serde(rename = "updatedAt")]
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub updated_at: DateTime<FixedOffset>,
     #[serde(skip_serializing_if = "Option::is_none")]

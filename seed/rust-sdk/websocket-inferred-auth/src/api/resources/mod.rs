@@ -21,7 +21,7 @@ impl WebsocketAuthClient {
         Ok(Self {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,
-            realtime: RealtimeConnector::new(config.base_url.clone()),
+            realtime: RealtimeConnector::new(config.base_url.clone(), config.token.clone()),
         })
     }
 }

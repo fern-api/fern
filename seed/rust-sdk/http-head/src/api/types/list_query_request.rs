@@ -5,5 +5,6 @@ pub use crate::prelude::*;
 /// Request type for the ListQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ListQueryRequest {
+    #[serde(default)]
     pub limit: i64,
 }
