@@ -17,12 +17,15 @@ vi.mock("octokit", () => {
              * Simulates octokit.paginate(endpoint, params, mapFn) by calling the
              * map function with the mock listReleases response and a done callback.
              */
-            paginate = async (_endpoint: unknown, _params: unknown, mapFn: (response: unknown, done: () => void) => string[]) => {
+            paginate = async (
+                _endpoint: unknown,
+                _params: unknown,
+                mapFn: (response: unknown, done: () => void) => string[]
+            ) => {
                 const response = await mockListReleases(_params);
-                let results: string[] = [];
-                const done = () => {};
-                results = mapFn(response, done);
-                return results;
+                // no-op: the test doesn't need to track whether done() was called
+                const done = () => undefined;
+                return mapFn(response, done);
             };
         }
     };
