@@ -10,5 +10,6 @@ pub struct FindRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub private_property: Option<i64>,
     #[serde(rename = "optionalString")]
+    #[serde(default)]
     pub optional_string: OptionalString,
 }

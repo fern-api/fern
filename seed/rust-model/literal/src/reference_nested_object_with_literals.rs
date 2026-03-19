@@ -7,5 +7,6 @@ pub struct NestedObjectWithLiterals {
     #[serde(rename = "literal2")]
     pub literal_2: String,
     #[serde(rename = "strProp")]
+    #[serde(default)]
     pub str_prop: String,
 }

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListUsersPaginationResponse {
     #[serde(rename = "hasNextPage")]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8,6 +8,8 @@ pub struct ListUsersPaginationResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub page: Option<Page>,
     /// The totall number of /users
+    #[serde(default)]
     pub total_count: i64,
+    #[serde(default)]
     pub data: Users,
 }

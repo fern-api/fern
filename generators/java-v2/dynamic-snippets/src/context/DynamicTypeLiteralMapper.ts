@@ -11,6 +11,9 @@ export declare namespace DynamicTypeLiteralMapper {
         value: unknown;
         as?: ConvertedAs;
         inUndiscriminatedUnion?: boolean;
+        // Set to true when we've detected a nested optional+nullable type that should
+        // collapse into OptionalNullable<T> (only relevant when collapse-optional-nullable is enabled).
+        isCollapsedOptionalNullable?: boolean;
     }
 
     // Identifies what the type is being converted as, which sometimes influences how
@@ -29,11 +32,15 @@ export class DynamicTypeLiteralMapper {
         return this.context.customConfig?.["collapse-optional-nullable"] === true;
     }
 
-    private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
+    private wrapInOptionalIfNotNop(
+        value: java.TypeLiteral,
+        useOf: boolean = false,
+        isCollapsedOptionalNullable: boolean = false
+    ): java.TypeLiteral {
         if (java.TypeLiteral.isNop(value)) {
             return value;
         }
-        if (this.usesOptionalNullable()) {
+        if (isCollapsedOptionalNullable) {
             return this.context.getOptionalNullableOf(value);
         }
         return java.TypeLiteral.optional({ value, useOf });
@@ -82,7 +89,14 @@ export class DynamicTypeLiteralMapper {
                         Object.keys(args.value).length === 0 &&
                         args.typeReference.value.type === "named")
                 ) {
-                    if (this.usesOptionalNullable()) {
+                    // Use OptionalNullable.absent() only when the type is truly a collapsed
+                    // optional+nullable (either detected here or propagated from outer recursion).
+                    const isCollapsed =
+                        args.isCollapsedOptionalNullable ||
+                        (this.usesOptionalNullable() &&
+                            (args.typeReference.value.type === "optional" ||
+                                args.typeReference.value.type === "nullable"));
+                    if (isCollapsed) {
                         return this.context.getOptionalNullableAbsent();
                     } else {
                         return java.TypeLiteral.reference(
@@ -100,7 +114,7 @@ export class DynamicTypeLiteralMapper {
 
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
-                    return this.wrapInOptionalIfNotNop(listLiteral, true);
+                    return this.wrapInOptionalIfNotNop(listLiteral, true, args.isCollapsedOptionalNullable === true);
                 }
 
                 // When using OptionalNullable mode and we have nested optional/nullable,
@@ -113,7 +127,8 @@ export class DynamicTypeLiteralMapper {
                         typeReference: args.typeReference.value,
                         value: args.value,
                         as: args.as,
-                        inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                        inUndiscriminatedUnion: args.inUndiscriminatedUnion,
+                        isCollapsedOptionalNullable: true
                     });
                 }
 
@@ -129,7 +144,7 @@ export class DynamicTypeLiteralMapper {
                 // flag.
                 // When in an undiscriminated union, we always use Optional.of() for optional types
                 const useOf = args.as === "mapValue" || args.inUndiscriminatedUnion === true;
-                return this.wrapInOptionalIfNotNop(convertedValue, useOf);
+                return this.wrapInOptionalIfNotNop(convertedValue, useOf, args.isCollapsedOptionalNullable === true);
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
