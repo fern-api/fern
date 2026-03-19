@@ -180,10 +180,13 @@ export function convertObject({
                 return property;
             });
 
-            // Merge base property schemas from referenced allOf parents into inline
-            // override properties. This handles cases like allOf narrowing array items
-            // without redeclaring type: array — the base schema's type/structure is
-            // carried forward so the property is correctly recognized.
+            // Merge structural type fields from referenced allOf parent properties into
+            // inline override properties. This handles cases like allOf narrowing array
+            // items without redeclaring type: array — the base schema's type/structure
+            // is carried forward so the property is correctly recognized.
+            // Only structural fields (type, format, items, etc.) are merged — metadata
+            // fields (description, readOnly, etc.) are intentionally excluded to avoid
+            // propagating base metadata into overrides.
             // We build a new element to avoid mutating the parsed OpenAPI document.
             let mergedAllOfElement = allOfElement;
             if (allOfElement.properties != null) {
@@ -198,7 +201,10 @@ export function convertObject({
                             const resolvedParent = context.resolveSchemaReference(otherAllOfElement);
                             const basePropSchema = resolvedParent.properties?.[key];
                             if (basePropSchema != null && !isReferenceObject(basePropSchema)) {
-                                merged = { ...basePropSchema, ...overridePropSchema };
+                                merged = {
+                                    ...pickStructuralFields(basePropSchema),
+                                    ...overridePropSchema
+                                };
                                 break;
                             }
                         }
@@ -556,6 +562,38 @@ function filterNotProperties(schema: OpenAPIV3.SchemaObject): OpenAPIV3.SchemaOb
         filteredProperties[key] = propertySchema;
     }
     return { ...schema, properties: filteredProperties };
+}
+
+/**
+ * Picks only structural/type-related fields from an OpenAPI schema object.
+ * This is used when merging base property schemas into allOf overrides to
+ * carry forward type information (e.g. type: array) without propagating
+ * metadata fields (description, readOnly, title, etc.) from the base.
+ */
+function pickStructuralFields(schema: OpenAPIV3.SchemaObject): Record<string, unknown> {
+    const src = schema as Record<string, unknown>;
+    const result: Record<string, unknown> = {};
+    const STRUCTURAL_KEYS = [
+        "type",
+        "format",
+        "items",
+        "properties",
+        "additionalProperties",
+        "allOf",
+        "oneOf",
+        "anyOf",
+        "enum",
+        "const",
+        "nullable",
+        "not",
+        "required"
+    ];
+    for (const key of STRUCTURAL_KEYS) {
+        if (src[key] != null) {
+            result[key] = src[key];
+        }
+    }
+    return result;
 }
 
 function getAllProperties({
