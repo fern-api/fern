@@ -6,10 +6,12 @@ package com.seed.bytesUpload.resources.service;
 import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.InputStreamRequestBody;
 import com.seed.bytesUpload.core.ObjectMappers;
+import com.seed.bytesUpload.core.QueryStringMapper;
 import com.seed.bytesUpload.core.RequestOptions;
 import com.seed.bytesUpload.core.SeedBytesUploadApiException;
 import com.seed.bytesUpload.core.SeedBytesUploadException;
 import com.seed.bytesUpload.core.SeedBytesUploadHttpResponse;
+import com.seed.bytesUpload.resources.service.requests.UploadWithQueryParamsRequest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,5 +74,50 @@ public class RawServiceClient {
 
     public SeedBytesUploadHttpResponse<Void> upload(byte[] request, RequestOptions requestOptions) {
         return upload(new ByteArrayInputStream(request), requestOptions);
+    }
+
+    public SeedBytesUploadHttpResponse<Void> uploadWithQueryParams(UploadWithQueryParamsRequest request) {
+        return uploadWithQueryParams(request, null);
+    }
+
+    public SeedBytesUploadHttpResponse<Void> uploadWithQueryParams(
+            UploadWithQueryParamsRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("upload-content-with-query-params");
+        QueryStringMapper.addQueryParameter(httpUrl, "model", request.getModel(), false);
+        if (request.getLanguage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "language", request.getLanguage().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body = new InputStreamRequestBody(
+                MediaType.parse("application/octet-stream"), new ByteArrayInputStream(request.getBody()));
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/octet-stream");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedBytesUploadHttpResponse<>(null, response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedBytesUploadApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedBytesUploadException("Network error executing HTTP request", e);
+        }
     }
 }

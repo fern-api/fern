@@ -27,6 +27,18 @@ describe("extractLanguageFromGeneratorName", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-python-sdk")).toBe("python");
     });
 
+    it("extracts 'python' from 'fernapi/fern-pydantic-model'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-pydantic-model")).toBe("python");
+    });
+
+    it("extracts 'python' from 'fernapi/fern-fastapi-server'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-fastapi-server")).toBe("python");
+    });
+
+    it("extracts 'python' from 'fernapi/fern-fastapi'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-fastapi")).toBe("python");
+    });
+
     it("extracts 'java' from 'fernapi/fern-java-sdk'", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-java-sdk")).toBe("java");
     });
@@ -91,13 +103,18 @@ describe("extractLanguageFromGeneratorName", () => {
 });
 
 describe("extractLanguageFromGeneratorName integration - runGenerator.ts", () => {
-    it("passes generatorLanguage to LocalTaskHandler with extractLanguageFromGeneratorName fallback", () => {
+    it("computes generatorLanguage with extractLanguageFromGeneratorName fallback", () => {
         expect(runGeneratorSource).toContain(
-            "generatorLanguage: generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)"
+            "generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)"
         );
     });
 
     it("imports extractLanguageFromGeneratorName in runGenerator.ts", () => {
-        expect(runGeneratorSource).toContain('import { extractLanguageFromGeneratorName } from "./VersionUtils.js"');
+        expect(runGeneratorSource).toContain("extractLanguageFromGeneratorName");
+        expect(runGeneratorSource).toContain('from "./VersionUtils.js"');
+    });
+
+    it("imports mapMagicVersionForLanguage in runGenerator.ts", () => {
+        expect(runGeneratorSource).toContain("mapMagicVersionForLanguage");
     });
 });

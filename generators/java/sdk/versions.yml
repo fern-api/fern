@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.2
+  changelogEntry:
+    - summary: |
+        Fix binary file upload for wrapped request endpoints (endpoints with
+        query parameters alongside an `application/octet-stream` body). The body
+        type is now `byte[]` instead of `String`, and the request is sent via
+        `InputStreamRequestBody` instead of `String.valueOf().getBytes(UTF_8)`,
+        which was corrupting binary data.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.0.1
   changelogEntry:
     - summary: |

@@ -4,7 +4,7 @@ import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from 
 import os from "os";
 import path from "path";
 
-const BUF_VERSION = "v1.66.1";
+const BUF_VERSION = "v1.50.0";
 const GITHUB_RELEASE_URL_BASE = "https://github.com/bufbuild/buf/releases/download";
 const BINARY_NAME = "buf";
 const CACHE_DIR_NAME = ".fern";
@@ -163,7 +163,7 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
 /**
  * Resolves the buf binary, downloading it from GitHub Releases if needed.
  *
- * **Versioning**: Binaries are cached with a versioned filename (e.g. `buf-v1.66.1`).
+ * **Versioning**: Binaries are cached with a versioned filename (e.g. `buf-v1.50.0`).
  * A `.version` marker file tracks which version the canonical `buf` binary corresponds to.
  * When `BUF_VERSION` is bumped, the canonical binary is atomically replaced on the
  * next invocation.

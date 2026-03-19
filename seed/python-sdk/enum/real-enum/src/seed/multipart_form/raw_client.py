@@ -55,7 +55,9 @@ class RawMultipartFormClient:
                 "color": color,
                 "maybeColor": maybe_color,
                 "colorList": json.dumps(jsonable_encoder(color_list)),
-                "maybeColorList": json.dumps(jsonable_encoder(maybe_color_list)),
+                "maybeColorList": json.dumps(jsonable_encoder(maybe_color_list))
+                if maybe_color_list is not OMIT
+                else OMIT,
             },
             files={},
             request_options=request_options,
@@ -113,7 +115,9 @@ class AsyncRawMultipartFormClient:
                 "color": color,
                 "maybeColor": maybe_color,
                 "colorList": json.dumps(jsonable_encoder(color_list)),
-                "maybeColorList": json.dumps(jsonable_encoder(maybe_color_list)),
+                "maybeColorList": json.dumps(jsonable_encoder(maybe_color_list))
+                if maybe_color_list is not OMIT
+                else OMIT,
             },
             files={},
             request_options=request_options,

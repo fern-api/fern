@@ -49,24 +49,31 @@ export async function getLatestRelease(
             return tag;
         }
 
-        // The "latest" release is a semver prerelease — scan recent releases
-        // for the first stable (non-semver-prerelease, non-draft, non-GitHub-prerelease) tag.
-        const releases = await octokit.paginate(octokit.rest.repos.listReleases, {
-            owner,
-            repo,
-            per_page: 100
-        });
-
-        for (const release of releases) {
-            if (release.draft || release.prerelease) {
-                continue;
+        // The "latest" release is a semver prerelease — paginate through releases
+        // to find the first stable (non-semver-prerelease, non-draft, non-GitHub-prerelease) tag.
+        // The done() callback tells paginate to stop fetching further pages once we find a match.
+        const results = await octokit.paginate(
+            octokit.rest.repos.listReleases,
+            {
+                owner,
+                repo,
+                per_page: 100
+            },
+            (response, done) => {
+                for (const release of response.data) {
+                    if (release.draft || release.prerelease) {
+                        continue;
+                    }
+                    if (!isSemverPrerelease(release.tag_name)) {
+                        done();
+                        return [release.tag_name];
+                    }
+                }
+                return [];
             }
-            if (!isSemverPrerelease(release.tag_name)) {
-                return release.tag_name;
-            }
-        }
+        );
 
-        return undefined;
+        return results[0];
     } catch {
         // No releases found (404) or other error — return undefined
         return undefined;
