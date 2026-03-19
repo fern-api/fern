@@ -5,6 +5,8 @@ pub use crate::prelude::*;
 /// Request type for the GetDirectThreadQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct GetDirectThreadQueryRequest {
+    #[serde(default)]
     pub ids: Vec<String>,
+    #[serde(default)]
     pub tags: Vec<String>,
 }

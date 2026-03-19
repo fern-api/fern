@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 /// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchRequest {
+    #[serde(default)]
     pub query: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub filters: Option<HashMap<String, Option<String>>>,
