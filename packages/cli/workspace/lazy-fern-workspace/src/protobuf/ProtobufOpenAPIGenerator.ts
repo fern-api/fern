@@ -322,7 +322,7 @@ export class ProtobufOpenAPIGenerator {
         }
 
         // Allow users to force the local PATH version (e.g. for testing a custom build).
-        if (process.env.FERN_USE_LOCAL_PROTOC_GEN_OPENAPI) {
+        if (process.env.FERN_USE_LOCAL_PROTOC_GEN_OPENAPI === "true") {
             this.context.logger.debug("FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set, using protoc-gen-openapi from PATH");
             const which = createLoggingExecutable("which", {
                 cwd: AbsoluteFilePath.of(process.cwd()),
