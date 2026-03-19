@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.8
+  changelogEntry:
+    - summary: |
+        Map magic placeholder version to PEP 440-compatible format for Python
+        generators during local auto-versioning. Poetry validates versions during
+        generation and rejects semver pre-release tags with hyphens. Python
+        generators now receive `0.0.0.dev0` instead of `0.0.0-fern-placeholder`.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.7
   changelogEntry:
     - summary: |
@@ -9,7 +20,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 4.37.6
   changelogEntry:
     - summary: |
