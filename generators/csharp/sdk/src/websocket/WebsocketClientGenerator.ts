@@ -177,11 +177,21 @@ export class WebSocketClientGenerator extends WithGeneration {
         websocketChannel: WebSocketChannel
     ): void {
         const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
         const createMethodName = `Create${websocketApiName}`;
 
         const websocketApiClassReference = context.csharp.classReference({
             origin: websocketChannel,
             name: websocketApiName,
+            namespace
+        });
+
+        // Use the interface type as the return type so the concrete class
+        // satisfies the interface contract (C# requires exact return type match
+        // for interface implementation in versions before C# 9).
+        const websocketInterfaceRef = context.csharp.classReference({
+            origin: websocketChannel,
+            name: interfaceName,
             namespace
         });
 
@@ -203,7 +213,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 name: createMethodName,
                 parameters: [],
                 access: ast.Access.Public,
-                return_: websocketApiClassReference,
+                return_: websocketInterfaceRef,
                 body: context.csharp.codeblock((writer) => {
                     writer.write("return ");
                     const optionsArguments: Array<{ name: string; assignment: ast.AstNode }> =
@@ -238,7 +248,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             access: ast.Access.Public,
-            return_: websocketApiClassReference,
+            return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(
@@ -1142,11 +1152,6 @@ export class WebSocketClientGenerator extends WithGeneration {
      */
     private createWebsocketInterface(): ast.Interface {
         const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel);
-        const interfaceRef = this.csharp.classReference({
-            origin: this.websocketChannel,
-            name: interfaceName,
-            namespace: this.classReference.namespace
-        });
 
         const interface_ = this.csharp.interface_({
             name: interfaceName,
@@ -1359,17 +1364,6 @@ export class WebSocketClientGenerator extends WithGeneration {
         });
     }
 
-    /**
-     * Generates the complete C# WebSocket client file.
-     *
-     * Creates a CSharpFile containing:
-     * - The WebSocket client class with all methods and properties
-     * - Proper namespace organization
-     * - All necessary type references
-     * - Custom configuration settings
-     *
-     * @returns The generated C# file ready for compilation
-     */
     /**
      * Generates the C# WebSocket client interface file.
      *
