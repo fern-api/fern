@@ -9,87 +9,6 @@ import (
 	big "math/big"
 )
 
-type FlushedEvent struct {
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-	type_          string
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (f *FlushedEvent) Type() string {
-	return f.type_
-}
-
-func (f *FlushedEvent) GetExtraProperties() map[string]interface{} {
-	if f == nil {
-		return nil
-	}
-	return f.extraProperties
-}
-
-func (f *FlushedEvent) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
-	}
-	f.explicitFields.Or(f.explicitFields, field)
-}
-
-func (f *FlushedEvent) UnmarshalJSON(data []byte) error {
-	type embed FlushedEvent
-	var unmarshaler = struct {
-		embed
-		Type string `json:"type"`
-	}{
-		embed: embed(*f),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*f = FlushedEvent(unmarshaler.embed)
-	if unmarshaler.Type != "flushed" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "flushed", unmarshaler.Type)
-	}
-	f.type_ = unmarshaler.Type
-	extraProperties, err := internal.ExtractExtraProperties(data, *f, "type")
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-	f.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (f *FlushedEvent) MarshalJSON() ([]byte, error) {
-	type embed FlushedEvent
-	var marshaler = struct {
-		embed
-		Type string `json:"type"`
-	}{
-		embed: embed(*f),
-		Type:  "flushed",
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (f *FlushedEvent) String() string {
-	if f == nil {
-		return "<nil>"
-	}
-	if len(f.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
 var (
 	errorEventFieldErrorCode    = big.NewInt(1 << 0)
 	errorEventFieldErrorMessage = big.NewInt(1 << 1)
@@ -188,6 +107,87 @@ func (e *ErrorEvent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+type FlushedEvent struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlushedEvent) Type() string {
+	return f.type_
+}
+
+func (f *FlushedEvent) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FlushedEvent) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+func (f *FlushedEvent) UnmarshalJSON(data []byte) error {
+	type embed FlushedEvent
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FlushedEvent(unmarshaler.embed)
+	if unmarshaler.Type != "flushed" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "flushed", unmarshaler.Type)
+	}
+	f.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *f, "type")
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlushedEvent) MarshalJSON() ([]byte, error) {
+	type embed FlushedEvent
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*f),
+		Type:  "flushed",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FlushedEvent) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 var (
