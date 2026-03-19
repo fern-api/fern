@@ -374,14 +374,14 @@ export function parseAsyncAPIV3({
         // Skip any parameters already added from channel.parameters to avoid duplicates.
         if (channel.bindings?.ws?.query != null) {
             const queryParamNames = new Set(queryParameters.map((qp) => qp.name));
-            const required = channel.bindings.ws.query.required ?? [];
+            const requiredSet = new Set(channel.bindings.ws.query.required ?? []);
             for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
                 if (queryParamNames.has(name)) {
                     continue;
                 }
                 if (isReferenceObject(schema)) {
                     const resolvedSchema = context.resolveSchemaReference(schema);
-                    const isRequired = required.includes(name);
+                    const isRequired = requiredSet.has(name);
                     const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
                         ? [false, !isRequired]
                         : [!isRequired, false];
@@ -405,7 +405,7 @@ export function parseAsyncAPIV3({
                     });
                     continue;
                 }
-                const isRequired = required.includes(name);
+                const isRequired = requiredSet.has(name);
                 const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
                     ? [false, !isRequired]
                     : [!isRequired, false];
@@ -433,14 +433,14 @@ export function parseAsyncAPIV3({
         // Skip any headers already added from channel.parameters to avoid duplicates.
         if (channel.bindings?.ws?.headers != null) {
             const headerNames = new Set(headers.map((h) => h.name));
-            const required = channel.bindings.ws.headers.required ?? [];
+            const requiredSet = new Set(channel.bindings.ws.headers.required ?? []);
             for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
                 if (headerNames.has(name)) {
                     continue;
                 }
                 if (isReferenceObject(schema)) {
                     const resolvedSchema = context.resolveSchemaReference(schema);
-                    const isRequired = required.includes(name);
+                    const isRequired = requiredSet.has(name);
                     const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
                         ? [false, !isRequired]
                         : [!isRequired, false];
@@ -464,7 +464,7 @@ export function parseAsyncAPIV3({
                     });
                     continue;
                 }
-                const isRequired = required.includes(name);
+                const isRequired = requiredSet.has(name);
                 const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
                     ? [false, !isRequired]
                     : [!isRequired, false];
