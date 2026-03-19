@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.2
+  changelogEntry:
+    - summary: |
+        Fix pagination query parameter key mismatch. Query parameters were initialized
+        with string keys but pagination iterator blocks used symbol keys, causing duplicate
+        parameters to be sent (e.g., `page=0&page=0`) which resulted in 400 errors.
+      type: fix
+    - summary: |
+        URI-encode path parameters before interpolation into URL paths. Resource IDs
+        containing reserved URI characters (e.g., pipes, spaces) now work correctly
+        instead of raising `URI::InvalidURIError`.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 61
+
 - version: 1.1.1
   changelogEntry:
     - summary: |

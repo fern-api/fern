@@ -55,7 +55,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{params[:payment_id]}",
+          path: "/payment/#{URI.encode_uri_component(params[:payment_id].to_s)}",
           request_options: request_options
         )
         begin

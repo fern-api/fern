@@ -14,7 +14,7 @@ pub struct DeserializationTestRequest {
     pub optional_string: Option<String>,
     #[serde(rename = "optionalNullableString")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_nullable_string: Option<Option<String>>,
+    pub optional_nullable_string: Option<String>,
     #[serde(rename = "nullableEnum")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_enum: Option<UserRole>,
