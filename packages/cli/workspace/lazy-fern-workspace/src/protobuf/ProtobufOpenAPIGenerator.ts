@@ -321,6 +321,29 @@ export class ProtobufOpenAPIGenerator {
             return;
         }
 
+        // Allow users to force the local PATH version (e.g. for testing a custom build).
+        if (process.env.FERN_USE_LOCAL_PROTOC_GEN_OPENAPI) {
+            this.context.logger.debug("FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set, using protoc-gen-openapi from PATH");
+            const which = createLoggingExecutable("which", {
+                cwd: AbsoluteFilePath.of(process.cwd()),
+                logger: undefined,
+                doNotPipeOutput: true
+            });
+            try {
+                const result = await which(["protoc-gen-openapi"]);
+                const resolvedPath = result.stdout?.trim();
+                if (resolvedPath) {
+                    this.context.logger.debug(`Found protoc-gen-openapi on PATH: ${resolvedPath}`);
+                }
+                this.protocGenOpenAPIResolved = true;
+                return;
+            } catch {
+                this.context.failAndThrow(
+                    "FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set but protoc-gen-openapi was not found on PATH."
+                );
+            }
+        }
+
         // Always prefer the auto-downloaded fern fork of protoc-gen-openapi.
         // A user may have the original Google/gnostic protoc-gen-openapi on
         // PATH, which does not support fern-specific flags like flatten_oneofs.

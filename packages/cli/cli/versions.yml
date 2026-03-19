@@ -7,7 +7,9 @@
         original Google/gnostic `protoc-gen-openapi` installed would encounter
         `no such flag -flatten_oneofs` errors because that version does not
         support fern-specific plugin options. The CLI now downloads the fern fork
-        first and only falls back to PATH if the download fails.
+        first and only falls back to PATH if the download fails. Set
+        `FERN_USE_LOCAL_PROTOC_GEN_OPENAPI=true` to force the PATH version
+        (e.g. for testing a custom build).
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
