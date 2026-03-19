@@ -873,6 +873,48 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         true
                     )
                 );
+            } else if (protocolUnionInfo != null) {
+                // No serde layer but protocol-discriminated: inject discriminant from eventType
+                const EVENT_TYPE_PARAM = "_eventType";
+                parseFunction = ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                        ),
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            EVENT_TYPE_PARAM,
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken)
+                        )
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createAsExpression(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createSpreadAssignment(
+                                    ts.factory.createAsExpression(
+                                        ts.factory.createIdentifier(
+                                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                        ),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                    )
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(protocolUnionInfo.discriminantWireValue),
+                                    ts.factory.createIdentifier(EVENT_TYPE_PARAM)
+                                )
+                            ],
+                            false
+                        ),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                    )
+                );
             } else {
                 parseFunction = ts.factory.createArrowFunction(
                     undefined,
