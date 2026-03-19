@@ -939,7 +939,7 @@ class EndpointResponseCodeWriter:
             variant_shape = variant.shape.get_as_union()
 
             # Determine the variant type reference for deserialization
-            if variant_shape.type == "samePropertiesAsObject":
+            if variant_shape.properties_type == "samePropertiesAsObject":
                 variant_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                     ir_types.TypeReference.factory.named(
                         ir_types.DeclaredTypeName(
@@ -950,7 +950,7 @@ class EndpointResponseCodeWriter:
                         )
                     )
                 )
-            elif variant_shape.type == "singleProperty":
+            elif variant_shape.properties_type == "singleProperty":
                 variant_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                     variant_shape.type
                 )
