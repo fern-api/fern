@@ -20,6 +20,15 @@ import {
     PROTOBUF_SHELL_PROXY_FILENAME
 } from "./utils.js";
 
+// Coalesces concurrent `npm install -g fern-api` calls into a single execution.
+// Multiple ProtobufIRGenerator instances may call ensureFernGloballyInstalled()
+// concurrently (e.g. during `fern docs dev` with multiple protobuf-sourced API tabs).
+// Without this, parallel npm global installs race on the same node_modules/fern-api
+// directory rename and produce ENOTEMPTY errors. The first caller creates the promise;
+// subsequent callers await the same one. On failure the promise is cleared to allow retry.
+// Safety: the check-and-assign after `await isFernOnPath()` is synchronous within a
+// single tick, so Node's single-threaded event loop guarantees no two callers can both
+// create the install promise.
 let fernGlobalInstallPromise: Promise<void> | undefined;
 
 async function isFernOnPath(logger: Logger): Promise<boolean> {
