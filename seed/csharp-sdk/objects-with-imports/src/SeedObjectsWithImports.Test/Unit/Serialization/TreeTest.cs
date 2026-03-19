@@ -1,8 +1,8 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.Test.Utils;
 
 namespace SeedObjectsWithImports.Test;
 
@@ -82,7 +82,7 @@ public class TreeTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "nodes": [
                 {
@@ -110,42 +110,6 @@ public class TreeTest
               ]
             }
             """;
-        var actualObj = new Tree
-        {
-            Nodes = new List<Node>()
-            {
-                new Node
-                {
-                    Id = "node-8dvgfja2",
-                    Label = "left",
-                    Metadata = new Metadata
-                    {
-                        Id = "metadata-kjasf923",
-                        Data = new Dictionary<string, string>()
-                        {
-                            { "foo", "bar" },
-                            { "baz", "qux" },
-                        },
-                    },
-                },
-                new Node
-                {
-                    Id = "node-cwda9fi2x",
-                    Label = "right",
-                    Metadata = new Metadata
-                    {
-                        Id = "metadata-lkasdfv9j",
-                        Data = new Dictionary<string, string>()
-                        {
-                            { "one", "two" },
-                            { "three", "four" },
-                        },
-                    },
-                },
-            },
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Tree>(inputJson);
     }
 }
