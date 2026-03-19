@@ -1040,10 +1040,10 @@ class FromProtoPropertyMapper extends WithGeneration {
     }): ast.CodeBlock {
         switch (primitive.v1) {
             case "DATE_TIME":
-                return this.csharp.codeblock(`${propertyName}.ToDateTime()`);
+                return this.csharp.codeblock(`${propertyName}?.ToDateTime()`);
             case "BASE_64":
                 // Proto bytes fields are ByteString; SDK exposes byte[].
-                return this.csharp.codeblock(`${propertyName}.ToByteArray()`);
+                return this.csharp.codeblock(`${propertyName}?.ToByteArray()`);
             case "DATE":
             case "INTEGER":
             case "LONG":

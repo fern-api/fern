@@ -1305,9 +1305,11 @@ client.endpoints().object().getAndReturnWithUnknownField(
 client.endpoints().object().getAndReturnWithDocumentedUnknownType(
     ObjectWithDocumentedUnknownType
         .builder()
-        .documentedUnknownType(new 
+        .documentedUnknownType(
+            DocumentedUnknownType.of(new 
             HashMap<String, Object>() {{put("key", "value");
             }})
+        )
         .build()
 );
 ```
@@ -1325,6 +1327,52 @@ client.endpoints().object().getAndReturnWithDocumentedUnknownType(
 <dd>
 
 **request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request) -> Map&amp;lt;String, Object&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
+    new HashMap<String, Object>() {{
+        put("string", DocumentedUnknownType.of(new 
+        HashMap<String, Object>() {{put("key", "value");
+        }}));
+    }}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, Object>` 
     
 </dd>
 </dl>

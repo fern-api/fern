@@ -20,18 +20,9 @@ public partial class DataServiceClient : IDataServiceClient
     }
 
     /// <example><code>
-    /// await client.DataService.UploadAsync(
-    ///     new UploadRequest
-    ///     {
-    ///         Columns = new List&lt;SeedApi.Column&gt;()
-    ///         {
-    ///             new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
-    ///         },
-    ///     }
-    /// );
+    /// await client.DataService.CheckAsync();
     /// </code></example>
-    public async Task<UploadResponse> UploadAsync(
-        UploadRequest request,
+    public async Task<CheckResponse> CheckAsync(
         GrpcRequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -66,9 +57,12 @@ public partial class DataServiceClient : IDataServiceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            var call = _dataService.UploadAsync(request.ToProto(), callOptions);
+            var call = _dataService.CheckAsync(
+                new Google.Protobuf.WellKnownTypes.Empty(),
+                callOptions
+            );
             var response = await call.ConfigureAwait(false);
-            return UploadResponse.FromProto(response);
+            return CheckResponse.FromProto(response);
         }
         catch (RpcException rpc)
         {
@@ -260,6 +254,130 @@ public partial class DataServiceClient : IDataServiceClient
     }
 
     /// <example><code>
+    /// await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
+    /// </code></example>
+    public async Task<QueryResponse> QueryAsync(
+        QueryRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        try
+        {
+            var metadata = new global::Grpc.Core.Metadata();
+            foreach (var header in _client.Options.Headers)
+            {
+                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+                metadata.Add(header.Key, value);
+            }
+            if (_client.Options.AdditionalHeaders != null)
+            {
+                foreach (var header in _client.Options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+            if (options?.AdditionalHeaders != null)
+            {
+                foreach (var header in options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+
+            var callOptions = _grpc.CreateCallOptions(
+                metadata,
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            var call = _dataService.QueryAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return QueryResponse.FromProto(response);
+        }
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
+    }
+
+    /// <example><code>
+    /// await client.DataService.UploadAsync(
+    ///     new UploadRequest
+    ///     {
+    ///         Columns = new List&lt;SeedApi.Column&gt;()
+    ///         {
+    ///             new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<UploadResponse> UploadAsync(
+        UploadRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        try
+        {
+            var metadata = new global::Grpc.Core.Metadata();
+            foreach (var header in _client.Options.Headers)
+            {
+                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+                metadata.Add(header.Key, value);
+            }
+            if (_client.Options.AdditionalHeaders != null)
+            {
+                foreach (var header in _client.Options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+            if (options?.AdditionalHeaders != null)
+            {
+                foreach (var header in options.AdditionalHeaders)
+                {
+                    if (header.Value != null)
+                        metadata.Add(header.Key, header.Value);
+                }
+            }
+
+            var callOptions = _grpc.CreateCallOptions(
+                metadata,
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            var call = _dataService.UploadAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return UploadResponse.FromProto(response);
+        }
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
+    }
+
+    /// <example><code>
     /// await client.DataService.FetchAsync(new FetchRequest());
     /// </code></example>
     public async Task<FetchResponse> FetchAsync(
@@ -359,64 +477,6 @@ public partial class DataServiceClient : IDataServiceClient
             var call = _dataService.ListAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return ListResponse.FromProto(response);
-        }
-        catch (RpcException rpc)
-        {
-            var statusCode = (int)rpc.StatusCode;
-            throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
-            );
-        }
-        catch (Exception e)
-        {
-            throw new SeedApiException("Error", e);
-        }
-    }
-
-    /// <example><code>
-    /// await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
-    /// </code></example>
-    public async Task<QueryResponse> QueryAsync(
-        QueryRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        try
-        {
-            var metadata = new global::Grpc.Core.Metadata();
-            foreach (var header in _client.Options.Headers)
-            {
-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
-                metadata.Add(header.Key, value);
-            }
-            if (_client.Options.AdditionalHeaders != null)
-            {
-                foreach (var header in _client.Options.AdditionalHeaders)
-                {
-                    if (header.Value != null)
-                        metadata.Add(header.Key, header.Value);
-                }
-            }
-            if (options?.AdditionalHeaders != null)
-            {
-                foreach (var header in options.AdditionalHeaders)
-                {
-                    if (header.Value != null)
-                        metadata.Add(header.Key, header.Value);
-                }
-            }
-
-            var callOptions = _grpc.CreateCallOptions(
-                metadata,
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
-            var call = _dataService.QueryAsync(request.ToProto(), callOptions);
-            var response = await call.ConfigureAwait(false);
-            return QueryResponse.FromProto(response);
         }
         catch (RpcException rpc)
         {

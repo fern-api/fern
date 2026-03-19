@@ -226,12 +226,33 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
       disableDynamicSnippetTests: true
+  basic-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  bearer-token-environment-variable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+  url-form-encoded:
+    - customConfig: null
+      outputFolder: no-custom-config
   enum:
     - customConfig: null
       outputFolder: forward-compatible-enums
@@ -258,6 +279,18 @@ fixtures:
         experimental-fully-qualified-namespaces: true
         experimental-dotnet-format: true
       outputFolder: fully-qualified-namespaces
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "Contoso"
+        explicit-namespaces: true
+        experimental-fully-qualified-namespaces: true
+      outputFolder: namespace-client-collision
+  csharp-namespace-conflict:
+    - customConfig:
+        namespace: Seed.CsharpNamespaceConflict
+        client-class-name: Seed
+        experimental-fully-qualified-namespaces: true
+      outputFolder: client-class-name-matches-namespace-root
   csharp-system-collision:
     - customConfig:
         client-class-name: System

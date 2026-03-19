@@ -62,4 +62,14 @@ public final class ApiClient: Sendable {
             responseType: PostSubmitResponse.self
         )
     }
+
+    public func getToken(request: TokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/token",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TokenResponse.self
+        )
+    }
 }

@@ -1,7 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
-using System.Globalization;
 
 namespace Usage;
 
@@ -15,10 +13,13 @@ public class Example25
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
-            new ObjectWithDatetimeLikeString {
-                DatetimeLikeString = "2023-08-31T14:15:22Z",
-                ActualDatetime = DateTime.Parse("2023-08-31T14:15:22Z", null, DateTimeStyles.AdjustToUniversal)
+        await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+            new Dictionary<string, object>(){
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
             }
         );
     }

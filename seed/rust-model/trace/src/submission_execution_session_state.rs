@@ -7,8 +7,10 @@ pub struct ExecutionSessionState {
     pub last_time_contacted: Option<String>,
     /// The auto-generated session id. Formatted as a uuid.
     #[serde(rename = "sessionId")]
+    #[serde(default)]
     pub session_id: String,
     #[serde(rename = "isWarmInstance")]
+    #[serde(default)]
     pub is_warm_instance: bool,
     #[serde(rename = "awsTaskId")]
     #[serde(skip_serializing_if = "Option::is_none")]

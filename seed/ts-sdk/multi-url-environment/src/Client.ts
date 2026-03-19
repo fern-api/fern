@@ -5,6 +5,7 @@ import { S3Client } from "./api/resources/s3/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
+import * as environments from "./environments.js";
 
 export declare namespace SeedMultiUrlEnvironmentClient {
     export type Options = BaseClientOptions;
@@ -48,7 +49,15 @@ export class SeedMultiUrlEnvironmentClient {
             input,
             init,
             {
-                baseUrl: this._options.baseUrl,
+                baseUrl:
+                    this._options.baseUrl ??
+                    (async () => {
+                        const env = await core.Supplier.get(this._options.environment);
+                        return typeof env === "string"
+                            ? env
+                            : ((env as Record<string, string>)?.ec2 ??
+                                  environments.SeedMultiUrlEnvironmentEnvironment.Production.ec2);
+                    }),
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

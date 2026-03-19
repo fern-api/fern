@@ -2038,7 +2038,7 @@ func getExtraPropertiesFieldName(extraPropertiesEnabled bool) string {
 
 // unknownToGoType maps the given unknown into its Go-equivalent.
 func unknownToGoType(_ any) string {
-	return "interface{}"
+	return "any"
 }
 
 // literalToUndiscriminatedUnionField maps Fern's literal types to the field name used in an

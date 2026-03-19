@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import type { CppLibraryDocsIr } from "@fern-api/library-docs-generator";
@@ -9,9 +10,7 @@ import { Project } from "@fern-api/project-loader";
 import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
-
 import { CliContext } from "../../cli-context/CliContext.js";
-
 export interface GenerateLibraryDocsOptions {
     project: Project;
     cliContext: CliContext;
@@ -303,7 +302,7 @@ async function startGeneration(
         return result.jobId;
     } catch (error) {
         return context.failAndThrow(
-            `Failed to start generation for library '${opts.name}': ${error instanceof Error ? error.message : String(error)}`
+            `Failed to start generation for library '${opts.name}': ${extractErrorMessage(error)}`
         );
     }
 }
@@ -324,7 +323,7 @@ async function pollForCompletion(
             status = await client.getLibraryDocsGenerationStatus({ jobId });
         } catch (error) {
             return context.failAndThrow(
-                `Failed to check generation status for library '${libraryName}': ${error instanceof Error ? error.message : String(error)}`
+                `Failed to check generation status for library '${libraryName}': ${extractErrorMessage(error)}`
             );
         }
 
@@ -365,7 +364,7 @@ async function downloadIr(
         resultUrl = result.resultUrl;
     } catch (error) {
         return context.failAndThrow(
-            `Failed to fetch generation result for library '${libraryName}': ${error instanceof Error ? error.message : String(error)}`
+            `Failed to fetch generation result for library '${libraryName}': ${extractErrorMessage(error)}`
         );
     }
 

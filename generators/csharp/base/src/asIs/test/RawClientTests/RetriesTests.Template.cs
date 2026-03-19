@@ -26,7 +26,7 @@ public class RetriesTests
         _baseUrl = _server.Url ?? "";
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         _rawClient = new RawClient(
-            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
+            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
         )
         {
             BaseRetryDelay = 0,
@@ -145,7 +145,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new <%= namespaces.core %>.MultipartFormRequest{
+        var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest{
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -185,12 +185,12 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new <%= context.namespaces.core %>.MultipartFormRequest{
-            BaseUrl = _baseUrl,
-            Method = HttpMethod.Post,
-            Path = "/test",
-        };
-        request.AddJsonPart("object", new {});
+                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest{
+                    BaseUrl = _baseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/test",
+                };
+                request.AddJsonPart("object", new {});
 
         var response = await _rawClient.SendRequestAsync(request);
         Assert.That(response.StatusCode, Is.EqualTo(200));
@@ -373,8 +373,8 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new <%= context.namespaces.core %>.MultipartFormRequest
-        {
+                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest
+                {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",

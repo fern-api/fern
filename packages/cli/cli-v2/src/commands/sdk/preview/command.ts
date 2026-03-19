@@ -21,7 +21,7 @@ export class PreviewCommand {
     }
 }
 
-export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new PreviewCommand();
     command(
         cli,
@@ -96,7 +96,6 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }

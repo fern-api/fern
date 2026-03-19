@@ -5,5 +5,6 @@ pub struct Practitioner {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
     pub resource_type: String,
+    #[serde(default)]
     pub name: String,
 }

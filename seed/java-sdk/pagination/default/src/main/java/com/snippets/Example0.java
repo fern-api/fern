@@ -6,6 +6,7 @@ import com.seed.pagination.resources.complex.types.SearchRequestQuery;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
 import com.seed.pagination.resources.complex.types.StartingAfterPaging;
+import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
@@ -19,9 +20,9 @@ public class Example0 {
                         "index",
                         SearchRequest.builder()
                                 .query(SearchRequestQuery.of(SingleFilterSearchRequest.builder()
-                                        .field("field")
-                                        .operator(SingleFilterSearchRequestOperator.EQUALS)
-                                        .value("value")
+                                        .field(Optional.of("field"))
+                                        .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                                        .value(Optional.of("value"))
                                         .build()))
                                 .pagination(StartingAfterPaging.builder()
                                         .perPage(1)

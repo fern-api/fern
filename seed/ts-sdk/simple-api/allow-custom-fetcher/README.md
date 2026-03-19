@@ -21,6 +21,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
   - [Custom Fetch](#custom-fetch)
+  - [Custom Fetcher](#custom-fetcher)
   - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
@@ -247,6 +248,20 @@ const response = await client.fetch("/v1/custom/endpoint", {
 const data = await response.json();
 ```
 
+### Custom Fetcher
+
+The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
+unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
+```typescript
+import { SeedSimpleApiClient } from "@fern/simple-api";
+
+const client = new SeedSimpleApiClient({
+    ...
+    fetcher: // provide your implementation here
+});
+```
+
 ### Runtime Compatibility
 
 
@@ -261,19 +276,6 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedSimpleApiClient } from "@fern/simple-api";
-
-const client = new SeedSimpleApiClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 

@@ -1,4 +1,5 @@
 import type { FernToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -14,7 +15,6 @@ import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
 import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
 import { command } from "../../_internal/command.js";
-
 export declare namespace PublishCommand {
     export interface Args extends GlobalArgs {
         force: boolean;
@@ -116,7 +116,7 @@ export class PublishCommand {
                 throw new ValidationError(checkResult.violations);
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            const message = extractErrorMessage(error);
             docsTask.stage.validation.fail(message);
         }
 
@@ -255,7 +255,7 @@ export class PublishCommand {
     }
 }
 
-export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addPublishCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new PublishCommand();
     command(
         cli,
@@ -291,7 +291,6 @@ export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     default: false,
                     description: "Generate a preview link instead of publishing to production",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }

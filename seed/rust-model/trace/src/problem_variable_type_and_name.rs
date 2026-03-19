@@ -4,5 +4,6 @@ pub use crate::prelude::*;
 pub struct VariableTypeAndName {
     #[serde(rename = "variableType")]
     pub variable_type: VariableType,
+    #[serde(default)]
     pub name: String,
 }

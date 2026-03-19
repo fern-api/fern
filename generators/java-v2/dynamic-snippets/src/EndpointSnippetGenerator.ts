@@ -628,9 +628,14 @@ export class EndpointSnippetGenerator {
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
 
+                    // Determine if the optional body wraps a nullable (truly optional+nullable).
+                    const isCollapsedOptionalNullable =
+                        this.usesOptionalNullable() &&
+                        (body.value.value.type === "optional" || body.value.value.type === "nullable");
+
                     // Check if value is undefined/null and use Optional.empty() or OptionalNullable.absent()
                     if (value === undefined || value === null) {
-                        if (this.usesOptionalNullable()) {
+                        if (isCollapsedOptionalNullable) {
                             return this.context.getOptionalNullableAbsent();
                         } else {
                             return java.TypeLiteral.reference(
@@ -649,7 +654,8 @@ export class EndpointSnippetGenerator {
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
                         typeReference: body.value.value,
                         value,
-                        as: "request"
+                        as: "request",
+                        isCollapsedOptionalNullable
                     });
 
                     // Check if the converted value is already Optional.empty() or OptionalNullable.absent() to avoid double-wrapping
@@ -665,7 +671,7 @@ export class EndpointSnippetGenerator {
                         return convertedValue;
                     }
 
-                    if (this.usesOptionalNullable()) {
+                    if (isCollapsedOptionalNullable) {
                         return this.context.getOptionalNullableOf(convertedValue);
                     } else {
                         return java.TypeLiteral.optional({

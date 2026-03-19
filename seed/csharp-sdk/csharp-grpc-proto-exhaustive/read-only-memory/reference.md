@@ -25,7 +25,7 @@ await client.PostFooAsync();
 </details>
 
 ## DataService
-<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">UploadAsync</a>(UploadRequest { ... }) -> WithRawResponseTask&lt;UploadResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">CheckAsync</a>() -> WithRawResponseTask&lt;CheckResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,31 +38,8 @@ await client.PostFooAsync();
 <dd>
 
 ```csharp
-await client.DataService.UploadAsync(
-    new UploadRequest
-    {
-        Columns = new List<SeedApi.Column>()
-        {
-            new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
-        },
-    }
-);
+await client.DataService.CheckAsync();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UploadRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -193,6 +170,94 @@ await client.DataService.DescribeAsync(new DescribeRequest());
 </dl>
 </details>
 
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">QueryAsync</a>(QueryRequest { ... }) -> WithRawResponseTask&lt;QueryResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `QueryRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">UploadAsync</a>(UploadRequest { ... }) -> WithRawResponseTask&lt;UploadResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.DataService.UploadAsync(
+    new UploadRequest
+    {
+        Columns = new List<SeedApi.Column>()
+        {
+            new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UploadRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">FetchAsync</a>(FetchRequest { ... }) -> WithRawResponseTask&lt;FetchResponse&gt;</code></summary>
 <dl>
 <dd>
@@ -262,46 +327,6 @@ await client.DataService.ListAsync(new ListRequest());
 <dd>
 
 **request:** `ListRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">QueryAsync</a>(QueryRequest { ... }) -> WithRawResponseTask&lt;QueryResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `QueryRequest` 
     
 </dd>
 </dl>

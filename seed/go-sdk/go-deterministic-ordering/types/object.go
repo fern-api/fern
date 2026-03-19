@@ -872,7 +872,7 @@ var (
 )
 
 type ObjectWithUnknownField struct {
-	Unknown interface{} `json:"unknown" url:"unknown"`
+	Unknown any `json:"unknown" url:"unknown"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -881,7 +881,7 @@ type ObjectWithUnknownField struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithUnknownField) GetUnknown() interface{} {
+func (o *ObjectWithUnknownField) GetUnknown() any {
 	if o == nil {
 		return nil
 	}
@@ -904,7 +904,7 @@ func (o *ObjectWithUnknownField) require(field *big.Int) {
 
 // SetUnknown sets the Unknown field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithUnknownField) SetUnknown(unknown interface{}) {
+func (o *ObjectWithUnknownField) SetUnknown(unknown any) {
 	o.Unknown = unknown
 	o.require(objectWithUnknownFieldFieldUnknown)
 }

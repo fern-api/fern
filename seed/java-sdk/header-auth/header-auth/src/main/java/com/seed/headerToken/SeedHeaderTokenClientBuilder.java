@@ -125,7 +125,7 @@ public class SeedHeaderTokenClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        builder.addHeader("x-api-key", "test_prefix" + this.headerTokenAuth);
+        builder.addHeader("x-api-key", "test_prefix " + this.headerTokenAuth);
     }
 
     /**

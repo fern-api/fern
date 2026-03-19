@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/Seed.Client)](https://nuget.org/packages/Seed.Client)
+[![nuget shield](https://img.shields.io/nuget/v/Ferncsharp-grpc-proto-exhaustive)](https://nuget.org/packages/Ferncsharp-grpc-proto-exhaustive)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -26,7 +26,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package Seed.Client
+dotnet add package Ferncsharp-grpc-proto-exhaustive
 ```
 
 ## Reference
@@ -41,19 +41,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.DataService.UploadAsync(
-    new UploadRequest
-    {
-        Columns = new List<SeedApi.Column>()
-        {
-            new SeedApi.Column
-            {
-                Id = "id",
-                Values = new List<float>() { 1.1f },
-            },
-        },
-    }
-);
+await client.DataService.CheckAsync();
 ```
 
 ## Exception Handling
@@ -65,7 +53,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.DataService.UploadAsync(...);
+    var response = await client.DataService.CheckAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -89,7 +77,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -102,7 +90,7 @@ var response = await client.DataService.UploadAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -115,7 +103,7 @@ var response = await client.DataService.UploadAsync(
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.DataService.UploadAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>

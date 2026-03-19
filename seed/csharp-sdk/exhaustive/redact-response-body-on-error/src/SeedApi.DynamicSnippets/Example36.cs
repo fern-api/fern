@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using System.Text;
 
 namespace Usage;
 
@@ -13,9 +12,9 @@ public class Example36
             }
         );
 
-        await client.Endpoints.Params.UploadWithPathAsync(
-            "upload-path",
-            new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+        await client.Endpoints.Params.ModifyWithPathAsync(
+            "param",
+            "string"
         );
     }
 

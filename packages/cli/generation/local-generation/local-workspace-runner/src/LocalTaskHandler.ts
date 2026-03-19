@@ -1,6 +1,7 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -18,8 +19,8 @@ import {
     countFilesInDiff,
     formatSizeKB
 } from "./AutoVersioningService.js";
+import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
-
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -354,7 +355,7 @@ export class LocalTaskHandler {
                                 versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
                             } catch (rollupError) {
                                 this.context.logger.warn(
-                                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                                    `Changelog consolidation failed, using raw entries: ${extractErrorMessage(rollupError)}`
                                 );
                                 changelogEntry = rawEntries;
                             }
@@ -373,7 +374,7 @@ export class LocalTaskHandler {
                     }
                 }
             } catch (aiError) {
-                const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
+                const errorMessage = extractErrorMessage(aiError);
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
@@ -411,7 +412,9 @@ export class LocalTaskHandler {
             const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
-            const changelogEntry = finalChangelogEntry?.trim() || undefined;
+            const changelogEntry = finalChangelogEntry?.trim()
+                ? sanitizeChangelogEntry(finalChangelogEntry.trim())
+                : undefined;
             const prDescription = finalPrDescription?.trim() || undefined;
             const versionBumpReason = finalVersionBumpReason?.trim() || undefined;
 
