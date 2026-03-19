@@ -950,7 +950,11 @@ export class AutoVersioningService {
             }
 
             // Only process import lines
-            const isImportLine = inImportBlock || trimmed.startsWith('import "') || trimmed.startsWith('import\t"');
+            const isImportLine =
+                inImportBlock ||
+                trimmed.startsWith('import "') ||
+                trimmed.startsWith('import\t"') ||
+                /^import\s+\w+\s+"/.test(trimmed);
             if (!isImportLine) {
                 continue;
             }
