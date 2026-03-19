@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.37.10
+- version: 4.37.11
   changelogEntry:
     - summary: |
         Fix schema name collisions when merging multiple OpenAPI specs that define
@@ -8,6 +8,14 @@
         enabled, duplicate schema names from subsequent specs are now renamed
         (e.g. `CardInstrument2`) and all references throughout the IR are updated
         accordingly.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.10
+  changelogEntry:
+    - summary: |
+        Guard concurrent `npm install -g fern-api` invocations with an async lock to prevent race conditions during protobuf toolchain setup
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65

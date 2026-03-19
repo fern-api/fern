@@ -41,5 +41,27 @@ public readonly struct AliasToStream
             AliasToStream value,
             JsonSerializerOptions options
         ) => writer.WriteBooleanValue(AliasToStream.Value);
+
+        public override AliasToStream ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (!bool.TryParse(value, out var boolValue) || boolValue != AliasToStream.Value)
+            {
+                throw new JsonException(
+                    "Expected false for type discriminator but got \"" + value + "\"."
+                );
+            }
+            return new AliasToStream();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            AliasToStream value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(AliasToStream.Value.ToString());
     }
 }
