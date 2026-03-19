@@ -56,13 +56,13 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '   "name": "test-package",\n' +
             '-  "version": "1.2.3",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "description": "Test package"\n' +
             " }\n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("1.2.3");
     });
@@ -76,11 +76,11 @@ describe("AutoVersioningService", () => {
             "@@ -1,3 +1,3 @@\n" +
             " package main\n" +
             '-const Version = "v2.5.1"\n' +
-            '+const Version = "v505.503.4455"\n';
+            '+const Version = "v0.0.0-fern-placeholder"\n';
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "v505.503.4455"
+            "v0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("v2.5.1");
     });
@@ -95,13 +95,13 @@ describe("AutoVersioningService", () => {
             " setup(\n" +
             "     name='test-package',\n" +
             "-    version='3.0.0-beta.2',\n" +
-            "+    version='505.503.4455',\n" +
+            "+    version='0.0.0-fern-placeholder',\n" +
             "     description='Test package'\n" +
             " )\n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("3.0.0-beta.2");
     });
@@ -114,9 +114,12 @@ describe("AutoVersioningService", () => {
             "--- /dev/null\n" +
             "+++ b/new-file.txt\n" +
             "@@ -0,0 +1 @@\n" +
-            "+version = 505.503.4455\n";
+            "+version = 0.0.0-fern-placeholder\n";
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -131,7 +134,7 @@ describe("AutoVersioningService", () => {
             "@@ -0,0 +1,6 @@\n" +
             "+{\n" +
             '+    "name": "test-sdk",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '+    "private": false\n' +
             "+}\n" +
             "diff --git a/src/Client.ts b/src/Client.ts\n" +
@@ -141,7 +144,7 @@ describe("AutoVersioningService", () => {
             "+++ b/src/Client.ts\n" +
             "@@ -0,0 +1,5 @@\n" +
             "+export class Client {\n" +
-            '+    private readonly version = "505.503.4455";\n' +
+            '+    private readonly version = "0.0.0-fern-placeholder";\n' +
             "+    constructor() {}\n" +
             "+}\n" +
             "diff --git a/src/core/index.ts b/src/core/index.ts\n" +
@@ -150,10 +153,13 @@ describe("AutoVersioningService", () => {
             "--- /dev/null\n" +
             "+++ b/src/core/index.ts\n" +
             "@@ -0,0 +1,3 @@\n" +
-            '+export const SDK_VERSION = "505.503.4455";\n' +
+            '+export const SDK_VERSION = "0.0.0-fern-placeholder";\n' +
             '+export const SDK_NAME = "test-sdk";\n';
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -167,13 +173,16 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '   "name": "test-package",\n' +
             '-  "version": "1.2.3",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "description": "Test package"\n' +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("1.2.3");
         expect(cleaned).not.toContain('"version"');
         expect(cleaned).not.toContain("package.json");
@@ -188,22 +197,28 @@ describe("AutoVersioningService", () => {
             "@@ -1,5 +1,5 @@\n" +
             " // Config file\n" +
             '-const VERSION = "1.0.0";\n' +
-            '+const VERSION = "505.503.4455";\n' +
+            '+const VERSION = "0.0.0-fern-placeholder";\n' +
             " \n" +
             " // Features\n" +
             "+export const NEW_FEATURE = true;\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).toContain("// Config file");
         expect(cleaned).toContain("// Features");
         expect(cleaned).toContain("NEW_FEATURE");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
     });
 
     it("testCleanDiffForAI_emptyDiff", () => {
         const diff = "";
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
         expect(cleaned).toBe("");
     });
 
@@ -215,14 +230,17 @@ describe("AutoVersioningService", () => {
             "+++ b/test.txt\n" +
             "@@ -1,5 +1,5 @@\n" +
             "-version1 = 1.0.0\n" +
-            "+version1 = 505.503.4455\n" +
+            "+version1 = 0.0.0-fern-placeholder\n" +
             "-version2 = 2.0.0\n" +
-            "+version2 = 505.503.4455\n" +
+            "+version2 = 0.0.0-fern-placeholder\n" +
             " unchanged line\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("1.0.0");
         expect(cleaned).not.toContain("2.0.0");
         expect(cleaned).not.toContain("test.txt");
@@ -237,11 +255,11 @@ describe("AutoVersioningService", () => {
             "@@ -1,3 +1,3 @@\n" +
             " package sdk\n" +
             '-const Version = "v1.5.2"\n' +
-            '+const Version = "v505.503.4455"\n';
+            '+const Version = "v0.0.0-fern-placeholder"\n';
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "v505.503.4455"
+            "v0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("v1.5.2");
     });
@@ -255,12 +273,15 @@ describe("AutoVersioningService", () => {
             "@@ -1,3 +1,3 @@\n" +
             " package sdk\n" +
             '-const Version = "v1.5.2"\n' +
-            '+const Version = "v505.503.4455"\n' +
+            '+const Version = "v0.0.0-fern-placeholder"\n' +
             " // Some other code\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
 
-        expect(cleaned).not.toContain("v505.503.4455");
+        expect(cleaned).not.toContain("v0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("v1.5.2");
         expect(cleaned).not.toContain("version.go");
     });
@@ -273,11 +294,14 @@ describe("AutoVersioningService", () => {
             "+++ b/config.txt\n" +
             "@@ -1,3 +1,3 @@\n" +
             "-some random text\n" +
-            "+magic version is 505.503.4455\n";
+            "+magic version is 0.0.0-fern-placeholder\n";
 
         // The minus line doesn't form a version pair, so no previous version can be extracted.
         // This is treated like a new file scenario - returns undefined instead of throwing.
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -291,12 +315,12 @@ describe("AutoVersioningService", () => {
             "-# sentra-unified-ts-sdk\n" +
             " \n" +
             '-version = "1.2.3"\n' +
-            '+version = "505.503.4455"\n' +
+            '+version = "0.0.0-fern-placeholder"\n' +
             " \n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("1.2.3");
     });
@@ -309,7 +333,7 @@ describe("AutoVersioningService", () => {
             "+++ b/README.md\n" +
             "@@ -1,3 +1,4 @@\n" +
             " # My Project\n" +
-            "+Version: 505.503.4455\n" +
+            "+Version: 0.0.0-fern-placeholder\n" +
             " \n" +
             "diff --git a/package.json b/package.json\n" +
             "index abc123..def456 100644\n" +
@@ -318,13 +342,13 @@ describe("AutoVersioningService", () => {
             "@@ -1,5 +1,5 @@\n" +
             " {\n" +
             '-  "version": "1.5.0",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "name": "test"\n' +
             " }\n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("1.5.0");
     });
@@ -337,16 +361,19 @@ describe("AutoVersioningService", () => {
             "+++ b/README.md\n" +
             "@@ -1,2 +1,3 @@\n" +
             " # My Project\n" +
-            "+Version: 505.503.4455\n" +
+            "+Version: 0.0.0-fern-placeholder\n" +
             "diff --git a/CHANGELOG.md b/CHANGELOG.md\n" +
             "index abc123..def456 100644\n" +
             "--- a/CHANGELOG.md\n" +
             "+++ b/CHANGELOG.md\n" +
             "@@ -1,2 +1,3 @@\n" +
             " # Changelog\n" +
-            "+## 505.503.4455\n";
+            "+## 0.0.0-fern-placeholder\n";
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -360,15 +387,18 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '     "name": "",\n' +
             '-    "version": "0.0.60441",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '     "private": false\n' +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("package.json");
         expect(cleaned).not.toContain("0.0.60441");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("diff --git");
     });
 
@@ -382,18 +412,21 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '     "name": "test-package",\n' +
             '-    "version": "0.0.60441",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '     "private": false,\n' +
             '+    "newField": "newValue",\n' +
             '     "description": "Test"\n' +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).toContain("package.json");
         expect(cleaned).toContain('+    "newField": "newValue"');
         expect(cleaned).not.toContain("0.0.60441");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain('"version"');
     });
 
@@ -407,7 +440,7 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '     "name": "",\n' +
             '-    "version": "0.0.60441",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '     "private": false\n' +
             " }\n" +
             "diff --git a/src/Client.ts b/src/Client.ts\n" +
@@ -419,16 +452,19 @@ describe("AutoVersioningService", () => {
             '                     "X-Fern-Language": "JavaScript",\n' +
             '                     "X-Fern-SDK-Name": "",\n' +
             '-                    "X-Fern-SDK-Version": "0.0.60441",\n' +
-            '+                    "X-Fern-SDK-Version": "505.503.4455",\n' +
+            '+                    "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
             '                     "X-Fern-Runtime": core.RUNTIME.type,\n' +
             "                 },\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("package.json");
         expect(cleaned).not.toContain("Client.ts");
         expect(cleaned).not.toContain("0.0.60441");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("diff --git");
     });
 
@@ -442,7 +478,7 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '     "name": "",\n' +
             '-    "version": "0.0.60441",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '     "private": false\n' +
             " }\n" +
             "diff --git a/src/types.ts b/src/types.ts\n" +
@@ -455,13 +491,16 @@ describe("AutoVersioningService", () => {
             "+export type NewType = string;\n" +
             " // End\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("package.json");
         expect(cleaned).toContain("types.ts");
         expect(cleaned).toContain("+export type NewType = string;");
         expect(cleaned).not.toContain("0.0.60441");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
     });
 
     it("testCleanDiffForAI_versionInSdkHeader", () => {
@@ -475,17 +514,20 @@ describe("AutoVersioningService", () => {
             '                     "X-Fern-Language": "JavaScript",\n' +
             '                     "X-Fern-SDK-Name": "",\n' +
             '-                    "X-Fern-SDK-Version": "0.0.60441",\n' +
-            '+                    "X-Fern-SDK-Version": "505.503.4455",\n' +
+            '+                    "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
             '                     "X-Fern-Runtime": core.RUNTIME.type,\n' +
             '                     "X-Fern-Runtime-Version": core.RUNTIME.version,\n' +
             "                 },\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("Client.ts");
         expect(cleaned).not.toContain("X-Fern-SDK-Version");
         expect(cleaned).not.toContain("0.0.60441");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
     });
 
     it("testCleanDiffForAI_versionFileWithOnlyVersionChange", () => {
@@ -496,13 +538,16 @@ describe("AutoVersioningService", () => {
             "+++ b/src/version.ts\n" +
             "@@ -1,1 +1,1 @@\n" +
             '-export const VERSION = "1.2.3";\n' +
-            '+export const VERSION = "505.503.4455";\n';
+            '+export const VERSION = "0.0.0-fern-placeholder";\n';
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("version.ts");
         expect(cleaned).not.toContain("1.2.3");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("VERSION");
     });
 
@@ -518,16 +563,19 @@ describe("AutoVersioningService", () => {
             '                     "X-Fern-SDK-Name": "",\n' +
             '-                    "X-Fern-SDK-Version": "0.0.1",\n' +
             '                     "X-Fern-Runtime": core.RUNTIME.type,\n' +
-            '+                    "X-Fern-SDK-Version": "505.503.4455",\n' +
+            '+                    "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
             '                     "X-Fern-Runtime-Version": core.RUNTIME.version,\n' +
             "                 },\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("Client.ts");
         expect(cleaned).not.toContain("X-Fern-SDK-Version");
         expect(cleaned).not.toContain("0.0.1");
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
     });
 
     it("testCleanDiffForAI_multipleVersionHeadersWithMagicVersion", () => {
@@ -542,33 +590,36 @@ describe("AutoVersioningService", () => {
             '                     "X-Fern-SDK-Name": "",\n' +
             '-                    "X-Fern-SDK-Version": "0.0.1",\n' +
             '-                    "User-Agent": "/0.0.1",\n' +
-            '+                    "X-Fern-SDK-Version": "505.503.4455",\n' +
-            '+                    "User-Agent": "/505.503.4455",\n' +
+            '+                    "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
+            '+                    "User-Agent": "/0.0.0-fern-placeholder",\n' +
             '                     "X-Fern-Runtime": core.RUNTIME.type,\n' +
             '                     "X-Fern-Runtime-Version": core.RUNTIME.version,\n' +
             "                 },\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
-        expect(cleaned).not.toContain("505.503.4455");
-        expect(cleaned).not.toContain("/505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
+        expect(cleaned).not.toContain("/0.0.0-fern-placeholder");
     });
 
     it("testReplaceMagicVersion_simpleFile", async () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const testFile = path.join(tempDir, "package.json");
-            const originalContent = '{\n  "version": "505.503.4455",\n  "name": "test-package"\n}';
+            const originalContent = '{\n  "version": "0.0.0-fern-placeholder",\n  "name": "test-package"\n}';
             await fs.writeFile(testFile, originalContent);
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "1.2.3"
             );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
-            expect(updatedContent).not.toContain("505.503.4455");
+            expect(updatedContent).not.toContain("0.0.0-fern-placeholder");
             expect(updatedContent).toContain("1.2.3");
             expect(updatedContent).toBe('{\n  "version": "1.2.3",\n  "name": "test-package"\n}');
         } finally {
@@ -580,17 +631,17 @@ describe("AutoVersioningService", () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const testFile = path.join(tempDir, "version.go");
-            const originalContent = 'package main\n\nconst Version = "v505.503.4455"\n';
+            const originalContent = 'package main\n\nconst Version = "v0.0.0-fern-placeholder"\n';
             await fs.writeFile(testFile, originalContent);
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "v505.503.4455",
+                "v0.0.0-fern-placeholder",
                 "v1.2.3"
             );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
-            expect(updatedContent).not.toContain("v505.503.4455");
+            expect(updatedContent).not.toContain("v0.0.0-fern-placeholder");
             expect(updatedContent).toContain("v1.2.3");
             expect(updatedContent).toBe('package main\n\nconst Version = "v1.2.3"\n');
         } finally {
@@ -602,17 +653,17 @@ describe("AutoVersioningService", () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const file1 = path.join(tempDir, "package.json");
-            await fs.writeFile(file1, '{"version": "505.503.4455"}');
+            await fs.writeFile(file1, '{"version": "0.0.0-fern-placeholder"}');
 
             const file2 = path.join(tempDir, "README.md");
-            await fs.writeFile(file2, "# Version 505.503.4455\n\nThis is the magic version.");
+            await fs.writeFile(file2, "# Version 0.0.0-fern-placeholder\n\nThis is the magic version.");
 
             const file3 = path.join(tempDir, "setup.py");
-            await fs.writeFile(file3, "version='505.503.4455'");
+            await fs.writeFile(file3, "version='0.0.0-fern-placeholder'");
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "2.0.0"
             );
 
@@ -620,13 +671,13 @@ describe("AutoVersioningService", () => {
             const content2 = await fs.readFile(file2, "utf-8");
             const content3 = await fs.readFile(file3, "utf-8");
 
-            expect(content1).not.toContain("505.503.4455");
+            expect(content1).not.toContain("0.0.0-fern-placeholder");
             expect(content1).toContain("2.0.0");
 
-            expect(content2).not.toContain("505.503.4455");
+            expect(content2).not.toContain("0.0.0-fern-placeholder");
             expect(content2).toContain("2.0.0");
 
-            expect(content3).not.toContain("505.503.4455");
+            expect(content3).not.toContain("0.0.0-fern-placeholder");
             expect(content3).toContain("2.0.0");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -638,17 +689,17 @@ describe("AutoVersioningService", () => {
         try {
             const testFile = path.join(tempDir, "config.yaml");
             const originalContent =
-                "version: 505.503.4455\nmin_version: 505.503.4455\ndisplay_name: SDK v505.503.4455\n";
+                "version: 0.0.0-fern-placeholder\nmin_version: 0.0.0-fern-placeholder\ndisplay_name: SDK v0.0.0-fern-placeholder\n";
             await fs.writeFile(testFile, originalContent);
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "3.1.4"
             );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
-            expect(updatedContent).not.toContain("505.503.4455");
+            expect(updatedContent).not.toContain("0.0.0-fern-placeholder");
             expect(updatedContent).toBe("version: 3.1.4\nmin_version: 3.1.4\ndisplay_name: SDK v3.1.4\n");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -662,24 +713,24 @@ describe("AutoVersioningService", () => {
             await fs.mkdir(subDir, { recursive: true });
 
             const file1 = path.join(tempDir, "package.json");
-            await fs.writeFile(file1, '{"version": "505.503.4455"}');
+            await fs.writeFile(file1, '{"version": "0.0.0-fern-placeholder"}');
 
             const file2 = path.join(subDir, "Version.java");
-            await fs.writeFile(file2, 'public static final String VERSION = "505.503.4455";');
+            await fs.writeFile(file2, 'public static final String VERSION = "0.0.0-fern-placeholder";');
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "4.5.6"
             );
 
             const content1 = await fs.readFile(file1, "utf-8");
             const content2 = await fs.readFile(file2, "utf-8");
 
-            expect(content1).not.toContain("505.503.4455");
+            expect(content1).not.toContain("0.0.0-fern-placeholder");
             expect(content1).toContain("4.5.6");
 
-            expect(content2).not.toContain("505.503.4455");
+            expect(content2).not.toContain("0.0.0-fern-placeholder");
             expect(content2).toContain("4.5.6");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -693,22 +744,22 @@ describe("AutoVersioningService", () => {
             await fs.mkdir(gitDir, { recursive: true });
 
             const gitFile = path.join(gitDir, "config");
-            await fs.writeFile(gitFile, "some_config=505.503.4455");
+            await fs.writeFile(gitFile, "some_config=0.0.0-fern-placeholder");
 
             const regularFile = path.join(tempDir, "version.txt");
-            await fs.writeFile(regularFile, "version=505.503.4455");
+            await fs.writeFile(regularFile, "version=0.0.0-fern-placeholder");
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "1.0.0"
             );
 
             const gitContent = await fs.readFile(gitFile, "utf-8");
             const regularContent = await fs.readFile(regularFile, "utf-8");
 
-            expect(gitContent).toContain("505.503.4455");
-            expect(regularContent).not.toContain("505.503.4455");
+            expect(gitContent).toContain("0.0.0-fern-placeholder");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
             expect(regularContent).toContain("1.0.0");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -722,18 +773,18 @@ describe("AutoVersioningService", () => {
             const originalContent =
                 "Gem::Specification.new do |s|\n" +
                 "  s.name = 'my-gem'\n" +
-                "  s.version = 'v505.503.4455'\n" +
+                "  s.version = 'v0.0.0-fern-placeholder'\n" +
                 "end\n";
             await fs.writeFile(gemspec, originalContent);
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "v505.503.4455",
+                "v0.0.0-fern-placeholder",
                 "v1.5.2"
             );
 
             const updatedContent = await fs.readFile(gemspec, "utf-8");
-            expect(updatedContent).not.toContain("v505.503.4455");
+            expect(updatedContent).not.toContain("v0.0.0-fern-placeholder");
             expect(updatedContent).toContain("v1.5.2");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -749,7 +800,7 @@ describe("AutoVersioningService", () => {
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "2.0.0"
             );
 
@@ -775,13 +826,13 @@ describe("AutoVersioningService", () => {
             " ## Installation\n";
 
         expect(() =>
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "0.0.0-fern-placeholder")
         ).toThrow(AutoVersioningException);
     });
 
     it("testExtractPreviousVersion_emptyDiff_throws", () => {
         expect(() =>
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion("", "505.503.4455")
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion("", "0.0.0-fern-placeholder")
         ).toThrow(AutoVersioningException);
     });
 
@@ -793,12 +844,12 @@ describe("AutoVersioningService", () => {
             "--- a/config.txt\n" +
             "+++ b/config.txt\n" +
             "@@ -1,3 +1,4 @@\n" +
-            " version = 505.503.4455\n" +
+            " version = 0.0.0-fern-placeholder\n" +
             "+new line added\n" +
             " other content\n";
 
         expect(() =>
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "0.0.0-fern-placeholder")
         ).toThrow(AutoVersioningException);
     });
 
@@ -814,7 +865,7 @@ describe("AutoVersioningService", () => {
             "+++ b/version.go\n" +
             "@@ -0,0 +1,3 @@\n" +
             "+package sdk\n" +
-            '+const Version = "v505.503.4455"\n' +
+            '+const Version = "v0.0.0-fern-placeholder"\n' +
             "+\n" +
             "diff --git a/client.go b/client.go\n" +
             "new file mode 100644\n" +
@@ -825,10 +876,13 @@ describe("AutoVersioningService", () => {
             "+package sdk\n" +
             "+\n" +
             "+type Client struct {\n" +
-            "+    version string // v505.503.4455\n" +
+            "+    version string // v0.0.0-fern-placeholder\n" +
             "+}\n";
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -840,9 +894,12 @@ describe("AutoVersioningService", () => {
             "--- /dev/null\n" +
             "+++ b/version.go\n" +
             "@@ -0,0 +1 @@\n" +
-            '+const Version = "v505.503.4455"\n';
+            '+const Version = "v0.0.0-fern-placeholder"\n';
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
         expect(result).toBeUndefined();
     });
 
@@ -857,7 +914,7 @@ describe("AutoVersioningService", () => {
             "--- /dev/null\n" +
             "+++ b/src/newFile.ts\n" +
             "@@ -0,0 +1,3 @@\n" +
-            '+export const SDK_VERSION = "505.503.4455";\n' +
+            '+export const SDK_VERSION = "0.0.0-fern-placeholder";\n' +
             "+export const name = 'test';\n" +
             "diff --git a/package.json b/package.json\n" +
             "index abc123..def456 100644\n" +
@@ -866,13 +923,13 @@ describe("AutoVersioningService", () => {
             "@@ -1,5 +1,5 @@\n" +
             " {\n" +
             '-  "version": "2.3.4",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "name": "test"\n' +
             " }\n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("2.3.4");
     });
@@ -887,7 +944,7 @@ describe("AutoVersioningService", () => {
             "--- /dev/null\n" +
             "+++ b/src/version.ts\n" +
             "@@ -0,0 +1,1 @@\n" +
-            '+export const VERSION = "505.503.4455";\n' +
+            '+export const VERSION = "0.0.0-fern-placeholder";\n' +
             "diff --git a/src/Client.ts b/src/Client.ts\n" +
             "new file mode 100644\n" +
             "index 0000000..def456\n" +
@@ -895,7 +952,7 @@ describe("AutoVersioningService", () => {
             "+++ b/src/Client.ts\n" +
             "@@ -0,0 +1,2 @@\n" +
             '+import { VERSION } from "./version";\n' +
-            '+const v = "505.503.4455";\n' +
+            '+const v = "0.0.0-fern-placeholder";\n' +
             "diff --git a/package.json b/package.json\n" +
             "index 111111..222222 100644\n" +
             "--- a/package.json\n" +
@@ -903,12 +960,12 @@ describe("AutoVersioningService", () => {
             "@@ -2,3 +2,3 @@\n" +
             '   "name": "my-sdk",\n' +
             '-  "version": "1.0.0",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "private": false\n';
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("1.0.0");
     });
@@ -926,7 +983,7 @@ describe("AutoVersioningService", () => {
             "@@ -0,0 +1,5 @@\n" +
             "+{\n" +
             '+    "name": "test-sdk",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '+    "private": false\n' +
             "+}\n" +
             "diff --git a/src/Client.ts b/src/Client.ts\n" +
@@ -939,10 +996,13 @@ describe("AutoVersioningService", () => {
             "+    constructor() {}\n" +
             "+}\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // The version line should be removed
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         // Other new file content should be preserved
         expect(cleaned).toContain('+    "name": "test-sdk"');
         expect(cleaned).toContain("+export class Client");
@@ -958,40 +1018,43 @@ describe("AutoVersioningService", () => {
             "+++ b/version.go\n" +
             "@@ -0,0 +1,3 @@\n" +
             "+package sdk\n" +
-            '+const Version = "v505.503.4455"\n' +
+            '+const Version = "v0.0.0-fern-placeholder"\n' +
             "+\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
 
-        expect(cleaned).not.toContain("v505.503.4455");
+        expect(cleaned).not.toContain("v0.0.0-fern-placeholder");
         expect(cleaned).toContain("+package sdk");
     });
 
     // --- Tests for replaceMagicVersion: initial version scenarios ---
 
     it("testReplaceMagicVersion_withVPrefixInitialVersion", async () => {
-        // Simulates Go SDK initial generation: replacing v505.503.4455 with v0.0.1
+        // Simulates Go SDK initial generation: replacing v0.0.0-fern-placeholder with v0.0.1
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const versionFile = path.join(tempDir, "version.go");
-            await fs.writeFile(versionFile, 'package sdk\n\nconst Version = "v505.503.4455"\n');
+            await fs.writeFile(versionFile, 'package sdk\n\nconst Version = "v0.0.0-fern-placeholder"\n');
 
             const clientFile = path.join(tempDir, "client.go");
-            await fs.writeFile(clientFile, 'package sdk\n\nvar sdkVersion = "v505.503.4455"\n');
+            await fs.writeFile(clientFile, 'package sdk\n\nvar sdkVersion = "v0.0.0-fern-placeholder"\n');
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "v505.503.4455",
+                "v0.0.0-fern-placeholder",
                 "v0.0.1"
             );
 
             const versionContent = await fs.readFile(versionFile, "utf-8");
-            expect(versionContent).not.toContain("v505.503.4455");
+            expect(versionContent).not.toContain("v0.0.0-fern-placeholder");
             expect(versionContent).toContain("v0.0.1");
             expect(versionContent).toBe('package sdk\n\nconst Version = "v0.0.1"\n');
 
             const clientContent = await fs.readFile(clientFile, "utf-8");
-            expect(clientContent).not.toContain("v505.503.4455");
+            expect(clientContent).not.toContain("v0.0.0-fern-placeholder");
             expect(clientContent).toContain("v0.0.1");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -999,30 +1062,30 @@ describe("AutoVersioningService", () => {
     });
 
     it("testReplaceMagicVersion_withNonVPrefixInitialVersion", async () => {
-        // Simulates TS/Python SDK initial generation: replacing 505.503.4455 with 0.0.1
+        // Simulates TS/Python SDK initial generation: replacing 0.0.0-fern-placeholder with 0.0.1
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const packageJson = path.join(tempDir, "package.json");
-            await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "505.503.4455"\n}');
+            await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "0.0.0-fern-placeholder"\n}');
 
             const clientFile = path.join(tempDir, "src");
             await fs.mkdir(clientFile, { recursive: true });
             const versionTs = path.join(clientFile, "version.ts");
-            await fs.writeFile(versionTs, 'export const SDK_VERSION = "505.503.4455";\n');
+            await fs.writeFile(versionTs, 'export const SDK_VERSION = "0.0.0-fern-placeholder";\n');
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
                 tempDir,
-                "505.503.4455",
+                "0.0.0-fern-placeholder",
                 "0.0.1"
             );
 
             const packageContent = await fs.readFile(packageJson, "utf-8");
-            expect(packageContent).not.toContain("505.503.4455");
+            expect(packageContent).not.toContain("0.0.0-fern-placeholder");
             expect(packageContent).toContain("0.0.1");
             expect(packageContent).toBe('{\n  "name": "test-sdk",\n  "version": "0.0.1"\n}');
 
             const versionContent = await fs.readFile(versionTs, "utf-8");
-            expect(versionContent).not.toContain("505.503.4455");
+            expect(versionContent).not.toContain("0.0.0-fern-placeholder");
             expect(versionContent).toContain("0.0.1");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -1040,12 +1103,12 @@ describe("AutoVersioningService", () => {
             "+++ b/package.json\n" +
             "@@ -1,5 +1,4 @@\n" +
             " {\n" +
-            '-  "version": "505.503.4455",\n' +
+            '-  "version": "0.0.0-fern-placeholder",\n' +
             '   "name": "test"\n' +
             " }\n";
 
         expect(() =>
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "0.0.0-fern-placeholder")
         ).toThrow(AutoVersioningException);
     });
 
@@ -1059,7 +1122,7 @@ describe("AutoVersioningService", () => {
             "@@ -1,5 +1,5 @@\n" +
             " {\n" +
             '-  "version": "3.2.1",\n' +
-            '+  "version": "505.503.4455",\n' +
+            '+  "version": "0.0.0-fern-placeholder",\n' +
             '   "name": "test"\n' +
             " }\n" +
             "diff --git a/src/version.ts b/src/version.ts\n" +
@@ -1068,11 +1131,11 @@ describe("AutoVersioningService", () => {
             "+++ b/src/version.ts\n" +
             "@@ -1 +1 @@\n" +
             '-export const VERSION = "3.2.1";\n' +
-            '+export const VERSION = "505.503.4455";\n';
+            '+export const VERSION = "0.0.0-fern-placeholder";\n';
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("3.2.1");
     });
@@ -1086,12 +1149,12 @@ describe("AutoVersioningService", () => {
             "@@ -1,3 +1,3 @@\n" +
             " setup(\n" +
             "-    version='1.0.0+build.123',\n" +
-            "+    version='505.503.4455',\n" +
+            "+    version='0.0.0-fern-placeholder',\n" +
             " )\n";
 
         const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
             diff,
-            "505.503.4455"
+            "0.0.0-fern-placeholder"
         );
         expect(previousVersion).toBe("1.0.0+build.123");
     });
@@ -1107,7 +1170,7 @@ describe("AutoVersioningService", () => {
             "+++ b/src/newFile.ts\n" +
             "@@ -0,0 +1,3 @@\n" +
             "+export function hello() {\n" +
-            '+    return "505.503.4455";\n' +
+            '+    return "0.0.0-fern-placeholder";\n' +
             "+}\n" +
             "diff --git a/src/existing.ts b/src/existing.ts\n" +
             "index 111111..222222 100644\n" +
@@ -1118,10 +1181,13 @@ describe("AutoVersioningService", () => {
             "+    newMethod() { return true; }\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // Version line removed from new file
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         // Non-version new file content preserved
         expect(cleaned).toContain("+export function hello()");
         // Existing file changes preserved
@@ -1139,7 +1205,7 @@ describe("AutoVersioningService", () => {
             " [tool.poetry]\n" +
             ' name = "immix-sdk"\n' +
             '-version = "0.0.46"\n' +
-            '+version = "505.503.4455"\n' +
+            '+version = "0.0.0-fern-placeholder"\n' +
             ' description = ""\n' +
             "diff --git a/src/immix/version.py b/src/immix/version.py\n" +
             "index abc123..def456 100644\n" +
@@ -1147,7 +1213,7 @@ describe("AutoVersioningService", () => {
             "+++ b/src/immix/version.py\n" +
             "@@ -1 +1 @@\n" +
             '-__version__ = "0.0.46"\n' +
-            '+__version__ = "505.503.4455"\n' +
+            '+__version__ = "0.0.0-fern-placeholder"\n' +
             "diff --git a/src/immix/client.py b/src/immix/client.py\n" +
             "index abc123..def456 100644\n" +
             "--- a/src/immix/client.py\n" +
@@ -1166,7 +1232,7 @@ describe("AutoVersioningService", () => {
             " class ClientWrapper:\n" +
             "     headers = {\n" +
             '-        "X-Fern-SDK-Version": "0.0.46",\n' +
-            '+        "X-Fern-SDK-Version": "505.503.4455",\n' +
+            '+        "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
             "     }\n" +
             "diff --git a/src/immix/marketdata/__init__.py b/src/immix/marketdata/__init__.py\n" +
             "deleted file mode 100644\n" +
@@ -1187,10 +1253,13 @@ describe("AutoVersioningService", () => {
             "+from . import types\n" +
             '+__all__ = ["MarketDataClient", "types"]\n';
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // Version-only changes should be removed
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("0.0.46");
         // Namespace changes should be preserved
         expect(cleaned).toContain("market_data");
@@ -1216,7 +1285,7 @@ describe("AutoVersioningService", () => {
             " [tool.poetry]\n" +
             ' name = "immix-sdk"\n' +
             '-version = "0.0.46"\n' +
-            '+version = "505.503.4455"\n' +
+            '+version = "0.0.0-fern-placeholder"\n' +
             ' description = ""\n' +
             "diff --git a/src/immix/version.py b/src/immix/version.py\n" +
             "index abc123..def456 100644\n" +
@@ -1224,7 +1293,7 @@ describe("AutoVersioningService", () => {
             "+++ b/src/immix/version.py\n" +
             "@@ -1 +1 @@\n" +
             '-__version__ = "0.0.46"\n' +
-            '+__version__ = "505.503.4455"\n' +
+            '+__version__ = "0.0.0-fern-placeholder"\n' +
             "diff --git a/src/immix/core/client_wrapper.py b/src/immix/core/client_wrapper.py\n" +
             "index abc123..def456 100644\n" +
             "--- a/src/immix/core/client_wrapper.py\n" +
@@ -1233,10 +1302,13 @@ describe("AutoVersioningService", () => {
             " class ClientWrapper:\n" +
             "     headers = {\n" +
             '-        "X-Fern-SDK-Version": "0.0.46",\n' +
-            '+        "X-Fern-SDK-Version": "505.503.4455",\n' +
+            '+        "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
             "     }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // All changes are version-related, so the cleaned diff should be empty
         expect(cleaned.trim().length).toBe(0);
@@ -1374,7 +1446,7 @@ describe("AutoVersioningService", () => {
     //         await runCommand(["git", "add", "package.json"], tempDir);
     //         await runCommand(["git", "commit", "-m", "Initial commit"], tempDir);
 
-    //         const magicVersion = "505.503.4455";
+    //         const magicVersion = "0.0.0-fern-placeholder";
     //         const contentWithMagic = `{\n  "name": "test-sdk",\n  "version": "${magicVersion}"\n}`;
     //         await fs.writeFile(packageJson, contentWithMagic);
 
@@ -1433,7 +1505,7 @@ describe("AutoVersioningService", () => {
     //         await runCommand(["git", "add", "version.go"], tempDir);
     //         await runCommand(["git", "commit", "-m", "Initial commit"], tempDir);
 
-    //         const mappedMagicVersion = "v505.503.4455";
+    //         const mappedMagicVersion = "v0.0.0-fern-placeholder";
     //         const contentWithMagic = `package sdk\n\nconst Version = "${mappedMagicVersion}"\n`;
     //         await fs.writeFile(versionFile, contentWithMagic);
 
@@ -1493,7 +1565,10 @@ describe("AutoVersioningService", () => {
             "+    newMethod() { return true; }\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // reference.md should be excluded entirely
         expect(cleaned).not.toContain("reference.md");
@@ -1522,7 +1597,10 @@ describe("AutoVersioningService", () => {
             " export { Client } from './Client';\n" +
             "+export { NewType } from './NewType';\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("pnpm-lock.yaml");
         expect(cleaned).not.toContain("axios");
@@ -1564,7 +1642,10 @@ describe("AutoVersioningService", () => {
             " github.com/pkg/errors v0.9.1 h1:abc\n" +
             "+github.com/stretchr/testify v1.8.0 h1:def\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("yarn.lock");
         expect(cleaned).not.toContain("poetry.lock");
@@ -1592,7 +1673,10 @@ describe("AutoVersioningService", () => {
             "+    newEndpoint() {}\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // Test files matched by extension should be excluded
         expect(cleaned).not.toContain("api.test.ts");
@@ -1631,7 +1715,10 @@ describe("AutoVersioningService", () => {
             "+    initiateTransfer() {}\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // All three files should be preserved — they're domain source, not test infra
         expect(cleaned).toContain("tests/integration/client.py");
@@ -1660,7 +1747,10 @@ describe("AutoVersioningService", () => {
             " snapshot data\n" +
             "+more data\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("__snapshots__");
         expect(cleaned).not.toContain(".snap");
@@ -1701,7 +1791,10 @@ describe("AutoVersioningService", () => {
             '+    "formatter": {}\n' +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain(".github");
         expect(cleaned).not.toContain(".editorconfig");
@@ -1795,7 +1888,10 @@ describe("AutoVersioningService", () => {
             " # Contributing\n" +
             "+Please read the guidelines.\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain(".eslintrc");
         expect(cleaned).not.toContain(".rubocop");
@@ -1837,7 +1933,10 @@ describe("AutoVersioningService", () => {
             " export { Client } from './Client';\n" +
             "+export { Types } from './types';\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("CHANGELOG");
         expect(cleaned).not.toContain("changelog");
@@ -1863,7 +1962,10 @@ describe("AutoVersioningService", () => {
             " My SDK\n" +
             "+======\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("README");
         expect(cleaned).not.toContain("readme");
@@ -1914,7 +2016,10 @@ describe("AutoVersioningService", () => {
             "+require github.com/pkg/errors v0.9.1\n" +
             " \n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // All source files and config files should be preserved
         expect(cleaned).toContain("__init__.py");
@@ -1939,7 +2044,10 @@ describe("AutoVersioningService", () => {
             "+## Users endpoint added\n" +
             " \n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("reference.md");
         expect(cleaned.trim()).toBe("");
@@ -1964,7 +2072,10 @@ describe("AutoVersioningService", () => {
             "+    public void newMethod() {}\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // Java test file matched by *Test.java naming convention
         expect(cleaned).not.toContain("ClientTest.java");
@@ -1992,7 +2103,10 @@ describe("AutoVersioningService", () => {
             "+    NewField string\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("client_test.go");
         expect(cleaned).toContain("client.go");
@@ -2025,7 +2139,10 @@ describe("AutoVersioningService", () => {
             " def test_helpers():\n" +
             "+    pass\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // _test.py, .test.py, and .spec.ts should be excluded
         expect(cleaned).not.toContain("client_test.py");
@@ -2068,7 +2185,10 @@ describe("AutoVersioningService", () => {
             "+    }\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // reference.md and pnpm-lock.yaml should be stripped
         expect(cleaned).not.toContain("reference.md");
@@ -2091,7 +2211,10 @@ describe("AutoVersioningService", () => {
             "+  - run: npm test\n" +
             " \n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain(".circleci");
         expect(cleaned.trim()).toBe("");
@@ -2124,7 +2247,10 @@ describe("AutoVersioningService", () => {
             " lock data\n" +
             "+more lock data\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("Gemfile.lock");
         expect(cleaned).not.toContain("composer.lock");
@@ -2143,7 +2269,10 @@ describe("AutoVersioningService", () => {
             "+    it('should call endpoint', () => {});\n" +
             " });\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("__tests__");
         expect(cleaned.trim()).toBe("");
@@ -2176,7 +2305,7 @@ describe("AutoVersioningService", () => {
             " {\n" +
             '     "name": "test-sdk",\n' +
             '-    "version": "1.0.0",\n' +
-            '+    "version": "505.503.4455",\n' +
+            '+    "version": "0.0.0-fern-placeholder",\n' +
             '     "private": false\n' +
             " }\n" +
             "diff --git a/src/Client.ts b/src/Client.ts\n" +
@@ -2188,13 +2317,16 @@ describe("AutoVersioningService", () => {
             "+    newMethod() {}\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // Excluded files should be gone
         expect(cleaned).not.toContain("reference.md");
         expect(cleaned).not.toContain("pnpm-lock.yaml");
         // Version-only package.json should be cleaned away
-        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("package.json");
         // Real source changes should remain
         expect(cleaned).toContain("Client.ts");
@@ -2238,7 +2370,10 @@ describe("AutoVersioningService", () => {
             "+    date: string;\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         // All these source files should be PRESERVED (not excluded)
         expect(cleaned).toContain("readmeGenerator.ts");
@@ -2283,7 +2418,10 @@ describe("AutoVersioningService", () => {
             " Changes\n" +
             "+- fix\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("README");
         expect(cleaned).not.toContain("CHANGELOG");
@@ -2322,7 +2460,10 @@ describe("AutoVersioningService", () => {
             "+    return 'world';\n" +
             " }\n";
 
-        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
 
         expect(cleaned).not.toContain("LICENSE");
         expect(cleaned).toContain("src/api.ts");
@@ -2392,6 +2533,335 @@ describe("countFilesInDiff", () => {
     it("handles diff with no trailing newline", () => {
         const diff = "diff --git a/file.txt b/file.txt";
         expect(countFilesInDiff(diff)).toBe(1);
+    });
+});
+
+describe("addGoMajorVersionSuffix", () => {
+    it("adds /v2 suffix to go.mod and .go files for v2", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("adds /v3 suffix for v3", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n\tinternal "github.com/org/repo/internal"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v3.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v3");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v3/core"');
+            expect(goFile).toContain('"github.com/org/repo/v3/internal"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("does nothing for v1", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            const goModContent = "module github.com/org/repo\n\ngo 1.21\n";
+            const goFileContent = 'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n';
+            await fs.writeFile(path.join(tempDir, "go.mod"), goModContent);
+            await fs.writeFile(path.join(tempDir, "client.go"), goFileContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v1.5.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toBe(goModContent);
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toBe(goFileContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("does nothing for v0", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            const goModContent = "module github.com/org/repo\n\ngo 1.21\n";
+            await fs.writeFile(path.join(tempDir, "go.mod"), goModContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v0.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toBe(goModContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips when no go.mod exists", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            // Should not throw
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            // .go file should be unchanged since no go.mod to determine module path
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/core"');
+            expect(goFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips when suffix already present", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo/v2\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/v2/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.1.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            // Should NOT have /v2/v2
+            expect(goMod).toContain("module github.com/org/repo/v2");
+            expect(goMod).not.toContain("/v2/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+            expect(goFile).not.toContain("/v2/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles multiple subpackages", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+
+            const coreDir = path.join(tempDir, "core");
+            const optionDir = path.join(tempDir, "option");
+            await fs.mkdir(coreDir, { recursive: true });
+            await fs.mkdir(optionDir, { recursive: true });
+
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n\toption "github.com/org/repo/option"\n)\n'
+            );
+            await fs.writeFile(path.join(coreDir, "core.go"), 'package core\n\nimport (\n\t"fmt"\n)\n');
+            await fs.writeFile(
+                path.join(optionDir, "option.go"),
+                'package option\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const clientFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(clientFile).toContain('"github.com/org/repo/v2/core"');
+            expect(clientFile).toContain('"github.com/org/repo/v2/option"');
+
+            const optionFile = await fs.readFile(path.join(optionDir, "option.go"), "utf-8");
+            expect(optionFile).toContain('"github.com/org/repo/v2/core"');
+
+            // core.go has no imports from the module, should be unchanged
+            const coreFile = await fs.readFile(path.join(coreDir, "core.go"), "utf-8");
+            expect(coreFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("skips vendor directory", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+
+            const vendorDir = path.join(tempDir, "vendor", "other");
+            await fs.mkdir(vendorDir, { recursive: true });
+
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+            await fs.writeFile(
+                path.join(vendorDir, "vendored.go"),
+                'package other\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const clientFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(clientFile).toContain('"github.com/org/repo/v2/core"');
+
+            // Vendor files should NOT be modified
+            const vendoredFile = await fs.readFile(path.join(vendorDir, "vendored.go"), "utf-8");
+            expect(vendoredFile).toContain('"github.com/org/repo/core"');
+            expect(vendoredFile).not.toContain("/v2/");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles version without v prefix", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "client.go"),
+                'package sdk\n\nimport (\n\tcore "github.com/org/repo/core"\n)\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "2.0.0");
+
+            const goMod = await fs.readFile(path.join(tempDir, "go.mod"), "utf-8");
+            expect(goMod).toContain("module github.com/org/repo/v2");
+
+            const goFile = await fs.readFile(path.join(tempDir, "client.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("handles single-line import statements", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/org/repo\n\ngo 1.21\n");
+            await fs.writeFile(
+                path.join(tempDir, "simple.go"),
+                'package sdk\n\nimport "github.com/org/repo/core"\n\nfunc main() {}\n'
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v2.0.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "simple.go"), "utf-8");
+            expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+});
+
+describe("cleanDiffForAI - Go module path suffix changes", () => {
+    it("filters Go module path suffix changes from diff", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,7 +3,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/repo/core"\n' +
+            '+\tcore "github.com/org/repo/v2/core"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        expect(cleaned).not.toContain("github.com/org/repo/core");
+        expect(cleaned).not.toContain("github.com/org/repo/v2/core");
+    });
+
+    it("preserves unrelated changes alongside Go module path changes", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,9 +3,10 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/repo/core"\n' +
+            '+\tcore "github.com/org/repo/v2/core"\n' +
+            " )\n" +
+            " \n" +
+            "+func NewFeature() {}\n" +
+            " \n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        expect(cleaned).toContain("NewFeature");
+        expect(cleaned).not.toContain("github.com/org/repo/core");
+    });
+
+    it("does not filter non-Go URL version changes like API base URLs", () => {
+        const diff =
+            "diff --git a/config.json b/config.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/config.json\n" +
+            "+++ b/config.json\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            " {\n" +
+            '-  "baseUrl": "https://api.example.com/v1/resource"\n' +
+            '+  "baseUrl": "https://api.example.com/v2/resource"\n' +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+        // Non-Go URL version changes should be preserved, not filtered
+        expect(cleaned).toContain("api.example.com/v1/resource");
+        expect(cleaned).toContain("api.example.com/v2/resource");
+    });
+
+    it("filters unquoted go.mod module directive suffix changes", () => {
+        const diff =
+            "diff --git a/go.mod b/go.mod\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.mod\n" +
+            "+++ b/go.mod\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            "-module github.com/org/repo/v2\n" +
+            "+module github.com/org/repo\n" +
+            " \n" +
+            " go 1.21\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+        // Go module directive suffix change should be filtered
+        expect(cleaned).not.toContain("module github.com/org/repo");
+    });
+
+    it("does not filter lines that differ by more than just /vN suffix", () => {
+        const diff =
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -3,7 +3,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/org/old-repo/core"\n' +
+            '+\tcore "github.com/org/new-repo/v2/core"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v0.503.4455");
+        // These should be preserved since the repo name also changed
+        expect(cleaned).toContain("old-repo");
+        expect(cleaned).toContain("new-repo");
     });
 });
 
