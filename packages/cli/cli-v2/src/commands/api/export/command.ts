@@ -78,7 +78,7 @@ export class ExportCommand {
 
         await mkdir(dirname(outputPath), { recursive: true });
 
-        const isJson = outputPath.endsWith(".json");
+        const isJson = outputPath.toLowerCase().endsWith(".json");
         const content = isJson ? JSON.stringify(openapi, undefined, indent) : yaml.dump(openapi, { indent });
 
         await writeFile(outputPath, content);

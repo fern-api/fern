@@ -27,7 +27,9 @@ describe("fern api export", () => {
     let outputPath: string;
 
     afterEach(async () => {
-        await rm(outputPath, { force: true });
+        if (outputPath) {
+            await rm(outputPath, { force: true });
+        }
     });
 
     describe("--output <file.json>", () => {
