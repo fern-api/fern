@@ -181,7 +181,10 @@ public final class ActualResult {
   @JsonIgnoreProperties("type")
   private static final class ExceptionValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private ExceptionInfo value;
 
     @JsonCreator(

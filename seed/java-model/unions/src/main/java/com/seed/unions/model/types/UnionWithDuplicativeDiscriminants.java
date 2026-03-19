@@ -123,7 +123,10 @@ public final class UnionWithDuplicativeDiscriminants {
   @JsonIgnoreProperties("type")
   private static final class FirstItemTypeValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private FirstItemType value;
 
     @JsonCreator(
@@ -166,7 +169,10 @@ public final class UnionWithDuplicativeDiscriminants {
   @JsonIgnoreProperties("type")
   private static final class SecondItemTypeValue implements Value {
     @JsonUnwrapped
-    @JsonIgnoreProperties(value = "type", allowSetters = true)
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SecondItemType value;
 
     @JsonCreator(
