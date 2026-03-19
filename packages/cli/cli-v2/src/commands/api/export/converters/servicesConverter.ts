@@ -605,6 +605,21 @@ function getErrorInfoByStatusCode({
     return errorInfoByStatusCode;
 }
 
+function attachExamples(
+    parameter: OpenAPIV3.ParameterObject,
+    examples: ExampleEndpointCall[],
+    extractValue: (example: ExampleEndpointCall) => unknown | undefined
+): void {
+    const openapiExamples = collectExamples(examples, extractValue);
+    if (openapiExamples != null) {
+        parameter.examples = openapiExamples;
+        const firstExample = Object.values(openapiExamples)[0];
+        if (firstExample != null && "value" in firstExample) {
+            parameter.example = firstExample.value;
+        }
+    }
+}
+
 function convertPathParameter({
     pathParameter,
     examples
@@ -620,7 +635,7 @@ function convertPathParameter({
         schema: convertTypeReference(pathParameter.valueType)
     };
 
-    const openapiExamples = collectExamples(examples, (example) => {
+    attachExamples(convertedParameter, examples, (example) => {
         const match = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
@@ -628,13 +643,6 @@ function convertPathParameter({
         ].find((param) => param.name.originalName === pathParameter.name.originalName);
         return match?.value.jsonExample;
     });
-    if (openapiExamples != null) {
-        convertedParameter.examples = openapiExamples;
-        const firstExample = Object.values(openapiExamples)[0];
-        if (firstExample != null && "value" in firstExample) {
-            convertedParameter.example = firstExample.value;
-        }
-    }
 
     return convertedParameter;
 }
@@ -658,17 +666,10 @@ function convertQueryParameter({
             : convertTypeReference(queryParameter.valueType)
     };
 
-    const openapiExamples = collectExamples(examples, (example) => {
+    attachExamples(convertedParameter, examples, (example) => {
         const match = example.queryParameters.find((param) => param.name.wireValue === queryParameter.name.wireValue);
         return match?.value.jsonExample;
     });
-    if (openapiExamples != null) {
-        convertedParameter.examples = openapiExamples;
-        const firstExample = Object.values(openapiExamples)[0];
-        if (firstExample != null && "value" in firstExample) {
-            convertedParameter.example = firstExample.value;
-        }
-    }
 
     return convertedParameter;
 }
@@ -690,19 +691,12 @@ function convertHeader({
         schema: convertTypeReference(httpHeader.valueType)
     };
 
-    const openapiExamples = collectExamples(examples, (example) => {
+    attachExamples(convertedParameter, examples, (example) => {
         const match = [...example.serviceHeaders, ...example.endpointHeaders].find(
             (headerFromExample) => headerFromExample.name.wireValue === httpHeader.name.wireValue
         );
         return match?.value.jsonExample;
     });
-    if (openapiExamples != null) {
-        convertedParameter.examples = openapiExamples;
-        const firstExample = Object.values(openapiExamples)[0];
-        if (firstExample != null && "value" in firstExample) {
-            convertedParameter.example = firstExample.value;
-        }
-    }
 
     return convertedParameter;
 }

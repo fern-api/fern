@@ -1,0 +1,307 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fern api export > snapshots > Fern definition exports correctly 1`] = `
+{
+  "components": {
+    "schemas": {
+      "CreateMovieRequest": {
+        "properties": {
+          "rating": {
+            "format": "double",
+            "type": "number",
+          },
+          "title": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "title",
+          "rating",
+        ],
+        "title": "CreateMovieRequest",
+        "type": "object",
+      },
+      "Movie": {
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/MovieId",
+          },
+          "rating": {
+            "description": "The rating scale is one to five stars",
+            "format": "double",
+            "type": "number",
+          },
+          "title": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "id",
+          "title",
+          "rating",
+        ],
+        "title": "Movie",
+        "type": "object",
+      },
+      "MovieId": {
+        "title": "MovieId",
+        "type": "string",
+      },
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "scheme": "bearer",
+        "type": "http",
+      },
+    },
+  },
+  "info": {
+    "title": "api",
+    "version": "",
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/movies/create-movie": {
+      "post": {
+        "description": "Add a movie to the database",
+        "operationId": "movies_createMovie",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMovieRequest",
+              },
+            },
+          },
+          "required": true,
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieId",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": [
+          "Movies",
+        ],
+      },
+    },
+    "/movies/{movieId}": {
+      "get": {
+        "operationId": "movies_getMovie",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "movieId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MovieId",
+            },
+          },
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie",
+                },
+              },
+            },
+            "description": "",
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieId",
+                },
+              },
+            },
+            "description": "",
+          },
+        },
+        "tags": [
+          "Movies",
+        ],
+      },
+    },
+  },
+}
+`;
+
+exports[`fern api export > snapshots > OpenAPI-imported spec roundtrips correctly 1`] = `
+{
+  "components": {
+    "schemas": {
+      "CreatePetRequestSpecies": {
+        "enum": [
+          "dog",
+          "cat",
+          "bird",
+        ],
+        "title": "CreatePetRequestSpecies",
+        "type": "string",
+      },
+      "Pet": {
+        "properties": {
+          "age": {
+            "nullable": true,
+            "type": "integer",
+          },
+          "id": {
+            "type": "string",
+          },
+          "name": {
+            "type": "string",
+          },
+          "species": {
+            "$ref": "#/components/schemas/PetSpecies",
+            "nullable": true,
+          },
+        },
+        "required": [
+          "id",
+          "name",
+        ],
+        "title": "Pet",
+        "type": "object",
+      },
+      "PetSpecies": {
+        "enum": [
+          "dog",
+          "cat",
+          "bird",
+        ],
+        "title": "PetSpecies",
+        "type": "string",
+      },
+    },
+    "securitySchemes": {},
+  },
+  "info": {
+    "title": "Simple Pet Store API",
+    "version": "",
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/pets": {
+      "get": {
+        "operationId": "listPets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Pet",
+                  },
+                  "type": "array",
+                },
+              },
+            },
+            "description": "A list of pets",
+          },
+        },
+        "summary": "List all pets",
+        "tags": [
+          "",
+        ],
+      },
+      "post": {
+        "operationId": "createPet",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "age": {
+                    "nullable": true,
+                    "type": "integer",
+                  },
+                  "name": {
+                    "type": "string",
+                  },
+                  "species": {
+                    "$ref": "#/components/schemas/CreatePetRequestSpecies",
+                    "nullable": true,
+                  },
+                },
+                "required": [
+                  "name",
+                ],
+                "type": "object",
+              },
+            },
+          },
+          "required": true,
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet",
+                },
+              },
+            },
+            "description": "Pet created",
+          },
+        },
+        "summary": "Create a pet",
+        "tags": [
+          "",
+        ],
+      },
+    },
+    "/pets/{petId}": {
+      "get": {
+        "operationId": "getPet",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "schema": {
+              "type": "string",
+            },
+          },
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet",
+                },
+              },
+            },
+            "description": "A pet",
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {},
+              },
+            },
+            "description": "",
+          },
+        },
+        "summary": "Get a pet by ID",
+        "tags": [
+          "",
+        ],
+      },
+    },
+  },
+}
+`;

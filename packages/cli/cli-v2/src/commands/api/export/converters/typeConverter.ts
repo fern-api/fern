@@ -7,10 +7,7 @@ import {
     type ExampleObjectProperty,
     type ExampleRequestBody,
     type ExampleType,
-    type IntermediateRepresentation,
     type PrimitiveType,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
     SingleUnionTypeProperties,
     Type,
     type TypeDeclaration,
@@ -29,7 +26,12 @@ export interface ConvertedType {
 
 export type OpenApiComponentSchema = OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
 
-export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRepresentation): ConvertedType {
+export interface ExampleLookupMaps {
+    requestExamplesByTypeId: Map<string, ExampleRequestBody>;
+    responseExamplesByTypeId: Map<string, ExampleEndpointSuccessResponse>;
+}
+
+export function convertType(typeDeclaration: TypeDeclaration, exampleLookup: ExampleLookupMaps): ConvertedType {
     const shape = typeDeclaration.shape;
     const docs = typeDeclaration.docs ?? undefined;
     const openApiSchema = Type._visit<OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>(shape, {
@@ -42,10 +44,12 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
         object: (objectTypeDeclaration) => {
             const exampleType: ExampleType | undefined = typeDeclaration.userProvidedExamples[0];
             const exampleTypeFromEndpointRequest =
-                exampleType == null ? getExampleFromEndpointRequest(ir, typeDeclaration.name) : undefined;
+                exampleType == null
+                    ? exampleLookup.requestExamplesByTypeId.get(typeDeclaration.name.typeId)
+                    : undefined;
             const exampleTypeFromEndpointResponse =
                 exampleType == null && exampleTypeFromEndpointRequest == null
-                    ? getExampleFromEndpointResponse(ir, typeDeclaration.name)
+                    ? exampleLookup.responseExamplesByTypeId.get(typeDeclaration.name.typeId)
                     : undefined;
 
             return convertObject({
@@ -248,182 +252,60 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
     });
 }
 
+/** Maps a normalized primitive name to an OpenAPI schema. Accepts both V1 uppercase and V2 lowercase names. */
+function basePrimitiveSchema(name: string): OpenAPIV3.NonArraySchemaObject {
+    switch (name.toLowerCase()) {
+        case "boolean":
+            return { type: "boolean" };
+        case "date_time":
+        case "datetime":
+            return { type: "string", format: "date-time" };
+        case "double":
+            return { type: "number", format: "double" };
+        case "integer":
+            return { type: "integer" };
+        case "long":
+            return { type: "integer", format: "int64" };
+        case "string":
+            return { type: "string" };
+        case "uuid":
+            return { type: "string", format: "uuid" };
+        case "date":
+            return { type: "string", format: "date" };
+        case "base_64":
+        case "base64":
+            return { type: "string", format: "byte" };
+        case "uint":
+        case "uint_64":
+        case "uint64":
+            return { type: "integer", format: "int64" };
+        case "float":
+            return { type: "number", format: "float" };
+        case "big_integer":
+        case "biginteger":
+            return { type: "integer", format: "bigint" };
+        case "date_time_rfc_2822":
+        case "datetimerfc2822":
+            return { type: "string", format: "date-time-rfc-2822" };
+        default:
+            throw new Error("Encountered unknown primitiveType: " + name);
+    }
+}
+
 function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArraySchemaObject {
     if (primitiveType.v2 == null) {
-        return (
-            PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
-                boolean: () => {
-                    return { type: "boolean" };
-                },
-                dateTime: () => {
-                    return {
-                        type: "string",
-                        format: "date-time"
-                    };
-                },
-                double: () => {
-                    return {
-                        type: "number",
-                        format: "double"
-                    };
-                },
-                integer: () => {
-                    return {
-                        type: "integer"
-                    };
-                },
-                long: () => {
-                    return {
-                        type: "integer",
-                        format: "int64"
-                    };
-                },
-                string: () => {
-                    return { type: "string" };
-                },
-                uuid: () => {
-                    return {
-                        type: "string",
-                        format: "uuid"
-                    };
-                },
-                date: () => {
-                    return {
-                        type: "string",
-                        format: "date"
-                    };
-                },
-                base64: () => {
-                    return {
-                        type: "string",
-                        format: "byte"
-                    };
-                },
-                uint: () => {
-                    return {
-                        type: "integer",
-                        format: "int64"
-                    };
-                },
-                uint64: () => {
-                    return {
-                        type: "integer",
-                        format: "int64"
-                    };
-                },
-                float: () => {
-                    return {
-                        type: "number",
-                        format: "float"
-                    };
-                },
-                bigInteger: () => {
-                    return {
-                        type: "integer",
-                        format: "bigint"
-                    };
-                },
-                dateTimeRfc2822: () => {
-                    return {
-                        type: "string",
-                        format: "date-time-rfc-2822"
-                    };
-                },
-                _other: () => {
-                    throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
-                }
-            }) ?? {}
-        );
+        return basePrimitiveSchema(primitiveType.v1);
     }
-    return PrimitiveTypeV2._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v2, {
-        boolean: () => {
-            return { type: "boolean" };
-        },
-        dateTime: () => {
-            return {
-                type: "string",
-                format: "date-time"
-            };
-        },
-        double: () => {
-            return {
-                type: "number",
-                format: "double"
-            };
-        },
-        integer: () => {
-            return {
-                type: "integer"
-            };
-        },
-        long: () => {
-            return {
-                type: "integer",
-                format: "int64"
-            };
-        },
-        string: (val) => {
-            const type: OpenAPIV3.NonArraySchemaObject = { type: "string" };
-            if (val.validation?.format != null) {
-                type.format = val.validation.format;
-            }
-            if (val.validation?.pattern != null) {
-                type.pattern = val.validation.pattern;
-            }
-            return type;
-        },
-        uuid: () => {
-            return {
-                type: "string",
-                format: "uuid"
-            };
-        },
-        date: () => {
-            return {
-                type: "string",
-                format: "date"
-            };
-        },
-        base64: () => {
-            return {
-                type: "string",
-                format: "byte"
-            };
-        },
-        uint: () => {
-            return {
-                type: "integer",
-                format: "int64"
-            };
-        },
-        uint64: () => {
-            return {
-                type: "integer",
-                format: "int64"
-            };
-        },
-        float: () => {
-            return {
-                type: "number",
-                format: "float"
-            };
-        },
-        bigInteger: () => {
-            return {
-                type: "integer",
-                format: "bigint"
-            };
-        },
-        dateTimeRfc2822: () => {
-            return {
-                type: "string",
-                format: "date-time-rfc-2822"
-            };
-        },
-        _other: () => {
-            throw new Error("Encountered unknown primitiveType: " + primitiveType.v2);
+    const schema = basePrimitiveSchema(primitiveType.v2.type);
+    if (primitiveType.v2.type === "string") {
+        if (primitiveType.v2.validation?.format != null) {
+            schema.format = primitiveType.v2.validation.format;
         }
-    });
+        if (primitiveType.v2.validation?.pattern != null) {
+            schema.pattern = primitiveType.v2.validation.pattern;
+        }
+    }
+    return schema;
 }
 
 function convertContainerType(containerType: ContainerType): OpenApiComponentSchema {
@@ -500,50 +382,4 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
         ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
         declaredTypeName.name.originalName
     ].join("");
-}
-
-function getExampleFromEndpointRequest(
-    ir: IntermediateRepresentation,
-    declaredTypeName: DeclaredTypeName
-): ExampleRequestBody | undefined {
-    for (const service of Object.values(ir.services)) {
-        for (const endpoint of service.endpoints) {
-            if (endpoint.userSpecifiedExamples.length <= 0) {
-                continue;
-            }
-            if (
-                endpoint.requestBody?.type === "reference" &&
-                endpoint.requestBody.requestBodyType.type === "named" &&
-                endpoint.requestBody.requestBodyType.typeId === declaredTypeName.typeId
-            ) {
-                return endpoint.userSpecifiedExamples[0]?.example?.request ?? undefined;
-            }
-        }
-    }
-    return undefined;
-}
-
-function getExampleFromEndpointResponse(
-    ir: IntermediateRepresentation,
-    declaredTypeName: DeclaredTypeName
-): ExampleEndpointSuccessResponse | undefined {
-    for (const service of Object.values(ir.services)) {
-        for (const endpoint of service.endpoints) {
-            if (endpoint.userSpecifiedExamples.length <= 0 || endpoint.response?.body?.type !== "json") {
-                continue;
-            }
-            if (
-                endpoint.response.body.value.responseBodyType.type === "named" &&
-                endpoint.response.body.value.responseBodyType.typeId === declaredTypeName.typeId
-            ) {
-                const okResponseExample = endpoint.userSpecifiedExamples.find((exampleEndpoint) => {
-                    return exampleEndpoint.example?.response.type === "ok";
-                });
-                if (okResponseExample != null && okResponseExample.example?.response.type === "ok") {
-                    return okResponseExample.example.response.value;
-                }
-            }
-        }
-    }
-    return undefined;
 }

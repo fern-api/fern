@@ -3,13 +3,14 @@ import { randomUUID } from "crypto";
 import { readFile, rm } from "fs/promises";
 import yaml from "js-yaml";
 import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { ExportCommand } from "../commands/api/export/command.js";
 import { CliError } from "../errors/CliError.js";
 import { createTestContextWithCapture } from "./utils/createTestContext.js";
 
 const FIXTURES_DIR = AbsoluteFilePath.of(join(__dirname, "fixtures"));
 const SIMPLE_API_DIR = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
+const FERN_DEF_DIR = AbsoluteFilePath.of(join(FIXTURES_DIR, "fern-definition"));
 const INVALID_API_DIR = AbsoluteFilePath.of(join(FIXTURES_DIR, "invalid-api"));
 
 function baseArgs(overrides?: Partial<ExportCommand.Args>): ExportCommand.Args {
@@ -25,17 +26,8 @@ describe("fern api export", () => {
     const cmd = new ExportCommand();
     let outputPath: string;
 
-    beforeEach(() => {
-        const ext = outputPath?.endsWith(".yaml") ? "yaml" : "json";
-        outputPath = join(SIMPLE_API_DIR, `export-test-${randomUUID()}.${ext}`);
-    });
-
     afterEach(async () => {
-        try {
-            await rm(outputPath, { force: true });
-        } catch {
-            // ignore
-        }
+        await rm(outputPath, { force: true });
     });
 
     describe("--output <file.json>", () => {
@@ -134,6 +126,26 @@ describe("fern api export", () => {
             const spec = JSON.parse(content);
             const schemas = Object.keys(spec.components.schemas);
             expect(schemas.length).toBeGreaterThan(0);
+        });
+    });
+
+    describe("snapshots", () => {
+        it("OpenAPI-imported spec roundtrips correctly", async () => {
+            outputPath = join(SIMPLE_API_DIR, `export-test-${randomUUID()}.json`);
+            const { context } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            await cmd.handle(context, baseArgs({ output: outputPath }));
+
+            const spec = JSON.parse(await readFile(outputPath, "utf-8"));
+            expect(spec).toMatchSnapshot();
+        });
+
+        it("Fern definition exports correctly", async () => {
+            outputPath = join(FERN_DEF_DIR, `export-test-${randomUUID()}.json`);
+            const { context } = createTestContextWithCapture({ cwd: FERN_DEF_DIR });
+            await cmd.handle(context, baseArgs({ output: outputPath }));
+
+            const spec = JSON.parse(await readFile(outputPath, "utf-8"));
+            expect(spec).toMatchSnapshot();
         });
     });
 });
