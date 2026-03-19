@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.3
+  changelogEntry:
+    - summary: |
+        Sanitize preview IDs passed via `--id` to produce valid DNS subdomain
+        labels. Characters like slashes, dots, and uppercase letters in branch
+        names (e.g. `kenny/test-feature`) are replaced with hyphens and
+        lowercased, so the CLI correctly predicts the preview URL that the
+        server will produce.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.2
   changelogEntry:
     - summary: |
