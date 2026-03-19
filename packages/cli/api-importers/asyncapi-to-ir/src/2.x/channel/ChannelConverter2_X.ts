@@ -250,7 +250,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: this.breadcrumbs
                 }),
                 docs: operation.description,
-                methodName: this.getOperationMethodName(operation)
+                methodName: this.getOperationMethodName(operation),
+                discriminantValues: undefined
             };
         }
 

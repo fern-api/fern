@@ -149,6 +149,7 @@ types:
       origin: WebsocketMessageOrigin
       body: Schema
       methodName: optional<string>
+      discriminantValues: optional<list<string>>
 
   WebsocketMessageOrigin:
     enum:

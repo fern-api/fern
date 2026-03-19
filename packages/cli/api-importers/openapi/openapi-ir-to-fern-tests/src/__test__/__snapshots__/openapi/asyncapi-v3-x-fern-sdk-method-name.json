@@ -108,6 +108,11 @@
           "messages": {
             "serverNotification": {
               "body": "root.ServerNotificationPayload",
+              "discriminant-values": [
+                "info",
+                "warning",
+                "error",
+              ],
               "method-name": "onNotification",
               "origin": "server",
             },
@@ -133,6 +138,10 @@
       origin: server
       body: root.ServerNotificationPayload
       method-name: onNotification
+      discriminant-values:
+        - info
+        - warning
+        - error
     userMessage:
       origin: client
       body: root.UserMessagePayload

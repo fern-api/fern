@@ -8,4 +8,5 @@ export interface WebSocketChannelMessageSchema
         FernDefinition.WithMethodName {
     origin: FernDefinition.WebSocketOrigin;
     body: FernDefinition.WebSocketChannelMessageBodySchema;
+    "discriminant-values"?: string[];
 }

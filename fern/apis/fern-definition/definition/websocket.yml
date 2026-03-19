@@ -28,6 +28,7 @@ types:
     properties:
       origin: WebSocketOrigin
       body: WebSocketChannelMessageBodySchema
+      discriminant-values: optional<list<string>>
 
   WebSocketOrigin:
     enum:

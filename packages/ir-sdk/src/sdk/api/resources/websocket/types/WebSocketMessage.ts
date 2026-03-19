@@ -6,6 +6,7 @@ export interface WebSocketMessage extends FernIr.Declaration {
     type: FernIr.WebSocketMessageId;
     displayName: string | undefined;
     methodName: string | undefined;
+    discriminantValues: string[] | undefined;
     origin: FernIr.WebSocketMessageOrigin;
     body: FernIr.WebSocketMessageBody;
 }

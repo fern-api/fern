@@ -16,6 +16,7 @@ export const WebSocketChannelMessageSchema: core.serialization.ObjectSchema<
     .object({
         origin: WebSocketOrigin,
         body: WebSocketChannelMessageBodySchema,
+        "discriminant-values": core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(DeclarationSchema)
     .extend(WithDisplayName)
@@ -25,5 +26,6 @@ export declare namespace WebSocketChannelMessageSchema {
     export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw, WithMethodName.Raw {
         origin: WebSocketOrigin.Raw;
         body: WebSocketChannelMessageBodySchema.Raw;
+        "discriminant-values"?: string[] | null;
     }
 }

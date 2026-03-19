@@ -36,7 +36,12 @@
             },
             "type": "reference"
           },
-          "methodName": "onNotification"
+          "methodName": "onNotification",
+          "discriminantValues": [
+            "info",
+            "warning",
+            "error"
+          ]
         },
         {
           "origin": "client",

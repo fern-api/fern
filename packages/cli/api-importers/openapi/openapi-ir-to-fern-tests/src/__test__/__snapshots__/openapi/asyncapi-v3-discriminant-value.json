@@ -1,0 +1,240 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "DataPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "payload": "optional<string>",
+              "type": "optional<DataPayloadType>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "DataPayloadType": {
+            "enum": [
+              "DataUpdate",
+              "DataRefresh",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ErrorPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "optional<integer>",
+              "type": "optional<ErrorPayloadType>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ErrorPayloadType": {
+            "enum": [
+              "Error",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "PlainPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "WelcomePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": "optional<string>",
+              "type": "optional<WelcomePayloadType>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "WelcomePayloadType": {
+            "enum": [
+              "Welcome",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  WelcomePayloadType:
+    enum:
+      - Welcome
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  WelcomePayload:
+    properties:
+      type: optional<WelcomePayloadType>
+      message: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+  ErrorPayloadType:
+    enum:
+      - Error
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  ErrorPayload:
+    properties:
+      type: optional<ErrorPayloadType>
+      code: optional<integer>
+    source:
+      openapi: ../asyncapi.yml
+  DataPayloadType:
+    enum:
+      - DataUpdate
+      - DataRefresh
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  DataPayload:
+    properties:
+      type: optional<DataPayloadType>
+      payload: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+  PlainPayload:
+    properties:
+      content: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "events.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "docs": "Channel for testing discriminant value extraction",
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {},
+                  "type": "plainMessage",
+                },
+                {
+                  "body": {},
+                  "type": "welcomeMessage",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "dataMessage": {
+              "body": "root.DataPayload",
+              "discriminant-values": [
+                "DataUpdate",
+                "DataRefresh",
+              ],
+              "origin": "server",
+            },
+            "errorMessage": {
+              "body": "root.ErrorPayload",
+              "discriminant-values": [
+                "Error",
+              ],
+              "origin": "server",
+            },
+            "plainMessage": {
+              "body": "root.PlainPayload",
+              "origin": "client",
+            },
+            "welcomeMessage": {
+              "body": "root.WelcomePayload",
+              "discriminant-values": [
+                "Welcome",
+              ],
+              "origin": "server",
+            },
+          },
+          "path": "/v1/ws/events",
+          "url": undefined,
+        },
+        "imports": {
+          "root": "__package__.yml",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/ws/events
+  auth: false
+  docs: Channel for testing discriminant value extraction
+  messages:
+    welcomeMessage:
+      origin: server
+      body: root.WelcomePayload
+      discriminant-values:
+        - Welcome
+    errorMessage:
+      origin: server
+      body: root.ErrorPayload
+      discriminant-values:
+        - Error
+    dataMessage:
+      origin: server
+      body: root.DataPayload
+      discriminant-values:
+        - DataUpdate
+        - DataRefresh
+    plainMessage:
+      origin: client
+      body: root.PlainPayload
+  examples:
+    - messages:
+        - type: plainMessage
+          body: {}
+        - type: welcomeMessage
+          body: {}
+imports:
+  root: __package__.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}

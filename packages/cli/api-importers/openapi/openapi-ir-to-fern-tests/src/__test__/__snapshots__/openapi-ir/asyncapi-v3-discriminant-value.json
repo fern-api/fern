@@ -1,0 +1,359 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "events": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "events"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "welcomeMessage",
+          "body": {
+            "generatedName": "WelcomeMessage",
+            "schema": "WelcomePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "discriminantValues": [
+            "Welcome"
+          ]
+        },
+        {
+          "origin": "server",
+          "name": "errorMessage",
+          "body": {
+            "generatedName": "ErrorMessage",
+            "schema": "ErrorPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "discriminantValues": [
+            "Error"
+          ]
+        },
+        {
+          "origin": "server",
+          "name": "dataMessage",
+          "body": {
+            "generatedName": "DataMessage",
+            "schema": "DataPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "discriminantValues": [
+            "DataUpdate",
+            "DataRefresh"
+          ]
+        },
+        {
+          "origin": "client",
+          "name": "plainMessage",
+          "body": {
+            "generatedName": "PlainMessage",
+            "schema": "PlainPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/ws/events",
+      "description": "Channel for testing discriminant value extraction",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "plainMessage",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "welcomeMessage",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {
+      "WelcomePayload": {
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "generatedName": "WelcomePayloadType",
+              "value": {
+                "generatedName": "WelcomePayloadType",
+                "values": [
+                  {
+                    "generatedName": "Welcome",
+                    "value": "Welcome",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "welcomePayloadType"
+          },
+          {
+            "key": "message",
+            "schema": {
+              "generatedName": "WelcomePayloadMessage",
+              "value": {
+                "generatedName": "WelcomePayloadMessage",
+                "schema": {
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "welcomePayloadMessage"
+          }
+        ],
+        "generatedName": "WelcomePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ErrorPayload": {
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "generatedName": "ErrorPayloadType",
+              "value": {
+                "generatedName": "ErrorPayloadType",
+                "values": [
+                  {
+                    "generatedName": "Error",
+                    "value": "Error",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorPayloadType"
+          },
+          {
+            "key": "code",
+            "schema": {
+              "generatedName": "ErrorPayloadCode",
+              "value": {
+                "generatedName": "ErrorPayloadCode",
+                "schema": {
+                  "type": "int"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorPayloadCode"
+          }
+        ],
+        "generatedName": "ErrorPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DataPayload": {
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "generatedName": "DataPayloadType",
+              "value": {
+                "generatedName": "DataPayloadType",
+                "values": [
+                  {
+                    "generatedName": "DataUpdate",
+                    "value": "DataUpdate",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "DataRefresh",
+                    "value": "DataRefresh",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "dataPayloadType"
+          },
+          {
+            "key": "payload",
+            "schema": {
+              "generatedName": "DataPayloadPayload",
+              "value": {
+                "generatedName": "DataPayloadPayload",
+                "schema": {
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "dataPayloadPayload"
+          }
+        ],
+        "generatedName": "DataPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PlainPayload": {
+        "properties": [
+          {
+            "key": "content",
+            "schema": {
+              "generatedName": "PlainPayloadContent",
+              "value": {
+                "generatedName": "PlainPayloadContent",
+                "schema": {
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "plainPayloadContent"
+          }
+        ],
+        "generatedName": "PlainPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

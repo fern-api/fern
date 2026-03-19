@@ -16,6 +16,7 @@ export const WebSocketMessage: core.serialization.ObjectSchema<
         type: WebSocketMessageId,
         displayName: core.serialization.string().optional(),
         methodName: core.serialization.string().optional(),
+        discriminantValues: core.serialization.list(core.serialization.string()).optional(),
         origin: WebSocketMessageOrigin,
         body: WebSocketMessageBody,
     })
@@ -26,6 +27,7 @@ export declare namespace WebSocketMessage {
         type: WebSocketMessageId.Raw;
         displayName?: string | null;
         methodName?: string | null;
+        discriminantValues?: string[] | null;
         origin: WebSocketMessageOrigin.Raw;
         body: WebSocketMessageBody.Raw;
     }

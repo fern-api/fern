@@ -60,7 +60,8 @@ export function convertChannel({
             origin: message.origin,
             body: convertMessageSchema({ body: message.body, file }),
             displayName: message["display-name"],
-            methodName: message["method-name"]
+            methodName: message["method-name"],
+            discriminantValues: message["discriminant-values"]
         });
     }
     return {

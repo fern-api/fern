@@ -151,6 +151,10 @@ export function buildChannel({
             messageSchema["method-name"] = message.methodName;
         }
 
+        if (message.discriminantValues != null) {
+            messageSchema["discriminant-values"] = message.discriminantValues;
+        }
+
         context.builder.addChannelMessage(declarationFile, {
             messageId: message.name,
             message: messageSchema

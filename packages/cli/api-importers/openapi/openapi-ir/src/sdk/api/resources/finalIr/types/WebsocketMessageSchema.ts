@@ -7,4 +7,5 @@ export interface WebsocketMessageSchema {
     origin: FernOpenapiIr.WebsocketMessageOrigin;
     body: FernOpenapiIr.Schema;
     methodName: string | undefined;
+    discriminantValues: string[] | undefined;
 }

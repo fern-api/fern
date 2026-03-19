@@ -325,7 +325,8 @@ export function parseAsyncAPIV2({
                     methodName:
                         channel.publish != null
                             ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
-                            : undefined
+                            : undefined,
+                    discriminantValues: undefined
                 });
             }
             if (subscribeSchema != null) {
@@ -336,7 +337,8 @@ export function parseAsyncAPIV2({
                     methodName:
                         channel.subscribe != null
                             ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
-                            : undefined
+                            : undefined,
+                    discriminantValues: undefined
                 });
             }
             parsedChannels[channelPath] = {

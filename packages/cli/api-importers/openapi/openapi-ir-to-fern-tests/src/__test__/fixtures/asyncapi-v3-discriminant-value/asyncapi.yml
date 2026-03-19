@@ -1,0 +1,122 @@
+asyncapi: 3.0.0
+
+info:
+  title: Discriminant Value Test API
+  version: 1.0.0
+  description: Tests that discriminantValue is extracted from const and single-enum type properties
+
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+    pathname: /v1/ws
+
+channels:
+  events:
+    address: /v1/ws/events
+    description: Channel for testing discriminant value extraction
+    messages:
+      welcomeMessage:
+        $ref: "#/components/messages/WelcomeMessage"
+      errorMessage:
+        $ref: "#/components/messages/ErrorMessage"
+      dataMessage:
+        $ref: "#/components/messages/DataMessage"
+      plainMessage:
+        $ref: "#/components/messages/PlainMessage"
+
+operations:
+  receiveWelcome:
+    action: receive
+    channel:
+      $ref: "#/channels/events"
+    messages:
+      - $ref: "#/channels/events/messages/welcomeMessage"
+
+  receiveError:
+    action: receive
+    channel:
+      $ref: "#/channels/events"
+    messages:
+      - $ref: "#/channels/events/messages/errorMessage"
+
+  receiveData:
+    action: receive
+    channel:
+      $ref: "#/channels/events"
+    messages:
+      - $ref: "#/channels/events/messages/dataMessage"
+
+  sendPlain:
+    action: send
+    channel:
+      $ref: "#/channels/events"
+    messages:
+      - $ref: "#/channels/events/messages/plainMessage"
+
+components:
+  messages:
+    WelcomeMessage:
+      name: WelcomeMessage
+      title: Welcome Message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/WelcomePayload"
+
+    ErrorMessage:
+      name: ErrorMessage
+      title: Error Message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ErrorPayload"
+
+    DataMessage:
+      name: DataMessage
+      title: Data Message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/DataPayload"
+
+    PlainMessage:
+      name: PlainMessage
+      title: Plain Message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/PlainPayload"
+
+  schemas:
+    WelcomePayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: Welcome
+        message:
+          type: string
+
+    ErrorPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - Error
+        code:
+          type: integer
+
+    DataPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - DataUpdate
+            - DataRefresh
+        payload:
+          type: string
+
+    PlainPayload:
+      type: object
+      properties:
+        content:
+          type: string

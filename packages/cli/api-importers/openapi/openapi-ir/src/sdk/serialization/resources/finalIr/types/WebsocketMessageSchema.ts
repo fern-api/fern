@@ -13,6 +13,7 @@ export const WebsocketMessageSchema: core.serialization.ObjectSchema<
     origin: WebsocketMessageOrigin,
     body: core.serialization.lazy(() => serializers.Schema),
     methodName: core.serialization.string().optional(),
+    discriminantValues: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace WebsocketMessageSchema {
@@ -21,5 +22,6 @@ export declare namespace WebsocketMessageSchema {
         origin: WebsocketMessageOrigin.Raw;
         body: serializers.Schema.Raw;
         methodName?: string | null;
+        discriminantValues?: string[] | null;
     }
 }

@@ -589,11 +589,13 @@ function convertMessageReferencesToWebsocketSchemas({
 
             const schema = messageSchemas[schemaId];
             if (schema != null) {
+                const resolvedMessage = context.resolveMessageReference(message.ref, false);
                 results.push({
                     origin,
                     name: schemaId ?? `${origin}Message${i + 1}`,
                     body: convertSchemaWithExampleToSchema(schema),
-                    methodName: message.methodName
+                    methodName: message.methodName,
+                    discriminantValues: extractDiscriminantValues({ channelMessage: resolvedMessage, context })
                 });
             }
         } catch (error) {
@@ -604,6 +606,37 @@ function convertMessageReferencesToWebsocketSchemas({
     });
 
     return results;
+}
+
+function extractDiscriminantValues({
+    channelMessage,
+    context
+}: {
+    channelMessage: AsyncAPIV3.ChannelMessage;
+    context: AsyncAPIV3ParserContext;
+}): string[] | undefined {
+    if (channelMessage.payload == null) {
+        return undefined;
+    }
+    const resolvedPayload = isReferenceObject(channelMessage.payload)
+        ? context.resolveSchemaReference(channelMessage.payload)
+        : channelMessage.payload;
+    if (resolvedPayload.properties == null) {
+        return undefined;
+    }
+    const typeProp = resolvedPayload.properties["type"];
+    if (typeProp == null || isReferenceObject(typeProp)) {
+        return undefined;
+    }
+    if ("const" in typeProp && typeProp.const != null) {
+        return [String(typeProp.const)];
+    }
+    if (typeProp.enum != null && typeProp.enum.length > 0) {
+        return typeProp.enum
+            .filter((v): v is string | number => typeof v === "string" || typeof v === "number")
+            .map(String);
+    }
+    return undefined;
 }
 
 function getExampleSchemas({
