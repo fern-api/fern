@@ -1,4 +1,4 @@
-import { getAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
+import { getPartialAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -77,7 +77,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             }
 
-            const apiSettings = getAPIDefinitionSettings(definition.settings);
+            const apiSettings = getPartialAPIDefinitionSettings(definition.settings);
             specs.push({
                 type: "protobuf",
                 absoluteFilepathToProtobufRoot,
@@ -178,7 +178,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             };
         }
-        const apiSettings = getAPIDefinitionSettings(definition.settings);
+        const apiSettings = getPartialAPIDefinitionSettings(definition.settings);
         specs.push({
             type: "openapi",
             absoluteFilepath,

@@ -38,6 +38,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     asyncApiMessageNaming: "asyncApiNaming",
     shouldUseOptionalAdditionalProperties: "optionalAdditionalProperties",
     coerceEnumsToLiterals: "coerceEnumsToLiterals",
+    coerceConstToLiteral: "coerceConstToLiteral",
     objectQueryParameters: "objectQueryParameters",
     respectReadonlySchemas: "respectReadonlySchemas",
     respectNullableSchemas: "respectNullableSchemas",
@@ -103,4 +104,34 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
     }
 
     return getOpenAPISettings({ options: mappedSettings });
+}
+
+/**
+ * Convert settings from generators.yml format to a partial ParseOpenAPIOptions.
+ * Unlike getAPIDefinitionSettings, this does NOT apply defaults — only explicitly-set values
+ * are included in the result. This is used when specs need to be combined later, so that
+ * "not set" can be distinguished from "explicitly set to false".
+ */
+export function getPartialAPIDefinitionSettings(
+    settings?: generatorsYml.APIDefinitionSettings
+): Partial<ParseOpenAPIOptions> {
+    const mappedSettings: Partial<OpenAPISettings> = {};
+
+    if (settings != null) {
+        for (const [yamlKey, internalKey] of Object.entries(FIELD_MAPPINGS) as Array<
+            [keyof generatorsYml.APIDefinitionSettings, MappingValue]
+        >) {
+            const value = settings[yamlKey];
+            const targets = Array.isArray(internalKey) ? internalKey : [internalKey];
+            for (const target of targets) {
+                setIfDefined(
+                    mappedSettings,
+                    target as keyof OpenAPISettings,
+                    value as unknown as OpenAPISettings[keyof OpenAPISettings]
+                );
+            }
+        }
+    }
+
+    return mappedSettings;
 }
