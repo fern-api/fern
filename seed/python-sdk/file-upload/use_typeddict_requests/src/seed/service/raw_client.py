@@ -102,9 +102,13 @@ class RawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings)),
+                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                if optional_list_of_strings is not OMIT
+                else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
-                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata)),
+                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
+                if optional_metadata is not OMIT
+                else OMIT,
                 "optional_object_type": optional_object_type,
                 "optional_id": optional_id,
                 "alias_object": json.dumps(jsonable_encoder(alias_object)),
@@ -466,9 +470,13 @@ class RawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings)),
+                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                if optional_list_of_strings is not OMIT
+                else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
-                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata)),
+                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
+                if optional_metadata is not OMIT
+                else OMIT,
                 "optional_object_type": optional_object_type,
                 "optional_id": optional_id,
                 "list_of_objects_with_optionals": json.dumps(jsonable_encoder(list_of_objects_with_optionals)),
@@ -635,7 +643,7 @@ class RawServiceClient:
             "with-json-property",
             method="POST",
             data={
-                "json": _json.dumps(jsonable_encoder(json)),
+                "json": _json.dumps(jsonable_encoder(json)) if json is not OMIT else OMIT,
             },
             files={
                 "file": file,
@@ -828,9 +836,13 @@ class AsyncRawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings)),
+                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                if optional_list_of_strings is not OMIT
+                else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
-                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata)),
+                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
+                if optional_metadata is not OMIT
+                else OMIT,
                 "optional_object_type": optional_object_type,
                 "optional_id": optional_id,
                 "alias_object": json.dumps(jsonable_encoder(alias_object)),
@@ -1192,9 +1204,13 @@ class AsyncRawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings)),
+                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                if optional_list_of_strings is not OMIT
+                else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
-                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata)),
+                "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
+                if optional_metadata is not OMIT
+                else OMIT,
                 "optional_object_type": optional_object_type,
                 "optional_id": optional_id,
                 "list_of_objects_with_optionals": json.dumps(jsonable_encoder(list_of_objects_with_optionals)),
@@ -1361,7 +1377,7 @@ class AsyncRawServiceClient:
             "with-json-property",
             method="POST",
             data={
-                "json": _json.dumps(jsonable_encoder(json)),
+                "json": _json.dumps(jsonable_encoder(json)) if json is not OMIT else OMIT,
             },
             files={
                 "file": file,
