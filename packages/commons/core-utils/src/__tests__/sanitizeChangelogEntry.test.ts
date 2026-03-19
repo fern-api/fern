@@ -74,4 +74,23 @@ describe("sanitizeChangelogEntry", () => {
         const expected = "Added `Optional<String>` support.\nAlso changed `Map<String, Object>` handling.";
         expect(sanitizeChangelogEntry(input)).toBe(expected);
     });
+
+    it("does not double-wrap types inside backtick spans after a fenced code block", () => {
+        const input =
+            "Intro text.\n\n```java\nws.connect();\n```\n\n**Generic `onMessage(Consumer<String>)` handler** fires.";
+        const expected =
+            "Intro text.\n\n```java\nws.connect();\n```\n\n**Generic `onMessage(Consumer<String>)` handler** fires.";
+        expect(sanitizeChangelogEntry(input)).toBe(expected);
+    });
+
+    it("preserves fenced code blocks verbatim", () => {
+        const input = "Before.\n\n```java\nList<String> items = new ArrayList<String>();\n```\n\nAfter.";
+        expect(sanitizeChangelogEntry(input)).toBe(input);
+    });
+
+    it("wraps types outside a code fence but not inside", () => {
+        const input = "Use Optional<String>.\n\n```java\nOptional<String> x;\n```\n\nAlso Map<String, Object>.";
+        const expected = "Use `Optional<String>`.\n\n```java\nOptional<String> x;\n```\n\nAlso `Map<String, Object>`.";
+        expect(sanitizeChangelogEntry(input)).toBe(expected);
+    });
 });

@@ -9,9 +9,30 @@
  * Already-backticked spans are left untouched.
  */
 export function sanitizeChangelogEntry(entry: string): string {
+    // First, split on triple-backtick fenced code blocks so they are never
+    // processed by the inline-backtick logic (which only understands single
+    // backtick pairs and gets confused by the three-backtick delimiters).
+    const fenceParts = entry.split(/(```[\s\S]*?```)/g);
+    return fenceParts
+        .map((part) => {
+            // Fenced code blocks are preserved verbatim.
+            if (part.startsWith("```") && part.endsWith("```")) {
+                return part;
+            }
+            return sanitizeInlinePart(part);
+        })
+        .join("");
+}
+
+/**
+ * Processes a text segment that is outside any fenced code block.
+ * Splits on single-backtick inline code spans and only applies
+ * angle-bracket wrapping to plain-text segments.
+ */
+function sanitizeInlinePart(text: string): string {
     // Split the text into alternating segments: plain text and backtick-delimited code spans.
     // Odd-indexed segments are inside backticks and must be preserved as-is.
-    const parts = entry.split(/(`[^`]+`)/g);
+    const parts = text.split(/(`[^`]+`)/g);
     return parts
         .map((part) => {
             // If this part is a code span, leave it as-is
