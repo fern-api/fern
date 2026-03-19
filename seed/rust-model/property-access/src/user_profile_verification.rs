@@ -1,8 +1,9 @@
 pub use crate::prelude::*;
 
 /// User profile verification object
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UserProfileVerification {
     /// User profile verification status
+    #[serde(default)]
     pub verified: String,
 }

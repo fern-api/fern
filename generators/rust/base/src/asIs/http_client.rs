@@ -433,7 +433,17 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
+        let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
+
+        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
+        if text.is_empty() {
+            return Err(ApiError::Http {
+                status,
+                message: String::new(),
+            });
+        }
+
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 

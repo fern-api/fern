@@ -5,6 +5,7 @@ pub struct Account {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
     pub resource_type: String,
+    #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub patient: Option<Patient>,
