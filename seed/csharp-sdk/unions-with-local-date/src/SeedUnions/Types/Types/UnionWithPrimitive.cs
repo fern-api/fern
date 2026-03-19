@@ -210,6 +210,27 @@ public record UnionWithPrimitive
             json["type"] = value.Type;
             json.WriteTo(writer, options);
         }
+
+        public override UnionWithPrimitive ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithPrimitive(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithPrimitive value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
+        }
     }
 
     /// <summary>

@@ -208,6 +208,27 @@ public record Union
             json["type"] = value.Type;
             json.WriteTo(writer, options);
         }
+
+        public override Union ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Union(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Union value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
+        }
     }
 
     /// <summary>

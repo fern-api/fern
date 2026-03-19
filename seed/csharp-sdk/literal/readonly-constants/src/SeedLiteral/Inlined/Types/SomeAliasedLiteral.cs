@@ -47,5 +47,31 @@ public readonly struct SomeAliasedLiteral
             SomeAliasedLiteral value,
             JsonSerializerOptions options
         ) => writer.WriteStringValue(SomeAliasedLiteral.Value);
+
+        public override SomeAliasedLiteral ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (value != SomeAliasedLiteral.Value)
+            {
+                throw new JsonException(
+                    "Expected \""
+                        + SomeAliasedLiteral.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
+                );
+            }
+            return new SomeAliasedLiteral();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SomeAliasedLiteral value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(SomeAliasedLiteral.Value);
     }
 }

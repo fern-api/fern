@@ -78,6 +78,32 @@ public record ANestedLiteral : IJsonOnDeserialized
                 MyLiteralLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(MyLiteralLiteral.Value);
+
+            public override MyLiteralLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != MyLiteralLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + MyLiteralLiteral.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new MyLiteralLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                MyLiteralLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(MyLiteralLiteral.Value);
         }
     }
 }
