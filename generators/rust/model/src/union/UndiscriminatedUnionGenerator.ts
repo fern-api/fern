@@ -135,60 +135,100 @@ export class UndiscriminatedUnionGenerator {
         if (memberType.type === "named") {
             return memberType.name.pascalCase.unsafeName;
         } else if (memberType.type === "primitive") {
-            // Handle primitive types
-            const primitiveType = memberType.primitive.v1;
-            switch (primitiveType) {
-                case "STRING":
-                    return "String";
-                case "BOOLEAN":
-                    return "Boolean";
-                case "INTEGER":
-                    return "Integer";
-                case "LONG":
-                    return "Long";
-                case "DOUBLE":
-                    return "Double";
-                case "DATE_TIME":
-                    return "DateTime";
-                case "DATE":
-                    return "Date";
-                case "UUID":
-                    return "Uuid";
-                case "BASE_64":
-                    return "Base64";
-                default:
-                    return `Variant${index}`;
-            }
+            return this.getPrimitiveVariantName(memberType.primitive.v1) ?? `Variant${index}`;
         } else if (memberType.type === "container") {
-            // Handle container types - include inner type information to avoid conflicts
-            const containerType = memberType.container.type;
-            switch (containerType) {
-                case "list": {
-                    // Try to get the inner type name to make it unique
-                    const listInnerType = memberType.container.list;
-                    if (listInnerType.type === "named") {
-                        return `${listInnerType.name.pascalCase.unsafeName}List`;
-                    }
-                    return `List${index}`;
-                }
-                case "map":
-                    return `Map${index}`;
-                case "set":
-                    return `Set${index}`;
-                case "optional":
-                    return `Optional${index}`;
-                case "nullable":
-                    return `Nullable${index}`;
-                case "literal":
-                    return `Literal${index}`;
-                default:
-                    return `Container${index}`;
-            }
+            return this.getContainerVariantName(memberType.container, index);
         } else if (memberType.type === "unknown") {
             return "Unknown";
         } else {
             // Fallback to indexed variant name
             return `Variant${index}`;
+        }
+    }
+
+    /**
+     * Maps a primitive type to a meaningful variant name.
+     */
+    private getPrimitiveVariantName(primitiveType: string): string | undefined {
+        switch (primitiveType) {
+            case "STRING":
+                return "String";
+            case "BOOLEAN":
+                return "Boolean";
+            case "INTEGER":
+                return "Integer";
+            case "LONG":
+                return "Long";
+            case "DOUBLE":
+                return "Double";
+            case "FLOAT":
+                return "Float";
+            case "DATE_TIME":
+                return "DateTime";
+            case "DATE":
+                return "Date";
+            case "UUID":
+                return "Uuid";
+            case "BASE_64":
+                return "Base64";
+            case "BIG_INTEGER":
+                return "BigInteger";
+            case "UINT":
+                return "Uint";
+            case "UINT_64":
+                return "Uint64";
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Derives a meaningful variant name from any type reference.
+     * Returns undefined if no meaningful name can be determined.
+     */
+    private getInnerTypeName(typeRef: FernIr.TypeReference): string | undefined {
+        if (typeRef.type === "named") {
+            return typeRef.name.pascalCase.unsafeName;
+        } else if (typeRef.type === "primitive") {
+            return this.getPrimitiveVariantName(typeRef.primitive.v1);
+        }
+        return undefined;
+    }
+
+    /**
+     * Generates a variant name for container types, using inner type information
+     * to produce meaningful names (e.g. "DoubleList" instead of "List1").
+     */
+    private getContainerVariantName(container: FernIr.ContainerType, index: number): string {
+        switch (container.type) {
+            case "list": {
+                const innerName = this.getInnerTypeName(container.list);
+                return innerName ? `${innerName}List` : `List${index}`;
+            }
+            case "set": {
+                const innerName = this.getInnerTypeName(container.set);
+                return innerName ? `${innerName}Set` : `Set${index}`;
+            }
+            case "map": {
+                const keyName = this.getInnerTypeName(container.keyType);
+                const valueName = this.getInnerTypeName(container.valueType);
+                if (keyName && valueName) {
+                    return `${keyName}To${valueName}Map`;
+                }
+                return `Map${index}`;
+            }
+            case "optional": {
+                const innerName = this.getInnerTypeName(container.optional);
+                return innerName ? `Optional${innerName}` : `Optional${index}`;
+            }
+            case "nullable": {
+                const innerName = this.getInnerTypeName(container.nullable);
+                return innerName ? `Nullable${innerName}` : `Nullable${index}`;
+            }
+            case "literal":
+                return `Literal${index}`;
+            default:
+                return `Container${index}`;
         }
     }
 
