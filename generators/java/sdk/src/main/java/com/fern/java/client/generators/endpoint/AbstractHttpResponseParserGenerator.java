@@ -1112,11 +1112,9 @@ public abstract class AbstractHttpResponseParserGenerator {
         UnionTypeDeclaration unionDecl = maybeUnion.get();
         List<SingleUnionType> variants = unionDecl.getTypes();
 
-        // Generate a lambda: (eventType, data) -> { ... }
-        CodeBlock.Builder builder = CodeBlock.builder();
-        builder.add("($L, $L) -> {\n", "eventType", "data");
-        builder.indent();
-        builder.beginControlFlow("try");
+        // Build the lambda body as a separate CodeBlock
+        CodeBlock.Builder bodyBuilder = CodeBlock.builder();
+        bodyBuilder.beginControlFlow("try");
 
         boolean first = true;
         for (SingleUnionType variant : variants) {
@@ -1162,27 +1160,26 @@ public abstract class AbstractHttpResponseParserGenerator {
                     });
 
             if (first) {
-                builder.beginControlFlow("if ($S.equals($L))", wireValue, "eventType");
+                bodyBuilder.beginControlFlow("if ($S.equals(eventType))", wireValue);
                 first = false;
             } else {
-                builder.nextControlFlow("else if ($S.equals($L))", wireValue, "eventType");
+                bodyBuilder.nextControlFlow("else if ($S.equals(eventType))", wireValue);
             }
 
             if (variantTypeName != null) {
                 // Deserialize data into the variant's inner type, then wrap via factory method
-                builder.addStatement(
-                        "$T variantValue = $T.JSON_MAPPER.readValue($L, $T.class)",
+                bodyBuilder.addStatement(
+                        "$T variantValue = $T.JSON_MAPPER.readValue(data, $T.class)",
                         variantTypeName,
                         clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                        "data",
                         variantTypeName);
-                builder.addStatement(
+                bodyBuilder.addStatement(
                         "return $T.$L(variantValue)",
                         bodyTypeName,
                         factoryMethodName);
             } else {
                 // noProperties variant - call factory method with no args
-                builder.addStatement(
+                bodyBuilder.addStatement(
                         "return $T.$L()",
                         bodyTypeName,
                         factoryMethodName);
@@ -1190,27 +1187,30 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
 
         if (!first) {
-            builder.endControlFlow();
+            bodyBuilder.endControlFlow();
         }
 
         // Default: try to parse as the union type directly for unknown event types
-        builder.addStatement(
-                "return $T.JSON_MAPPER.readValue($L, $T.class)",
+        bodyBuilder.addStatement(
+                "return $T.JSON_MAPPER.readValue(data, $T.class)",
                 clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                "data",
                 bodyTypeName);
 
-        builder.endControlFlow();
-        builder.beginControlFlow("catch ($T e)", Exception.class);
-        builder.addStatement(
-                "throw new $T(\"Failed to parse SSE event: \" + $L, e)",
-                RuntimeException.class,
-                "eventType");
-        builder.endControlFlow();
-        builder.unindent();
-        builder.add("}");
+        bodyBuilder.nextControlFlow("catch ($T e)", Exception.class);
+        bodyBuilder.addStatement(
+                "throw new $T(\"Failed to parse SSE event: \" + eventType, e)",
+                RuntimeException.class);
+        bodyBuilder.endControlFlow();
 
-        return builder.build();
+        // Wrap the body in a lambda expression
+        CodeBlock.Builder lambdaBuilder = CodeBlock.builder();
+        lambdaBuilder.add("(eventType, data) -> {\n");
+        lambdaBuilder.indent();
+        lambdaBuilder.add(bodyBuilder.build());
+        lambdaBuilder.unindent();
+        lambdaBuilder.add("}");
+
+        return lambdaBuilder.build();
     }
 
     private SnippetAndResultType getNestedPropertySnippet(
