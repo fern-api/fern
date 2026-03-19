@@ -4,11 +4,14 @@
 //!
 //! - **Service**
 
-use crate::{ApiError, ClientConfig};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub mod service;
 pub struct PackageYmlClient {
     pub config: ClientConfig,
+    pub http_client: HttpClient,
     pub service: ServiceClient,
 }
 
@@ -16,8 +19,26 @@ impl PackageYmlClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            http_client: HttpClient::new(config.clone())?,
             service: ServiceClient::new(config.clone())?,
         })
+    }
+
+    pub async fn echo(
+        &self,
+        id: &String,
+        request: &EchoRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("/{}/", id),
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
     }
 }
 

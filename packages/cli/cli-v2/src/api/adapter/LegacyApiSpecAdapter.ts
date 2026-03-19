@@ -1,4 +1,5 @@
 import type {
+    OpenAPISettings,
     OpenAPISpec,
     Spec,
     OpenRPCSpec as V1OpenRPCSpec,
@@ -7,7 +8,6 @@ import type {
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
-import type { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
@@ -110,12 +110,12 @@ export class LegacyApiSpecAdapter {
         };
     }
 
-    private adaptOpenApiSettings(settings: OpenApiSpec["settings"]): ParseOpenAPIOptions | undefined {
+    private adaptOpenApiSettings(settings: OpenApiSpec["settings"]): OpenAPISettings | undefined {
         if (settings == null) {
             return undefined;
         }
 
-        const result: Partial<ParseOpenAPIOptions> = {
+        const result: Partial<OpenAPISettings> = {
             // Base API settings
             respectNullableSchemas: settings.respectNullableSchemas,
             wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
@@ -152,15 +152,15 @@ export class LegacyApiSpecAdapter {
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
-        return hasSettings ? (result as ParseOpenAPIOptions) : undefined;
+        return hasSettings ? (result as OpenAPISettings) : undefined;
     }
 
-    private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): ParseOpenAPIOptions | undefined {
+    private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): OpenAPISettings | undefined {
         if (settings == null) {
             return undefined;
         }
 
-        const result: Partial<ParseOpenAPIOptions> = {
+        const result: Partial<OpenAPISettings> = {
             // Base API settings (shared)
             respectNullableSchemas: settings.respectNullableSchemas,
             wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
@@ -181,7 +181,7 @@ export class LegacyApiSpecAdapter {
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
-        return hasSettings ? (result as ParseOpenAPIOptions) : undefined;
+        return hasSettings ? (result as OpenAPISettings) : undefined;
     }
 
     private adaptRemoveDiscriminantsFromSchemas(

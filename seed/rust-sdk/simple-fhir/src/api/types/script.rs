@@ -5,5 +5,6 @@ pub struct Script {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
     pub resource_type: String,
+    #[serde(default)]
     pub name: String,
 }
