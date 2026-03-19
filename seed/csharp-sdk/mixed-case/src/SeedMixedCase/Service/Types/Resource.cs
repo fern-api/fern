@@ -231,6 +231,27 @@ public record Resource
             }
             json.WriteTo(writer, options);
         }
+
+        public override Resource ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Resource(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Resource value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.ResourceType);
+        }
     }
 
     /// <summary>
