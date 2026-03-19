@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
@@ -21,20 +22,24 @@ import {
 
 let fernGlobalInstallPromise: Promise<void> | undefined;
 
-async function isFernOnPath(): Promise<boolean> {
+async function isFernOnPath(logger: Logger): Promise<boolean> {
     try {
         await runExeca(undefined, "fern", ["--version"], {
             stdout: "ignore",
             stderr: "ignore"
         });
         return true;
-    } catch {
+    } catch (error) {
+        const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
+        if (!isNotFound) {
+            logger.debug(`Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`);
+        }
         return false;
     }
 }
 
-async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath): Promise<void> {
-    if (await isFernOnPath()) {
+async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath, logger: Logger): Promise<void> {
+    if (await isFernOnPath(logger)) {
         return;
     }
     if (fernGlobalInstallPromise) {
@@ -246,7 +251,7 @@ export class ProtobufIRGenerator {
             stderr: "pipe"
         });
 
-        await ensureFernGloballyInstalled(protobufGeneratorConfigPath);
+        await ensureFernGloballyInstalled(protobufGeneratorConfigPath, this.context.logger);
 
         // Write buf config
         await writeFile(
