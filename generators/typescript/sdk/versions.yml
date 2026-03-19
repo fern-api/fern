@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Use `discriminatorContext` from the IR at code-generation time for SSE event-level
+        discrimination instead of injecting the discriminator into the data payload at runtime.
+        The `Stream` class now passes the SSE `event:` field to the parse callback, and the
+        generated parse function switches on event type to select the correct variant deserializer.
+        This fixes edge cases where the data payload already contains a field with the same name
+        as the discriminator.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 3.59.3
   changelogEntry:
     - summary: |

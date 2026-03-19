@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Use `discriminatorContext` from the IR at code-generation time for SSE event-level
+        discrimination instead of using runtime reflection to determine the discrimination strategy.
+        When the SSE payload is a protocol-discriminated union, the generated code now accepts a
+        `BiFunction<String, String, T>` event parser that switches on event type to deserialize
+        into the correct variant type using Jackson. This removes the need for reflection-based
+        methods and fixes edge cases where the data payload contains a field with the same name
+        as the discriminator.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 3.44.4
   changelogEntry:
     - summary: |
