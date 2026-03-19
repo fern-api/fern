@@ -93,6 +93,29 @@ public readonly record struct ErrorCode : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override ErrorCode ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new ErrorCode(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ErrorCode value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>
