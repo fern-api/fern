@@ -3,7 +3,6 @@
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import * as environments from "../../../../../../environments.js";
 import { EmptyRealtimeSocket } from "./Socket.js";
 
 export declare namespace EmptyRealtimeClient {
@@ -30,7 +29,7 @@ export declare namespace EmptyRealtimeClient {
 export class EmptyRealtimeClient {
     protected readonly _options: NormalizedClientOptions<EmptyRealtimeClient.Options>;
 
-    constructor(options: EmptyRealtimeClient.Options = {}) {
+    constructor(options: EmptyRealtimeClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -41,8 +40,7 @@ export class EmptyRealtimeClient {
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedWebsocketEnvironment.Production,
+                    (await core.Supplier.get(this._options.environment)),
                 "/empty/realtime/",
             ),
             protocols: protocols ?? [],

@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.5
+  changelogEntry:
+    - summary: |
+        Always prefer the auto-downloaded fern fork of `protoc-gen-openapi` over
+        an arbitrary `protoc-gen-openapi` binary found on PATH. Users with the
+        original Google/gnostic `protoc-gen-openapi` installed would encounter
+        `no such flag -flatten_oneofs` errors because that version does not
+        support fern-specific plugin options. The CLI now downloads the fern fork
+        first and only falls back to PATH if the download fails. Set
+        `FERN_USE_LOCAL_PROTOC_GEN_OPENAPI=true` to force the PATH version
+        (e.g. for testing a custom build).
+      type: fix
+    - summary: |
+        Add hidden `install-dependencies` CLI command that pre-downloads `buf`
+        and `protoc-gen-openapi` binaries into the Fern cache. CI workflows now
+        use this command instead of `bufbuild/buf-setup-action` and
+        `go install protoc-gen-openapi`, removing the Go toolchain dependency
+        from CI.
+      type: chore
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.4
   changelogEntry:
     - summary: |
@@ -6,7 +28,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 4.37.3
   changelogEntry:
     - summary: |
