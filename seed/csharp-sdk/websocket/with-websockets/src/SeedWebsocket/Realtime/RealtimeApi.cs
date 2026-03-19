@@ -5,7 +5,11 @@ using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
-public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+public partial class RealtimeApi
+    : IRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
     private readonly RealtimeApi.Options _options;
 
@@ -19,54 +23,6 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         add => _client.PropertyChanged += value;
         remove => _client.PropertyChanged -= value;
     }
-
-    /// <summary>
-    /// Event handler for ReceiveEvent.
-    /// Use ReceiveEvent.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<ReceiveEvent> ReceiveEvent = new();
-
-    /// <summary>
-    /// Event handler for ReceiveSnakeCase.
-    /// Use ReceiveSnakeCase.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<ReceiveSnakeCase> ReceiveSnakeCase = new();
-
-    /// <summary>
-    /// Event handler for ReceiveEvent2.
-    /// Use ReceiveEvent2.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<ReceiveEvent2> ReceiveEvent2 = new();
-
-    /// <summary>
-    /// Event handler for ReceiveEvent3.
-    /// Use ReceiveEvent3.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
-
-    /// <summary>
-    /// Event handler for TranscriptEvent.
-    /// Use TranscriptEvent.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<TranscriptEvent> TranscriptEvent = new();
-
-    /// <summary>
-    /// Event handler for FlushedEvent.
-    /// Use FlushedEvent.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<FlushedEvent> FlushedEvent = new();
-
-    /// <summary>
-    /// Event handler for ErrorEvent.
-    /// Use ErrorEvent.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<ErrorEvent> ErrorEvent = new();
-
-    /// <summary>
-    /// Event handler for unknown/unrecognized message types.
-    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
-    /// </summary>
-    public readonly Event<JsonElement> UnknownMessage = new();
 
     /// <summary>
     /// Constructor with options
@@ -105,6 +61,54 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Event handler for ReceiveEvent.
+    /// Use ReceiveEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<ReceiveEvent> ReceiveEvent => new();
+
+    /// <summary>
+    /// Event handler for ReceiveSnakeCase.
+    /// Use ReceiveSnakeCase.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<ReceiveSnakeCase> ReceiveSnakeCase => new();
+
+    /// <summary>
+    /// Event handler for ReceiveEvent2.
+    /// Use ReceiveEvent2.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<ReceiveEvent2> ReceiveEvent2 => new();
+
+    /// <summary>
+    /// Event handler for ReceiveEvent3.
+    /// Use ReceiveEvent3.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<ReceiveEvent3> ReceiveEvent3 => new();
+
+    /// <summary>
+    /// Event handler for TranscriptEvent.
+    /// Use TranscriptEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<TranscriptEvent> TranscriptEvent => new();
+
+    /// <summary>
+    /// Event handler for FlushedEvent.
+    /// Use FlushedEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<FlushedEvent> FlushedEvent => new();
+
+    /// <summary>
+    /// Event handler for ErrorEvent.
+    /// Use ErrorEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public Event<ErrorEvent> ErrorEvent => new();
+
+    /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public Event<JsonElement> UnknownMessage => new();
 
     /// <summary>
     /// Disposes of event subscriptions

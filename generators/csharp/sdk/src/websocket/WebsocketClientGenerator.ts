@@ -131,7 +131,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         const createMethodName = `Create${websocketApiName}`;
 
         const websocketInterfaceRef = context.csharp.classReference({
-            origin: websocketChannel,
+            origin: context.model.explicit(websocketChannel, "Interface"),
             name: interfaceName,
             namespace
         });
@@ -190,7 +190,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         // satisfies the interface contract (C# requires exact return type match
         // for interface implementation in versions before C# 9).
         const websocketInterfaceRef = context.csharp.classReference({
-            origin: websocketChannel,
+            origin: context.model.explicit(websocketChannel, "Interface"),
             name: interfaceName,
             namespace
         });
@@ -942,7 +942,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         for (const each of this.events) {
             cls.addField({
                 origin: cls.explicit(`${each.name}`),
-                readonly: true,
+                get: true,
                 initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
                 access: ast.Access.Public,
                 doc: this.csharp.xmlDocBlockOf({
@@ -954,7 +954,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         cls.addField({
             origin: cls.explicit("UnknownMessage"),
-            readonly: true,
+            get: true,
             initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
             access: ast.Access.Public,
             doc: this.csharp.xmlDocBlockOf({
@@ -1265,7 +1265,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      */
     private createWebsocketClass() {
         const interfaceRef = this.csharp.classReference({
-            origin: this.websocketChannel,
+            origin: this.model.explicit(this.websocketChannel, "Interface"),
             name: WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel),
             namespace: this.classReference.namespace
         });

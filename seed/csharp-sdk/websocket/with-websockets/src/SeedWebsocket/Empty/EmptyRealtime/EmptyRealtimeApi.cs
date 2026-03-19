@@ -4,7 +4,11 @@ using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket.Empty;
 
-public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+public partial class EmptyRealtimeApi
+    : IEmptyRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
     private readonly EmptyRealtimeApi.Options _options;
 
@@ -18,12 +22,6 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         add => _client.PropertyChanged += value;
         remove => _client.PropertyChanged -= value;
     }
-
-    /// <summary>
-    /// Event handler for unknown/unrecognized message types.
-    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
-    /// </summary>
-    public readonly Event<JsonElement> UnknownMessage = new();
 
     /// <summary>
     /// Default constructor
@@ -60,6 +58,12 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public Event<JsonElement> UnknownMessage => new();
 
     /// <summary>
     /// Disposes of event subscriptions
