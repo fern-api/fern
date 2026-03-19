@@ -27,6 +27,18 @@ describe("extractLanguageFromGeneratorName", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-python-sdk")).toBe("python");
     });
 
+    it("extracts 'python' from 'fernapi/fern-pydantic-model'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-pydantic-model")).toBe("python");
+    });
+
+    it("extracts 'python' from 'fernapi/fern-fastapi-server'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-fastapi-server")).toBe("python");
+    });
+
+    it("extracts 'python' from 'fernapi/fern-fastapi'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-fastapi")).toBe("python");
+    });
+
     it("extracts 'java' from 'fernapi/fern-java-sdk'", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-java-sdk")).toBe("java");
     });

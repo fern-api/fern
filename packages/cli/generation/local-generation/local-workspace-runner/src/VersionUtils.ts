@@ -9,7 +9,7 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
     if (name.includes("typescript") || name.includes("ts-sdk") || name.includes("node-sdk")) {
         return "typescript";
     }
-    if (name.includes("python")) {
+    if (name.includes("python") || name.includes("pydantic") || name.includes("fastapi")) {
         return "python";
     }
     if (name.includes("java") && !name.includes("javascript")) {
