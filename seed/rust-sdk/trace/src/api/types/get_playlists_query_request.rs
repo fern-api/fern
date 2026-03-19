@@ -9,13 +9,17 @@ pub struct GetPlaylistsQueryRequest {
     pub limit: Option<i64>,
     /// i'm another field
     #[serde(rename = "otherField")]
+    #[serde(default)]
     pub other_field: String,
     /// I'm a multiline
     /// description
     #[serde(rename = "multiLineDocs")]
+    #[serde(default)]
     pub multi_line_docs: String,
     #[serde(rename = "optionalMultipleField")]
+    #[serde(default)]
     pub optional_multiple_field: Vec<Option<String>>,
     #[serde(rename = "multipleField")]
+    #[serde(default)]
     pub multiple_field: Vec<String>,
 }

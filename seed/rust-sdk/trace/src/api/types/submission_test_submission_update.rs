@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestSubmissionUpdate {
     #[serde(rename = "updateTime")]
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub update_time: DateTime<FixedOffset>,
     #[serde(rename = "updateInfo")]

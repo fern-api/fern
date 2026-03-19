@@ -1,11 +1,14 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct Page {
     /// The current page
+    #[serde(default)]
     pub page: i64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next: Option<NextPage>,
+    #[serde(default)]
     pub per_page: i64,
+    #[serde(default)]
     pub total_page: i64,
 }

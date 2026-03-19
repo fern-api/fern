@@ -4,15 +4,11 @@ use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum RealtimeServerMessage {
-    #[serde(rename = "receive")]
     ReceiveEvent(ReceiveEvent),
-    #[serde(rename = "receive_snake_case")]
     ReceiveSnakeCase(ReceiveSnakeCase),
-    #[serde(rename = "receive2")]
     ReceiveEvent2(ReceiveEvent2),
-    #[serde(rename = "receive3")]
     ReceiveEvent3(ReceiveEvent3),
 }
 pub struct RealtimeClient {
