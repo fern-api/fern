@@ -51,7 +51,6 @@ public static class AdditionalPropertiesComparerExtensions
         return constraint;
     }
 
-
     /// <summary>
     /// Modifies the EqualConstraint to handle Dictionary&lt;string, object?&gt; values by comparing
     /// their serialized JSON representations. This handles the type mismatch between native C# types

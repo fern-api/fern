@@ -1,4 +1,5 @@
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -23,6 +24,27 @@ impl ServiceClient {
                 "upload-content",
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn upload_with_query_params(
+        &self,
+        model: &String,
+        language: &Option<String>,
+        request: &Vec<u8>,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "upload-content-with-query-params",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                QueryBuilder::new()
+                    .string("model", model.clone())
+                    .string("language", language.clone())
+                    .build(),
                 options,
             )
             .await
