@@ -126,7 +126,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
         {
             await ExceptionOccurred
