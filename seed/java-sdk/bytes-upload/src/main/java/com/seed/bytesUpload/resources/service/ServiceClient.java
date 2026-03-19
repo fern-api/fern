@@ -5,6 +5,7 @@ package com.seed.bytesUpload.resources.service;
 
 import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.RequestOptions;
+import com.seed.bytesUpload.resources.service.requests.UploadWithQueryParamsRequest;
 import java.io.InputStream;
 
 public class ServiceClient {
@@ -38,5 +39,13 @@ public class ServiceClient {
 
     public void upload(byte[] request, RequestOptions requestOptions) {
         this.rawClient.upload(request, requestOptions).body();
+    }
+
+    public void uploadWithQueryParams(UploadWithQueryParamsRequest request) {
+        this.rawClient.uploadWithQueryParams(request).body();
+    }
+
+    public void uploadWithQueryParams(UploadWithQueryParamsRequest request, RequestOptions requestOptions) {
+        this.rawClient.uploadWithQueryParams(request, requestOptions).body();
     }
 }

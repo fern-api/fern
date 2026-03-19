@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.7
+  changelogEntry:
+    - summary: |
+        Fix `getLatestRelease` fetching all GitHub releases when falling back
+        from a semver prerelease tag. The fallback now uses a single
+        `listReleases` API call (up to 100 results) instead of paginating
+        through every release in the repository.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.6
   changelogEntry:
     - summary: |

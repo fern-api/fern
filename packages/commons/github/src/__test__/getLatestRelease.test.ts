@@ -13,9 +13,19 @@ vi.mock("octokit", () => {
                     listReleases: mockListReleases
                 }
             };
-            paginate = async (method: (p: unknown) => Promise<{ data: unknown[] }>, params: unknown) => {
-                const response = await method(params);
-                return response.data;
+            /**
+             * Simulates octokit.paginate(endpoint, params, mapFn) by calling the
+             * map function with the mock listReleases response and a done callback.
+             */
+            paginate = async (
+                _endpoint: unknown,
+                _params: unknown,
+                mapFn: (response: unknown, done: () => void) => string[]
+            ) => {
+                const response = await mockListReleases(_params);
+                // no-op: the test doesn't need to track whether done() was called
+                const done = () => undefined;
+                return mapFn(response, done);
             };
         }
     };
@@ -86,6 +96,21 @@ describe("getLatestRelease", () => {
         const result = await getLatestRelease("owner/repo");
         expect(result).toEqual("v0.0.33450");
         expect(mockListReleases).toHaveBeenCalledWith({ owner: "owner", repo: "repo", per_page: 100 });
+    });
+
+    it("returns undefined when paginate exhausts all pages without finding stable release", async () => {
+        mockGetLatestRelease.mockResolvedValueOnce({
+            data: { tag_name: "0.0.0-dev-aaa" }
+        });
+        mockListReleases.mockResolvedValueOnce({
+            data: [
+                { tag_name: "0.0.0-dev-aaa", draft: false, prerelease: false },
+                { tag_name: "0.0.0-dev-bbb", draft: false, prerelease: false }
+            ]
+        });
+
+        const result = await getLatestRelease("owner/repo");
+        expect(result).toBeUndefined();
     });
 
     it("skips GitHub drafts and prereleases when falling back", async () => {
