@@ -256,6 +256,7 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
+    const apiNameToIdMap: Record<string, string> = {};
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -277,7 +278,13 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
+        registerApi: async (opts) => {
+            const id = apiCollector.addReferencedAPI(opts);
+            if (opts.apiName != null) {
+                apiNameToIdMap[opts.apiName] = id;
+            }
+            return id;
+        },
         targetAudiences: undefined
     });
 
@@ -313,7 +320,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
-        apiNameToId: {},
+        apiNameToId: apiNameToIdMap,
         id: undefined
     };
 
