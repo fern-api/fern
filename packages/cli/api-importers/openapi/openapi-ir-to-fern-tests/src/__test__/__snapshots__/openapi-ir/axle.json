@@ -125,9 +125,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -148,6 +146,7 @@
                   },
                   "value": {
                     "generatedName": "StartIgnitionRequestMetadataValue",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "StartIgnitionRequestMetadata",
@@ -205,9 +204,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -485,9 +482,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -534,6 +529,7 @@
                       "description": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
                       "value": {
                         "generatedName": "ExchangeTokenResponseDataPolicies",
+                        "groupName": [],
                         "type": "unknown"
                       },
                       "generatedName": "ExchangeTokenResponseDataPolicies",
@@ -790,9 +786,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -811,9 +805,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1086,9 +1078,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -1107,9 +1097,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1615,9 +1603,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -1636,9 +1622,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1886,9 +1870,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -2365,9 +2347,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -2697,9 +2677,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -2974,9 +2952,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3346,9 +3322,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3507,9 +3481,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},

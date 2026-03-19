@@ -13,6 +13,7 @@ import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
 import com.seed.serverSentEvents.core.Stream;
+import com.seed.serverSentEvents.resources.completions.errors.BadRequestError;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
@@ -85,6 +86,15 @@ public class AsyncRawCompletionsClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    try {
+                        if (response.code() == 400) {
+                            future.completeExceptionally(new BadRequestError(
+                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                            return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
@@ -151,6 +161,15 @@ public class AsyncRawCompletionsClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    try {
+                        if (response.code() == 400) {
+                            future.completeExceptionally(new BadRequestError(
+                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                            return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));

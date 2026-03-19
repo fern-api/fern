@@ -1,11 +1,8 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import type { Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import type { RelativeFilePath } from "@fern-api/path-utils";
 
 import { convertSdkGroupNameToFile } from "./convertSdkGroupName.js";
-
-const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
     switch (schema.type) {
@@ -18,6 +15,7 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
         case "literal":
         case "optional":
         case "nullable":
+        case "unknown":
             return getDeclarationFileFromGroupName({
                 namespace: schema.namespace,
                 groupName: schema.groupName
@@ -27,8 +25,6 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
                 namespace: schema.value.namespace,
                 groupName: schema.value.groupName
             });
-        case "unknown":
-            return PACKAGE_MARKER_RELATIVE_FILEPATH;
         default:
             assertNever(schema);
     }

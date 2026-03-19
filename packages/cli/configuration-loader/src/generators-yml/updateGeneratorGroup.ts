@@ -13,6 +13,13 @@ export async function updateGeneratorGroup({
     update: (draft: generatorsYml.GeneratorGroupSchema, groupName: string) => Promise<void>;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     if (groupName == null) {
+        const availableGroups = Object.keys(generatorsConfiguration.groups ?? {});
+        if (availableGroups.length > 0) {
+            const message =
+                "No group specified. Use the --group option:\n" +
+                availableGroups.map((name) => ` › ${name}`).join("\n");
+            return context.failAndThrow(message);
+        }
         return context.failAndThrow("No group specified.");
     }
     const groups = (generatorsConfiguration.groups ??= {});

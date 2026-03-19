@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes abstract error class 1`] = `
+"export abstract class BaseApiError extends Error {
+    constructor() {
+        super("error");
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes basic error class extending Error 1`] = `
+"export class MyError extends Error {
+    constructor() {
+        super("error");
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes error class with class properties 1`] = `
+"export class ApiError extends Error {
+    readonly statusCode: number;
+    body?: unknown;
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes error class with constructor parameters 1`] = `
+"export class BadRequestError extends Error {
+    constructor(message: string, statusCode?: number) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes error class with constructor statements 1`] = `
+"export class CustomError extends Error {
+    constructor(statusCode: number) {
+        super("custom error");
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+        this.statusCode = statusCode;
+    }
+}
+"
+`;
+
+exports[`AbstractErrorClassGenerator > writeToSourceFile > writes error class with custom base class 1`] = `
+"export class SpecificError extends BaseApiError {
+    constructor() {
+        super("error");
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;

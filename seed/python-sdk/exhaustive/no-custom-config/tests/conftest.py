@@ -15,6 +15,7 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
+_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
 _WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
 _PROJECT_NAME: str = "seed-exhaustive"
 
@@ -41,8 +42,17 @@ def _get_wiremock_port() -> str:
 
 def _start_wiremock() -> None:
     """Starts the WireMock container using docker-compose."""
-    global _STARTED, _WIREMOCK_URL
+    global _STARTED, _EXTERNAL, _WIREMOCK_URL
     if _STARTED:
+        return
+
+    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
+    existing_url = os.environ.get("WIREMOCK_URL")
+    if existing_url:
+        _WIREMOCK_URL = existing_url
+        _EXTERNAL = True
+        _STARTED = True
+        print(f"\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
         return
 
     print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
@@ -65,6 +75,10 @@ def _start_wiremock() -> None:
 
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
+    if _EXTERNAL:
+        # Container is managed externally; nothing to tear down.
+        return
+
     print("\nStopping WireMock container...")
     subprocess.run(
         ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],

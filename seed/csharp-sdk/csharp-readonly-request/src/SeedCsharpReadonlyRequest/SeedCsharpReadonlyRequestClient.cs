@@ -56,7 +56,9 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<CreateVendorResponse>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCsharpReadonlyRequestApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

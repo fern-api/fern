@@ -1,19 +1,431 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.34.0
+  changelogEntry:
+    - summary: |
+        Add `unified-client-options` configuration flag. When enabled, all auth parameters,
+        global headers, and `BaseUrl` are consolidated into `ClientOptions` so the client
+        constructor takes a single argument with no positional parameters:
+
+        ```yaml
+        # generators.yml
+        groups:
+          dotnet-sdk:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                config:
+                  unified-client-options: true
+        ```
+
+        **Before** (default):
+        ```csharp
+        var client = new MyClient(
+            "my-api-key",
+            clientOptions: new ClientOptions { BaseUrl = "..." }
+        );
+        ```
+
+        **After** (with `unified-client-options: true`):
+        ```csharp
+        var client = new MyClient(
+            new ClientOptions
+            {
+                ApiKey = "my-api-key",
+                BaseUrl = "https://api.example.com",
+            }
+        );
+        ```
+
+        Supported auth schemes: bearer token, basic auth (username/password), header auth,
+        OAuth client credentials (clientId/clientSecret + custom params), and inferred auth.
+        Global headers (non-literal) are also included.
+
+        Properties on `ClientOptions` use the appropriate C# semantics based on the
+        parameter's characteristics:
+
+        - **Has environment variable fallback** — `public string? ApiKey { get; set; }`.
+          Nullable and mutable so the constructor can apply the fallback via
+          `clientOptions.ApiKey ??= GetFromEnvironmentOrThrow(...)`.
+        - **Optional (no environment variable)** — `public string? ApiKey { get; init; }`.
+          Nullable, immutable after construction.
+        - **Required (no environment variable, not optional)** — `public required string ApiKey { get; init; }`.
+          Non-nullable, enforced at the call site by the compiler. `BaseUrl` is also
+          `required` when no default environment is configured, replacing the previous
+          behavior of silently defaulting to `""`.
+
+        When any `ClientOptions` field is `required`, the constructor parameter becomes
+        non-nullable (`ClientOptions clientOptions` instead of `ClientOptions? clientOptions = null`),
+        and `Clone()` uses an internal copy constructor annotated with `[SetsRequiredMembers]`.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.33.1
+  changelogEntry:
+    - summary: |
+        Fix README generation to use the `package-name` field from `generator.yml` for the
+        NuGet package name in installation instructions and shields. Previously, the README
+        always used the namespace (or `package-id` custom config) instead of the configured
+        `package-name`, which is the actual NuGet package identifier.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.33.0
+  changelogEntry:
+    - summary: |
+        WebSocket factory methods now resolve the base URL from the main client's
+        multi-URL environment when the channel specifies a `baseUrl`. This allows
+        WebSocket clients to use environments defined on the root client (e.g.,
+        `Environment.Wss`) instead of requiring separate per-WebSocket environment
+        classes.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+- version: 2.32.2
+  changelogEntry:
+    - summary: |
+        Fix CS1501 build error for literal struct `GetHashCode` on `netstandard2.0` and
+        `net462` targets. `string.GetHashCode(StringComparison)` is only available in
+        .NET Core 2.1+ / .NET Standard 2.1+. The generated code now uses
+        `StringComparer.Ordinal.GetHashCode(Value)` which is available on all frameworks.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.32.1
+  changelogEntry:
+    - summary: |
+        Fix referenced request bodies with `application/x-www-form-urlencoded` content type
+        to generate `FormRequest` instead of `JsonRequest`. Previously, endpoints using a
+        `$ref` schema with form-urlencoded content type would incorrectly send JSON-serialized
+        bodies, causing auth token requests (e.g., OAuth) to fail.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.32.0
+  changelogEntry:
+    - summary: |
+        Add support for the `google.protobuf.Empty` well-known type for gRPC endpoints.
+      type: feat
+    - summary: |
+        Add more permissive handling for optional `google.protobuf.Timestamp` response properties.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+- version: 2.31.1
+  changelogEntry:
+    - summary: |
+        Fix CS0426 compilation error when the client class name matches a namespace
+        root segment (e.g., class `Candid` in namespace `Candid.Net`). The C# compiler
+        previously resolved `Candid.Net` as looking for a `Net` member on the `Candid`
+        type instead of the `Candid.Net` namespace. The generator now uses `global::`
+        prefixes in both inline references and `using` directives to disambiguate.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 2.31.0
+  changelogEntry:
+    - summary: |
+        Add support for `base64` primitive type in the IR to represent Protobuf byte[].
+      type: feat
+    - summary: |
+        Fix the `.ToProto` and `.FromProto` mapper methods to support for enums nested within
+        message descriptors.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.30.3
+  changelogEntry:
+    - summary: |
+        Add better support for the `google.rpc.Status` type, and stop
+        generating redundant wrapper types for `google.api` and
+        `google.rpc` types.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.30.2
+  changelogEntry:
+    - summary: |
+        Fix gRPC code generation to support enums with numeric identifiers.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.30.1
+  changelogEntry:
+    - summary: |
+        Fix gRPC code generation to support enums with numeric identifiers.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.30.0
+  changelogEntry:
+    - summary: |
+        Add `sln-format` configuration option. Set to `"sln"` to generate both a legacy
+        `.sln` solution file and the modern `.slnx` file. The default value `"slnx"` generates
+        only the `.slnx` file. This is useful for teams that need compatibility with older
+        .NET tooling or CI systems that do not yet support the `.slnx` format.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            config:
+              sln-format: sln
+        ```
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.29.0
+  changelogEntry:
+    - summary: |
+        Rework enum JSON serialization to eliminate reflection. Each enum now gets
+        a generated serializer with static dictionary lookups instead of the generic
+        `EnumSerializer<T>` / `StringEnumSerializer<T>` that used `Enum.GetValues`,
+        `GetField`, `GetCustomAttributes`, and `Activator.CreateInstance` at runtime.
+        Serializer initialization is ~1,000x faster (18 ns vs 18 us) and allocates
+        160x less memory; steady-state throughput is unchanged. The generated code is
+        also NativeAOT and IL-trimming compatible.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.28.0
+  changelogEntry:
+    - summary: |
+        Generate a separate WireMock server for each test fixture instead of sharing
+        a single global server across all mock server tests. Each test class now starts
+        and stops its own `WireMockServer` in `[OneTimeSetUp]`/`[OneTimeTearDown]`,
+        and test fixtures are annotated with `[Parallelizable(ParallelScope.Self)]`
+        so NUnit can run them in parallel.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+- version: 2.27.1
+  changelogEntry:
+    - summary: |
+        Fix retry test assertions to match the SDK's indented JSON serialization.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.27.0
+  changelogEntry:
+    - summary: |
+        Improve gRPC code generation with the following:
+         1. Updated enum representation and .ToProto + .FromProto mappers.
+         2. Fix an issue with rendering the gRPC client reference.
+         3. Update protoc-gen-openapi to unwrap synthetic oneof types (re: https://github.com/fern-api/protoc-gen-openapi/releases/tag/v0.1.7)
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+- version: 2.26.0
+  changelogEntry:
+    - summary: |
+        Add `omit-fern-headers` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 2.25.0
+  changelogEntry:
+    - summary: |
+        Add `generate-literals` configuration option. When enabled, string and boolean
+        literal properties emit a self-contained `readonly struct` with a built-in
+        `JsonConverter` instead of using a string property with an `Assert` setter.
+        The struct type validates the literal value at the JSON deserialization boundary
+        and supports implicit conversion to `string` or `bool`.
+
+        The previous `experimental-readonly-constants` option is now deprecated and
+        will log a warning when used. Use `generate-literals` instead.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 2.24.5
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 2.24.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for undiscriminated unions when `use-undiscriminated-unions: true`
+        is set. Previously, snippets always emitted `OneOf<A, B, C>` regardless of the config setting.
+        Now, when the setting is enabled, snippets use the SDK's generated union wrapper type (e.g.
+        `MixedType`) instead, matching the actual SDK types and producing compilable code.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 2.24.3
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 2.24.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 2.24.1
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of a generic "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 2.24.0
   changelogEntry:
     - summary: |
-        Fix WebSocket binary message sending. Binary messages (e.g. audio bytes) are now sent as raw bytes instead of being JSON-serialized, which caused servers to reject them with CONFIG_DENIED.
-      type: fix
-    - summary: |
-        Fix WebSocket incoming message deserialization. TryDeserialize(JsonDocument) now passes JsonSerializerOptions so the custom type info resolver is active, enabling the generated literal property setters to correctly validate const discriminator fields (e.g. `type: "transcript"` vs `type: "flushed"`) during deserialization.
-      type: fix
-    - summary: |
-        Set the default environment on the WebSocket Options class when environments are defined, so the Environment property is pre-populated with the configured default. Previously the property had no default, which could lead to misconfiguration.
-      type: fix
-    - summary: |
-        Add forward-compatible UnknownMessage event to WebSocket clients. When the server sends an event type not recognized by the SDK, it is now dispatched to the UnknownMessage event handler (as a JsonElement) instead of raising an exception. This allows SDKs to gracefully handle new server event types without requiring regeneration.
+        Upgrade IR SDK from v62 to v65. Adds support for `dateTimeRfc2822` primitive,
+        `validation` on `LongType`, and `uri`/`path` pagination types (currently skipped
+        with a warning as they are not yet fully supported in C#).
       type: feat
-  createdAt: "2026-03-02"
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 2.23.12
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.11
+  changelogEntry:
+    - summary: |
+        Remove unnecessary NuGet package restore from the generator Dockerfile.
+        NuGet packages are not needed at generation time since the generator only
+        writes files and runs csharpier; no dotnet restore occurs during generation.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.10
+  changelogEntry:
+    - summary: |
+        Optimize context construction performance: replace expensive O(n) string
+        split/filter/join in ModelNavigator's tree indexing with O(1) incremental
+        path building, skip recursion into name-casing variant branches that only
+        contain primitive values, and lazily initialize the CsharpFormatter so
+        the csharpier tool path is only resolved when formatting is actually needed.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.9
+  changelogEntry:
+    - summary: |
+        Sync and cache NuGet dependencies across all C# Dockerfiles. Updates test
+        framework packages to match generated SDK versions and adds NuGet restore
+        caching to the generator Dockerfiles.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.8
+  changelogEntry:
+    - summary: |
+        Reduce dotnet CLI process spawns during project setup by generating
+        the `.slnx` solution file and test project reference directly as
+        templates instead of invoking 5 separate `dotnet` CLI commands
+        (`dotnet new sln`, `dotnet sln add` ×2, `dotnet remove reference`,
+        `dotnet add reference`). This eliminates ~5-10s of cold .NET CLI
+        startup overhead per generation run.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.7
+  changelogEntry:
+    - summary: |
+        Parallelize file writes during project persistence using batched concurrency
+        (100 files per batch via `Promise.all`), significantly reducing generation time
+        for large projects with thousands of files.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.6
+  changelogEntry:
+    - summary: |
+        Refactor `HeaderValue` to use a single `Func<ValueTask<string>>` resolver
+        instead of string-based type discrimination with unchecked casts. The old
+        static factory methods (`FromString`, `FromFunc`, `FromValueTaskFunc`,
+        `FromTaskFunc`) are retained (without deprecation) for backwards compatibility.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.5
+  changelogEntry:
+    - summary: |
+        Pass cancellation token to `ReadAsStringAsync()` calls in generated endpoint methods,
+        ensuring cancellation is respected during response body reading. A polyfill extension
+        method is included for target frameworks older than .NET 5 where the overload is not
+        natively available.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.4
+  changelogEntry:
+    - summary: |
+        Remove unused `using System.Text.Json.Serialization` import from `StringEnum.cs`.
+      type: chore
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.3
+  changelogEntry:
+    - summary: |
+        Remove duplicate `WithRawResponse<T>` and `WithRawResponseTask<T>` structs
+        from the internal `Core` namespace. These types were already generated in the
+        public root namespace (via `Core/Public/`), making the `Core/` copies redundant.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.2
+  changelogEntry:
+    - summary: |
+        Fix incorrect XML doc comment on `MaxRetries` property in `ClientOptions`,
+        `RequestOptions`, and `IRequestOptions`. The summary previously read
+        "The http client used to make requests." (copy-paste from `HttpClient`)
+        and now correctly reads "The max number of retries to attempt."
+      type: fix
+    - summary: |
+        Add missing `readonly` modifier to `_client` field in generated sub-clients.
+        The root client already had `private readonly RawClient _client` but sub-clients
+        only had `private RawClient _client`, despite the field being assigned once in
+        the constructor and never reassigned.
+      type: fix
+  createdAt: "2026-03-03"
   irVersion: 62
 
 - version: 2.23.1

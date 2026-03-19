@@ -32,6 +32,13 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+export class DocsPublishConflictError extends Error {
+    constructor() {
+        super("Another docs publish is currently in progress for this domain.");
+        this.name = "DocsPublishConflictError";
+    }
+}
+
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
@@ -63,6 +70,7 @@ export async function publishDocs({
     ossWorkspaces,
     context,
     preview,
+    previewId,
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
@@ -70,7 +78,8 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
-    docsUrl
+    docsUrl,
+    cliVersion
 }: {
     token: FernToken;
     organization: string;
@@ -81,6 +90,7 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
+    previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
@@ -89,14 +99,18 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
-}): Promise<void> {
+    cliVersion?: string;
+}): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }
 
-    const fdr = createFdrService({ token: token.value });
+    const fdr = createFdrService({
+        token: token.value,
+        ...(cliVersion != null && { headers: { "X-CLI-Version": cliVersion } })
+    });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
     if (excludeApis) {
@@ -203,13 +217,17 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
+                // previewId is defined in the oRPC contract but not yet exposed
+                // on the FdrClient's Fern-generated StartDocsPreviewRegisterRequestV2 type.
+                // The server accepts it, so we use a cast here until the client is migrated.
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths: filepaths,
                     images,
-                    basePath
-                });
+                    basePath,
+                    previewId
+                } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -489,7 +507,7 @@ export async function publishDocs({
         {
             docsDefinition,
             excludeApis,
-            ...(isBasepathAware && { basepathAware: true })
+            ...(isBasepathAware && !preview && { basepathAware: true })
         }
     );
 
@@ -506,6 +524,7 @@ export async function publishDocs({
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
+        return url;
     } else {
         switch (registerDocsResponse.error.error) {
             case "UnauthorizedError":
@@ -598,6 +617,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const errorObj = error as unknown as Record<string, unknown>;
+    const errorContent = errorObj?.content as Record<string, unknown> | undefined;
+    if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
+        throw new DocsPublishConflictError();
+    }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization);
     if (authErrorMessage != null) {

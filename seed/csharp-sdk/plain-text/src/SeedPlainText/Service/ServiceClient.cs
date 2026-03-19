@@ -4,7 +4,7 @@ namespace SeedPlainText;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
@@ -36,7 +36,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             return new WithRawResponse<string>()
             {
                 Data = responseBody,
@@ -49,7 +51,9 @@ public partial class ServiceClient : IServiceClient
             };
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPlainTextApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

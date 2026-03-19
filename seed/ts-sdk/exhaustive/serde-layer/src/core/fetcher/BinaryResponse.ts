@@ -14,7 +14,7 @@ export type BinaryResponse = {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bytes)
      * Some versions of the Fetch API may not support this method.
      */
-    bytes?(): ReturnType<Response["bytes"]>;
+    bytes?(): Promise<Uint8Array>;
 };
 
 export function getBinaryResponse(response: Response): BinaryResponse {

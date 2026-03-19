@@ -3,7 +3,7 @@
 # isort: skip_file
 
 from .types import (
-    FlushedEvent,
+    ErrorEvent,
     ReceiveEvent,
     ReceiveEvent2,
     ReceiveEvent3,
@@ -11,11 +11,10 @@ from .types import (
     SendEvent,
     SendEvent2,
     SendSnakeCase,
-    TranscriptEvent,
 )
 
 __all__ = [
-    "FlushedEvent",
+    "ErrorEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
@@ -23,5 +22,4 @@ __all__ = [
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
-    "TranscriptEvent",
 ]

@@ -75,7 +75,7 @@ public class DummyObject
     public DummyEnum EnumProperty { get; set; }
 }
 
-[JsonConverter(typeof(StringEnumSerializer<DummyEnum>))]
+[JsonConverter(typeof(DummyEnum.DummyEnumSerializer))]
 public readonly record struct DummyEnum : IStringEnum
 {
     public DummyEnum(string value)
@@ -135,4 +135,18 @@ public readonly record struct DummyEnum : IStringEnum
     public static bool operator ==(DummyEnum value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(DummyEnum value1, string value2) => !value1.Value.Equals(value2);
+
+    internal class DummyEnumSerializer : JsonConverter<DummyEnum>
+    {
+        public override DummyEnum Read(ref System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+        {
+            var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+            return new DummyEnum(stringValue);
+        }
+
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 }

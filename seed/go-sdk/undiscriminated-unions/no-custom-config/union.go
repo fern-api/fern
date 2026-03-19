@@ -462,8 +462,8 @@ var (
 )
 
 type NamedMetadata struct {
-	Name  string                 `json:"name" url:"name"`
-	Value map[string]interface{} `json:"value" url:"value"`
+	Name  string         `json:"name" url:"name"`
+	Value map[string]any `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -479,7 +479,7 @@ func (n *NamedMetadata) GetName() string {
 	return n.Name
 }
 
-func (n *NamedMetadata) GetValue() map[string]interface{} {
+func (n *NamedMetadata) GetValue() map[string]any {
 	if n == nil {
 		return nil
 	}
@@ -509,7 +509,7 @@ func (n *NamedMetadata) SetName(name string) {
 
 // SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NamedMetadata) SetValue(value map[string]interface{}) {
+func (n *NamedMetadata) SetValue(value map[string]any) {
 	n.Value = value
 	n.require(namedMetadataFieldValue)
 }
@@ -829,7 +829,7 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
-type OptionalMetadata = map[string]interface{}
+type OptionalMetadata = map[string]any
 
 // Tests that nested properties with camelCase wire names are properly
 // converted from snake_case Ruby keys when passed as Hash values.

@@ -10,6 +10,7 @@ import com.seed.pagination.resources.complex.types.SearchRequestQuery;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
 import com.seed.pagination.resources.complex.types.StartingAfterPaging;
+import java.util.Optional;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -50,9 +51,9 @@ public class ComplexWireTest {
                         "index",
                         SearchRequest.builder()
                                 .query(SearchRequestQuery.of(SingleFilterSearchRequest.builder()
-                                        .field("field")
-                                        .operator(SingleFilterSearchRequestOperator.EQUALS)
-                                        .value("value")
+                                        .field(Optional.of("field"))
+                                        .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                                        .value(Optional.of("value"))
                                         .build()))
                                 .pagination(StartingAfterPaging.builder()
                                         .perPage(1)

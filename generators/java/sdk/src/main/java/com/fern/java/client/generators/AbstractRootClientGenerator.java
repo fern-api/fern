@@ -81,6 +81,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public abstract class AbstractRootClientGenerator extends AbstractFileGenerator {
@@ -596,6 +597,28 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        // Add interceptors field and addInterceptor method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            clientBuilder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                            "interceptors")
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .initializer("new $T<>()", ArrayList.class)
+                    .build());
+
+            clientBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(Interceptor.class, "interceptor")
+                    .addStatement("this.interceptors.add(interceptor)")
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
         clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(
                                 ClassName.get(Optional.class),
@@ -734,8 +757,14 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
+        buildClientOptionsMethodBuilder.addStatement("setHttpClient(builder)");
+
+        // Add setInterceptors call when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            buildClientOptionsMethodBuilder.addStatement("setInterceptors(builder)");
+        }
+
         buildClientOptionsMethodBuilder
-                .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
                 .addStatement("setLogging(builder)")
@@ -949,6 +978,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .endControlFlow()
                 .build();
         clientBuilder.addMethod(setHttpClientMethod);
+
+        // Add setInterceptors method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            MethodSpec setInterceptorsMethod = MethodSpec.methodBuilder("setInterceptors")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Sets the custom OkHttp interceptors.\n"
+                            + "Override this method to add or modify custom interceptors.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure")
+                    .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                    .addStatement("builder.addInterceptor(interceptor)")
+                    .endControlFlow()
+                    .build();
+            clientBuilder.addMethod(setInterceptorsMethod);
+        }
 
         MethodSpec setLoggingMethod = MethodSpec.methodBuilder("setLogging")
                 .addModifiers(Modifier.PROTECTED)
@@ -1851,6 +1896,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("new $T<>()", HashMap.class)
                         .build());
 
+                // Add interceptors field when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addField(FieldSpec.builder(
+                                    ParameterizedTypeName.get(
+                                            ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                                    "interceptors")
+                            .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                            .initializer("new $T<>()", ArrayList.class)
+                            .build());
+                }
+
                 // Add environment() method if environments are present
                 if (generatedEnvironmentsClass.optionsPresent()) {
                     builderStageBuilder.addMethod(MethodSpec.methodBuilder("environment")
@@ -1922,6 +1978,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add addInterceptor() method when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors added here are forwarded to the auth builder when\n"
+                                    + "{@link #token(String)} or {@link #credentials(String, String)} is called.")
+                            .addParameter(Interceptor.class, "interceptor")
+                            .returns(builderStageClassName)
+                            .addStatement("this.interceptors.add(interceptor)")
+                            .addStatement("return this")
+                            .build());
+                }
+
                 // Add token() method that returns _TokenAuth with configuration copied using setter methods
                 MethodSpec.Builder tokenMethodBuilder = MethodSpec.methodBuilder("token")
                         .addModifiers(Modifier.PUBLIC)
@@ -1950,8 +2020,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _TokenAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    tokenMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                tokenMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(tokenMethodBuilder.build());
 
                 // Add credentials() method that returns _CredentialsAuth with configuration copied using setter methods
@@ -1981,8 +2060,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _CredentialsAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    credentialsMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                credentialsMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(credentialsMethodBuilder.build());
 
                 clientBuilder.addType(builderStageBuilder.build());
@@ -2099,7 +2187,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
                         "builder.addHeader($S, $S + this.$L)",
                         header.getName().getWireValue(),
-                        header.getPrefix().get(),
+                        header.getPrefix().get() + " ",
                         fieldName);
             } else {
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(

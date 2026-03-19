@@ -1,8 +1,974 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.2
+  changelogEntry:
+    - summary: |
+        Remove `cli-progress` from the published `fern-api` package's runtime
+        dependencies. The package is a pure JS library that is already bundled
+        into the CLI output by tsup, so it does not need to be installed
+        separately at runtime.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.1
+  changelogEntry:
+    - summary: |
+        Optimize protobuf buf generate to reuse a single working directory
+        across all proto files. Instead of creating a new temp dir, copying
+        the proto root, checking binaries, and resolving deps for every file,
+        setup is done once and only `buf generate <target>` runs per file.
+        The two buf generate passes (protoc-gen-openapi and protoc-gen-fern)
+        also now run concurrently.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Auto-download `buf` CLI binary from GitHub Releases when it is not found
+        on PATH. This eliminates the need for users to pre-install `buf` before
+        running proto-based SDK generation. The binary is cached at `~/.fern/bin/`
+        with versioning, filesystem locking, and atomic file operations.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.36.1
+  changelogEntry:
+    - summary: |
+        Fix `getLatestRelease` returning semver prerelease tags (e.g.
+        `0.0.0-dev-babaf54d`) as the latest release. When GitHub's "latest
+        release" API returns a tag that is a semver prerelease, the CLI now
+        falls back to scanning recent releases for the first stable
+        (non-prerelease, non-draft) version. This prevents
+        `computeSemanticVersion` from computing incorrect next versions.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+- version: 4.36.0
+  changelogEntry:
+    - summary: |
+        Auto-download `protoc-gen-openapi` binary from GitHub Releases when it is
+        not found on PATH. This eliminates the need to install Go and compile
+        `protoc-gen-openapi` from source on every CI run, reducing proto-based
+        SDK generation setup time by ~40 seconds.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.35.0
+  changelogEntry:
+    - summary: |
+        Add `--id` flag to `fern generate --docs --preview` for stable preview
+        URLs. When `--id <name>` is provided, the preview domain uses the given
+        identifier instead of a random UUID, so subsequent runs with the same ID
+        overwrite the previous preview and the URL stays constant. In non-CI
+        environments the CLI checks whether the preview already exists and
+        prompts for confirmation before overwriting (skip with `--force`).
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+- version: 4.34.1
+  changelogEntry:
+    - summary: |
+        Include available group names in the error message when no group is
+        specified and no default-group is set. The error now lists all groups
+        defined in generators.yml so users can quickly pick the right
+        `--group` value.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.34.0
+  changelogEntry:
+    - summary: |
+        Add `infer-default-environment` API definition setting. When set to `false`,
+        the OpenAPI importer will not automatically designate the first server as the
+        default environment, requiring SDK users to explicitly provide a base URL.
+        Defaults to `true` to preserve existing behavior.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                infer-default-environment: false
+        ```
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.33.0
+  changelogEntry:
+    - summary: |
+        Add `enums-coerceable-to-literals` option for `coerce-consts-to`, and make
+        it the new default. This behaves like `enums` (const values become
+        single-element enums) but allows `coerce-enums-to-literals` to transitively
+        coerce them to literals, which is consistent with past default behavior. The
+        existing `enums` option continues to block this transitive coercion.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.32.2
+  changelogEntry:
+    - summary: |
+        Fix custom LICENSE files not being included in SDK output when using
+        `fern generate --local`. The license path (e.g. `../../LICENSE`) was
+        resolved relative to `fern.config.json` instead of `generators.yml`,
+        causing the file to not be found in multi-API workspace layouts where
+        these files are in different directories.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+- version: 4.32.1
+  changelogEntry:
+    - summary: |
+        Downgrade the `no-openapi-v2-in-docs` validation rule from an error to a
+        warning. Fern supports OpenAPI 2.0 (Swagger) specs in docs generation, so
+        `fern check` no longer fails when Swagger 2.0 specs are present.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-sdk-method-name` extension on AsyncAPI v2
+        `publish` and `subscribe` operations. Users can now customize the
+        generated SDK method name (e.g., changing `sendPublish` to `send`)
+        without migrating to AsyncAPI v3.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.31.3
+  changelogEntry:
+    - summary: |
+        Enable WebSocket auth in AsyncAPI by populating IR auth schemes. The AsyncAPI
+        converter now converts security schemes from both generators.yml auth overrides
+        and native AsyncAPI spec securitySchemes into IR AuthScheme objects, so the docs
+        explorer correctly renders auth forms for WebSocket endpoints.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.31.2
+  changelogEntry:
+    - summary: |
+        Sanitize changelog entries to wrap type references containing angle
+        brackets (e.g. `Optional<String>`, `Map<String, Object>`) in inline
+        code fences. This prevents MDX compilers from parsing these as
+        unclosed HTML/JSX tags when changelogs are rendered in documentation
+        sites. The sanitization is applied to both seed-based and
+        auto-versioned changelog generation paths, and the AI prompt now
+        instructs the model to wrap such references in backticks.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.31.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-streaming` with `stream-condition` emitting the condition field
+        as an optional boolean instead of a required literal in split request types.
+        When the source property was nullable (`type: [boolean, "null"]`), the spread
+        order allowed the original property to overwrite the literal overrides.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        Update the gRPC SDK generator to not require the `google.api.http` annotation
+        on endpoints.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.30.2
+  changelogEntry:
+    - summary: |
+        Fix an issue where the `x-fern-encoding` extension was not respected on
+        arbitrary object schemas (i.e. objects w/ properties).
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.30.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate request wrapper name when using `x-fern-streaming` with
+        `stream-condition` on an endpoint whose request body is a `$ref` to a
+        named schema. Both the streaming and non-streaming endpoint variants
+        previously resolved to the same wrapper name (e.g. `ChatRequest`),
+        causing TypeScript SDK generation to fail with "already declared in this
+        file". Streaming variants now automatically receive a `Streaming` suffix
+        (e.g. `ChatRequest` → `ChatRequestStreaming`), aligned with the V3
+        importer convention. Users can also explicitly set the streaming request
+        name via the new `stream-request-name` property inside
+        `x-fern-streaming`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.30.0
+  changelogEntry:
+    - summary: |
+        Configures the `flatten_oneofs` configuration option for protoc-gen-openapi.
+        When `flatten_oneofs` is enabled, the generated OpenAPI schema will flatten
+        oneOf structures with a single schema. No additional configuration is required
+        by the user.
+      type: feat
+    - summary: |
+        Add the `respectByteFormat` configuration option, which is implicitly enabled
+        for gRPC/Protobuf specs.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+- version: 4.29.0
+  changelogEntry:
+    - summary: |
+        Add AI changelog rollup for multi-chunk diff analysis. When large diffs
+        are split into multiple chunks, the resulting changelog entries are now
+        consolidated via a dedicated AI call that deduplicates repetitive bullets,
+        groups changes under Keep a Changelog headers (Breaking Changes, Added,
+        Changed, Fixed), and produces a structured PR description with
+        Before/After code fences for breaking changes. Also adds a
+        `version_bump_reason` field to AI analysis responses, providing an
+        explicit one-sentence justification for why MAJOR/MINOR/PATCH was chosen.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 4.28.0
+  changelogEntry:
+    - summary: |
+        Add `coerce-consts-to` setting for controlling how OpenAPI/AsyncAPI
+        `const` values are represented. Set to `literals` to convert them directly
+        to literals with defaults; set to `enums` (the default, current behavior)
+        to convert them to single-valued and therefore extensible enums.
+
+        When `coerce-consts-to` is `enums`, the `coerce-enums-to-literals` setting
+        will not transitively apply to const-originated enums, keeping the two
+        concepts independent.
+
+        Usage:
+        ```yaml
+        api:
+          specs:
+            - asyncapi: ./asyncapi.yaml
+              settings:
+                coerce-consts-to: literals
+        ```
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+- version: 4.27.0
+  changelogEntry:
+    - summary: |
+        Log detected .fernignore paths when copying generated files. When a
+        .fernignore file is present in the output directory, the CLI now emits
+        a debug-level message listing the preserved paths. This improves
+        observability for both `fern generate` and `pnpm seed run` workflows.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+- version: 4.26.1
+  changelogEntry:
+    - summary: |
+        Fix `fern diff` running out of memory on very large IR files (>2 GB).
+        The command now uses streaming JSON parsing and automatically re-spawns
+        Node with an increased heap limit (8 GB) when running `fern diff`,
+        allowing the full IR to be parsed and validated in memory. This removes
+        both the V8 string-size limit and the heap allocation limit.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.26.0
+  changelogEntry:
+    - summary: |
+        Add chunked diff analysis for oversized diffs during AUTO versioning.
+        Large SDK diffs (e.g. Java with 700+ generated files) that exceed 40 KB
+        are now split into semantically ranked chunks, each analyzed by the AI
+        separately. Version bumps are merged (takes the maximum) and all changelog
+        entries are aggregated into a markdown list. Analysis is capped at 40
+        chunks to bound latency and cost. Diffs exceeding 10 MB are rejected
+        before chunking to prevent resource exhaustion. Both the local generation
+        path and the CLI `sdk-diff` command now support chunked analysis.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.25.0
+  changelogEntry:
+    - summary: |
+        Handle 409 Conflict responses from FDR during `fern generate --docs`.
+        When another docs publish is already in progress for the same domain,
+        the CLI now fails fast with a clear error message. The CLI version is
+        sent to FDR so that the server can gate the concurrent-publish check
+        on CLI versions that support 409 handling.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        Redesign `respect-readonly-schemas` to use a post-parse graph-based
+        reachability analysis instead of the previous side-effect-based marking
+        mechanism. When `respect-readonly-schemas` is enabled, the new approach
+        performs a DFS from all endpoint request/response roots to classify
+        schemas as request-only, response-only, or shared, then generates
+        Read/Write variants accordingly. This fixes several structural bugs
+        with the previous design. No behavior change when the option is off.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` generating required readOnly fields as
+        optional in Read types. When a property is both `readOnly` and in the
+        `required` array, it is now correctly marked required in the generated
+        type.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` inlining request body `$ref` schemas
+        instead of preserving them as type aliases. Schemas like
+        `UpdateOrganizationDetailsRequestContent` that reference another schema
+        via `$ref` are now kept as `type Foo = Bar` instead of being
+        dereferenced into a standalone interface.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` generating unnecessary Read/Write
+        variants for schemas only used in responses. Response-only schemas
+        with readOnly properties now generate a single type with all
+        properties instead of splitting into Read and Write variants.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` resolving response type aliases to the
+        Write variant instead of the Read variant. Schema references in
+        response contexts now correctly resolve to Read variant names.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` leaking readOnly properties into
+        `allOf`-composed request types. Request types that inherit from schemas
+        with readOnly properties via `allOf` no longer include those properties
+        in Write variants.
+      type: fix
+    - summary: |
+        Fix `allOf` with top-level `required` array not propagating to
+        properties inherited from inline `allOf` members. Properties marked
+        optional by an inline member's own (missing) `required` array are now
+        correctly promoted to required when the outer schema's `required`
+        array includes them.
+      type: fix
+    - summary: |
+        Fix `readOnly` not being detected on `$ref` properties whose
+        referenced schema has `readOnly: true`. The parser now checks both
+        the property-level and resolved schema-level `readOnly` flag.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+- version: 4.24.0
+  changelogEntry:
+    - summary: |
+        Add support for `"latest"` as the `version` value in `fern.config.json`.
+        When set to `"latest"`, the CLI automatically resolves to the most recent
+        published version from npm on every invocation, removing the need to
+        manually run `fern upgrade` to stay current.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.23.1
+  changelogEntry:
+    - summary: |
+        Preserve description, namespace, group name, and availability metadata for unknown
+        (empty-type) schemas in OpenAPI specs. Previously these fields were dropped during
+        parsing, causing loss of documentation on schemas with no explicit type.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        Infer forward-compatible enums in OpenAPI specs. When an enum is expressed
+        as `oneOf: [enum, string]` or `anyOf: [enum, string]`, the parser now
+        lowers it to a single enum type with `forwardCompatible: true` instead of an
+        undiscriminated union. Fern Definition enums can also be marked with
+        `forward-compatible: true`. This behavior is controlled by the new
+        `infer-forward-compatible` parser flag (disabled by default).
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Include the origin git commit hash in `.fern/metadata.json` when generating SDKs.
+        The new `originGitCommit` field is populated with the HEAD commit of the repo where
+        `fern generate` is run. If the working directory is not a git repo or git is unavailable,
+        the field is omitted.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.4
+  changelogEntry:
+    - summary: |
+        Include required global headers in dynamic snippet examples. Also
+        fixes header value lookup in all generator snippet generators (Python,
+        TypeScript, Go, Java, C#, PHP, Ruby, Swift) to correctly resolve values
+        by wire name.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.21.3
+  changelogEntry:
+    - summary: |
+        Surface descriptive error messages from Fiddle when remote generation
+        fails due to configuration issues (e.g. missing GitHub App installation).
+        Previously, unrecognized Fiddle errors were shown as a generic "Failed to
+        create job" message. Now the CLI extracts and displays the server-provided
+        error message when available. Also fixes existing error type matching
+        in `convertCreateJobError` to use the correct Fiddle `ErrorBody` field
+        names (`error`/`content`), so known errors like `InsufficientPermissions`
+        and `BranchDoesNotExist` now properly match their handlers instead of
+        falling through to the generic error.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Expand the docs validator allowlist to accept archive files
+        (`application/x-tar`, `application/gzip`, `application/zip`,
+        `application/x-bzip2`) and additional image formats (`image/bmp`,
+        `image/heif`). Previously, self-hosted users uploading `.tar` bundles
+        as docs assets were rejected with "The file type of application/x-tar
+        is not allowed".
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Fix `fern check` rejecting `og:dynamic` and `og:background-image` keys in
+        `docs.yml` metadata. These fields were added to the MetadataConfig API types
+        but the serialization schema was not updated, causing validation to fail with
+        "Unexpected key" errors when using the dynamic OG image feature introduced in
+        v4.3.0.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Remove the `FERN_SELF_HOSTED` environment variable from the CLI. The
+        three behaviors it controlled are now handled independently:
+        - **Auth bypass**: when `FERN_FDR_ORIGIN` (or legacy `OVERRIDE_FDR_ORIGIN`)
+          is set, the CLI reads `FERN_TOKEN` directly instead of triggering
+          interactive login.
+        - **Telemetry opt-out**: use the existing `FERN_DISABLE_TELEMETRY=true` to
+          disable PostHog telemetry.
+        - **ValidFileTypes skip**: removed entirely (no longer needed).
+
+        Also renames `OVERRIDE_FDR_ORIGIN` to `FERN_FDR_ORIGIN` (the old name
+        is still accepted for backward compatibility).
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.20.4
+  changelogEntry:
+    - summary: |
+        Fix JSON schema validation for `collapsed: open-by-default`. The
+        auto-generated JSON schemas now accept `boolean | "open-by-default"`
+        for the `collapsed` property, matching the Zod runtime schema.
+        Previously, `fern check` rejected valid configurations like
+        `collapsed: open-by-default` inside API reference section layouts
+        because the JSON schema only allowed `boolean | null`.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Add support for the `collapsed` property on API reference section
+        configurations. Sections inside an API reference `layout` can now use
+        `collapsed: true` or `collapsed: open-by-default` to control sidebar
+        collapse behavior, matching the existing support on top-level sections
+        and folders.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Fix `respect-readonly-schemas` handling for request bodies that reference
+        a wrapper schema (a `$ref`-only schema pointing to another schema with
+        `readOnly` properties). The wrapper schema name is now preserved as the
+        request name and the stale type alias to the `Read` variant is no longer
+        emitted.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Revert treating JSON Schema `const` values as literal types regardless of
+        `coerceEnumsToLiterals`. This reverts the behavior introduced in 3.90.8 so
+        that `const` values are again converted to single-value enums when
+        `coerceEnumsToLiterals` is not enabled.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Add `fern api enrich` CLI command that decomposes x-fern-examples from an
+        overrides file into native OpenAPI example fields per endpoint. Usage:
+        `fern api enrich openapi.yml -f overrides.yml -o output.yml`.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for `open-by-default` value on the `collapsed` property in
+        docs navigation configuration. Sections configured with
+        `collapsed: open-by-default` will start expanded but can be collapsed
+        by the user.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Gzip-compress IR before uploading to Fiddle for remote generation. This
+        reduces upload size by ~85-90% on typical IR payloads, improving upload
+        speed and reducing bandwidth usage. The Fiddle receiver transparently
+        detects and decompresses gzip content, maintaining backward compatibility
+        with older CLI versions.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add `fern check` validation rule to detect component schema collisions
+        across multiple OpenAPI specs. When two specs define
+        `components/schemas` with the same name, one silently overwrites the
+        other during merge. The new `no-component-schema-collisions` rule now
+        reports this as a warning, unless `resolve-schema-collisions` is enabled.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Auto-discover `.fernignore` for generators configured with local file system
+        output. When running `fern generate` without the `--fernignore` flag, the CLI
+        now automatically looks for a `.fernignore` file in the generator's configured
+        output directory and uses it if present. This eliminates the need to explicitly
+        pass `--fernignore` for the common case where the `.fernignore` lives alongside
+        the generated code.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.15.5
+  changelogEntry:
+    - summary: |
+        Fix GraphQL operations leaking into all API reference sections in docs.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Fix cross-reference links in C++ library documentation. Entity pages
+        now use relative links resolved via an entity registry, template
+        specializations link to their dedicated pages on index pages, namespace
+        index links are properly slugified, and operator method anchors use
+        deterministic safe names to avoid collisions.
+      type: fix
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing with `ENOENT` on `package.json`
+        when multiple CLI processes run concurrently (e.g., in parallel tests).
+        A cross-process file lock now serializes npm installs to the shared
+        `~/.fern/migration-cache` prefix, preventing concurrent install races.
+      type: fix
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix CLI error logging during local generation. `FernCliError` exceptions
+        are no longer double-logged, `LoggableFernCliError` now surfaces its
+        structured message, and all other errors pass the original error object
+        to `failWithoutThrowing` so the full stack trace is preserved.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `readOnly`/`writeOnly` not being detected on properties that use
+        `$ref` to reference a schema with `readOnly: true`/`writeOnly: true`.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add C++ library documentation generation. Users can now configure
+        `lang: cpp` libraries in docs.yml with an optional Doxyfile path,
+        and `fern docs md generate` will produce structured MDX pages for
+        classes, structs, functions, enums, typedefs, and variables with
+        template parameters, method overload tabs, and hierarchical
+        namespace navigation.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Merge behavioral analysis into the unified AnalyzeSdkDiff prompt. The
+        AI now classifies both public API surface changes AND behavioral changes
+        (HTTP status handling, default parameter values, serialization behavior,
+        retry/backoff configuration) in a single call — producing the version
+        bump, commit message, and changelog entry in one pass. This replaces the
+        previous two-call approach where a separate Tier 3 analysis ran after
+        Tier 2 returned PATCH.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Include the last 3 prior changelog entries from the SDK's CHANGELOG.md
+        in the AI prompt for AUTO versioning. This gives the AI context on the
+        SDK's versioning cadence and commit message style, producing more
+        consistent and appropriately-toned commit messages. The changelog is
+        read case-insensitively, capped at 2 KB, and gracefully skipped if
+        the file is missing or unreadable.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Pass the API spec repo commit message to the AI prompt during AUTO
+        versioning. When `fern generate` runs, the CLI now reads the most recent
+        git commit message that touched the `.fern/` directory and includes it
+        in the `AnalyzeSdkDiff` prompt as `spec_commit_message`. This gives the
+        AI ground-truth context about why the API changed, producing more
+        accurate version bumps and commit messages. Merge commits, empty
+        messages, and messages shorter than 5 characters are filtered out.
+        Messages longer than 500 characters are truncated.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Add language-specific breaking change rules to the AnalyzeSdkDiff BAML
+        prompt. The prompt now uses Jinja conditionals to include only the rules
+        for the SDK language being analyzed (typescript, python, java, go, ruby,
+        csharp, php, swift, rust, kotlin), keeping the prompt focused and
+        improving version bump accuracy. A new `extractLanguageFromGeneratorName`
+        utility maps generator names (e.g. `fernapi/fern-typescript-node-sdk`)
+        to normalized language identifiers as a fallback when
+        `generatorInvocation.language` is not set.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+- version: 4.10.0
+  changelogEntry:
+    - summary: |
+        Separate commit message from changelog entry during AUTO versioning.
+        The AI now produces a developer-facing git commit message and a separate
+        user-facing changelog entry for CHANGELOG.md and GitHub Releases. PATCH
+        changes produce an empty changelog entry. MINOR/MAJOR changes produce
+        user-facing prose describing the impact on SDK consumers. The PR body
+        uses the changelog entry when available, falling back to the commit
+        message body when absent.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+- version: 4.9.0
+  changelogEntry:
+    - summary: |
+        Deduplicate AI calls during AUTO versioning when multiple generators
+        run in a single `fern generate` invocation. An in-memory cache keyed on
+        `sha256(cleanedDiff + language + previousVersion)` is shared across all
+        generators so the AI analysis is performed exactly once per unique
+        combination of diff, language, and previous version. Subsequent generators
+        with the same inputs receive the cached result immediately, eliminating
+        redundant AI calls and ensuring consistent version bump decisions.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.8.0
+  changelogEntry:
+    - summary: |
+        Add few-shot examples to the AnalyzeSdkDiff prompt for more consistent
+        version bump classification. The examples cover the three most common
+        misclassification cases (removed export -> MAJOR, new optional parameter
+        -> MINOR, internal constant change -> PATCH) across TypeScript, Python,
+        Java, and Go, plus "when in doubt" guidance for boundary decisions.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Pass `previous_version` and `language` to the AI prompt for AUTO
+        versioning diff analysis. The `AnalyzeSdkDiff` BAML function now
+        accepts three parameters (`diff`, `language`, `previous_version`)
+        instead of just `diff`, giving the AI meaningful calibration context
+        for commit messages and version bump decisions. New repos with no
+        previous version pass `"0.0.0"` as a sentinel value.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.6.0
+  changelogEntry:
+    - summary: |
+        Expand AUTO versioning diff exclusion list to strip noise files before
+        AI analysis. The cleaned diff now excludes lock files (`pnpm-lock.yaml`,
+        `poetry.lock`, `yarn.lock`, etc.), test files by naming convention
+        (`*.test.ts`, `*_test.go`, `*Test.java`, `__tests__/`, `wiremock/`),
+        snapshot files (`*.snap`, `__snapshots__/`), generated documentation
+        (`reference.md`), CI/editor config (`.github/`, `.editorconfig`,
+        `.prettierrc*`, `biome.json`), linting configs (`.eslintrc*`,
+        `.rubocop*`, `phpstan.neon`, `rustfmt.toml`, etc.), and build/devtool
+        configs (`tsconfig*.json`, `Makefile`, `Rakefile`, `snippet.json`,
+        `.gitignore`, etc.). `CHANGELOG*`/`README*` exclusion confirmed
+        case-insensitive. This dramatically reduces diff sizes sent to the AI
+        endpoint, fixing silent failures on large SDK diffs.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Add .fern/metadata.json fallback for AUTO version resolution. When both
+        package registry lookups and GitHub release lookups fail to determine the current
+        SDK version, the CLI now reads the sdkVersion field from the .fern/metadata.json
+        file in the GitHub repository (written by Fern generators during previous
+        generations). This provides an additional fallback layer for version resolution.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.5
+  changelogEntry:
+    - summary: |
+        Improve error messages when AI analysis fails during AUTO versioning.
+        Error and warning logs now include diff size (in characters and KB),
+        number of files changed, and guidance when the diff exceeds the FAI
+        endpoint's 100,000 character limit. Previously, failures only logged a
+        generic "AI analysis failed, falling back to PATCH" message with no
+        actionable context.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+- version: 4.4.4
+  changelogEntry:
+    - summary: |
+        Fix `fern check` false-positives on JSON-formatted Swagger 2.0 specs
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.3
+  changelogEntry:
+    - summary: |
+        Preview domains are by default not basepath aware.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+- version: 4.4.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing on Windows with
+        `Only URLs with a scheme in: file, data, and node are supported
+        by the default ESM loader. Received protocol 'c:'`. The dynamic
+        `import()` of the migration package now uses `pathToFileURL()` to
+        convert absolute filesystem paths to valid `file://` URLs, which
+        is required by the Node.js ESM loader on Windows.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.1
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing with `TAR_ENTRY_ERROR` and
+        `ENOENT` on `package.json` when upgrading multiple workspaces.
+        The root cause was concurrent `npm install` calls to the same
+        `--prefix` directory racing on tar extraction. Now the migration
+        package is installed exactly once per CLI process using a
+        deduplicating promise pattern, and an isolated npm cache prevents
+        system-level cache corruption.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add `--retry-rate-limited` flag to `fern generate` that automatically retries
+        with exponential backoff and jitter when receiving 429 Too Many Requests responses.
+        Retries up to 3 times (2s, 4s, 8s base delays, capped at 120s).
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.4
+  changelogEntry:
+    - summary: |
+        Support repository-based GitHub configurations in `fern replay init`.
+        Previously, replay init required a self-hosted GitHub config with explicit
+        `uri` and `token` fields. Now it also accepts standard `repository`-based
+        configs (pull-request, push, commit-and-release modes) and reads the token
+        from the `GITHUB_TOKEN` environment variable or the `--token` CLI flag.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.3
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement when the pruned OpenAPI spec for an endpoint
+        exceeds 40,000 characters, avoiding unnecessary timeouts on large specs.
+        Additionally, downgrade retry-failure log messages from warn to debug level
+        to reduce noise in CLI output.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.2
+  changelogEntry:
+    - summary: |
+        Fix `getLatestTag` to use the GitHub "get latest release" endpoint instead
+        of `listTags`. The `listTags` API sorts by commit date, so backport tags
+        (e.g. v1.0.1 pushed after v2.0.0) could be incorrectly selected as the
+        latest version, causing `semver.inc` to produce a lower version than already
+        exists.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Fix `fern add` resolving outdated generator versions when FDR returns a
+        version older than the hardcoded fallback. This could happen when the dev
+        CLI (version 0.0.0) queries FDR, which returns an old version incompatible
+        with CLI v4. The resolved version is now guaranteed to be at least as new
+        as the hardcoded fallback version shipped with the CLI.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Adds beta support for dynamically generating `og:images`.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.2
+  changelogEntry:
+    - summary: |
+        Use registry URLs from output mode configuration as the primary lookup
+        strategy for semantic version checks. Previously, hardcoded public registry
+        URLs and environment variables were the default lookup strategy. Now the CLI
+        extracts the registry URL and auth token from the generator's output mode
+        (publishV2 or githubV2 publishInfo) and uses those as the primary source,
+        falling back to environment variables and then hardcoded defaults only when
+        the output mode does not specify a registry URL.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Fix REST HTTP clients incorrectly using WebSocket environment URLs in
+        multi-URL environments with both OpenAPI and AsyncAPI servers.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.0
+  changelogEntry:
+    - summary: |
+        Adds support for per-generator headers overrides in `generators.yml`, allowing each generator in a group to specify its own headers that are merged with (and take precedence over) the top-level `api.headers` configuration.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Add CLI subcommand for resolving customization conflicts on SDK generation PR branches.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add external `$ref` bundling for AsyncAPI documents. Multi-file AsyncAPI specs
+        that split schemas across separate YAML files (e.g. `$ref: './schemas/types.yml#/MyType'`)
+        are now resolved and inlined before parsing, matching the existing behavior for OpenAPI
+        documents. Previously these external references caused `fern check` and `fern generate`
+        to fail with "Failed to resolve schema reference".
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.0.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-global-headers` ignoring the `optional` field in the legacy
+        OpenAPI importer. Previously, all global headers were defaulted to
+        `optional<string>` regardless of whether `optional: false` or no `optional`
+        field was specified. Now headers without `optional: true` are correctly
+        treated as required `string` types.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 4.0.0
   changelogEntry:
     - summary: |
-        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+        Deprecate IR versions `<= 52`. Cuts down on binary size, build time, and migrations.
 
         **Breaking changes**: To upgrade to this version of the CLI, generators now have
         minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:
@@ -681,6 +1647,7 @@
       type: fix
   createdAt: "2026-02-24"
   irVersion: 65
+
 - version: 3.85.2
   changelogEntry:
     - summary: |

@@ -1,0 +1,904 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AuthProviderInstance > AnyAuthProviderInstance > getSnippetProperties() combines properties from all constituent providers 1`] = `
+"{
+    token: "YOUR_TOKEN",
+    username: "YOUR_USERNAME",
+    password: "YOUR_PASSWORD"
+}"
+`;
+
+exports[`AuthProviderInstance > AnyAuthProviderInstance > instantiate() produces new AnyAuthProvider call 1`] = `"new AnyAuthProvider(providers)"`;
+
+exports[`AuthProviderInstance > BasicAuthProviderInstance > getSnippetProperties() returns username and password properties 1`] = `
+"{
+    username: "YOUR_USERNAME",
+    password: "YOUR_PASSWORD"
+}"
+`;
+
+exports[`AuthProviderInstance > BasicAuthProviderInstance > getSnippetProperties() uses custom field names from auth scheme 1`] = `
+"{
+    user: "YOUR_USER",
+    pass: "YOUR_PASS"
+}"
+`;
+
+exports[`AuthProviderInstance > BasicAuthProviderInstance > instantiate() produces BasicAuthProvider.createInstance call 1`] = `"BasicAuthProvider.createInstance(options)"`;
+
+exports[`AuthProviderInstance > BearerAuthProviderInstance > getSnippetProperties() returns token property 1`] = `
+"{
+    token: "YOUR_TOKEN"
+}"
+`;
+
+exports[`AuthProviderInstance > BearerAuthProviderInstance > getSnippetProperties() uses custom token name 1`] = `
+"{
+    accessToken: "YOUR_ACCESS_TOKEN"
+}"
+`;
+
+exports[`AuthProviderInstance > BearerAuthProviderInstance > instantiate() produces new BearerAuthProvider call 1`] = `"new BearerAuthProvider(options)"`;
+
+exports[`AuthProviderInstance > HeaderAuthProviderInstance > getSnippetProperties() returns header name property 1`] = `
+"{
+    apiKey: "YOUR_API_KEY"
+}"
+`;
+
+exports[`AuthProviderInstance > HeaderAuthProviderInstance > getSnippetProperties() uses custom header name 1`] = `
+"{
+    authToken: "YOUR_AUTH_TOKEN"
+}"
+`;
+
+exports[`AuthProviderInstance > HeaderAuthProviderInstance > instantiate() produces new HeaderAuthProvider call 1`] = `"new HeaderAuthProvider(options)"`;
+
+exports[`AuthProviderInstance > InferredAuthProviderInstance > instantiate() produces InferredAuthProvider.createInstance call 1`] = `"InferredAuthProvider.createInstance(options)"`;
+
+exports[`AuthProviderInstance > OAuthAuthProviderInstance > getSnippetProperties() returns clientId and clientSecret when generateOAuthClients is true 1`] = `
+"{
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET"
+}"
+`;
+
+exports[`AuthProviderInstance > OAuthAuthProviderInstance > instantiate() produces new OAuthAuthProvider call 1`] = `"new OAuthAuthProvider(options)"`;
+
+exports[`AuthProviderInstance > RoutingAuthProviderInstance > getSnippetProperties() combines properties from all routed providers 1`] = `
+"{
+    token: "YOUR_TOKEN",
+    apiKey: "YOUR_API_KEY"
+}"
+`;
+
+exports[`AuthProviderInstance > RoutingAuthProviderInstance > instantiate() produces new RoutingAuthProvider call 1`] = `"new RoutingAuthProvider(providers)"`;
+
+exports[`BasicAuthProviderGenerator > getAuthOptionsProperties() > returns optional properties with union type when env vars are present 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": true,
+    "kind": 33,
+    "name": "username",
+    "type": "core.Supplier<string> | undefined",
+  },
+  {
+    "docs": undefined,
+    "hasQuestionToken": true,
+    "kind": 33,
+    "name": "password",
+    "type": "core.Supplier<string> | undefined",
+  },
+]
+`;
+
+exports[`BasicAuthProviderGenerator > getAuthOptionsProperties() > returns required username and password when auth is mandatory and no env vars 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": false,
+    "kind": 33,
+    "name": "username",
+    "type": "core.Supplier<string>",
+  },
+  {
+    "docs": undefined,
+    "hasQuestionToken": false,
+    "kind": 33,
+    "name": "password",
+    "type": "core.Supplier<string>",
+  },
+]
+`;
+
+exports[`BasicAuthProviderGenerator > writeToFile() > generates basic auth provider with env vars 1`] = `
+"const USERNAME_PARAM = "username" as const;
+const PASSWORD_PARAM = "password" as const;
+const ENV_USERNAME = "PLANT_API_USERNAME" as const;
+const ENV_PASSWORD = "PLANT_API_PASSWORD" as const;
+
+export class BasicAuthProvider implements core.AuthProvider {
+    private readonly options: BasicAuthProvider.Options;
+
+    constructor(options: BasicAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
+        return (options?.[USERNAME_PARAM] != null || process.env?.[ENV_USERNAME] != null) && (options?.[PASSWORD_PARAM] != null || process.env?.[ENV_PASSWORD] != null);
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const username = 
+                    (await core.Supplier.get(this.options[USERNAME_PARAM], { endpointMetadata })) ??
+                    process.env?.[ENV_USERNAME];
+                if (username == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+                    });
+                }
+
+                const password = 
+                    (await core.Supplier.get(this.options[PASSWORD_PARAM], { endpointMetadata })) ??
+                    process.env?.[ENV_PASSWORD];
+                if (password == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+                    });
+                }
+
+                const authHeader = core.BasicAuth.toAuthorizationHeader(username, password);
+
+                return {
+                    headers: authHeader != null ? { Authorization: authHeader } : {},
+                };
+                
+    }
+}
+
+export namespace BasicAuthProvider {
+    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client, or set the '\${ENV_USERNAME}' environment variable\` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client, or set the '\${ENV_PASSWORD}' environment variable\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [USERNAME_PARAM]?: core.Supplier<string> | undefined; [PASSWORD_PARAM]?: core.Supplier<string> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BasicAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BasicAuthProviderGenerator > writeToFile() > generates basic auth provider with neverThrowErrors 1`] = `
+"const USERNAME_PARAM = "username" as const;
+const PASSWORD_PARAM = "password" as const;
+
+export class BasicAuthProvider implements core.AuthProvider {
+    private readonly options: BasicAuthProvider.Options;
+
+    constructor(options: BasicAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
+        return (options?.[USERNAME_PARAM] != null) && (options?.[PASSWORD_PARAM] != null);
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const username = await core.Supplier.get(this.options[USERNAME_PARAM], { endpointMetadata });
+                if (username == null) {
+                    return { headers: {} };
+                }
+
+                const password = await core.Supplier.get(this.options[PASSWORD_PARAM], { endpointMetadata });
+                if (password == null) {
+                    return { headers: {} };
+                }
+
+                const authHeader = core.BasicAuth.toAuthorizationHeader(username, password);
+
+                return {
+                    headers: authHeader != null ? { Authorization: authHeader } : {},
+                };
+                
+    }
+}
+
+export namespace BasicAuthProvider {
+    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [USERNAME_PARAM]?: core.Supplier<string>; [PASSWORD_PARAM]?: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BasicAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BasicAuthProviderGenerator > writeToFile() > generates basic auth provider with wrapper 1`] = `
+"const WRAPPER_PROPERTY = "basicAuth" as const;
+const USERNAME_PARAM = "username" as const;
+const PASSWORD_PARAM = "password" as const;
+
+export class BasicAuthProvider implements core.AuthProvider {
+    private readonly options: BasicAuthProvider.Options;
+
+    constructor(options: BasicAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
+        return (options?.[WRAPPER_PROPERTY]?.[USERNAME_PARAM] != null) && (options?.[WRAPPER_PROPERTY]?.[PASSWORD_PARAM] != null);
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const username = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM], { endpointMetadata });
+                if (username == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+                    });
+                }
+
+                const password = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM], { endpointMetadata });
+                if (password == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+                    });
+                }
+
+                const authHeader = core.BasicAuth.toAuthorizationHeader(username, password);
+
+                return {
+                    headers: authHeader != null ? { Authorization: authHeader } : {},
+                };
+                
+    }
+}
+
+export namespace BasicAuthProvider {
+    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = {
+                [WRAPPER_PROPERTY]?: { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
+            };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BasicAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BasicAuthProviderGenerator > writeToFile() > generates basic auth provider without env vars 1`] = `
+"const USERNAME_PARAM = "username" as const;
+const PASSWORD_PARAM = "password" as const;
+
+export class BasicAuthProvider implements core.AuthProvider {
+    private readonly options: BasicAuthProvider.Options;
+
+    constructor(options: BasicAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
+        return (options?.[USERNAME_PARAM] != null) && (options?.[PASSWORD_PARAM] != null);
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const username = await core.Supplier.get(this.options[USERNAME_PARAM], { endpointMetadata });
+                if (username == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+                    });
+                }
+
+                const password = await core.Supplier.get(this.options[PASSWORD_PARAM], { endpointMetadata });
+                if (password == null) {
+                    throw new errors.SeedApiError({
+                        message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+                    });
+                }
+
+                const authHeader = core.BasicAuth.toAuthorizationHeader(username, password);
+
+                return {
+                    headers: authHeader != null ? { Authorization: authHeader } : {},
+                };
+                
+    }
+}
+
+export namespace BasicAuthProvider {
+    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BasicAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BearerAuthProviderGenerator > getAuthOptionsProperties() > includes docs when present on auth scheme 1`] = `
+[
+  {
+    "docs": [
+      "The bearer token for authentication",
+    ],
+    "hasQuestionToken": false,
+    "kind": 33,
+    "name": "token",
+    "type": "core.Supplier<core.BearerToken>",
+  },
+]
+`;
+
+exports[`BearerAuthProviderGenerator > getAuthOptionsProperties() > returns optional token property with union type when env var is present 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": true,
+    "kind": 33,
+    "name": "token",
+    "type": "core.Supplier<core.BearerToken> | undefined",
+  },
+]
+`;
+
+exports[`BearerAuthProviderGenerator > getAuthOptionsProperties() > returns optional token when auth is not mandatory 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": true,
+    "kind": 33,
+    "name": "token",
+    "type": "core.Supplier<core.BearerToken>",
+  },
+]
+`;
+
+exports[`BearerAuthProviderGenerator > getAuthOptionsProperties() > returns required token property when auth is mandatory and no env var 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": false,
+    "kind": 33,
+    "name": "token",
+    "type": "core.Supplier<core.BearerToken>",
+  },
+]
+`;
+
+exports[`BearerAuthProviderGenerator > getFilePath() > returns auth/BearerAuthProvider.ts path 1`] = `
+{
+  "directories": [
+    {
+      "nameOnDisk": "auth",
+    },
+  ],
+  "file": {
+    "exportDeclaration": {
+      "namedExports": [
+        "BearerAuthProvider",
+      ],
+    },
+    "nameOnDisk": "BearerAuthProvider.ts",
+  },
+}
+`;
+
+exports[`BearerAuthProviderGenerator > instantiate() > produces BearerAuthProvider.createInstance call 1`] = `"BearerAuthProvider.createInstance(options)"`;
+
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider with env var + neverThrowErrors 1`] = `
+"const TOKEN_PARAM = "token" as const;
+const ENV_TOKEN = "PLANT_API_TOKEN" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = 
+                    (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
+                    process.env?.[ENV_TOKEN];
+                if (token == null) {
+                    return { headers: {} };
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client, or set the '\${ENV_TOKEN}' environment variable\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider with env var 1`] = `
+"const TOKEN_PARAM = "token" as const;
+const ENV_TOKEN = "PLANT_API_TOKEN" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = 
+                    (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
+                    process.env?.[ENV_TOKEN];
+                if (token == null) {
+                    throw new errors.SeedApiError({
+                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client, or set the '\${ENV_TOKEN}' environment variable\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider with neverThrowErrors 1`] = `
+"const TOKEN_PARAM = "token" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata });
+                if (token == null) {
+                    return { headers: {} };
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider with wrapper (multiple auth schemes) 1`] = `
+"const WRAPPER_PROPERTY = "bearer" as const;
+const TOKEN_PARAM = "token" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM], { endpointMetadata });
+                if (token == null) {
+                    throw new errors.SeedApiError({
+                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = {
+                [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]: core.Supplier<core.BearerToken> };
+            };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`BearerAuthProviderGenerator > writeToFile() > generates bearer auth provider without env var 1`] = `
+"const TOKEN_PARAM = "token" as const;
+
+export class BearerAuthProvider implements core.AuthProvider {
+    private readonly options: BearerAuthProvider.Options;
+
+    constructor(options: BearerAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const token = await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata });
+                if (token == null) {
+                    throw new errors.SeedApiError({
+                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { Authorization: \`Bearer \${token}\` },
+                };
+                
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]: core.Supplier<core.BearerToken> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`HeaderAuthProviderGenerator > getAuthOptionsProperties() > returns optional header property with env var fallback 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": true,
+    "kind": 33,
+    "name": "apiKey",
+    "type": "core.Supplier<string> | undefined",
+  },
+]
+`;
+
+exports[`HeaderAuthProviderGenerator > getAuthOptionsProperties() > returns required header property when auth is mandatory and no env var 1`] = `
+[
+  {
+    "docs": undefined,
+    "hasQuestionToken": false,
+    "kind": 33,
+    "name": "apiKey",
+    "type": "core.Supplier<string>",
+  },
+]
+`;
+
+exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with custom header name and prefix 1`] = `
+"const PARAM_KEY = "authorization" as const;
+const HEADER_NAME = "Authorization" as const;
+
+export class HeaderAuthProvider implements core.AuthProvider {
+    private readonly options: HeaderAuthProvider.Options;
+
+    constructor(options: HeaderAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const headerValue = await core.Supplier.get(this.options[PARAM_KEY], { endpointMetadata });
+                if (headerValue == null) {
+                    throw new errors.SeedApiError({
+                        message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: headerValue },
+                };
+                
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [PARAM_KEY]: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with env var 1`] = `
+"const PARAM_KEY = "apiKey" as const;
+const ENV_HEADER_KEY = "PLANT_API_KEY" as const;
+const HEADER_NAME = "X-API-Key" as const;
+
+export class HeaderAuthProvider implements core.AuthProvider {
+    private readonly options: HeaderAuthProvider.Options;
+
+    constructor(options: HeaderAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const headerValue = 
+                    (await core.Supplier.get(this.options[PARAM_KEY], { endpointMetadata })) ??
+                    process.env?.[ENV_HEADER_KEY];
+                if (headerValue == null) {
+                    throw new errors.SeedApiError({
+                        message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: headerValue },
+                };
+                
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client, or set the '\${ENV_HEADER_KEY}' environment variable\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [PARAM_KEY]?: core.Supplier<string> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with neverThrowErrors 1`] = `
+"const PARAM_KEY = "apiKey" as const;
+const HEADER_NAME = "X-API-Key" as const;
+
+export class HeaderAuthProvider implements core.AuthProvider {
+    private readonly options: HeaderAuthProvider.Options;
+
+    constructor(options: HeaderAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const headerValue = await core.Supplier.get(this.options[PARAM_KEY], { endpointMetadata });
+                if (headerValue == null) {
+                    return { headers: {} };
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: headerValue },
+                };
+                
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [PARAM_KEY]?: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with wrapper 1`] = `
+"const WRAPPER_PROPERTY = "apiKey" as const;
+const PARAM_KEY = "apiKey" as const;
+const HEADER_NAME = "X-API-Key" as const;
+
+export class HeaderAuthProvider implements core.AuthProvider {
+    private readonly options: HeaderAuthProvider.Options;
+
+    constructor(options: HeaderAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const headerValue = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[PARAM_KEY], { endpointMetadata });
+                if (headerValue == null) {
+                    throw new errors.SeedApiError({
+                        message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: headerValue },
+                };
+                
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = {
+                [WRAPPER_PROPERTY]?: { [PARAM_KEY]: core.Supplier<string> };
+            };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
+    }
+}
+"
+`;
+
+exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider without env var 1`] = `
+"const PARAM_KEY = "apiKey" as const;
+const HEADER_NAME = "X-API-Key" as const;
+
+export class HeaderAuthProvider implements core.AuthProvider {
+    private readonly options: HeaderAuthProvider.Options;
+
+    constructor(options: HeaderAuthProvider.Options) {
+        this.options = options;
+    }
+
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null;
+    }
+
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
+
+                const headerValue = await core.Supplier.get(this.options[PARAM_KEY], { endpointMetadata });
+                if (headerValue == null) {
+                    throw new errors.SeedApiError({
+                        message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: headerValue },
+                };
+                
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client\` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [PARAM_KEY]: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
+    }
+}
+"
+`;

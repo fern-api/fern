@@ -140,6 +140,9 @@ fixtures:
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -267,6 +270,11 @@ fixtures:
         packageName: fern
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
+  go-deterministic-ordering:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
@@ -276,8 +284,12 @@ fixtures:
         enableWireTests: true
         omitEmptyRequestWrappers: true
 scripts:
-  - image: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:2.0.0
     commands:
+      build:
+        - |
+          printf 'version: "2"\nlinters:\n  exclusions:\n    paths:\n      - dynamic-snippets\n' > .golangci.yml
+          golangci-lint run --timeout=5m --allow-parallel-runners
       test:
         - |
           PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
@@ -285,6 +297,12 @@ scripts:
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
             export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            for i in $(seq 1 30); do
+              if wget -q --spider "$WIREMOCK_URL/__admin/mappings" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
           fi
           CGO_ENABLED=0 go test ./...
           TEST_EXIT_CODE=$?
@@ -329,6 +347,4 @@ allowedFailures:
 
   - pagination-custom:.
 
-  # TODO: Go generator doesn't support DATE_TIME_RFC_2822 primitive yet.
-  - exhaustive:no-custom-config
-  - exhaustive:omit-empty-request-wrappers
+  # exhaustive fixtures now pass after fixing bytes endpoint wire test generation

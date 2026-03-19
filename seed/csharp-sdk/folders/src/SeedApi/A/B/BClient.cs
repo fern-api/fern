@@ -5,7 +5,7 @@ namespace SeedApi.A.B;
 
 public partial class BClient : IBClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BClient(RawClient client)
     {
@@ -43,7 +43,9 @@ public partial class BClient : IBClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

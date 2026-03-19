@@ -8,6 +8,7 @@ using SeedExhaustive.Types.Object;
 namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

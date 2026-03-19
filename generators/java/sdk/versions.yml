@@ -1,4 +1,435 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.1
+  changelogEntry:
+    - summary: |
+        Fix generated snippets producing `OptionalNullable.of(...)` for fields
+        that are only optional (not nullable) when `collapse-optional-nullable`
+        is enabled.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.0.0
+  changelogEntry:
+    - summary: |
+        **Breaking change for WebSocket users only.** REST-only SDKs are
+        unaffected — no code changes required.
+
+        Overhaul generated WebSocket clients. The generated API is restructured
+        around a factory → configure → connect lifecycle that separates client
+        creation from connection parameters:
+
+        ```java
+        // Create client from the service tree — no connection params yet
+        V1WebSocketClient ws = client.listen().v1WebSocket();
+
+        // Register handlers before connecting
+        ws.onListenV1Results(results ->
+            System.out.println(results.getChannel().getAlternatives()));
+        ws.onError(error -> error.printStackTrace());
+
+        // Connect with channel-specific options (required params enforced at compile time)
+        ws.connect(V1ConnectOptions.builder()
+            .model(ListenV1Model.NOVA3)
+            .encoding(ListenV1Encoding.LINEAR16)
+            .sampleRate(16000)
+            .build());
+
+        // Stream audio and disconnect
+        ws.sendMedia(audioBytes);
+        ws.disconnect();
+        ```
+
+        **Query parameters move from constructor to `connect()`**. The factory
+        method (`client.listen().v1WebSocket()`) now takes no channel-specific
+        arguments. All query parameters are passed via a builder-pattern
+        `ConnectOptions` object to `connect()`, matching the Python SDK's design.
+        Required parameters use staged builders so missing fields are caught at
+        compile time.
+
+        **`AutoCloseable`** — clients implement `AutoCloseable` for
+        try-with-resources, calling `disconnect()` automatically on scope exit.
+
+        **Configurable reconnection** — `reconnectOptions(ReconnectOptions)`
+        lets callers tune max retries, backoff delay, and queue size before
+        calling `connect()`.
+
+        **Generic `onMessage(Consumer<String>)` handler** — fires for every
+        incoming text frame with the raw JSON string, before type-specific
+        dispatch. Useful for logging or custom routing.
+
+        **Binary WebSocket support** — channels that define binary messages
+        now generate typed send and receive methods. Binary frames queue
+        when disconnected and flush on reconnect, matching text behavior.
+
+        **Shared core types** — `DisconnectReason` and `WebSocketReadyState` are
+        generated once in the core package instead of duplicated as inner classes
+        inside every WebSocket client.
+
+        **Thread safety** — all handler fields are now `volatile` so handlers
+        registered from the main thread are visible to OkHttp callback threads.
+        Previously only `readyState` was volatile.
+
+        **`x-fern-sdk-method-name` support** — WebSocket send/receive methods
+        use the custom method name from the Fern config when set.
+
+        Also removes the deprecated `hasWebSocketInstance()` method and fires
+        `onError` for unrecognized incoming message types instead of silently
+        dropping them.
+      type: feat
+    - summary: |
+        Fix WebSocket `connect()` crashing with `NullPointerException` when the
+        environment URL uses `wss://` or `ws://` schemes. OkHttp's `HttpUrl.parse()`
+        only accepts `http`/`https`, so the client now rewrites the scheme before
+        parsing and null-checks the result.
+      type: fix
+    - summary: |
+        Fix WebSocket clients always calling `environment().getUrl()`, which
+        does not exist on multi-URL environment classes. The generator now
+        resolves the correct per-URL getter (e.g. `environment().getAgentURL()`)
+        based on the channel's `baseUrl` field in the IR, matching the pattern
+        already used by REST endpoints.
+      type: fix
+    - summary: |
+        Fix WebSocket clients not sending authentication headers when the
+        channel's `auth` field is false in the IR. Previously, headers were only
+        applied when `websocketChannel.getAuth()` was true. `connect()` now
+        unconditionally applies `clientOptions.headers()` to the upgrade request,
+        ensuring bearer tokens, API keys, and custom headers are always sent
+        regardless of the channel's auth configuration.
+      type: fix
+    - summary: |
+        Fix WebSocket message serialization wrapping every outgoing message in a
+        `{"type": "...", "body": {...}}` envelope and expecting the same format
+        for incoming messages. Messages are now serialized directly as flat JSON
+        (the discriminated union already contains the `type` field), and incoming
+        messages are deserialized from the root JSON object instead of extracting
+        a nested `body` sub-field.
+      type: fix
+    - summary: |
+        Fix binary file upload endpoints (`application/octet-stream`) serializing
+        the request body through Jackson, which corrupted binary data with JSON
+        string escaping. These endpoints now send raw bytes via
+        `InputStreamRequestBody`.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.44.6
+  changelogEntry:
+    - summary: |
+        Fix duplicate discriminator keys in union serialization. When a
+        discriminated union variant uses `@JsonUnwrapped` and the wrapped
+        object already contains the discriminant property (e.g., "type"),
+        the serialized JSON previously contained the key twice. The
+        generator now adds a field-level `@JsonIgnoreProperties` annotation
+        with `allowSetters = true` on `@JsonUnwrapped` fields to suppress
+        the duplicate during serialization while preserving deserialization.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.44.5
+  changelogEntry:
+    - summary: |
+        Fix floating-point serialization of integer-valued doubles. Values like
+        `24000.0` are now serialized as `24000` instead of `24000.0` in JSON
+        output. This prevents API rejections for fields defined as `type: number`
+        when the value happens to be a whole number. Non-integer double values
+        like `3.14` continue to serialize normally.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.44.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet compilation errors for objects with required fields
+        in staged builders. When an endpoint example omits a required property,
+        the snippet generator now fills in a type-appropriate default value
+        instead of producing an invalid `.builder().build()` call that skips
+        mandatory builder stages.
+      type: fix
+    - summary: |
+        Fix dynamic snippet builder ordering when default values are added for
+        missing required properties. Properties are now re-sorted to match schema
+        declaration order after defaults are injected, ensuring Java staged
+        builder method calls follow the correct sequence.
+      type: fix
+    - summary: |
+        Fix undiscriminated union variant matching selecting incorrect variants
+        when example data doesn't match. Required properties and their nested
+        types are now validated during matching, so variants with mismatched
+        enum values or missing required fields are correctly rejected.
+      type: fix
+    - summary: |
+        Fix hardcoded `com.seed.api.core.OptionalNullable` import in generated
+        README OptionalNullable documentation. The import now uses the correct
+        dynamic package name for the SDK being generated.
+      type: fix
+    - summary: |
+        Fix incorrect raw response type name in generated README. The "Access
+        Raw Response Data" section now uses the correct `{BaseNamePrefix}HttpResponse`
+        class name (e.g., `Auth0ApiHttpResponse`) instead of the endpoint-derived
+        name (e.g., `CreateHttpResponse`).
+      type: fix
+    - summary: |
+        Fix missing environment URL variables in generated README Usage example.
+        Builder parameters like `tenantDomain` from OpenAPI server URL templates
+        are now included in the Usage snippet alongside auth parameters.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.44.3
+  changelogEntry:
+    - summary: |
+        Fix auth header prefix missing trailing space.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.44.2
+  changelogEntry:
+    - summary: |
+        Generate named Java wrapper classes for unknown type aliases. Previously,
+        when an API schema had no `type` and no `properties` (representing an
+        "any" type), the generator dropped the named type definition and inlined
+        `Object` wherever it was referenced. Unknown type aliases now generate a
+        proper wrapper class (e.g. `DocumentedUnknownType`) based on
+        `java.lang.Object`, consistent with how other alias types are handled.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Fix `enable-forward-compatible-enums` config flag being ignored in
+        download files mode. The flag was missing from
+        `JavaSdkDownloadFilesCustomConfig`, so `enable-forward-compatible-enums: false`
+        in generators.yml had no effect when using `--local` generation.
+      type: fix
+  createdAt: "2026-03-14"
+  irVersion: 65
+
+- version: 3.44.0
+  changelogEntry:
+    - summary: |
+        Add `omit-fern-headers` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client compilation error when a server message type
+        produces the same method name as a lifecycle handler. For example,
+        a message type `error` generated `onError(Consumer<Error>)` which
+        clashed with the lifecycle `onError(Consumer<Exception>)` due to
+        Java generics type erasure. Colliding message handler methods are
+        now suffixed with `Message` (e.g. `onErrorMessage`).
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.42.9
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.10 to 7.5.11.
+      type: chore
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 3.42.8
+  changelogEntry:
+    - summary: |
+        Add `equals()`, `hashCode()`, and `toString()` methods to
+        interface-based discriminated union wrapper classes. Previously,
+        the outer wrapper class fell back to `Object.equals()` (reference
+        identity), breaking equality for any type that transitively
+        contained the union. The methods now delegate to the inner `Value`
+        field.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.7
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 3.42.5
+  changelogEntry:
+    - summary: |
+        Fix `custom-interceptors` support for OAuth staged builders. When
+        `custom-interceptors: true` is enabled, the `_Builder` inner class now
+        generates an `interceptors` field, `addInterceptor(Interceptor)` method,
+        and forwards interceptors to `_TokenAuth` and `_CredentialsAuth` via
+        `token()` and `credentials()` methods. Previously, only the root builder
+        received interceptor support, causing OAuth staged builders to lose
+        interceptor configuration.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 3.42.4
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 3.42.3
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.8 to 7.5.10 to fix
+        GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative
+        Linkpath).
+      type: chore
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 3.42.2
+  changelogEntry:
+    - summary: |
+        Fix `custom-plugins` configuration not being applied when running in
+        local/download-files mode (`fern generate --local`). The download-files
+        config class was missing the `customPlugins` field, causing the values
+        to be silently dropped during deserialization.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error for objects with many properties that exceed the
+        JVM 255-parameter-slot limit. Types like CMS-1500 claim forms caused
+        `too many parameters` javac errors. The generator now computes precise
+        JVM slot counts (`long`/`double` consume two slots, all other types one)
+        and, when the threshold is exceeded, generates a constructor that accepts
+        the Builder as a single parameter, keeping the public API unchanged.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add support for custom Gradle plugins via the `custom-plugins` configuration
+        option. Users can now specify custom Gradle plugins (with optional versions)
+        that will be added to the generated build.gradle file. Format:
+        `["plugin-id:version", "plugin-id"]`. Plugins are applied after built-in
+        plugins (java-library, maven-publish, spotless).
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+- version: 3.41.0
+  changelogEntry:
+    - summary: |
+        Add `custom-interceptors` configuration option for the Java SDK generator.
+        When enabled (`custom-interceptors: true` in `generators.yml`), the generated
+        client builder exposes an `addInterceptor(Interceptor)` method that allows SDK
+        users to add custom OkHttp interceptors. Interceptors are applied to the
+        OkHttpClient when the client is built. This enables use cases like PKCV (Public
+        Key Client Validation), custom request signing, and other HTTP-level
+        customizations via custom code protected by `.fernignore`.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for form-urlencoded request bodies: objects
+        now serialize as Java's `Map.toString()` format (`{key=value}`) instead
+        of JSON (`{"key":"value"}`), and ISO 8601 dates with zero seconds drop
+        the `:00` to match Java's `OffsetDateTime.toString()` output (e.g.
+        `2015-07-30T20:00Z` instead of `2015-07-30T20:00:00Z`).
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.8
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to convert RFC 2822 dates to ISO 8601 in both
+        the mock response body (served by MockWebServer) and the expected response
+        assertion. Previously, only the expected response was converted, leaving
+        RFC 2822 dates in the mock response which caused `DateTimeParseException`
+        during Jackson deserialization for fields typed as `dateTime` (not
+        `dateTimeRfc2822`). The conversion now happens upfront so a single
+        normalized resource file is shared by both mock setup and validation.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.7
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for URI and path paginated endpoints returning
+        wrong type. The published `@fern-fern/ir-sdk` doesn't include `uri`/`path`
+        as `Pagination` union members, so the raw IR JSON passes through
+        undeserialized with `_type` discriminant fields instead of `type`. The
+        generator now normalizes raw IR JSON (`_type` → `type`) before extracting
+        the pagination item type, so wire tests correctly use
+        `SyncPagingIterable<T>` instead of the raw response type.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for form-urlencoded request body encoding.
+        The generator now uses `+` for spaces (matching Java's `URLEncoder.encode()`)
+        instead of `%20` (from `encodeURIComponent`), serializes arrays as
+        `[val1, val2]` (matching Java's `List.toString()`), and serializes objects
+        as JSON strings.
+      type: fix
+    - summary: |
+        Fix wire test generation for RFC 2822 date fields. The expected response
+        body in wire tests now converts RFC 2822 dates (e.g.
+        `Thu, 30 Jul 2015 20:00:00 +0000`) to ISO 8601 with Z suffix (e.g.
+        `2015-07-30T20:00:00Z`) to match Jackson's `JavaTimeModule` serialization
+        of `OffsetDateTime`. The mock response body retains RFC 2822 dates since
+        the SDK's `Rfc2822DateTimeDeserializer` handles them correctly.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for URI and path paginated endpoints. The generated
+        wire tests incorrectly used the raw response type (e.g. `ListMessagesResponse`)
+        instead of the paginated return type (`SyncPagingIterable<T>`) for endpoints
+        using URI or path-based pagination, causing compilation failures.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 3.40.4
   changelogEntry:
     - summary: |

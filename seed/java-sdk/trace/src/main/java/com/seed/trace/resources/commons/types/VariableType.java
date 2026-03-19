@@ -131,6 +131,22 @@ public final class VariableType {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof VariableType && value.equals(((VariableType) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -297,6 +313,7 @@ public final class VariableType {
     @JsonIgnoreProperties("type")
     private static final class ListTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ListType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -336,6 +353,7 @@ public final class VariableType {
     @JsonIgnoreProperties("type")
     private static final class MapTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private MapType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

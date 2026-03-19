@@ -26,6 +26,14 @@ inputs:
     description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
     required: false
     default: '["seed/*/.mock/*"]'
+  allow-unexpected-failures:
+    description: "Whether to allow unexpected failures during seed generation"
+    required: false
+    default: "false"
+  skip-git-diff-check:
+    description: "Whether to skip the git diff check (used by auto-update-seed where changes are expected)"
+    required: false
+    default: "false"
 
 outputs:
   start_time:
@@ -60,7 +68,7 @@ runs:
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Run seed
       uses: ./.github/actions/cached-seed
@@ -69,6 +77,7 @@ runs:
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
         skip-scripts: ${{ inputs.skip-scripts }}
+        allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
 
     - name: Summarize Test Results
       if: always() && !cancelled()
@@ -102,27 +111,6 @@ runs:
       shell: bash
       run: |
         echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
-
-    # Fail CI if seed produced changes to any git-tracked files (excluding known non-deterministic paths like .mock and lock files)
-    - name: Ensure no pending git changes
-      if: always() && !cancelled()
-      shell: bash
-      run: |
-        # Parse JSON array and build exclude arguments
-        JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
-        EXCLUDE_ARGS=()
-        while IFS= read -r EXCLUDE_PATTERN; do
-          EXCLUDE_ARGS+=(":(exclude)${EXCLUDE_PATTERN}")
-        done < <(echo "${JSON_INPUT}" | jq -c -r '.[]')
-
-        if ! git --no-pager diff --exit-code --quiet -- "${EXCLUDE_ARGS[@]}"; then
-          echo "::error::Seed generation produced changes to git-tracked files. Please run seed locally and commit the changes."
-          echo "Showing first 200 lines of diff:"
-          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -200 || true
-          exit 1
-        else
-          echo "No pending git changes after seed generation."
-        fi
 
     # Run after seed is built, do this separately so we can keep seed time collection limited to seed generation
     # Note: tests failing can be a cause of this reporting as non-deterministic

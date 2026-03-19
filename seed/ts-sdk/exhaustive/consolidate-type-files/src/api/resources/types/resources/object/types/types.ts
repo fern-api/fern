@@ -62,3 +62,20 @@ export interface ObjectWithDatetimeLikeString {
 export interface ObjectWithUnknownField {
     unknown?: unknown | undefined;
 }
+
+/**
+ * Tests that unknown types are able to preserve their type names.
+ */
+export interface ObjectWithDocumentedUnknownType {
+    documentedUnknownType?: SeedExhaustive.types.DocumentedUnknownType | undefined;
+}
+
+/**
+ * Tests that unknown types are able to preserve their docstrings.
+ */
+export type DocumentedUnknownType = unknown;
+
+/**
+ * Tests that map value types with unknown types don't get spurious | undefined.
+ */
+export type MapOfDocumentedUnknownType = Record<string, SeedExhaustive.types.DocumentedUnknownType>;

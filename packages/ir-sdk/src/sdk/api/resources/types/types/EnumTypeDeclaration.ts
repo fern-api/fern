@@ -5,4 +5,11 @@ import type * as FernIr from "../../../index.js";
 export interface EnumTypeDeclaration {
     default: FernIr.EnumValue | undefined;
     values: FernIr.EnumValue[];
+    /**
+     * If true, the enum is forward-compatible (i.e., the API may return values
+     * not listed in `values`). This is inferred from OpenAPI specs that express
+     * an enum as `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from
+     * Fern Definition enums marked with `forward-compatible: true`.
+     */
+    forwardCompatible: boolean | undefined;
 }

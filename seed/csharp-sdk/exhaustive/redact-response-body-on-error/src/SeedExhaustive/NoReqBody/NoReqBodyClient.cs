@@ -6,7 +6,7 @@ namespace SeedExhaustive;
 
 public partial class NoReqBodyClient : INoReqBodyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NoReqBodyClient(RawClient client)
     {
@@ -38,7 +38,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -64,7 +66,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -98,7 +102,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -124,7 +130,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

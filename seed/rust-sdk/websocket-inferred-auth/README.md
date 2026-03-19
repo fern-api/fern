@@ -12,6 +12,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Usage](#usage)
 - [Errors](#errors)
 - [Request Types](#request-types)
+- [Websockets](#websockets)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -95,6 +96,38 @@ use seed_websocket_auth::prelude::{*};
 let request = GetTokenRequest {
     ...
 };
+```
+
+## Websockets
+
+The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
+
+```rust
+use seed_websocket_auth::prelude::*;
+
+let config = ClientConfig {
+    base_url: " ".to_string(),
+    api_key: Some("your-api-key".to_string())
+};
+let client = WebsocketAuthClient::new(config).expect("Failed to build client");
+
+// Connect to the WebSocket
+let mut realtime = client.realtime.connect(
+    "session_id",
+    None,
+    None,
+).await.expect("Failed to connect");
+
+// Iterate over messages as they arrive
+while let Some(Ok(message)) = realtime.recv().await {
+    println!("{:?}", message);
+}
+
+// Send a message
+realtime.send_send(&SendEvent { /* fields */ }).await.expect("Failed to send");
+
+// Close the connection when done
+realtime.close().await.expect("Failed to close");
 ```
 
 ## Advanced

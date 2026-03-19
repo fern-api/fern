@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using SeedWebsocket.Core;
 using SeedWebsocket.Core.WebSockets;
 
@@ -46,22 +45,10 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
-    /// Event handler for TranscriptEvent.
-    /// Use TranscriptEvent.Subscribe(...) to receive messages.
+    /// Event handler for ErrorEvent.
+    /// Use ErrorEvent.Subscribe(...) to receive messages.
     /// </summary>
-    public readonly Event<TranscriptEvent> TranscriptEvent = new();
-
-    /// <summary>
-    /// Event handler for FlushedEvent.
-    /// Use FlushedEvent.Subscribe(...) to receive messages.
-    /// </summary>
-    public readonly Event<FlushedEvent> FlushedEvent = new();
-
-    /// <summary>
-    /// Event handler for unknown/unrecognized message types.
-    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
-    /// </summary>
-    public readonly Event<JsonElement> UnknownMessage = new();
+    public readonly Event<ErrorEvent> ErrorEvent = new();
 
     /// <summary>
     /// Constructor with options
@@ -110,9 +97,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         ReceiveSnakeCase.Dispose();
         ReceiveEvent2.Dispose();
         ReceiveEvent3.Dispose();
-        TranscriptEvent.Dispose();
-        FlushedEvent.Dispose();
-        UnknownMessage.Dispose();
+        ErrorEvent.Dispose();
     }
 
     /// <summary>
@@ -120,11 +105,8 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var message = await JsonSerializer.DeserializeAsync<IncomingMessage>(
-            stream,
-            JsonOptions.JsonSerializerOptions
-        );
-        if (message == null)
+        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        if (json == null)
         {
             await ExceptionOccurred
                 .RaiseEvent(new Exception("Invalid message - Not valid JSON"))
@@ -132,53 +114,50 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             return;
         }
 
-        if (message.Type == "ReceiveEvent")
+        // deserialize the message to find the correct event
         {
-            await ReceiveEvent.RaiseEvent((ReceiveEvent)message.Value!).ConfigureAwait(false);
-            return;
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent? message))
+            {
+                await ReceiveEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
         }
 
-        if (message.Type == "ReceiveSnakeCase")
         {
-            await ReceiveSnakeCase
-                .RaiseEvent((ReceiveSnakeCase)message.Value!)
-                .ConfigureAwait(false);
-            return;
+            if (JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message))
+            {
+                await ReceiveSnakeCase.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
         }
 
-        if (message.Type == "ReceiveEvent2")
         {
-            await ReceiveEvent2.RaiseEvent((ReceiveEvent2)message.Value!).ConfigureAwait(false);
-            return;
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent2? message))
+            {
+                await ReceiveEvent2.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
         }
 
-        if (message.Type == "ReceiveEvent3")
         {
-            await ReceiveEvent3.RaiseEvent((ReceiveEvent3)message.Value!).ConfigureAwait(false);
-            return;
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
+            {
+                await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
         }
 
-        if (message.Type == "TranscriptEvent")
         {
-            await TranscriptEvent.RaiseEvent((TranscriptEvent)message.Value!).ConfigureAwait(false);
-            return;
+            if (JsonUtils.TryDeserialize(json, out ErrorEvent? message))
+            {
+                await ErrorEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
         }
 
-        if (message.Type == "FlushedEvent")
-        {
-            await FlushedEvent.RaiseEvent((FlushedEvent)message.Value!).ConfigureAwait(false);
-            return;
-        }
-
-        await UnknownMessage.RaiseEvent((JsonElement)message.Value!).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// Serializes and sends a JSON message to the server
-    /// </summary>
-    private async Task SendJsonAsync(object message)
-    {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await ExceptionOccurred
+            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -222,7 +201,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent message)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -230,7 +209,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendSnakeCase message)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -238,81 +217,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent2 message)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
-    }
-
-    [JsonConverter(typeof(RealtimeApi.IncomingMessage.JsonConverter))]
-    internal class IncomingMessage
-    {
-        /// <summary>
-        /// Sentinel value for unknown/unrecognized event types
-        /// </summary>
-        internal static readonly string _unknownType = "_unknown";
-
-        private IncomingMessage(string type, object? value)
-        {
-            Type = type;
-            Value = value;
-        }
-
-        /// <summary>
-        /// Type discriminator
-        /// </summary>
-        internal string Type { get; }
-
-        /// <summary>
-        /// Union value
-        /// </summary>
-        internal object? Value { get; }
-
-        internal sealed class JsonConverter : JsonConverter<RealtimeApi.IncomingMessage>
-        {
-            public override RealtimeApi.IncomingMessage? Read(
-                ref Utf8JsonReader reader,
-                System.Type typeToConvert,
-                JsonSerializerOptions options
-            )
-            {
-                var document = JsonDocument.ParseValue(ref reader);
-
-                var types = new (string Key, System.Type Type)[]
-                {
-                    ("ReceiveEvent", typeof(ReceiveEvent)),
-                    ("ReceiveSnakeCase", typeof(ReceiveSnakeCase)),
-                    ("ReceiveEvent2", typeof(ReceiveEvent2)),
-                    ("ReceiveEvent3", typeof(ReceiveEvent3)),
-                    ("TranscriptEvent", typeof(TranscriptEvent)),
-                    ("FlushedEvent", typeof(FlushedEvent)),
-                };
-
-                foreach (var (key, type) in types)
-                {
-                    try
-                    {
-                        var value = document.Deserialize(type, options);
-                        if (value != null)
-                        {
-                            return new IncomingMessage(key, value);
-                        }
-                    }
-                    catch (JsonException) { }
-                }
-
-                return new IncomingMessage(_unknownType, document.RootElement.Clone());
-            }
-
-            public override void Write(
-                Utf8JsonWriter writer,
-                RealtimeApi.IncomingMessage value,
-                JsonSerializerOptions options
-            )
-            {
-                if (value.Value != null)
-                {
-                    JsonSerializer.Serialize(writer, value.Value, value.Value.GetType(), options);
-                }
-            }
-        }
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>

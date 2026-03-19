@@ -237,6 +237,7 @@ export class UnionGenerator {
 
         // Generate variant attributes
         const variantAttributes = this.generateVariantAttributes(unionType, variantName);
+
         variantAttributes.forEach((attr) => {
             writer.write("    ");
             attr.write(writer);

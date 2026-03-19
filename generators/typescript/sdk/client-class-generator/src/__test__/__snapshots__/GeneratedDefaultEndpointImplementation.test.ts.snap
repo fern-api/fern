@@ -1,0 +1,104 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedDefaultEndpointImplementation > getDocs > generates docs with endpoint docs and parameter docs 1`] = `
+"Fetches a user by ID.
+
+@param {string} userId - The user's unique identifier.
+@param {RequestOptions} requestOptions - Request-specific configuration."
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getDocs > generates docs with no endpoint docs (params only) 1`] = `
+"@param {number} id
+@param {RequestOptions} requestOptions - Request-specific configuration."
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getDocs > generates multiline parameter docs with proper indentation 1`] = `
+"@param {Options} options - Configuration options.
+                           Includes timeout and retry settings.
+                           See docs for details.
+@param {RequestOptions} requestOptions - Request-specific configuration."
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getExample > returns endpoint invocation example 1`] = `"await client.service.testEndpoint("example-arg")"`;
+
+exports[`GeneratedDefaultEndpointImplementation > getSignature > returns custom pager return type when custom pagination present 1`] = `"core.CustomPager<Item, ListResponse>"`;
+
+exports[`GeneratedDefaultEndpointImplementation > getSignature > returns paginated return type when cursor pagination present 1`] = `"core.Page<Item, ListResponse>"`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates basic endpoint body (no pagination) 1`] = `
+"const _headers = {};
+const _response = await this._options.fetcher.fetch({});
+return _response.body;"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates cursor pagination body with requestParameter 1`] = `
+"const list = core.HttpResponsePromise.interceptFunction(async (request: ListUsersRequest): Promise<core.RawResponse.WithRawResponse<void>> => { const _response = await this._options.fetcher.fetch({}); return _response.body; });
+const dataWithRawResponse = await list(request).withRawResponse();
+return new core.Page({});"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates custom pagination body with sendRequest and CustomPager 1`] = `
+"const _request = {
+    url: core.urlJoin(this._options.baseUrl, "/test"),
+    method: "POST",
+    timeoutMs: (this._options.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+    maxRetries: this._options.maxRetries ?? this._options?.maxRetries,
+    abortSignal: requestOptions?.abortSignal
+};
+const _sendRequest = async (request: core.Fetcher.Args) => {
+    const _response = await core.fetcher<void>(request);
+    if (_response.ok) {
+        return _response;
+    }
+};
+return core.CustomPager.create({});"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates endpoint body with endpoint metadata 1`] = `
+"const _metadata: core.EndpointMetadata = { security: undefined };
+const _response = await this._options.fetcher.fetch({});
+return _response.body;"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates offset pagination body with initializeOffset 1`] = `
+"const list = core.HttpResponsePromise.interceptFunction(async (request: ListUsersRequest): Promise<core.RawResponse.WithRawResponse<void>> => { const _response = await this._options.fetcher.fetch({}); return _response.body; });
+let _offset = 0;
+const dataWithRawResponse = await list(request).withRawResponse();
+return new core.Page({});"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates offset-step pagination body 1`] = `
+"const list = core.HttpResponsePromise.interceptFunction(async (request: ListUsersRequest): Promise<core.RawResponse.WithRawResponse<void>> => { const _response = await this._options.fetcher.fetch({}); return _response.body; });
+let _page = 1;
+const dataWithRawResponse = await list(request).withRawResponse();
+return new core.Page({});"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > includeCredentialsOnCrossOriginRequests > adds withCredentials to fetcher args when enabled 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response.body;"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > invokeFetcherAndReturnResponse > generates fetcher invocation and response handling 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response.body;"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > maybeLeverageInvocation > returns pagination leverage code when pagination and generatePaginatedClients are both set 1`] = `
+"const pageableResponse = result;
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+// Or you can manually iterate page-by-page
+let page = result;
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+// You can also access the underlying response
+const response = page.response;"
+`;
+
+exports[`GeneratedDefaultEndpointImplementation > text response type > sets responseType to text for text response endpoints 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response.body;"
+`;

@@ -1,11 +1,11 @@
 import { docsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, dirname, join as fsUtilsJoin, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import type { Root as HastRoot } from "hast";
-
 import { getFavicon } from "./extract/favicon.js";
 import { getTitle } from "./extract/title.js";
 import { parsePage } from "./parse/parsePage.js";
@@ -17,7 +17,6 @@ import { getColors } from "./utils/colors.js";
 import { getLogos } from "./utils/files/logo.js";
 import { htmlToHast } from "./utils/hast.js";
 import { fetchPageHtml, startPuppeteer } from "./utils/network.js";
-
 export declare namespace ReadmeImporter {
     interface Args {
         context: TaskContext;
@@ -161,9 +160,7 @@ export class ReadmeImporter extends DocsImporter<object> {
 
             return navItems;
         } catch (error) {
-            this.logger.error(
-                `Failed to scrape tab ${name}: ${error instanceof Error ? error.message : String(error)}`
-            );
+            this.logger.error(`Failed to scrape tab ${name}: ${extractErrorMessage(error)}`);
             if (error instanceof Error && error.stack) {
                 this.logger.error(`Stack trace: ${error.stack}`);
             }

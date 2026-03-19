@@ -203,17 +203,21 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName
+    workspaceName,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members */
+    lenient?: boolean;
 }): Promise<WorkspaceLoader.Result> {
     const [generatorsConfiguration, changelog] = await Promise.all([
         loadGeneratorsConfiguration({
             absolutePathToWorkspace,
-            context
+            context,
+            lenient
         }),
         loadAPIChangelog({ absolutePathToWorkspace }).catch(() => undefined)
     ]);
@@ -338,7 +342,7 @@ export async function loadAPIWorkspace({
     // check if directory is empty
     if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const apiFolderName = absolutePathToWorkspace.split("/").pop();
-        context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
+        context.logger.warn(`Detected empty API definition: ${apiFolderName}. Remove to resolve error.`);
     }
 
     // Build a detailed diagnostic message so users know exactly what was checked

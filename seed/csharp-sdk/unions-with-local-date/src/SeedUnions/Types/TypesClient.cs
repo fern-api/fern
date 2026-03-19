@@ -5,7 +5,7 @@ namespace SeedUnions;
 
 public partial class TypesClient : ITypesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TypesClient(RawClient client)
     {
@@ -38,7 +38,9 @@ public partial class TypesClient : ITypesClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UnionWithTime>(responseBody)!;
@@ -64,7 +66,9 @@ public partial class TypesClient : ITypesClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -100,7 +104,9 @@ public partial class TypesClient : ITypesClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -126,7 +132,9 @@ public partial class TypesClient : ITypesClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

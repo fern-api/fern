@@ -46,6 +46,7 @@ type StreamParams struct {
 	ErrorDecoder       ErrorDecoder
 	Format             core.StreamFormat
 	EventDiscriminator string
+	MaxBufSize         int
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -92,12 +93,12 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, decodeError(resp, params.ErrorDecoder)
 	}
 
@@ -116,6 +117,9 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	}
 	if params.EventDiscriminator != "" {
 		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
+	}
+	if params.MaxBufSize > 0 {
+		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
 	return core.NewStream[T](resp, opts...), nil

@@ -8,9 +8,8 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import realtime
     from .client import AsyncSeedWebsocket, SeedWebsocket
-    from .environment import SeedWebsocketEnvironment
     from .realtime import (
-        FlushedEvent,
+        ErrorEvent,
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -18,22 +17,19 @@ if typing.TYPE_CHECKING:
         SendEvent,
         SendEvent2,
         SendSnakeCase,
-        TranscriptEvent,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocket": ".client",
-    "FlushedEvent": ".realtime",
+    "ErrorEvent": ".realtime",
     "ReceiveEvent": ".realtime",
     "ReceiveEvent2": ".realtime",
     "ReceiveEvent3": ".realtime",
     "ReceiveSnakeCase": ".realtime",
     "SeedWebsocket": ".client",
-    "SeedWebsocketEnvironment": ".environment",
     "SendEvent": ".realtime",
     "SendEvent2": ".realtime",
     "SendSnakeCase": ".realtime",
-    "TranscriptEvent": ".realtime",
     "__version__": ".version",
     "realtime": ".realtime",
 }
@@ -62,17 +58,15 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedWebsocket",
-    "FlushedEvent",
+    "ErrorEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
     "ReceiveSnakeCase",
     "SeedWebsocket",
-    "SeedWebsocketEnvironment",
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
-    "TranscriptEvent",
     "__version__",
     "realtime",
 ]

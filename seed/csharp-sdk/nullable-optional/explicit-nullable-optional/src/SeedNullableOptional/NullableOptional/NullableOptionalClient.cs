@@ -5,7 +5,7 @@ namespace SeedNullableOptional;
 
 public partial class NullableOptionalClient : INullableOptionalClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NullableOptionalClient(RawClient client)
     {
@@ -41,7 +41,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UserResponse>(responseBody)!;
@@ -67,7 +69,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -103,7 +107,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UserResponse>(responseBody)!;
@@ -129,7 +135,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -169,7 +177,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UserResponse>(responseBody)!;
@@ -195,7 +205,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -238,7 +250,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
@@ -264,7 +278,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -307,7 +323,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
@@ -333,7 +351,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -369,7 +389,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
@@ -395,7 +417,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -433,7 +457,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
@@ -459,7 +485,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -499,7 +527,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
@@ -525,7 +555,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -561,7 +593,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<DeserializationTestResponse>(
@@ -589,7 +623,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -634,7 +670,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
@@ -660,7 +698,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -698,7 +738,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
@@ -724,7 +766,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -764,7 +808,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
@@ -790,7 +836,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -826,7 +874,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
@@ -852,7 +902,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNullableOptionalApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

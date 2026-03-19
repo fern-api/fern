@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod api;
@@ -6,6 +7,7 @@ pub struct NestedClient {
     pub http_client: HttpClient,
     pub api: ApiClient,
 }
+
 impl NestedClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

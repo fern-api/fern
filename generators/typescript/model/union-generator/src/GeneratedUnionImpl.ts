@@ -431,6 +431,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             singleUnionType.getInterfaceDeclaration(context, this)
         );
 
+        // Collect interface names that shadow global TypeScript types.
+        // These interfaces are inside a namespace so they don't actually conflict at the
+        // top level, but property type references within sibling interfaces would resolve
+        // to the local interface instead of the global type (e.g., `value: Date` resolving
+        // to the union's `Date` variant instead of `globalThis.Date`).
+        const interfaceNames = new Set(interfaces.map((i) => i.name));
+        const shadowedGlobalTypes = GLOBAL_TS_TYPES.filter((t) => interfaceNames.has(t));
+
         for (const interface_ of interfaces) {
             const hasBaseInterfaces = this.hasBaseInterfaces(context);
             if (hasBaseInterfaces.normal) {
@@ -469,7 +477,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 name: interface_.name,
                 isExported: true,
                 extends: interface_.extends.map((e) => getTextOfTsNode(e.typeNode)),
-                properties: interface_.properties.map((p) => p.property)
+                properties: interface_.properties.map((p) =>
+                    qualifyShadowedGlobalTypes(p.property, shadowedGlobalTypes)
+                )
             });
             if (interface_.module) {
                 statements.push(interface_.module);
@@ -501,7 +511,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                             name: "Request",
                             isExported: true,
                             extends: requestExtends.map((e) => getTextOfTsNode(e)),
-                            properties: requestProperties.map((p) => p.requestProperty ?? p.property)
+                            properties: requestProperties.map((p) =>
+                                qualifyShadowedGlobalTypes(p.requestProperty ?? p.property, shadowedGlobalTypes)
+                            )
                         });
                     }
                     if (anyResponseExtends || anyWriteonlyProperties || anyResponseProperties) {
@@ -510,7 +522,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                             name: "Response",
                             isExported: true,
                             extends: responseExtends.map((e) => getTextOfTsNode(e)),
-                            properties: responseProperties.map((p) => p.responseProperty ?? p.property)
+                            properties: responseProperties.map((p) =>
+                                qualifyShadowedGlobalTypes(p.responseProperty ?? p.property, shadowedGlobalTypes)
+                            )
                         });
                     }
 
@@ -892,4 +906,43 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         }
         return singleUnionType;
     }
+}
+
+/**
+ * Global TypeScript types that can be shadowed by union member interfaces
+ * declared inside a namespace. When a union has a variant named e.g. "Date",
+ * the generated `export interface Date { ... }` inside the namespace shadows
+ * `globalThis.Date`. If a sibling interface references `Date` as a property
+ * type, it would incorrectly resolve to the local interface instead of the
+ * global built-in.
+ */
+const GLOBAL_TS_TYPES: string[] = ["Date", "Error", "Object", "File", "Record", "Map", "Set", "Promise", "Array"];
+
+/**
+ * Post-processes a property signature to qualify any type references that would
+ * be shadowed by sibling union member interfaces. For example, if the union has
+ * a `Date` interface, a property typed as `Date` becomes `globalThis.Date`.
+ */
+function qualifyShadowedGlobalTypes(
+    property: PropertySignatureStructure,
+    shadowedGlobalTypes: string[]
+): PropertySignatureStructure {
+    if (shadowedGlobalTypes.length === 0 || property.type == null || typeof property.type !== "string") {
+        return property;
+    }
+
+    let typeText = property.type;
+    for (const globalType of shadowedGlobalTypes) {
+        // Replace standalone occurrences of the global type name with globalThis-qualified version.
+        // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
+        // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
+        const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
+        typeText = typeText.replace(pattern, `globalThis.${globalType}`);
+    }
+
+    if (typeText === property.type) {
+        return property;
+    }
+
+    return { ...property, type: typeText };
 }

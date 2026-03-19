@@ -37,10 +37,11 @@ Instantiate and use the client with the following:
 from seed import SeedBasicAuth
 
 client = SeedBasicAuth(
-    username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    username="<username>",
+    password="<password>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.basic_auth.post_with_basic_auth(
     request={"key": "value"},
 )
@@ -56,8 +57,8 @@ import asyncio
 from seed import AsyncSeedBasicAuth
 
 client = AsyncSeedBasicAuth(
-    username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    username="<username>",
+    password="<password>",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -96,9 +97,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedBasicAuth
 
-client = SeedBasicAuth(
-    ...,
-)
+client = SeedBasicAuth(...)
 response = client.basic_auth.with_raw_response.post_with_basic_auth(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -130,14 +129,9 @@ client.basic_auth.post_with_basic_auth(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedBasicAuth
 
-client = SeedBasicAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedBasicAuth(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.basic_auth.post_with_basic_auth(..., request_options={

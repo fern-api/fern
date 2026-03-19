@@ -67,6 +67,10 @@ export class PaginationValidator {
             return this.extractPath(endpoint.pagination.results);
         } else if (endpoint.pagination.type === "offset") {
             return this.extractPath(endpoint.pagination.results);
+        } else if (endpoint.pagination.type === "uri") {
+            return this.extractPath(endpoint.pagination.results);
+        } else if (endpoint.pagination.type === "path") {
+            return this.extractPath(endpoint.pagination.results);
         } else if (endpoint.pagination.type === "custom") {
             return undefined;
         }

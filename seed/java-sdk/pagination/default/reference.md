@@ -21,9 +21,9 @@ client.complex().search(
             SearchRequestQuery.of(
                 SingleFilterSearchRequest
                     .builder()
-                    .field("field")
-                    .operator(SingleFilterSearchRequestOperator.EQUALS)
-                    .value("value")
+                    .field(Optional.of("field"))
+                    .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                    .value(Optional.of("value"))
                     .build()
             )
         )

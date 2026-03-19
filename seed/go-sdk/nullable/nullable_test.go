@@ -1013,7 +1013,7 @@ func TestSettersUser(t *testing.T) {
 
 	t.Run("SetStrings", func(t *testing.T) {
 		obj := &User{}
-		var fernTestValueStrings map[string]interface{}
+		var fernTestValueStrings map[string]any
 		obj.SetStrings(fernTestValueStrings)
 		assert.Equal(t, fernTestValueStrings, obj.Strings)
 		assert.NotNil(t, obj.explicitFields)
@@ -1227,7 +1227,7 @@ func TestGettersUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Strings = expected
 
 		// Act & Assert
@@ -1480,7 +1480,7 @@ func TestSettersMarkExplicitUser(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var fernTestValueStrings map[string]interface{}
+		var fernTestValueStrings map[string]any
 
 		// Act
 		obj.SetStrings(fernTestValueStrings)

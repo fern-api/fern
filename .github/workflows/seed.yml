@@ -48,150 +48,14 @@ jobs:
             echo "Will not collect metrics on this run"
           fi
 
-  changes:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [setup]
-    strategy:
-      matrix:
-        generator-name: [seed, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
-        include:
-          - files: |
-              packages/seed/
-              packages/ir-sdk/fern/apis/
-              packages/cli/generation/ir-generator/
-              test-definitions/
-              test-definitions-openapi/
-            generator-name: seed
-          - files: |
-              generators/ruby-v2/
-              seed/ruby-sdk-v2/seed.yml
-            generator-name: ruby-v2
-          - files: |
-              generators/openapi/
-              seed/openapi/seed.yml
-            generator-name: openapi
-          - files: |
-              generators/python/
-              generators/python-v2/
-              seed/pydantic/seed.yml
-              seed/pydantic-v2/seed.yml
-              seed/python-sdk/seed.yml
-              seed/fastapi/seed.yml
-            generator-name: python
-          - files: |
-              generators/postman/
-              seed/postman/seed.yml
-            generator-name: postman
-          - files: |
-              generators/java/
-              generators/java-v2/
-              seed/java-sdk/seed.yml
-              seed/java-model/seed.yml
-              seed/java-spring/seed.yml
-            generator-name: java
-          - files: |
-              generators/typescript/
-              generators/typescript-v2/
-              seed/ts-sdk/seed.yml
-              seed/ts-express/seed.yml
-            generator-name: typescript
-          - files: |
-              generators/go/
-              generators/go-v2/
-              seed/go-sdk/seed.yml
-              seed/go-model/seed.yml
-            generator-name: go
-          - files: |
-              generators/csharp/
-              seed/csharp-sdk/seed.yml
-              seed/csharp-model/seed.yml
-            generator-name: csharp
-          - files: |
-              generators/php/
-              seed/php-sdk/seed.yml
-              seed/php-model/seed.yml
-            generator-name: php
-          - files: |
-              generators/swift/
-              seed/swift-sdk/seed.yml
-            generator-name: swift
-          - files: |
-              generators/rust/
-              seed/rust-model/seed.yml
-              seed/rust-sdk/seed.yml
-            generator-name: rust
-    outputs:
-      seed: ${{ steps.set-output.outputs.seed-changes }}
-      ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
-      openapi: ${{ steps.set-output.outputs.openapi-changes }}
-      python: ${{ steps.set-output.outputs.python-changes }}
-      postman: ${{ steps.set-output.outputs.postman-changes }}
-      java: ${{ steps.set-output.outputs.java-changes }}
-      typescript: ${{ steps.set-output.outputs.typescript-changes }}
-      go: ${{ steps.set-output.outputs.go-changes }}
-      csharp: ${{ steps.set-output.outputs.csharp-changes }}
-      php: ${{ steps.set-output.outputs.php-changes }}
-      swift: ${{ steps.set-output.outputs.swift-changes }}
-      rust: ${{ steps.set-output.outputs.rust-changes }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            ${{ matrix.files }}
-            .github/
-          fetch-tags: false
-
-      - name: Get base SHA for change detection
-        id: get-base-sha
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Use the PR base SHA directly from the event - no git fetch needed
-            echo "Using PR base SHA: ${{ github.event.pull_request.base.sha }}"
-            echo "base_sha=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
-          else
-            LAST_SUCCESS_SHA=$(gh api \
-              "/repos/${{ github.repository }}/actions/workflows/seed.yml/runs?branch=main&status=success&per_page=1" \
-              --jq '.workflow_runs[0].head_sha // empty' 2>/dev/null || echo "")
-
-            if [[ -n "$LAST_SUCCESS_SHA" ]]; then
-              echo "Last successful run SHA: $LAST_SUCCESS_SHA"
-              echo "base_sha=$LAST_SUCCESS_SHA" >> $GITHUB_OUTPUT
-            else
-              echo "No successful run found, using default change detection"
-              echo "base_sha=" >> $GITHUB_OUTPUT
-            fi
-          fi
-
-      - name: Get generator changes for ${{ matrix.generator-name }}
-        id: get-generator-changes
-        uses: ./.github/actions/check-for-changed-files
-        with:
-          base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
-          files: ${{ matrix.files }}
-
-      - name: Set output
-        id: set-output
-        run: |
-          if [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
-            echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
-            echo "Forced changes to true to collect metrics data."
-          else
-            echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
-            echo "Set changes according to output of get-generator-changes step"
-          fi
-
   check-orphaned-seed-folders:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [changes]
-    if: ${{ needs.changes.outputs.seed == 'true' || github.event_name == 'workflow_dispatch' }}
+    needs: [get-all-test-matrices]
+    if: ${{ needs.get-all-test-matrices.outputs.seed-infrastructure-changed == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -206,7 +70,9 @@ jobs:
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: [setup]
     outputs:
+      seed-infrastructure-changed: ${{ steps.detect-affected.outputs.seed-infrastructure-changed }}
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
       pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
@@ -229,7 +95,7 @@ jobs:
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -238,7 +104,7 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -252,34 +118,144 @@ jobs:
           FORCE_COLOR: "2"
         run: pnpm seed:build
 
+      - name: Detect affected generators and fixtures
+        id: detect-affected
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Determine base ref for affected detection.
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            # Use the PR base SHA from the event payload and fetch only that
+            # specific commit. This is much faster than `git fetch --deepen=1`
+            # which negotiates the entire repo graph (~4 min on this repo).
+            BASE_REF="${{ github.event.pull_request.base.sha }}"
+            echo "Using PR base SHA: $BASE_REF"
+            # Fetch just the base commit so git diff can reach it
+            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
+          else
+            # For push/dispatch/workflow_call: use last successful run SHA
+            LAST_SUCCESS_SHA=$(gh api \
+              "/repos/${{ github.repository }}/actions/workflows/seed.yml/runs?branch=main&status=success&per_page=1" \
+              --jq '.workflow_runs[0].head_sha // empty' 2>/dev/null || echo "")
+            if [[ -n "$LAST_SUCCESS_SHA" ]]; then
+              BASE_REF="$LAST_SUCCESS_SHA"
+              echo "Using last successful run SHA: $BASE_REF"
+              # Fetch just the target commit
+              git fetch --no-tags --depth=1 origin "$LAST_SUCCESS_SHA" 2>/dev/null || true
+            else
+              BASE_REF="origin/main"
+              echo "No successful run found, using origin/main"
+            fi
+          fi
+
+          # Force run everything for workflow_dispatch (manual trigger) and metrics collection
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Manual dispatch — forcing all generators and fixtures to run."
+            AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: workflow_dispatch event."]}'
+          elif [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
+            echo "Metrics collection mode — forcing all generators and fixtures to run."
+            AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: metrics collection mode."]}'
+          else
+            # Run affected detection (falls back to "run everything" on failure)
+            AFFECTED_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs affected --json --base-ref "$BASE_REF" 2>/dev/null || echo '{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Affected detection failed — running everything as fallback."]}')
+          fi
+
+          echo "=== Affected Detection Result ==="
+          echo "$AFFECTED_JSON" | jq .
+          echo "================================="
+
+          # Save to temp file for the matrix step
+          echo "$AFFECTED_JSON" > /tmp/affected.json
+
+          # Determine if seed infrastructure changed (for check-orphaned-seed-folders)
+          ALL_GENERATORS=$(echo "$AFFECTED_JSON" | jq -r '.allGeneratorsAffected')
+          ALL_FIXTURES=$(echo "$AFFECTED_JSON" | jq -r '.allFixturesAffected')
+          if [[ "$ALL_GENERATORS" == "true" && "$ALL_FIXTURES" == "true" ]]; then
+            echo "seed-infrastructure-changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "seed-infrastructure-changed=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Dynamic Matrix
         id: create-dynamic-matrix
         shell: bash
         run: |
           # List of all generators
           GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
-          
+
+          # Read affected detection result
+          AFFECTED_JSON=$(cat /tmp/affected.json)
+          ALL_GENERATORS_AFFECTED=$(echo "$AFFECTED_JSON" | jq -r '.allGeneratorsAffected')
+          ALL_FIXTURES_AFFECTED=$(echo "$AFFECTED_JSON" | jq -r '.allFixturesAffected')
+
           # Process each generator and set its output
           for GEN in $GENERATORS; do
-            # Query fixtures with auto-grouping (seed CLI calculates optimal group count)
+            # Check if this generator is affected
+            IS_AFFECTED=false
+            if [[ "$ALL_GENERATORS_AFFECTED" == "true" ]]; then
+              IS_AFFECTED=true
+            else
+              if echo "$AFFECTED_JSON" | jq -e --arg gen "$GEN" '.generators | index($gen)' > /dev/null 2>&1; then
+                IS_AFFECTED=true
+              fi
+            fi
+
+            if [[ "$IS_AFFECTED" != "true" ]]; then
+              echo "Skipping $GEN (not affected)"
+              echo "${GEN}-test-matrix=" >> $GITHUB_OUTPUT
+              continue
+            fi
+
+            # Get the full fixture matrix
             MATRIX=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator "$GEN" --groups auto)
-            
+
             if [ -z "$MATRIX" ] || [ "$MATRIX" = "null" ] || [ "$MATRIX" = "undefined" ]; then
               echo "Error: Failed to create matrix for $GEN"
               exit 1
             fi
-            
-            echo "${GEN}-test-matrix=$MATRIX" >> $GITHUB_OUTPUT
-            echo "Set output for $GEN: $MATRIX"
+
+            # Check if this generator needs all fixtures or only specific ones
+            NEEDS_ALL_FIXTURES=false
+            if [[ "$ALL_FIXTURES_AFFECTED" == "true" ]]; then
+              NEEDS_ALL_FIXTURES=true
+            else
+              if echo "$AFFECTED_JSON" | jq -e --arg gen "$GEN" '.generatorsWithAllFixtures | index($gen)' > /dev/null 2>&1; then
+                NEEDS_ALL_FIXTURES=true
+              fi
+            fi
+
+            if [[ "$NEEDS_ALL_FIXTURES" == "true" ]]; then
+              # Generator needs all fixtures — use full matrix
+              echo "${GEN}-test-matrix=$MATRIX" >> $GITHUB_OUTPUT
+              echo "Set output for $GEN: ALL fixtures"
+            else
+              # Generator needs only specific changed fixtures — filter the matrix
+              FILTERED_MATRIX=$(echo "$MATRIX" | jq -c --argjson affected "$(echo "$AFFECTED_JSON" | jq -c '.fixtures')" '
+                [.[] | .fixtures = [.fixtures[] |
+                  (if contains(":") then split(":")[0] else . end) as $name |
+                  select(any($affected[]; . == $name))
+                ] | select(.fixtures | length > 0)]
+              ')
+
+              if [[ "$FILTERED_MATRIX" == "[]" || -z "$FILTERED_MATRIX" ]]; then
+                echo "No affected fixtures for $GEN after filtering"
+                echo "${GEN}-test-matrix=" >> $GITHUB_OUTPUT
+              else
+                echo "${GEN}-test-matrix=$FILTERED_MATRIX" >> $GITHUB_OUTPUT
+                echo "Set output for $GEN: filtered fixtures"
+              fi
+            fi
           done
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.ruby-v2 == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+        (needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -289,7 +265,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -307,10 +283,10 @@ jobs:
   pydantic:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.pydantic != ''
+        (needs.get-all-test-matrices.outputs.pydantic != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -320,7 +296,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -337,10 +313,10 @@ jobs:
   python-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.python-sdk != ''
+        (needs.get-all-test-matrices.outputs.python-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -350,7 +326,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -368,10 +344,10 @@ jobs:
   fastapi:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.fastapi != ''
+        (needs.get-all-test-matrices.outputs.fastapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -381,7 +357,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -398,10 +374,10 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.openapi == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.openapi != ''
+        (needs.get-all-test-matrices.outputs.openapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -411,7 +387,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -428,10 +404,10 @@ jobs:
   postman:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.postman == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.postman != ''
+        (needs.get-all-test-matrices.outputs.postman != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -441,7 +417,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -458,10 +434,10 @@ jobs:
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-sdk != ''
+        (needs.get-all-test-matrices.outputs.java-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -471,7 +447,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -488,10 +464,10 @@ jobs:
   java-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-model != ''
+        (needs.get-all-test-matrices.outputs.java-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -501,7 +477,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -518,10 +494,10 @@ jobs:
   java-spring:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-spring != ''
+        (needs.get-all-test-matrices.outputs.java-spring != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -531,7 +507,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -548,10 +524,10 @@ jobs:
   ts-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ts-sdk != ''
+        (needs.get-all-test-matrices.outputs.ts-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -561,7 +537,7 @@ jobs:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -579,10 +555,10 @@ jobs:
   ts-express:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ts-express != ''
+        (needs.get-all-test-matrices.outputs.ts-express != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -592,7 +568,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -610,10 +586,10 @@ jobs:
   go-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-model != ''
+        (needs.get-all-test-matrices.outputs.go-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -623,7 +599,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -640,10 +616,10 @@ jobs:
   go-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-sdk != ''
+        (needs.get-all-test-matrices.outputs.go-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -653,7 +629,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -670,10 +646,10 @@ jobs:
   csharp-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.csharp-model != ''
+        (needs.get-all-test-matrices.outputs.csharp-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -683,7 +659,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -700,10 +676,10 @@ jobs:
   csharp-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.csharp-sdk != ''
+        (needs.get-all-test-matrices.outputs.csharp-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -713,7 +689,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -730,10 +706,10 @@ jobs:
   php-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.php-model != ''
+        (needs.get-all-test-matrices.outputs.php-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -743,7 +719,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -760,10 +736,10 @@ jobs:
   php-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.php-sdk != ''
+        (needs.get-all-test-matrices.outputs.php-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -773,7 +749,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -790,10 +766,10 @@ jobs:
   swift-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.swift == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.swift-sdk != ''
+        (needs.get-all-test-matrices.outputs.swift-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -803,7 +779,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -820,10 +796,10 @@ jobs:
   rust-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.rust-model != ''
+        (needs.get-all-test-matrices.outputs.rust-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -833,7 +809,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -850,10 +826,10 @@ jobs:
   rust-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.rust-sdk != ''
+        (needs.get-all-test-matrices.outputs.rust-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -863,7 +839,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -982,7 +958,7 @@ jobs:
   collect-allowed-failures:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [setup, changes, get-all-test-matrices]
+    needs: [setup, get-all-test-matrices]
     if: >-
       ${{
         always() && !cancelled() && needs.setup.outputs.post-metrics == 'true'
@@ -1096,7 +1072,7 @@ jobs:
       rust-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures-count }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -1105,7 +1081,7 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 

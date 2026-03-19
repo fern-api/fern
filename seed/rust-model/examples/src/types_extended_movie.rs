@@ -4,5 +4,6 @@ pub use crate::prelude::*;
 pub struct ExtendedMovie {
     #[serde(flatten)]
     pub movie_fields: Movie,
+    #[serde(default)]
     pub cast: Vec<String>,
 }

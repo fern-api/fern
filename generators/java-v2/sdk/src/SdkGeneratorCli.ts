@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
@@ -66,12 +67,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Successfully generated README.md");
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
@@ -79,12 +75,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 await this.generateReference({ context });
                 context.logger.debug("Successfully generated reference.md");
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
 
             try {
@@ -112,9 +103,11 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
-        const convertedIr = convertIr(dynamicIr);
+        // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+        // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+        // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
+        const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
             ir: convertedIr,
             config: context.config
         });
@@ -157,6 +150,11 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         context: SdkGeneratorContext;
         endpointSnippets: Endpoint[];
     }): Promise<void> {
+        const dynamicEndpoints = context.ir.dynamic?.endpoints;
+        if (!dynamicEndpoints || Object.keys(dynamicEndpoints).length === 0) {
+            context.logger.debug("No endpoints found; skipping README.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)

@@ -297,22 +297,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "CreateChatCompletionsStreamRequest",
+              "originalName": "CreateCompletionRequestStreaming",
               "camelCase": {
-                "unsafeName": "createChatCompletionsStreamRequest",
-                "safeName": "createChatCompletionsStreamRequest"
+                "unsafeName": "createCompletionRequestStreaming",
+                "safeName": "createCompletionRequestStreaming"
               },
               "snakeCase": {
-                "unsafeName": "create_chat_completions_stream_request",
-                "safeName": "create_chat_completions_stream_request"
+                "unsafeName": "create_completion_request_streaming",
+                "safeName": "create_completion_request_streaming"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
-                "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
+                "unsafeName": "CREATE_COMPLETION_REQUEST_STREAMING",
+                "safeName": "CREATE_COMPLETION_REQUEST_STREAMING"
               },
               "pascalCase": {
-                "unsafeName": "CreateChatCompletionsStreamRequest",
-                "safeName": "CreateChatCompletionsStreamRequest"
+                "unsafeName": "CreateCompletionRequestStreaming",
+                "safeName": "CreateCompletionRequestStreaming"
               }
             },
             "extends": [],
@@ -401,22 +401,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "CreateChatCompletionsStreamRequest",
+                "originalName": "CreateCompletionRequestStreaming",
                 "camelCase": {
-                  "unsafeName": "createChatCompletionsStreamRequest",
-                  "safeName": "createChatCompletionsStreamRequest"
+                  "unsafeName": "createCompletionRequestStreaming",
+                  "safeName": "createCompletionRequestStreaming"
                 },
                 "snakeCase": {
-                  "unsafeName": "create_chat_completions_stream_request",
-                  "safeName": "create_chat_completions_stream_request"
+                  "unsafeName": "create_completion_request_streaming",
+                  "safeName": "create_completion_request_streaming"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
-                  "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
+                  "unsafeName": "CREATE_COMPLETION_REQUEST_STREAMING",
+                  "safeName": "CREATE_COMPLETION_REQUEST_STREAMING"
                 },
                 "pascalCase": {
-                  "unsafeName": "CreateChatCompletionsStreamRequest",
-                  "safeName": "CreateChatCompletionsStreamRequest"
+                  "unsafeName": "CreateCompletionRequestStreaming",
+                  "safeName": "CreateCompletionRequestStreaming"
                 }
               },
               "bodyKey": {
@@ -994,22 +994,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "CreateChatCompletionsStreamRequest",
+              "originalName": "CreateCompletionRequestStreaming",
               "camelCase": {
-                "unsafeName": "createChatCompletionsStreamRequest",
-                "safeName": "createChatCompletionsStreamRequest"
+                "unsafeName": "createCompletionRequestStreaming",
+                "safeName": "createCompletionRequestStreaming"
               },
               "snakeCase": {
-                "unsafeName": "create_chat_completions_stream_request",
-                "safeName": "create_chat_completions_stream_request"
+                "unsafeName": "create_completion_request_streaming",
+                "safeName": "create_completion_request_streaming"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
-                "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
+                "unsafeName": "CREATE_COMPLETION_REQUEST_STREAMING",
+                "safeName": "CREATE_COMPLETION_REQUEST_STREAMING"
               },
               "pascalCase": {
-                "unsafeName": "CreateChatCompletionsStreamRequest",
-                "safeName": "CreateChatCompletionsStreamRequest"
+                "unsafeName": "CreateCompletionRequestStreaming",
+                "safeName": "CreateCompletionRequestStreaming"
               }
             },
             "fernFilepath": {

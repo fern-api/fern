@@ -48,6 +48,10 @@ channel:
       display-name: ReceiveFlushed
       origin: server
       body: FlushedEvent
+    error:
+      display-name: Error
+      origin: server
+      body: ErrorEvent
   examples:
     - name: Default example
       path-parameters:
@@ -106,3 +110,7 @@ types:
   FlushedEvent:
     properties:
       type: literal<"flushed">
+  ErrorEvent:
+    properties:
+      errorCode: integer
+      errorMessage: string

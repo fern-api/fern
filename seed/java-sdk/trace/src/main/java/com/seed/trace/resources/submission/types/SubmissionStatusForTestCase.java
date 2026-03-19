@@ -82,6 +82,23 @@ public final class SubmissionStatusForTestCase {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof SubmissionStatusForTestCase
+                && value.equals(((SubmissionStatusForTestCase) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -112,6 +129,7 @@ public final class SubmissionStatusForTestCase {
     @JsonIgnoreProperties("type")
     private static final class GradedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TestCaseResultWithStdout value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -188,6 +206,7 @@ public final class SubmissionStatusForTestCase {
     @JsonIgnoreProperties("type")
     private static final class TracedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TracedTestCase value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

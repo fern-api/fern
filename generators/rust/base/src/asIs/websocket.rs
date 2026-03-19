@@ -150,9 +150,22 @@ impl WebSocketClient {
         Ok(read)
     }
 
+    /// Convert HTTP(S) URLs to WS(S) URLs for WebSocket connections.
+    /// tokio-tungstenite requires ws:// or wss:// scheme.
+    fn to_ws_url(url: &str) -> String {
+        if url.starts_with("https://") {
+            format!("wss://{}", &url[8..])
+        } else if url.starts_with("http://") {
+            format!("ws://{}", &url[7..])
+        } else {
+            url.to_string()
+        }
+    }
+
     fn build_url(&self) -> String {
+        let base = Self::to_ws_url(&self.url);
         if self.options.query_params.is_empty() {
-            return self.url.clone();
+            return base;
         }
         let query: String = self
             .options
@@ -161,7 +174,7 @@ impl WebSocketClient {
             .map(|(k, v)| format!("{}={}", urlencoding::encode(k), urlencoding::encode(v)))
             .collect::<Vec<_>>()
             .join("&");
-        format!("{}?{}", self.url, query)
+        format!("{}?{}", base, query)
     }
 
     pub async fn send_json<T: Serialize>(&self, message: &T) -> Result<(), ApiError> {
@@ -331,8 +344,9 @@ impl WebSocketClient {
         options: &WebSocketOptions,
         sink: &Arc<Mutex<Option<WsSink>>>,
     ) -> Result<WsSource, ApiError> {
+        let base = Self::to_ws_url(url);
         let full_url = if options.query_params.is_empty() {
-            url.to_string()
+            base
         } else {
             let query: String = options
                 .query_params
@@ -340,7 +354,7 @@ impl WebSocketClient {
                 .map(|(k, v)| format!("{}={}", urlencoding::encode(k), urlencoding::encode(v)))
                 .collect::<Vec<_>>()
                 .join("&");
-            format!("{}?{}", url, query)
+            format!("{}?{}", base, query)
         };
 
         let uri: Uri = full_url

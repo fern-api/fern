@@ -102,7 +102,7 @@ const base_keywords = new Set([
     "while"
 ]);
 
-const acessor_keywords = new Set(["get", "set", "init", "value", "add", "remove"]);
+const accessor_keywords = new Set(["get", "set", "init", "value", "add", "remove"]);
 const generic_keywords = new Set(["where"]);
 const linq_keywords = new Set(["from", "where", "select", "orderby", "groupby", "into", "let", "join", "on", "equals"]);
 const async_keywords = new Set(["async", "await"]);
@@ -525,14 +525,14 @@ export class TypeScope extends Identifier {
             const provenance = this.registry.model.provenance(property.jsonPath);
 
             if (provenance?.explicit) {
-                // if the origin is an IR node and the property has an explictly named origin, then it will not be a match,
-                // this should have been redirected (this should be avoided if possible by making explictly named properties created after properties that are IR-based)
-                // `BAD: getFieldName: ${this.fullyQualifiedName} for ${expectedName} found a IR-based property, but is being requested for an explictly named property.`
-                // You should redirect the explictly named property
+                // if the origin is an IR node and the property has an explicitly named origin, then it will not be a match,
+                // this should have been redirected (this should be avoided if possible by making explicitly named properties created after properties that are IR-based)
+                // `BAD: getFieldName: ${this.fullyQualifiedName} for ${expectedName} found a IR-based property, but is being requested for an explicitly named property.`
+                // You should redirect the explicitly named property
                 return expectedName;
             }
 
-            // this is a good match, (or at least it's not an explictly named property) we'll return the name
+            // this is a good match, (or at least it's not an explicitly named property) we'll return the name
 
             return property.name;
         }
@@ -735,6 +735,10 @@ export class NameRegistry {
         this.typeNames.set("System", new Set(["System"]));
         this.typeNames.set("NUnit", new Set(["NUnit"]));
         this.typeNames.set("OneOf", new Set(["OneOf"]));
+        // Also track NUnit and OneOf as known built-in identifiers so they
+        // are excluded from type-namespace conflict detection (just like System)
+        this.knownBuiltInIdentifiers.add("NUnit");
+        this.knownBuiltInIdentifiers.add("OneOf");
     }
 
     /**
@@ -856,6 +860,34 @@ export class NameRegistry {
     }
 
     /**
+     * Checks if a name is both a registered type name and a root-level namespace segment.
+     * This detects cases where a class name shadows a namespace root, causing CS0426 errors.
+     *
+     * For example, if there's a class `Candid` in namespace `Candid.Net`, then any reference
+     * to `Candid.Net.Something` from within the `Candid.Net` namespace tree will fail because
+     * the C# compiler resolves `Candid` to the class instead of the namespace.
+     *
+     * @param name - The name to check (optional)
+     * @returns `true` if the name is both a type name and a root namespace segment, `false` otherwise
+     */
+    public hasTypeNamespaceConflict(name?: string): boolean {
+        if (!name) {
+            return false;
+        }
+        // Exclude known built-in identifiers (System, NUnit, OneOf, etc.) since these
+        // are framework names that don't create shadowing conflicts in user code.
+        // The conflict we're detecting is when a USER-DEFINED type name (like a client
+        // class "Candid") matches a root namespace segment (like "Candid" in "Candid.Net").
+        if (this.knownBuiltInIdentifiers.has(name)) {
+            return false;
+        }
+        // Check if this name is a tracked type name AND a root-level namespace segment
+        // (i.e., it appears as the first segment of some namespace, indicated by having
+        // an empty string "" as a parent in the namespaceNames registry)
+        return this.typeNames.has(name) && (this.namespaceNames.get(name)?.has("") ?? false);
+    }
+
+    /**
      * Generates a fully qualified name string from a class reference identity.
      * For nested types, includes the enclosing type in the qualified name.
      *
@@ -866,10 +898,19 @@ export class NameRegistry {
      * @returns A fully qualified name string (e.g., "Namespace.TypeName" or "Namespace.EnclosingType.TypeName")
      */
     public static fullyQualifiedNameOf(classReference: ClassReference.Identity): string {
-        // Create a consistent string representation for registry keys
-        return classReference.enclosingType
-            ? `${classReference.namespace}.${classReference.enclosingType.name}.${classReference.name}`
-            : `${classReference.namespace}.${classReference.name}`;
+        // Create a consistent string representation for registry keys.
+        // Nested types use '+' separator (matching .NET IL convention) to structurally
+        // distinguish them from types in sub-namespaces that would otherwise produce
+        // the same dotted path. For example:
+        //   Nested:      namespace=A, enclosingType=B, name=C  → "A.B+C"
+        //   Sub-namespace: namespace=A.B, name=C               → "A.B.C"
+        if (classReference.enclosingType) {
+            const enclosingFqn =
+                classReference.enclosingType.fullyQualifiedName ??
+                `${classReference.namespace}.${classReference.enclosingType.name}`;
+            return `${enclosingFqn}+${classReference.name}`;
+        }
+        return `${classReference.namespace}.${classReference.name}`;
     }
 
     /**
@@ -1182,6 +1223,48 @@ export class NameRegistry {
                 continue conflictResolution;
             }
 
+            // Check if the fully qualified name conflicts with an existing registered type
+            if (this.typeRegistry.has(fullyQualifiedName)) {
+                // The type name conflicts with an already-registered type (e.g., multiple endpoints
+                // with the same name producing test classes that all resolve to the same suffixed name)
+                name = `${name}_`;
+                modified = true;
+                continue conflictResolution;
+            }
+
+            // Cross-format ambiguity check: a nested type "A.B+C" and a non-nested type "A.B.C"
+            // would both resolve to "A.B.C" in C# source code, causing compilation ambiguity.
+            // Detect and resolve this by checking the alternate format.
+            if (enclosingType) {
+                // Nested type: check if a non-nested type with the same dotted path exists
+                const dottedFqn = fullyQualifiedName.replaceAll("+", ".");
+                if (this.typeRegistry.has(dottedFqn)) {
+                    name = `${name}_`;
+                    modified = true;
+                    continue conflictResolution;
+                }
+                // Nested type: also check if the dotted form conflicts with an existing namespace
+                // (the check at line 1186 uses the raw FQN which contains '+', so it won't match
+                // namespaces which only use '.' separators)
+                if (this.namespaceRegistry.has(dottedFqn)) {
+                    name = `${name}_`;
+                    modified = true;
+                    continue conflictResolution;
+                }
+            } else {
+                // Non-nested type: check all possible nested variations
+                // e.g., "A.B.C.D" could collide with "A.B.C+D", "A.B+C+D", "A+B+C+D", etc.
+                const segments = fullyQualifiedName.split(".");
+                for (let i = 1; i < segments.length; i++) {
+                    const nestedVariant = segments.slice(0, i).join(".") + "+" + segments.slice(i).join("+");
+                    if (this.typeRegistry.has(nestedVariant)) {
+                        name = `${name}_`;
+                        modified = true;
+                        continue conflictResolution;
+                    }
+                }
+            }
+
             // No conflicts found, we're good to go
             break;
         }
@@ -1204,7 +1287,7 @@ export class NameRegistry {
                     multipartMethodName: classReferenceArgs.multipartMethodName,
                     multipartMethodNameForCollection: classReferenceArgs.multipartMethodNameForCollection
                 },
-                // the typescope is the common data across all copies of a class referecne
+                // the typescope is the common data across all copies of a class reference
                 new TypeScope(this, name, namespace, fullyQualifiedName),
                 this.generation
             ),

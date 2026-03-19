@@ -1,0 +1,138 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`appendPropertyToFormData > body properties > generates Array.isArray check for unknown type (maybe iterable) 1`] = `
+"if (Array.isArray(request.data) || request.data instanceof Set)
+    for (const _item of request.data) {
+        _body.append("data", _item.toString());
+    }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates JSON.stringify append for body property with json style 1`] = `"_body.append("config", JSON.stringify(request.config));"`;
+
+exports[`appendPropertyToFormData > body properties > generates JSON.stringify for json style body property 1`] = `"_body.append("metadata", JSON.stringify(request.metadata));"`;
+
+exports[`appendPropertyToFormData > body properties > generates Object.entries loop for body property with form style 1`] = `
+"for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "metadata": request.metadata }))) {
+    _body.append(key, value);
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates Object.entries loop for form style body property 1`] = `
+"for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "formData": request.formData }))) {
+    _body.append(key, value);
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates append with stringify for simple string property 1`] = `"_body.append("name", request.name.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of for optional wrapping a list (isDefinitelyIterable via optional) 1`] = `
+"if (request.optionalTags != null) {
+    for (const _item of request.optionalTags) {
+        _body.append("optionalTags", _item.toString());
+    }
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for list body property 1`] = `
+"for (const _item of request.tags) {
+    _body.append("tags", _item.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for named type aliasing a list 1`] = `
+"for (const _item of request.items) {
+    _body.append("items", _item.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for named type aliasing a set 1`] = `
+"for (const _item of request.uniqueItems) {
+    _body.append("uniqueItems", _item.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for set body property 1`] = `
+"for (const _item of request.uniqueTags) {
+    _body.append("uniqueTags", _item.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for unknown type (isMaybeIterable=true, isDefinitelyIterable=false) 1`] = `
+"if (Array.isArray(request.data) || request.data instanceof Set)
+    for (const _item of request.data) {
+        _body.append("data", _item.toString());
+    }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of with Array.isArray+instanceof for undiscriminated union with list, set, and non-iterable members 1`] = `
+"if (Array.isArray(request.mixed) || request.mixed instanceof Set)
+    for (const _item of request.mixed) {
+        _body.append("mixed", _item.toString());
+    }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of with only Array.isArray for undiscriminated union with only list member 1`] = `
+"if (Array.isArray(request.listOrString))
+    for (const _item of request.listOrString) {
+        _body.append("listOrString", _item.toString());
+    }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of with only instanceof Set for undiscriminated union with only set member 1`] = `
+"if (request.setOrString instanceof Set)
+    for (const _item of request.setOrString) {
+        _body.append("setOrString", _item.toString());
+    }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of without guard for nullable wrapping a list (definitely iterable=false) 1`] = `
+"if (request.nullableTags != null) {
+    for (const _item of request.nullableTags) {
+        _body.append("nullableTags", _item.toString());
+    }
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of without guard for undiscriminated union where all members are definitely iterable 1`] = `
+"for (const _item of request.allIterable) {
+    _body.append("allIterable", _item.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates simple append for enum named type 1`] = `"_body.append("status", request.status.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > generates simple append for literal container type (not iterable) 1`] = `"_body.append("fixed", request.fixed.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > generates simple append for map container type (not iterable) 1`] = `"_body.append("metadata", request.metadata.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > generates simple append for non-iterable named type (object) 1`] = `"_body.append("obj", request.obj.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > generates simple append for union named type 1`] = `"_body.append("variant", request.variant.toString());"`;
+
+exports[`appendPropertyToFormData > body properties > wraps in null check for optional body property 1`] = `
+"if (request.description != null) {
+    _body.append("description", request.description.toString());
+}"
+`;
+
+exports[`appendPropertyToFormData > file properties > generates appendFile for single file 1`] = `"_body.appendFile("avatar", avatar);"`;
+
+exports[`appendPropertyToFormData > file properties > generates for-of loop for fileArray 1`] = `
+"for (const _file of files) {
+    _body.appendFile("files", _file);
+}"
+`;
+
+exports[`appendPropertyToFormData > file properties > wraps in null check for optional fileArray 1`] = `
+"if (files != null) {
+    for (const _file of files) {
+        _body.appendFile("files", _file);
+    }
+}"
+`;
+
+exports[`appendPropertyToFormData > file properties > wraps in null check for optional single file 1`] = `
+"if (avatar != null) {
+    _body.appendFile("avatar", avatar);
+}"
+`;

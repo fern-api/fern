@@ -19,7 +19,7 @@ import Unions
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = CalendarDate("1994-01-01")!
+        let expectedResponse = UnionWithTime.date(CalendarDate("1994-01-01")!)
         let response = try await client.types.get(
             id: "date-example",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -43,7 +43,7 @@ import Unions
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = try! Date("1994-01-01T01:01:01Z", strategy: .iso8601)
+        let expectedResponse = UnionWithTime.datetime(try! Date("1994-01-01T01:01:01Z", strategy: .iso8601))
         let response = try await client.types.get(
             id: "datetime-example",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -67,7 +67,7 @@ import Unions
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = 1
+        let expectedResponse = UnionWithTime.value(1)
         let response = try await client.types.get(
             id: "id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -91,9 +91,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.date(
-                .init(
-                    date: 
-                )
+
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -116,9 +114,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.datetime(
-                .init(
-                    datetime: 
-                )
+
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -141,9 +137,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.value(
-                .init(
-                    value: 1
-                )
+                1
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

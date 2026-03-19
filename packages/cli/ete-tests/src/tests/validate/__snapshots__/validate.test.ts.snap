@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`validate > docs 1`] = `
-"Detected empty API definiton: fern. Remove to resolve error.
+"Detected empty API definition: fern. Remove to resolve error.
 No API definition found. Expected one of the following:
   - An api section in generators.yml pointing to your API spec(s)
   - A definition/ directory with Fern Definition files
@@ -12,7 +12,7 @@ All checks passed"
 exports[`validate > no-api 1`] = `"Missing file: api.yml"`;
 
 exports[`validate > no-generator 1`] = `
-"Detected empty API definiton: api1. Remove to resolve error.
+"Detected empty API definition: api1. Remove to resolve error.
 No API definition found. Expected one of the following:
   - An api section in generators.yml pointing to your API spec(s)
   - A definition/ directory with Fern Definition files

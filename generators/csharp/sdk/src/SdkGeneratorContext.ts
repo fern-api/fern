@@ -13,11 +13,23 @@ import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsG
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class SdkGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: FernIr.IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -42,7 +54,6 @@ export class SdkGeneratorContext extends GeneratorContext {
                     this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
         this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
@@ -159,6 +170,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Headers,
                 AsIsFiles.HeadersBuilder,
                 AsIsFiles.HeaderValue,
+                AsIsFiles.HttpContentExtensions,
                 AsIsFiles.HttpMethodExtensions,
                 AsIsFiles.IIsRetryableContent,
                 AsIsFiles.JsonRequest,
@@ -170,9 +182,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.RawClient,
                 AsIsFiles.RawResponse,
                 AsIsFiles.ResponseHeaders,
-                AsIsFiles.StreamRequest,
-                AsIsFiles.WithRawResponse,
-                AsIsFiles.WithRawResponseTask
+                AsIsFiles.StreamRequest
             ]
         );
 
@@ -193,9 +203,6 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.Json.StringEnumSerializer);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(
             FernIr.WellKnownProtobufType.any()
@@ -227,11 +234,6 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
-        }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }

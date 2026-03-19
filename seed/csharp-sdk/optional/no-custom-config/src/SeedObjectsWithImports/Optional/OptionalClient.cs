@@ -5,7 +5,7 @@ namespace SeedObjectsWithImports;
 
 public partial class OptionalClient : IOptionalClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OptionalClient(RawClient client)
     {
@@ -39,7 +39,9 @@ public partial class OptionalClient : IOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -65,7 +67,9 @@ public partial class OptionalClient : IOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedObjectsWithImportsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -101,7 +105,9 @@ public partial class OptionalClient : IOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -127,7 +133,9 @@ public partial class OptionalClient : IOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedObjectsWithImportsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -171,7 +179,9 @@ public partial class OptionalClient : IOptionalClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<DeployResponse>(responseBody)!;
@@ -197,7 +207,9 @@ public partial class OptionalClient : IOptionalClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedObjectsWithImportsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

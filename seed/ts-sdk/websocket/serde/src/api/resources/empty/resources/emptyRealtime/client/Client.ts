@@ -10,6 +10,8 @@ export declare namespace EmptyRealtimeClient {
     export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -33,7 +35,8 @@ export class EmptyRealtimeClient {
     }
 
     public async connect(args: EmptyRealtimeClient.ConnectArgs = {}): Promise<EmptyRealtimeSocket> {
-        const { queryParams, headers, debug, reconnectAttempts, connectionTimeoutInSeconds, abortSignal } = args;
+        const { protocols, queryParams, headers, debug, reconnectAttempts, connectionTimeoutInSeconds, abortSignal } =
+            args;
         const _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
@@ -42,7 +45,7 @@ export class EmptyRealtimeClient {
                     environments.SeedWebsocketEnvironment.Production,
                 "/empty/realtime/",
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: queryParams ?? {},
             headers: _headers,
             options: {

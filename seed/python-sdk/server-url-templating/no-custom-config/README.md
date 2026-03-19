@@ -37,6 +37,7 @@ Instantiate and use the client with the following:
 from seed import SeedApi
 
 client = SeedApi()
+
 client.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -90,9 +91,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-)
+client = SeedApi(...)
 response = client.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -124,14 +123,9 @@ client.get_token(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.get_token(..., request_options={
