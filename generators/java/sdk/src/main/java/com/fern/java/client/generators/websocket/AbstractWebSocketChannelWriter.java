@@ -17,7 +17,6 @@
 package com.fern.java.client.generators.websocket;
 
 import com.fern.ir.model.http.PathParameter;
-import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.websocket.InlinedWebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketChannel;
@@ -71,19 +70,28 @@ public abstract class AbstractWebSocketChannelWriter {
     // Message handlers map
     protected final Map<String, FieldSpec> messageHandlerFields = new HashMap<>();
 
-    // Binary message handler field
-    protected final FieldSpec onBinaryMessageHandlerField;
-
     // Lifecycle handler fields
     protected final FieldSpec onConnectedHandlerField;
     protected final FieldSpec onDisconnectedHandlerField;
     protected final FieldSpec onErrorHandlerField;
+
+    // Generic message handler field (fires for all incoming text messages)
+    protected final FieldSpec onMessageHandlerField;
+
+    // Reconnect options field (configurable before connect())
+    protected final FieldSpec reconnectOptionsField;
+
+    // Cached core class names
+    protected final ClassName reconnectOptionsClassName;
 
     // Reserved lifecycle method names that take Consumer<T> parameters.
     // Server message handlers also take Consumer<T>, so if a message type
     // produces the same method name, Java type-erasure makes the two
     // overloads ambiguous. We append "Message" to disambiguate.
     private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
+
+    // Connect options class name (present when channel has query parameters)
+    protected final Optional<ClassName> connectOptionsClassName;
 
     public AbstractWebSocketChannelWriter(
             WebSocketChannel websocketChannel,
@@ -92,7 +100,8 @@ public abstract class AbstractWebSocketChannelWriter {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedObjectMapper generatedObjectMapper,
             FieldSpec clientOptionsField,
-            Optional<Subpackage> subpackage) {
+            Optional<Subpackage> subpackage,
+            Optional<ClassName> connectOptionsClassName) {
         this.websocketChannel = websocketChannel;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedClientOptions = generatedClientOptions;
@@ -100,6 +109,7 @@ public abstract class AbstractWebSocketChannelWriter {
         this.generatedObjectMapper = generatedObjectMapper;
         this.clientOptionsField = clientOptionsField;
         this.subpackage = subpackage;
+        this.connectOptionsClassName = connectOptionsClassName;
 
         // Generate class name for this WebSocket channel with correct package
         this.className = clientGeneratorContext
@@ -124,41 +134,61 @@ public abstract class AbstractWebSocketChannelWriter {
                         ScheduledExecutorService.class, "timeoutExecutor", Modifier.PRIVATE)
                 .build();
 
-        ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        ClassName readyStateClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getCoreClassName("WebSocketReadyState");
         this.readyStateField = FieldSpec.builder(readyStateClassName, "readyState", Modifier.PRIVATE, Modifier.VOLATILE)
                 .initializer("$T.CLOSED", readyStateClassName)
                 .build();
 
-        // Initialize binary message handler field
-        this.onBinaryMessageHandlerField = FieldSpec.builder(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Consumer.class),
-                                ClassName.get("okio", "ByteString")),
-                        "onBinaryMessageHandler",
-                        Modifier.PRIVATE)
-                .build();
-
         // Initialize lifecycle handler fields
-        this.onConnectedHandlerField = FieldSpec.builder(Runnable.class, "onConnectedHandler", Modifier.PRIVATE)
-                .build();
+        this.onConnectedHandlerField =
+                FieldSpec.builder(Runnable.class, "onConnectedHandler", Modifier.PRIVATE, Modifier.VOLATILE)
+                        .build();
 
+        ClassName disconnectReasonClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getCoreClassName("DisconnectReason");
         this.onDisconnectedHandlerField = FieldSpec.builder(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Consumer.class),
-                                ClassName.get(className.packageName(), className.simpleName(), "DisconnectReason")),
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), disconnectReasonClassName),
                         "onDisconnectedHandler",
-                        Modifier.PRIVATE)
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
                 .build();
 
         this.onErrorHandlerField = FieldSpec.builder(
-                        ParameterizedTypeName.get(Consumer.class, Exception.class), "onErrorHandler", Modifier.PRIVATE)
+                        ParameterizedTypeName.get(Consumer.class, Exception.class),
+                        "onErrorHandler",
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
+                .build();
+
+        // Generic message handler (raw JSON string for all incoming text messages)
+        this.onMessageHandlerField = FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get(String.class)),
+                        "onMessageHandler",
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
+                .build();
+
+        // Reconnect options (configurable before connect())
+        this.reconnectOptionsClassName = ClassName.get(
+                clientGeneratorContext
+                        .getPoetClassNameFactory()
+                        .getCoreClassName("ReconnectingWebSocketListener")
+                        .packageName(),
+                "ReconnectingWebSocketListener",
+                "ReconnectOptions");
+        this.reconnectOptionsField = FieldSpec.builder(
+                        reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE)
                 .build();
     }
 
     public GeneratedJavaFile generateFile() {
-        TypeSpec.Builder classBuilder =
-                TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC).addJavadoc(generateClassJavadoc());
+        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(AutoCloseable.class)
+                .addJavadoc(generateClassJavadoc());
 
         // Add fields
         addFields(classBuilder);
@@ -169,7 +199,6 @@ public abstract class AbstractWebSocketChannelWriter {
         // Add connection management methods
         classBuilder.addMethod(generateConnectMethod());
         classBuilder.addMethod(generateDisconnectMethod());
-        classBuilder.addMethod(generateIsConnectedMethod());
         classBuilder.addMethod(generateGetReadyStateMethod());
 
         // Add message sending methods (one per client message)
@@ -179,40 +208,35 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
 
-        // Add message handler registration methods (one per server message)
-        // Binary server messages are skipped — they're handled by onBinaryMessage()
+        // Add message handler registration methods (one per server message, including binary)
         for (WebSocketMessage message : websocketChannel.getMessages()) {
-            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
                 classBuilder.addMethod(generateOnMessageMethod(message));
                 // Add handler field for this message
                 TypeName messageType = getMessageBodyType(message);
                 FieldSpec handlerField = FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Consumer.class), messageType),
                                 getHandlerFieldName(message),
-                                Modifier.PRIVATE)
+                                Modifier.PRIVATE,
+                                Modifier.VOLATILE)
                         .build();
                 messageHandlerFields.put(message.getType().get(), handlerField);
                 classBuilder.addField(handlerField);
             }
         }
 
-        // Add binary message handler and send methods
-        classBuilder.addMethod(generateOnBinaryMessageMethod());
-        classBuilder.addMethod(generateSendBinaryMethod());
-
         // Add lifecycle handler methods
         classBuilder.addMethod(generateOnConnectedMethod());
         classBuilder.addMethod(generateOnDisconnectedMethod());
         classBuilder.addMethod(generateOnErrorMethod());
+        classBuilder.addMethod(generateOnMessageMethod());
+        classBuilder.addMethod(generateReconnectOptionsMethod());
+        classBuilder.addMethod(generateCloseMethod());
 
         // Add helper methods
         classBuilder.addMethod(generateAssertSocketIsOpen());
         classBuilder.addMethod(generateSendMessageHelper());
         classBuilder.addMethod(generateHandleIncomingMessageHelper());
-
-        // Add inner classes
-        classBuilder.addType(generateDisconnectReasonClass());
-        classBuilder.addType(generateWebSocketReadyStateEnum());
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -234,18 +258,14 @@ public abstract class AbstractWebSocketChannelWriter {
             classBuilder.addField(generatePathParameterField(pathParam));
         }
 
-        // Add query parameter fields
-        for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-            classBuilder.addField(generateQueryParameterField(queryParam));
-        }
-
-        // Add binary message handler field
-        classBuilder.addField(onBinaryMessageHandlerField);
-
         // Add lifecycle handler fields
         classBuilder.addField(onConnectedHandlerField);
         classBuilder.addField(onDisconnectedHandlerField);
         classBuilder.addField(onErrorHandlerField);
+
+        // Add generic message handler and reconnect options fields
+        classBuilder.addField(onMessageHandlerField);
+        classBuilder.addField(reconnectOptionsField);
     }
 
     protected abstract MethodSpec generateConstructor();
@@ -260,36 +280,10 @@ public abstract class AbstractWebSocketChannelWriter {
     // since they have access to reconnectingListenerField
     protected abstract MethodSpec generateDisconnectMethod();
 
-    protected MethodSpec generateIsConnectedMethod() {
-        // This method doesn't need webSocketField anymore
-        // It's checking the ready state, not the socket instance
-        ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
-
-        return MethodSpec.methodBuilder("hasWebSocketInstance")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(TypeName.BOOLEAN)
-                .addJavadoc("Checks if a WebSocket instance exists (not necessarily connected).\n")
-                .addJavadoc("\n")
-                .addJavadoc("This method only verifies that a WebSocket object has been created, not whether\n")
-                .addJavadoc("it's actively connected. For actual connection state, use getReadyState().\n")
-                .addJavadoc("\n")
-                .addJavadoc("@return true if a WebSocket instance exists, false otherwise\n")
-                .addJavadoc("@deprecated Use getReadyState() for accurate connection status\n")
-                .addAnnotation(Deprecated.class)
-                .addComment("Check if WebSocket connection is open based on ready state")
-                .addStatement(
-                        "return $N == $T.OPEN || $N == $T.CONNECTING",
-                        readyStateField,
-                        readyStateClassName,
-                        readyStateField,
-                        readyStateClassName)
-                .build();
-    }
-
     protected MethodSpec generateGetReadyStateMethod() {
-        ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        ClassName readyStateClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getCoreClassName("WebSocketReadyState");
         return MethodSpec.methodBuilder("getReadyState")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(readyStateClassName)
@@ -331,13 +325,13 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected MethodSpec generateOnDisconnectedMethod() {
+        ClassName disconnectReasonClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getCoreClassName("DisconnectReason");
         return MethodSpec.methodBuilder("onDisconnected")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
-                                ParameterizedTypeName.get(
-                                        ClassName.get(Consumer.class),
-                                        ClassName.get(
-                                                className.packageName(), className.simpleName(), "DisconnectReason")),
+                                ParameterizedTypeName.get(ClassName.get(Consumer.class), disconnectReasonClassName),
                                 "handler")
                         .build())
                 .addJavadoc("Registers a handler called when the connection is closed.\n")
@@ -358,32 +352,77 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    protected MethodSpec generateOnBinaryMessageMethod() {
-        return MethodSpec.methodBuilder("onBinaryMessage")
+    /**
+     * Generates the onMessage(Consumer&lt;String&gt;) method for receiving all raw text messages.
+     */
+    protected MethodSpec generateOnMessageMethod() {
+        return MethodSpec.methodBuilder("onMessage")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
-                                ParameterizedTypeName.get(
-                                        ClassName.get(Consumer.class),
-                                        ClassName.get("okio", "ByteString")),
+                                ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get(String.class)),
                                 "handler")
                         .build())
-                .addJavadoc("Registers a handler for binary messages from the server.\n")
-                .addJavadoc("@param handler the handler to invoke when binary data is received\n")
-                .addStatement("this.$N = handler", onBinaryMessageHandlerField)
+                .addJavadoc("Registers a handler called for every incoming text message.\n")
+                .addJavadoc("The handler receives the raw JSON string before type-specific dispatch.\n")
+                .addJavadoc("@param handler the handler to invoke with the raw message JSON\n")
+                .addStatement("this.$N = handler", onMessageHandlerField)
                 .build();
     }
 
-    protected abstract MethodSpec generateSendBinaryMethod();
+    /**
+     * Generates the reconnectOptions(ReconnectOptions) setter method.
+     */
+    protected MethodSpec generateReconnectOptionsMethod() {
+        return MethodSpec.methodBuilder("reconnectOptions")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(reconnectOptionsClassName, "options")
+                .addJavadoc("Configures reconnection behavior. Must be called before {@link #connect}.\n")
+                .addJavadoc("\n")
+                .addJavadoc("@param options the reconnection options (backoff, retries, queue size)\n")
+                .addStatement("this.$N = options", reconnectOptionsField)
+                .build();
+    }
+
+    /**
+     * Generates the close() method for AutoCloseable support.
+     */
+    protected MethodSpec generateCloseMethod() {
+        return MethodSpec.methodBuilder("close")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Closes this WebSocket client, releasing all resources.\n")
+                .addJavadoc("Equivalent to calling {@link #disconnect()}.\n")
+                .addStatement("disconnect()")
+                .build();
+    }
 
     // Note: assertSocketIsOpen must be implemented by subclasses
     // since they have access to reconnectingListenerField
     protected abstract MethodSpec generateAssertSocketIsOpen();
+
+    /**
+     * Returns the handler field names for binary server messages, used by subclasses
+     * to wire up the onWebSocketBinaryMessage override.
+     */
+    protected java.util.List<String> getBinaryServerMessageHandlerFieldNames() {
+        java.util.List<String> result = new java.util.ArrayList<>();
+        for (WebSocketMessage message : websocketChannel.getMessages()) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && isMessageBodyBinary(message)) {
+                result.add(getHandlerFieldName(message));
+            }
+        }
+        return result;
+    }
 
     protected MethodSpec generateHandleIncomingMessageHelper() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("handleIncomingMessage")
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(String.class, "json")
                 .beginControlFlow("try")
+                // Fire generic onMessage handler before type dispatch
+                .beginControlFlow("if ($N != null)", onMessageHandlerField)
+                .addStatement("$N.accept(json)", onMessageHandlerField)
+                .endControlFlow()
                 .addStatement(
                         "$T node = $N.readTree(json)",
                         ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
@@ -425,7 +464,14 @@ public abstract class AbstractWebSocketChannelWriter {
         }
 
         builder.addCode("default:\n")
-                .addStatement("// Unknown message type - log or ignore")
+                .beginControlFlow("if ($N != null)", onErrorHandlerField)
+                .addStatement(
+                        "$N.accept(new $T($S + type + $S))",
+                        onErrorHandlerField,
+                        RuntimeException.class,
+                        "Unknown WebSocket message type: '",
+                        "'. Update your SDK version to support new message types.")
+                .endControlFlow()
                 .addStatement("break");
 
         builder.endControlFlow() // end switch
@@ -444,90 +490,12 @@ public abstract class AbstractWebSocketChannelWriter {
         return builder.build();
     }
 
-    protected TypeSpec generateDisconnectReasonClass() {
-        return TypeSpec.classBuilder("DisconnectReason")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addJavadoc("Reason for WebSocket disconnection.\n")
-                .addField(FieldSpec.builder(TypeName.INT, "code", Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "reason", Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(TypeName.INT, "code")
-                        .addParameter(String.class, "reason")
-                        .addStatement("this.code = code")
-                        .addStatement("this.reason = reason")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("getCode")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(TypeName.INT)
-                        .addStatement("return code")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("getReason")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(String.class)
-                        .addStatement("return reason")
-                        .build())
-                .build();
-    }
-
-    protected TypeSpec generateWebSocketReadyStateEnum() {
-        return TypeSpec.enumBuilder("WebSocketReadyState")
-                .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("WebSocket connection ready state, based on the W3C WebSocket API.\n")
-                .addEnumConstant(
-                        "CONNECTING",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is being established.\n")
-                                .build())
-                .addEnumConstant(
-                        "OPEN",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is open and ready to communicate.\n")
-                                .build())
-                .addEnumConstant(
-                        "CLOSING",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is in the process of closing.\n")
-                                .build())
-                .addEnumConstant(
-                        "CLOSED",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is closed.\n")
-                                .build())
-                .build();
-    }
-
     protected FieldSpec generatePathParameterField(PathParameter pathParam) {
         TypeName paramType =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
         return FieldSpec.builder(
                         paramType, pathParam.getName().getCamelCase().getSafeName(), Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-    }
-
-    protected FieldSpec generateQueryParameterField(QueryParameter queryParam) {
-        TypeName paramType =
-                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-        if (queryParam.getValueType().getContainer().isPresent()
-                && queryParam.getValueType().getContainer().get().isOptional()) {
-            // Already wrapped in Optional
-            return FieldSpec.builder(
-                            paramType,
-                            queryParam.getName().getName().getCamelCase().getSafeName(),
-                            Modifier.PRIVATE,
-                            Modifier.FINAL)
-                    .build();
-        } else {
-            // Wrap in Optional for optional parameters
-            return FieldSpec.builder(
-                            ParameterizedTypeName.get(ClassName.get(Optional.class), paramType),
-                            queryParam.getName().getName().getCamelCase().getSafeName(),
-                            Modifier.PRIVATE,
-                            Modifier.FINAL)
-                    .build();
-        }
     }
 
     protected TypeName getMessageBodyType(WebSocketMessage message) {

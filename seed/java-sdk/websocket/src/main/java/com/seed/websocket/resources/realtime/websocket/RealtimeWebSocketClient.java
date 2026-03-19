@@ -6,8 +6,10 @@ package com.seed.websocket.resources.realtime.websocket;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.websocket.core.ClientOptions;
+import com.seed.websocket.core.DisconnectReason;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.core.WebSocketReadyState;
 import com.seed.websocket.resources.realtime.types.ErrorEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent2;
@@ -16,7 +18,6 @@ import com.seed.websocket.resources.realtime.types.ReceiveSnakeCase;
 import com.seed.websocket.resources.realtime.types.SendEvent;
 import com.seed.websocket.resources.realtime.types.SendEvent2;
 import com.seed.websocket.resources.realtime.types.SendSnakeCase;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
@@ -31,7 +32,7 @@ import okio.ByteString;
  * WebSocket client for the realtime channel.
  * Provides real-time bidirectional communication with strongly-typed messages.
  */
-public class RealtimeWebSocketClient {
+public class RealtimeWebSocketClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final ObjectMapper objectMapper;
@@ -44,61 +45,47 @@ public class RealtimeWebSocketClient {
 
     private final String sessionId;
 
-    private final Optional<String> model;
+    private volatile Runnable onConnectedHandler;
 
-    private final Optional<Integer> temperature;
+    private volatile Consumer<DisconnectReason> onDisconnectedHandler;
 
-    private final Optional<String> languageCode;
+    private volatile Consumer<Exception> onErrorHandler;
 
-    private Consumer<ByteString> onBinaryMessageHandler;
+    private volatile Consumer<String> onMessageHandler;
 
-    private Runnable onConnectedHandler;
-
-    private Consumer<DisconnectReason> onDisconnectedHandler;
-
-    private Consumer<Exception> onErrorHandler;
+    private ReconnectingWebSocketListener.ReconnectOptions reconnectOptions;
 
     private CompletableFuture<Void> connectionFuture;
 
     private ReconnectingWebSocketListener reconnectingListener;
 
-    private Consumer<ReceiveEvent> receiveHandler;
+    private volatile Consumer<ReceiveEvent> receiveHandler;
 
-    private Consumer<ReceiveSnakeCase> receiveSnakeCaseHandler;
+    private volatile Consumer<ReceiveSnakeCase> receiveSnakeCaseHandler;
 
-    private Consumer<ReceiveEvent2> receive2Handler;
+    private volatile Consumer<ReceiveEvent2> receive2Handler;
 
-    private Consumer<ReceiveEvent3> receive3Handler;
+    private volatile Consumer<ReceiveEvent3> receive3Handler;
 
-    private Consumer<ErrorEvent> errorHandler;
+    private volatile Consumer<ErrorEvent> errorHandler;
 
     /**
      * Creates a new async WebSocket client for the realtime channel.
      * @param sessionId the sessionId path parameter
-     * @param model Optional model query parameter
-     * @param temperature Optional temperature query parameter
-     * @param languageCode Optional languageCode query parameter
      */
-    public RealtimeWebSocketClient(
-            ClientOptions clientOptions,
-            String sessionId,
-            Optional<String> model,
-            Optional<Integer> temperature,
-            Optional<String> languageCode) {
+    public RealtimeWebSocketClient(ClientOptions clientOptions, String sessionId) {
         this.clientOptions = clientOptions;
         this.objectMapper = ObjectMappers.JSON_MAPPER;
         this.okHttpClient = clientOptions.httpClient();
         this.sessionId = sessionId;
-        this.model = model;
-        this.temperature = temperature;
-        this.languageCode = languageCode;
     }
 
     /**
      * Establishes the WebSocket connection asynchronously with automatic reconnection.
      * @return a CompletableFuture that completes when the connection is established
+     * @param options connection options including query parameters
      */
-    public CompletableFuture<Void> connect() {
+    public CompletableFuture<Void> connect(RealtimeConnectOptions options) {
         connectionFuture = new CompletableFuture<>();
         String baseUrl = clientOptions.environment().getUrl();
         StringBuilder pathBuilder = new StringBuilder();
@@ -122,23 +109,27 @@ public class RealtimeWebSocketClient {
             throw new IllegalArgumentException("Invalid WebSocket URL: " + baseUrl + fullPath);
         }
         HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
-        if (model != null && model.isPresent()) {
-            urlBuilder.addQueryParameter("model", String.valueOf(model.get()));
+        if (options.getModel() != null && options.getModel().isPresent()) {
+            urlBuilder.addQueryParameter(
+                    "model", String.valueOf(options.getModel().get()));
         }
-        if (temperature != null && temperature.isPresent()) {
-            urlBuilder.addQueryParameter("temperature", String.valueOf(temperature.get()));
+        if (options.getTemperature() != null && options.getTemperature().isPresent()) {
+            urlBuilder.addQueryParameter(
+                    "temperature", String.valueOf(options.getTemperature().get()));
         }
-        if (languageCode != null && languageCode.isPresent()) {
-            urlBuilder.addQueryParameter("language-code", String.valueOf(languageCode.get()));
+        if (options.getLanguageCode() != null && options.getLanguageCode().isPresent()) {
+            urlBuilder.addQueryParameter(
+                    "language-code", String.valueOf(options.getLanguageCode().get()));
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
         clientOptions.headers(null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
-        ReconnectingWebSocketListener.ReconnectOptions reconnectOptions =
-                ReconnectingWebSocketListener.ReconnectOptions.builder().build();
+        ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null
+                ? this.reconnectOptions
+                : ReconnectingWebSocketListener.ReconnectOptions.builder().build();
         this.reconnectingListener =
-                new ReconnectingWebSocketListener(reconnectOptions, () -> {
+                new ReconnectingWebSocketListener(reconnectOpts, () -> {
                     if (clientOptions.webSocketFactory().isPresent()) {
                         return clientOptions.webSocketFactory().get().create(request, this.reconnectingListener);
                     } else {
@@ -160,11 +151,7 @@ public class RealtimeWebSocketClient {
                     }
 
                     @Override
-                    protected void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes) {
-                        if (onBinaryMessageHandler != null) {
-                            onBinaryMessageHandler.accept(bytes);
-                        }
-                    }
+                    protected void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes) {}
 
                     @Override
                     protected void onWebSocketFailure(WebSocket webSocket, Throwable t, Response response) {
@@ -199,21 +186,6 @@ public class RealtimeWebSocketClient {
     }
 
     /**
-     * Checks if a WebSocket instance exists (not necessarily connected).
-     *
-     * This method only verifies that a WebSocket object has been created, not whether
-     * it's actively connected. For actual connection state, use getReadyState().
-     *
-     * @return true if a WebSocket instance exists, false otherwise
-     * @deprecated Use getReadyState() for accurate connection status
-     */
-    @Deprecated
-    public boolean hasWebSocketInstance() {
-        // Check if WebSocket connection is open based on ready state
-        return readyState == WebSocketReadyState.OPEN || readyState == WebSocketReadyState.CONNECTING;
-    }
-
-    /**
      * Gets the current state of the WebSocket connection.
      *
      * This provides the actual connection state, similar to the W3C WebSocket API.
@@ -230,7 +202,7 @@ public class RealtimeWebSocketClient {
      * @return a CompletableFuture that completes when the message is sent
      */
     public CompletableFuture<Void> sendSend(SendEvent message) {
-        return sendMessage("send", message);
+        return sendMessage(message);
     }
 
     /**
@@ -239,7 +211,7 @@ public class RealtimeWebSocketClient {
      * @return a CompletableFuture that completes when the message is sent
      */
     public CompletableFuture<Void> sendSendSnakeCase(SendSnakeCase message) {
-        return sendMessage("send_snake_case", message);
+        return sendMessage(message);
     }
 
     /**
@@ -248,7 +220,7 @@ public class RealtimeWebSocketClient {
      * @return a CompletableFuture that completes when the message is sent
      */
     public CompletableFuture<Void> customSend(SendEvent2 message) {
-        return sendMessage("send2", message);
+        return sendMessage(message);
     }
 
     /**
@@ -292,35 +264,6 @@ public class RealtimeWebSocketClient {
     }
 
     /**
-     * Registers a handler for binary messages from the server.
-     * @param handler the handler to invoke when binary data is received
-     */
-    public void onBinaryMessage(Consumer<ByteString> handler) {
-        this.onBinaryMessageHandler = handler;
-    }
-
-    /**
-     * Sends binary data to the server asynchronously.
-     * @param data the binary data to send
-     * @return a CompletableFuture that completes when the data is sent
-     */
-    public CompletableFuture<Void> sendBinary(ByteString data) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        try {
-            assertSocketIsOpen();
-            boolean sent = reconnectingListener.sendBinary(data);
-            if (sent) {
-                future.complete(null);
-            } else {
-                future.completeExceptionally(new RuntimeException("Failed to send binary data"));
-            }
-        } catch (Exception e) {
-            future.completeExceptionally(new RuntimeException("Failed to send binary data", e));
-        }
-        return future;
-    }
-
-    /**
      * Registers a handler called when the connection is established.
      * @param handler the handler to invoke when connected
      */
@@ -345,6 +288,33 @@ public class RealtimeWebSocketClient {
     }
 
     /**
+     * Registers a handler called for every incoming text message.
+     * The handler receives the raw JSON string before type-specific dispatch.
+     * @param handler the handler to invoke with the raw message JSON
+     */
+    public void onMessage(Consumer<String> handler) {
+        this.onMessageHandler = handler;
+    }
+
+    /**
+     * Configures reconnection behavior. Must be called before {@link #connect}.
+     *
+     * @param options the reconnection options (backoff, retries, queue size)
+     */
+    public void reconnectOptions(ReconnectingWebSocketListener.ReconnectOptions options) {
+        this.reconnectOptions = options;
+    }
+
+    /**
+     * Closes this WebSocket client, releasing all resources.
+     * Equivalent to calling {@link #disconnect()}.
+     */
+    @Override
+    public void close() {
+        disconnect();
+    }
+
+    /**
      * Ensures the WebSocket is connected and ready to send messages.
      * @throws IllegalStateException if the socket is not connected or not open
      */
@@ -357,7 +327,7 @@ public class RealtimeWebSocketClient {
         }
     }
 
-    private CompletableFuture<Void> sendMessage(String type, Object body) {
+    private CompletableFuture<Void> sendMessage(Object body) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         try {
             assertSocketIsOpen();
@@ -380,6 +350,9 @@ public class RealtimeWebSocketClient {
 
     private void handleIncomingMessage(String json) {
         try {
+            if (onMessageHandler != null) {
+                onMessageHandler.accept(json);
+            }
             JsonNode node = objectMapper.readTree(json);
             if (node == null || node.isNull()) {
                 throw new IllegalArgumentException("Received null or invalid JSON message");
@@ -431,7 +404,10 @@ public class RealtimeWebSocketClient {
                     }
                     break;
                 default:
-                    // Unknown message type - log or ignore;
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
                     break;
             }
         } catch (IllegalArgumentException e) {
@@ -443,52 +419,5 @@ public class RealtimeWebSocketClient {
                 onErrorHandler.accept(e);
             }
         }
-    }
-
-    /**
-     * Reason for WebSocket disconnection.
-     */
-    public static class DisconnectReason {
-        private final int code;
-
-        private final String reason;
-
-        public DisconnectReason(int code, String reason) {
-            this.code = code;
-            this.reason = reason;
-        }
-
-        public int getCode() {
-            return code;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-    }
-
-    /**
-     * WebSocket connection ready state, based on the W3C WebSocket API.
-     */
-    public enum WebSocketReadyState {
-        /**
-         * The connection is being established.
-         */
-        CONNECTING,
-
-        /**
-         * The connection is open and ready to communicate.
-         */
-        OPEN,
-
-        /**
-         * The connection is in the process of closing.
-         */
-        CLOSING,
-
-        /**
-         * The connection is closed.
-         */
-        CLOSED
     }
 }

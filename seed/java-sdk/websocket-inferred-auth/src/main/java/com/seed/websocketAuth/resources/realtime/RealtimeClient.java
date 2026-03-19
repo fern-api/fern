@@ -5,7 +5,6 @@ package com.seed.websocketAuth.resources.realtime;
 
 import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.resources.realtime.websocket.RealtimeWebSocketClient;
-import java.util.Optional;
 
 public class RealtimeClient {
     protected final ClientOptions clientOptions;
@@ -17,11 +16,8 @@ public class RealtimeClient {
     /**
      * Creates a new WebSocket client for the realtime channel.
      * @param sessionId the sessionId path parameter
-     * @param model Optional model query parameter
-     * @param temperature Optional temperature query parameter
      */
-    public RealtimeWebSocketClient realtimeWebSocket(
-            String sessionId, Optional<String> model, Optional<Integer> temperature) {
-        return new RealtimeWebSocketClient(clientOptions, sessionId, model, temperature);
+    public RealtimeWebSocketClient realtimeWebSocket(String sessionId) {
+        return new RealtimeWebSocketClient(clientOptions, sessionId);
     }
 }
