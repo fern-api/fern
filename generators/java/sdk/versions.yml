@@ -102,6 +102,8 @@
         string escaping. These endpoints now send raw bytes via
         `InputStreamRequestBody`.
       type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
 
 - version: 3.44.6
   changelogEntry:
