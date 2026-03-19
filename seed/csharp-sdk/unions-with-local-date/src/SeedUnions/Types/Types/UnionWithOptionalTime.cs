@@ -209,6 +209,27 @@ public record UnionWithOptionalTime
             json["type"] = value.Type;
             json.WriteTo(writer, options);
         }
+
+        public override UnionWithOptionalTime ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithOptionalTime(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithOptionalTime value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
+        }
     }
 
     /// <summary>

@@ -56,4 +56,30 @@ internal class ForwardCompatibleEnumSerializer
             _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
+
+    public override ForwardCompatibleEnum ReadAsPropertyName(
+        ref global::System.Text.Json.Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception(
+                "The JSON property name could not be read as a string."
+            );
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void WriteAsPropertyName(
+        global::System.Text.Json.Utf8JsonWriter writer,
+        ForwardCompatibleEnum value,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        if (_enumToString.TryGetValue(value, out var stringValue))
+        {
+            writer.WritePropertyName(stringValue);
+        }
+    }
 }
