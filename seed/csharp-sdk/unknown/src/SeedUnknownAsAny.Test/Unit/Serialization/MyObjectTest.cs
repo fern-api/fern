@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
+using SeedUnknownAsAny.Test.Utils;
 
 namespace SeedUnknownAsAny.Test;
 
@@ -35,7 +35,7 @@ public class MyObjectTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "unknown": {
                 "boolVal": true,
@@ -43,16 +43,6 @@ public class MyObjectTest
               }
             }
             """;
-        var actualObj = new MyObject
-        {
-            Unknown = new Dictionary<object, object?>()
-            {
-                { "boolVal", true },
-                { "strVal", "string" },
-            },
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<MyObject>(inputJson);
     }
 }
