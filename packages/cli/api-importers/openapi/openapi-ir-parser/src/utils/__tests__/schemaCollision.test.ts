@@ -157,6 +157,53 @@ describe("Schema Collision", () => {
         });
     });
 
+    describe("registerExistingId", () => {
+        it("should detect collisions with pre-registered IDs", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            // Pre-register an existing ID (simulating schemas from a first spec)
+            tracker.registerExistingId("CardInstrument");
+
+            // Now when the same ID comes from a second spec, it should collide
+            const uniqueId = tracker.getUniqueSchemaId("CardInstrument", mockLogger, true);
+            expect(uniqueId).toBe("CardInstrument2");
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                "Schema name collision detected: 'CardInstrument' already exists. Renaming to 'CardInstrument2' to avoid conflicts."
+            );
+        });
+
+        it("should not affect non-colliding IDs", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            tracker.registerExistingId("CardInstrument");
+
+            const uniqueId = tracker.getUniqueSchemaId("PaymentMethod", mockLogger, true);
+            expect(uniqueId).toBe("PaymentMethod");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
+
+        it("should be idempotent for the same ID", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            tracker.registerExistingId("CardInstrument");
+            tracker.registerExistingId("CardInstrument");
+
+            // Should still only produce CardInstrument2 (not CardInstrument3)
+            const uniqueId = tracker.getUniqueSchemaId("CardInstrument", mockLogger, true);
+            expect(uniqueId).toBe("CardInstrument2");
+        });
+
+        it("should not rename when resolveCollisions is false", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            tracker.registerExistingId("CardInstrument");
+
+            const uniqueId = tracker.getUniqueSchemaId("CardInstrument", mockLogger, false);
+            expect(uniqueId).toBe("CardInstrument");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
+    });
+
     describe("reset", () => {
         it("should reset collision tracking state", () => {
             const tracker = createSchemaCollisionTracker();

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.5
+  changelogEntry:
+    - summary: |
+        Fix schema name collisions when merging multiple OpenAPI specs that define
+        schemas with the same name but different properties (e.g. `CardInstrument`
+        in both wallet and payments specs). When `resolve-schema-collisions` is
+        enabled, duplicate schema names from subsequent specs are now renamed
+        (e.g. `CardInstrument2`) and all references throughout the IR are updated
+        accordingly.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.37.4
   changelogEntry:
     - summary: |

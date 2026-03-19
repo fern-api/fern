@@ -4,6 +4,7 @@ import {
     GlobalSecurity,
     OpenApiIntermediateRepresentation,
     Source as OpenApiIrSource,
+    Schema,
     Schemas,
     Server
 } from "@fern-api/openapi-ir";
@@ -118,7 +119,12 @@ export function parse({
                         };
                     }
                     if (parsedAsyncAPI.groupedSchemas != null) {
-                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
+                        const { schemas: mergedAsyncSchemas } = mergeSchemaMaps(
+                            ir.groupedSchemas,
+                            parsedAsyncAPI.groupedSchemas,
+                            options
+                        );
+                        ir.groupedSchemas = mergedAsyncSchemas;
                     }
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
@@ -376,6 +382,8 @@ function merge(
 
     // When flag is disabled, use the original simple merge behavior
     if (!shouldGroupEnvironments) {
+        const { schemas: mergedSchemas, renameMap } = mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options);
+        renameSchemaReferencesInIr(ir2, renameMap);
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
             title: ir1.title ?? ir2.title,
@@ -400,7 +408,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
+            groupedSchemas: mergedSchemas,
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -428,6 +436,12 @@ function merge(
 
     // Only do complex merging when flag is enabled
     const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
+    const { schemas: groupedMergedSchemas, renameMap: groupedRenameMap } = mergeSchemaMaps(
+        ir1.groupedSchemas,
+        ir2.groupedSchemas,
+        options
+    );
+    renameSchemaReferencesInIr(ir2, groupedRenameMap);
     if (hasMultipleApis) {
         const mergedServers: GroupedServerInput[] = [];
         let mergedEndpoints: TypedEndpoint[] = [];
@@ -568,7 +582,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
+            groupedSchemas: groupedMergedSchemas,
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -619,7 +633,7 @@ function merge(
             ...ir1.channels,
             ...ir2.channels
         },
-        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
+        groupedSchemas: groupedMergedSchemas,
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -640,14 +654,32 @@ function merge(
     };
 }
 
-function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
+interface MergeSchemasResult {
+    schemas: Schemas;
+    renameMap: Map<string, string>;
+}
+
+function mergeSchemaMaps(
+    schemas1: Schemas,
+    schemas2: Schemas,
+    options?: Partial<ParseOpenAPIOptions>
+): MergeSchemasResult {
     const collisionTracker = createSchemaCollisionTracker();
-    const shouldWarn = options?.resolveSchemaCollisions ?? false;
+    const shouldResolve = options?.resolveSchemaCollisions ?? false;
+    const renameMap = new Map<string, string>();
+
+    // Pre-register all schemas1 keys so collisions with schemas2 are detected
+    for (const key of Object.keys(schemas1.rootSchemas)) {
+        collisionTracker.registerExistingId(key);
+    }
 
     // Merge root schemas with collision detection
     const mergedRootSchemas = { ...schemas1.rootSchemas };
     for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
-        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldResolve);
+        if (uniqueKey !== key) {
+            renameMap.set(key, uniqueKey);
+        }
         mergedRootSchemas[uniqueKey] = schema;
     }
     schemas1.rootSchemas = mergedRootSchemas;
@@ -656,8 +688,15 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
         if (schemas1.namespacedSchemas[namespace] != null) {
             const existingSchemas = schemas1.namespacedSchemas[namespace];
+            // Pre-register existing namespace schema keys
+            for (const existingKey of Object.keys(existingSchemas)) {
+                collisionTracker.registerExistingId(existingKey);
+            }
             for (const [key, schema] of Object.entries(namespaceSchemas)) {
-                const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+                const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldResolve);
+                if (uniqueKey !== key) {
+                    renameMap.set(key, uniqueKey);
+                }
                 existingSchemas[uniqueKey] = schema;
             }
         } else {
@@ -665,5 +704,150 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial
         }
     }
 
-    return schemas1;
+    return { schemas: schemas1, renameMap };
+}
+
+/**
+ * Recursively updates all schema references in a Schema tree according to the rename map.
+ * Mutates the schema objects in-place to avoid reconstructing complex auto-generated types.
+ */
+function renameReferencesInSchema(schema: Schema, renameMap: Map<string, string>): void {
+    switch (schema.type) {
+        case "reference": {
+            const newId = renameMap.get(schema.schema);
+            if (newId != null) {
+                (schema as { schema: string }).schema = newId;
+            }
+            break;
+        }
+        case "object":
+            for (const allOfRef of schema.allOf) {
+                const newId = renameMap.get(allOfRef.schema);
+                if (newId != null) {
+                    (allOfRef as { schema: string }).schema = newId;
+                }
+            }
+            for (const prop of schema.properties) {
+                renameReferencesInSchema(prop.schema, renameMap);
+            }
+            for (const commonProp of schema.allOfPropertyConflicts) {
+                // Update allOf schema IDs that reference renamed schemas
+                for (let i = 0; i < commonProp.allOfSchemaIds.length; i++) {
+                    const existingId = commonProp.allOfSchemaIds[i];
+                    if (existingId != null) {
+                        const newId = renameMap.get(existingId);
+                        if (newId != null) {
+                            commonProp.allOfSchemaIds[i] = newId;
+                        }
+                    }
+                }
+            }
+            break;
+        case "array":
+        case "optional":
+        case "nullable":
+            renameReferencesInSchema(schema.value, renameMap);
+            break;
+        case "map":
+            renameReferencesInSchema(schema.value, renameMap);
+            break;
+        case "oneOf":
+            if (schema.value.type === "discriminated") {
+                for (const commonProp of schema.value.commonProperties) {
+                    renameReferencesInSchema(commonProp.schema, renameMap);
+                }
+                for (const variant of Object.values(schema.value.schemas)) {
+                    renameReferencesInSchema(variant, renameMap);
+                }
+            } else if (schema.value.type === "undiscriminated") {
+                for (const variant of schema.value.schemas) {
+                    renameReferencesInSchema(variant, renameMap);
+                }
+            }
+            break;
+        case "primitive":
+        case "enum":
+        case "literal":
+        case "unknown":
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Renames schema references throughout an entire IR according to the rename map.
+ * This updates endpoints, webhooks, and schema definitions that reference renamed schemas.
+ */
+function renameSchemaReferencesInIr(ir: OpenApiIntermediateRepresentation, renameMap: Map<string, string>): void {
+    if (renameMap.size === 0) {
+        return;
+    }
+
+    // Update references in endpoints
+    for (const endpoint of ir.endpoints) {
+        if (endpoint.request != null) {
+            if (endpoint.request.type === "json" || endpoint.request.type === "formUrlEncoded") {
+                renameReferencesInSchema(endpoint.request.schema, renameMap);
+            }
+        }
+        if (endpoint.response != null) {
+            if (
+                endpoint.response.type === "json" ||
+                endpoint.response.type === "streamingSse" ||
+                endpoint.response.type === "streamingJson"
+            ) {
+                renameReferencesInSchema(endpoint.response.schema, renameMap);
+            }
+        }
+        for (const param of endpoint.queryParameters) {
+            renameReferencesInSchema(param.schema, renameMap);
+        }
+        for (const param of endpoint.pathParameters) {
+            renameReferencesInSchema(param.schema, renameMap);
+        }
+        for (const header of endpoint.headers) {
+            renameReferencesInSchema(header.schema, renameMap);
+        }
+        for (const error of Object.values(endpoint.errors)) {
+            if (error.schema != null) {
+                renameReferencesInSchema(error.schema, renameMap);
+            }
+        }
+    }
+
+    // Update references in webhooks
+    for (const webhook of ir.webhooks) {
+        renameReferencesInSchema(webhook.payload, renameMap);
+        for (const header of webhook.headers) {
+            renameReferencesInSchema(header.schema, renameMap);
+        }
+        if (webhook.response != null) {
+            if (
+                webhook.response.type === "json" ||
+                webhook.response.type === "streamingSse" ||
+                webhook.response.type === "streamingJson"
+            ) {
+                renameReferencesInSchema(webhook.response.schema, renameMap);
+            }
+        }
+    }
+
+    // Update references in schema definitions themselves
+    for (const schema of Object.values(ir.groupedSchemas.rootSchemas)) {
+        renameReferencesInSchema(schema, renameMap);
+    }
+    for (const namespaceSchemas of Object.values(ir.groupedSchemas.namespacedSchemas)) {
+        for (const schema of Object.values(namespaceSchemas)) {
+            renameReferencesInSchema(schema, renameMap);
+        }
+    }
+
+    // Update nonRequestReferencedSchemas set
+    for (const [oldId, newId] of renameMap) {
+        if (ir.nonRequestReferencedSchemas.has(oldId)) {
+            ir.nonRequestReferencedSchemas.delete(oldId);
+            ir.nonRequestReferencedSchemas.add(newId);
+        }
+    }
 }

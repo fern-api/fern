@@ -8,6 +8,8 @@ export interface SchemaCollisionTracker {
         logger?: Logger,
         resolveCollisions?: boolean
     ): string;
+    /** Pre-register an existing schema ID so future calls to getUniqueSchemaId detect collisions. */
+    registerExistingId(id: string): void;
     reset(): void;
 }
 
@@ -50,6 +52,13 @@ export function createSchemaCollisionTracker(): SchemaCollisionTracker {
             }
 
             return baseTitle;
+        },
+
+        registerExistingId(id: string): void {
+            const existingCount = schemaIdRegistry.get(id) || 0;
+            if (existingCount === 0) {
+                schemaIdRegistry.set(id, 1);
+            }
         },
 
         reset(): void {
