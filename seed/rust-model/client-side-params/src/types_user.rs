@@ -1,10 +1,13 @@
 pub use crate::prelude::*;
 
 /// User object similar to Auth0 users
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct User {
+    #[serde(default)]
     pub user_id: String,
+    #[serde(default)]
     pub email: String,
+    #[serde(default)]
     pub email_verified: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub username: Option<String>,
@@ -12,8 +15,10 @@ pub struct User {
     pub phone_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub phone_verified: Option<bool>,
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub created_at: DateTime<FixedOffset>,
+    #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub updated_at: DateTime<FixedOffset>,
     #[serde(skip_serializing_if = "Option::is_none")]

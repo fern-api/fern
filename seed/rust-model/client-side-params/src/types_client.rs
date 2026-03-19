@@ -1,14 +1,16 @@
 pub use crate::prelude::*;
 
 /// Represents a client application
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct Client {
     /// The unique client identifier
+    #[serde(default)]
     pub client_id: String,
     /// The tenant name
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tenant: Option<String>,
     /// Name of the client
+    #[serde(default)]
     pub name: String,
     /// Free text description of the client
     #[serde(skip_serializing_if = "Option::is_none")]
