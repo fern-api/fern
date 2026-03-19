@@ -114,6 +114,13 @@ export class StructGenerator {
 
         attributes.push(Attribute.derive(derives));
 
+        // Add #[serde(transparent)] for single-property structs used in undiscriminated unions.
+        // This makes the struct serialize/deserialize as the inner value directly,
+        // which is required for untagged enum variant matching.
+        if (this.isSinglePropertyUndiscriminatedUnionMember()) {
+            attributes.push(Attribute.serde.transparent());
+        }
+
         return attributes;
     }
 
@@ -126,7 +133,10 @@ export class StructGenerator {
 
         // Generate the field type, wrapping in Box<T> if recursive
         const fieldType = generateFieldType(property, this.context, isRecursive);
-        const fieldAttributes = generateFieldAttributes(property, this.context);
+        const isTransparent = this.isSinglePropertyUndiscriminatedUnionMember();
+        // When struct is transparent, skip field-level serde attributes (rename, default, etc.)
+        // as they are incompatible with #[serde(transparent)]
+        const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
@@ -201,6 +211,21 @@ export class StructGenerator {
             );
         });
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
+    }
+
+    /**
+     * Check if this struct is a single-property wrapper used in an undiscriminated union.
+     * Such structs need #[serde(transparent)] so they serialize/deserialize as the
+     * inner value directly, enabling correct untagged enum variant matching.
+     */
+    private isSinglePropertyUndiscriminatedUnionMember(): boolean {
+        // Must have exactly one property and no extends (inheritance)
+        if (this.objectTypeDeclaration.properties.length !== 1 || this.objectTypeDeclaration.extends.length > 0) {
+            return false;
+        }
+        // Check if this type is referenced by any undiscriminated union
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+        return typeId != null && this.context.undiscriminatedUnionMemberTypeIds.has(typeId);
     }
 
     private canDeriveDefault(): boolean {
