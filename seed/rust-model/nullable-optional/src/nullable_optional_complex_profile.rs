@@ -1,8 +1,9 @@
 pub use crate::prelude::*;
 
 /// Test object with nullable enums, unions, and arrays
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct ComplexProfile {
+    #[serde(default)]
     pub id: String,
     #[serde(rename = "nullableRole")]
     #[serde(skip_serializing_if = "Option::is_none")]
