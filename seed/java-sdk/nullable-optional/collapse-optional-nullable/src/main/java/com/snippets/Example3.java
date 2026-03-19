@@ -11,10 +11,10 @@ public class Example3 {
 
         client.nullableOptional()
                 .listUsers(ListUsersRequest.builder()
-                        .limit(OptionalNullable.of(1))
-                        .offset(OptionalNullable.of(1))
-                        .includeDeleted(OptionalNullable.of(true))
                         .sortBy(OptionalNullable.of("sortBy"))
+                        .limit(1)
+                        .offset(1)
+                        .includeDeleted(true)
                         .build());
     }
 }
