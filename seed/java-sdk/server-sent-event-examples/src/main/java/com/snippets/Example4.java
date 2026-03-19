@@ -9,6 +9,6 @@ public class Example4 {
                 SeedServerSentEventsClient.builder().url("https://api.fern.com").build();
 
         client.completions()
-                .streamEvents(StreamEventsRequest.builder().query("query").build());
+                .streamEvents(StreamEventsRequest.builder().query("").build());
     }
 }

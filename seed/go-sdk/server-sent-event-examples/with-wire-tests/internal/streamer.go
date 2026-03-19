@@ -124,3 +124,74 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 
 	return core.NewStream[T](resp, opts...), nil
 }
+
+// StreamWithEventUnmarshal is like Stream but uses a custom event unmarshal function
+// for protocol-level SSE discrimination. The eventUnmarshal function receives the SSE
+// event type and raw data bytes, and returns the deserialized value.
+func (s *Streamer[T]) StreamWithEventUnmarshal(ctx context.Context, params *StreamParams, eventUnmarshal core.EventUnmarshalFunc[T]) (*core.Stream[T], error) {
+	url := buildURL(params.URL, params.QueryParameters)
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		params.Headers,
+		params.Request,
+		params.BodyProperties,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
+	client := s.client
+	if params.Client != nil {
+		client = params.Client
+	}
+
+	var retryOptions []RetryOption
+	if params.MaxAttempts > 0 {
+		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
+	}
+
+	resp, err := s.retrier.Run(
+		client.Do,
+		req,
+		params.ErrorDecoder,
+		retryOptions...,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := ctx.Err(); err != nil {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, err
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, decodeError(resp, params.ErrorDecoder)
+	}
+
+	var opts []core.StreamOption
+	if params.Delimiter != "" {
+		opts = append(opts, core.WithDelimiter(params.Delimiter))
+	}
+	if params.Prefix != "" {
+		opts = append(opts, core.WithPrefix(params.Prefix))
+	}
+	if params.Terminator != "" {
+		opts = append(opts, core.WithTerminator(params.Terminator))
+	}
+	if params.Format != core.StreamFormatEmpty {
+		opts = append(opts, core.WithFormat(params.Format))
+	}
+	if params.MaxBufSize > 0 {
+		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
+	}
+
+	return core.NewStreamWithEventUnmarshal[T](resp, eventUnmarshal, opts...), nil
+}

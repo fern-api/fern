@@ -3,11 +3,6 @@
 /**
  * @example
  *     {
- *         query: "query"
- *     }
- *
- * @example
- *     {
  *         query: ""
  *     }
  */

@@ -98,7 +98,7 @@ func TestCompletionsStreamEventsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamEventsRequest{
-		Query: "query",
+		Query: "",
 	}
 	_, invocationErr := client.Completions.StreamEvents(
 		context.TODO(),
@@ -110,4 +110,29 @@ func TestCompletionsStreamEventsWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
+}
+
+func TestCompletionsStreamEventsContextProtocolWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &sse.StreamEventsRequest{
+		Query: "",
+	}
+	_, invocationErr := client.Completions.StreamEventsContextProtocol(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsContextProtocolWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
 }

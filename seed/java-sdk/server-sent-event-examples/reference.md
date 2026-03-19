@@ -61,7 +61,52 @@ client.completions().stream(
 client.completions().streamEvents(
     StreamEventsRequest
         .builder()
-        .query("query")
+        .query("")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.completions.streamEventsContextProtocol(request) -> Iterable&amp;lt;StreamEventContextProtocol&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.completions().streamEventsContextProtocol(
+    StreamEventsRequest
+        .builder()
+        .query("")
         .build()
 );
 ```

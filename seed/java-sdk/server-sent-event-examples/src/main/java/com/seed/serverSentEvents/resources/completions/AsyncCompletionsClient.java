@@ -8,6 +8,7 @@ import com.seed.serverSentEvents.core.RequestOptions;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
+import com.seed.serverSentEvents.resources.completions.types.StreamEventContextProtocol;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,5 +45,17 @@ public class AsyncCompletionsClient {
     public CompletableFuture<Iterable<StreamEvent>> streamEvents(
             StreamEventsRequest request, RequestOptions requestOptions) {
         return this.rawClient.streamEvents(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Iterable<StreamEventContextProtocol>> streamEventsContextProtocol(
+            StreamEventsRequest request) {
+        return this.rawClient.streamEventsContextProtocol(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Iterable<StreamEventContextProtocol>> streamEventsContextProtocol(
+            StreamEventsRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamEventsContextProtocol(request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

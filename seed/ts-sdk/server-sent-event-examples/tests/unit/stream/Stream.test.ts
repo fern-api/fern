@@ -151,14 +151,17 @@ describe("Stream", () => {
         });
     });
 
-    describe("SSE event-level discrimination (inject discriminator)", () => {
-        it("should inject event type as discriminator into JSON data", async () => {
+    describe("SSE event-level discrimination (eventType passed to parse)", () => {
+        it("should pass event type to parse callback", async () => {
             const mockStream = createReadableStream([
                 'event: completion\ndata: {"content": "hello"}\n\nevent: completion\ndata: {"content": "world"}\n\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -173,13 +176,16 @@ describe("Stream", () => {
             ]);
         });
 
-        it("should inject different event types for mixed events", async () => {
+        it("should pass different event types for mixed events", async () => {
             const mockStream = createReadableStream([
                 'event: completion\ndata: {"content": "hi"}\n\nevent: error\ndata: {"message": "fail"}\n\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { event: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "event" },
             });
 
@@ -194,14 +200,19 @@ describe("Stream", () => {
             ]);
         });
 
-        it("should not inject if data already contains discriminator key", async () => {
+        it("should correctly handle data that contains a field with the same name as the discriminator", async () => {
             const mockStream = createReadableStream([
-                'event: completion\ndata: {"type": "existing", "content": "hello"}\n\n',
+                'event: event\ndata: {"event": "user_value", "content": "hello"}\n\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
-                eventShape: { type: "sse", eventDiscriminator: "type" },
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    // The parse function uses eventType from the SSE envelope,
+                    // NOT from the data payload. The data's "event" field is preserved as-is.
+                    return { discriminator: eventType, ...data };
+                },
+                eventShape: { type: "sse", eventDiscriminator: "discriminator" },
             });
 
             const messages: unknown[] = [];
@@ -209,32 +220,17 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ type: "existing", content: "hello" }]);
+            expect(messages).toEqual([{ discriminator: "event", event: "user_value", content: "hello" }]);
         });
 
-        it("should not false-positive when discriminator key appears inside a value", async () => {
-            const mockStream = createReadableStream([
-                'event: completion\ndata: {"description": "type: foo", "content": "hello"}\n\n',
-            ]);
-            const stream = new Stream({
-                stream: mockStream,
-                parse: async (val: unknown) => val,
-                eventShape: { type: "sse", eventDiscriminator: "type" },
-            });
-
-            const messages: unknown[] = [];
-            for await (const message of stream) {
-                messages.push(message);
-            }
-
-            expect(messages).toEqual([{ type: "completion", description: "type: foo", content: "hello" }]);
-        });
-
-        it("should not inject if no event field is present", async () => {
+        it("should pass undefined eventType when no event field is present", async () => {
             const mockStream = createReadableStream(['data: {"content": "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -243,14 +239,17 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ content: "hello" }]);
+            expect(messages).toEqual([{ type: undefined, content: "hello" }]);
         });
 
         it("should handle empty JSON object", async () => {
             const mockStream = createReadableStream(["event: heartbeat\ndata: {}\n\n"]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -268,7 +267,10 @@ describe("Stream", () => {
             ]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type", streamTerminator: "[DONE]" },
             });
 
@@ -284,7 +286,10 @@ describe("Stream", () => {
             const mockStream = createReadableStream(['event: completion\ndata: {"delta":\ndata: "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -300,7 +305,10 @@ describe("Stream", () => {
             const mockStream = createReadableStream(["event: comple", 'tion\ndata: {"con', 'tent": "hi"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -316,7 +324,10 @@ describe("Stream", () => {
             const mockStream = createReadableStream(['event: completion\ndata: {"content": "hi"}\n']);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -334,7 +345,10 @@ describe("Stream", () => {
             ]);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 
@@ -349,11 +363,14 @@ describe("Stream", () => {
             ]);
         });
 
-        it("should inject empty string discriminator when event field is present but empty", async () => {
+        it("should pass empty string eventType when event field is present but empty", async () => {
             const mockStream = createReadableStream(['event: \ndata: {"content": "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
-                parse: async (val: unknown) => val,
+                parse: async (val: unknown, eventType?: string) => {
+                    const data = val as Record<string, unknown>;
+                    return { type: eventType, ...data };
+                },
                 eventShape: { type: "sse", eventDiscriminator: "type" },
             });
 

@@ -37,7 +37,7 @@ const EVENT_PREFIX = "event:";
 export class Stream<T> implements AsyncIterable<T> {
     private stream: ReadableStream;
 
-    private parse: (val: unknown) => Promise<T>;
+    private parse: (val: unknown, eventType?: string) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
      * for SSE, the prefix is "data: ".
@@ -49,7 +49,12 @@ export class Stream<T> implements AsyncIterable<T> {
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
-    constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({
+        stream,
+        parse,
+        eventShape,
+        signal,
+    }: Stream.Args & { parse: (val: unknown, eventType?: string) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -162,21 +167,7 @@ export class Stream<T> implements AsyncIterable<T> {
         if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
             return null;
         }
-        return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
-    }
-
-    private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
-        if (this.eventDiscriminator == null || eventType == null) {
-            return parsed;
-        }
-        if (parsed == null || typeof parsed !== "object" || Array.isArray(parsed)) {
-            return parsed;
-        }
-        const obj = parsed as Record<string, unknown>;
-        if (this.eventDiscriminator in obj) {
-            return parsed;
-        }
-        return { [this.eventDiscriminator]: eventType, ...obj };
+        return this.parse(fromJson(dataValue), eventType);
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {

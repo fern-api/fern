@@ -14,7 +14,7 @@ func do() {
         ),
     )
     request := &sse.StreamEventsRequest{
-        Query: "query",
+        Query: "",
     }
     client.Completions.StreamEvents(
         context.TODO(),

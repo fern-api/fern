@@ -3,109 +3,176 @@
 package completions
 
 import (
-	context "context"
-	sse "github.com/fern-api/sse-examples-go"
-	core "github.com/fern-api/sse-examples-go/core"
-	internal "github.com/fern-api/sse-examples-go/internal"
-	option "github.com/fern-api/sse-examples-go/option"
-	http "net/http"
+    core "github.com/fern-api/sse-examples-go/core"
+    internal "github.com/fern-api/sse-examples-go/internal"
+    context "context"
+    sse "github.com/fern-api/sse-examples-go"
+    option "github.com/fern-api/sse-examples-go/option"
+    http "net/http"
+    json "encoding/json"
+    fmt "fmt"
 )
 
-type Client struct {
-	WithRawResponse *RawClient
 
-	options *core.RequestOptions
-	baseURL string
-	caller  *internal.Caller
+type Client struct {
+    WithRawResponse *RawClient
+
+    options *core.RequestOptions
+    baseURL string
+    caller *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	return &Client{
-		WithRawResponse: NewRawClient(options),
-		options:         options,
-		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
-			},
-		),
-	}
+    return &Client{
+        WithRawResponse: NewRawClient(options),
+        options: options,
+        baseURL: options.BaseURL,
+        caller: internal.NewCaller(
+            &internal.CallerParams{
+                Client: options.HTTPClient,
+                MaxAttempts: options.MaxAttempts,
+            },
+        ),
+    }
 }
 
 func (c *Client) Stream(
-	ctx context.Context,
-	request *sse.StreamCompletionRequest,
-	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamedCompletion], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/stream"
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
-	return streamer.Stream(
-		ctx,
-		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      "[[DONE]]",
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
-		},
-	)
+    ctx context.Context,
+    request *sse.StreamCompletionRequest,
+    opts ...option.RequestOption,
+) (*core.Stream[sse.StreamedCompletion], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        c.baseURL,
+        "",
+    )
+    endpointURL := baseURL + "/stream"
+    headers := internal.MergeHeaders(
+        c.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Accept", "text/event-stream")
+    streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+    return streamer.Stream(
+        ctx,
+        &internal.StreamParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            MaxBufSize: options.MaxBufSize,
+            Prefix: internal.DefaultSSEDataPrefix,
+            Terminator: "[[DONE]]",
+            Format: core.StreamFormatSSE,
+            Request: request,
+            ErrorDecoder: internal.NewErrorDecoder(sse.ErrorCodes),
+        },
+    )
 }
 
 func (c *Client) StreamEvents(
-	ctx context.Context,
-	request *sse.StreamEventsRequest,
-	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamEvent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/stream-events"
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[sse.StreamEvent](c.caller)
-	return streamer.Stream(
-		ctx,
-		&internal.StreamParams{
-			URL:                endpointURL,
-			Method:             http.MethodPost,
-			Headers:            headers,
-			MaxAttempts:        options.MaxAttempts,
-			BodyProperties:     options.BodyProperties,
-			QueryParameters:    options.QueryParameters,
-			Client:             options.HTTPClient,
-			MaxBufSize:         options.MaxBufSize,
-			Prefix:             internal.DefaultSSEDataPrefix,
-			Terminator:         "[DONE]",
-			Format:             core.StreamFormatSSE,
-			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
-		},
-	)
+    ctx context.Context,
+    request *sse.StreamEventsRequest,
+    opts ...option.RequestOption,
+) (*core.Stream[sse.StreamEvent], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        c.baseURL,
+        "",
+    )
+    endpointURL := baseURL + "/stream-events"
+    headers := internal.MergeHeaders(
+        c.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Accept", "text/event-stream")
+    streamer := internal.NewStreamer[sse.StreamEvent](c.caller)
+    return streamer.Stream(
+        ctx,
+        &internal.StreamParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            MaxBufSize: options.MaxBufSize,
+            Prefix: internal.DefaultSSEDataPrefix,
+            Terminator: "[DONE]",
+            Format: core.StreamFormatSSE,
+            Request: request,
+            ErrorDecoder: internal.NewErrorDecoder(sse.ErrorCodes),
+        },
+    )
 }
+
+func (c *Client) StreamEventsContextProtocol(
+    ctx context.Context,
+    request *sse.StreamEventsRequest,
+    opts ...option.RequestOption,
+) (*core.Stream[sse.StreamEventContextProtocol], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        c.baseURL,
+        "",
+    )
+    endpointURL := baseURL + "/stream-events-context-protocol"
+    headers := internal.MergeHeaders(
+        c.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Accept", "text/event-stream")
+    streamer := internal.NewStreamer[sse.StreamEventContextProtocol](c.caller)
+    return streamer.StreamWithEventUnmarshal(
+        ctx,
+        &internal.StreamParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            MaxBufSize: options.MaxBufSize,
+            Prefix: internal.DefaultSSEDataPrefix,
+            Terminator: "[DONE]",
+            Format: core.StreamFormatSSE,
+            EventDiscriminator: "event",
+            Request: request,
+            ErrorDecoder: internal.NewErrorDecoder(sse.ErrorCodes),
+        },
+        core.EventUnmarshalFunc[*sse.StreamEventContextProtocol](func(eventType string, data []byte) (*sse.StreamEventContextProtocol, error) {
+            switch eventType {
+            case "completion":
+                var value *sse.CompletionEvent
+                if err := json.Unmarshal(data, &value); err != nil {
+                    return nil, err
+                }
+                return &sse.StreamEventContextProtocol{Event: "completion", Completion: value}, nil
+            case "error":
+                var value *sse.ErrorEvent
+                if err := json.Unmarshal(data, &value); err != nil {
+                    return nil, err
+                }
+                return &sse.StreamEventContextProtocol{Event: "error", Error: value}, nil
+            case "event":
+                var value *sse.EventEvent
+                if err := json.Unmarshal(data, &value); err != nil {
+                    return nil, err
+                }
+                return &sse.StreamEventContextProtocol{Event: "event", Event: value}, nil
+            default:
+                return nil, fmt.Errorf("unknown SSE event type: %s", eventType)
+            }
+        })
+        ,
+    )
+}
+

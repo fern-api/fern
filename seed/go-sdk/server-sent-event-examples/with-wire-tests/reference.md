@@ -61,9 +61,56 @@ client.Completions.Stream(
 
 ```go
 request := &sse.StreamEventsRequest{
-        Query: "query",
+        Query: "",
     }
 client.Completions.StreamEvents(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> sse.StreamEventContextProtocol</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sse.StreamEventsRequest{
+        Query: "",
+    }
+client.Completions.StreamEventsContextProtocol(
         context.TODO(),
         request,
     )

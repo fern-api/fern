@@ -56,32 +56,7 @@ describe("CompletionsClient", () => {
         }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
     });
 
-    test("streamEvents (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { query: "query" };
-        const rawResponseBody = 'event: completion\ndata: {"content":"content"}\n\n';
-
-        server
-            .mockEndpoint()
-            .post("/stream-events")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
-
-        const response = await client.completions.streamEvents({
-            query: "query",
-        });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([{ event: "completion", content: "content" }]);
-    });
-
-    test("streamEvents (2)", async () => {
+    test("streamEvents", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
@@ -98,6 +73,28 @@ describe("CompletionsClient", () => {
 
         await expect(async () => {
             return await client.completions.streamEvents({
+                query: "",
+            });
+        }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
+    });
+
+    test("streamEventsContextProtocol", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "" };
+        const rawResponseBody = "bad request";
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.completions.streamEventsContextProtocol({
                 query: "",
             });
         }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
