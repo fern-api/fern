@@ -19,6 +19,12 @@ export class EnumGenerator {
         this.context = context;
     }
 
+    private isForwardCompatible(): boolean {
+        // The forwardCompatible field exists in the IR wire format but may not be typed
+        // in the current IR SDK version. Access it safely via type assertion.
+        return (this.enumTypeDeclaration as unknown as Record<string, unknown>).forwardCompatible === true;
+    }
+
     public generate(): RustFile {
         const rustEnum = this.generateEnumForTypeDeclaration();
         const fileContents = this.generateFileContents(rustEnum);
@@ -48,6 +54,14 @@ export class EnumGenerator {
         rustEnum.write(writer);
         writer.newLine();
 
+        if (this.isForwardCompatible()) {
+            // Write custom Serialize/Deserialize implementations
+            this.writeSerializeImplementation(writer);
+            writer.newLine();
+            this.writeDeserializeImplementation(writer);
+            writer.newLine();
+        }
+
         // Write Display implementation
         this.writeDisplayImplementation(writer);
 
@@ -55,11 +69,28 @@ export class EnumGenerator {
     }
 
     private generateEnumForTypeDeclaration(): rust.Enum {
+        const variants = this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue));
+
+        if (this.isForwardCompatible()) {
+            variants.push(
+                rust.enumVariant({
+                    name: "__Unknown",
+                    data: [rust.Type.string()],
+                    docs: rust.docComment({
+                        summary:
+                            "This variant is used for forward compatibility.\n" +
+                            "If the server sends a value not recognized by the current SDK version,\n" +
+                            "it will be captured here with the raw string value."
+                    })
+                })
+            );
+        }
+
         return rust.enum_({
             name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
             visibility: PUBLIC,
             attributes: this.generateEnumAttributes(),
-            variants: this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue)),
+            variants,
             docs: this.typeDeclaration.docs
                 ? rust.docComment({
                       summary: this.typeDeclaration.docs
@@ -71,10 +102,13 @@ export class EnumGenerator {
     private generateEnumAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives including Hash and Eq for maximum compatibility
-        // Hash and Eq are needed when enums are used as HashMap keys
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq", "Eq", "Hash"];
-        attributes.push(Attribute.derive(derives));
+        if (this.isForwardCompatible()) {
+            attributes.push(Attribute.nonExhaustive());
+            // No Serialize/Deserialize derives; we provide custom impls
+            attributes.push(Attribute.derive(["Debug", "Clone", "PartialEq", "Eq", "Hash"]));
+        } else {
+            attributes.push(Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize", "PartialEq", "Eq", "Hash"]));
+        }
 
         return attributes;
     }
@@ -82,8 +116,8 @@ export class EnumGenerator {
     private generateEnumVariant(enumValue: FernIr.EnumTypeDeclaration["values"][0]): rust.EnumVariant {
         const variantAttributes: rust.Attribute[] = [];
 
-        // Add serde rename if the variant name differs from wire value
-        if (enumValue.name.name.pascalCase.unsafeName !== enumValue.name.wireValue) {
+        // Only add serde rename for non-forward-compatible enums (forward-compatible enums use custom serde impls)
+        if (!this.isForwardCompatible() && enumValue.name.name.pascalCase.unsafeName !== enumValue.name.wireValue) {
             variantAttributes.push(Attribute.serde.rename(enumValue.name.wireValue));
         }
 
@@ -98,6 +132,61 @@ export class EnumGenerator {
         });
     }
 
+    private writeSerializeImplementation(writer: rust.Writer): void {
+        const enumName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
+
+        writer.writeLine(`impl Serialize for ${enumName} {`);
+        writer.indent();
+        writer.writeLine("fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {");
+        writer.indent();
+        writer.writeLine("match self {");
+        writer.indent();
+
+        this.enumTypeDeclaration.values.forEach((enumValue) => {
+            const variantName = enumValue.name.name.pascalCase.unsafeName;
+            const wireValue = enumValue.name.wireValue;
+            writer.writeLine(`Self::${variantName} => serializer.serialize_str(${JSON.stringify(wireValue)}),`);
+        });
+
+        writer.writeLine("Self::__Unknown(val) => serializer.serialize_str(val),");
+
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeDeserializeImplementation(writer: rust.Writer): void {
+        const enumName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
+
+        writer.writeLine(`impl<'de> Deserialize<'de> for ${enumName} {`);
+        writer.indent();
+        writer.writeLine(
+            "fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {"
+        );
+        writer.indent();
+        writer.writeLine("let value = String::deserialize(deserializer)?;");
+        writer.writeLine("match value.as_str() {");
+        writer.indent();
+
+        this.enumTypeDeclaration.values.forEach((enumValue) => {
+            const variantName = enumValue.name.name.pascalCase.unsafeName;
+            const wireValue = enumValue.name.wireValue;
+            writer.writeLine(`${JSON.stringify(wireValue)} => Ok(Self::${variantName}),`);
+        });
+
+        writer.writeLine("_ => Ok(Self::__Unknown(value)),");
+
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
     private writeDisplayImplementation(writer: rust.Writer): void {
         const enumName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
 
@@ -105,20 +194,36 @@ export class EnumGenerator {
         writer.indent();
         writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
         writer.indent();
-        writer.writeLine("let s = match self {");
-        writer.indent();
 
-        // Generate match arms for each enum variant
-        this.enumTypeDeclaration.values.forEach((enumValue) => {
-            const variantName = enumValue.name.name.pascalCase.unsafeName;
-            const wireValue = enumValue.name.wireValue;
-            // Use JSON.stringify to properly escape special characters in string literals
-            writer.writeLine(`Self::${variantName} => ${JSON.stringify(wireValue)},`);
-        });
+        if (this.isForwardCompatible()) {
+            writer.writeLine("match self {");
+            writer.indent();
 
-        writer.dedent();
-        writer.writeLine("};");
-        writer.writeLine('write!(f, "{}", s)');
+            this.enumTypeDeclaration.values.forEach((enumValue) => {
+                const variantName = enumValue.name.name.pascalCase.unsafeName;
+                const wireValue = enumValue.name.wireValue;
+                writer.writeLine(`Self::${variantName} => write!(f, ${JSON.stringify(wireValue)}),`);
+            });
+
+            writer.writeLine("Self::__Unknown(val) => write!(f, \"{}\", val),");
+
+            writer.dedent();
+            writer.writeLine("}");
+        } else {
+            writer.writeLine("let s = match self {");
+            writer.indent();
+
+            this.enumTypeDeclaration.values.forEach((enumValue) => {
+                const variantName = enumValue.name.name.pascalCase.unsafeName;
+                const wireValue = enumValue.name.wireValue;
+                writer.writeLine(`Self::${variantName} => ${JSON.stringify(wireValue)},`);
+            });
+
+            writer.dedent();
+            writer.writeLine("};");
+            writer.writeLine('write!(f, "{}", s)');
+        }
+
         writer.dedent();
         writer.writeLine("}");
         writer.dedent();
