@@ -79,10 +79,11 @@ describe("parseVersionBumpOverride regex behavior", () => {
         expect("".match(OVERRIDE_REGEX)).toBeNull();
     });
 
-    it("does not match lowercase bump values", () => {
-        // The regex requires uppercase MAJOR/MINOR/PATCH
+    it("matches lowercase bump values (regex is case-insensitive, code normalizes with toUpperCase)", () => {
         const match = "version-bump: major".match(OVERRIDE_REGEX);
-        expect(match).toBeNull();
+        expect(match).not.toBeNull();
+        // The actual code calls .toUpperCase() on match[1] to normalize
+        expect(match?.[1]?.toUpperCase()).toBe("MAJOR");
     });
 });
 
