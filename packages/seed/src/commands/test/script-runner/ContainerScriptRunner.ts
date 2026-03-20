@@ -390,29 +390,43 @@ export class ContainerScriptRunner extends ScriptRunner {
         logger: Logger | undefined
     ): Promise<ContainerSlot> {
         const scripts: RunningScriptConfig[] = [];
-        for (const script of scriptConfigs) {
-            const startSeedCommand = await loggingExeca(
-                logger,
-                this.runner,
-                [
-                    "run",
-                    "--privileged",
-                    "--cgroupns=host",
-                    "-v",
-                    "/sys/fs/cgroup:/sys/fs/cgroup:rw",
-                    "-dit",
-                    "-v",
-                    cliVolumeBind,
-                    script.image,
-                    "/bin/sh"
-                ],
-                {
-                    doNotPipeOutput: !this.shouldStreamOutput()
-                }
-            );
-            const containerId = startSeedCommand.stdout;
-            scripts.push({ ...script, containerId });
+        try {
+            for (const script of scriptConfigs) {
+                const startSeedCommand = await loggingExeca(
+                    logger,
+                    this.runner,
+                    [
+                        "run",
+                        "--privileged",
+                        "--cgroupns=host",
+                        "-v",
+                        "/sys/fs/cgroup:/sys/fs/cgroup:rw",
+                        "-dit",
+                        "-v",
+                        cliVolumeBind,
+                        script.image,
+                        "/bin/sh"
+                    ],
+                    {
+                        doNotPipeOutput: !this.shouldStreamOutput()
+                    }
+                );
+                const containerId = startSeedCommand.stdout;
+                scripts.push({ ...script, containerId });
+            }
+            return { scripts };
+        } catch (error) {
+            // Clean up any containers that started before the failure in this slot
+            for (const script of scripts) {
+                await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                    doNotPipeOutput: true
+                }).catch((killError: unknown) => {
+                    CONSOLE_LOGGER.warn(
+                        `Failed to kill container ${script.containerId} during slot cleanup: ${killError}`
+                    );
+                });
+            }
+            throw error;
         }
-        return { scripts };
     }
 }
