@@ -132,6 +132,24 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Queues a text message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(string message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
+    /// Queues a binary message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(byte[] message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
     /// Asynchronously disposes the WebSocketClient instance, closing any active connections and cleaning up resources.
     /// </summary>
     /// <returns>A ValueTask representing the asynchronous dispose operation.</returns>

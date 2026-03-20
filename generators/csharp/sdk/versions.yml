@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.44.0
+  changelogEntry:
+    - summary: |
+        Add queued sending via `Channel<T>` to the WebSocket connection layer. Two
+        unbounded channels (text and binary) are drained by dedicated background tasks
+        started alongside the connection. The non-blocking `Send(string)` and `Send(byte[])`
+        methods return `bool` indicating whether the message was queued, while the existing
+        `SendInstant` async-per-send path remains unchanged. Queues are completed in `Dispose`
+        before cancellation tokens are signalled. Drain loop errors are surfaced through the
+        `ExceptionOccurred` event.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.43.0
   changelogEntry:
     - summary: |
