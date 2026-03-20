@@ -860,7 +860,6 @@ class CsProj extends WithGeneration {
         const dependencies = this.getDependencies();
         const indent = this.generation.constants.formatting.indent;
         const legacyDeps = this.getLegacyFrameworkDependencies();
-        const modernRefs = this.getModernFrameworkReferences();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
@@ -891,13 +890,6 @@ ${projectGroup.join("\n")}
     <ItemGroup Condition="${LEGACY_FRAMEWORK_CONDITION}">
         ${legacyDeps.join(`\n${indent}${indent}`)}
     </ItemGroup>
-${
-    modernRefs.length > 0
-        ? `    <ItemGroup Condition="${NET6_COMPATIBLE_CONDITION}">
-        ${modernRefs.join(`\n${indent}${indent}`)}
-    </ItemGroup>\n`
-        : ``
-}\
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
         <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
@@ -948,32 +940,20 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
     }
 
     /**
-     * Returns package references that should only be emitted for legacy (pre-net6.0) TFMs.
-     * These packages are included in the .NET shared framework starting with net6.0.
+     * Returns package references that should only be emitted for legacy (pre-net8.0) TFMs.
+     * These packages are included in the .NET shared framework starting with net8.0.
      */
     private getLegacyFrameworkDependencies(): string[] {
         const result: string[] = [];
-        for (const pkg of NET6_INBOX_PACKAGES) {
+        for (const pkg of NET8_INBOX_PACKAGES) {
             result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
         }
         if (this.context.hasWebSocketEndpoints) {
-            for (const pkg of NET6_INBOX_WEBSOCKET_PACKAGES) {
+            for (const pkg of NET8_INBOX_WEBSOCKET_PACKAGES) {
                 result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
             }
         }
         return result;
-    }
-
-    /**
-     * Returns FrameworkReference entries for modern (net6.0+) TFMs.
-     * Microsoft.AspNetCore.App includes Microsoft.Extensions.* and other packages
-     * that would otherwise need to be referenced individually.
-     */
-    private getModernFrameworkReferences(): string[] {
-        if (!this.context.hasWebSocketEndpoints) {
-            return [];
-        }
-        return ['<FrameworkReference Include="Microsoft.AspNetCore.App" />'];
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
@@ -1106,23 +1086,23 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
 const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];
 
 /**
- * MSBuild condition that matches target frameworks compatible with net6.0 or later.
+ * MSBuild condition that matches target frameworks compatible with net8.0 or later.
  * Uses IsTargetFrameworkCompatible for >= semantics rather than hardcoded TFM equality.
  */
-const NET6_COMPATIBLE_CONDITION = "$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))";
+const NET8_COMPATIBLE_CONDITION = "$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))";
 
 /**
- * MSBuild condition that matches legacy (pre-net6.0) target frameworks.
- * This is the negation of NET6_COMPATIBLE_CONDITION.
+ * MSBuild condition that matches legacy (pre-net8.0) target frameworks.
+ * This is the negation of NET8_COMPATIBLE_CONDITION.
  */
-const LEGACY_FRAMEWORK_CONDITION = `!${NET6_COMPATIBLE_CONDITION}`;
+const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
 
 /**
- * Packages that are included in the .NET shared framework for net6.0+ and should
+ * Packages that are included in the .NET shared framework for net8.0+ and should
  * only be emitted as PackageReference when targeting legacy TFMs (netstandard2.0, net462, etc.).
  * Extend this list as more packages become in-box in future .NET versions.
  */
-const NET6_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
     { name: "System.Text.Json", version: "8.0.5" },
     { name: "System.Net.Http", version: "[4.3.4,)" },
     { name: "System.Text.RegularExpressions", version: "[4.3.1,)" }
@@ -1130,9 +1110,9 @@ const NET6_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
 
 /**
  * Packages from the websocket dependencies that are included in the .NET shared
- * framework for net6.0+ and should only be emitted as PackageReference for legacy TFMs.
+ * framework for net8.0+ and should only be emitted as PackageReference for legacy TFMs.
  */
-const NET6_INBOX_WEBSOCKET_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+const NET8_INBOX_WEBSOCKET_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
     { name: "Microsoft.Extensions.Logging.Abstractions", version: "8.0.2" },
     { name: "System.Threading.Channels", version: "8.0.0" }
 ];
