@@ -1051,12 +1051,9 @@ export class WebSocketClientGenerator extends WithGeneration {
             }),
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine("#if NET6_0_OR_GREATER");
-                writer.writeLine("if (_options.EnableCompression)");
-                writer.pushScope();
                 writer.writeTextStatement(
-                    "_client.DeflateOptions = new System.Net.WebSockets.WebSocketDeflateOptions()"
+                    "_client.DeflateOptions = _options.EnableCompression ? new System.Net.WebSockets.WebSocketDeflateOptions() : null"
                 );
-                writer.popScope();
                 writer.writeLine("#endif");
                 writer.writeTextStatement("await _client.ConnectAsync(cancellationToken).ConfigureAwait(false)");
             })
