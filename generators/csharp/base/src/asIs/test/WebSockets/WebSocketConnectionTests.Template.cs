@@ -1,5 +1,5 @@
-using System.Net.WebSockets;
-using System.Text;
+using global::System.Net.WebSockets;
+using global::System.Text;
 using NUnit.Framework;
 using <%= namespace%>.Core.WebSockets;
 
@@ -292,7 +292,7 @@ public class WebSocketConnectionTests
 
         try
         {
-            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var sw = global::System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 await ws.StartOrFail();
@@ -587,7 +587,7 @@ public class WebSocketConnectionTests
     {
         var ws = new WebSocketConnection(
             new Uri("ws://localhost:1"),
-            clientFactory: () => new System.Net.WebSockets.ClientWebSocket()
+            clientFactory: () => new global::System.Net.WebSockets.ClientWebSocket()
         );
         try
         {
@@ -1018,7 +1018,7 @@ public class WebSocketConnectionTests
             await ws.StartOrFail();
             var native = ws.NativeClient;
             Assert.That(native, Is.Not.Null);
-            Assert.That(native, Is.InstanceOf<System.Net.WebSockets.ClientWebSocket>());
+            Assert.That(native, Is.InstanceOf<global::System.Net.WebSockets.ClientWebSocket>());
         }
         finally
         {
@@ -1154,7 +1154,7 @@ public class WebSocketConnectionTests
         try
         {
             await ws.StartOrFail();
-            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var sw = global::System.Diagnostics.Stopwatch.StartNew();
 
             // Use graceful close — more reliable than abort for triggering reconnection
             await server.CloseAllClientsAsync();

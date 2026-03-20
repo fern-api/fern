@@ -291,7 +291,7 @@ public class QueryTests
         var query = new Query();
         query.Add("a", "1");
 
-        var enumerable = (System.Collections.IEnumerable)query;
+        var enumerable = (global::System.Collections.IEnumerable)query;
         var enumerator = enumerable.GetEnumerator();
         Assert.That(enumerator.MoveNext(), Is.True);
         Assert.That(enumerator.Current, Is.InstanceOf<KeyValuePair<string, string>>());

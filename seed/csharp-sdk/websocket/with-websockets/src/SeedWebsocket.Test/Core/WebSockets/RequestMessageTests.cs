@@ -60,7 +60,9 @@ public class RequestMessageTests
     {
         RequestMessage text = new RequestTextMessage("hi");
         RequestMessage binary = new RequestBinaryMessage(new byte[] { 1 });
-        RequestMessage segment = new RequestBinarySegmentMessage(new ArraySegment<byte>(new byte[] { 1 }));
+        RequestMessage segment = new RequestBinarySegmentMessage(
+            new ArraySegment<byte>(new byte[] { 1 })
+        );
 
         Assert.That(text, Is.InstanceOf<RequestTextMessage>());
         Assert.That(binary, Is.InstanceOf<RequestBinaryMessage>());
