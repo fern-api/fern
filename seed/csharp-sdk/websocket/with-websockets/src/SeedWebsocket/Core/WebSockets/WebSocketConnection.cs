@@ -729,16 +729,18 @@ internal partial class WebSocketConnection
                 );
                 IsStarted = false;
                 _reconnecting = false;
-                var info = new DisconnectionInfo(
-                    DisconnectionType.Exit,
-                    null,
-                    null,
-                    null,
-                    causedException
-                );
+                var info = DisconnectionInfo.Create(DisconnectionType.Exit, null, causedException);
                 await OnDisconnectionHappened(info).ConfigureAwait(false);
                 return;
             }
+
+            _logger.LogInformation(
+                "Reconnecting in {Delay}ms (attempt {Attempt})",
+                delay.Value.TotalMilliseconds,
+                Backoff.MaxAttempts.HasValue
+                    ? $"{Backoff.AttemptsMade}/{Backoff.MaxAttempts}"
+                    : $"{Backoff.AttemptsMade}"
+            );
 
             try
             {

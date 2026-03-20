@@ -5,12 +5,17 @@ namespace SeedWebsocket.Core.WebSockets;
 /// <summary>
 /// Configures the backoff strategy for automatic reconnection.
 /// </summary>
-internal class ReconnectStrategy
+public class ReconnectStrategy
 {
     private readonly Random _jitterRandom = new();
 
     private int _attemptsMade;
     private TimeSpan _currentInterval;
+
+    /// <summary>
+    /// Gets the number of reconnection attempts made since the last reset.
+    /// </summary>
+    public int AttemptsMade => _attemptsMade;
 
     /// <summary>
     /// Initial delay before the first reconnection attempt.
@@ -82,9 +87,4 @@ internal class ReconnectStrategy
         _attemptsMade = 0;
         _currentInterval = MinReconnectInterval;
     }
-
-    /// <summary>
-    /// Returns true if the maximum number of attempts has been reached.
-    /// </summary>
-    public bool AreAttemptsExhausted => MaxAttempts.HasValue && _attemptsMade >= MaxAttempts.Value;
 }
