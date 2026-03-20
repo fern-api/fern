@@ -23,7 +23,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!("/admin/store-test-submission-status/{}", submission_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -40,7 +40,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!("/admin/store-test-submission-status-v2/{}", submission_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -60,7 +60,7 @@ impl AdminClient {
                     "/admin/store-workspace-submission-status/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -80,7 +80,7 @@ impl AdminClient {
                     "/admin/store-workspace-submission-status-v2/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -101,7 +101,7 @@ impl AdminClient {
                     "/admin/store-test-trace/submission/{}/testCase/{}",
                     submission_id.0, test_case_id
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -122,7 +122,7 @@ impl AdminClient {
                     "/admin/store-test-trace-v2/submission/{}/testCase/{}",
                     submission_id.0, test_case_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -142,7 +142,7 @@ impl AdminClient {
                     "/admin/store-workspace-trace/submission/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -162,7 +162,7 @@ impl AdminClient {
                     "/admin/store-workspace-trace-v2/submission/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
