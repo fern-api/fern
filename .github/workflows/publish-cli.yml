@@ -60,6 +60,8 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
+      FERN_SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -83,6 +85,18 @@ jobs:
         run: |
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver ${git_version} --dev --log-level debug
+
+      - name: Upload Sentry source maps
+        if: ${{ env.FERN_SENTRY_AUTH_TOKEN != '' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          npx @sentry/cli sourcemaps upload \
+            --org buildwithfern \
+            --project cli \
+            --release "cli@${git_version}" \
+            packages/cli/cli/dist/dev/
 
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
@@ -115,6 +129,8 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
+      FERN_SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -152,6 +168,19 @@ jobs:
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
 
+      - name: Upload Sentry source maps
+        if: ${{ env.FERN_SENTRY_AUTH_TOKEN != '' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+        run: |
+          pnpm seed:local latest cli -o "version.txt" --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml
+          cli_version="$(cat version.txt)"
+          npx @sentry/cli sourcemaps upload \
+            --org buildwithfern \
+            --project cli \
+            --release "cli@${cli_version}" \
+            packages/cli/cli/dist/prod/
+
   manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
@@ -159,6 +188,8 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
+      FERN_SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -182,6 +213,17 @@ jobs:
         run: |
           pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
           pnpm seed register cli
+
+      - name: Upload Sentry source maps
+        if: ${{ env.FERN_SENTRY_AUTH_TOKEN != '' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+        run: |
+          npx @sentry/cli sourcemaps upload \
+            --org buildwithfern \
+            --project cli \
+            --release "cli@${{ inputs.version }}" \
+            packages/cli/cli/dist/prod/
 
   bulk-update-cli:
     runs-on: ubuntu-latest
