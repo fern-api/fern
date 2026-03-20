@@ -4,7 +4,11 @@ using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket.Empty;
 
-public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+public partial class EmptyRealtimeApi
+    : IEmptyRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
     private readonly EmptyRealtimeApi.Options _options;
 
@@ -39,6 +43,12 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         var uri = new UriBuilder(_options.BaseUrl);
         uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.HttpInvoker = _options.HttpInvoker;
+        _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
+        _client.ReconnectTimeout = _options.ReconnectTimeout;
+        _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
+        _client.LostReconnectTimeout = _options.LostReconnectTimeout;
+        _client.Backoff = _options.ReconnectBackoff;
     }
 
     /// <summary>
@@ -62,6 +72,11 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
 
     /// <summary>
+    /// Event raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
+
+    /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
     private void DisposeEvents()
@@ -74,7 +89,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
         {
             await ExceptionOccurred
@@ -88,19 +103,33 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Injects a fake text message for testing. Dispatches through the normal message handling pipeline.
+    /// </summary>
+    internal async Task InjectTestMessage(string rawJson)
+    {
+        using var stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(rawJson));
+        await OnTextMessage(stream).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
-    public async Task ConnectAsync()
+    public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
-        await _client.ConnectAsync().ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+        _client.DeflateOptions = _options.EnableCompression
+            ? new System.Net.WebSockets.WebSocketDeflateOptions()
+            : null;
+#endif
+        await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously closes the WebSocket connection.
     /// </summary>
-    public async Task CloseAsync()
+    public async Task CloseAsync(CancellationToken cancellationToken = default)
     {
-        await _client.CloseAsync().ConfigureAwait(false);
+        await _client.CloseAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -132,5 +161,41 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Enable per-message deflate compression (RFC 7692). When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> before connecting. Compression is negotiated during the handshake; if the server does not support it, the connection proceeds uncompressed. Default: <c>false</c>.
+        /// <para><b>Security warning:</b> do not enable compression when transmitting data containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>
+        /// </summary>
+        public bool EnableCompression { get; set; } = false;
+
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+        /// <summary>
+        /// Enable or disable automatic reconnection. Default: false.
+        /// </summary>
+        public bool IsReconnectionEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
+        /// </summary>
+        public TimeSpan? LostReconnectTimeout { get; set; }
+
+        /// <summary>
+        /// Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. Set to null to use fixed-interval reconnection (legacy behavior). Default: exponential backoff, 1s→60s, unlimited attempts, with jitter.
+        /// </summary>
+        public ReconnectStrategy? ReconnectBackoff { get; set; } = new ReconnectStrategy();
     }
 }

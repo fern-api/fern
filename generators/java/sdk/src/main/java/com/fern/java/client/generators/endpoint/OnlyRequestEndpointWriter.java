@@ -372,18 +372,17 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 return null;
             }
 
-            // Handle octet-stream content type — send raw bytes, not JSON-encoded
+            // Handle octet-stream content type — send raw bytes using InputStreamRequestBody
             if (contentType.equals("application/octet-stream")) {
                 codeBlock.addStatement(
-                        "$T $L = $T.create($T.valueOf($L).getBytes($T.UTF_8), $T.parse($S))",
+                        "$T $L = new $T($T.parse($S), new $T($L))",
                         RequestBody.class,
                         variables.getOkhttpRequestBodyName(),
-                        RequestBody.class,
-                        String.class,
-                        requestBodyGetter,
-                        ClassName.get("java.nio.charset", "StandardCharsets"),
+                        clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
                         MediaType.class,
-                        "application/octet-stream");
+                        "application/octet-stream",
+                        ClassName.get("java.io", "ByteArrayInputStream"),
+                        requestBodyGetter);
                 return null;
             }
 

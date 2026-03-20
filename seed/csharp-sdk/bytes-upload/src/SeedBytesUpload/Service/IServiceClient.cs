@@ -7,4 +7,10 @@ public partial interface IServiceClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    Task UploadWithQueryParamsAsync(
+        UploadWithQueryParamsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

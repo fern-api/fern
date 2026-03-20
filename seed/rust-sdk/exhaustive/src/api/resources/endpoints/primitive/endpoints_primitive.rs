@@ -23,7 +23,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/string",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -39,7 +39,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/integer",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -55,7 +55,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/long",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -71,7 +71,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/double",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -87,7 +87,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/boolean",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -103,7 +103,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/datetime",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -119,7 +119,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/date",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -135,7 +135,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/uuid",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -151,7 +151,7 @@ impl PrimitiveClient {
             .execute_request_base64(
                 Method::POST,
                 "/primitive/base64",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
