@@ -39,6 +39,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         var uri = new UriBuilder(_options.BaseUrl);
         uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
     }
 
     /// <summary>
@@ -62,11 +63,17 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
 
     /// <summary>
+    /// Event raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
+
+    /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
     private void DisposeEvents()
     {
         UnknownMessage.Dispose();
+        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -132,5 +139,10 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Enable or disable automatic reconnection. Default: false.
+        /// </summary>
+        public bool IsReconnectionEnabled { get; set; } = false;
     }
 }

@@ -15,6 +15,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     private readonly Func<Stream, global::System.Threading.Tasks.Task> _onTextMessage;
 
     /// <summary>
+    /// Enable or disable automatic reconnection. Default: false.
+    /// </summary>
+    public bool IsReconnectionEnabled { get; set; }
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -160,6 +165,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         ExceptionOccurred.Dispose();
         Closed.Dispose();
         Connected.Dispose();
+        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -198,6 +204,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
         {
+            IsReconnectionEnabled = IsReconnectionEnabled,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
@@ -212,6 +219,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
                         new Closed { Code = (int?)d.CloseStatus, Reason = d.CloseStatusDescription }
                     )
                     .ConfigureAwait(false);
+            },
+            ReconnectionHappened = async info =>
+            {
+                Status = ConnectionStatus.Connected;
+                await Reconnecting.RaiseEvent(info).ConfigureAwait(false);
             },
         };
 
@@ -242,6 +254,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public readonly Event<Exception> ExceptionOccurred = new();
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public readonly Event<ReconnectionInfo> Reconnecting = new();
 
     /// <summary>
     /// Event that is raised when a property value changes.

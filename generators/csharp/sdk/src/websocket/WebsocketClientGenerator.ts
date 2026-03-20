@@ -448,6 +448,16 @@ export class WebSocketClientGenerator extends WithGeneration {
             });
         }
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("IsReconnectionEnabled"),
+            access: ast.Access.Public,
+            type: this.Primitive.boolean,
+            summary: "Enable or disable automatic reconnection. Default: false.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("false")
+        });
+
         return optionsClass;
     }
 
@@ -588,6 +598,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     })
                 );
                 writer.writeTextStatement("");
+                writer.writeTextStatement("_client.IsReconnectionEnabled = _options.IsReconnectionEnabled");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
@@ -984,6 +995,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.writeTextStatement(`${event.name}.Dispose()`);
                 }
                 writer.writeTextStatement(`UnknownMessage.Dispose()`);
+                writer.writeTextStatement(`Reconnecting.Dispose()`);
             })
         });
     }
@@ -1089,6 +1101,16 @@ export class WebSocketClientGenerator extends WithGeneration {
             summary: "Event that is raised when an exception occurs during WebSocket operations.",
             get: true,
             initializer: this.csharp.codeblock("_client.ExceptionOccurred")
+        });
+
+        // Reconnecting event
+        cls.addField({
+            origin: cls.explicit("Reconnecting"),
+            access: ast.Access.Public,
+            type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo),
+            summary: "Event raised when the WebSocket connection is re-established after a disconnect.",
+            get: true,
+            initializer: this.csharp.codeblock("_client.Reconnecting")
         });
     }
 

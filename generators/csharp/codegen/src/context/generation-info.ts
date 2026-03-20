@@ -815,6 +815,12 @@ export class Generation {
                 origin: this.model.staticExplicit("Closed"),
                 namespace: this.namespaces.webSocketsCore
             }),
+        /** Reconnection info for WebSocket connections */
+        ReconnectionInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ReconnectionInfo"),
+                namespace: this.namespaces.webSocketsCore
+            }),
         /**
          * Custom pagination class for iterating over paged results.
          * @param itemType - The type of items in each page

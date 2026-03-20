@@ -28,10 +28,22 @@ internal partial class WebSocketConnection
 
     private Timer _errorReconnectTimer;
 
+    private DateTime _lastReceivedMsg = DateTime.UtcNow;
+
     private bool _disposing;
     private bool _reconnecting;
     private bool _stopping;
-    private bool _isReconnectionEnabled = true;
+    private bool _isReconnectionEnabled;
+
+    /// <summary>
+    /// Enable or disable automatic reconnection. Default: false.
+    /// </summary>
+    public bool IsReconnectionEnabled
+    {
+        get => _isReconnectionEnabled;
+        set => _isReconnectionEnabled = value;
+    }
+
     private WebSocket _client;
     private CancellationTokenSource _cancellation;
     private CancellationTokenSource _cancellationTotal;
@@ -93,6 +105,24 @@ internal partial class WebSocketConnection
 
     public Uri Url { get; set; }
 
+    /// <summary>
+    /// Time range for how long to wait before reconnecting if no message comes from server.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time range for how long to wait before reconnecting if last reconnection failed.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time range for how long to wait before reconnecting if connection is lost with a transient error.
+    /// Set null to disable. Default: null/disabled (reconnect immediately).
+    /// </summary>
+    public TimeSpan? LostReconnectTimeout { get; set; }
+
     public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
     public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }
     public Func<
@@ -100,6 +130,10 @@ internal partial class WebSocketConnection
         global::System.Threading.Tasks.Task
     >? DisconnectionHappened { get; set; }
     public Func<Exception, global::System.Threading.Tasks.Task>? ExceptionOccurred { get; set; }
+    public Func<
+        ReconnectionInfo,
+        global::System.Threading.Tasks.Task
+    >? ReconnectionHappened { get; set; }
 
     private global::System.Threading.Tasks.Task OnTextMessageReceived(Stream stream) =>
         TextMessageReceived is null
@@ -120,6 +154,11 @@ internal partial class WebSocketConnection
         ExceptionOccurred is null
             ? global::System.Threading.Tasks.Task.CompletedTask
             : ExceptionOccurred.Invoke(exception);
+
+    private global::System.Threading.Tasks.Task OnReconnectionHappened(ReconnectionInfo info) =>
+        ReconnectionHappened is null
+            ? global::System.Threading.Tasks.Task.CompletedTask
+            : ReconnectionHappened.Invoke(info);
 
     /// <summary>
     /// Get or set the name of the current websocket client instance.
@@ -355,10 +394,44 @@ internal partial class WebSocketConnection
 
     private async global::System.Threading.Tasks.Task StartClient(Uri uri, CancellationToken token)
     {
-        _client = await _connectionFactory(uri, token).ConfigureAwait(false);
-        _ = Listen(_client, token);
-        IsRunning = true;
-        IsStarted = true;
+        DeactivateLastChance();
+        try
+        {
+            _client = await _connectionFactory(uri, token).ConfigureAwait(false);
+            _ = Listen(_client, token);
+            IsRunning = true;
+            IsStarted = true;
+            _lastReceivedMsg = DateTime.UtcNow;
+            ActivateLastChance();
+            await OnReconnectionHappened(ReconnectionInfo.Create(ReconnectionType.Initial))
+                .ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            IsRunning = _client?.State == WebSocketState.Open;
+            var info = DisconnectionInfo.Create(DisconnectionType.Error, _client, e);
+            await OnDisconnectionHappened(info).ConfigureAwait(false);
+
+            if (info.CancelReconnection)
+                return;
+
+            if (ErrorReconnectTimeout == null)
+                return;
+
+            var timeout = ErrorReconnectTimeout.Value;
+            _errorReconnectTimer?.Dispose();
+            _errorReconnectTimer = new Timer(
+                _ =>
+                {
+                    if (_client != null && ShouldIgnoreReconnection(_client))
+                        return;
+                    _ = ReconnectSynchronized(ReconnectionType.Error, false, e);
+                },
+                null,
+                timeout,
+                Timeout.InfiniteTimeSpan
+            );
+        }
     }
 
     private bool IsClientConnected()
@@ -373,6 +446,7 @@ internal partial class WebSocketConnection
         CancellationToken token
     )
     {
+        Exception causedException = null;
         try
         {
             // define buffer here and reuse, to avoid more allocation
@@ -398,9 +472,11 @@ internal partial class WebSocketConnection
                     switch (result.MessageType)
                     {
                         case WebSocketMessageType.Text:
+                            _lastReceivedMsg = DateTime.UtcNow;
                             await OnTextMessageReceived(ms).ConfigureAwait(false);
                             break;
                         case WebSocketMessageType.Binary:
+                            _lastReceivedMsg = DateTime.UtcNow;
                             await OnBinaryMessageReceived(ms).ConfigureAwait(false);
                             break;
                         case WebSocketMessageType.Close:
@@ -447,6 +523,141 @@ internal partial class WebSocketConnection
                 e.Message
             );
             await OnExceptionOccurred(e).ConfigureAwait(false);
+            causedException = e;
+        }
+
+        if (ShouldIgnoreReconnection(client) || !IsStarted)
+        {
+            return;
+        }
+
+        if (LostReconnectTimeout.HasValue)
+        {
+            await global::System
+                .Threading.Tasks.Task.Delay(LostReconnectTimeout.Value, token)
+                .ConfigureAwait(false);
+        }
+
+        _ = ReconnectSynchronized(ReconnectionType.Lost, false, causedException);
+    }
+
+    public global::System.Threading.Tasks.Task Reconnect() => ReconnectInternal(false);
+
+    public global::System.Threading.Tasks.Task ReconnectOrFail() => ReconnectInternal(true);
+
+    private async global::System.Threading.Tasks.Task ReconnectInternal(bool failFast)
+    {
+        if (!IsStarted)
+            return;
+        try
+        {
+            await ReconnectSynchronized(ReconnectionType.ByUser, failFast, null)
+                .ConfigureAwait(false);
+        }
+        finally
+        {
+            _reconnecting = false;
+        }
+    }
+
+    private async global::System.Threading.Tasks.Task ReconnectSynchronized(
+        ReconnectionType type,
+        bool failFast,
+        Exception? causedException
+    )
+    {
+        using (await _locker.LockAsync())
+        {
+            await Reconnect(type, failFast, causedException);
+        }
+    }
+
+    private async global::System.Threading.Tasks.Task Reconnect(
+        ReconnectionType type,
+        bool failFast,
+        Exception? causedException
+    )
+    {
+        IsRunning = false;
+        if (_disposing || !IsStarted)
+            return;
+
+        _reconnecting = true;
+
+        var disType = (DisconnectionType)(int)type;
+        var disInfo = DisconnectionInfo.Create(disType, _client, causedException);
+        if (
+            type != ReconnectionType.Error
+            && _client?.State != WebSocketState.CloseReceived
+            && _client?.State != WebSocketState.Closed
+        )
+        {
+            await OnDisconnectionHappened(disInfo).ConfigureAwait(false);
+            if (disInfo.CancelReconnection)
+            {
+                _reconnecting = false;
+                return;
+            }
+        }
+
+        _cancellation?.Cancel();
+        try
+        {
+            _client?.Abort();
+        }
+        catch
+        { /* ignored */
+        }
+        _client?.Dispose();
+
+        if (
+            type != ReconnectionType.Error
+            && (!_isReconnectionEnabled || disInfo.CancelReconnection)
+        )
+        {
+            IsStarted = false;
+            _reconnecting = false;
+            return;
+        }
+
+        _cancellation = new CancellationTokenSource();
+        await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
+        _reconnecting = false;
+    }
+
+    private bool ShouldIgnoreReconnection(WebSocket client)
+    {
+        var inProgress = _disposing || _reconnecting || _stopping;
+        var differentClient = client != _client;
+        return inProgress || differentClient;
+    }
+
+    private void ActivateLastChance()
+    {
+        var timerMs = 1000;
+        _lastChanceTimer = new Timer(LastChance, null, timerMs, timerMs);
+    }
+
+    private void DeactivateLastChance()
+    {
+        _lastChanceTimer?.Dispose();
+        _lastChanceTimer = null;
+    }
+
+    private void LastChance(object? state)
+    {
+        if (!_isReconnectionEnabled || ReconnectTimeout == null)
+        {
+            DeactivateLastChance();
+            return;
+        }
+
+        var timeoutMs = Math.Abs(ReconnectTimeout.Value.TotalMilliseconds);
+        var diffMs = Math.Abs(DateTime.UtcNow.Subtract(_lastReceivedMsg).TotalMilliseconds);
+        if (diffMs > timeoutMs)
+        {
+            DeactivateLastChance();
+            _ = ReconnectSynchronized(ReconnectionType.NoMessageReceived, false, null);
         }
     }
 

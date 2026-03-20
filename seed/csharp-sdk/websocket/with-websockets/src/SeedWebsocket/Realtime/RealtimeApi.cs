@@ -84,6 +84,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
     }
 
     /// <summary>
@@ -107,6 +108,11 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
 
     /// <summary>
+    /// Event raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
+
+    /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
     private void DisposeEvents()
@@ -119,6 +125,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         FlushedEvent.Dispose();
         ErrorEvent.Dispose();
         UnknownMessage.Dispose();
+        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -282,5 +289,10 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         public string? LanguageCode { get; set; }
 
         public required string SessionId { get; set; }
+
+        /// <summary>
+        /// Enable or disable automatic reconnection. Default: false.
+        /// </summary>
+        public bool IsReconnectionEnabled { get; set; } = false;
     }
 }
