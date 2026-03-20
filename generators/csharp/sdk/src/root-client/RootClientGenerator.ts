@@ -564,7 +564,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     if (needsWsDefaults) {
                         const tenantNameAccess = unified ? "clientOptions.TenantName" : "tenantName";
-                        const environmentAccess = "clientOptions?.Environment?.Wss ?? \"\"";
+                        const environmentAccess = 'clientOptions?.Environment?.Wss ?? ""';
                         innerWriter.writeLine("_wsDefaults = new WebSocketDefaults");
                         innerWriter.writeLine("{");
                         innerWriter.indent();
@@ -575,9 +575,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeLine(
                             `var token = tokenProvider.${this.names.methods.getAccessTokenAsync}().GetAwaiter().GetResult();`
                         );
-                        innerWriter.writeLine(
-                            'return token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)'
-                        );
+                        innerWriter.writeLine('return token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)');
                         innerWriter.indent();
                         innerWriter.writeLine('? token["Bearer ".Length..]');
                         innerWriter.writeLine(": token;");

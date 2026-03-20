@@ -35,8 +35,8 @@ import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceG
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
 import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
-import { WebSocketClientGenerator, websocketChannelNeedsDefaults } from "./websocket/WebsocketClientGenerator.js";
 import { WebSocketDefaultsGenerator } from "./websocket/WebSocketDefaultsGenerator.js";
+import { WebSocketClientGenerator, websocketChannelNeedsDefaults } from "./websocket/WebsocketClientGenerator.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
