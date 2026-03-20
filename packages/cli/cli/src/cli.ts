@@ -743,6 +743,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("require-env-vars", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -811,7 +817,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
                 });
             }
             if (argv.docs != null) {
@@ -868,7 +875,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
             });
         }
     );
