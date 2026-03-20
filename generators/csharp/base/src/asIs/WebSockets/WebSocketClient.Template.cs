@@ -20,6 +20,24 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public bool IsReconnectionEnabled { get; set; }
 
     /// <summary>
+    /// Time to wait before reconnecting if no message comes from the server.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the last reconnection attempt failed.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the connection is lost with a transient error.
+    /// Set null to disable (reconnect immediately). Default: null.
+    /// </summary>
+    public TimeSpan? LostReconnectTimeout { get; set; }
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -189,6 +207,9 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
         {
             IsReconnectionEnabled = IsReconnectionEnabled,
+            ReconnectTimeout = ReconnectTimeout,
+            ErrorReconnectTimeout = ErrorReconnectTimeout,
+            LostReconnectTimeout = LostReconnectTimeout,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>

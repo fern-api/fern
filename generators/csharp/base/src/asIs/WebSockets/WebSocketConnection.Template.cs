@@ -362,7 +362,6 @@ internal partial class WebSocketConnection
             IsStarted = true;
             _lastReceivedMsg = DateTime.UtcNow;
             ActivateLastChance();
-            await OnReconnectionHappened(ReconnectionInfo.Create(ReconnectionType.Initial)).ConfigureAwait(false);
         }
         catch (Exception e)
         {
@@ -531,7 +530,7 @@ internal partial class WebSocketConnection
 
         _reconnecting = true;
 
-        var disType = (DisconnectionType)(int)type;
+        var disType = ToDisconnectionType(type);
         var disInfo = DisconnectionInfo.Create(disType, _client, causedException);
         if (type != ReconnectionType.Error
             && _client?.State != WebSocketState.CloseReceived
@@ -557,7 +556,8 @@ internal partial class WebSocketConnection
         }
 
         _cancellation = new CancellationTokenSource();
-        await StartClient(Url, _cancellation.Token, failFast: false).ConfigureAwait(false);
+        await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
+        await OnReconnectionHappened(ReconnectionInfo.Create(type)).ConfigureAwait(false);
         _reconnecting = false;
     }
 
@@ -567,6 +567,17 @@ internal partial class WebSocketConnection
         var differentClient = client != _client;
         return inProgress || differentClient;
     }
+
+    private static DisconnectionType ToDisconnectionType(ReconnectionType type) => type switch
+    {
+        ReconnectionType.Initial => DisconnectionType.Exit,
+        ReconnectionType.Lost => DisconnectionType.Lost,
+        ReconnectionType.NoMessageReceived => DisconnectionType.NoMessageReceived,
+        ReconnectionType.Error => DisconnectionType.Error,
+        ReconnectionType.ByUser => DisconnectionType.ByUser,
+        ReconnectionType.ByServer => DisconnectionType.ByServer,
+        _ => DisconnectionType.Exit
+    };
 
     private void ActivateLastChance()
     {

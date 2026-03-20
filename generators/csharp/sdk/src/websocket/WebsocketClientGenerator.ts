@@ -540,6 +540,38 @@ export class WebSocketClientGenerator extends WithGeneration {
             initializer: this.csharp.codeblock("false")
         });
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("ReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("TimeSpan.FromMinutes(1)")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("ErrorReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("TimeSpan.FromMinutes(1)")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("LostReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.",
+            get: true,
+            set: true
+        });
+
         return optionsClass;
     }
 
@@ -681,6 +713,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                 );
                 writer.writeTextStatement("");
                 writer.writeTextStatement("_client.IsReconnectionEnabled = _options.IsReconnectionEnabled");
+                writer.writeTextStatement("_client.ReconnectTimeout = _options.ReconnectTimeout");
+                writer.writeTextStatement("_client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout");
+                writer.writeTextStatement("_client.LostReconnectTimeout = _options.LostReconnectTimeout");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
