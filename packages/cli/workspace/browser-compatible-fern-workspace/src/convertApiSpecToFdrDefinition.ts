@@ -14,12 +14,12 @@ import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
  * Note: Protobuf and GraphQL are NOT supported in-memory because they require
  * filesystem access and/or external tools (buf, protoc-gen-fern).
  */
-export type ApiSpecType = "openapi" | "asyncapi" | "openrpc";
+type ApiSpecType = "openapi" | "asyncapi" | "openrpc";
 
 /**
  * Supported API spec types for in-memory conversion (when you want to explicitly specify the type).
  */
-export type ApiSpec =
+type ApiSpec =
     | { type: "openapi"; spec: OpenAPIV3_1.Document; overrides?: Partial<OpenAPIV3_1.Document> }
     | { type: "asyncapi"; spec: Record<string, unknown> }
     | { type: "openrpc"; spec: OpenrpcDocument; namespace?: string };
@@ -35,7 +35,7 @@ export type ApiSpec =
  *
  * @returns The detected spec type, or undefined if the document doesn't match any known format.
  */
-export function detectApiSpecType(spec: Record<string, unknown>): ApiSpecType | undefined {
+function detectApiSpecType(spec: Record<string, unknown>): ApiSpecType | undefined {
     if (typeof spec.openapi === "string" || typeof spec.swagger === "string") {
         return "openapi";
     }
@@ -121,7 +121,7 @@ export async function apiSpecToFdr({
  * This is the explicit-type entry point where the caller specifies the spec type
  * via the `apiSpec.type` discriminant. For auto-detection, use `apiSpecToFdr()` instead.
  */
-export async function convertApiSpecToFdrDefinition({
+async function convertApiSpecToFdrDefinition({
     apiSpec,
     apiName,
     settings,
