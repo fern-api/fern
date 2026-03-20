@@ -61,6 +61,16 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
+     * Creates the interface name for the WebSocket client from the channel name.
+     *
+     * @param websocketChannel - The WebSocket channel definition
+     * @returns A PascalCase interface name with "I" prefix and "Api" suffix
+     */
+    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
+        return `I${websocketChannel.name.pascalCase.safeName}Api`;
+    }
+
+    /**
      * Creates factory methods for instantiating WebSocket API clients.
      *
      * Generates two overloaded factory methods:
@@ -97,6 +107,68 @@ export class WebSocketClientGenerator extends WithGeneration {
         return undefined;
     }
 
+    /**
+     * Creates factory method signatures for the WebSocket API interface.
+     *
+     * Generates method declarations (no body) on an interface that mirror
+     * the concrete factory methods from createWebSocketApiFactories.
+     *
+     * @param interface_ - The interface to add factory method signatures to
+     * @param subpackage - The subpackage containing the WebSocket channel
+     * @param context - The SDK generator context
+     * @param namespace - The namespace for the generated class
+     * @param websocketChannel - The WebSocket channel definition
+     */
+    static createWebSocketApiInterfaceFactories(
+        interface_: ast.Interface,
+        subpackage: Subpackage,
+        context: SdkGeneratorContext,
+        namespace: string,
+        websocketChannel: WebSocketChannel
+    ): void {
+        const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
+        const createMethodName = `Create${websocketApiName}`;
+
+        const websocketInterfaceRef = context.csharp.classReference({
+            origin: context.model.explicit(websocketChannel, "Interface"),
+            name: interfaceName,
+            namespace
+        });
+
+        const websocketApiClassReference = context.csharp.classReference({
+            origin: websocketChannel,
+            name: websocketApiName,
+            namespace
+        });
+
+        const optionsClassReference = context.csharp.classReference({
+            origin: websocketApiClassReference.explicit("Options"),
+            enclosingType: websocketApiClassReference
+        });
+
+        // If the websocket channel has required options, we can't have a parameterless factory
+        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
+            interface_.addMethod({
+                name: createMethodName,
+                parameters: [],
+                noBody: true,
+                return_: websocketInterfaceRef
+            });
+        }
+        interface_.addMethod({
+            name: createMethodName,
+            parameters: [
+                context.csharp.parameter({
+                    name: "options",
+                    type: optionsClassReference
+                })
+            ],
+            noBody: true,
+            return_: websocketInterfaceRef
+        });
+    }
+
     static createWebSocketApiFactories(
         cls: ast.Class,
         subpackage: Subpackage,
@@ -105,11 +177,21 @@ export class WebSocketClientGenerator extends WithGeneration {
         websocketChannel: WebSocketChannel
     ): void {
         const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
         const createMethodName = `Create${websocketApiName}`;
 
         const websocketApiClassReference = context.csharp.classReference({
             origin: websocketChannel,
             name: websocketApiName,
+            namespace
+        });
+
+        // Use the interface type as the return type so the concrete class
+        // satisfies the interface contract (C# requires exact return type match
+        // for interface implementation in versions before C# 9).
+        const websocketInterfaceRef = context.csharp.classReference({
+            origin: context.model.explicit(websocketChannel, "Interface"),
+            name: interfaceName,
             namespace
         });
 
@@ -131,7 +213,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 name: createMethodName,
                 parameters: [],
                 access: ast.Access.Public,
-                return_: websocketApiClassReference,
+                return_: websocketInterfaceRef,
                 body: context.csharp.codeblock((writer) => {
                     writer.write("return ");
                     const optionsArguments: Array<{ name: string; assignment: ast.AstNode }> =
@@ -166,7 +248,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             access: ast.Access.Public,
-            return_: websocketApiClassReference,
+            return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(
@@ -1093,6 +1175,115 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
+     * Creates the interface for the WebSocket client class.
+     *
+     * Generates an interface that declares:
+     * - All public event properties
+     * - ConnectionStatus Status property
+     * - ConnectAsync, CloseAsync, and Send method signatures
+     * - Extends IAsyncDisposable, IDisposable
+     *
+     * @returns The WebSocket client interface definition
+     */
+    private createWebsocketInterface(): ast.Interface {
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel);
+
+        const interface_ = this.csharp.interface_({
+            name: interfaceName,
+            namespace: this.classReference.namespace,
+            access: ast.Access.Public,
+            partial: true,
+            interfaceReferences: [this.System.IAsyncDisposable, this.System.IDisposable]
+        });
+
+        // Connected event
+        interface_.addField({
+            name: "Connected",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.Types.WebSocketConnected)
+        });
+
+        // Closed event
+        interface_.addField({
+            name: "Closed",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.Types.WebSocketClosed)
+        });
+
+        // ExceptionOccurred event
+        interface_.addField({
+            name: "ExceptionOccurred",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.System.Exception)
+        });
+
+        // Status property
+        interface_.addField({
+            name: "Status",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.ConnectionStatus
+        });
+
+        // ConnectAsync method
+        interface_.addMethod({
+            name: "ConnectAsync",
+            noBody: true,
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
+            return_: this.System.Threading.Tasks.Task()
+        });
+
+        // Send methods for each client-to-server message type
+        for (const each of this.messages) {
+            interface_.addMethod({
+                name: "Send",
+                noBody: true,
+                parameters: [
+                    this.csharp.parameter({
+                        name: "message",
+                        type: each.type
+                    }),
+                    this.csharp.parameter({
+                        name: "cancellationToken",
+                        type: this.System.Threading.CancellationToken,
+                        initializer: "default"
+                    })
+                ],
+                return_: this.System.Threading.Tasks.Task()
+            });
+        }
+
+        // CloseAsync method
+        interface_.addMethod({
+            name: "CloseAsync",
+            noBody: true,
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
+            return_: this.System.Threading.Tasks.Task()
+        });
+
+        return interface_;
+    }
+
+    /**
      * Creates the complete WebSocket client class.
      *
      * Assembles all components into a single class:
@@ -1107,12 +1298,19 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns The complete WebSocket client class definition
      */
     private createWebsocketClass() {
+        const interfaceRef = this.csharp.classReference({
+            origin: this.model.explicit(this.websocketChannel, "Interface"),
+            name: WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel),
+            namespace: this.classReference.namespace
+        });
+
         const cls = this.csharp.class_({
             reference: this.classReference,
             access: ast.Access.Public,
             partial: true,
             doc: this.websocketChannel.docs ? { summary: this.websocketChannel.docs } : undefined,
             interfaceReferences: [
+                interfaceRef,
                 this.System.IAsyncDisposable,
                 this.System.IDisposable,
                 this.System.ComponentModel.INotifyPropertyChanged
@@ -1198,16 +1396,21 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Generates the complete C# WebSocket client file.
+     * Generates the C# WebSocket client interface file.
      *
-     * Creates a CSharpFile containing:
-     * - The WebSocket client class with all methods and properties
-     * - Proper namespace organization
-     * - All necessary type references
-     * - Custom configuration settings
-     *
-     * @returns The generated C# file ready for compilation
+     * @returns The generated C# interface file
      */
+    public generateInterface(): CSharpFile {
+        return new CSharpFile({
+            clazz: this.createWebsocketInterface(),
+            directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
+            allNamespaceSegments: this.registry.allNamespacesOf(this.classReference.namespace),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.classReference.namespace,
+            generation: this.generation
+        });
+    }
+
     public generate(): CSharpFile {
         return new CSharpFile({
             clazz: this.createWebsocketClass(),

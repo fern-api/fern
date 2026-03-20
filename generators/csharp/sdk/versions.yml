@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.39.0
+  changelogEntry:
+    - summary: |
+        Generate interfaces for WebSocket API classes (e.g., `IStreamApi`, `ITranscribeApi`)
+        to improve testability. Each WebSocket client now implements a corresponding interface
+        that declares all public event properties, `Status`, `ConnectAsync`, `Send`, and
+        `CloseAsync`. The root client interface (`ICortiClient`) also includes factory method
+        signatures (`CreateStreamApi`, `CreateTranscribeApi`) when WebSockets are enabled.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.38.2
   changelogEntry:
     - summary: |
@@ -42,6 +54,7 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
+
 - version: 2.37.1
   changelogEntry:
     - summary: |

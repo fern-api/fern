@@ -5,7 +5,11 @@ using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
-public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+public partial class RealtimeApi
+    : IRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
     private readonly RealtimeApi.Options _options;
 
