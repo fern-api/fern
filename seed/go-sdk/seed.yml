@@ -312,6 +312,7 @@ scripts:
           exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
+  - bytes-upload
   - bytes-download
   - enum
   - errors

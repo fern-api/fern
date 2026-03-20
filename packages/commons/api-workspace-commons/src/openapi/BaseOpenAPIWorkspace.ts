@@ -22,10 +22,11 @@ export declare namespace BaseOpenAPIWorkspace {
         inlineAllOfSchemas: boolean | undefined;
         resolveAliases: generatorsYml.ResolveAliases | undefined;
         groupEnvironmentsByHost: boolean | undefined;
+        inferDefaultEnvironment: boolean | undefined;
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-        coerceConstsTo: "literals" | "enums" | undefined;
+        coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -46,10 +47,11 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly inlineAllOfSchemas: boolean | undefined;
     public readonly resolveAliases: generatorsYml.ResolveAliases | undefined;
     public readonly groupEnvironmentsByHost: boolean | undefined;
+    public readonly inferDefaultEnvironment: boolean | undefined;
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
-    public readonly coerceConstsTo: "literals" | "enums" | undefined;
+    public readonly coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -68,6 +70,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
+        this.inferDefaultEnvironment = args.inferDefaultEnvironment;
         this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.pathParameterOrder = args.pathParameterOrder;
@@ -137,10 +140,11 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public respectForwardCompatibleEnums: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
     public groupEnvironmentsByHost: boolean | undefined;
+    public inferDefaultEnvironment: boolean | undefined;
     public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
-    public coerceConstsTo: "literals" | "enums" | undefined;
+    public coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -153,6 +157,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
+        this.inferDefaultEnvironment = args.inferDefaultEnvironment;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
         this.pathParameterOrder = args.pathParameterOrder;

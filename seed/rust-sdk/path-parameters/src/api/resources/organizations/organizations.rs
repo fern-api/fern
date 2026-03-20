@@ -15,8 +15,8 @@ impl OrganizationsClient {
 
     pub async fn get_organization(
         &self,
-        tenant_id: &String,
-        organization_id: &String,
+        tenant_id: &str,
+        organization_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Organization, ApiError> {
         self.http_client
@@ -32,9 +32,9 @@ impl OrganizationsClient {
 
     pub async fn get_organization_user(
         &self,
-        tenant_id: &String,
-        organization_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        organization_id: &str,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -53,8 +53,8 @@ impl OrganizationsClient {
 
     pub async fn search_organizations(
         &self,
-        tenant_id: &String,
-        organization_id: &String,
+        tenant_id: &str,
+        organization_id: &str,
         request: &SearchOrganizationsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Organization>, ApiError> {

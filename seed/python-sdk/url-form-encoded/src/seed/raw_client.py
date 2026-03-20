@@ -10,6 +10,7 @@ from .core.parse_error import ParsingError
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .types.post_submit_response import PostSubmitResponse
+from .types.token_response import TokenResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -72,6 +73,58 @@ class RawSeedApi:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TokenResponse]:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TokenResponse]
+            Token issued successfully
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            data={
+                "client_id": client_id,
+                "client_secret": client_secret,
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -116,6 +169,58 @@ class AsyncRawSeedApi:
                     PostSubmitResponse,
                     parse_obj_as(
                         type_=PostSubmitResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TokenResponse]:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TokenResponse]
+            Token issued successfully
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            data={
+                "client_id": client_id,
+                "client_secret": client_secret,
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

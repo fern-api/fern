@@ -1,7 +1,13 @@
 import { GraphQLSpec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import {
+    assertNever,
+    extractErrorMessage,
+    isNonNullish,
+    replaceEnvVariables,
+    visitDiscriminatedUnion
+} from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -411,9 +417,7 @@ export class DocsDefinitionResolver {
                     filesToUploadSet.add(filepath);
                 }
             } catch (error) {
-                this.taskContext.logger.error(
-                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
-                );
+                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
                 throw error;
             }
         }
@@ -1702,7 +1706,7 @@ export class DocsDefinitionResolver {
             return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
         } catch (e) {
             this.taskContext.logger.warn(
-                `Failed to parse _navigation.yml for library '${libraryName}': ${e instanceof Error ? e.message : String(e)}`
+                `Failed to parse _navigation.yml for library '${libraryName}': ${extractErrorMessage(e)}`
             );
             return null;
         }

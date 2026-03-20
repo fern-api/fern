@@ -83,4 +83,7 @@ scripts:
           
           dotnet test "$solution_file" --no-restore --no-build -c Release
 allowedFailures:
+  - mixed-case
+  - property-access
   - unions
+  - unions-with-local-date

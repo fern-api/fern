@@ -73,4 +73,31 @@ public class DateOnlyJsonTests
             Assert.That(dateOnly, Is.EqualTo(expected));
         }
     }
+
+    [Test]
+    public void ShouldSerializeDictionaryWithDateOnlyKey()
+    {
+        var key = new DateOnly(2023, 10, 5);
+        var dict = new Dictionary<DateOnly, string>
+        {
+            { key, "value_a" },
+        };
+        var json = JsonUtils.Serialize(dict);
+        Assert.That(json, Does.Contain("2023-10-05"));
+        Assert.That(json, Does.Contain("value_a"));
+    }
+
+    [Test]
+    public void ShouldDeserializeDictionaryWithDateOnlyKey()
+    {
+        var json = """
+            {
+                "2023-10-05": "value_a"
+            }
+            """;
+        var dict = JsonUtils.Deserialize<Dictionary<DateOnly, string>>(json);
+        Assert.That(dict, Is.Not.Null);
+        var key = new DateOnly(2023, 10, 5);
+        Assert.That(dict![key], Is.EqualTo("value_a"));
+    }
 }

@@ -14,8 +14,8 @@ impl ServiceClient {
 
     pub async fn nop(
         &self,
-        id: &String,
-        nested_id: &String,
+        id: &str,
+        nested_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

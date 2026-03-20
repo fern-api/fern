@@ -23,7 +23,7 @@ pub enum UserOrAdminDiscriminated {
 }
 
 impl UserOrAdminDiscriminated {
-    pub fn get_normal(&self) -> &String {
+    pub fn get_normal(&self) -> &str {
         match self {
                     Self::User { normal, .. } => normal,
                     Self::Admin { normal, .. } => normal,

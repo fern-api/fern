@@ -40,6 +40,14 @@ channel:
       display-name: Receive3
       origin: server
       body: ReceiveEvent3
+    receive_transcript:
+      display-name: ReceiveTranscript
+      origin: server
+      body: TranscriptEvent
+    receive_flushed:
+      display-name: ReceiveFlushed
+      origin: server
+      body: FlushedEvent
     error:
       display-name: Error
       origin: server
@@ -95,6 +103,13 @@ types:
   ReceiveEvent3:
     properties:
       receiveText3: string
+  TranscriptEvent:
+    properties:
+      type: literal<"transcript">
+      data: string
+  FlushedEvent:
+    properties:
+      type: literal<"flushed">
   ErrorEvent:
     properties:
       errorCode: integer

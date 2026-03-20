@@ -12,7 +12,7 @@ public readonly struct SomeLiteral
 
     public override string ToString() => Value;
 
-    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
+    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
 
     public override bool Equals(object? obj) => obj is SomeLiteral;
 
@@ -47,5 +47,31 @@ public readonly struct SomeLiteral
             SomeLiteral value,
             JsonSerializerOptions options
         ) => writer.WriteStringValue(SomeLiteral.Value);
+
+        public override SomeLiteral ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (value != SomeLiteral.Value)
+            {
+                throw new JsonException(
+                    "Expected \""
+                        + SomeLiteral.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
+                );
+            }
+            return new SomeLiteral();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SomeLiteral value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(SomeLiteral.Value);
     }
 }

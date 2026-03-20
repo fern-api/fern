@@ -8,6 +8,7 @@ type HttpService = FernIr.HttpService;
 type Subpackage = FernIr.Subpackage;
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
@@ -56,6 +57,8 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
             this.generateEndpointSignatures(interface_);
         }
 
+        this.generateWebsocketInterfaceFactories(interface_);
+
         return new CSharpFile({
             clazz: interface_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
@@ -82,6 +85,25 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
                 endpoint,
                 grpcClientInfo
             });
+        }
+    }
+
+    private generateWebsocketInterfaceFactories(interface_: ast.Interface) {
+        if (this.settings.enableWebsockets) {
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        WebSocketClientGenerator.createWebSocketApiInterfaceFactories(
+                            interface_,
+                            subpackage,
+                            this.context,
+                            this.interfaceReference.namespace,
+                            websocketChannel
+                        );
+                    }
+                }
+            }
         }
     }
 

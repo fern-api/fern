@@ -68,7 +68,7 @@ runs:
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Run seed
       uses: ./.github/actions/cached-seed

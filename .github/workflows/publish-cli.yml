@@ -39,7 +39,7 @@ jobs:
       is_release_bump: ${{ steps.check_versions_yml.outputs.is_release_bump }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 2
 
@@ -57,13 +57,12 @@ jobs:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' && needs.detect-release-bump.outputs.is_release_bump == 'false' }}
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -91,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install
         uses: ./.github/actions/install
@@ -113,13 +112,12 @@ jobs:
     if: ${{ inputs.version == null && needs.detect-release-bump.outputs.is_release_bump == 'true' }}
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 20
@@ -158,13 +156,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-tags: true
 
@@ -195,7 +192,7 @@ jobs:
       AUTOPILOT_HOST: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Get CLI version
         id: get_version

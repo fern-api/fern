@@ -9,6 +9,7 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import {
     AutoVersioningService,
@@ -208,7 +209,7 @@ export async function sdkDiffCommand({
                 versionBumpReason = rollup.version_bump_reason?.trim() || "";
             } catch (rollupError) {
                 context.logger.warn(
-                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                    `Changelog consolidation failed, using raw entries: ${extractErrorMessage(rollupError)}`
                 );
                 changelogEntry = rawEntries;
             }
@@ -224,7 +225,7 @@ export async function sdkDiffCommand({
             version_bump_reason: versionBumpReason
         };
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = extractErrorMessage(error);
         context.failWithoutThrowing(
             `Failed to analyze SDK diff. ` +
                 `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
@@ -272,8 +273,6 @@ async function generateDiff({
             return error.stdout;
         }
         // For other errors, throw
-        return context.failAndThrow(
-            `Failed to generate diff: ${error instanceof Error ? error.message : String(error)}`
-        );
+        return context.failAndThrow(`Failed to generate diff: ${extractErrorMessage(error)}`);
     }
 }

@@ -15,7 +15,7 @@ impl PutClient {
 
     pub async fn add(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<PutResponse, ApiError> {
         self.http_client

@@ -81,6 +81,29 @@ public readonly record struct MultipleFilterSearchRequestOperator : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override MultipleFilterSearchRequestOperator ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new MultipleFilterSearchRequestOperator(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            MultipleFilterSearchRequestOperator value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

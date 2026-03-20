@@ -1,16 +1,19 @@
 pub use crate::prelude::*;
 
 /// Represents an identity provider connection
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct Connection {
     /// Connection identifier
+    #[serde(default)]
     pub id: String,
     /// Connection name
+    #[serde(default)]
     pub name: String,
     /// Display name for the connection
     #[serde(skip_serializing_if = "Option::is_none")]
     pub display_name: Option<String>,
     /// The identity provider identifier (auth0, google-oauth2, facebook, etc.)
+    #[serde(default)]
     pub strategy: String,
     /// Connection-specific configuration options
     #[serde(skip_serializing_if = "Option::is_none")]

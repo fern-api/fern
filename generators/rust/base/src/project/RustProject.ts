@@ -127,6 +127,438 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "");
         }
 
+        // Conditionally include ordered-float exports in prelude
+        if (this.context.usesOrderedFloat()) {
+            content = content.replace(
+                /\{\{ORDERED_FLOAT_EXPORTS\}\}/g,
+                "\npub use ordered_float::OrderedFloat;"
+            );
+        } else {
+            content = content.replace(/\{\{ORDERED_FLOAT_EXPORTS\}\}/g, "");
+        }
+
+        // Conditionally include SerdeError import in http_client (only needed for base64 method)
+        if (this.context.usesBase64()) {
+            content = content.replace(/\{\{SERDE_ERROR_IMPORT\}\}/g, "use serde::de::Error as SerdeError;\n");
+        } else {
+            content = content.replace(/\{\{SERDE_ERROR_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include base64 import in http_client
+        if (this.context.usesBase64()) {
+            content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "use base64::Engine;\n");
+        } else {
+            content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include multipart method in http_client
+        if (this.context.hasFileUploadEndpoints()) {
+            content = content.replace(
+                /\{\{MULTIPART_METHOD\}\}/g,
+                `    /// Execute a multipart/form-data request with the given method, path, and options
+    ///
+    /// This method is used for file uploads using reqwest's built-in multipart support.
+    /// Note: Multipart requests are not retried because they cannot be cloned.
+    ///
+    /// # Example
+    /// \`\`\`no_run
+    /// let form = reqwest::multipart::Form::new()
+    ///     .part("file", reqwest::multipart::Part::bytes(vec![1, 2, 3]));
+    ///
+    /// let response: MyResponse = client.execute_multipart_request(
+    ///     Method::POST,
+    ///     "/upload",
+    ///     form,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    /// \`\`\`
+    #[cfg(feature = "multipart")]
+    pub async fn execute_multipart_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        form: reqwest::multipart::Form,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Use reqwest's built-in multipart support
+        request = request.multipart(form);
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute directly without retries (multipart requests cannot be cloned)
+        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
+
+        // Check response status
+        if !response.status().is_success() {
+            let status_code = response.status().as_u16();
+            let body = response.text().await.ok();
+            return Err(ApiError::from_response(status_code, body.as_deref()));
+        }
+
+        self.parse_response(response).await
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{MULTIPART_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include SSE method in http_client
+        if (this.context.hasStreamingEndpoints()) {
+            content = content.replace(
+                /\{\{SSE_METHOD\}\}/g,
+                `    /// Execute a request and return an SSE stream
+    ///
+    /// This method returns an \`SseStream<T>\` that automatically parses
+    /// Server-Sent Events and deserializes the JSON data in each event.
+    ///
+    /// # SSE-Specific Headers
+    ///
+    /// This method automatically sets the following headers **after** applying custom headers,
+    /// which means these headers will override any user-supplied values:
+    /// - \`Accept: text/event-stream\` - Required for SSE protocol
+    /// - \`Cache-Control: no-store\` - Prevents caching of streaming responses
+    ///
+    /// This ensures proper SSE behavior even if custom headers are provided.
+    ///
+    /// # Example
+    /// \`\`\`no_run
+    /// use futures::StreamExt;
+    ///
+    /// let stream = client.execute_sse_request::<CompletionChunk>(
+    ///     Method::POST,
+    ///     "/stream",
+    ///     Some(serde_json::json!({"query": "Hello"})),
+    ///     None,
+    ///     None,
+    ///     Some("[[DONE]]".to_string()),
+    /// ).await?;
+    ///
+    /// let mut stream = std::pin::pin!(stream);
+    /// while let Some(chunk) = stream.next().await {
+    ///     let chunk = chunk?;
+    ///     println!("Received: {:?}", chunk);
+    /// }
+    /// \`\`\`
+    #[cfg(feature = "sse")]
+    pub async fn execute_sse_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+        terminator: Option<String>,
+    ) -> Result<crate::SseStream<T>, ApiError>
+    where
+        T: DeserializeOwned + Send + 'static,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // SSE-specific headers
+        req.headers_mut().insert(
+            "Accept",
+            "text/event-stream"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
+        );
+        req.headers_mut().insert(
+            "Cache-Control",
+            "no-store"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
+        );
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Return SSE stream
+        crate::SseStream::new(response, terminator).await
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{SSE_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include base64 method in http_client
+        if (this.context.usesBase64()) {
+            content = content.replace(
+                /\{\{BASE64_METHOD\}\}/g,
+                `    /// Execute a request that returns a base64-encoded string and decode it to bytes
+    ///
+    /// This method is used for endpoints that return raw base64-encoded data as a JSON string.
+    /// The response is expected to be a JSON string (e.g., \`"SGVsbG8gd29ybGQh"\`) which is
+    /// decoded from base64 to raw bytes.
+    pub async fn execute_request_base64(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<u8>, ApiError> {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Parse response as JSON string and decode base64
+        let text = response.text().await.map_err(ApiError::Network)?;
+        let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
+        base64::engine::general_purpose::STANDARD
+            .decode(&base64_string)
+            .map_err(|e| ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e))))
+    }
+`
+            );
+        } else {
+            content = content.replace(/\{\{BASE64_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include chrono import in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_CHRONO_IMPORT\}\}/g,
+                "use chrono::{DateTime, TimeZone};\n"
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_CHRONO_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include datetime/date methods in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_DATETIME_METHODS\}\}/g,
+                `    /// Add a datetime parameter (any DateTime timezone)
+    pub fn datetime<Tz: TimeZone>(mut self, key: &str, value: impl Into<Option<DateTime<Tz>>>) -> Self
+    where
+        Tz::Offset: std::fmt::Display,
+    {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+
+    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
+            // Convert NaiveDate to DateTime<Utc> at start of day
+            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
+            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_DATETIME_METHODS\}\}/g, "");
+        }
+
+        // Conditionally include uuid method in query_parameter_builder
+        if (this.context.usesUuid()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_UUID_METHOD\}\}/g,
+                `    /// Add a UUID parameter (converts to string)
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_UUID_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include big_int method in query_parameter_builder
+        if (this.context.usesBigInteger()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_BIGINT_METHOD\}\}/g,
+                `    /// Add a big integer parameter (accept both required/optional)
+    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_BIGINT_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include chrono test imports in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_TEST_CHRONO_IMPORT\}\}/g,
+                "\n    use chrono::{NaiveDate, TimeZone, Utc};"
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_TEST_CHRONO_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include uuid tests in query_parameter_builder
+        if (this.context.usesUuid()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_UUID_TESTS\}\}/g,
+                `    #[test]
+    fn test_uuid_param() {
+        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
+        let result = QueryBuilder::new().uuid("id", Some(id)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "id".to_string(),
+                "550e8400-e29b-41d4-a716-446655440000".to_string()
+            )])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_UUID_TESTS\}\}/g, "");
+        }
+
+        // Conditionally include datetime tests in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_DATETIME_TESTS\}\}/g,
+                `    #[test]
+    fn test_datetime_param_formats_rfc3339() {
+        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
+        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "since".to_string(),
+                "2024-01-15T09:30:00Z".to_string()
+            )])
+        );
+    }
+
+    #[test]
+    fn test_date_param_converts_to_midnight_utc() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "on".to_string(),
+                "2024-01-15T00:00:00Z".to_string()
+            )])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_DATETIME_TESTS\}\}/g, "");
+        }
+
+        // Conditionally include bigint tests in query_parameter_builder
+        if (this.context.usesBigInteger()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_BIGINT_TESTS\}\}/g,
+                `    #[test]
+    fn test_big_int_param() {
+        let big = num_bigint::BigInt::from(999_999_999_999i64);
+        let result = QueryBuilder::new().big_int("value", Some(big)).build();
+        assert_eq!(
+            result,
+            Some(vec![("value".to_string(), "999999999999".to_string())])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_BIGINT_TESTS\}\}/g, "");
+        }
+
         // Replace API key header name from IR auth schemes
         content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
 
