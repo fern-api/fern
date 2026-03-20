@@ -60,8 +60,10 @@ runs:
           if eval "$SEED_CMD" | tee output.log; then
             break
           fi
-          if [ "$attempt" -lt 3 ]; then
-            echo "Seed test failed (attempt $attempt/3), retrying in 10s..."
-            sleep 10
+          if [ "$attempt" -eq 3 ]; then
+            echo "Seed test failed after 3 attempts"
+            exit 1
           fi
+          echo "Seed test failed (attempt $attempt/3), retrying in 10s..."
+          sleep 10
         done
