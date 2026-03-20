@@ -5,7 +5,11 @@ using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
-public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+public partial class RealtimeApi
+    : IRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
     private readonly RealtimeApi.Options _options;
 
@@ -133,7 +137,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
         {
             await ExceptionOccurred

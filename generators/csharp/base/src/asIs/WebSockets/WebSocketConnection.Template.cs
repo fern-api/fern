@@ -292,7 +292,7 @@ internal partial class WebSocketConnection
             : new CancellationTokenSource();
         _cancellationTotal = new CancellationTokenSource();
 
-        await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
+        await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
     }
 
     private async global::System.Threading.Tasks.Task<bool> StopInternal(
@@ -350,7 +350,8 @@ internal partial class WebSocketConnection
         return result;
     }
 
-    private async global::System.Threading.Tasks.Task StartClient(Uri uri, CancellationToken token)
+    private async global::System.Threading.Tasks.Task StartClient(
+        Uri uri, CancellationToken token, bool failFast = false)
     {
         DeactivateLastChance();
         try
@@ -368,6 +369,8 @@ internal partial class WebSocketConnection
             IsRunning = _client?.State == WebSocketState.Open;
             var info = DisconnectionInfo.Create(DisconnectionType.Error, _client, e);
             await OnDisconnectionHappened(info).ConfigureAwait(false);
+
+            if (failFast) throw;
 
             if (info.CancelReconnection) return;
 
@@ -481,8 +484,15 @@ internal partial class WebSocketConnection
 
         if (LostReconnectTimeout.HasValue)
         {
-            await global::System.Threading.Tasks.Task.Delay(
-                LostReconnectTimeout.Value, token).ConfigureAwait(false);
+            try
+            {
+                await global::System.Threading.Tasks.Task.Delay(
+                    LostReconnectTimeout.Value, token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
         }
 
         _ = ReconnectSynchronized(ReconnectionType.Lost, false, causedException);
@@ -547,7 +557,7 @@ internal partial class WebSocketConnection
         }
 
         _cancellation = new CancellationTokenSource();
-        await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
+        await StartClient(Url, _cancellation.Token, failFast: false).ConfigureAwait(false);
         _reconnecting = false;
     }
 
