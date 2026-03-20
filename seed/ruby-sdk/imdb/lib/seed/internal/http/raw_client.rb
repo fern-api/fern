@@ -17,11 +17,15 @@ module Seed
         # @return [String] The base URL for requests
         attr_reader :base_url
 
+        # @return [Seed::Internal::Logging::ILogger] The SDK logger
+        attr_reader :logger
+
         # @param base_url [String] The base url for the request.
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {})
+        # @param logger [Seed::Internal::Logging::ILogger, nil] Logger implementation.
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, logger: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
@@ -30,6 +34,8 @@ module Seed
             "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)
+          @logger = logger || Seed::Internal::Logging::NoOpLogger.new
+          @logging_middleware = Seed::Internal::Logging::LoggingMiddleware.new(@logger)
         end
 
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
@@ -40,11 +46,21 @@ module Seed
           response = nil
 
           loop do
+            # Merge headers to get the final set that will be sent
+            request_headers = @default_headers.merge(request.encode_headers)
+
             http_request = build_http_request(
               url:,
               method: request.method,
               headers: request.encode_headers,
               body: request.encode_body
+            )
+
+            @logging_middleware.log_request(
+              method: request.method,
+              url: url,
+              headers: request_headers,
+              has_body: request.respond_to?(:encode_body) && !request.encode_body.nil?
             )
 
             conn = connect(url)
@@ -54,6 +70,12 @@ module Seed
             conn.continue_timeout = @timeout
 
             response = conn.request(http_request)
+
+            @logging_middleware.log_response(
+              status: response.code.to_i,
+              url: url,
+              headers: response.each_header.to_h
+            )
 
             break unless should_retry?(response, attempt)
 

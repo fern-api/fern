@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module <%= gem_namespace %>
+module Seed
   module Internal
     module Logging
       # Log levels for SDK logging configuration.

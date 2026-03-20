@@ -17,15 +17,15 @@ module <%= gem_namespace %>
         # @return [String] The base URL for requests
         attr_reader :base_url
 
-        # @return [<%= gem_namespace %>::Internal::Logging::Logger] The SDK logger
+        # @return [<%= gem_namespace %>::Internal::Logging::ILogger] The SDK logger
         attr_reader :logger
 
         # @param base_url [String] The base url for the request.
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        # @param logging_config [<%= gem_namespace %>::Internal::Logging::LogConfig, Hash, nil] Logging configuration.
-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, logging_config: nil)
+        # @param logger [<%= gem_namespace %>::Internal::Logging::ILogger, nil] Logger implementation.
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, logger: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
@@ -33,8 +33,8 @@ module <%= gem_namespace %>
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
-          }.merge(headers)
-          @logger = <%= gem_namespace %>::Internal::Logging::Logger.from(logging_config)
+          }.merge(headers)<% } else { %>headers<% } %>
+          @logger = logger || <%= gem_namespace %>::Internal::Logging::NoOpLogger.new
           @logging_middleware = <%= gem_namespace %>::Internal::Logging::LoggingMiddleware.new(@logger)
         end
 

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "set"
-
-module <%= gem_namespace %>
+module Seed
   module Internal
     module Logging
       # HTTP middleware that logs requests and responses.
@@ -12,23 +10,23 @@ module <%= gem_namespace %>
       # @api private
       class LoggingMiddleware
         SENSITIVE_HEADERS = Set.new(%w[
-          authorization
-          www-authenticate
-          x-api-key
-          api-key
-          apikey
-          x-api-token
-          x-auth-token
-          auth-token
-          proxy-authenticate
-          proxy-authorization
-          cookie
-          set-cookie
-          x-csrf-token
-          x-xsrf-token
-          x-session-token
-          x-access-token
-        ]).freeze
+                                      authorization
+                                      www-authenticate
+                                      x-api-key
+                                      api-key
+                                      apikey
+                                      x-api-token
+                                      x-auth-token
+                                      auth-token
+                                      proxy-authenticate
+                                      proxy-authorization
+                                      cookie
+                                      set-cookie
+                                      x-csrf-token
+                                      x-xsrf-token
+                                      x-session-token
+                                      x-access-token
+                                    ]).freeze
 
         # @param logger [ILogger] the logger implementation
         def initialize(logger)
@@ -57,9 +55,9 @@ module <%= gem_namespace %>
             "HTTP Response: status=#{status} url=#{url} headers=#{redacted}"
           )
 
-          if status >= 400
-            @logger.error("HTTP Error: status=#{status} url=#{url}")
-          end
+          return unless status >= 400
+
+          @logger.error("HTTP Error: status=#{status} url=#{url}")
         end
 
         private

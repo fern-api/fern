@@ -306,8 +306,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.LoggingLogLevel,
             AsIsFiles.LoggingILogger,
             AsIsFiles.LoggingConsoleLogger,
-            AsIsFiles.LoggingLogConfig,
-            AsIsFiles.LoggingLogger,
+            AsIsFiles.LoggingNoOpLogger,
             AsIsFiles.LoggingMiddleware,
 
             // Public errors

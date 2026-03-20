@@ -4,29 +4,31 @@
   changelogEntry:
     - summary: |
         Add support for logging to the generated SDK.
-        Users can configure the logger by passing a `logging` parameter to the client constructor.
+        Users can enable logging by passing a `logger` parameter to the client constructor.
 
         ```ruby
         require "acme"
 
+        # Enable logging with the built-in ConsoleLogger
         client = Acme::Client.new(
           token: "YOUR_TOKEN",
-          logging: {
-            level: :debug,        # :info is the default
-            logger: Acme::Internal::Logging::ConsoleLogger.new,  # ConsoleLogger is the default
-            silent: false         # true is the default, set to false to enable logging
-          }
+          logger: Acme::Internal::Logging::ConsoleLogger.new
+        )
+
+        # With a custom log level
+        client = Acme::Client.new(
+          token: "YOUR_TOKEN",
+          logger: Acme::Internal::Logging::ConsoleLogger.new(level: :debug)
         )
         ```
 
-        The `logging` parameter accepts a `LogConfig`, `Hash`, or `nil` with the following properties:
-        - `level`: The log level to use. Defaults to `:info`.
-        - `logger`: The logger implementation to use. Defaults to `ConsoleLogger`.
-        - `silent`: Whether to silence the logger. Defaults to `true`.
+        The `logger` parameter accepts any object implementing the `ILogger` interface
+        (`debug`, `info`, `warn`, `error` methods). If no logger is provided, a silent
+        `NoOpLogger` is used by default.
 
-        The `level` property can be one of the following values:
+        The built-in `ConsoleLogger` writes to stderr and accepts a `level` parameter:
         - `:debug`
-        - `:info`
+        - `:info` (default)
         - `:warn`
         - `:error`
 
@@ -36,10 +38,10 @@
         HTTP request and response details (method, URL, status code, headers) are
         logged via a `LoggingMiddleware` added to the HTTP client. Sensitive headers
         (`authorization`, `x-api-key`, `cookie`, etc.) are automatically redacted in logs.
-       type: feat
+      type: feat
   createdAt: "2026-03-12"
   irVersion: 61
- 
+
 - version: 1.1.2
   changelogEntry:
     - summary: |

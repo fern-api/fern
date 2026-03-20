@@ -29,8 +29,7 @@ export const AsIsFiles = {
     LoggingLogLevel: "internal/logging/log_level.Template.rb",
     LoggingILogger: "internal/logging/i_logger.Template.rb",
     LoggingConsoleLogger: "internal/logging/console_logger.Template.rb",
-    LoggingLogConfig: "internal/logging/log_config.Template.rb",
-    LoggingLogger: "internal/logging/logger.Template.rb",
+    LoggingNoOpLogger: "internal/logging/no_op_logger.Template.rb",
     LoggingMiddleware: "internal/logging/logging_middleware.Template.rb",
 
     // HTTP
@@ -90,9 +89,8 @@ const asIsTopoValue = {
     [AsIsFiles.LoggingLogLevel]: 0,
     [AsIsFiles.LoggingILogger]: 1,
     [AsIsFiles.LoggingConsoleLogger]: 2,
-    [AsIsFiles.LoggingLogConfig]: 3,
-    [AsIsFiles.LoggingLogger]: 4,
-    [AsIsFiles.LoggingMiddleware]: 5,
+    [AsIsFiles.LoggingNoOpLogger]: 3,
+    [AsIsFiles.LoggingMiddleware]: 4,
     [AsIsFiles.JsonSerializable]: 6,
     [AsIsFiles.TypesType]: 7,
     [AsIsFiles.TypesUtils]: 8,

@@ -2,7 +2,7 @@
 
 require "logger"
 
-module <%= gem_namespace %>
+module Seed
   module Internal
     module Logging
       # Logger implementation that writes to stderr using Ruby's built-in Logger.

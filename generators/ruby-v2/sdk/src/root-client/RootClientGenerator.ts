@@ -62,13 +62,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(baseUrlParameter);
 
-        const loggingParameter = ruby.parameters.keyword({
-            name: "logging",
+        const loggerParameter = ruby.parameters.keyword({
+            name: "logger",
             type: ruby.Type.untyped(),
             initializer: ruby.nilValue(),
-            docs: "Logging configuration. Pass a `LogConfig`, `Hash`, or `nil`. Set `{ silent: false }` to enable logging, or pass a `LogConfig` / `Hash` with `:level`, `:logger`, and `:silent`"
+            docs: "Logger implementation (must respond to `debug`, `info`, `warn`, `error`). Defaults to a no-op logger. Use `ConsoleLogger` to enable logging."
         });
-        parameters.push(loggingParameter);
+        parameters.push(loggerParameter);
 
         if (isMultiUrl) {
             const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
@@ -140,7 +140,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 } else {
                     writer.writeLine(`,`);
                 }
-                writer.writeLine(`logging_config: logging`);
+                writer.writeLine(`logger: logger`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })
