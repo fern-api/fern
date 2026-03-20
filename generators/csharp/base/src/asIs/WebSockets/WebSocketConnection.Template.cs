@@ -262,17 +262,11 @@ internal partial class WebSocketConnection
 
         await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
 
-        _ = global::System.Threading.Tasks.Task.Factory.StartNew(
-            () => DrainTextQueue(_cancellationTotal.Token),
-            _cancellationTotal.Token,
-            TaskCreationOptions.LongRunning,
-            TaskScheduler.Default);
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainTextQueue(_cancellationTotal.Token));
 
-        _ = global::System.Threading.Tasks.Task.Factory.StartNew(
-            () => DrainBinaryQueue(_cancellationTotal.Token),
-            _cancellationTotal.Token,
-            TaskCreationOptions.LongRunning,
-            TaskScheduler.Default);
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainBinaryQueue(_cancellationTotal.Token));
     }
 
     private async global::System.Threading.Tasks.Task<bool> StopInternal(
