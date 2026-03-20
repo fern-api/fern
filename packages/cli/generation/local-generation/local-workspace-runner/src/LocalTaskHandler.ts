@@ -266,6 +266,17 @@ export class LocalTaskHandler {
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
+                await this.writeAutoVersioningArtifacts({
+                    rawDiff: diffContent,
+                    cleanedDiff: cleanedDiff,
+                    previousVersion: previousVersion ?? "unknown",
+                    versionBump: effectiveBump,
+                    newVersion,
+                    commitMessage: fallbackMessage,
+                    changelogEntry: undefined,
+                    versionBumpReason: "Diff too large for AI analysis",
+                    bumpOverride: bumpOverride ?? undefined
+                });
                 return {
                     version: newVersion,
                     commitMessage: fallbackMessage
@@ -420,6 +431,17 @@ export class LocalTaskHandler {
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
+                await this.writeAutoVersioningArtifacts({
+                    rawDiff: diffContent,
+                    cleanedDiff: cleanedDiff,
+                    previousVersion: previousVersion ?? "unknown",
+                    versionBump: effectiveBump,
+                    newVersion,
+                    commitMessage: fallbackMessage,
+                    changelogEntry: undefined,
+                    versionBumpReason: `AI analysis failed: ${errorMessage}`,
+                    bumpOverride: bumpOverride ?? undefined
+                });
                 return {
                     version: newVersion,
                     commitMessage: fallbackMessage
@@ -436,6 +458,17 @@ export class LocalTaskHandler {
                     const overrideMessage = this.isWhitelabel
                         ? "SDK regeneration"
                         : `SDK regeneration (version bump override: ${bumpOverride})\n\n🌿 Generated with Fern`;
+                    await this.writeAutoVersioningArtifacts({
+                        rawDiff: diffContent,
+                        cleanedDiff: cleanedDiff,
+                        previousVersion: previousVersion ?? "unknown",
+                        versionBump: bumpOverride,
+                        newVersion,
+                        commitMessage: overrideMessage,
+                        changelogEntry: undefined,
+                        versionBumpReason: `AI detected no changes but version bump overridden to ${bumpOverride}`,
+                        bumpOverride
+                    });
                     return {
                         version: newVersion,
                         commitMessage: overrideMessage
