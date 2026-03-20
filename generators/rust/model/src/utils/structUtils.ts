@@ -131,7 +131,6 @@ function hasBigIntInType(typeRef: FernIr.TypeReference): boolean {
             bigInteger: () => true,
             date: () => false,
             dateTime: () => false,
-            dateTimeRfc2822: () => false,
             base64: () => false,
             uuid: () => false,
             _other: () => false
