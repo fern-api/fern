@@ -245,9 +245,7 @@ export class LocalTaskHandler {
             // Check for version bump override in spec commit message
             const bumpOverride = this.parseVersionBumpOverride(specCommitMessage);
             if (bumpOverride != null) {
-                this.context.logger.info(
-                    `Version bump override detected in spec commit message: ${bumpOverride}`
-                );
+                this.context.logger.info(`Version bump override detected in spec commit message: ${bumpOverride}`);
             }
 
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
