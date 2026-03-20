@@ -94,7 +94,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
                 seed._default_clients.DefaultAioHttpClient()
             self.assertIn("pip install seed[aiohttp]", str(ctx.exception))
 
-            importlib.reload(seed._default_clients)
+        importlib.reload(seed._default_clients)
 
 
 @pytest.mark.aiohttp
