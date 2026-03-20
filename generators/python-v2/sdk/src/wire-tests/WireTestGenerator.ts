@@ -194,6 +194,7 @@ export class WireTestGenerator {
             service: FernIr.HttpService;
             exampleIndex: number;
             isErrorResponse: boolean;
+            staticIrExample: FernIr.ExampleEndpointCall;
         }> = [];
 
         for (const endpoint of endpoints) {
@@ -222,7 +223,8 @@ export class WireTestGenerator {
                     example: wireTestExample,
                     service,
                     exampleIndex: 0,
-                    isErrorResponse
+                    isErrorResponse,
+                    staticIrExample: staticExample
                 });
             }
         }
@@ -259,6 +261,7 @@ export class WireTestGenerator {
             service: FernIr.HttpService;
             exampleIndex: number;
             isErrorResponse: boolean;
+            staticIrExample: FernIr.ExampleEndpointCall;
         }>
     ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
@@ -271,14 +274,15 @@ export class WireTestGenerator {
 
         // Add test functions for each endpoint
         let testFunctionCount = 0;
-        for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
+        for (const { endpoint, example, service, exampleIndex, isErrorResponse, staticIrExample } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
                 endpoint,
                 example,
                 service,
                 exampleIndex,
-                isErrorResponse
+                isErrorResponse,
+                staticIrExample
             );
             if (testFunction) {
                 statements.push(testFunction);
@@ -326,7 +330,8 @@ export class WireTestGenerator {
         example: WireTestExample,
         service: FernIr.HttpService,
         exampleIndex: number,
-        isErrorResponse: boolean
+        isErrorResponse: boolean,
+        staticIrExample: FernIr.ExampleEndpointCall
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -383,8 +388,37 @@ export class WireTestGenerator {
                 // This is necessary because streaming methods return lazy generators that don't
                 // execute the HTTP request until iterated
                 if (this.isStreamingEndpoint(endpoint)) {
-                    statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
-                    statements.push(python.codeBlock("    pass"));
+                    const sseEvents = this.getSseEvents(staticIrExample);
+                    if (sseEvents && sseEvents.length > 0) {
+                        // For SSE endpoints, collect events and assert on content
+                        statements.push(python.codeBlock(`response = list(${apiCallAst.toString()})`));
+                        statements.push(python.codeBlock(`assert len(response) == ${sseEvents.length}`));
+                        for (let i = 0; i < sseEvents.length; i++) {
+                            const event = sseEvents[i];
+                            if (event == null) {
+                                continue;
+                            }
+                            const dataJson = event.data?.jsonExample;
+                            if (dataJson != null && typeof dataJson === "object") {
+                                for (const [key, value] of Object.entries(dataJson as Record<string, unknown>)) {
+                                    if (typeof value === "string") {
+                                        statements.push(
+                                            python.codeBlock(
+                                                `assert response[${i}].${key} == "${this.escapeStringForPython(value)}"`
+                                            )
+                                        );
+                                    } else if (typeof value === "number" || typeof value === "boolean") {
+                                        statements.push(
+                                            python.codeBlock(`assert response[${i}].${key} == ${value}`)
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
+                        statements.push(python.codeBlock("    pass"));
+                    }
                 } else {
                     statements.push(apiCallAst);
                 }
@@ -415,6 +449,20 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Extracts SSE events from the static IR example response, if present.
+     */
+    private getSseEvents(example: FernIr.ExampleEndpointCall): FernIr.ExampleServerSideEvent[] | undefined {
+        if (example.response.type !== "ok") {
+            return undefined;
+        }
+        const value = example.response.value;
+        if (value?.type !== "sse") {
+            return undefined;
+        }
+        return value.value;
     }
 
     /**

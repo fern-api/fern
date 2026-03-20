@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
+        Fix SSE wire test generation to assert on deserialized event content instead of
+        only iterating the stream. Generated tests now collect SSE events into a list and
+        assert on event count and individual property values. Also adds happy-path tests
+        for protocol-discriminated SSE endpoints.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 5.0.5
   changelogEntry:
     - summary: |
