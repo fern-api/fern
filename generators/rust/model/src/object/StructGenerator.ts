@@ -240,20 +240,7 @@ export class StructGenerator {
         }
         // Check if this type is referenced by any undiscriminated union
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-        if (typeId == null || !this.context.undiscriminatedUnionMemberTypeIds.has(typeId)) {
-            return false;
-        }
-        // Don't apply transparent when the single property's type is an enum.
-        // Enum-typed single properties are typically discriminator fields (e.g. `type`)
-        // that need the JSON object envelope for correct untagged deserialization.
-        const singleProperty = this.objectTypeDeclaration.properties[0];
-        if (singleProperty != null && singleProperty.valueType.type === "named") {
-            const referencedType = this.context.ir.types[singleProperty.valueType.typeId];
-            if (referencedType != null && referencedType.shape.type === "enum") {
-                return false;
-            }
-        }
-        return true;
+        return typeId != null && this.context.undiscriminatedUnionMemberTypeIds.has(typeId);
     }
 
     private canDeriveDefault(): boolean {
