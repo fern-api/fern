@@ -38,7 +38,7 @@ impl HttpMethodsClient {
             .execute_request(
                 Method::POST,
                 "/http-methods",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -55,7 +55,7 @@ impl HttpMethodsClient {
             .execute_request(
                 Method::PUT,
                 &format!("/http-methods/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -72,7 +72,7 @@ impl HttpMethodsClient {
             .execute_request(
                 Method::PATCH,
                 &format!("/http-methods/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

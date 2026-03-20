@@ -23,7 +23,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/list-of-primitives",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -39,7 +39,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/list-of-objects",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -55,7 +55,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/set-of-primitives",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -71,7 +71,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/set-of-objects",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -87,7 +87,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/map-prim-to-prim",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -103,7 +103,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/map-prim-to-object",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -119,7 +119,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/map-prim-to-union",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -135,7 +135,7 @@ impl ContainerClient {
             .execute_request(
                 Method::POST,
                 "/container/opt-objects",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
