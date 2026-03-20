@@ -619,6 +619,8 @@ internal partial class WebSocketConnection
         var monitorTask = MonitorState(client, receiveCts);
 
         Exception causedException = null;
+        var closedByServer = false;
+        var cancelReconnect = false;
         try
         {
             // define buffer here and reuse, to avoid more allocation
@@ -669,7 +671,9 @@ internal partial class WebSocketConnection
                                 true
                             );
 
-                            return;
+                            closedByServer = true;
+                            cancelReconnect = info.CancelReconnection;
+                            break;
                         }
                     }
                 }
@@ -729,7 +733,14 @@ internal partial class WebSocketConnection
             }
         }
 
-        _ = ReconnectSynchronized(ReconnectionType.Lost, false, causedException);
+        if (!cancelReconnect)
+        {
+            _ = ReconnectSynchronized(
+                closedByServer ? ReconnectionType.ByServer : ReconnectionType.Lost,
+                false,
+                causedException
+            );
+        }
     }
 
     public global::System.Threading.Tasks.Task Reconnect() => ReconnectInternal(false);
