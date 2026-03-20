@@ -408,9 +408,7 @@ export class WireTestGenerator {
                                             )
                                         );
                                     } else if (typeof value === "number" || typeof value === "boolean") {
-                                        statements.push(
-                                            python.codeBlock(`assert response[${i}].${key} == ${value}`)
-                                        );
+                                        statements.push(python.codeBlock(`assert response[${i}].${key} == ${value}`));
                                     }
                                 }
                             }
