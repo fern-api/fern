@@ -20,11 +20,11 @@
     <UsePortableDateOnly>true</UsePortableDateOnly>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-    <Using Include="global::System.Net.Http" />
-    <Using Include="global::System.Collections.Generic" />
-    <Using Include="global::System.Linq" />
-    <Using Include="global::System.Threading" />
-    <Using Include="global::System.Threading.Tasks" />
+    <Using Include="System.Net.Http" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Linq" />
+    <Using Include="System.Threading" />
+    <Using Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
