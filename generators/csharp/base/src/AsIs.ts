@@ -116,11 +116,13 @@ export const AsIsFiles = {
             DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",
             EventTests: "test/WebSockets/EventTests.Template.cs",
             QueryTests: "test/WebSockets/QueryTests.Template.cs",
+            ReconnectionInfoTests: "test/WebSockets/ReconnectionInfoTests.Template.cs",
             ReconnectStrategyTests: "test/WebSockets/ReconnectStrategyTests.Template.cs",
             RequestMessageTests: "test/WebSockets/RequestMessageTests.Template.cs",
             TestWebSocketServer: "test/WebSockets/TestWebSocketServer.Template.cs",
             WebSocketClientTests: "test/WebSockets/WebSocketClientTests.Template.cs",
-            WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs"
+            WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs",
+            WebsocketExceptionTests: "test/WebSockets/WebsocketExceptionTests.Template.cs"
         },
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",

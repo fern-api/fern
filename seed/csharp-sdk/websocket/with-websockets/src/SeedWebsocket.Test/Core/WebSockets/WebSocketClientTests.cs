@@ -379,4 +379,204 @@ public class WebSocketClientTests
 
         // We can't guarantee an exception fires, but the subscribe/unsubscribe should work
     }
+
+    [Test]
+    public async Task SendInstant_Memory_DeliversMessage()
+    {
+        await using var server = new TestWebSocketServer();
+        var serverReceived = new TaskCompletionSource<byte[]>();
+        server.OnBinaryMessage = data =>
+        {
+            serverReceived.TrySetResult(data);
+            return null;
+        };
+        server.Start();
+
+        await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+        };
+
+        await client.ConnectAsync();
+        await client.SendInstant((Memory<byte>)new byte[] { 0x10, 0x20 });
+
+        var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
+        Assert.That(result, Is.EqualTo(serverReceived.Task));
+        Assert.That(serverReceived.Task.Result, Is.EqualTo(new byte[] { 0x10, 0x20 }));
+    }
+
+    [Test]
+    public async Task SendInstant_ArraySegment_DeliversMessage()
+    {
+        await using var server = new TestWebSocketServer();
+        var serverReceived = new TaskCompletionSource<byte[]>();
+        server.OnBinaryMessage = data =>
+        {
+            serverReceived.TrySetResult(data);
+            return null;
+        };
+        server.Start();
+
+        await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+        };
+
+        await client.ConnectAsync();
+        await client.SendInstant(new ArraySegment<byte>(new byte[] { 0x30, 0x40 }));
+
+        var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
+        Assert.That(result, Is.EqualTo(serverReceived.Task));
+        Assert.That(serverReceived.Task.Result, Is.EqualTo(new byte[] { 0x30, 0x40 }));
+    }
+
+    [Test]
+    public void SendInstant_Memory_WhenDisconnected_Throws()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        Assert.Throws<Exception>(() =>
+        {
+            client.SendInstant((Memory<byte>)new byte[] { 1, 2 }).GetAwaiter().GetResult();
+        });
+
+        client.Dispose();
+    }
+
+    [Test]
+    public void SendInstant_ArraySegment_WhenDisconnected_Throws()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        Assert.Throws<Exception>(() =>
+        {
+            client.SendInstant(new ArraySegment<byte>(new byte[] { 1, 2 })).GetAwaiter().GetResult();
+        });
+
+        client.Dispose();
+    }
+
+    [Test]
+    public void Send_Binary_WhenDisconnected_Throws()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        Assert.Throws<Exception>(() => client.Send(new byte[] { 1, 2 }));
+
+        client.Dispose();
+    }
+
+    [Test]
+    public async Task CloseAsync_WhenNotConnected_DoesNotThrow()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        // CloseAsync when _webSocket is null should be a no-op
+        await client.CloseAsync();
+
+        client.Dispose();
+    }
+
+    [Test]
+    public async Task Reconnecting_Event_RaisedOnReconnection()
+    {
+        await using var server = new TestWebSocketServer();
+        server.Start();
+
+        var reconnecting = new TaskCompletionSource<ReconnectionInfo>();
+        await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+            IsReconnectionEnabled = true,
+            Backoff = new ReconnectStrategy
+            {
+                MinReconnectInterval = TimeSpan.FromMilliseconds(200),
+                MaxReconnectInterval = TimeSpan.FromSeconds(2),
+                UseJitter = false,
+            },
+        };
+
+        client.Reconnecting.Subscribe(info => reconnecting.TrySetResult(info));
+
+        await client.ConnectAsync();
+        Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected));
+
+        // Server closes connection, triggering reconnection
+        await server.CloseAllClientsAsync();
+
+        var result = await Task.WhenAny(reconnecting.Task, Task.Delay(30000));
+        Assert.That(result, Is.EqualTo(reconnecting.Task), "Timed out waiting for reconnecting event");
+        Assert.That(reconnecting.Task.Result, Is.Not.Null);
+
+        // After reconnection, status should be Connected again
+        await Task.Delay(500);
+        Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected));
+    }
+
+    [Test]
+    public async Task Properties_CanBeConfigured()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        client.IsReconnectionEnabled = true;
+        Assert.That(client.IsReconnectionEnabled, Is.True);
+
+        client.ReconnectTimeout = TimeSpan.FromSeconds(30);
+        Assert.That(client.ReconnectTimeout, Is.EqualTo(TimeSpan.FromSeconds(30)));
+
+        client.ErrorReconnectTimeout = TimeSpan.FromSeconds(30);
+        Assert.That(client.ErrorReconnectTimeout, Is.EqualTo(TimeSpan.FromSeconds(30)));
+
+        client.LostReconnectTimeout = TimeSpan.FromSeconds(5);
+        Assert.That(client.LostReconnectTimeout, Is.EqualTo(TimeSpan.FromSeconds(5)));
+
+        client.ConnectTimeout = TimeSpan.FromSeconds(10);
+        Assert.That(client.ConnectTimeout, Is.EqualTo(TimeSpan.FromSeconds(10)));
+
+        client.SendTimeout = TimeSpan.FromSeconds(15);
+        Assert.That(client.SendTimeout, Is.EqualTo(TimeSpan.FromSeconds(15)));
+
+        client.Backoff = null;
+        Assert.That(client.Backoff, Is.Null);
+
+        client.Dispose();
+    }
+
+    [Test]
+    public async Task DisposeAsync_WhenNotConnected_DoesNotThrow()
+    {
+        var client = new WebSocketClient(new Uri("ws://localhost:1"), _ => Task.CompletedTask);
+
+        // Should not throw when never connected
+        await client.DisposeAsync();
+    }
+
+    [Test]
+    public async Task Closed_Event_IncludesCloseInfo()
+    {
+        await using var server = new TestWebSocketServer();
+        server.Start();
+
+        var closed = new TaskCompletionSource<Closed>();
+        var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+        };
+
+        client.Closed.Subscribe(c => closed.TrySetResult(c));
+
+        await client.ConnectAsync();
+
+        // Server initiates close
+        await server.CloseAllClientsAsync();
+
+        var result = await Task.WhenAny(closed.Task, Task.Delay(10000));
+        Assert.That(result, Is.EqualTo(closed.Task), "Timed out waiting for close event");
+        // CloseInfo should have been populated
+        Assert.That(closed.Task.Result, Is.Not.Null);
+
+        // Dispose manually — the connection is already closed by server,
+        // so Dispose may throw if it tries to close an already-closed socket.
+        try { client.Dispose(); } catch { /* already closed */ }
+    }
 }

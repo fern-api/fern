@@ -203,4 +203,97 @@ public class QueryTests
         Assert.That(query, Is.Not.Null);
         Assert.That(query.ToString(), Is.EqualTo(""));
     }
+
+    [Test]
+    public void AddFloat_Null_Skipped()
+    {
+        var query = new Query();
+        query.Add("rate", (float?)null);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddDouble_Null_Skipped()
+    {
+        var query = new Query();
+        query.Add("pi", (double?)null);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddDecimal_Null_Skipped()
+    {
+        var query = new Query();
+        query.Add("price", (decimal?)null);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddInt_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", 42);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddBool_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", true);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddFloat_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", 1.5f);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddDouble_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", 3.14);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddDecimal_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", 19.99m);
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void AddObject_EmptyKey_Skipped()
+    {
+        var query = new Query();
+        query.Add("", (object)"hello");
+
+        Assert.That(query.ToString(), Is.EqualTo(""));
+    }
+
+    [Test]
+    public void NonGenericEnumerator_Works()
+    {
+        var query = new Query();
+        query.Add("a", "1");
+
+        var enumerable = (System.Collections.IEnumerable)query;
+        var enumerator = enumerable.GetEnumerator();
+        Assert.That(enumerator.MoveNext(), Is.True);
+        Assert.That(enumerator.Current, Is.InstanceOf<KeyValuePair<string, string>>());
+    }
 }
