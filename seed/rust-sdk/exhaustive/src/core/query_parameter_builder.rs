@@ -132,14 +132,6 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
     /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
     pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
         if let Some(v) = value.into() {
@@ -149,6 +141,14 @@ impl QueryBuilder {
                 key.to_string(),
                 datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
             ));
+        }
+        self
+    }
+
+    /// Add a UUID parameter (converts to string)
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
