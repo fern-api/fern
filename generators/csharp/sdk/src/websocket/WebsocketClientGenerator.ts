@@ -597,6 +597,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     })
                 );
                 writer.writeTextStatement("");
+                writer.writeTextStatement("_client.HttpInvoker = _options.HttpInvoker");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })

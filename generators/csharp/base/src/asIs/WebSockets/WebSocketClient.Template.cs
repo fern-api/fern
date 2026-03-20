@@ -26,6 +26,13 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Optional HttpMessageInvoker for HTTP/2 WebSocket connections.
+    /// When set, enables multiplexing multiple WebSocket streams over a single TCP connection.
+    /// Requires .NET 7+.
+    /// </summary>
+    public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+    /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
     public ConnectionStatus Status
@@ -182,6 +189,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
         {
+            HttpInvoker = HttpInvoker,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
