@@ -21,7 +21,7 @@ type TypeReference = FernIr.TypeReference;
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { WebSocketClientGenerator, websocketChannelNeedsDefaults } from "../websocket/WebsocketClientGenerator.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -110,6 +110,25 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
     }
 
+    /**
+     * Checks whether any WebSocket channel in the API needs credential
+     * propagation from the parent client via WebSocketDefaults.
+     */
+    private anyWebsocketChannelNeedsDefaults(): boolean {
+        if (!this.settings.enableWebsockets) {
+            return false;
+        }
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null && websocketChannelNeedsDefaults(websocketChannel, this.context)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public doGenerate(): CSharpFile {
         const interfaceReference = this.csharp.classReference({
             name: `I${this.names.classes.rootClient}`,
@@ -129,6 +148,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             readonly: true
         });
 
+        const needsWsDefaults = this.anyWebsocketChannelNeedsDefaults();
+        if (needsWsDefaults) {
+            class_.addField({
+                access: ast.Access.Private,
+                origin: class_.explicit("_wsDefaults"),
+                type: this.Types.Arbitrary(`${this.namespaces.qualifiedCore}.WebSocketDefaults`),
+                readonly: true
+            });
+        }
+
         if (this.grpcClientInfo != null) {
             class_.addField({
                 access: ast.Access.Private,
@@ -144,7 +173,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
         }
 
-        class_.addConstructor(this.getConstructorMethod());
+        class_.addConstructor(this.getConstructorMethod(needsWsDefaults));
 
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
@@ -189,7 +218,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         });
     }
 
-    private getConstructorMethod() {
+    private getConstructorMethod(needsWsDefaults: boolean) {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const unified = this.settings.unifiedClientOptions;
         const parameters: ast.Parameter[] = [];
@@ -532,6 +561,34 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             arguments_: [this.csharp.codeblock(clientOptionsVariable)]
                         })
                     );
+
+                    if (needsWsDefaults) {
+                        const tenantNameAccess = unified ? "clientOptions.TenantName" : "tenantName";
+                        const environmentAccess = "clientOptions?.Environment?.Wss ?? \"\"";
+                        innerWriter.writeLine("_wsDefaults = new WebSocketDefaults");
+                        innerWriter.writeLine("{");
+                        innerWriter.indent();
+                        innerWriter.writeLine(`TenantName = ${tenantNameAccess},`);
+                        innerWriter.writeLine("GetToken = () =>");
+                        innerWriter.writeLine("{");
+                        innerWriter.indent();
+                        innerWriter.writeLine(
+                            `var token = tokenProvider.${this.names.methods.getAccessTokenAsync}().GetAwaiter().GetResult();`
+                        );
+                        innerWriter.writeLine(
+                            'return token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)'
+                        );
+                        innerWriter.indent();
+                        innerWriter.writeLine('? token["Bearer ".Length..]');
+                        innerWriter.writeLine(": token;");
+                        innerWriter.dedent();
+                        innerWriter.dedent();
+                        innerWriter.writeLine("},");
+                        innerWriter.writeLine(`Environment = ${environmentAccess},`);
+                        innerWriter.dedent();
+                        innerWriter.writeTextStatement("}");
+                    }
+
                     if (this.grpcClientInfo != null) {
                         innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);

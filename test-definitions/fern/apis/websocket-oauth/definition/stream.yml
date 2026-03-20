@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+channel:
+  path: /stream
+  auth: false
+  query-parameters:
+    tenant-name: string
+    token: string
+    id: string
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendEvent
+    receive:
+      display-name: Receive
+      origin: server
+      body: ReceiveEvent
+  examples:
+    - name: Default example
+      messages:
+        - type: send
+          body:
+            data: "hello"
+        - type: receive
+          body:
+            result: "world"
+types:
+  SendEvent:
+    properties:
+      data: string
+  ReceiveEvent:
+    properties:
+      result: string

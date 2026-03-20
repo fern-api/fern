@@ -1,0 +1,29 @@
+name: websocket-oauth
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getTokenWithClientCredentials
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+
+headers:
+  Tenant-Name: string
+
+environments:
+  Production:
+    urls:
+      default: https://api.example.com
+      wss: wss://realtime.example.com
+  Staging:
+    urls:
+      default: https://api.staging.example.com
+      wss: wss://realtime.staging.example.com
+
+default-environment: Production

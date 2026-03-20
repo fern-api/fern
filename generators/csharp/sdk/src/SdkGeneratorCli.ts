@@ -35,7 +35,8 @@ import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceG
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
 import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
-import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator.js";
+import { WebSocketClientGenerator, websocketChannelNeedsDefaults } from "./websocket/WebsocketClientGenerator.js";
+import { WebSocketDefaultsGenerator } from "./websocket/WebSocketDefaultsGenerator.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
@@ -264,6 +265,21 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
+
+        // Generate WebSocketDefaults.cs when any WebSocket channel needs credential propagation
+        if (context.settings.enableWebsockets) {
+            const needsWsDefaults = subpackages.some((subpackage) => {
+                if (subpackage.websocket == null) {
+                    return false;
+                }
+                const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
+                return websocketChannel != null && websocketChannelNeedsDefaults(websocketChannel, context);
+            });
+            if (needsWsDefaults) {
+                const wsDefaultsGenerator = new WebSocketDefaultsGenerator(context);
+                context.project.addSourceFiles(wsDefaultsGenerator.generate());
+            }
         }
 
         const inferred = context.getInferredAuth();

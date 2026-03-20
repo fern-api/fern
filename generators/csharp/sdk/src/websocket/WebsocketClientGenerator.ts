@@ -10,6 +10,37 @@ type WebSocketChannel = FernIr.WebSocketChannel;
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
+ * Checks whether a WebSocket channel should receive automatic credential propagation
+ * from the parent client via WebSocketDefaults.
+ *
+ * Returns true when all three conditions are met:
+ * 1. The Options class has a `tenant-name` query parameter
+ * 2. The Options class has a `token` query parameter
+ * 3. The parent client uses OAuthTokenProvider and sets a `Tenant-Name` HTTP header
+ */
+export function websocketChannelNeedsDefaults(
+    websocketChannel: WebSocketChannel,
+    context: SdkGeneratorContext
+): boolean {
+    const hasOAuth = context.getOauth() != null;
+    const hasTenantNameHeader = context.ir.headers.some((h) => h.name.wireValue === "Tenant-Name");
+    if (!hasOAuth || !hasTenantNameHeader) {
+        return false;
+    }
+    const hasTenantNameParam = websocketChannel.queryParameters.some(
+        (qp) => qp.name.wireValue === "tenant-name"
+    );
+    const hasTokenParam = websocketChannel.queryParameters.some((qp) => qp.name.wireValue === "token");
+    return hasTenantNameParam && hasTokenParam;
+}
+
+/**
+ * Returns the set of query parameter wire values that are sourced from
+ * WebSocketDefaults when credential propagation applies.
+ */
+const WS_DEFAULTS_PARAM_WIRE_VALUES = new Set(["tenant-name", "token"]);
+
+/**
  * Arguments for creating a WebSocket client generator.
  */
 export declare namespace WebSocketClientGenerator {
@@ -129,6 +160,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
         const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
         const createMethodName = `Create${websocketApiName}`;
+        const needsDefaults = websocketChannelNeedsDefaults(websocketChannel, context);
 
         const websocketInterfaceRef = context.csharp.classReference({
             origin: context.model.explicit(websocketChannel, "Interface"),
@@ -147,8 +179,13 @@ export class WebSocketClientGenerator extends WithGeneration {
             enclosingType: websocketApiClassReference
         });
 
+        // When credential propagation applies and there are no non-defaultable required
+        // options, the options parameter becomes nullable with a default of null.
+        const hasRequiredNonDefaultable = WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context);
+        const optionsNullable = needsDefaults && !hasRequiredNonDefaultable;
+
         // If the websocket channel has required options, we can't have a parameterless factory
-        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
+        if (!hasRequiredNonDefaultable && !needsDefaults) {
             interface_.addMethod({
                 name: createMethodName,
                 parameters: [],
@@ -161,7 +198,10 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 context.csharp.parameter({
                     name: "options",
-                    type: optionsClassReference
+                    type: optionsNullable
+                        ? optionsClassReference.asOptional()
+                        : optionsClassReference,
+                    initializer: optionsNullable ? "null" : undefined
                 })
             ],
             noBody: true,
@@ -179,6 +219,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
         const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
         const createMethodName = `Create${websocketApiName}`;
+        const needsDefaults = websocketChannelNeedsDefaults(websocketChannel, context);
 
         const websocketApiClassReference = context.csharp.classReference({
             origin: websocketChannel,
@@ -206,9 +247,12 @@ export class WebSocketClientGenerator extends WithGeneration {
             context
         );
 
+        const hasRequiredNonDefaultable = WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context);
+        const optionsNullable = needsDefaults && !hasRequiredNonDefaultable;
+
         // if the websocket channel has required options, we can't have a default constructor
         // nor a factory with a default options parameter
-        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
+        if (!hasRequiredNonDefaultable && !needsDefaults) {
             cls.addMethod({
                 name: createMethodName,
                 parameters: [],
@@ -244,12 +288,20 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 context.csharp.parameter({
                     name: "options",
-                    type: optionsClassReference
+                    type: optionsNullable
+                        ? optionsClassReference.asOptional()
+                        : optionsClassReference,
+                    initializer: optionsNullable ? "null" : undefined
                 })
             ],
             access: ast.Access.Public,
             return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
+                if (needsDefaults) {
+                    writer.writeLine(
+                        `options = ${websocketApiName}.Options.WithDefaults(options, _wsDefaults);`
+                    );
+                }
                 writer.write("return ");
                 writer.writeNodeStatement(
                     context.csharp.instantiateClass({
@@ -526,20 +578,26 @@ export class WebSocketClientGenerator extends WithGeneration {
             set: true
         });
 
+        const needsDefaults = websocketChannelNeedsDefaults(this.websocketChannel, this.context);
         for (const queryParameter of this.websocketChannel.queryParameters) {
             // add to the options class
             const type = this.context.csharpTypeMapper.convert({
                 reference: queryParameter.valueType
             });
 
+            // When credential propagation applies, make tenant-name and token
+            // nullable and non-required so WithDefaults can fill them in.
+            const isDefaultableParam =
+                needsDefaults && WS_DEFAULTS_PARAM_WIRE_VALUES.has(queryParameter.name.wireValue);
+
             optionsClass.addField({
                 origin: queryParameter,
                 access: ast.Access.Public,
-                type,
+                type: isDefaultableParam ? type.asOptional() : type,
                 summary: queryParameter.docs ?? "",
                 get: true,
                 set: true,
-                useRequired: !type.isOptional
+                useRequired: isDefaultableParam ? false : !type.isOptional
             });
         }
 
@@ -613,7 +671,162 @@ export class WebSocketClientGenerator extends WithGeneration {
             initializer: this.csharp.codeblock("new ReconnectStrategy()")
         });
 
+        // When credential propagation applies, add WithDefaults static method
+        if (needsDefaults) {
+            this.addWithDefaultsMethod(optionsClass, needsDefaults);
+        }
+
         return optionsClass;
+    }
+
+    /**
+     * Adds a static WithDefaults method to the Options class.
+     * This method creates a new Options instance, filling in TenantName, Token,
+     * and Environment from WebSocketDefaults when not explicitly set by the caller.
+     */
+    private addWithDefaultsMethod(optionsClass: ast.Class, _needsDefaults: boolean): void {
+        const hasRequiredNonDefaultable = this.hasNonDefaultableRequiredOptions();
+        const optionsParamNullable = !hasRequiredNonDefaultable;
+        const wsDefaultsRef = this.Types.Arbitrary(`${this.namespaces.qualifiedCore}.WebSocketDefaults`);
+
+        optionsClass.addMethod({
+            access: ast.Access.Internal,
+            type: ast.MethodType.STATIC,
+            name: "WithDefaults",
+            parameters: [
+                this.csharp.parameter({
+                    name: "options",
+                    type: optionsParamNullable
+                        ? this.Types.Arbitrary(`${this.classReference.name}.Options?`)
+                        : this.optionsClassReference
+                }),
+                this.csharp.parameter({
+                    name: "defaults",
+                    type: wsDefaultsRef
+                })
+            ],
+            return_: this.optionsClassReference,
+            body: this.csharp.codeblock((writer) => {
+                // When options is nullable, use null-conditional access (options?.)
+                // When non-nullable, use direct access (options.)
+                const nc = optionsParamNullable ? "options?." : "options.";
+                writer.writeLine("return new()");
+                writer.writeLine("{");
+                writer.indent();
+
+                // BaseUrl — resolve from defaults.Environment when the user hasn't set one
+                if (optionsParamNullable) {
+                    writer.writeLine(
+                        `BaseUrl = string.IsNullOrEmpty(${nc}BaseUrl) ? defaults.Environment : options!.BaseUrl,`
+                    );
+                } else {
+                    writer.writeLine(
+                        `BaseUrl = string.IsNullOrEmpty(options.BaseUrl) ? defaults.Environment : options.BaseUrl,`
+                    );
+                }
+
+                // Query parameters
+                for (const queryParameter of this.websocketChannel.queryParameters) {
+                    const propName = queryParameter.name.name.pascalCase.safeName;
+                    if (WS_DEFAULTS_PARAM_WIRE_VALUES.has(queryParameter.name.wireValue)) {
+                        if (queryParameter.name.wireValue === "tenant-name") {
+                            writer.writeLine(`${propName} = ${nc}${propName} ?? defaults.TenantName,`);
+                        } else if (queryParameter.name.wireValue === "token") {
+                            writer.writeLine(`${propName} = ${nc}${propName} ?? defaults.GetToken(),`);
+                        }
+                    } else {
+                        const type = this.context.csharpTypeMapper.convert({
+                            reference: queryParameter.valueType
+                        });
+                        if (optionsParamNullable && !type.isOptional) {
+                            writer.writeLine(
+                                `${propName} = ${nc}${propName} ?? ${this.getDefaultValueForType(type)},`
+                            );
+                        } else {
+                            writer.writeLine(`${propName} = ${nc}${propName},`);
+                        }
+                    }
+                }
+
+                // Path parameters — always copy directly (required fields)
+                for (const pathParameter of this.websocketChannel.pathParameters) {
+                    const propName = pathParameter.name.pascalCase.safeName;
+                    if (optionsParamNullable) {
+                        const type = this.context.csharpTypeMapper.convert({
+                            reference: pathParameter.valueType
+                        });
+                        if (!type.isOptional) {
+                            writer.writeLine(`${propName} = ${nc}${propName} ?? ${this.getDefaultValueForType(type)},`);
+                        } else {
+                            writer.writeLine(`${propName} = ${nc}${propName},`);
+                        }
+                    } else {
+                        writer.writeLine(`${propName} = ${nc}${propName},`);
+                    }
+                }
+
+                // Environment property (multi-URL environments class)
+                if (this.hasEnvironments) {
+                    writer.writeLine(
+                        `Environment = ${nc}Environment ?? defaults.Environment,`
+                    );
+                }
+
+                // Standard options fields
+                // When options is non-nullable, copy value-type fields directly (no ?? needed).
+                // When options is nullable, use null-conditional + ?? with defaults.
+                if (optionsParamNullable) {
+                    writer.writeLine(`EnableCompression = ${nc}EnableCompression ?? false,`);
+                    writer.writeLine(`HttpInvoker = ${nc}HttpInvoker,`);
+                    writer.writeLine(`IsReconnectionEnabled = ${nc}IsReconnectionEnabled ?? false,`);
+                    writer.writeLine(`ReconnectTimeout = ${nc}ReconnectTimeout ?? TimeSpan.FromMinutes(1),`);
+                    writer.writeLine(`ErrorReconnectTimeout = ${nc}ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),`);
+                    writer.writeLine(`LostReconnectTimeout = ${nc}LostReconnectTimeout,`);
+                    writer.writeLine(`ReconnectBackoff = ${nc}ReconnectBackoff ?? new ReconnectStrategy(),`);
+                } else {
+                    writer.writeLine(`EnableCompression = ${nc}EnableCompression,`);
+                    writer.writeLine(`HttpInvoker = ${nc}HttpInvoker,`);
+                    writer.writeLine(`IsReconnectionEnabled = ${nc}IsReconnectionEnabled,`);
+                    writer.writeLine(`ReconnectTimeout = ${nc}ReconnectTimeout,`);
+                    writer.writeLine(`ErrorReconnectTimeout = ${nc}ErrorReconnectTimeout,`);
+                    writer.writeLine(`LostReconnectTimeout = ${nc}LostReconnectTimeout,`);
+                    writer.writeLine(`ReconnectBackoff = ${nc}ReconnectBackoff,`);
+                }
+
+                writer.dedent();
+                writer.writeTextStatement("}");
+            })
+        });
+    }
+
+    /**
+     * Returns a sensible default value expression for a type.
+     */
+    private getDefaultValueForType(type: ast.Type): string {
+        if (type.isOptional) {
+            return "default";
+        }
+        // For primitive types, return common defaults
+        return "default";
+    }
+
+    /**
+     * Checks if a WebSocket channel has required options that are NOT sourced
+     * from WebSocketDefaults (e.g. path parameters like Id).
+     */
+    private hasNonDefaultableRequiredOptions(): boolean {
+        const needsDefaults = websocketChannelNeedsDefaults(this.websocketChannel, this.context);
+        return (
+            this.websocketChannel.pathParameters.some(
+                (p) => !this.context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
+            ) ||
+            this.websocketChannel.queryParameters.some((p) => {
+                if (needsDefaults && WS_DEFAULTS_PARAM_WIRE_VALUES.has(p.name.wireValue)) {
+                    return false; // These will be filled by defaults
+                }
+                return !this.context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional;
+            })
+        );
     }
 
     /**
@@ -624,13 +837,17 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns True if any path or query parameters are required
      */
     private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
+        const needsDefaults = websocketChannelNeedsDefaults(websocketChannel, context);
         return (
             websocketChannel.pathParameters.some(
                 (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||
-            websocketChannel.queryParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
-            )
+            websocketChannel.queryParameters.some((p) => {
+                if (needsDefaults && WS_DEFAULTS_PARAM_WIRE_VALUES.has(p.name.wireValue)) {
+                    return false; // These will be filled by defaults
+                }
+                return !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional;
+            })
         );
     }
 
