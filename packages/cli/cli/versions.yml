@@ -9,6 +9,8 @@
         debugging. API authors can force a specific version bump by including
         `version-bump: MAJOR`, `version-bump: MINOR`, or `version-bump: PATCH`
         in their spec repo commit message, overriding the AI recommendation.
+        The override is respected in all code paths including large-diff
+        fallback, AI failure fallback, and no-change detection.
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
