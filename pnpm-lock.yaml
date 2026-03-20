@@ -4681,6 +4681,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/docs-markdown-utils':
+        specifier: workspace:*
+        version: link:../docs-markdown-utils
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -4864,6 +4867,9 @@ importers:
       graphql:
         specifier: 'catalog:'
         version: 16.12.0
+      gray-matter:
+        specifier: 'catalog:'
+        version: 4.0.3
       immer:
         specifier: ^10.1.1
         version: 10.2.0
@@ -5257,12 +5263,6 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
-
-  packages/cli/cli/dist/prod-unminified:
-    dependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
 
   packages/cli/config:
     devDependencies:
