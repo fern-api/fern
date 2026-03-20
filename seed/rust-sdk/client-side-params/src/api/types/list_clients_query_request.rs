@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listClients
-///
-/// Request type for the ListClientsQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListClientsQueryRequest {
     /// Comma-separated list of fields to include
