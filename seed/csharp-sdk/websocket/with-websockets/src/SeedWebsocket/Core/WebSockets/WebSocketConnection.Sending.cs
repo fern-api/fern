@@ -237,6 +237,7 @@ internal partial class WebSocketConnection
                     {
                         await SendInternalSynchronized(new RequestTextMessage(message));
                     }
+                    catch (OperationCanceledException) { }
                     catch (Exception e)
                     {
                         await OnExceptionOccurred(e).ConfigureAwait(false);
@@ -259,6 +260,7 @@ internal partial class WebSocketConnection
                     {
                         await SendInternalSynchronized(new ArraySegment<byte>(message));
                     }
+                    catch (OperationCanceledException) { }
                     catch (Exception e)
                     {
                         await OnExceptionOccurred(e).ConfigureAwait(false);
