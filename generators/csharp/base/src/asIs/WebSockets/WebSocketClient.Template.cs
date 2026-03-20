@@ -38,6 +38,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public TimeSpan? LostReconnectTimeout { get; set; }
 
     /// <summary>
+    /// How often to check the WebSocket state for silent disconnections.
+    /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
+    /// See: https://github.com/dotnet/runtime/issues/110496
+    /// Set to null to disable. Default: 5 seconds.
+    /// </summary>
+    public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Strategy for reconnection backoff delays.
     /// Controls interval growth, jitter, and max attempts.
     /// Set to null to use fixed-interval reconnection (legacy behavior).
@@ -281,6 +289,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             ReconnectTimeout = ReconnectTimeout,
             ErrorReconnectTimeout = ErrorReconnectTimeout,
             LostReconnectTimeout = LostReconnectTimeout,
+            StateCheckInterval = StateCheckInterval,
             Backoff = Backoff,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,

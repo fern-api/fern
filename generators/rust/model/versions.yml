@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.1.6
+  changelogEntry:
+    - summary: |
+        Avoid applying `#[serde(transparent)]` to single-property structs whose sole field is an
+        enum type. When used inside undiscriminated unions, transparent serialization would serialize
+        the struct as just the inner enum variant string instead of the expected object wrapper.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 61
+
 - version: 0.1.5
   changelogEntry:
     - summary: |
