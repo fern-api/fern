@@ -580,7 +580,10 @@ internal partial class WebSocketConnection
 
         _cancellation = new CancellationTokenSource();
         await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
-        await OnReconnectionHappened(ReconnectionInfo.Create(type)).ConfigureAwait(false);
+        if (IsRunning)
+        {
+            await OnReconnectionHappened(ReconnectionInfo.Create(type)).ConfigureAwait(false);
+        }
         _reconnecting = false;
     }
 
