@@ -38,6 +38,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public TimeSpan? LostReconnectTimeout { get; set; }
 
     /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -273,6 +281,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             ReconnectTimeout = ReconnectTimeout,
             ErrorReconnectTimeout = ErrorReconnectTimeout,
             LostReconnectTimeout = LostReconnectTimeout,
+            Backoff = Backoff,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
