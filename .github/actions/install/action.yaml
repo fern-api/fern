@@ -33,7 +33,7 @@ runs:
       shell: bash
       run: |
         for attempt in 1 2 3; do
-          pnpm install && break
+          pnpm install --frozen-lockfile && break
           if [ "$attempt" -eq 3 ]; then
             echo "pnpm install failed after 3 attempts"
             exit 1
