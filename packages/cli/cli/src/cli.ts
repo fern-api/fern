@@ -1902,7 +1902,9 @@ function addDocsLintCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
     cli.command(
         "lint",
         "Validate MDX syntax in your docs",
-        () => {},
+        () => {
+            // No additional options for this command
+        },
         async () => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern docs lint"
