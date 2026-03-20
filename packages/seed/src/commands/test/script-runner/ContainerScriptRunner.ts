@@ -350,9 +350,7 @@ export class ContainerScriptRunner extends ScriptRunner {
 
         if (!this.shouldStreamOutput()) {
             const imageNames = scriptConfigs.map((s) => s.image).join(", ");
-            CONSOLE_LOGGER.info(
-                `Starting ${this.poolSize} script container(s) for [${imageNames}]...`
-            );
+            CONSOLE_LOGGER.info(`Starting ${this.poolSize} script container(s) for [${imageNames}]...`);
         }
 
         // Start poolSize slots in parallel, each slot has one container per script config
