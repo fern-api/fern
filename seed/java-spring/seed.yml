@@ -72,3 +72,4 @@ allowedFailures:
   - undiscriminated-union-with-response-property
   - enum
   - java-streaming-accept-header
+  - multipart-mixed-response

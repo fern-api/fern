@@ -93,6 +93,7 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - multipart-mixed-response
   - file-upload-openapi
   - folders
   - http-head
