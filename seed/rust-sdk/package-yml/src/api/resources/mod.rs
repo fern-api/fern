@@ -34,7 +34,7 @@ impl PackageYmlClient {
             .execute_request(
                 Method::POST,
                 &format!("/{}/", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

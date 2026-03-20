@@ -22,7 +22,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -51,7 +51,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("complex/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -78,7 +78,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("named-mixed/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -106,7 +106,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 "optional-merge-patch-test",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -132,7 +132,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("regular/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

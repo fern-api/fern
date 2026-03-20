@@ -56,7 +56,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -82,7 +82,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PATCH,
                 &format!("/api/users/{}", user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -167,7 +167,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/profiles/complex",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -218,7 +218,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PATCH,
                 &format!("/api/profiles/complex/{}", profile_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -243,7 +243,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/test/deserialization",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -323,7 +323,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PUT,
                 &format!("/api/users/{}/tags", user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -348,7 +348,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/search",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
