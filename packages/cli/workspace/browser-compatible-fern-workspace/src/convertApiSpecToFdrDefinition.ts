@@ -1,12 +1,11 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { convertAsyncApiSpecToFdrDefinition, convertAsyncApiSpecToIr } from "./convertAsyncApiSpecToFdrDefinition.js";
-import { convertOpenApiSpecToFdrDefinition, convertOpenApiSpecToIr } from "./convertOpenApiSpecToFdrDefinition.js";
-import { convertOpenRpcSpecToFdrDefinition, convertOpenRpcSpecToIr } from "./convertOpenRpcSpecToFdrDefinition.js";
+import { convertAsyncApiSpecToFdrDefinition } from "./convertAsyncApiSpecToFdrDefinition.js";
+import { convertOpenApiSpecToFdrDefinition } from "./convertOpenApiSpecToFdrDefinition.js";
+import { convertOpenRpcSpecToFdrDefinition } from "./convertOpenRpcSpecToFdrDefinition.js";
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
 
 /**
@@ -116,55 +115,6 @@ export async function apiSpecToFdr({
 }
 
 /**
- * Simplified entry point: converts any supported API spec to Fern IR.
- * Automatically detects the spec type from the document contents.
- */
-export async function apiSpecToIr({
-    spec,
-    settings,
-    generationLanguage
-}: {
-    spec: Record<string, unknown>;
-    settings?: OpenAPIWorkspace.Settings;
-    generationLanguage?: generatorsYml.GenerationLanguage;
-}): Promise<IntermediateRepresentation> {
-    const detectedType = detectApiSpecType(spec);
-
-    if (detectedType == null) {
-        throw new Error(
-            "Unable to detect API spec type. Expected a document with an 'openapi', 'swagger', 'asyncapi', or 'openrpc' top-level field."
-        );
-    }
-
-    switch (detectedType) {
-        case "openapi": {
-            if (typeof spec.swagger === "string") {
-                throw new Error(
-                    `Swagger v2.0 is not supported. Please convert your spec to OpenAPI 3.x first. Detected swagger version: ${spec.swagger}`
-                );
-            }
-            return convertOpenApiSpecToIr({
-                spec: spec as unknown as OpenAPIV3_1.Document,
-                settings,
-                generationLanguage
-            });
-        }
-        case "asyncapi":
-            return convertAsyncApiSpecToIr({
-                spec,
-                settings,
-                generationLanguage
-            });
-        case "openrpc":
-            return convertOpenRpcSpecToIr({
-                spec: spec as unknown as OpenrpcDocument,
-                settings,
-                generationLanguage
-            });
-    }
-}
-
-/**
  * Converts any supported API spec (OpenAPI 3.1, AsyncAPI v2/v3, or OpenRPC)
  * directly to an FDR API Definition, without requiring filesystem access.
  *
@@ -202,45 +152,6 @@ export async function convertApiSpecToFdrDefinition({
             return convertOpenRpcSpecToFdrDefinition({
                 spec: apiSpec.spec,
                 apiName,
-                namespace: apiSpec.namespace,
-                settings,
-                generationLanguage
-            });
-    }
-}
-
-/**
- * Converts any supported API spec to Fern Intermediate Representation (IR),
- * without requiring filesystem access.
- *
- * This is the explicit-type entry point. For auto-detection, use `apiSpecToIr()` instead.
- */
-export async function convertApiSpecToIr({
-    apiSpec,
-    settings,
-    generationLanguage
-}: {
-    apiSpec: ApiSpec;
-    settings?: OpenAPIWorkspace.Settings;
-    generationLanguage?: generatorsYml.GenerationLanguage;
-}): Promise<IntermediateRepresentation> {
-    switch (apiSpec.type) {
-        case "openapi":
-            return convertOpenApiSpecToIr({
-                spec: apiSpec.spec,
-                overrides: apiSpec.overrides,
-                settings,
-                generationLanguage
-            });
-        case "asyncapi":
-            return convertAsyncApiSpecToIr({
-                spec: apiSpec.spec,
-                settings,
-                generationLanguage
-            });
-        case "openrpc":
-            return convertOpenRpcSpecToIr({
-                spec: apiSpec.spec,
                 namespace: apiSpec.namespace,
                 settings,
                 generationLanguage
