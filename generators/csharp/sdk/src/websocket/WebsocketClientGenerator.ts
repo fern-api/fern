@@ -600,6 +600,19 @@ export class WebSocketClientGenerator extends WithGeneration {
             set: true
         });
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("ReconnectBackoff"),
+            access: ast.Access.Public,
+            type: this.Types.Arbitrary("ReconnectStrategy?"),
+            summary:
+                "Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. " +
+                "Set to null to use fixed-interval reconnection (legacy behavior). " +
+                "Default: exponential backoff, 1s\u219260s, unlimited attempts, with jitter.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("new ReconnectStrategy()")
+        });
+
         return optionsClass;
     }
 
@@ -745,6 +758,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeTextStatement("_client.ReconnectTimeout = _options.ReconnectTimeout");
                 writer.writeTextStatement("_client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout");
                 writer.writeTextStatement("_client.LostReconnectTimeout = _options.LostReconnectTimeout");
+                writer.writeTextStatement("_client.Backoff = _options.ReconnectBackoff");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
