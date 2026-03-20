@@ -27,9 +27,7 @@ export function websocketChannelNeedsDefaults(
     if (!hasOAuth || !hasTenantNameHeader) {
         return false;
     }
-    const hasTenantNameParam = websocketChannel.queryParameters.some(
-        (qp) => qp.name.wireValue === "tenant-name"
-    );
+    const hasTenantNameParam = websocketChannel.queryParameters.some((qp) => qp.name.wireValue === "tenant-name");
     const hasTokenParam = websocketChannel.queryParameters.some((qp) => qp.name.wireValue === "token");
     return hasTenantNameParam && hasTokenParam;
 }
@@ -198,9 +196,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 context.csharp.parameter({
                     name: "options",
-                    type: optionsNullable
-                        ? optionsClassReference.asOptional()
-                        : optionsClassReference,
+                    type: optionsNullable ? optionsClassReference.asOptional() : optionsClassReference,
                     initializer: optionsNullable ? "null" : undefined
                 })
             ],
@@ -288,9 +284,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 context.csharp.parameter({
                     name: "options",
-                    type: optionsNullable
-                        ? optionsClassReference.asOptional()
-                        : optionsClassReference,
+                    type: optionsNullable ? optionsClassReference.asOptional() : optionsClassReference,
                     initializer: optionsNullable ? "null" : undefined
                 })
             ],
@@ -298,9 +292,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
                 if (needsDefaults) {
-                    writer.writeLine(
-                        `options = ${websocketApiName}.Options.WithDefaults(options, _wsDefaults);`
-                    );
+                    writer.writeLine(`options = ${websocketApiName}.Options.WithDefaults(options, _wsDefaults);`);
                 }
                 writer.write("return ");
                 writer.writeNodeStatement(
@@ -739,9 +731,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                             reference: queryParameter.valueType
                         });
                         if (optionsParamNullable && !type.isOptional) {
-                            writer.writeLine(
-                                `${propName} = ${nc}${propName} ?? ${this.getDefaultValueForType(type)},`
-                            );
+                            writer.writeLine(`${propName} = ${nc}${propName} ?? ${this.getDefaultValueForType(type)},`);
                         } else {
                             writer.writeLine(`${propName} = ${nc}${propName},`);
                         }
@@ -767,9 +757,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 // Environment property (multi-URL environments class)
                 if (this.hasEnvironments) {
-                    writer.writeLine(
-                        `Environment = ${nc}Environment ?? defaults.Environment,`
-                    );
+                    writer.writeLine(`Environment = ${nc}Environment ?? defaults.Environment,`);
                 }
 
                 // Standard options fields
