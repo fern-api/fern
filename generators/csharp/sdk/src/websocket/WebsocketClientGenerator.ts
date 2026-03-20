@@ -800,9 +800,13 @@ export class WebSocketClientGenerator extends WithGeneration {
                 }),
                 body: this.csharp.codeblock((writer) => {
                     if (isBinaryMessage) {
-                        writer.writeTextStatement(`await SendBinaryAsync(message, cancellationToken).ConfigureAwait(false)`);
+                        writer.writeTextStatement(
+                            `await SendBinaryAsync(message, cancellationToken).ConfigureAwait(false)`
+                        );
                     } else {
-                        writer.writeTextStatement(`await SendJsonAsync(message, cancellationToken).ConfigureAwait(false)`);
+                        writer.writeTextStatement(
+                            `await SendJsonAsync(message, cancellationToken).ConfigureAwait(false)`
+                        );
                     }
                 })
             });
@@ -855,7 +859,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                     summary: "Sends a binary message to the server"
                 }),
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeTextStatement(`await _client.SendInstant(message, cancellationToken).ConfigureAwait(false)`);
+                    writer.writeTextStatement(
+                        `await _client.SendInstant(message, cancellationToken).ConfigureAwait(false)`
+                    );
                 })
             });
         }
