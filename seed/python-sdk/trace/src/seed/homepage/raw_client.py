@@ -7,8 +7,10 @@ from ..commons.types.problem_id import ProblemId
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -40,15 +42,24 @@ class RawHomepageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                typing.List[ProblemId],
-                parse_obj_as(
-                    type_=typing.List[ProblemId],  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return HttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.List[ProblemId],
+                    parse_obj_as(
+                        type_=typing.List[ProblemId],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def set_homepage_problems(
@@ -79,6 +90,10 @@ class RawHomepageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -108,15 +123,24 @@ class AsyncRawHomepageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                typing.List[ProblemId],
-                parse_obj_as(
-                    type_=typing.List[ProblemId],  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return AsyncHttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.List[ProblemId],
+                    parse_obj_as(
+                        type_=typing.List[ProblemId],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def set_homepage_problems(
@@ -147,4 +171,8 @@ class AsyncRawHomepageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

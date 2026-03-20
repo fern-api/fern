@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="src/seed/organization/client.py">create</a>(...) -&gt; AsyncHttpResponse[Organization]</code></summary>
+<details><summary><code>client.organization.<a href="src/seed/organization/client.py">create</a>(...) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -32,6 +32,7 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.organization.create(
     name="name",
 )
@@ -50,7 +51,7 @@ client.organization.create(
 <dl>
 <dd>
 
-**name:** `str` 
+**request:** `CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -71,7 +72,7 @@ client.organization.create(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -103,6 +104,7 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.list(
     limit=1,
 )
@@ -142,7 +144,7 @@ client.user.list(
 </details>
 
 ## User Events
-<details><summary><code>client.user.events.<a href="src/seed/user/events/client.py">list_events</a>(...) -&gt; AsyncHttpResponse[typing.List[Event]]</code></summary>
+<details><summary><code>client.user.events.<a href="src/seed/user/events/client.py">list_events</a>(...) -> typing.List[Event]</code></summary>
 <dl>
 <dd>
 
@@ -174,6 +176,7 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.events.list_events(
     limit=1,
 )
@@ -213,7 +216,7 @@ client.user.events.list_events(
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.user.events.metadata.<a href="src/seed/user/events/metadata/client.py">get_metadata</a>(...) -&gt; AsyncHttpResponse[Metadata]</code></summary>
+<details><summary><code>client.user.events.metadata.<a href="src/seed/user/events/metadata/client.py">get_metadata</a>(...) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -245,6 +248,7 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.events.metadata.get_metadata(
     id="id",
 )

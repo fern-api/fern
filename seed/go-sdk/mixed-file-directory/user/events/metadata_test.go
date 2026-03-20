@@ -12,7 +12,7 @@ import (
 func TestSettersMetadata(t *testing.T) {
 	t.Run("SetValue", func(t *testing.T) {
 		obj := &Metadata{}
-		var fernTestValueValue interface{}
+		var fernTestValueValue any
 		obj.SetValue(fernTestValueValue)
 		assert.Equal(t, fernTestValueValue, obj.Value)
 		assert.NotNil(t, obj.explicitFields)
@@ -25,7 +25,7 @@ func TestGettersMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Metadata{}
-		var expected interface{}
+		var expected any
 		obj.Value = expected
 
 		// Act & Assert
@@ -51,7 +51,7 @@ func TestSettersMarkExplicitMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Metadata{}
-		var fernTestValueValue interface{}
+		var fernTestValueValue any
 
 		// Act
 		obj.SetValue(fernTestValueValue)

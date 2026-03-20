@@ -1,4 +1,130 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.5.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to all remaining
+        custom `JsonConverter` types: `EnumSerializer<TEnum>` (native C# enums),
+        `DateTimeSerializer`, `DateAsDateTimeConverter`, discriminated union converters,
+        and literal type converters. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` when any of these types is used as a `Dictionary<TKey, TValue>`
+        key. This complements the `IStringEnum` fix in 0.3.2.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.5.0
+  changelogEntry:
+    - summary: |
+        Replace separate deserialization and serialization tests with a single round-trip
+        serialization test using `JsonAssert.Roundtrips<T>(inputJson)`. The helper deserializes
+        JSON to `T`, re-serializes, and compares to the original JSON via `JsonElement` deep
+        equality, producing diff-reportable failures.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.4.0
+  changelogEntry:
+    - summary: |
+        Add `UsingObjectDictionaryComparer` to test comparers for handling
+        `Dictionary<string, object?>` fields. System.Text.Json deserializes
+        `object?` values as `JsonElement`, so structural equality comparisons
+        need to serialize both sides before comparing. The `UsingDefaults()`
+        chain now includes this comparer automatically.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.3.2
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to the generated
+        `IStringEnum` JsonConverter. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` at runtime when serializing or deserializing a
+        `Dictionary<TStringEnum, TValue>`. This is applied to all generated `IStringEnum`
+        types so dictionary-key usage works without requiring regeneration.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 0.3.1
+  changelogEntry:
+    - summary: |
+        Fix CS1501 build error for literal struct `GetHashCode` on `netstandard2.0` and
+        `net462` targets. `string.GetHashCode(StringComparison)` is only available in
+        .NET Core 2.1+ / .NET Standard 2.1+. The generated code now uses
+        `StringComparer.Ordinal.GetHashCode(Value)` which is available on all frameworks.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        Rework enum JSON serialization to eliminate reflection. Each enum now gets
+        a generated serializer with static dictionary lookups instead of the generic
+        `EnumSerializer<T>` / `StringEnumSerializer<T>` that used `Enum.GetValues`,
+        `GetField`, `GetCustomAttributes`, and `Activator.CreateInstance` at runtime.
+        Serializer initialization is ~1,000x faster (18 ns vs 18 us) and allocates
+        160x less memory; steady-state throughput is unchanged. The generated code is
+        also NativeAOT and IL-trimming compatible.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 0.2.0
+  changelogEntry:
+    - summary: |
+        Add `generate-literals` configuration option. When enabled, string and boolean
+        literal properties emit a self-contained `readonly struct` with a built-in
+        `JsonConverter` instead of using a string property with an `Assert` setter.
+        The struct type validates the literal value at the JSON deserialization boundary
+        and supports implicit conversion to `string` or `bool`.
+
+        The previous `experimental-readonly-constants` option is now deprecated and
+        will log a warning when used. Use `generate-literals` instead.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 0.1.0
+  changelogEntry:
+    - summary: |
+        Upgrade IR SDK from v62 to v65. Adds support for `dateTimeRfc2822` primitive
+        and `validation` on `LongType`.
+      type: feat
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 0.0.14
+  changelogEntry:
+    - summary: |
+        Remove unnecessary NuGet package restore from the generator Dockerfile.
+        NuGet packages are not needed at generation time since the generator only
+        writes files and runs csharpier; no dotnet restore occurs during generation.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 0.0.13
+  changelogEntry:
+    - summary: |
+        Sync and cache NuGet dependencies across all C# Dockerfiles. Updates test
+        framework packages to match generated SDK versions and adds NuGet restore
+        caching to the generator Dockerfiles.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 0.0.12
+  changelogEntry:
+    - summary: |
+        Parallelize file writes during project persistence using batched concurrency
+        (100 files per batch via `Promise.all`), significantly reducing generation time
+        for large projects with thousands of files.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 0.0.11
   changelogEntry:
     - summary: |

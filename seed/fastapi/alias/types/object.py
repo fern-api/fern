@@ -11,3 +11,6 @@ Type(
 )
 """
 Object = Type
+"""
+Object is an alias for a type.
+"""

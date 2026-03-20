@@ -6,7 +6,6 @@ import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -41,8 +40,6 @@ export declare namespace AddCommand {
 
 export class AddCommand {
     public async handle(context: Context, args: AddCommand.Args): Promise<void> {
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
         const workspace = await context.loadWorkspaceOrThrow();
 
         const fernYmlPath = workspace.absoluteFilePath;
@@ -53,7 +50,7 @@ export class AddCommand {
         }
 
         const sdkChecker = new SdkChecker({ context });
-        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
             throw CliError.exit();
         }
@@ -211,7 +208,7 @@ export class AddCommand {
             newTarget.group = [group];
         }
 
-        editor.addTarget(language, newTarget);
+        await editor.addTarget(language, newTarget);
         await editor.save();
     }
 
@@ -255,7 +252,7 @@ export class AddCommand {
     }
 }
 
-export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addAddCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new AddCommand();
     command(
         cli,
@@ -283,10 +280,8 @@ export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void 
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

@@ -822,6 +822,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -900,6 +901,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {

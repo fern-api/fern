@@ -12,7 +12,13 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    extractErrorMessage,
+    haveSameNullishness,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
@@ -54,7 +60,9 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
@@ -215,7 +223,7 @@ async function tryRunCli(cliContext: CliContext) {
     addOverridesCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
-    addUpdateApiSpecCommand(cli, cliContext);
+    addApiCommand(cli, cliContext);
     addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
@@ -237,6 +245,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGeneratorCommands(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
+    addInstallDependenciesCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -260,6 +269,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
+        }
+        if (projectConfig.version === "latest") {
+            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
         }
         return projectConfig.version;
     }
@@ -433,6 +445,34 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                 }),
         async (argv) => {
+            // Large IR files (>2 GB) can exceed Node's default heap limit.
+            // If either file exceeds 1 GB and we haven't already re-spawned,
+            // re-spawn with --max-old-space-size so that the full IR can be
+            // parsed and validated in memory.
+            if (process.env.__FERN_DIFF_HEAP_RESPAWNED == null) {
+                const fs = await import("node:fs");
+                const ONE_GB = 1024 * 1024 * 1024;
+                const fromPath = resolve(cwd(), argv.from);
+                const toPath = resolve(cwd(), argv.to);
+                const fromSize = fs.statSync(fromPath, { throwIfNoEntry: false })?.size ?? 0;
+                const toSize = fs.statSync(toPath, { throwIfNoEntry: false })?.size ?? 0;
+
+                if (fromSize > ONE_GB || toSize > ONE_GB) {
+                    const { spawnSync } = await import("child_process");
+                    const HEAP_SIZE_MB = 8192;
+                    const child = spawnSync(
+                        process.execPath,
+                        [`--max-old-space-size=${HEAP_SIZE_MB}`, ...process.execArgv, ...process.argv.slice(1)],
+                        {
+                            env: { ...process.env, __FERN_DIFF_HEAP_RESPAWNED: "1" },
+                            stdio: "inherit"
+                        }
+                    );
+                    await cliContext.exit({ code: child.status ?? 1 });
+                    return;
+                }
+            }
+
             const fromVersion = undefinedIfNullish(argv.fromVersion);
             const generatorVersions = undefinedIfSomeNullish({
                 from: argv.fromGeneratorVersion,
@@ -595,6 +635,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Whether to generate a preview link for the docs"
                 })
+                .option("id", {
+                    type: "string",
+                    description:
+                        "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate"
@@ -675,7 +720,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("fernignore", {
                     type: "string",
                     description:
-                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                        "Path to a custom .fernignore file. For generators with local file system output, the .fernignore in the output directory is used automatically if not specified"
                 })
                 .option("dynamic-ir-only", {
                     boolean: true,
@@ -692,10 +737,22 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: true,
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
+                })
+                .option("retry-rate-limited", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            }
+            if (argv.id != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.");
+            }
+            if (argv.id != null && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.");
             }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
@@ -753,7 +810,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
-                    noReplay: !argv.replay
+                    noReplay: !argv.replay,
+                    retryRateLimited: argv["retry-rate-limited"]
                 });
             }
             if (argv.docs != null) {
@@ -778,6 +836,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     instance: argv.instance,
                     preview: argv.preview,
+                    previewId: argv.id,
+                    force: argv.force,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
@@ -807,7 +867,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
-                noReplay: !argv.replay
+                noReplay: !argv.replay,
+                retryRateLimited: argv["retry-rate-limited"]
             });
         }
     );
@@ -1229,9 +1290,17 @@ function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
     );
 }
 
+function addApiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("api", "Commands for managing your API specs", (yargs) => {
+        addUpdateApiSpecCommand(yargs, cliContext);
+        addEnrichCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "api update",
+        "update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
             yargs
@@ -1966,6 +2035,46 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
+function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "enrich <openapi>",
+        false, // Hidden from --help
+        (yargs) =>
+            yargs
+                .positional("openapi", {
+                    type: "string",
+                    description: "Path to the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("file", {
+                    type: "string",
+                    alias: "f",
+                    description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    description: "Path to write the enriched output file",
+                    demandOption: true
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern api enrich"
+            });
+            const openapiPath = resolve(cwd(), argv.openapi as string);
+            const overridesPath = resolve(cwd(), argv.file);
+            const outputPath = resolve(cwd(), argv.output);
+            await mergeOpenAPIWithOverrides({
+                openapiPath: AbsoluteFilePath.of(openapiPath),
+                overridesPath: AbsoluteFilePath.of(overridesPath),
+                outputPath: AbsoluteFilePath.of(outputPath),
+                cliContext
+            });
+        }
+    );
+}
+
 function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "beta",
@@ -2043,6 +2152,18 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     });
 }
 
+function addInstallDependenciesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "install-dependencies",
+        false, // hidden from --help
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+        (yargs) => {},
+        async () => {
+            await installDependencies({ cliContext });
+        }
+    );
+}
+
 function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command({
         command: "replay",
@@ -2111,9 +2232,11 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             }
 
             if (githubRepo == null || token == null) {
-                return cliContext.failAndThrow(
-                    "Missing required github config. Either use --group to read from generators.yml, or provide --github and --token directly."
-                );
+                const hint =
+                    githubRepo != null
+                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
+                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
+                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
@@ -2147,9 +2270,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     cliContext.logger.info("\nDry run complete. No changes made.");
                 }
             } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2221,7 +2342,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
             }
         }
     );

@@ -1,4 +1,97 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.1
+  changelogEntry:
+    - summary: |
+        Fix Wire test files to read `WIREMOCK_URL` environment variable instead of
+        hardcoding `http://localhost:8080`. The `setUp()` method now declares a
+        `$wiremockUrl` variable that reads from the environment with a fallback,
+        enabling tests to work with dynamically assigned Docker ports in local
+        development and CI/CD environments.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 62
+
+- version: 2.2.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 2.1.12
+  changelogEntry:
+    - summary: |
+        Fix WireMock datetime mismatch in wire tests. The mock-utils package generates datetime
+        query parameter values with milliseconds (e.g., `2022-01-02T00:00:00.000Z`) via
+        `Date.toISOString()`, but PHP's `DateTimeInterface::RFC3339` format omits fractional
+        seconds (e.g., `2022-01-02T00:00:00Z`). Since WireMock's `equalTo` is an exact-match,
+        the stubs never fired. Now strips zero milliseconds from WireMock datetime query
+        parameter values to match the PHP SDK's serialization format.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 2.1.11
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 62
+
+- version: 2.1.10
+  changelogEntry:
+    - summary: |
+        Fix serialization and deserialization of boolean values in union types.
+        (Matches existing fix for floats.)
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.9
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.8
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+- version: 2.1.7
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of a generic message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 62
+
+- version: 2.1.6
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.1.5
   changelogEntry:
     - summary: |

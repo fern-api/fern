@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -&gt; AsyncHttpResponse[MovieId]</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -30,9 +30,10 @@ Add a movie to the database using the movies/* /... path.
 from seed import SeedApi
 
 client = SeedApi(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.imdb.create_movie(
     title="title",
     rating=1.1,
@@ -52,15 +53,7 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**title:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rating:** `float` 
+**request:** `CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -80,7 +73,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -&gt; AsyncHttpResponse[Movie]</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -96,9 +89,10 @@ client.imdb.create_movie(
 from seed import SeedApi
 
 client = SeedApi(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.imdb.get_movie(
     movie_id="movieId",
 )

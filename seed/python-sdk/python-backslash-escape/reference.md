@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -34,6 +34,7 @@ from seed import SeedPythonBackslashEscape
 client = SeedPythonBackslashEscape(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get(
     id="id",
     domain="domain",

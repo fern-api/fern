@@ -21,6 +21,14 @@ public class Example3
                     State = "state",
                     Zip = "zip",
                     Country = "USA"
+                },
+                Owner = new global::SeedCsharpNamespaceCollision.System.User {
+                    Line1 = "line1",
+                    Line2 = "line2",
+                    City = "city",
+                    State = "state",
+                    Zip = "zip",
+                    Country = "USA"
                 }
             }
         );

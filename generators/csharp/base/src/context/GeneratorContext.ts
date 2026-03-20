@@ -1,5 +1,10 @@
 import { fail } from "node:assert";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -73,7 +78,22 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
             ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
+
+        // Log deprecation warning if the old flag is used
+        if (this.customConfig["experimental-readonly-constants"] === true) {
+            this.logger.warn(
+                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead.'
+            );
+        }
     }
+
+    /**
+     * Backing field for the lazily-initialized formatter.
+     * Declared here so that sibling subclasses (SdkGeneratorContext,
+     * ModelGeneratorContext) share a single property declaration and
+     * remain structurally compatible in TypeScript.
+     */
+    protected _formatter: AbstractFormatter | undefined;
 
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
@@ -603,6 +623,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             uuid: () => this.csharp.codeblock('""'),
             base64: () => this.csharp.codeblock('""'),
             bigInteger: () => this.csharp.codeblock('""'),
+            dateTimeRfc2822: () => this.csharp.codeblock("DateTime.MinValue"),
             _other: () => this.csharp.codeblock("null")
         });
     }
@@ -639,7 +660,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return undefined;
     }
 
-    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+    public getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {
@@ -819,7 +840,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // types that can get used
         this.Types.ReadOnlyAdditionalProperties();
         this.Types.JsonUtils;
-        this.Types.StringEnumSerializer;
         this.Types.IStringEnum;
 
         // start with the models
@@ -844,6 +864,18 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         this.csharp.classReference({
                             origin: this.model.explicit(typeDeclaration, "Values"),
                             enclosingType
+                        });
+
+                        // Register nested serializer class reference
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            enclosingType
+                        });
+                    } else {
+                        // Register companion serializer class reference for regular enums
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            namespace: enclosingType.namespace
                         });
                     }
                 },

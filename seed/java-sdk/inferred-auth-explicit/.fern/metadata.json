@@ -2,5 +2,6 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

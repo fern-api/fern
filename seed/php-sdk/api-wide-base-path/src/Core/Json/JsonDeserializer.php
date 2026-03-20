@@ -144,6 +144,11 @@ class JsonDeserializer
             return (float) $data;
         }
 
+        // Handle bools as a special case since gettype($data) returns "boolean" for bool values in PHP.
+        if ($type === 'bool' && is_bool($data)) {
+            return $data;
+        }
+
         if (gettype($data) === $type) {
             return $data;
         }

@@ -13,10 +13,13 @@ import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context
+    context,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members (useful for seed run against customer configs that may use a different CLI version) */
+    lenient?: boolean;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (filepath == null) {
@@ -27,9 +30,9 @@ export async function loadRawGeneratorsConfiguration({
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
         const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
-            allowUnrecognizedEnumValues: false,
-            unrecognizedObjectKeys: "fail",
-            allowUnrecognizedUnionMembers: false,
+            allowUnrecognizedEnumValues: lenient === true,
+            unrecognizedObjectKeys: lenient === true ? "passthrough" : "fail",
+            allowUnrecognizedUnionMembers: lenient === true,
             skipValidation: false,
             breadcrumbsPrefix: undefined,
             omitUndefined: false
@@ -82,12 +85,19 @@ export async function loadRawGeneratorsConfiguration({
 
 export async function loadGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context
+    context,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members */
+    lenient?: boolean;
 }): Promise<generatorsYml.GeneratorsConfiguration | undefined> {
-    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({
+        absolutePathToWorkspace,
+        context,
+        lenient
+    });
     if (rawGeneratorsConfiguration == null) {
         return undefined;
     }

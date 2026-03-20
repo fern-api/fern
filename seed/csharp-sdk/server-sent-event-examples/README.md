@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedServerSentEvents)](https://nuget.org/packages/SeedServerSentEvents)
+[![nuget shield](https://img.shields.io/nuget/v/Fernserver-sent-event-examples)](https://nuget.org/packages/Fernserver-sent-event-examples)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -27,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedServerSentEvents
+dotnet add package Fernserver-sent-event-examples
 ```
 
 ## Reference
@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 using SeedServerSentEvents;
 
 var client = new SeedServerSentEventsClient();
-var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
+var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "" });
 
 await foreach (var item in items)
 {

@@ -67,6 +67,23 @@ public final class UnionWithDuplicativeDiscriminants {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnionWithDuplicativeDiscriminants
+                && value.equals(((UnionWithDuplicativeDiscriminants) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -91,6 +108,7 @@ public final class UnionWithDuplicativeDiscriminants {
     @JsonIgnoreProperties("type")
     private static final class FirstItemTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private FirstItemType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -130,6 +148,7 @@ public final class UnionWithDuplicativeDiscriminants {
     @JsonIgnoreProperties("type")
     private static final class SecondItemTypeValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private SecondItemType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

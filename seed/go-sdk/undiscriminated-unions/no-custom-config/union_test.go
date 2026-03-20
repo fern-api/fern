@@ -464,7 +464,7 @@ func TestSettersNamedMetadata(t *testing.T) {
 
 	t.Run("SetValue", func(t *testing.T) {
 		obj := &NamedMetadata{}
-		var fernTestValueValue map[string]interface{}
+		var fernTestValueValue map[string]any
 		obj.SetValue(fernTestValueValue)
 		assert.Equal(t, fernTestValueValue, obj.Value)
 		assert.NotNil(t, obj.explicitFields)
@@ -500,7 +500,7 @@ func TestGettersNamedMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NamedMetadata{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Value = expected
 
 		// Act & Assert
@@ -567,7 +567,7 @@ func TestSettersMarkExplicitNamedMetadata(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NamedMetadata{}
-		var fernTestValueValue map[string]interface{}
+		var fernTestValueValue map[string]any
 
 		// Act
 		obj.SetValue(fernTestValueValue)

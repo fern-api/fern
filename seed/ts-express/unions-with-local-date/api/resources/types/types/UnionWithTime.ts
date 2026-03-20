@@ -39,6 +39,6 @@ export namespace UnionWithTime {
 
     export interface Datetime {
         type: "datetime";
-        value: Date;
+        value: globalThis.Date;
     }
 }

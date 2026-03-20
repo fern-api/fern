@@ -334,6 +334,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
+	f.P("MaxBufSize int")
 	if hasOAuth {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -425,7 +426,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				username = authScheme.Basic.Username.PascalCase.UnsafeName
 				password = authScheme.Basic.Password.PascalCase.UnsafeName
 			)
-			f.P(`if r.`, username, ` != "" && r.`, password, ` != "" {`)
+			f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
 			f.P("}")
 		}
@@ -517,7 +518,7 @@ func (f *fileWriter) writePlatformHeaders(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 ) error {
-	if sdkVersion == "" {
+	if sdkVersion == "" || f.omitFernHeaders {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("return r.HTTPHeader.Clone()")
 		f.P("}")
@@ -560,6 +561,9 @@ func (f *fileWriter) writeRequestOptionStructs(
 		return err
 	}
 	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
 	if isMultiURL {
@@ -814,6 +818,15 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {")
 	f.P("return &core.MaxAttemptsOption{")
 	f.P("MaxAttempts: attempts,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.")
+	f.P("// This controls the maximum size of a single message (in bytes) that the stream")
+	f.P("// can process. By default, this is set to 1MB.")
+	f.P("func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {")
+	f.P("return &core.MaxBufSizeOption{")
+	f.P("MaxBufSize: size,")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -1568,6 +1581,7 @@ func (f *fileWriter) WriteClient(
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
+			f.P("MaxBufSize: options.MaxBufSize,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}

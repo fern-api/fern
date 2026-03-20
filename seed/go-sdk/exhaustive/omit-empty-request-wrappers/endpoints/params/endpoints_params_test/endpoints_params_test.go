@@ -65,11 +65,10 @@ func VerifyRequestCount(
 func TestEndpointsParamsGetWithPathWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -88,11 +87,10 @@ func TestEndpointsParamsGetWithPathWithWireMock(
 func TestEndpointsParamsGetWithPathWithWireMock2(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -111,11 +109,10 @@ func TestEndpointsParamsGetWithPathWithWireMock2(
 func TestEndpointsParamsGetWithQueryWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -138,11 +135,10 @@ func TestEndpointsParamsGetWithQueryWithWireMock(
 func TestEndpointsParamsGetWithQueryWithWireMock2(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -165,11 +161,10 @@ func TestEndpointsParamsGetWithQueryWithWireMock2(
 func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -192,11 +187,10 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
 func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -219,11 +213,10 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
 func TestEndpointsParamsModifyWithPathWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -244,11 +237,10 @@ func TestEndpointsParamsModifyWithPathWithWireMock(
 func TestEndpointsParamsModifyWithPathWithWireMock2(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -264,31 +256,4 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
-}
-
-func TestEndpointsParamsUploadWithPathWithWireMock(
-	t *testing.T,
-) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
-	}
-	WireMockBaseURL := wiremockURL
-	client := client.NewClient(
-		option.WithBaseURL(WireMockBaseURL),
-	)
-	request := bytes.NewReader(
-		[]byte(""),
-	)
-	_, invocationErr := client.Endpoints.Params.UploadWithPath(
-		context.TODO(),
-		"upload-path",
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsParamsUploadWithPathWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsUploadWithPathWithWireMock", "POST", "/params/path/upload-path", nil, 1)
 }

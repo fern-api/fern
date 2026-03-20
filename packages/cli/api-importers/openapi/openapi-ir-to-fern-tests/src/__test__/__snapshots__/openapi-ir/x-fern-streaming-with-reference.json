@@ -19,6 +19,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
+      "requestNameOverride": "CreateCompletionRequestStreaming",
       "generatedRequestName": "CreateChatCompletionsStreamRequest",
       "request": {
         "schema": {

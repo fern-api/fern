@@ -25,7 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/service/#{params[:endpoint_param]}",
+          path: "/service/#{URI.encode_uri_component(params[:endpoint_param].to_s)}",
           request_options: request_options
         )
         begin

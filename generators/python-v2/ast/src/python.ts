@@ -31,6 +31,7 @@ export { LambdaParameter } from "./LambdaParameter.js";
 export { Method } from "./Method.js";
 export { MethodArgument } from "./MethodArgument.js";
 export { MethodInvocation } from "./MethodInvocation.js";
+export { ModuleImport } from "./ModuleImport.js";
 export { Operator } from "./Operator.js";
 export { Parameter } from "./Parameter.js";
 export { PythonFile } from "./PythonFile.js";

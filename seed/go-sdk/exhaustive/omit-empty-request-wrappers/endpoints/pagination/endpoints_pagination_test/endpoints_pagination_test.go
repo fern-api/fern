@@ -66,11 +66,10 @@ func VerifyRequestCount(
 func TestEndpointsPaginationListItemsWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)

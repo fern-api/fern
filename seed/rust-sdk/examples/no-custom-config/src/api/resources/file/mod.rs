@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod notification;
@@ -9,6 +10,7 @@ pub struct FileClient {
     pub notification: NotificationClient,
     pub service: ServiceClient2,
 }
+
 impl FileClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

@@ -3,6 +3,7 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { CoerceConstsTo } from "./CoerceConstsTo.js";
 import { PathParameterOrder } from "./PathParameterOrder.js";
 import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas.js";
 
@@ -18,9 +19,12 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
     "group-environments-by-host": core.serialization.boolean().optional(),
+    "infer-default-environment": core.serialization.boolean().optional(),
     "remove-discriminants-from-schemas": RemoveDiscriminantsFromSchemas.optional(),
     "path-parameter-order": PathParameterOrder.optional(),
     "resolve-schema-collisions": core.serialization.boolean().optional(),
+    "infer-forward-compatible": core.serialization.boolean().optional(),
+    "coerce-consts-to": CoerceConstsTo.optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -33,8 +37,11 @@ export declare namespace BaseApiSettingsSchema {
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;
         "group-environments-by-host"?: boolean | null;
+        "infer-default-environment"?: boolean | null;
         "remove-discriminants-from-schemas"?: RemoveDiscriminantsFromSchemas.Raw | null;
         "path-parameter-order"?: PathParameterOrder.Raw | null;
         "resolve-schema-collisions"?: boolean | null;
+        "infer-forward-compatible"?: boolean | null;
+        "coerce-consts-to"?: CoerceConstsTo.Raw | null;
     }
 }

@@ -53,9 +53,20 @@ export class ReadmeConfigBuilder {
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
         return FernGeneratorCli.LanguageInfo.csharp({
             publishInfo: {
-                packageName: context.generation.names.project.packageId
+                packageName: this.getPackageName(context)
             }
         });
+    }
+
+    private getPackageName(context: SdkGeneratorContext): string {
+        const outputMode = context.config.output.mode;
+        if (outputMode.type === "github" && outputMode.publishInfo?.type === "nuget") {
+            return outputMode.publishInfo.packageName;
+        }
+        if (outputMode.type === "publish" && outputMode.publishTarget?.type === "nuget") {
+            return outputMode.publishTarget.packageName;
+        }
+        return context.generation.names.project.packageId;
     }
 }
 

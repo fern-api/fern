@@ -6,6 +6,7 @@ using SeedExhaustive.Types.Object;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.ContentType;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostJsonPatchContentTypeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

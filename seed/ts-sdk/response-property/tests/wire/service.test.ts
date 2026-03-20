@@ -9,6 +9,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -36,6 +37,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -63,6 +65,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -83,6 +86,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -110,6 +114,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -137,6 +142,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -157,6 +163,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
+
         server
             .mockEndpoint()
             .post("/movie")

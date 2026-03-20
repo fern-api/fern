@@ -182,8 +182,14 @@ export class CsharpTypeMapper extends WithGeneration {
             dateTime: () => this.Value.dateTime,
             uuid: () => this.Primitive.string,
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
-            base64: () => this.Primitive.string,
+            //
+            // TODO: The protoc-gen-openapi plugin represents bytes as base64 properties. For this to
+            // be correct, we need a bytes primitive type in the IR. For now, this is only an issue in
+            // rare cases, where the SDK requires both gRPC and REST endpoints with base64 and byte[]
+            // properties.
+            base64: () => (this.context.hasGrpcEndpoints() ? this.Value.binary : this.Primitive.string),
             bigInteger: () => this.Primitive.string,
+            dateTimeRfc2822: () => this.Value.dateTime,
             _other: () => this.Primitive.object
         });
     }
@@ -204,6 +210,9 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Primitive.object;
             }
             return objectClassReference;
+        }
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            return this.context.protobufResolver.getExternalProtobufClassReference(named.typeId);
         }
 
         const typeDeclaration = this.model.dereferenceType(named.typeId).typeDeclaration;

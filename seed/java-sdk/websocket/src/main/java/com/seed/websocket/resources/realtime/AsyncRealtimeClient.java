@@ -5,7 +5,6 @@ package com.seed.websocket.resources.realtime;
 
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.resources.realtime.websocket.RealtimeWebSocketClient;
-import java.util.Optional;
 
 public class AsyncRealtimeClient {
     protected final ClientOptions clientOptions;
@@ -17,12 +16,8 @@ public class AsyncRealtimeClient {
     /**
      * Creates a new WebSocket client for the realtime channel.
      * @param sessionId the sessionId path parameter
-     * @param model Optional model query parameter
-     * @param temperature Optional temperature query parameter
-     * @param languageCode Optional languageCode query parameter
      */
-    public RealtimeWebSocketClient realtimeWebSocket(
-            String sessionId, Optional<String> model, Optional<Integer> temperature, Optional<String> languageCode) {
-        return new RealtimeWebSocketClient(clientOptions, sessionId, model, temperature, languageCode);
+    public RealtimeWebSocketClient realtimeWebSocket(String sessionId) {
+        return new RealtimeWebSocketClient(clientOptions, sessionId);
     }
 }

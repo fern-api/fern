@@ -5,6 +5,7 @@ pub use crate::prelude::*;
 pub struct CreateUserRequest {
     /// The name of the user to create.
     /// This name is unique to each user.
+    #[serde(default)]
     pub name: String,
     /// The age of the user.
     /// This property is not required.

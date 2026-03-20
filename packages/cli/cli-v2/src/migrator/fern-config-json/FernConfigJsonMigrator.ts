@@ -1,8 +1,8 @@
 import { PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import type { DetectResult, MigratorWarning } from "../types/index.js";
-
 export declare namespace FernConfigJsonMigrator {
     export interface Config {
         cwd: AbsoluteFilePath;
@@ -76,7 +76,7 @@ export class FernConfigJsonMigrator {
                 absoluteFilePath
             };
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            const message = extractErrorMessage(error);
             return {
                 success: false,
                 warnings: [

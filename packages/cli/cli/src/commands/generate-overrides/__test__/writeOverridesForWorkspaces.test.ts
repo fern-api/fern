@@ -116,6 +116,7 @@ function createObjectSchema(nameOverride: string): Schema {
         groupName: undefined,
         description: undefined,
         availability: undefined,
+        encoding: undefined,
         source: undefined,
         namespace: undefined,
         title: undefined,

@@ -60,6 +60,22 @@ public final class Exception {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof Exception && value.equals(((Exception) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -84,6 +100,7 @@ public final class Exception {
     @JsonIgnoreProperties("type")
     private static final class GenericValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ExceptionInfo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

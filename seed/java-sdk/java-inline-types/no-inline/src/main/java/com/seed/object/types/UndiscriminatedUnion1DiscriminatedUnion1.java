@@ -84,6 +84,23 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1 {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UndiscriminatedUnion1DiscriminatedUnion1
+                && value.equals(((UndiscriminatedUnion1DiscriminatedUnion1) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -114,6 +131,7 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class Type1Value implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private UndiscriminatedUnion1DiscriminatedUnion1InlineType1 value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -153,6 +171,7 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class Type2Value implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private UndiscriminatedUnion1DiscriminatedUnion1InlineType2 value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -192,6 +211,7 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1 {
     @JsonIgnoreProperties("type")
     private static final class RefValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ReferenceType value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

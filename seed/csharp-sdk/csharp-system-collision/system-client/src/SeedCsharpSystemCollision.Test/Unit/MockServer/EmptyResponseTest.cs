@@ -4,6 +4,7 @@ using SeedCsharpSystemCollision;
 namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class EmptyResponseTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

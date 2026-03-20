@@ -31,8 +31,8 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.CSHARP_MODEL]: "0.1.0",
+        [GeneratorName.CSHARP_SDK]: "2.24.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -51,6 +51,18 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
+            types: mapValues(v65.types, (typeDeclaration) => {
+                if (typeDeclaration.shape.type === "enum") {
+                    return {
+                        ...typeDeclaration,
+                        shape: IrVersions.V63.types.Type.enum({
+                            default: typeDeclaration.shape.default,
+                            values: typeDeclaration.shape.values
+                        })
+                    };
+                }
+                return typeDeclaration;
+            }),
             services: mapValues(v65.services, (service) => convertHttpService(service, context)),
             webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
                 webhookGroup.map((webhook) => {

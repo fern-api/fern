@@ -87,12 +87,15 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
+    inferForwardCompatible: boolean | undefined;
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
 }
 
 export interface APIDefinitionLocation {

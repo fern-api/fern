@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -126,6 +127,22 @@ public final class WorkspaceSubmissionUpdateInfo {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof WorkspaceSubmissionUpdateInfo && value.equals(((WorkspaceSubmissionUpdateInfo) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -214,6 +231,10 @@ public final class WorkspaceSubmissionUpdateInfo {
   @JsonIgnoreProperties("type")
   private static final class RanValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private WorkspaceRunDetails value;
 
     @JsonCreator(
@@ -308,6 +329,10 @@ public final class WorkspaceSubmissionUpdateInfo {
   @JsonIgnoreProperties("type")
   private static final class TracedV2Value implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private WorkspaceTracedUpdate value;
 
     @JsonCreator(
