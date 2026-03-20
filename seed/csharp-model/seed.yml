@@ -54,7 +54,8 @@ fixtures:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
 scripts:
-  - commands:
+  - image: fernapi/csharp-seed
+    commands:
       build:
         - |
           # Enforce global:: prefix for System namespace references in generated .cs files.
@@ -65,9 +66,6 @@ scripts:
             echo "$violations"
             exit 1
           fi
-  - image: fernapi/csharp-seed
-    commands:
-      build:
         - |        
           # Check for .NET 10
           # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
