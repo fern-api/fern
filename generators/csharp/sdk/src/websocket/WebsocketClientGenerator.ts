@@ -498,6 +498,34 @@ export class WebSocketClientGenerator extends WithGeneration {
             });
         }
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("EnableCompression"),
+            access: ast.Access.Public,
+            type: this.Primitive.boolean,
+            summary:
+                "Enable per-message deflate compression (RFC 7692). " +
+                "When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> " +
+                "before connecting. Compression is negotiated during the handshake; if the server " +
+                "does not support it, the connection proceeds uncompressed. " +
+                "Default: <c>false</c>.\n" +
+                "<para><b>Security warning:</b> do not enable compression when transmitting data " +
+                "containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH " +
+                'side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">' +
+                "ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("false")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("HttpInvoker"),
+            access: ast.Access.Public,
+            type: this.Types.Arbitrary("System.Net.Http.HttpMessageInvoker?"),
+            summary: "Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).",
+            get: true,
+            set: true
+        });
+
         for (const queryParameter of this.websocketChannel.queryParameters) {
             // add to the options class
             const type = this.context.csharpTypeMapper.convert({
@@ -670,6 +698,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     })
                 );
                 writer.writeTextStatement("");
+                writer.writeTextStatement("_client.HttpInvoker = _options.HttpInvoker");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
@@ -1021,6 +1050,14 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: "Asynchronously establishes a WebSocket connection."
             }),
             body: this.csharp.codeblock((writer) => {
+                writer.writeLine("#if NET6_0_OR_GREATER");
+                writer.writeLine("if (_options.EnableCompression)");
+                writer.pushScope();
+                writer.writeTextStatement(
+                    "_client.DeflateOptions = new System.Net.WebSockets.WebSocketDeflateOptions()"
+                );
+                writer.popScope();
+                writer.writeLine("#endif");
                 writer.writeTextStatement("await _client.ConnectAsync(cancellationToken).ConfigureAwait(false)");
             })
         });
