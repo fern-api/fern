@@ -11,7 +11,7 @@ async fn main() {
         .nullable
         .delete_user(
             &DeleteUserRequest {
-                username: Some(Some("xy".to_string())),
+                username: Some("xy".to_string()),
             },
             None,
         )

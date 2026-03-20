@@ -1,6 +1,5 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct UpdateFooRequest {
     /// Can be explicitly set to null to clear the value

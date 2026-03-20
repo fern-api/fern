@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listResources
-///
-/// Request type for the ListResourcesQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListResourcesQueryRequest {
     #[serde(default)]
     pub page_limit: i64,

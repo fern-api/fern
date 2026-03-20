@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for search
-///
-/// Request type for the SearchQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchQueryRequest {
     #[serde(default)]

@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getUsername
-///
-/// Request type for the GetUsernameQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct GetUsernameQueryRequest {
     #[serde(default)]
     pub limit: i64,

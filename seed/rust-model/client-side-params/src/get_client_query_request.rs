@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getClient
-///
-/// Request type for the GetClientQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetClientQueryRequest {
     /// Comma-separated list of fields to include

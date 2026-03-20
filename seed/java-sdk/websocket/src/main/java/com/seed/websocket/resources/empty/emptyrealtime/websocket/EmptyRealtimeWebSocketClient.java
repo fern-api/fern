@@ -65,9 +65,7 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
     public CompletableFuture<Void> connect() {
         connectionFuture = new CompletableFuture<>();
         String baseUrl = clientOptions.environment().getUrl();
-        StringBuilder pathBuilder = new StringBuilder();
-        pathBuilder.append("/empty/realtime/");
-        String fullPath = pathBuilder.toString();
+        String fullPath = "/empty/realtime/";
         if (baseUrl.endsWith("/") && fullPath.startsWith("/")) {
             fullPath = fullPath.substring(1);
         } else if (!baseUrl.endsWith("/") && !fullPath.startsWith("/")) {
@@ -229,13 +227,8 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -265,10 +258,6 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
                                 + "'. Update your SDK version to support new message types."));
                     }
                     break;
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

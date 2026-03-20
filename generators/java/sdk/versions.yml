@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.3
+  changelogEntry:
+    - summary: |
+        Fix WebSocket `handleIncomingMessage()` using Fern-internal message IDs
+        (e.g. `AgentV1Welcome`, `ListenV1Results`) instead of the wire discriminant
+        values from the spec (e.g. `Welcome`, `Results`). This caused all incoming
+        message handlers to never fire, falling through to the unknown type handler.
+
+        The generator now extracts wire discriminant values from each message body's
+        `type` property — resolving literal values (e.g. `literal<"Welcome">`) and
+        enum values (e.g. `enum[Flushed, Cleared]`) — and dispatches via a `switch`
+        statement on those values. This aligns with the approach used by the Python
+        generator.
+      type: fix
+    - summary: |
+        WebSocket handler registration methods and field names now use
+        wire discriminant values instead of Fern-internal prefixed names. For example,
+        `onAgentV1Welcome(handler)` is now `onWelcome(handler)`, and
+        `onAgentV1PromptUpdated(handler)` is now `onPromptUpdated(handler)`. Methods
+        that were already backed by a custom `x-fern-sdk-method-name` (e.g.
+        `onFunctionCallResponse`) are unchanged.
+      type: fix
+    - summary: |
+        Improve generated WebSocket client code quality: use a string literal for
+        static URL paths instead of `StringBuilder`, remove dead if/else branches in
+        async `sendMessage()`, consolidate redundant catch blocks in message dispatch,
+        and correct Javadoc articles ("a" vs "an") for type names starting with vowels.
+      type: chore
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 4.0.2
   changelogEntry:
     - summary: |

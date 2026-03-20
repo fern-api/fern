@@ -1,5 +1,103 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Add per-event timeout to SSE stream methods. The `SseStream` now accepts a timeout
+        duration and yields `ApiError::StreamTimeout` if no event is received within that
+        period. The timeout is derived from `RequestOptions.timeout_seconds` (per-request)
+        or `ClientConfig.timeout` (client-level), preventing indefinite blocking when the
+        server stops sending events.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add forward-compatible enum support. When `forward-compatible: true` is set on an enum
+        type, the generated Rust enum includes a `#[non_exhaustive]` attribute, a hidden
+        `__Unknown(String)` variant for unrecognized values, and custom Serialize/Deserialize
+        implementations that gracefully handle unknown enum values from the server.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.20.4
+  changelogEntry:
+    - summary: |
+        Derive `Default` on request body types (inlined and query-parameter requests) when all
+        fields have types that implement `Default` in Rust, not only when all fields are `Option<T>`.
+        Previously, a request like `ChatRequest { stream: bool, ... }` would not get `Default`
+        because `bool` is not `Option`, even though `bool` implements `Default`. Now the generator
+        uses the same `canDeriveDefault()` logic already used for model structs.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets and wire tests generating `Some(Some(value))` for optional+nullable
+        fields. Since `Type.option()` now collapses `Option<Option<T>>` to `Option<T>`, the
+        literal mapper must also collapse nested optional/nullable wrapping to produce `Some(value)`
+        instead of `Some(Some(value))`.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.2
+  changelogEntry:
+    - summary: |
+        Fix inlined request type documentation to use the schema-level description from the
+        OpenAPI spec instead of a generic fallback. Previously, all inlined request types used
+        the same `Request type for API operation` docstring. Now, the actual schema description
+        is propagated and used when available.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.1
+  changelogEntry:
+    - summary: |
+        Fix unexpected_cfgs warnings for multipart and sse features by conditionally including
+        the execute_multipart_request and execute_sse_request methods in http_client.rs only when
+        the corresponding features are needed. Also fix unused Utc import in query_parameter_builder.rs
+        and unused SerdeError import in http_client.rs.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.20.0
+  changelogEntry:
+    - summary: |
+        Reduce dependency footprint by conditionally including dependencies based on IR usage.
+        Dependencies like chrono, uuid, num-bigint, ordered-float, and base64 are now only added
+        to Cargo.toml when the corresponding types are actually used in the API spec. Associated
+        as-is files (flexible_datetime.rs, base64_bytes.rs, bigint_string.rs) and their module
+        declarations are also conditionally included. Template files for query_parameter_builder.rs,
+        http_client.rs, and prelude.rs use template variables to omit unused code sections.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.19.11
+  changelogEntry:
+    - summary: |
+        Use `&str` instead of `&String` in generated method signatures, union getter methods,
+        and undiscriminated union accessor methods. `&str` is more idiomatic Rust and more
+        flexible, accepting both `&String` and string literals.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.19.10
+  changelogEntry:
+    - summary: |
+        Replace `unwrap_or_default()` with proper error propagation via `map_err(ApiError::Serialization)?`
+        when serializing request bodies with `serde_json::to_value`. Previously, serialization failures
+        were silently swallowed and replaced with a default JSON null value. Now they correctly return
+        an `ApiError::Serialization` error to the caller.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
 - version: 0.19.9
   changelogEntry:
     - summary: |

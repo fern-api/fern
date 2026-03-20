@@ -22,11 +22,7 @@ impl ServiceClient3 {
     /// # Returns
     ///
     /// Empty response
-    pub async fn check(
-        &self,
-        id: &String,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
+    pub async fn check(&self, id: &str, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/check/{}", id), None, None, options)
             .await

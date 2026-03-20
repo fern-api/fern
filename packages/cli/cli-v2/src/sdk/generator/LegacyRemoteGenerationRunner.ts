@@ -126,7 +126,8 @@ export class LegacyRemoteGenerationRunner {
                 absolutePathToPreview,
                 whitelabel: undefined,
                 dynamicIrOnly: false,
-                retryRateLimited: false
+                retryRateLimited: false,
+                requireEnvVars: true
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {

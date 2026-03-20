@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Request for createPlaylist (body + query parameters)
-///
-/// Request type for the CreatePlaylistRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct CreatePlaylistRequest {
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]

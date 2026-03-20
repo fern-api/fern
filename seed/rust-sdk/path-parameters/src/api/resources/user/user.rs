@@ -15,8 +15,8 @@ impl UserClient {
 
     pub async fn get_user(
         &self,
-        tenant_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -32,7 +32,7 @@ impl UserClient {
 
     pub async fn create_user(
         &self,
-        tenant_id: &String,
+        tenant_id: &str,
         request: &User,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
@@ -40,7 +40,7 @@ impl UserClient {
             .execute_request(
                 Method::POST,
                 &format!("/{}/user/", tenant_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -49,8 +49,8 @@ impl UserClient {
 
     pub async fn update_user(
         &self,
-        tenant_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        user_id: &str,
         request: &User,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
@@ -58,7 +58,7 @@ impl UserClient {
             .execute_request(
                 Method::PATCH,
                 &format!("/{}/user/{}", tenant_id, user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -67,8 +67,8 @@ impl UserClient {
 
     pub async fn search_users(
         &self,
-        tenant_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        user_id: &str,
         request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -96,8 +96,8 @@ impl UserClient {
     /// JSON response from the API
     pub async fn get_user_metadata(
         &self,
-        tenant_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        user_id: &str,
         version: i64,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
@@ -123,10 +123,10 @@ impl UserClient {
     /// JSON response from the API
     pub async fn get_user_specifics(
         &self,
-        tenant_id: &String,
-        user_id: &String,
+        tenant_id: &str,
+        user_id: &str,
         version: i64,
-        thought: &String,
+        thought: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
