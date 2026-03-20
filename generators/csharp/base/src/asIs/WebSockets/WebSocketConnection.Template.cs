@@ -76,10 +76,6 @@ internal partial class WebSocketConnection
             ?? (
                 async (uri, token) =>
                 {
-                    //var client = new ClientWebSocket
-                    //{
-                    //    Options = { KeepAliveInterval = new TimeSpan(0, 0, 5, 0) }
-                    //};
                     var client = new ClientWebSocket();
                     client.Options.KeepAliveInterval = KeepAliveInterval;
 #if NET9_0_OR_GREATER
