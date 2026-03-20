@@ -1,6 +1,7 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,11 +17,10 @@ import {
     AutoVersioningService,
     AutoVersionResult,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "./AutoVersioningService.js";
-import { isAutoVersion } from "./VersionUtils.js";
-
+import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -88,6 +88,8 @@ export class LocalTaskHandler {
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -95,6 +97,17 @@ export class LocalTaskHandler {
         // Read prior changelog BEFORE copy operations overwrite the output directory
         const priorChangelog =
             this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+
+        if (isFernIgnorePresent) {
+            const absolutePathToFernignore = AbsoluteFilePath.of(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
+            );
+            const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+            const userPaths = fernIgnorePaths.filter((p) => p !== FERNIGNORE_FILENAME);
+            this.context.logger.debug(
+                `Detected ${FERNIGNORE_FILENAME} at ${absolutePathToFernignore} — preserving ${userPaths.length} path(s): ${userPaths.join(", ")}`
+            );
+        }
 
         if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
@@ -126,7 +139,9 @@ export class LocalTaskHandler {
                 return {
                     shouldCommit: false,
                     autoVersioningCommitMessage: undefined,
-                    autoVersioningChangelogEntry: undefined
+                    autoVersioningChangelogEntry: undefined,
+                    autoVersioningPrDescription: undefined,
+                    autoVersioningVersionBumpReason: undefined
                 };
             }
             // Replace placeholder version with computed version
@@ -135,10 +150,24 @@ export class LocalTaskHandler {
                 this.version,
                 autoVersionResult.version
             );
+
+            // For Go generators, add /vN suffix to module paths and imports
+            // when the computed version is v2+. The magic version uses major 0
+            // so generated code has no /vN suffix; we add the correct one now.
+            if (this.generatorLanguage === "go") {
+                this.context.logger.info("Adding Go major version suffix to module paths");
+                await autoVersioningService.addGoMajorVersionSuffix(
+                    this.absolutePathToLocalOutput,
+                    autoVersionResult.version
+                );
+            }
+
             return {
                 shouldCommit: true,
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,
-                autoVersioningChangelogEntry: autoVersionResult.changelogEntry
+                autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
+                autoVersioningPrDescription: autoVersionResult.prDescription,
+                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -165,7 +194,7 @@ export class LocalTaskHandler {
             }
 
             // Extract previous version and clean diff
-            // Note: this.version is the mapped magic version (e.g., "v505.503.4455" for Go)
+            // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
             if (!this.version) {
                 throw new Error("Version is required for auto versioning");
             }
@@ -207,42 +236,163 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
-                this.context.logger.warn(
-                    `Cleaned diff is too large for AI analysis ` +
-                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${cleanedFileCount} files). ` +
-                        `The AI endpoint limit is 100,000 characters. ` +
-                        `Lock files, test files, and generated docs are already excluded. ` +
-                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
-                );
-            }
-
             // Read spec repo commit message for AI context
             const specCommitMessage = await this.readSpecCommitMessage();
             if (specCommitMessage) {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
-            // Call AI (or reuse cached analysis) to determine version bump
+            // Reject absurdly large diffs before chunking to prevent excessive resource usage
+            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
+                this.context.logger.warn(
+                    `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
+                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
+                );
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const fallbackMessage = this.isWhitelabel
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
+                return {
+                    version: newVersion,
+                    commitMessage: fallbackMessage
+                };
+            }
+
+            // Split diff into chunks and analyze each one with the AI
+            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+
+            // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
+            // Chunks are ranked by semantic priority, so skipped chunks are
+            // low-priority (addition-only) sections.
+            const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+            const skippedChunks = chunks.length - cappedChunks.length;
+
+            if (chunks.length > 1) {
+                this.context.logger.info(
+                    `Diff too large for single AI call (${cleanedDiffBytes} bytes). ` +
+                        `Split into ${chunks.length} chunks for analysis` +
+                        (skippedChunks > 0
+                            ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks} low-priority chunks).`
+                            : ".")
+                );
+            }
+
             let analysis: CachedAnalysis | null;
             try {
-                analysis = await this.getAnalysis(
-                    cleanedDiff,
-                    this.generatorLanguage ?? "unknown",
-                    previousVersion ?? "0.0.0",
-                    priorChangelog,
-                    specCommitMessage
-                );
+                if (cappedChunks.length <= 1) {
+                    // Single chunk (or small diff): use normal path with caching
+                    analysis = await this.getAnalysis(
+                        cleanedDiff,
+                        this.generatorLanguage ?? "unknown",
+                        previousVersion ?? "0.0.0",
+                        priorChangelog,
+                        specCommitMessage
+                    );
+                } else {
+                    // Multiple chunks: analyze each sequentially, merge results.
+                    // Sequential (not parallel) to avoid burst API cost and simplify
+                    // error handling. Worst case: 40 chunks × ~3s = ~2 min.
+                    // We process ALL chunks so that every changelog entry is captured.
+                    let bestBump: string = VersionBump.NO_CHANGE;
+                    let bestMessage = "";
+                    let bestVersionBumpReason: string | undefined;
+                    const allChangelogEntries: string[] = [];
+
+                    for (let i = 0; i < cappedChunks.length; i++) {
+                        const chunk = cappedChunks[i];
+                        if (chunk == null) {
+                            continue;
+                        }
+                        this.context.logger.debug(
+                            `Analyzing chunk ${i + 1}/${cappedChunks.length} ` +
+                                `(${Buffer.byteLength(chunk, "utf-8")} bytes)`
+                        );
+
+                        const chunkAnalysis = await this.getAnalysis(
+                            chunk,
+                            this.generatorLanguage ?? "unknown",
+                            previousVersion ?? "0.0.0",
+                            priorChangelog,
+                            specCommitMessage
+                        );
+
+                        if (chunkAnalysis == null) {
+                            this.context.logger.debug(`Chunk ${i + 1} result: NO_CHANGE`);
+                            continue;
+                        }
+
+                        const prevBest = bestBump;
+                        bestBump = maxVersionBump(bestBump, chunkAnalysis.versionBump);
+
+                        // Keep the commit message and bump reason from the chunk that produced the highest bump
+                        if (bestBump !== prevBest) {
+                            bestMessage = chunkAnalysis.message;
+                            bestVersionBumpReason = chunkAnalysis.versionBumpReason;
+                        }
+
+                        // Collect all non-empty changelog entries so the final
+                        // changelog reflects changes from every chunk.
+                        const entry = chunkAnalysis.changelogEntry?.trim();
+                        if (entry) {
+                            allChangelogEntries.push(entry);
+                        }
+
+                        this.context.logger.debug(
+                            `Chunk ${i + 1} result: ${chunkAnalysis.versionBump}` +
+                                (bestBump !== prevBest ? ` (new highest: ${bestBump})` : "")
+                        );
+                    }
+
+                    if (bestBump === VersionBump.NO_CHANGE) {
+                        analysis = null;
+                    } else {
+                        let changelogEntry: string;
+                        let prDescription: string | undefined;
+                        let versionBumpReason: string | undefined = bestVersionBumpReason;
+                        if (allChangelogEntries.length > 1) {
+                            // Consolidate repetitive multi-chunk entries via AI rollup
+                            const rawEntries = allChangelogEntries
+                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
+                                .join("\n");
+                            try {
+                                this.context.logger.debug(
+                                    `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
+                                );
+                                const rollup = await BamlClient.withOptions({
+                                    clientRegistry: await this.getClientRegistry()
+                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                                prDescription = rollup.pr_description?.trim() || undefined;
+                                versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
+                            } catch (rollupError) {
+                                this.context.logger.warn(
+                                    `Changelog consolidation failed, using raw entries: ${extractErrorMessage(rollupError)}`
+                                );
+                                changelogEntry = rawEntries;
+                            }
+                        } else {
+                            changelogEntry = allChangelogEntries[0] ?? "";
+                            versionBumpReason = bestVersionBumpReason;
+                        }
+
+                        analysis = {
+                            versionBump: bestBump as VersionBump,
+                            message: bestMessage,
+                            changelogEntry,
+                            prDescription,
+                            versionBumpReason
+                        };
+                    }
+                }
             } catch (aiError) {
-                const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
+                const errorMessage = extractErrorMessage(aiError);
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
                         `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
-                        (cleanedDiff.length > DIFF_SIZE_LIMIT
-                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
-                              `Lock files, test files, and generated docs are already excluded. ` +
-                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
+                        (cappedChunks.length > 1
+                            ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                             : "") +
                         `Error: ${errorMessage}`
                 );
@@ -265,6 +415,8 @@ export class LocalTaskHandler {
             const finalBump = analysis.versionBump;
             const finalMessage = analysis.message;
             const finalChangelogEntry = analysis.changelogEntry;
+            const finalPrDescription = analysis.prDescription;
+            const finalVersionBumpReason = analysis.versionBumpReason;
 
             const newVersion = this.incrementVersion(previousVersion, finalBump);
             this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
@@ -272,12 +424,18 @@ export class LocalTaskHandler {
             const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
-            const changelogEntry = finalChangelogEntry?.trim() || undefined;
+            const changelogEntry = finalChangelogEntry?.trim()
+                ? sanitizeChangelogEntry(finalChangelogEntry.trim())
+                : undefined;
+            const prDescription = finalPrDescription?.trim() || undefined;
+            const versionBumpReason = finalVersionBumpReason?.trim() || undefined;
 
             return {
                 version: newVersion,
                 commitMessage,
-                changelogEntry
+                changelogEntry,
+                prDescription,
+                versionBumpReason
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -343,7 +501,8 @@ export class LocalTaskHandler {
             return {
                 versionBump: analysis.version_bump,
                 message: analysis.message,
-                changelogEntry: analysis.changelog_entry
+                changelogEntry: analysis.changelog_entry,
+                versionBumpReason: analysis.version_bump_reason
             };
         };
 

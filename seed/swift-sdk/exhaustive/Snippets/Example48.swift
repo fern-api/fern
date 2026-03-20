@@ -7,7 +7,12 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.urls.noEndingSlash()
+    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+        Dog(
+            name: "name",
+            likesToWoof: true
+        )
+    ))
 }
 
 try await main()

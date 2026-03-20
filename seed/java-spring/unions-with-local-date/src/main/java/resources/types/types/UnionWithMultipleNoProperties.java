@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,6 +74,22 @@ public final class UnionWithMultipleNoProperties {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof UnionWithMultipleNoProperties && value.equals(((UnionWithMultipleNoProperties) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -110,6 +127,10 @@ public final class UnionWithMultipleNoProperties {
   @JsonIgnoreProperties("type")
   private static final class FooValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Foo value;
 
     @JsonCreator(

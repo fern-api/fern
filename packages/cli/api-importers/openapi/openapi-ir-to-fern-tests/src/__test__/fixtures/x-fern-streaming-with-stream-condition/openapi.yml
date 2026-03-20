@@ -49,7 +49,9 @@ components:
           example: How can I use the Vectara platform?
         stream_response:
           description: Indicates whether the response should be streamed or not.
-          type: boolean
+          type:
+            - boolean
+            - "null"
           default: false
       required:
         - query

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Map;
 import java.util.Objects;
@@ -74,6 +75,22 @@ public final class CustomFiles {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CustomFiles && value.equals(((CustomFiles) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -108,6 +125,10 @@ public final class CustomFiles {
   @JsonIgnoreProperties("type")
   private static final class BasicValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private BasicCustomFiles value;
 
     @JsonCreator(

@@ -75,7 +75,9 @@ public final class PoetTypeNameMapper {
                 if (isAlias) {
                     AliasTypeDeclaration aliasTypeDeclaration =
                             typeDeclaration.getShape().getAlias().get();
-                    return aliasTypeDeclaration.getResolvedType().visit(this);
+                    if (!aliasTypeDeclaration.getAliasOf().isUnknown()) {
+                        return aliasTypeDeclaration.getResolvedType().visit(this);
+                    }
                 }
             }
             return applyEnclosing(

@@ -261,6 +261,9 @@ catalogs:
     '@types/yazl':
       specifier: ^3.3.0
       version: 3.3.0
+    '@vitest/coverage-v8':
+      specifier: ^4.1.0
+      version: 4.1.0
     '@wasm-fmt/gofmt':
       specifier: ^0.4.9
       version: 0.4.9
@@ -340,8 +343,8 @@ catalogs:
       specifier: ^3.0.0
       version: 3.0.0
     file-type:
-      specifier: ^21.3.1
-      version: 21.3.1
+      specifier: ^21.3.2
+      version: 21.3.2
     find-up:
       specifier: ^6.3.0
       version: 6.3.0
@@ -565,8 +568,8 @@ catalogs:
       specifier: ^1.0.37
       version: 1.0.41
     undici:
-      specifier: ^6.23.0
-      version: 6.23.0
+      specifier: ^6.24.0
+      version: 6.24.0
     unified:
       specifier: ^11.0.5
       version: 11.0.5
@@ -580,8 +583,8 @@ catalogs:
       specifier: ^5.0.1
       version: 5.0.1
     vitest:
-      specifier: ^4.0.18
-      version: 4.0.18
+      specifier: ^4.1.0
+      version: 4.1.0
     watcher:
       specifier: ^2.3.1
       version: 2.3.1
@@ -594,9 +597,6 @@ catalogs:
     xml2js:
       specifier: ^0.6.2
       version: 0.6.2
-    yauzl:
-      specifier: ^3.2.0
-      version: 3.2.0
     yazl:
       specifier: ^3.3.1
       version: 3.3.1
@@ -623,6 +623,8 @@ overrides:
   ts-essentials: ^10.1.1
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
+  vite: ^7.0.0
+  yauzl: ^3.2.1
 
 importers:
 
@@ -700,7 +702,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/base:
     dependencies:
@@ -749,7 +751,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/browser-compatible-base:
     dependencies:
@@ -783,7 +785,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/base:
     devDependencies:
@@ -825,7 +827,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/codegen:
     dependencies:
@@ -862,7 +864,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/dynamic-snippets:
     devDependencies:
@@ -898,7 +900,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/formatter:
     dependencies:
@@ -923,7 +925,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/model:
     devDependencies:
@@ -959,7 +961,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/csharp/sdk:
     devDependencies:
@@ -1013,7 +1015,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/go-v2/ast:
     devDependencies:
@@ -1037,7 +1039,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1082,7 +1084,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
@@ -1115,7 +1117,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/go-v2/formatter:
     dependencies:
@@ -1137,7 +1139,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/go-v2/model:
     devDependencies:
@@ -1170,7 +1172,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/go-v2/sdk:
     devDependencies:
@@ -1221,7 +1223,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/java-v2/ast:
     dependencies:
@@ -1246,7 +1248,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/java-v2/base:
     devDependencies:
@@ -1279,7 +1281,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/java-v2/dynamic-snippets:
     devDependencies:
@@ -1315,7 +1317,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/java-v2/sdk:
     devDependencies:
@@ -1366,7 +1368,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/openapi:
     devDependencies:
@@ -1414,7 +1416,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/php/base:
     devDependencies:
@@ -1453,7 +1455,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/php/codegen:
     dependencies:
@@ -1481,7 +1483,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1520,7 +1522,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/php/model:
     devDependencies:
@@ -1553,7 +1555,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1613,7 +1615,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1655,7 +1657,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1679,7 +1681,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/python-v2/base:
     dependencies:
@@ -1725,7 +1727,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/python-v2/browser-compatible-base:
     devDependencies:
@@ -1740,7 +1742,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1782,7 +1784,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/python-v2/fastapi:
     devDependencies:
@@ -1797,7 +1799,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/python-v2/formatter:
     devDependencies:
@@ -1818,7 +1820,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1854,7 +1856,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1911,7 +1913,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1939,7 +1941,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/ruby-v2/base:
     devDependencies:
@@ -1990,7 +1992,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/ruby-v2/dynamic-snippets:
     devDependencies:
@@ -2026,7 +2028,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/ruby-v2/model:
     devDependencies:
@@ -2059,7 +2061,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/ruby-v2/sdk:
     devDependencies:
@@ -2125,7 +2127,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/rust/base:
     dependencies:
@@ -2165,7 +2167,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/rust/codegen:
     dependencies:
@@ -2184,7 +2186,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/rust/dynamic-snippets:
     dependencies:
@@ -2218,7 +2220,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/rust/model:
     devDependencies:
@@ -2257,7 +2259,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2315,7 +2317,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2348,7 +2350,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/swift/codegen:
     dependencies:
@@ -2385,7 +2387,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/swift/dynamic-snippets:
     devDependencies:
@@ -2421,7 +2423,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/swift/model:
     dependencies:
@@ -2464,7 +2466,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2530,7 +2532,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2558,7 +2560,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript-v2/base:
     devDependencies:
@@ -2573,7 +2575,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
@@ -2594,7 +2596,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript-v2/dynamic-snippets:
     devDependencies:
@@ -2627,7 +2629,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript-v2/formatter:
     dependencies:
@@ -2652,7 +2654,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2725,7 +2727,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -2756,7 +2758,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -2790,7 +2792,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -2815,7 +2817,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -2846,7 +2848,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -2883,7 +2885,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -2914,7 +2916,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/generator:
     dependencies:
@@ -2990,7 +2992,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -3018,7 +3020,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -3047,12 +3049,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -3081,12 +3086,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -3115,12 +3123,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -3152,12 +3163,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -3188,7 +3202,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -3219,7 +3233,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -3229,6 +3243,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
@@ -3302,12 +3319,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -3339,12 +3359,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -3370,12 +3393,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -3473,12 +3499,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -3498,15 +3527,21 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -3535,12 +3570,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -3578,12 +3616,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -3612,12 +3653,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -3649,12 +3693,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -3683,18 +3730,24 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/sdk/test-utils:
     dependencies:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../packages/commons/casings-generator
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
       ts-morph:
         specifier: 'catalog:'
         version: 27.0.2
@@ -3733,15 +3786,21 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -3761,12 +3820,15 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -3812,7 +3874,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -3837,7 +3899,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/commons:
     dependencies:
@@ -3905,6 +3967,9 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       memfs:
         specifier: 'catalog:'
         version: 3.6.0
@@ -3916,7 +3981,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -3953,7 +4018,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   generators/typescript/utils/resolvers:
     dependencies:
@@ -3975,7 +4040,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/ai:
     dependencies:
@@ -3997,7 +4062,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4034,7 +4099,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -4068,7 +4133,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -4083,7 +4148,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/conjure/conjure-to-fern:
     dependencies:
@@ -4120,7 +4185,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -4145,7 +4210,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/graphql:
     dependencies:
@@ -4173,7 +4238,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi-pruner:
     dependencies:
@@ -4192,7 +4257,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
@@ -4238,7 +4303,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
@@ -4260,7 +4325,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -4309,7 +4374,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -4355,7 +4420,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -4395,10 +4460,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -4429,7 +4497,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
@@ -4493,7 +4561,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/api-importers/v3-importer-tests:
     dependencies:
@@ -4527,7 +4595,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/auth:
     dependencies:
@@ -4567,7 +4635,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/cli:
     devDependencies:
@@ -4846,13 +4914,13 @@ importers:
         version: 5.9.3
       undici:
         specifier: 'catalog:'
-        version: 6.23.0
+        version: 6.24.0
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       ws:
         specifier: 'catalog:'
         version: 8.19.0
@@ -4901,7 +4969,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/cli-migrations:
     dependencies:
@@ -4968,7 +5036,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/cli-source-resolver:
     dependencies:
@@ -4999,7 +5067,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/cli-v2:
     devDependencies:
@@ -5188,7 +5256,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -5212,7 +5280,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -5249,7 +5317,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/configuration-loader:
     dependencies:
@@ -5328,7 +5396,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -5362,7 +5430,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -5402,7 +5470,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/docs-importers/readme:
     dependencies:
@@ -5478,7 +5546,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/docs-markdown-utils:
     dependencies:
@@ -5554,7 +5622,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -5660,7 +5728,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/docs-resolver:
     dependencies:
@@ -5769,7 +5837,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/ete-tests:
     dependencies:
@@ -5830,7 +5898,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -5867,7 +5935,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
@@ -5919,7 +5987,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -5941,7 +6009,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -6011,7 +6079,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/ir-generator:
     devDependencies:
@@ -6074,7 +6142,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/ir-generator-tests:
     dependencies:
@@ -6120,7 +6188,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -6205,7 +6273,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -6236,7 +6304,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -6378,7 +6446,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/protoc-gen-fern:
     dependencies:
@@ -6424,7 +6492,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
@@ -6527,8 +6595,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       yauzl:
-        specifier: 'catalog:'
-        version: 3.2.0
+        specifier: ^3.2.1
+        version: 3.2.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6562,7 +6630,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yazl:
         specifier: 'catalog:'
         version: 3.3.1
@@ -6587,7 +6655,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/init:
     dependencies:
@@ -6666,7 +6734,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/library-docs-generator:
     dependencies:
@@ -6691,7 +6759,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/logger:
     dependencies:
@@ -6710,7 +6778,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/login:
     dependencies:
@@ -6765,7 +6833,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/mock:
     dependencies:
@@ -6808,7 +6876,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/posthog-manager:
     dependencies:
@@ -6845,7 +6913,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/project-loader:
     dependencies:
@@ -6879,7 +6947,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/register:
     dependencies:
@@ -6964,7 +7032,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/semver-utils:
     dependencies:
@@ -6983,7 +7051,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/source:
     devDependencies:
@@ -7001,7 +7069,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/task-context:
     dependencies:
@@ -7020,7 +7088,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/workspace/api-workspace-validator:
     dependencies:
@@ -7081,7 +7149,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/workspace/browser-compatible-fern-workspace:
     dependencies:
@@ -7121,7 +7189,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/workspace/lazy-fern-workspace:
     dependencies:
@@ -7269,7 +7337,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/workspace/loader:
     dependencies:
@@ -7324,7 +7392,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/workspace/oss-validator:
     dependencies:
@@ -7361,7 +7429,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -7433,7 +7501,7 @@ importers:
         version: 3.0.3
       file-type:
         specifier: 'catalog:'
-        version: 21.3.1
+        version: 21.3.2
       gray-matter:
         specifier: 'catalog:'
         version: 4.0.3
@@ -7500,7 +7568,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/yaml/generators-validator:
     dependencies:
@@ -7552,13 +7620,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/cli/yaml/loader:
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -7576,7 +7647,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -7655,7 +7726,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/casings-generator:
     dependencies:
@@ -7686,7 +7757,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/core-utils:
     dependencies:
@@ -7753,7 +7824,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/fs-utils:
     dependencies:
@@ -7790,13 +7861,19 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/github:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../core-utils
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
+      semver:
+        specifier: ^7.7.3
+        version: 7.7.4
       simple-git:
         specifier: 'catalog:'
         version: 3.33.0
@@ -7810,6 +7887,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.7.1
       stylelint:
         specifier: ^16.1.0
         version: 16.26.1(typescript@5.9.3)
@@ -7818,7 +7898,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/ir-utils:
     dependencies:
@@ -7855,7 +7935,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/loadable:
     dependencies:
@@ -7874,7 +7954,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/logging-execa:
     dependencies:
@@ -7899,7 +7979,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/mock-utils:
     dependencies:
@@ -7918,7 +7998,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/path-utils:
     devDependencies:
@@ -7933,7 +8013,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/commons/test-utils:
     devDependencies:
@@ -7972,10 +8052,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/configs:
     devDependencies:
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.0(vitest@4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
       esbuild-plugin-polyfill-node:
         specifier: 'catalog:'
         version: 0.3.0(esbuild@0.27.3)
@@ -7984,7 +8067,7 @@ importers:
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/core:
     dependencies:
@@ -8015,10 +8098,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/generator-cli:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@fern-api/replay':
         specifier: ^0.7.0
         version: 0.7.0
@@ -8064,7 +8150,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8094,7 +8180,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/ir-sdk:
     devDependencies:
@@ -8109,7 +8195,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/migrations-base:
     dependencies:
@@ -8134,7 +8220,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
   packages/scripts:
     devDependencies:
@@ -8158,7 +8244,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -8279,7 +8365,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8321,7 +8407,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+        version: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
 
 packages:
 
@@ -8880,6 +8966,10 @@ packages:
   '@babel/types@8.0.0-beta.4':
     resolution: {integrity: sha512-xjk2xqYp25ePzAs0I08hN2lrbUDDQFfCjwq6MIEa8HwHa0WK8NfNtdvtXod8Ku2CbE1iui7qwWojGvjQiyrQeA==}
     engines: {node: ^20.19.0 || >=22.12.0}
+
+  '@bcoe/v8-coverage@1.0.2':
+    resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
+    engines: {node: '>=18'}
 
   '@biomejs/biome@2.4.4':
     resolution: {integrity: sha512-tigwWS5KfJf0cABVd52NVaXyAVv4qpUXOWJ1rxFL8xF1RVoeS2q/LK+FHgYoKMclJCuRoCWAPy1IXaN9/mS61Q==}
@@ -10739,34 +10829,43 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
-  '@vitest/expect@4.0.18':
-    resolution: {integrity: sha512-8sCWUyckXXYvx4opfzVY03EOiYVxyNrHS5QxX3DAIi5dpJAAkyJezHCP77VMX4HKA2LDT/Jpfo8i2r5BE3GnQQ==}
+  '@vitest/coverage-v8@4.1.0':
+    resolution: {integrity: sha512-nDWulKeik2bL2Va/Wl4x7DLuTKAXa906iRFooIRPR+huHkcvp9QDkPQ2RJdmjOFrqOqvNfoSQLF68deE3xC3CQ==}
+    peerDependencies:
+      '@vitest/browser': 4.1.0
+      vitest: 4.1.0
+    peerDependenciesMeta:
+      '@vitest/browser':
+        optional: true
 
-  '@vitest/mocker@4.0.18':
-    resolution: {integrity: sha512-HhVd0MDnzzsgevnOWCBj5Otnzobjy5wLBe4EdeeFGv8luMsGcYqDuFRMcttKWZA5vVO8RFjexVovXvAM4JoJDQ==}
+  '@vitest/expect@4.1.0':
+    resolution: {integrity: sha512-EIxG7k4wlWweuCLG9Y5InKFwpMEOyrMb6ZJ1ihYu02LVj/bzUwn2VMU+13PinsjRW75XnITeFrQBMH5+dLvCDA==}
+
+  '@vitest/mocker@4.1.0':
+    resolution: {integrity: sha512-evxREh+Hork43+Y4IOhTo+h5lGmVRyjqI739Rz4RlUPqwrkFFDF6EMvOOYjTx4E8Tl6gyCLRL8Mu7Ry12a13Tw==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^6.0.0 || ^7.0.0-0
+      vite: ^7.0.0
     peerDependenciesMeta:
       msw:
         optional: true
       vite:
         optional: true
 
-  '@vitest/pretty-format@4.0.18':
-    resolution: {integrity: sha512-P24GK3GulZWC5tz87ux0m8OADrQIUVDPIjjj65vBXYG17ZeU3qD7r+MNZ1RNv4l8CGU2vtTRqixrOi9fYk/yKw==}
+  '@vitest/pretty-format@4.1.0':
+    resolution: {integrity: sha512-3RZLZlh88Ib0J7NQTRATfc/3ZPOnSUn2uDBUoGNn5T36+bALixmzphN26OUD3LRXWkJu4H0s5vvUeqBiw+kS0A==}
 
-  '@vitest/runner@4.0.18':
-    resolution: {integrity: sha512-rpk9y12PGa22Jg6g5M3UVVnTS7+zycIGk9ZNGN+m6tZHKQb7jrP7/77WfZy13Y/EUDd52NDsLRQhYKtv7XfPQw==}
+  '@vitest/runner@4.1.0':
+    resolution: {integrity: sha512-Duvx2OzQ7d6OjchL+trw+aSrb9idh7pnNfxrklo14p3zmNL4qPCDeIJAK+eBKYjkIwG96Bc6vYuxhqDXQOWpoQ==}
 
-  '@vitest/snapshot@4.0.18':
-    resolution: {integrity: sha512-PCiV0rcl7jKQjbgYqjtakly6T1uwv/5BQ9SwBLekVg/EaYeQFPiXcgrC2Y7vDMA8dM1SUEAEV82kgSQIlXNMvA==}
+  '@vitest/snapshot@4.1.0':
+    resolution: {integrity: sha512-0Vy9euT1kgsnj1CHttwi9i9o+4rRLEaPRSOJ5gyv579GJkNpgJK+B4HSv/rAWixx2wdAFci1X4CEPjiu2bXIMg==}
 
-  '@vitest/spy@4.0.18':
-    resolution: {integrity: sha512-cbQt3PTSD7P2OARdVW3qWER5EGq7PHlvE+QfzSC0lbwO+xnt7+XH06ZzFjFRgzUX//JmpxrCu92VdwvEPlWSNw==}
+  '@vitest/spy@4.1.0':
+    resolution: {integrity: sha512-pz77k+PgNpyMDv2FV6qmk5ZVau6c3R8HC8v342T2xlFxQKTrSeYw9waIJG8KgV9fFwAtTu4ceRzMivPTH6wSxw==}
 
-  '@vitest/utils@4.0.18':
-    resolution: {integrity: sha512-msMRKLMVLWygpK3u2Hybgi4MNjcYJvwTb0Ru09+fOyCXIgT5raYP041DRRdiJiI3k/2U6SEbAETB3YtBrUkCFA==}
+  '@vitest/utils@4.1.0':
+    resolution: {integrity: sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw==}
 
   '@wasm-fmt/gofmt@0.4.9':
     resolution: {integrity: sha512-YiJKASbwWHD9Rt4MD1Xwb5DanB0MQLYXgxeNGocxE5nu7ZyzPgm1nTn0sFVCJoxYMsGn5ypyXakuHTQtiJu4Ag==}
@@ -10887,6 +10986,9 @@ packages:
   ast-types@0.13.4:
     resolution: {integrity: sha512-x1FCFnFifvYDDzTaLII71vG5uvDwgtmDTEVWAxrgeiR8VjMONcCXJx7E+USjDtHlwFmt9MysbqgF9b9Vjr6w+w==}
     engines: {node: '>=4'}
+
+  ast-v8-to-istanbul@1.0.0:
+    resolution: {integrity: sha512-1fSfIwuDICFA4LKkCzRPO7F0hzFf0B7+Xqrl27ynQaa+Rh0e1Es0v6kWHPott3lU10AyAr7oKHa65OppjLn3Rg==}
 
   astral-regex@2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
@@ -11616,8 +11718,8 @@ packages:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
 
-  es-module-lexer@1.7.0:
-    resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
+  es-module-lexer@2.0.0:
+    resolution: {integrity: sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw==}
 
   es-object-atoms@1.1.1:
     resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
@@ -11848,9 +11950,6 @@ packages:
   fd-package-json@2.0.0:
     resolution: {integrity: sha512-jKmm9YtsNXN789RS/0mSzOC1NUq9mkVd65vbSSVsKdjGvYXBuE4oWe2QOEoFeRmJg+lPuZxpmrfFclNhoRMneQ==}
 
-  fd-slicer@1.1.0:
-    resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
-
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
     engines: {node: '>=12.0.0'}
@@ -11875,8 +11974,8 @@ packages:
     resolution: {integrity: sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==}
     engines: {node: '>=16.0.0'}
 
-  file-type@21.3.1:
-    resolution: {integrity: sha512-SrzXX46I/zsRDjTb82eucsGg0ODq2NpGDp4HcsFKApPy8P8vACjpJRDoGGMfEzhFC0ry61ajd7f72J3603anBA==}
+  file-type@21.3.2:
+    resolution: {integrity: sha512-DLkUvGwep3poOV2wpzbHCOnSKGk1LzyXTv+aHFgN2VFl96wnp8YA9YjO2qPzg5PuL8q/SW9Pdi6WTkYOIh995w==}
     engines: {node: '>=20'}
 
   file-type@3.9.0:
@@ -11925,8 +12024,8 @@ packages:
   flat-cache@6.1.20:
     resolution: {integrity: sha512-AhHYqwvN62NVLp4lObVXGVluiABTHapoB57EyegZVmazN+hhGhLTn3uZbOofoTw4DSDvVCadzzyChXhOAvy8uQ==}
 
-  flatted@3.3.3:
-    resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
+  flatted@3.4.1:
+    resolution: {integrity: sha512-IxfVbRFVlV8V/yRaGzk0UVIcsKKHMSfYw66T/u4nTwlWteQePsxe//LjudR1AMX4tZW3WFCh3Zqa/sjlqpbURQ==}
 
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
@@ -12213,6 +12312,9 @@ packages:
     resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==}
     engines: {node: '>=10'}
 
+  html-escaper@2.0.2:
+    resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
+
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
@@ -12465,6 +12567,18 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  istanbul-lib-coverage@3.2.2:
+    resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
+    engines: {node: '>=8'}
+
+  istanbul-lib-report@3.0.1:
+    resolution: {integrity: sha512-GCfE1mtsHGOELCU8e/Z7YWzpmybrx/+dSTfLrvY8qRmaY6zXTKWn6WQIjaAFw069icm6GVMNkgu0NzI4iPZUNw==}
+    engines: {node: '>=10'}
+
+  istanbul-reports@3.2.0:
+    resolution: {integrity: sha512-HGYWWS/ehqTV3xN10i23tkPkpH46MLCIMFNCaaKNavAXTF1RkqxawEPtnjnGZ6XKSInBKkiOA5BKS+aZiY3AvA==}
+    engines: {node: '>=8'}
+
   jackspeak@4.1.1:
     resolution: {integrity: sha512-zptv57P3GpL+O0I7VdMJNBZCu+BPHVQUk55Ft8/QCJjTVxrnJHuVuX/0Bl2A6/+2oyR/ZMEuFKwmzqqZ/U5nPQ==}
     engines: {node: 20 || >=22}
@@ -12509,6 +12623,9 @@ packages:
   js-levenshtein@1.1.6:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
     engines: {node: '>=0.10.0'}
+
+  js-tokens@10.0.0:
+    resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -12718,9 +12835,16 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
+  magicast@0.5.2:
+    resolution: {integrity: sha512-E3ZJh4J3S9KfwdjZhe2afj6R9lGIN5Pher1pF39UGrXRqq/VDaGVIGN13BjHd2u8B61hArAGOnso7nBOouW3TQ==}
+
   make-dir@1.3.0:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
     engines: {node: '>=4'}
+
+  make-dir@4.0.0:
+    resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
+    engines: {node: '>=10'}
 
   map-obj@1.0.1:
     resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
@@ -13875,8 +13999,8 @@ packages:
     resolution: {integrity: sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==}
     engines: {node: '>= 0.8'}
 
-  std-env@3.10.0:
-    resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
+  std-env@4.0.0:
+    resolution: {integrity: sha512-zUMPtQ/HBY3/50VbpkupYHbRroTRZJPRLvreamgErJVys0ceuzMkD44J/QjqhHjOzK42GQ3QZIeFG1OYfOtKqQ==}
 
   stdin-discarder@0.1.0:
     resolution: {integrity: sha512-xhV7w8S+bUwlPTb4bAOUQhv8/cSS5offJuX8GQGq32ONF0ZtDWKfkdomM3HMRA+LhX6um/FZ0COqlwsjD53LeQ==}
@@ -14355,8 +14479,8 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
-  undici@6.23.0:
-    resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
+  undici@6.24.0:
+    resolution: {integrity: sha512-lVLNosgqo5EkGqh5XUDhGfsMSoO8K0BAN0TyJLvwNRSl4xWGZlCVYsAIpa/OpA3TvmnM01GWcoKmc3ZWo5wKKA==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -14519,20 +14643,21 @@ packages:
       yaml:
         optional: true
 
-  vitest@4.0.18:
-    resolution: {integrity: sha512-hOQuK7h0FGKgBAas7v0mSAsnvrIgAvWmRFjmzpJ7SwFHH3g1k2u37JtYwOwmEKhK6ZO3v9ggDBBm0La1LCK4uQ==}
+  vitest@4.1.0:
+    resolution: {integrity: sha512-YbDrMF9jM2Lqc++2530UourxZHmkKLxrs4+mYhEwqWS97WJ7wOYEkcr+QfRgJ3PW9wz3odRijLZjHEaRLTNbqw==}
     engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@opentelemetry/api': ^1.9.0
       '@types/node': ^20.0.0 || ^22.0.0 || >=24.0.0
-      '@vitest/browser-playwright': 4.0.18
-      '@vitest/browser-preview': 4.0.18
-      '@vitest/browser-webdriverio': 4.0.18
-      '@vitest/ui': 4.0.18
+      '@vitest/browser-playwright': 4.1.0
+      '@vitest/browser-preview': 4.1.0
+      '@vitest/browser-webdriverio': 4.1.0
+      '@vitest/ui': 4.1.0
       happy-dom: '*'
       jsdom: '*'
+      vite: ^7.0.0
     peerDependenciesMeta:
       '@edge-runtime/vm':
         optional: true
@@ -14701,11 +14826,8 @@ packages:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
 
-  yauzl@2.10.0:
-    resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
-
-  yauzl@3.2.0:
-    resolution: {integrity: sha512-Ow9nuGZE+qp1u4JIPvg+uCiUr7xGQWdff7JQSk5VGYTAZMDe2q8lxJ10ygv10qmSj031Ty/6FNJpLO4o1Sgc+w==}
+  yauzl@3.2.1:
+    resolution: {integrity: sha512-k1isifdbpNSFEHFJ1ZY4YDewv0IH9FR61lDetaRMD3j2ae3bIXGV+7c+LHCqtQGofSd8PIyV4X6+dHMAnSr60A==}
     engines: {node: '>=12'}
 
   yazl@3.3.1:
@@ -15466,6 +15588,8 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 8.0.0-beta.4
       '@babel/helper-validator-identifier': 8.0.0-beta.4
+
+  '@bcoe/v8-coverage@1.0.2': {}
 
   '@biomejs/biome@2.4.4':
     optionalDependencies:
@@ -17309,59 +17433,89 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitest/expect@4.0.18':
+  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))':
+    dependencies:
+      '@bcoe/v8-coverage': 1.0.2
+      '@vitest/utils': 4.1.0
+      ast-v8-to-istanbul: 1.0.0
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-reports: 3.2.0
+      magicast: 0.5.2
+      obug: 2.1.1
+      std-env: 4.0.0
+      tinyrainbow: 3.0.3
+      vitest: 4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+
+  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))':
+    dependencies:
+      '@bcoe/v8-coverage': 1.0.2
+      '@vitest/utils': 4.1.0
+      ast-v8-to-istanbul: 1.0.0
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-reports: 3.2.0
+      magicast: 0.5.2
+      obug: 2.1.1
+      std-env: 4.0.0
+      tinyrainbow: 3.0.3
+      vitest: 4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+
+  '@vitest/expect@4.1.0':
     dependencies:
       '@standard-schema/spec': 1.1.0
       '@types/chai': 5.2.3
-      '@vitest/spy': 4.0.18
-      '@vitest/utils': 4.0.18
+      '@vitest/spy': 4.1.0
+      '@vitest/utils': 4.1.0
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
     dependencies:
-      '@vitest/spy': 4.0.18
+      '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
-  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
     dependencies:
-      '@vitest/spy': 4.0.18
+      '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
-  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
     dependencies:
-      '@vitest/spy': 4.0.18
+      '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       vite: 7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
-  '@vitest/pretty-format@4.0.18':
+  '@vitest/pretty-format@4.1.0':
     dependencies:
       tinyrainbow: 3.0.3
 
-  '@vitest/runner@4.0.18':
+  '@vitest/runner@4.1.0':
     dependencies:
-      '@vitest/utils': 4.0.18
+      '@vitest/utils': 4.1.0
       pathe: 2.0.3
 
-  '@vitest/snapshot@4.0.18':
+  '@vitest/snapshot@4.1.0':
     dependencies:
-      '@vitest/pretty-format': 4.0.18
+      '@vitest/pretty-format': 4.1.0
+      '@vitest/utils': 4.1.0
       magic-string: 0.30.21
       pathe: 2.0.3
 
-  '@vitest/spy@4.0.18': {}
+  '@vitest/spy@4.1.0': {}
 
-  '@vitest/utils@4.0.18':
+  '@vitest/utils@4.1.0':
     dependencies:
-      '@vitest/pretty-format': 4.0.18
+      '@vitest/pretty-format': 4.1.0
+      convert-source-map: 2.0.0
       tinyrainbow: 3.0.3
 
   '@wasm-fmt/gofmt@0.4.9': {}
@@ -17457,6 +17611,12 @@ snapshots:
   ast-types@0.13.4:
     dependencies:
       tslib: 2.8.1
+
+  ast-v8-to-istanbul@1.0.0:
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      estree-walker: 3.0.3
+      js-tokens: 10.0.0
 
   astral-regex@2.0.0: {}
 
@@ -17974,7 +18134,7 @@ snapshots:
       cspell-io: 9.7.0
       cspell-lib: 9.7.0
       fast-json-stable-stringify: 2.1.0
-      flatted: 3.3.3
+      flatted: 3.4.1
       semver: 7.7.4
       tinyglobby: 0.2.15
 
@@ -18043,7 +18203,7 @@ snapshots:
       file-type: 3.9.0
       get-stream: 2.3.1
       pify: 2.3.0
-      yauzl: 2.10.0
+      yauzl: 3.2.1
 
   decompress@4.2.1:
     dependencies:
@@ -18196,7 +18356,7 @@ snapshots:
 
   es-errors@1.3.0: {}
 
-  es-module-lexer@1.7.0: {}
+  es-module-lexer@2.0.0: {}
 
   es-object-atoms@1.1.1:
     dependencies:
@@ -18492,7 +18652,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       get-stream: 5.2.0
-      yauzl: 2.10.0
+      yauzl: 3.2.1
     optionalDependencies:
       '@types/yauzl': 2.10.3
     transitivePeerDependencies:
@@ -18540,10 +18700,6 @@ snapshots:
     dependencies:
       walk-up-path: 4.0.0
 
-  fd-slicer@1.1.0:
-    dependencies:
-      pend: 1.2.0
-
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
       picomatch: 4.0.3
@@ -18564,7 +18720,7 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-type@21.3.1:
+  file-type@21.3.2:
     dependencies:
       '@tokenizer/inflate': 0.4.1
       strtok3: 10.3.4
@@ -18618,22 +18774,22 @@ snapshots:
 
   flat-cache@3.2.0:
     dependencies:
-      flatted: 3.3.3
+      flatted: 3.4.1
       keyv: 4.5.4
       rimraf: 3.0.2
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.3.3
+      flatted: 3.4.1
       keyv: 4.5.4
 
   flat-cache@6.1.20:
     dependencies:
       cacheable: 2.3.2
-      flatted: 3.3.3
+      flatted: 3.4.1
       hookified: 1.15.0
 
-  flatted@3.3.3: {}
+  flatted@3.4.1: {}
 
   follow-redirects@1.15.11: {}
 
@@ -19013,6 +19169,8 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
+  html-escaper@2.0.2: {}
+
   html-tags@3.3.1: {}
 
   html-void-elements@3.0.0: {}
@@ -19212,6 +19370,19 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  istanbul-lib-coverage@3.2.2: {}
+
+  istanbul-lib-report@3.0.1:
+    dependencies:
+      istanbul-lib-coverage: 3.2.2
+      make-dir: 4.0.0
+      supports-color: 7.2.0
+
+  istanbul-reports@3.2.0:
+    dependencies:
+      html-escaper: 2.0.2
+      istanbul-lib-report: 3.0.1
+
   jackspeak@4.1.1:
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -19264,6 +19435,8 @@ snapshots:
   js-base64@3.7.7: {}
 
   js-levenshtein@1.1.6: {}
+
+  js-tokens@10.0.0: {}
 
   js-tokens@4.0.0: {}
 
@@ -19469,9 +19642,19 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  magicast@0.5.2:
+    dependencies:
+      '@babel/parser': 7.29.0
+      '@babel/types': 7.29.0
+      source-map-js: 1.2.1
+
   make-dir@1.3.0:
     dependencies:
       pify: 3.0.0
+
+  make-dir@4.0.0:
+    dependencies:
+      semver: 7.7.4
 
   map-obj@1.0.1: {}
 
@@ -21070,7 +21253,7 @@ snapshots:
 
   statuses@2.0.2: {}
 
-  std-env@3.10.0: {}
+  std-env@4.0.0: {}
 
   stdin-discarder@0.1.0:
     dependencies:
@@ -21654,7 +21837,7 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  undici@6.23.0: {}
+  undici@6.24.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -21824,22 +22007,22 @@ snapshots:
       tsx: 4.21.0
       yaml: 2.3.3
 
-  vitest@4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vitest@4.1.0(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
     dependencies:
-      '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
-      '@vitest/pretty-format': 4.0.18
-      '@vitest/runner': 4.0.18
-      '@vitest/snapshot': 4.0.18
-      '@vitest/spy': 4.0.18
-      '@vitest/utils': 4.0.18
-      es-module-lexer: 1.7.0
+      '@vitest/expect': 4.1.0
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/pretty-format': 4.1.0
+      '@vitest/runner': 4.1.0
+      '@vitest/snapshot': 4.1.0
+      '@vitest/spy': 4.1.0
+      '@vitest/utils': 4.1.0
+      es-module-lexer: 2.0.0
       expect-type: 1.3.0
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
       picomatch: 4.0.3
-      std-env: 3.10.0
+      std-env: 4.0.0
       tinybench: 2.9.0
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
@@ -21849,34 +22032,24 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
     transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
       - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
 
-  vitest@4.0.18(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vitest@4.1.0(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
     dependencies:
-      '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
-      '@vitest/pretty-format': 4.0.18
-      '@vitest/runner': 4.0.18
-      '@vitest/snapshot': 4.0.18
-      '@vitest/spy': 4.0.18
-      '@vitest/utils': 4.0.18
-      es-module-lexer: 1.7.0
+      '@vitest/expect': 4.1.0
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/pretty-format': 4.1.0
+      '@vitest/runner': 4.1.0
+      '@vitest/snapshot': 4.1.0
+      '@vitest/spy': 4.1.0
+      '@vitest/utils': 4.1.0
+      es-module-lexer: 2.0.0
       expect-type: 1.3.0
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
       picomatch: 4.0.3
-      std-env: 3.10.0
+      std-env: 4.0.0
       tinybench: 2.9.0
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
@@ -21886,34 +22059,24 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.19.11
     transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
       - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
 
-  vitest@4.0.18(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vitest@4.1.0(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
     dependencies:
-      '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
-      '@vitest/pretty-format': 4.0.18
-      '@vitest/runner': 4.0.18
-      '@vitest/snapshot': 4.0.18
-      '@vitest/spy': 4.0.18
-      '@vitest/utils': 4.0.18
-      es-module-lexer: 1.7.0
+      '@vitest/expect': 4.1.0
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/pretty-format': 4.1.0
+      '@vitest/runner': 4.1.0
+      '@vitest/snapshot': 4.1.0
+      '@vitest/spy': 4.1.0
+      '@vitest/utils': 4.1.0
+      es-module-lexer: 2.0.0
       expect-type: 1.3.0
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
       picomatch: 4.0.3
-      std-env: 3.10.0
+      std-env: 4.0.0
       tinybench: 2.9.0
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
@@ -21923,17 +22086,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.2.1
     transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
       - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
 
   vscode-languageserver-textdocument@1.0.12: {}
 
@@ -22064,12 +22217,7 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
-  yauzl@2.10.0:
-    dependencies:
-      buffer-crc32: 0.2.13
-      fd-slicer: 1.1.0
-
-  yauzl@3.2.0:
+  yauzl@3.2.1:
     dependencies:
       buffer-crc32: 0.2.13
       pend: 1.2.0

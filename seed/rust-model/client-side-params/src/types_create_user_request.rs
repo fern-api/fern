@@ -1,7 +1,8 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct CreateUserRequest {
+    #[serde(default)]
     pub email: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub email_verified: Option<bool>,
@@ -17,5 +18,6 @@ pub struct CreateUserRequest {
     pub user_metadata: Option<HashMap<String, serde_json::Value>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub app_metadata: Option<HashMap<String, serde_json::Value>>,
+    #[serde(default)]
     pub connection: String,
 }

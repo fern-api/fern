@@ -136,6 +136,8 @@ export class GenerationRunner {
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 

@@ -59,7 +59,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return {
             code: this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                    `var ${queryStringVar} = new ${this.namespaces.qualifiedCore}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
                 );
                 writer.indent();
                 for (const query of this.endpoint.queryParameters) {
@@ -185,7 +185,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: this.csharp.codeblock((writer) => {
                 // Start with HeadersBuilder.Builder instance
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
 

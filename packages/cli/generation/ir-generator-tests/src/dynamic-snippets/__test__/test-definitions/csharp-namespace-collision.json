@@ -435,6 +435,36 @@
                     },
                     "propertyAccess": null,
                     "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "owner",
+                            "camelCase": {
+                                "unsafeName": "owner",
+                                "safeName": "owner"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "owner",
+                                "safeName": "owner"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OWNER",
+                                "safeName": "OWNER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Owner",
+                                "safeName": "Owner"
+                            }
+                        },
+                        "wireValue": "owner"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_System:User"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "extends": null,
@@ -968,6 +998,119 @@
                         "value": "type_System:Task"
                     }
                 }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_System.getUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getUser",
+                    "camelCase": {
+                        "unsafeName": "getUser",
+                        "safeName": "getUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_user",
+                        "safeName": "get_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_USER",
+                        "safeName": "GET_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetUser",
+                        "safeName": "GetUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/{userId}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
             },
             "response": {
                 "type": "json"

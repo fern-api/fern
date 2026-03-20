@@ -11,10 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .upload_with_path(
-            &"upload-path".to_string(),
-            &todo!("Invalid bytes value"),
-            None,
-        )
+        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
         .await;
 }

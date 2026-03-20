@@ -19,6 +19,7 @@ export declare namespace EnvironmentsDeclarationReferencer {
         environmentsConfig: FernIr.EnvironmentsConfig | undefined;
         relativePackagePath: string;
         relativeTestPath: string;
+        environmentUrlsNamingOverride?: string;
     }
 }
 
@@ -27,12 +28,14 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     private environmentsConfig: FernIr.EnvironmentsConfig | undefined;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+    private environmentUrlsNamingOverride: string | undefined;
 
     constructor({
         npmPackage,
         environmentsConfig,
         relativePackagePath,
         relativeTestPath,
+        environmentUrlsNamingOverride,
         ...superInit
     }: EnvironmentsDeclarationReferencer.Init) {
         super(superInit);
@@ -40,6 +43,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         this.environmentsConfig = environmentsConfig;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.environmentUrlsNamingOverride = environmentUrlsNamingOverride;
     }
 
     public getExportedFilepath(): ExportedFilePath {
@@ -67,11 +71,11 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     public getExportedNameOfEnvironmentsEnum(): string {
-        return `${this.namespaceExport}Environment`;
+        return this.namingOverride ?? `${this.namespaceExport}Environment`;
     }
 
     public getExportedNameOfEnvironmentUrls(): string {
-        return `${this.namespaceExport}EnvironmentUrls`;
+        return this.environmentUrlsNamingOverride ?? `${this.namespaceExport}EnvironmentUrls`;
     }
 
     public getExportedNameOfFirstEnvironmentEnum(): { namepaceImport: string; exportedName: string } | undefined {

@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
-import { casingsGenerator, createDeclaredTypeName } from "@fern-typescript/test-utils";
+import {
+    casingsGenerator,
+    createDeclaredTypeName,
+    primitiveTypeRefNode,
+    readWriteTypeRefNode
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -16,52 +21,6 @@ function createFernFilepath(packageName = "types"): FernIr.FernFilepath {
         allParts: [casingsGenerator.generateName(packageName)],
         packagePath: [casingsGenerator.generateName(packageName)],
         file: casingsGenerator.generateName(packageName)
-    };
-}
-
-/**
- * Builds a TypeReferenceNode for a primitive type (non-optional).
- */
-function primitiveTypeRefNode(typeName: string): TypeReferenceNode {
-    const typeNode = ts.factory.createKeywordTypeNode(
-        typeName === "string"
-            ? ts.SyntaxKind.StringKeyword
-            : typeName === "number"
-              ? ts.SyntaxKind.NumberKeyword
-              : typeName === "boolean"
-                ? ts.SyntaxKind.BooleanKeyword
-                : ts.SyntaxKind.AnyKeyword
-    );
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
-    };
-}
-
-/**
- * Builds a TypeReferenceNode with request/response variants.
- */
-function readWriteTypeRefNode(opts: {
-    baseType: string;
-    requestType?: string;
-    responseType?: string;
-}): TypeReferenceNode {
-    const baseNode = ts.factory.createTypeReferenceNode(opts.baseType);
-    const reqNode = opts.requestType ? ts.factory.createTypeReferenceNode(opts.requestType) : undefined;
-    const respNode = opts.responseType ? ts.factory.createTypeReferenceNode(opts.responseType) : undefined;
-    return {
-        isOptional: false,
-        typeNode: baseNode,
-        typeNodeWithoutUndefined: baseNode,
-        requestTypeNode: reqNode,
-        requestTypeNodeWithoutUndefined: reqNode,
-        responseTypeNode: respNode,
-        responseTypeNodeWithoutUndefined: respNode
     };
 }
 

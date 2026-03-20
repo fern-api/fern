@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
 import {
     copyFromContainer,
     copyToContainer,
@@ -14,7 +14,8 @@ import {
     CONTAINER_GENERATOR_CONFIG_PATH,
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
-    CONTAINER_PATH_TO_SNIPPET_TEMPLATES
+    CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
+    CONTAINER_SOURCES_DIRECTORY
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
@@ -146,6 +147,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             snippetPath,
             snippetTemplatePath,
             licenseFilePath,
+            sourceMounts,
             context,
             inspect
         }: ExecutionEnvironment.ExecuteArgs
@@ -172,7 +174,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             command: [
                 "sh",
                 "-c",
-                `rm -rf ${CONTAINER_FERN_DIRECTORY} /tmp/LICENSE && mkdir -p ${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
+                `rm -rf ${CONTAINER_FERN_DIRECTORY} /tmp/LICENSE && mkdir -p ${CONTAINER_CODEGEN_OUTPUT_DIRECTORY} ${CONTAINER_SOURCES_DIRECTORY}`
             ],
             runner: this.runner,
             writeLogsToFile: false
@@ -225,6 +227,16 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             });
         }
 
+        for (const sourceMount of sourceMounts ?? []) {
+            await copyToContainer({
+                logger,
+                containerId,
+                hostPath: sourceMount.hostPath,
+                containerPath: sourceMount.containerPath,
+                runner: this.runner
+            });
+        }
+
         // Execute the generator inside the container using the image's original entrypoint
         await execInContainer({
             logger,
@@ -256,7 +268,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }).catch((e: unknown) => {
                 // Swallow "not found" errors — generator didn't produce snippet.
                 // Propagate other errors (permissions, disk space, etc.).
-                const msg = e instanceof Error ? e.message : String(e);
+                const msg = extractErrorMessage(e);
                 if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
                     logger.debug(`Snippet file not found (expected): ${msg}`);
                 } else {
@@ -275,7 +287,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }).catch((e: unknown) => {
                 // Swallow "not found" errors — generator didn't produce snippet template.
                 // Propagate other errors (permissions, disk space, etc.).
-                const msg = e instanceof Error ? e.message : String(e);
+                const msg = extractErrorMessage(e);
                 if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
                     logger.debug(`Snippet template file not found (expected): ${msg}`);
                 } else {

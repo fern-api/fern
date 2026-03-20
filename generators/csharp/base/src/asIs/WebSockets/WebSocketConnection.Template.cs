@@ -34,28 +34,30 @@ internal partial class WebSocketConnection
     private bool _isReconnectionEnabled = true;
     private WebSocket _client;
     private CancellationTokenSource _cancellation;
+    private CancellationTokenSource _cancellationConnection;
     private CancellationTokenSource _cancellationTotal;
+    private readonly Func<ClientWebSocket>? _clientFactory;
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
     /// </summary>
     /// <param name="url">Target websocket url (wss://)</param>
-    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc)</param>
+    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc). Note: when providing a factory, you are responsible for configuring keep-alive on the returned ClientWebSocket instance.</param>
     public WebSocketConnection(Uri url, Func<ClientWebSocket>? clientFactory = null)
-        : this(url, null, GetClientFactory(clientFactory)) { }
+        : this(url, null, null, clientFactory) { }
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
     /// </summary>
     /// <param name="url">Target websocket url (wss://)</param>
     /// <param name="logger">Logger instance, can be null</param>
-    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc)</param>
+    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc). Note: when providing a factory, you are responsible for configuring keep-alive on the returned ClientWebSocket instance.</param>
     public WebSocketConnection(
         Uri url,
         ILogger<WebSocketConnection> logger,
         Func<ClientWebSocket>? clientFactory = null
     )
-        : this(url, logger, GetClientFactory(clientFactory)) { }
+        : this(url, logger, null, clientFactory) { }
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
@@ -68,26 +70,92 @@ internal partial class WebSocketConnection
         ILogger<WebSocketConnection> logger,
         Func<Uri, CancellationToken, global::System.Threading.Tasks.Task<WebSocket>> connectionFactory
     )
+        : this(url, logger, connectionFactory, null) { }
+
+    private WebSocketConnection(
+        Uri url,
+        ILogger<WebSocketConnection> logger,
+        Func<Uri, CancellationToken, global::System.Threading.Tasks.Task<WebSocket>> connectionFactory,
+        Func<ClientWebSocket>? clientFactory
+    )
     {
         _logger = logger ?? NullLogger<WebSocketConnection>.Instance;
         Url = url;
+        _clientFactory = clientFactory;
         _connectionFactory =
             connectionFactory
             ?? (
                 async (uri, token) =>
                 {
-                    //var client = new ClientWebSocket
-                    //{
-                    //    Options = { KeepAliveInterval = new TimeSpan(0, 0, 5, 0) }
-                    //};
-                    var client = new ClientWebSocket();
-                    await client.ConnectAsync(uri, token).ConfigureAwait(false);
+                    var client = _clientFactory != null ? _clientFactory() : new ClientWebSocket();
+                    client.Options.KeepAliveInterval = KeepAliveInterval;
+#if NET6_0_OR_GREATER
+                    if (DeflateOptions != null)
+                    {
+                        client.Options.DangerousDeflateOptions = DeflateOptions;
+                    }
+#endif
+#if NET9_0_OR_GREATER
+                    client.Options.KeepAliveTimeout = KeepAliveTimeout;
+#endif
+                    if (HttpInvoker != null)
+                    {
+#if NET7_0_OR_GREATER
+                        client.Options.HttpVersion = System.Net.HttpVersion.Version20;
+                        client.Options.HttpVersionPolicy = System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
+                        await client.ConnectAsync(uri, HttpInvoker, token).ConfigureAwait(false);
+#else
+                        await client.ConnectAsync(uri, token).ConfigureAwait(false);
+#endif
+                    }
+                    else
+                    {
+                        await client.ConnectAsync(uri, token).ConfigureAwait(false);
+                    }
                     return client;
                 }
             );
     }
 
     public Uri Url { get; set; }
+
+    /// <summary>
+    /// Optional HttpMessageInvoker for HTTP/2 WebSocket connections.
+    /// When set, enables multiplexing multiple WebSocket streams over a single TCP connection.
+    /// Requires .NET 7+.
+    /// </summary>
+    public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+    /// <summary>
+    /// Interval for sending keep-alive frames. Default: 30 seconds.
+    /// Set to TimeSpan.Zero to disable keep-alive.
+    /// </summary>
+    public TimeSpan KeepAliveInterval { get; set; } = WebSocket.DefaultKeepAliveInterval;
+
+    /// <summary>
+    /// Timeout for expecting a PONG response to a PING keep-alive frame (.NET 9+).
+    /// Set to a positive finite TimeSpan to enable PING/PONG keep-alive strategy.
+    /// Default: 20 seconds.
+    /// </summary>
+    public TimeSpan KeepAliveTimeout { get; set; } = TimeSpan.FromSeconds(20);
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, the <see cref="ClientWebSocket" /> created by the default connection factory
+    /// assigns this value to <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
 
     public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
     public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }
@@ -137,6 +205,12 @@ internal partial class WebSocketConnection
     /// </summary>
     public bool IsStreamDisposedAutomatically { get; set; } = true;
 
+    /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
     public Encoding MessageEncoding { get; set; }
 
     public ClientWebSocket NativeClient => GetSpecificOrThrow(_client);
@@ -151,10 +225,14 @@ internal partial class WebSocketConnection
         {
             _lastChanceTimer?.Dispose();
             _errorReconnectTimer?.Dispose();
+            _textSendQueue.Writer.TryComplete();
+            _binarySendQueue.Writer.TryComplete();
+            _cancellationConnection?.Cancel();
             _cancellation?.Cancel();
-            _cancellationTotal?.Cancel();
             _client?.Abort();
+            _cancellationTotal?.Cancel();
             _client?.Dispose();
+            _cancellationConnection?.Dispose();
             _cancellation?.Dispose();
             _cancellationTotal?.Dispose();
         }
@@ -189,9 +267,9 @@ internal partial class WebSocketConnection
     /// In case of connection error it throws an exception.
     /// Fail fast approach.
     /// </summary>
-    public global::System.Threading.Tasks.Task StartOrFail()
+    public global::System.Threading.Tasks.Task StartOrFail(CancellationToken cancellationToken = default)
     {
-        return StartInternal(true);
+        return StartInternal(true, cancellationToken);
     }
 
     /// <summary>
@@ -212,32 +290,15 @@ internal partial class WebSocketConnection
     /// Method could throw exceptions, but client is marked as closed anyway.
     /// </summary>
     /// <returns>Returns true if close was initiated successfully</returns>
-    public async global::System.Threading.Tasks.Task<bool> StopOrFail(WebSocketCloseStatus status, string statusDescription)
+    public async global::System.Threading.Tasks.Task<bool> StopOrFail(WebSocketCloseStatus status, string statusDescription, CancellationToken cancellationToken = default)
     {
-        var result = await StopInternal(_client, status, statusDescription, null, true, false)
+        var result = await StopInternal(_client, status, statusDescription, cancellationToken, true, false)
             .ConfigureAwait(false);
         OnDisconnectionHappened(DisconnectionInfo.Create(DisconnectionType.ByUser, _client, null));
         return result;
     }
 
-    private static Func<Uri, CancellationToken, global::System.Threading.Tasks.Task<WebSocket>> GetClientFactory(
-        Func<ClientWebSocket> clientFactory
-    )
-    {
-        if (clientFactory is null)
-            return null;
-
-        return (
-            async (uri, token) =>
-            {
-                var client = clientFactory();
-                await client.ConnectAsync(uri, token).ConfigureAwait(false);
-                return client;
-            }
-        );
-    }
-
-    private async global::System.Threading.Tasks.Task StartInternal(bool failFast)
+    private async global::System.Threading.Tasks.Task StartInternal(bool failFast, CancellationToken cancellationToken = default)
     {
         if (_disposing)
         {
@@ -253,10 +314,18 @@ internal partial class WebSocketConnection
 
         IsStarted = true;
 
-        _cancellation = new CancellationTokenSource();
+        _cancellation = cancellationToken != default
+            ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
+            : new CancellationTokenSource();
         _cancellationTotal = new CancellationTokenSource();
 
         await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
+
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainTextQueue(_cancellationTotal.Token));
+
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainBinaryQueue(_cancellationTotal.Token));
     }
 
     private async global::System.Threading.Tasks.Task<bool> StopInternal(
@@ -316,7 +385,9 @@ internal partial class WebSocketConnection
 
     private async global::System.Threading.Tasks.Task StartClient(Uri uri, CancellationToken token)
     {
-        _client = await _connectionFactory(uri, token).ConfigureAwait(false);
+        _cancellationConnection = CancellationTokenSource.CreateLinkedTokenSource(token);
+        _cancellationConnection.CancelAfter(ConnectTimeout);
+        _client = await _connectionFactory(uri, _cancellationConnection.Token).ConfigureAwait(false);
         _ = Listen(_client, token);
         IsRunning = true;
         IsStarted = true;

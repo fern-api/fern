@@ -69,6 +69,22 @@ public final class CustomFiles {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof CustomFiles && value.equals(((CustomFiles) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -93,6 +109,7 @@ public final class CustomFiles {
     @JsonIgnoreProperties("type")
     private static final class BasicValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private BasicCustomFiles value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

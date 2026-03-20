@@ -5,6 +5,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
+    hasDefaultImpl,
     isBase64Type,
     isBigIntType,
     isCollectionType,
@@ -230,6 +231,13 @@ export function generateFieldAttributes(
     const isOptional = isOptionalType(property.valueType);
     if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
+    }
+
+    // For non-optional fields with types that implement Default (primitives, containers),
+    // add #[serde(default)] so deserialization succeeds when the field is missing from JSON.
+    // This handles cases like deferred responses that return partial objects.
+    if (!isOptional && hasDefaultImpl(property.valueType, context)) {
+        attributes.push(Attribute.serde.default());
     }
 
     // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing

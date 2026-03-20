@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.params.upload_with_path(param: "upload-path")
+client.endpoints.params.modify_with_path(
+  param: "param",
+  request: "string"
+)

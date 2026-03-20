@@ -399,7 +399,6 @@
           }
         ]
       },
-      "baseUrl": "production",
       "auth": false,
       "name": {
         "originalName": "usersUserIdMessages",

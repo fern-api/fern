@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
+using SeedExamples.Test_.Utils;
 
 namespace SeedExamples.Test_;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CronJobTest
 {
     [NUnit.Framework.Test]
@@ -24,14 +25,11 @@ public class CronJobTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "expression": "0 */6 * * *"
             }
             """;
-        var actualObj = new CronJob { Expression = "0 */6 * * *" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<CronJob>(inputJson);
     }
 }

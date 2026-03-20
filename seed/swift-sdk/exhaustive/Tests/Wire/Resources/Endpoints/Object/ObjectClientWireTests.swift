@@ -510,6 +510,78 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func getAndReturnWithDocumentedUnknownType1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "documentedUnknownType": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDocumentedUnknownType(
+            documentedUnknownType: JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(
+            request: ObjectWithDocumentedUnknownType(
+                documentedUnknownType: .object([
+                    "key": .string("value")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnMapOfDocumentedUnknownType1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "string": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            "string": JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        ]
+        let response = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(
+            request: [
+                "string": .object([
+                    "key": .string("value")
+                ])
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

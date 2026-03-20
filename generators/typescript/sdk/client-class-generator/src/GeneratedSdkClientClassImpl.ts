@@ -64,7 +64,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
@@ -107,7 +107,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
     private readonly generatedWrappedServices: GeneratedWrappedService[];
     private readonly allowCustomFetcher: boolean;
-    private readonly shouldGenerateWebsocketClients: boolean;
+    private readonly generateWebSocketClients: boolean;
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
     private readonly packageId: PackageId;
@@ -134,7 +134,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
-        shouldGenerateWebsocketClients,
+        generateWebSocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         includeContentHeadersOnFileDownloadResponse,
@@ -156,7 +156,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.serviceClassName = serviceClassName;
         this.packageId = packageId;
         this.allowCustomFetcher = allowCustomFetcher;
-        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = generateWebSocketClients;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -353,7 +353,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (websocketChannel != null && websocketChannelId != null && this.shouldGenerateWebsocketClients) {
+        if (websocketChannel != null && websocketChannelId != null && this.generateWebSocketClients) {
             this.generatedWebsocketImplementation = new GeneratedDefaultWebsocketImplementation({
                 channel: websocketChannel,
                 channelId: websocketChannelId,
@@ -374,10 +374,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
             (acc: GeneratedWrappedService[], wrappedSubpackageId: FernIr.SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
-                if (
-                    subpackage.hasEndpointsInTree ||
-                    (this.shouldGenerateWebsocketClients && subpackage.websocket != null)
-                ) {
+                if (subpackage.hasEndpointsInTree || (this.generateWebSocketClients && subpackage.websocket != null)) {
                     acc.push(
                         new GeneratedWrappedService({
                             wrappedSubpackageId,
@@ -827,6 +824,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
 
+        // Add passthrough fetch method on root client
+        if (this.isRoot) {
+            this.addPassthroughFetchMethod({ serviceClass, context });
+        }
+
         for (const wrappedService of this.generatedWrappedServices) {
             wrappedService.addToServiceClass({
                 isRoot: this.isRoot,
@@ -853,6 +855,110 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
+    }
+
+    private addPassthroughFetchMethod({
+        serviceClass,
+        context
+    }: {
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
+        context: SdkContext;
+    }): void {
+        // Build the auth headers getter expression
+        const hasAuth = this.authProvider && this.anyEndpointWithAuth;
+        let getAuthHeadersCode: string;
+        if (hasAuth) {
+            getAuthHeadersCode =
+                "getAuthHeaders: async () => (await this._options.authProvider.getAuthRequest()).headers,";
+        } else {
+            getAuthHeadersCode = "";
+        }
+
+        // Resolve the base URL from either the explicit baseUrl option or the environment.
+        // For multi-URL environments (e.g. { ec2: string; s3: string }), the environment is an object,
+        // so we project it to a string via the base URL property that HTTP endpoints use.
+        // This is the same logic regular endpoint methods use (via endpoint.baseUrl → getReferenceToEnvironmentUrl),
+        // ensuring the passthrough fetch resolves to the REST base URL, not a WebSocket or other URL.
+        // If the IR defines a default environment, we also fall back to it (matching regular endpoint behavior).
+        // For single-URL or no-IR-defined environments, the environment is already a string, so we fall back to it directly.
+        const envs = this.intermediateRepresentation.environments?.environments;
+        let baseUrlCode: string;
+        if (envs != null && envs.type === "multipleBaseUrls") {
+            // Find the base URL ID used by the first HTTP endpoint — this is the REST URL.
+            // Falls back to baseUrls[0] if no HTTP endpoints exist (e.g. WebSocket-only APIs).
+            let httpBaseUrlId: string | undefined;
+            for (const service of Object.values(this.intermediateRepresentation.services)) {
+                for (const endpoint of service.endpoints) {
+                    if (endpoint.baseUrl != null) {
+                        httpBaseUrlId = endpoint.baseUrl;
+                        break;
+                    }
+                }
+                if (httpBaseUrlId != null) {
+                    break;
+                }
+            }
+
+            const targetBaseUrl =
+                httpBaseUrlId != null
+                    ? (envs.baseUrls.find((bu) => bu.id === httpBaseUrlId) ?? envs.baseUrls[0])
+                    : envs.baseUrls[0];
+            if (targetBaseUrl == null) {
+                throw new Error("Multi-URL environment has no base URLs defined");
+            }
+            const baseUrlName = targetBaseUrl.name.camelCase.unsafeName;
+
+            // Get the default environment reference (e.g. environments.SdkEnvironment.Production) if one exists.
+            // This mirrors getEnvironment() which does: this._options.environment ?? defaultEnvironment
+            const defaultEnvExpr = context.environments
+                .getGeneratedEnvironments()
+                .getReferenceToDefaultEnvironment(context);
+            const defaultEnvFallback =
+                defaultEnvExpr != null ? ` ?? ${getTextOfTsNode(defaultEnvExpr)}.${baseUrlName}` : "";
+
+            baseUrlCode = `baseUrl: this._options.baseUrl ?? (async () => {
+        const env = await core.Supplier.get(this._options.environment);
+        return typeof env === "string" ? env : (env as Record<string, string>)?.${baseUrlName}${defaultEnvFallback};
+    }),`;
+        } else {
+            baseUrlCode = "baseUrl: this._options.baseUrl ?? this._options.environment,";
+        }
+
+        const fetchMethodBody = `
+return core.makePassthroughRequest(input, init, {
+    ${baseUrlCode}
+    headers: this._options.headers,
+    timeoutInSeconds: this._options.timeoutInSeconds,
+    maxRetries: this._options.maxRetries,
+    fetch: this._options.fetch,
+    logging: this._options.logging,
+    ${getAuthHeadersCode}
+}, requestOptions);`;
+
+        const fetchMethod: MethodDeclarationStructure = {
+            kind: StructureKind.Method,
+            scope: Scope.Public,
+            isAsync: true,
+            name: "fetch",
+            docs: [
+                "Make a passthrough request using the SDK's configured auth, retry, logging, etc.\n" +
+                    "This is useful for making requests to endpoints not yet supported in the SDK.\n" +
+                    "The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.\n\n" +
+                    "@param {Request | string | URL} input - The URL, path, or Request object.\n" +
+                    "@param {RequestInit} init - Standard fetch RequestInit options.\n" +
+                    "@param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).\n" +
+                    "@returns {Promise<Response>} A standard Response object."
+            ],
+            parameters: [
+                { name: "input", type: "Request | string | URL" },
+                { name: "init", type: "RequestInit", hasQuestionToken: true },
+                { name: "requestOptions", type: "core.PassthroughRequest.RequestOptions", hasQuestionToken: true }
+            ],
+            returnType: "Promise<Response>",
+            statements: fetchMethodBody
+        };
+
+        serviceClass.methods.push(fetchMethod);
     }
 
     public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {

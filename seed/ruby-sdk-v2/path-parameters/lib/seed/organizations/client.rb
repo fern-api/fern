@@ -26,7 +26,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/",
           request_options: request_options
         )
         begin
@@ -60,7 +60,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/users/#{params[:user_id]}",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -99,7 +99,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/search",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/search",
           query: query_params,
           request_options: request_options
         )

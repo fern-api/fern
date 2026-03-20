@@ -16,6 +16,7 @@ import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -227,6 +228,22 @@ public final class DebugVariableValue {
       return Optional.of(((_UnknownValue) value).value);
     }
     return Optional.empty();
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof DebugVariableValue && value.equals(((DebugVariableValue) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
   }
 
   @JsonValue
@@ -491,6 +508,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class MapValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DebugMapValue value;
 
     @JsonCreator(
@@ -572,6 +593,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class BinaryTreeNodeValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private BinaryTreeNodeAndTreeValue value;
 
     @JsonCreator(
@@ -614,6 +639,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class SinglyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SinglyLinkedListNodeAndListValue value;
 
     @JsonCreator(
@@ -656,6 +685,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class DoublyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DoublyLinkedListNodeAndListValue value;
 
     @JsonCreator(
@@ -750,6 +783,10 @@ public final class DebugVariableValue {
   @JsonIgnoreProperties("type")
   private static final class GenericValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GenericValue value;
 
     @JsonCreator(

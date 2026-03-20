@@ -11,7 +11,8 @@ import {
     createPathParameter,
     createQueryParameter,
     createSdkRequestBody,
-    createSdkRequestWrapper
+    createSdkRequestWrapper,
+    serializeStatements
 } from "@fern-typescript/test-utils";
 import assert from "assert";
 import { ts } from "ts-morph";
@@ -24,13 +25,6 @@ import { GeneratedFileUploadEndpointRequest } from "../endpoint-request/Generate
 const STRING_TYPE = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
 const OPTIONAL_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.optional(STRING_TYPE));
 const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined });
-
-/**
- * Helper to serialize ts.Statement[] to a readable string for snapshot comparison.
- */
-function serializeStatements(statements: ts.Statement[]): string {
-    return statements.map((s) => getTextOfTsNode(s)).join("\n");
-}
 
 /**
  * Creates a mock SdkContext for endpoint request tests.

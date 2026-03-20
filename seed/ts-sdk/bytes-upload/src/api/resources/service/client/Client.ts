@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import type * as SeedBytesUpload from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -77,5 +78,78 @@ export class ServiceClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/upload-content");
+    }
+
+    /**
+     * @param {core.file.Uploadable} uploadable
+     * @param {SeedBytesUpload.UploadWithQueryParamsRequest} request
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.service.uploadWithQueryParams(createReadStream("path/to/file"), {
+     *         model: "nova-2"
+     *     })
+     */
+    public uploadWithQueryParams(
+        uploadable: core.file.Uploadable,
+        request: SeedBytesUpload.UploadWithQueryParamsRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__uploadWithQueryParams(uploadable, request, requestOptions));
+    }
+
+    private async __uploadWithQueryParams(
+        uploadable: core.file.Uploadable,
+        request: SeedBytesUpload.UploadWithQueryParamsRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _queryParams: Record<string, unknown> = {
+            model: request.model,
+            language: request.language,
+        };
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            _binaryUploadRequest.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "upload-content-with-query-params",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/octet-stream",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            requestType: "bytes",
+            duplex: "half",
+            body: _binaryUploadRequest.body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedBytesUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/upload-content-with-query-params",
+        );
     }
 }

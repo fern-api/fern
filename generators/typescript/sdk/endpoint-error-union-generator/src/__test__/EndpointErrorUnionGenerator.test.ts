@@ -1,7 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId, Reference } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { casingsGenerator, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    casingsGenerator,
+    createMinimalIR,
+    createMockReference,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -16,15 +21,6 @@ import { GeneratedEndpointErrorUnionImpl } from "../GeneratedEndpointErrorUnionI
 // ────────────────────────────────────────────────────────────────────────────
 
 const MOCK_PACKAGE_ID = "pkg_test" as unknown as PackageId;
-
-function createMockReference(name: string): Reference {
-    return {
-        getExpression: () => ts.factory.createIdentifier(name),
-        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
-        getEntityName: () => ts.factory.createIdentifier(name)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
 
 function createMockSdkContext() {
     const project = new Project({ useInMemoryFileSystem: true });

@@ -2,6 +2,7 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { createHash } from "crypto";
 import { Eta } from "eta";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -25,6 +26,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
     private publicCoreTestFiles: File[] = [];
+    private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
 
@@ -117,6 +119,10 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.sourceFiles.push(file);
     }
 
+    public addSourceRawFile(file: File): void {
+        this.sourceRawFiles.push(file);
+    }
+
     public addTestFiles(file: CSharpFile): void {
         this.testFiles.push(file);
     }
@@ -148,7 +154,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format on the solution file using absolute path
+        // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
         const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
             doNotPipeOutput: false
@@ -230,7 +236,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         });
 
         const writeSourceFilesStartTime = Date.now();
-        await this.writeFilesInBatches(this.sourceFiles, absolutePathToProjectDirectory);
+        await this.writeFilesInBatches([...this.sourceFiles, ...this.sourceRawFiles], absolutePathToProjectDirectory);
         this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();
@@ -430,8 +436,10 @@ dotnet_diagnostic.IDE0005.severity = error
     }
 
     /**
-     * Generates the .slnx solution file directly as XML, avoiding dotnet CLI overhead.
+     * Generates the solution file directly as a template, avoiding dotnet CLI overhead.
      * Computes relative paths from the solution directory to both project .csproj files.
+     * When `sln-format` is "sln", generates both .sln and .slnx files.
+     * When `sln-format` is "slnx" (default), generates only .slnx.
      */
     private async createSolutionFile({
         absolutePathToSolutionDirectory,
@@ -451,6 +459,7 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
+        // Always generate .slnx format
         const libraryCsprojRelative = path
             .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
             .replace(/\\/g, "/");
@@ -464,8 +473,53 @@ dotnet_diagnostic.IDE0005.severity = error
 </Solution>
 `;
 
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await writeFile(solutionFilePath, slnxContents);
+        const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(slnxFilePath, slnxContents);
+
+        // When sln-format is "sln", also generate the legacy .sln file
+        if (this.settings.slnFormat === "sln") {
+            const libraryCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+                .replace(/\//g, "\\");
+            const testCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+                .replace(/\//g, "\\");
+
+            const projectTypeGuid = "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC";
+            const libraryProjectGuid = generateDeterministicGuid(this.name);
+            const testProjectGuid = generateDeterministicGuid(testProjectName);
+
+            const slnContents = [
+                "Microsoft Visual Studio Solution File, Format Version 12.00",
+                "# Visual Studio Version 17",
+                "VisualStudioVersion = 17.0.31903.59",
+                "MinimumVisualStudioVersion = 10.0.40219.1",
+                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelativeBackslash}", "{${libraryProjectGuid}}"`,
+                "EndProject",
+                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelativeBackslash}", "{${testProjectGuid}}"`,
+                "EndProject",
+                "Global",
+                "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution",
+                "\t\tDebug|Any CPU = Debug|Any CPU",
+                "\t\tRelease|Any CPU = Release|Any CPU",
+                "\tEndGlobalSection",
+                "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution",
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                "\tEndGlobalSection",
+                "EndGlobal",
+                ""
+            ].join("\n");
+
+            const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
+            await writeFile(slnFilePath, slnContents);
+        }
     }
 
     private async createCoreDirectory({
@@ -573,10 +627,61 @@ dotnet_diagnostic.IDE0005.severity = error
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
                 }
             })
         );
+    }
+
+    private cachedClientOptionsRequiredDefaults: string | undefined;
+
+    /**
+     * When unified-client-options is enabled and auth fields are required,
+     * returns a string of extra initializer assignments for ClientOptions in tests
+     * (e.g. ', ClientId = "test", ClientSecret = "test"'). Otherwise returns "".
+     */
+    private getClientOptionsRequiredDefaults(): string {
+        if (this.cachedClientOptionsRequiredDefaults !== undefined) {
+            return this.cachedClientOptionsRequiredDefaults;
+        }
+        return (this.cachedClientOptionsRequiredDefaults = this.computeClientOptionsRequiredDefaults());
+    }
+
+    private computeClientOptionsRequiredDefaults(): string {
+        if (!this.context.generation.settings.unifiedClientOptions) {
+            return "";
+        }
+        const parts: string[] = [];
+
+        // BaseUrl is required when there's no default environment
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+        if (!hasDefaultEnvironment) {
+            parts.push(`BaseUrl = "http://localhost"`);
+        }
+
+        // Auth fields are required when isAuthMandatory is false (confusingly named)
+        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        if (!isOptional) {
+            for (const scheme of this.context.ir.auth.schemes) {
+                if (scheme.type === "bearer") {
+                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "basic") {
+                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
+                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "header") {
+                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "oauth") {
+                    parts.push(`ClientId = "test"`);
+                    parts.push(`ClientSecret = "test"`);
+                }
+            }
+        }
+
+        if (parts.length === 0) {
+            return "";
+        }
+        return ", " + parts.join(", ");
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
@@ -701,6 +806,16 @@ function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
 }
 
+/**
+ * Generates a deterministic GUID from a project name using MD5 hashing.
+ * This ensures the same project name always produces the same GUID,
+ * making .sln files reproducible across generation runs.
+ */
+function generateDeterministicGuid(name: string): string {
+    const hash = createHash("md5").update(name).digest("hex");
+    return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-${hash.slice(12, 16)}-${hash.slice(16, 20)}-${hash.slice(20, 32)}`.toUpperCase();
+}
+
 declare namespace CsProj {
     interface Args {
         name: string;
@@ -819,7 +934,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return this.context.hasWebSocketEndpoints
             ? [
                   '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
+                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />',
+                  '    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />'
               ]
             : [];
     }
@@ -841,7 +957,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("");
         result.push("<ItemGroup>");
-        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />');
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.31.1" />');
         result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
@@ -854,6 +971,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("<ItemGroup>");
         for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            // Skip proto files provided by external packages (e.g. Google.Api.CommonProtos)
+            // to avoid conflicting with the types from those packages.
+            if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protobufSourceFilePath.startsWith(prefix))) {
+                continue;
+            }
             const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
             result.push(
                 `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
@@ -945,3 +1067,10 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return path.win32.normalize(relativePath);
     }
 }
+
+/**
+ * Proto file path prefixes for types provided by external NuGet packages
+ * (e.g. Google.Api.CommonProtos). These files should be excluded from
+ * Grpc.Tools compilation to avoid conflicting type definitions.
+ */
+const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];
