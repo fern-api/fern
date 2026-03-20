@@ -338,7 +338,8 @@ function addTestCommand(cli: Argv) {
                         argv.skipScripts,
                         taskContextFactory.create("docker-script-runner"),
                         argv["log-level"],
-                        argv.containerRuntime as "docker" | "podman" | undefined
+                        argv.containerRuntime as "docker" | "podman" | undefined,
+                        argv.parallel
                     );
                     testRunner = new ContainerTestRunner({
                         generator,
