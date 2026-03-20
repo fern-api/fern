@@ -59,7 +59,7 @@ export function generateNestedStringLiteralBody({
 
     public static implicit operator string(${structName} _) => Value;
     public override string ToString() => Value;
-    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
+    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
     public override bool Equals(object? obj) => obj is ${structName};
 
     public static bool operator ==(${structName} _, ${structName} __) => true;
@@ -88,6 +88,28 @@ export function generateNestedStringLiteralBody({
             ${structName} value,
             JsonSerializerOptions options
         ) => writer.WriteStringValue(${structName}.Value);
+
+        public override ${structName} ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (value != ${structName}.Value)
+            {
+                throw new JsonException(
+                    "Expected \\"" + ${structName}.Value + "\\" for type discriminator but got \\"" + value + "\\"."
+                );
+            }
+            return new ${structName}();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ${structName} value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(${structName}.Value);
     }`;
 }
 
@@ -137,6 +159,28 @@ export function generateNestedBoolLiteralBody({
             ${structName} value,
             JsonSerializerOptions options
         ) => writer.WriteBooleanValue(${structName}.Value);
+
+        public override ${structName} ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (!bool.TryParse(value, out var boolValue) || boolValue != ${structName}.Value)
+            {
+                throw new JsonException(
+                    "Expected ${csharpValue} for type discriminator but got \\"" + value + "\\"."
+                );
+            }
+            return new ${structName}();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ${structName} value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(${structName}.Value.ToString());
     }`;
 }
 
@@ -163,7 +207,7 @@ public readonly struct ${structName}
 
     public static implicit operator string(${structName} _) => Value;
     public override string ToString() => Value;
-    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
+    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
     public override bool Equals(object? obj) => obj is ${structName};
 
     public static bool operator ==(${structName} _, ${structName} __) => true;
@@ -192,6 +236,28 @@ public readonly struct ${structName}
             ${structName} value,
             JsonSerializerOptions options
         ) => writer.WriteStringValue(${structName}.Value);
+
+        public override ${structName} ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (value != ${structName}.Value)
+            {
+                throw new JsonException(
+                    "Expected \\"" + ${structName}.Value + "\\" for type discriminator but got \\"" + value + "\\"."
+                );
+            }
+            return new ${structName}();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ${structName} value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(${structName}.Value);
     }
 }
 `;
@@ -249,6 +315,28 @@ public readonly struct ${structName}
             ${structName} value,
             JsonSerializerOptions options
         ) => writer.WriteBooleanValue(${structName}.Value);
+
+        public override ${structName} ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (!bool.TryParse(value, out var boolValue) || boolValue != ${structName}.Value)
+            {
+                throw new JsonException(
+                    "Expected ${csharpValue} for type discriminator but got \\"" + value + "\\"."
+                );
+            }
+            return new ${structName}();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ${structName} value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(${structName}.Value.ToString());
     }
 }
 `;

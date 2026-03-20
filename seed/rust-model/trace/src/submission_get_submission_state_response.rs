@@ -7,6 +7,7 @@ pub struct GetSubmissionStateResponse {
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset::option")]
     pub time_submitted: Option<DateTime<FixedOffset>>,
+    #[serde(default)]
     pub submission: String,
     pub language: Language,
     #[serde(rename = "submissionTypeState")]

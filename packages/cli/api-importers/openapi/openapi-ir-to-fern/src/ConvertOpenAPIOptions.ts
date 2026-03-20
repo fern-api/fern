@@ -98,6 +98,12 @@ export interface ConvertOpenAPIOptions {
      * Defaults to `always`.
      */
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
+
+    /**
+     * Whether to automatically infer the default environment from the first server.
+     * Defaults to true. When false, SDK users must explicitly provide a base URL.
+     */
+    inferDefaultEnvironment: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -113,7 +119,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
-    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
+    inferDefaultEnvironment: true
 };
 
 function mergeOptions<T extends object>(params: {

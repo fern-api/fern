@@ -16,7 +16,6 @@
 
 package com.fern.java.client.generators.websocket;
 
-import com.fern.ir.model.http.HttpHeader;
 import com.fern.ir.model.http.HttpPath;
 import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
@@ -34,8 +33,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import javax.lang.model.element.Modifier;
@@ -57,7 +54,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedObjectMapper generatedObjectMapper,
             FieldSpec clientOptionsField,
-            Optional<Subpackage> subpackage) {
+            Optional<Subpackage> subpackage,
+            Optional<ClassName> connectOptionsClassName) {
         super(
                 websocketChannel,
                 clientGeneratorContext,
@@ -65,7 +63,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 generatedEnvironmentsClass,
                 generatedObjectMapper,
                 clientOptionsField,
-                subpackage);
+                subpackage,
+                connectOptionsClassName);
 
         this.connectionFutureField = FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()),
@@ -115,25 +114,6 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                                             + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
         }
 
-        // Add query parameters
-        for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-            TypeName paramType =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-            String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
-
-            // Check if already optional
-            if (queryParam.getValueType().getContainer().isPresent()
-                    && queryParam.getValueType().getContainer().get().isOptional()) {
-                builder.addParameter(paramType, paramName);
-            } else {
-                builder.addParameter(ParameterizedTypeName.get(ClassName.get(Optional.class), paramType), paramName);
-            }
-            builder.addJavadoc(
-                    "@param $L $L\n",
-                    paramName,
-                    queryParam.getDocs().orElse("Optional " + paramName + " query parameter"));
-        }
-
         // Constructor body
         builder.addStatement("this.$N = $N", clientOptionsField, clientOptionsField)
                 .addStatement("this.$N = $T.JSON_MAPPER", objectMapperField, generatedObjectMapper.getClassName())
@@ -142,12 +122,6 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         // Assign path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
             String paramName = pathParam.getName().getCamelCase().getSafeName();
-            builder.addStatement("this.$L = $L", paramName, paramName);
-        }
-
-        // Assign query parameters
-        for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-            String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
             builder.addStatement("this.$L = $L", paramName, paramName);
         }
 
@@ -162,9 +136,16 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addJavadoc("Establishes the WebSocket connection asynchronously with automatic reconnection.\n")
                 .addJavadoc("@return a CompletableFuture that completes when the connection is established\n");
 
+        // Add connect options parameter if channel has query params
+        if (connectOptionsClassName.isPresent()) {
+            builder.addParameter(connectOptionsClassName.get(), "options")
+                    .addJavadoc("@param options connection options including query parameters\n");
+        }
+
         // Build WebSocket URL
         builder.addStatement("$N = new $T<>()", connectionFutureField, CompletableFuture.class);
-        builder.addStatement("String baseUrl = $N.environment().getUrl()", clientOptionsField);
+        builder.addStatement(
+                "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
         builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
@@ -194,53 +175,63 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.beginControlFlow("else if (!baseUrl.endsWith(\"/\") && !fullPath.startsWith(\"/\"))");
         builder.addStatement("fullPath = \"/\" + fullPath");
         builder.endControlFlow();
+        // Convert WebSocket schemes to HTTP schemes for OkHttp's HttpUrl parser
+        builder.addComment("OkHttp's HttpUrl only supports http/https schemes; convert wss/ws for URL parsing");
+        builder.beginControlFlow("if (baseUrl.startsWith($S))", "wss://");
+        builder.addStatement("baseUrl = $S + baseUrl.substring(6)", "https://");
+        builder.endControlFlow();
+        builder.beginControlFlow("else if (baseUrl.startsWith($S))", "ws://");
+        builder.addStatement("baseUrl = $S + baseUrl.substring(5)", "http://");
+        builder.endControlFlow();
+        builder.addStatement("$T parsedUrl = $T.parse(baseUrl + fullPath)", HttpUrl.class, HttpUrl.class);
+        builder.beginControlFlow("if (parsedUrl == null)");
         builder.addStatement(
-                "$T.Builder urlBuilder = $T.parse(baseUrl + fullPath).newBuilder()", HttpUrl.class, HttpUrl.class);
+                "throw new $T($S + baseUrl + fullPath)", IllegalArgumentException.class, "Invalid WebSocket URL: ");
+        builder.endControlFlow();
+        builder.addStatement("$T.Builder urlBuilder = parsedUrl.newBuilder()", HttpUrl.class);
 
-        // Add query parameters
-        for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-            String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
-            String wireValue = queryParam.getName().getWireValue();
+        // Add query parameters from connect options
+        if (connectOptionsClassName.isPresent()) {
+            for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
+                String getterName = "get"
+                        + capitalize(
+                                queryParam.getName().getName().getCamelCase().getSafeName());
+                String wireValue = queryParam.getName().getWireValue();
 
-            builder.beginControlFlow("if ($L != null && $L.isPresent())", paramName, paramName);
-            builder.addStatement("urlBuilder.addQueryParameter($S, String.valueOf($L.get()))", wireValue, paramName);
-            builder.endControlFlow();
+                boolean isOptional = queryParam.getValueType().getContainer().isPresent()
+                        && queryParam.getValueType().getContainer().get().isOptional();
+
+                if (isOptional) {
+                    builder.beginControlFlow(
+                            "if (options.$L() != null && options.$L().isPresent())", getterName, getterName);
+                    builder.addStatement(
+                            "urlBuilder.addQueryParameter($S, String.valueOf(options.$L().get()))",
+                            wireValue,
+                            getterName);
+                    builder.endControlFlow();
+                } else if (queryParam.getAllowMultiple()) {
+                    builder.beginControlFlow("for ($T item : options.$L())", String.class, getterName);
+                    builder.addStatement("urlBuilder.addQueryParameter($S, item)", wireValue);
+                    builder.endControlFlow();
+                } else {
+                    builder.addStatement(
+                            "urlBuilder.addQueryParameter($S, String.valueOf(options.$L()))", wireValue, getterName);
+                }
+            }
         }
 
         // Build request with authentication
         builder.addStatement(
                 "$T.Builder requestBuilder = new $T.Builder().url(urlBuilder.build())", Request.class, Request.class);
 
-        // Apply authentication if needed
-        if (websocketChannel.getAuth()) {
-            builder.addStatement("$N.headers(null).forEach(requestBuilder::addHeader)", clientOptionsField);
-        }
-
-        // Add any additional headers
-        for (HttpHeader header : websocketChannel.getHeaders()) {
-            // Check if header value comes from environment variable
-            if (header.getEnv().isPresent()) {
-                String envVar = header.getEnv().get();
-                builder.addStatement("$T envValue = $T.getenv($S)", String.class, System.class, envVar);
-                builder.beginControlFlow("if (envValue != null)");
-                builder.addStatement(
-                        "requestBuilder.addHeader($S, envValue)",
-                        header.getName().getWireValue());
-                builder.endControlFlow();
-            } else {
-                // For now, skip headers without env vars as we don't support literal values yet
-                // TODO: Support literal header values when IR provides them
-                builder.addComment(
-                        "Header $L requires literal value support",
-                        header.getName().getWireValue());
-            }
-        }
+        // Apply authentication and configured headers
+        builder.addStatement("$N.headers(null).forEach(requestBuilder::addHeader)", clientOptionsField);
 
         builder.addStatement("final $T request = requestBuilder.build()", Request.class);
 
         // Set state to CONNECTING
         ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
         builder.addStatement("this.$N = $T.CONNECTING", readyStateField, readyStateClassName);
 
         // Create ReconnectingWebSocketListener with connection supplier
@@ -258,13 +249,17 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 "ReconnectingWebSocketListener",
                 "ReconnectOptions");
 
-        // Create reconnection options with defaults
+        // Use configured reconnect options or defaults
         builder.addStatement(
-                "$T reconnectOptions = $T.builder().build()", reconnectOptionsClass, reconnectOptionsClass);
+                "$T reconnectOpts = this.$N != null ? this.$N : $T.builder().build()",
+                reconnectOptionsClass,
+                reconnectOptionsField,
+                reconnectOptionsField,
+                reconnectOptionsClass);
 
         // Create the connection supplier lambda
         builder.addCode(
-                "this.$N = new $T(reconnectOptions, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
+                "this.$N = new $T(reconnectOpts, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
         builder.beginControlFlow("    if ($N.webSocketFactory().isPresent())", clientOptionsField);
         builder.addStatement(
                 "return $N.webSocketFactory().get().create(request, this.$N)",
@@ -299,6 +294,18 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         builder.addCode("    @Override\n");
         builder.addCode(
+                "    protected void onWebSocketBinaryMessage($T webSocket, $T bytes) {\n",
+                ClassName.get("okhttp3", "WebSocket"),
+                ClassName.get("okio", "ByteString"));
+        for (String handlerFieldName : getBinaryServerMessageHandlerFieldNames()) {
+            builder.beginControlFlow("        if ($L != null)", handlerFieldName);
+            builder.addStatement("            $L.accept(bytes)", handlerFieldName);
+            builder.endControlFlow();
+        }
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
                 "    protected void onWebSocketFailure($T webSocket, Throwable t, $T response) {\n",
                 ClassName.get("okhttp3", "WebSocket"),
                 ClassName.get("okhttp3", "Response"));
@@ -318,7 +325,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.addStatement(
                 "    $N.accept(new $T(code, reason))",
                 onDisconnectedHandlerField,
-                ClassName.get(className.packageName(), className.simpleName(), "DisconnectReason"));
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("DisconnectReason"));
         builder.endControlFlow();
         builder.addCode("    }\n");
         builder.addStatement("}");
@@ -332,13 +339,37 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
     }
 
     @Override
+    protected Optional<MethodSpec> generateConnectNoArgOverload() {
+        if (!connectOptionsClassName.isPresent()) {
+            return Optional.empty();
+        }
+        // Only generate no-arg overload when all query params are optional (no required builder stages)
+        boolean hasRequiredQueryParam = websocketChannel.getQueryParameters().stream()
+                .anyMatch(qp -> {
+                    boolean isOptional = qp.getValueType().getContainer().isPresent()
+                            && qp.getValueType().getContainer().get().isOptional();
+                    return !isOptional && !qp.getAllowMultiple();
+                });
+        if (hasRequiredQueryParam) {
+            return Optional.empty();
+        }
+        ClassName optionsClass = connectOptionsClassName.get();
+        return Optional.of(MethodSpec.methodBuilder("connect")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
+                .addJavadoc("Establishes the WebSocket connection asynchronously with default options.\n")
+                .addJavadoc("@return a CompletableFuture that completes when the connection is established\n")
+                .addStatement("return connect($T.builder().build())", optionsClass)
+                .build());
+    }
+
+    @Override
     protected MethodSpec generateSendMethod(WebSocketMessage message) {
         TypeName messageType = getMessageBodyType(message);
-        // Convert message type to valid Java method name
-        String messageTypeStr = message.getType().get();
-        String methodName = "send" + capitalize(messageTypeStr);
+        String methodName = getSendMethodName(message);
+        boolean isBinary = isMessageBodyBinary(message);
 
-        return MethodSpec.methodBuilder(methodName)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
                 .addParameter(messageType, "message")
@@ -346,10 +377,32 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         "Sends a $L message to the server asynchronously.\n",
                         message.getType().get())
                 .addJavadoc("@param message the message to send\n")
-                .addJavadoc("@return a CompletableFuture that completes when the message is sent\n")
-                .addStatement(
-                        "return sendMessage($S, message)", message.getType().get())
-                .build();
+                .addJavadoc("@return a CompletableFuture that completes when the message is sent\n");
+
+        if (isBinary) {
+            builder.addStatement(
+                            "$T<$T> future = new $T<>()",
+                            CompletableFuture.class,
+                            TypeName.VOID.box(),
+                            CompletableFuture.class)
+                    .beginControlFlow("try")
+                    .addStatement("assertSocketIsOpen()")
+                    .addComment("Use reconnecting listener's sendBinary method which handles queuing")
+                    .addStatement("$N.sendBinary(message)", reconnectingListenerField)
+                    .addStatement("future.complete(null)")
+                    .endControlFlow()
+                    .beginControlFlow("catch ($T e)", Exception.class)
+                    .addStatement(
+                            "future.completeExceptionally(new $T($S, e))",
+                            RuntimeException.class,
+                            "Failed to send binary data")
+                    .endControlFlow()
+                    .addStatement("return future");
+        } else {
+            builder.addStatement("return sendMessage(message)");
+        }
+
+        return builder.build();
     }
 
     @Override
@@ -357,7 +410,6 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         return MethodSpec.methodBuilder("sendMessage")
                 .addModifiers(Modifier.PRIVATE)
                 .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
-                .addParameter(String.class, "type")
                 .addParameter(Object.class, "body")
                 .addStatement(
                         "$T<$T> future = new $T<>()",
@@ -366,10 +418,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         CompletableFuture.class)
                 .beginControlFlow("try")
                 .addStatement("assertSocketIsOpen()")
-                .addStatement("$T<String, Object> envelope = new $T<>()", Map.class, HashMap.class)
-                .addStatement("envelope.put($S, type)", "type")
-                .addStatement("envelope.put($S, body)", "body")
-                .addStatement("String json = $N.writeValueAsString(envelope)", objectMapperField)
+                .addStatement("String json = $N.writeValueAsString(body)", objectMapperField)
                 .addComment("Use reconnecting listener's send method which handles queuing")
                 .addStatement("boolean sent = $N.send(json)", reconnectingListenerField)
                 .beginControlFlow("if (sent)")
@@ -394,7 +443,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
     @Override
     protected MethodSpec generateAssertSocketIsOpen() {
         ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
 
         return MethodSpec.methodBuilder("assertSocketIsOpen")
                 .addModifiers(Modifier.PRIVATE)

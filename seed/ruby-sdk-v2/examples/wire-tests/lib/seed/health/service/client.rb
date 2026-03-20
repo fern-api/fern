@@ -28,7 +28,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/check/#{params[:id]}",
+            path: "/check/#{URI.encode_uri_component(params[:id].to_s)}",
             request_options: request_options
           )
           begin

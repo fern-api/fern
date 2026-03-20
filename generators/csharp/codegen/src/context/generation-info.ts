@@ -214,6 +214,8 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
+        unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
@@ -455,7 +457,7 @@ export class Generation {
      * - `ExceptionInterceptor`, `ExceptionHandler`: Exception processing
      *
      * ### Serialization:
-     * - `EnumSerializer`, `StringEnumSerializer`: Enum serialization
+     * - `EnumSerializer`: Enum serialization
      * - `DateTimeSerializer`: DateTime handling
      * - `JsonUtils`: JSON utilities
      * - `OneOfSerializer`: Union type serialization
@@ -813,17 +815,12 @@ export class Generation {
                 origin: this.model.staticExplicit("Closed"),
                 namespace: this.namespaces.webSocketsCore
             }),
-        /**
-         * JSON serializer for string-based enum types.
-         * @param enumClassReference - The enum type to serialize
-         */
-        StringEnumSerializer: (enumClassReference: ast.Type | ast.ClassReference): ast.ClassReference => {
-            return this.csharp.classReference({
-                origin: this.model.staticExplicit("StringEnumSerializer"),
-                namespace: this.namespaces.core,
-                generics: [enumClassReference]
-            });
-        },
+        /** Reconnection info for WebSocket connections */
+        ReconnectionInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ReconnectionInfo"),
+                namespace: this.namespaces.webSocketsCore
+            }),
         /**
          * Custom pagination class for iterating over paged results.
          * @param itemType - The type of items in each page

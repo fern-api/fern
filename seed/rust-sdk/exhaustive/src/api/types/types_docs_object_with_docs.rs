@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ObjectWithDocs {
     /// Characters that could lead to broken generated SDKs:
     ///
@@ -66,5 +66,6 @@ pub struct ObjectWithDocs {
     /// - ** /: PHPDoc comment end
     /// - *: Can interfere with comment blocks
     /// - &: HTML entities
+    #[serde(default)]
     pub string: String,
 }

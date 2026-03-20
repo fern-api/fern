@@ -5,6 +5,7 @@ pub use crate::prelude::*;
 /// Request type for the SearchUsersQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SearchUsersQueryRequest {
+    #[serde(default)]
     pub query: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub department: Option<String>,
@@ -12,5 +13,5 @@ pub struct SearchUsersQueryRequest {
     pub role: Option<String>,
     #[serde(rename = "isActive")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub is_active: Option<Option<bool>>,
+    pub is_active: Option<bool>,
 }

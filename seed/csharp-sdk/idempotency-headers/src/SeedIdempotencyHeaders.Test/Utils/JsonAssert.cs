@@ -16,4 +16,14 @@ internal static class JsonAssert
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
+
+    /// <summary>
+    /// Asserts that the given JSON string survives a deserialization/serialization round-trip
+    /// intact: deserializes to T then re-serializes and compares to the original JSON.
+    /// </summary>
+    internal static void Roundtrips<T>(string json)
+    {
+        var deserialized = JsonUtils.Deserialize<T>(json);
+        AreEqual(deserialized!, json);
+    }
 }
