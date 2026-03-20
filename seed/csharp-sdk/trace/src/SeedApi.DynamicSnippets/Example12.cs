@@ -1,5 +1,5 @@
 using SeedTrace;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 

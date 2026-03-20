@@ -1,6 +1,6 @@
 using SeedExamples;
 using SeedExamples.Commons;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 

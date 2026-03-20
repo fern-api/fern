@@ -1,5 +1,5 @@
 using SeedNullableOptional;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 

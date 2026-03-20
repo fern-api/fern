@@ -150,9 +150,9 @@ public class QueryStringConverterTest
 
     private class TestEnumSerializer : JsonConverter<TestEnum>
     {
-                public override TestEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
-                {
-                    var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+        public override TestEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+        {
+            var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
             return stringValue switch
             {
                 "value_1" => TestEnum.Value1,
@@ -161,13 +161,13 @@ public class QueryStringConverterTest
             };
         }
 
-                public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TestEnum value, JsonSerializerOptions options)
-                {
-                    writer.WriteStringValue(value switch
-                    {
-                        TestEnum.Value1 => "value_1",
-                        TestEnum.Value2 => "value_2",
-                        _ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TestEnum value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value switch
+            {
+                TestEnum.Value1 => "value_1",
+                TestEnum.Value2 => "value_2",
+                _ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)
             });
         }
     }
@@ -192,9 +192,9 @@ public class QueryStringConverterTest
 
         internal class TestStringEnumSerializer : JsonConverter<TestStringEnum>
         {
-                        public override TestStringEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
-                        {
-                            var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+            public override TestStringEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+            {
+                var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
                 return new TestStringEnum(stringValue);
             }
 

@@ -1,5 +1,5 @@
 using SeedBytesUpload;
-using global::System.Text;
+using System.Text;
 
 namespace Usage;
 

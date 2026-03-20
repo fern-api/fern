@@ -181,6 +181,14 @@ internal partial class WebSocketConnection
     /// </summary>
     public TimeSpan? LostReconnectTimeout { get; set; }
 
+    /// <summary>
+    /// How often to check the WebSocket state for silent disconnections.
+    /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
+    /// See: https://github.com/dotnet/runtime/issues/110496
+    /// Set to null to disable. Default: 5 seconds.
+    /// </summary>
+    public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
@@ -522,11 +530,55 @@ internal partial class WebSocketConnection
 
     internal Exception ListenException { get; set; }
 
+    private async global::System.Threading.Tasks.Task MonitorState(
+        WebSocket client,
+        CancellationTokenSource receiveCts
+    )
+    {
+        if (StateCheckInterval == null)
+            return;
+
+        try
+        {
+            while (!receiveCts.Token.IsCancellationRequested)
+            {
+                await global::System
+                    .Threading.Tasks.Task.Delay(StateCheckInterval.Value, receiveCts.Token)
+                    .ConfigureAwait(false);
+
+                if (
+                    client.State == WebSocketState.Closed
+                    || client.State == WebSocketState.Aborted
+                    || client.State == WebSocketState.CloseReceived
+                )
+                {
+                    _logger.LogWarning(
+                        "State monitor detected WebSocket in '{State}' state, "
+                            + "cancelling receive loop",
+                        client.State
+                    );
+
+                    // Cancel the ReceiveAsync that may be hung
+                    receiveCts.Cancel();
+                    return;
+                }
+            }
+        }
+        catch (OperationCanceledException) { }
+        catch (ObjectDisposedException) { }
+    }
+
     private async global::System.Threading.Tasks.Task Listen(
         WebSocket client,
         CancellationToken token
     )
     {
+        // Create a linked CTS that the state monitor can cancel
+        using var receiveCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+
+        // Start the state monitor as a background task
+        var monitorTask = MonitorState(client, receiveCts);
+
         Exception causedException = null;
         try
         {
@@ -541,7 +593,7 @@ internal partial class WebSocketConnection
                     WebSocketReceiveResult result;
                     while (true)
                     {
-                        result = await client.ReceiveAsync(buffer, token);
+                        result = await client.ReceiveAsync(buffer, receiveCts.Token);
                         ms.Write(buffer.AsSpan(0, result.Count));
 
                         if (result.EndOfMessage)
@@ -582,17 +634,19 @@ internal partial class WebSocketConnection
                         }
                     }
                 }
-            } while (client.State == WebSocketState.Open && !token.IsCancellationRequested);
+            } while (
+                client.State == WebSocketState.Open && !receiveCts.Token.IsCancellationRequested
+            );
         }
-        catch (TaskCanceledException e)
+        catch (TaskCanceledException)
         {
             // task was canceled, ignore
         }
-        catch (OperationCanceledException e)
+        catch (OperationCanceledException)
         {
             // operation was canceled, ignore
         }
-        catch (ObjectDisposedException e)
+        catch (ObjectDisposedException)
         {
             // client was disposed, ignore
         }
@@ -605,6 +659,16 @@ internal partial class WebSocketConnection
             );
             await OnExceptionOccurred(e).ConfigureAwait(false);
             causedException = e;
+        }
+        finally
+        {
+            // Ensure monitor task completes
+            receiveCts.Cancel();
+            try
+            {
+                await monitorTask.ConfigureAwait(false);
+            }
+            catch { }
         }
 
         if (ShouldIgnoreReconnection(client) || !IsStarted)

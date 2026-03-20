@@ -1,7 +1,7 @@
 using SeedExhaustive;
 using SeedExhaustive.InlinedRequests;
 using SeedExhaustive.Types.Object;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 

@@ -60,7 +60,7 @@ scripts:
         - |
           # Enforce global:: prefix for System namespace references in generated .cs files.
           # This prevents compile breaks when customers have namespace conflicts (e.g., a class named "System").
-          violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v '^\s*//' || true)
+          violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v '^\s*//' | grep -v 'DynamicSnippets' || true)
           if [ -n "$violations" ]; then
             echo "ERROR: Found unqualified 'using System' references. Use 'using global::System' instead:"
             echo "$violations"

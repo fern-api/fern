@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using global::System.Text;
+using System.Text;
 
 namespace Usage;
 

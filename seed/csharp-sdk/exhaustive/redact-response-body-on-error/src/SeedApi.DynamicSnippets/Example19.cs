@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Types;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 

@@ -1,7 +1,7 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
-using global::System.Globalization;
+using System.Globalization;
 
 namespace Usage;
 
