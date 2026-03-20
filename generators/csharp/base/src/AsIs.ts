@@ -114,6 +114,7 @@ export const AsIsFiles = {
         WebSockets: {
             AsyncLockTests: "test/WebSockets/AsyncLockTests.Template.cs",
             DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",
+            E2eWebSocketTests: "test/WebSockets/E2eWebSocketTests.Template.cs",
             EventTests: "test/WebSockets/EventTests.Template.cs",
             QueryTests: "test/WebSockets/QueryTests.Template.cs",
             ReconnectionInfoTests: "test/WebSockets/ReconnectionInfoTests.Template.cs",
