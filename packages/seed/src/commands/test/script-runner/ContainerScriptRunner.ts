@@ -371,7 +371,9 @@ export class ContainerScriptRunner extends ScriptRunner {
                         await loggingExeca(logger, this.runner, ["kill", script.containerId], {
                             doNotPipeOutput: true
                         }).catch((killError: unknown) => {
-                            CONSOLE_LOGGER.warn(`Best-effort cleanup: failed to kill container ${script.containerId}: ${killError}`);
+                            CONSOLE_LOGGER.warn(
+                                `Best-effort cleanup: failed to kill container ${script.containerId}: ${killError}`
+                            );
                         });
                     }
                 }
