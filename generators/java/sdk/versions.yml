@@ -9,11 +9,25 @@
 
         The generator now extracts wire discriminant values from each message body's
         `type` property — resolving literal values (e.g. `literal<"Welcome">`) and
-        enum values (e.g. `enum[Flushed, Cleared]`) — and matches incoming messages
-        via an if-else chain over those values. This aligns with the approach used by
-        the Python generator.
+        enum values (e.g. `enum[Flushed, Cleared]`) — and dispatches via a `switch`
+        statement on those values. This aligns with the approach used by the Python
+        generator.
       type: fix
-  createdAt: "2026-03-19"
+    - summary: |
+        WebSocket handler registration methods and field names now use
+        wire discriminant values instead of Fern-internal prefixed names. For example,
+        `onAgentV1Welcome(handler)` is now `onWelcome(handler)`, and
+        `onAgentV1PromptUpdated(handler)` is now `onPromptUpdated(handler)`. Methods
+        that were already backed by a custom `x-fern-sdk-method-name` (e.g.
+        `onFunctionCallResponse`) are unchanged.
+      type: fix
+    - summary: |
+        Improve generated WebSocket client code quality: use a string literal for
+        static URL paths instead of `StringBuilder`, remove dead if/else branches in
+        async `sendMessage()`, consolidate redundant catch blocks in message dispatch,
+        and correct Javadoc articles ("a" vs "an") for type names starting with vowels.
+      type: chore
+  createdAt: "2026-03-20"
   irVersion: 65
 
 - version: 4.0.2

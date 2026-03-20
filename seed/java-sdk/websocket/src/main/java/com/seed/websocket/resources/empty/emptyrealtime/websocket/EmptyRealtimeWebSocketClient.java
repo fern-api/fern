@@ -65,9 +65,7 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
     public CompletableFuture<Void> connect() {
         connectionFuture = new CompletableFuture<>();
         String baseUrl = clientOptions.environment().getUrl();
-        StringBuilder pathBuilder = new StringBuilder();
-        pathBuilder.append("/empty/realtime/");
-        String fullPath = pathBuilder.toString();
+        String fullPath = "/empty/realtime/";
         if (baseUrl.endsWith("/") && fullPath.startsWith("/")) {
             fullPath = fullPath.substring(1);
         } else if (!baseUrl.endsWith("/") && !fullPath.startsWith("/")) {
@@ -229,13 +227,8 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -258,13 +251,13 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                        + "'. Update your SDK version to support new message types."));
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
+            switch (type) {
+                default:
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
+                    break;
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

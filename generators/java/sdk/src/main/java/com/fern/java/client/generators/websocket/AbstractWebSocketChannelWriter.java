@@ -16,6 +16,8 @@
 
 package com.fern.java.client.generators.websocket;
 
+import com.fern.ir.model.http.HttpPath;
+import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
@@ -318,7 +320,7 @@ public abstract class AbstractWebSocketChannelWriter {
                         .build())
                 .addJavadoc(
                         "Registers a handler for $L messages from the server.\n",
-                        message.getType().get())
+                        message.getDisplayName().orElse(message.getType().get()))
                 .addJavadoc("@param handler the handler to invoke when a message is received\n")
                 .addStatement("this.$L = handler", handlerFieldName)
                 .build();
@@ -443,23 +445,18 @@ public abstract class AbstractWebSocketChannelWriter {
                 .endControlFlow()
                 .addStatement("String type = typeNode.asText()");
 
-        // Iterate over each non-binary server message type, trying to match the discriminant value.
-        // This matches Python's approach of iterating over all possible message types to find the
-        // correct one, using the wire discriminant value from the body's literal type property.
-        boolean first = true;
+        // Switch on wire discriminant values extracted from each message body's literal/enum
+        // "type" property, rather than the Fern-internal message ID.
+        builder.beginControlFlow("switch (type)");
+
         for (WebSocketMessage message : websocketChannel.getMessages()) {
             if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 TypeName messageType = getMessageBodyType(message);
                 String handlerFieldName = getHandlerFieldName(message);
                 String wireDiscriminantValue = getWireDiscriminantValue(message);
 
-                if (first) {
-                    builder.beginControlFlow("if ($S.equals(type))", wireDiscriminantValue);
-                    first = false;
-                } else {
-                    builder.nextControlFlow("else if ($S.equals(type))", wireDiscriminantValue);
-                }
-                builder.beginControlFlow("if ($L != null)", handlerFieldName)
+                builder.addCode("case $S:\n", wireDiscriminantValue)
+                        .beginControlFlow("if ($L != null)", handlerFieldName)
                         .addStatement(
                                 "$T event = $N.treeToValue(node, $T.class)",
                                 messageType,
@@ -468,24 +465,17 @@ public abstract class AbstractWebSocketChannelWriter {
                         .beginControlFlow("if (event != null)")
                         .addStatement("$L.accept(event)", handlerFieldName)
                         .endControlFlow()
-                        .endControlFlow();
+                        .endControlFlow()
+                        .addStatement("break");
             }
         }
 
-        if (!first) {
-            builder.nextControlFlow("else");
-        }
+        builder.addCode("default:\n");
         addUnknownTypeErrorHandler(builder);
-        if (!first) {
-            builder.endControlFlow(); // end if-else chain
-        }
+        builder.addStatement("break");
 
-        builder.endControlFlow() // end try
-                .beginControlFlow("catch ($T e)", IllegalArgumentException.class)
-                .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                .addStatement("$N.accept(e)", onErrorHandlerField)
-                .endControlFlow()
-                .endControlFlow() // end catch
+        builder.endControlFlow() // end switch
+                .endControlFlow() // end try
                 .beginControlFlow("catch ($T e)", Exception.class)
                 .beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement("$N.accept(e)", onErrorHandlerField)
@@ -630,6 +620,34 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
+    /**
+     * Appends path-building code to the method builder. For static paths (no path parameters), emits a simple string
+     * literal. For dynamic paths, uses a StringBuilder to concatenate the head, path parameters, and tails.
+     */
+    protected void appendPathBuildingCode(MethodSpec.Builder builder) {
+        HttpPath path = websocketChannel.getPath();
+        if (path.getParts().isEmpty()) {
+            builder.addStatement("String fullPath = $S", path.getHead());
+        } else {
+            builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
+            builder.addStatement("pathBuilder.append($S)", path.getHead());
+            for (HttpPathPart part : path.getParts()) {
+                String pathParamId = part.getPathParameter();
+                if (pathParamId != null && !pathParamId.isEmpty()) {
+                    PathParameter matchingParam = websocketChannel.getPathParameters().stream()
+                            .filter(p -> p.getName().getOriginalName().equals(pathParamId))
+                            .findFirst()
+                            .orElseThrow();
+                    String paramFieldName =
+                            matchingParam.getName().getCamelCase().getSafeName();
+                    builder.addStatement("pathBuilder.append($L)", paramFieldName);
+                }
+                builder.addStatement("pathBuilder.append($S)", part.getTail());
+            }
+            builder.addStatement("String fullPath = pathBuilder.toString()");
+        }
+    }
+
     protected TypeName getMessageBodyType(WebSocketMessage message) {
         if (isMessageBodyBinary(message)) {
             return ClassName.get("okio", "ByteString");
@@ -769,30 +787,15 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected String getHandlerFieldName(WebSocketMessage message) {
-        // Use custom methodName if available, otherwise fall back to message type
+        // Use custom methodName if available, otherwise fall back to wire discriminant value
         String baseName;
         if (message.getMethodName().isPresent()) {
             // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Fall back to converting message type from snake_case to camelCase
-            String messageType = message.getType().get();
-            String[] parts = messageType.split("_");
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < parts.length; i++) {
-                String part = parts[i];
-                if (!part.isEmpty()) {
-                    if (i == 0) {
-                        sb.append(part.toLowerCase());
-                    } else {
-                        sb.append(Character.toUpperCase(part.charAt(0)));
-                        if (part.length() > 1) {
-                            sb.append(part.substring(1).toLowerCase());
-                        }
-                    }
-                }
-            }
-            baseName = sb.toString();
+            // Use the wire discriminant value (e.g., "Welcome" → "welcome", not "AgentV1Welcome")
+            String wireValue = getWireDiscriminantValue(message);
+            baseName = decapitalize(toCamelCase(wireValue));
         }
         return baseName + "Handler";
     }
@@ -814,6 +817,21 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
         return result.toString();
+    }
+
+    protected String decapitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toLowerCase(str.charAt(0)) + str.substring(1);
+    }
+
+    /** Returns "an X" or "a X" depending on whether X starts with a vowel sound. */
+    protected String articleFor(String name) {
+        if (name != null && !name.isEmpty() && "AEIOUaeiou".indexOf(name.charAt(0)) >= 0) {
+            return "an " + name;
+        }
+        return "a " + name;
     }
 
     protected String toPascalCase(String str) {
@@ -869,7 +887,8 @@ public abstract class AbstractWebSocketChannelWriter {
         if (message.getMethodName().isPresent()) {
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            baseName = "on" + toPascalCase(message.getType().get());
+            // Use the wire discriminant value (e.g., "Welcome" instead of "AgentV1Welcome")
+            baseName = "on" + toPascalCase(getWireDiscriminantValue(message));
         }
         if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
             return baseName + "Message";

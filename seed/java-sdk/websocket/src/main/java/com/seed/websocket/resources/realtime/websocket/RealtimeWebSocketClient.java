@@ -69,9 +69,9 @@ public class RealtimeWebSocketClient implements AutoCloseable {
 
     private volatile Consumer<ReceiveEvent3> receive3Handler;
 
-    private volatile Consumer<TranscriptEvent> receiveTranscriptHandler;
+    private volatile Consumer<TranscriptEvent> transcriptHandler;
 
-    private volatile Consumer<FlushedEvent> receiveFlushedHandler;
+    private volatile Consumer<FlushedEvent> flushedHandler;
 
     private volatile Consumer<ErrorEvent> errorHandler;
 
@@ -238,7 +238,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive(Consumer<ReceiveEvent> handler) {
@@ -246,7 +246,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive_snake_case messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceiveSnakeCase(Consumer<ReceiveSnakeCase> handler) {
@@ -254,7 +254,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive2 messages from the server.
+     * Registers a handler for Receive2 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive2(Consumer<ReceiveEvent2> handler) {
@@ -262,7 +262,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive3 messages from the server.
+     * Registers a handler for Receive3 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive3(Consumer<ReceiveEvent3> handler) {
@@ -270,23 +270,23 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive_transcript messages from the server.
+     * Registers a handler for ReceiveTranscript messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onReceiveTranscript(Consumer<TranscriptEvent> handler) {
-        this.receiveTranscriptHandler = handler;
+    public void onTranscript(Consumer<TranscriptEvent> handler) {
+        this.transcriptHandler = handler;
     }
 
     /**
-     * Registers a handler for receive_flushed messages from the server.
+     * Registers a handler for ReceiveFlushed messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onReceiveFlushed(Consumer<FlushedEvent> handler) {
-        this.receiveFlushedHandler = handler;
+    public void onFlushed(Consumer<FlushedEvent> handler) {
+        this.flushedHandler = handler;
     }
 
     /**
-     * Registers a handler for error messages from the server.
+     * Registers a handler for Error messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onErrorMessage(Consumer<ErrorEvent> handler) {
@@ -363,13 +363,8 @@ public class RealtimeWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -392,64 +387,69 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            if ("receive".equals(type)) {
-                if (receiveHandler != null) {
-                    ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
-                    if (event != null) {
-                        receiveHandler.accept(event);
+            switch (type) {
+                case "receive":
+                    if (receiveHandler != null) {
+                        ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
+                        if (event != null) {
+                            receiveHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive_snake_case".equals(type)) {
-                if (receiveSnakeCaseHandler != null) {
-                    ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
-                    if (event != null) {
-                        receiveSnakeCaseHandler.accept(event);
+                    break;
+                case "receive_snake_case":
+                    if (receiveSnakeCaseHandler != null) {
+                        ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
+                        if (event != null) {
+                            receiveSnakeCaseHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive2".equals(type)) {
-                if (receive2Handler != null) {
-                    ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
-                    if (event != null) {
-                        receive2Handler.accept(event);
+                    break;
+                case "receive2":
+                    if (receive2Handler != null) {
+                        ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
+                        if (event != null) {
+                            receive2Handler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive3".equals(type)) {
-                if (receive3Handler != null) {
-                    ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
-                    if (event != null) {
-                        receive3Handler.accept(event);
+                    break;
+                case "receive3":
+                    if (receive3Handler != null) {
+                        ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
+                        if (event != null) {
+                            receive3Handler.accept(event);
+                        }
                     }
-                }
-            } else if ("transcript".equals(type)) {
-                if (receiveTranscriptHandler != null) {
-                    TranscriptEvent event = objectMapper.treeToValue(node, TranscriptEvent.class);
-                    if (event != null) {
-                        receiveTranscriptHandler.accept(event);
+                    break;
+                case "transcript":
+                    if (transcriptHandler != null) {
+                        TranscriptEvent event = objectMapper.treeToValue(node, TranscriptEvent.class);
+                        if (event != null) {
+                            transcriptHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("flushed".equals(type)) {
-                if (receiveFlushedHandler != null) {
-                    FlushedEvent event = objectMapper.treeToValue(node, FlushedEvent.class);
-                    if (event != null) {
-                        receiveFlushedHandler.accept(event);
+                    break;
+                case "flushed":
+                    if (flushedHandler != null) {
+                        FlushedEvent event = objectMapper.treeToValue(node, FlushedEvent.class);
+                        if (event != null) {
+                            flushedHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("error".equals(type)) {
-                if (errorHandler != null) {
-                    ErrorEvent event = objectMapper.treeToValue(node, ErrorEvent.class);
-                    if (event != null) {
-                        errorHandler.accept(event);
+                    break;
+                case "error":
+                    if (errorHandler != null) {
+                        ErrorEvent event = objectMapper.treeToValue(node, ErrorEvent.class);
+                        if (event != null) {
+                            errorHandler.accept(event);
+                        }
                     }
-                }
-            } else {
-                if (onErrorHandler != null) {
-                    onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                            + "'. Update your SDK version to support new message types."));
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
+                    break;
+                default:
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
+                    break;
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

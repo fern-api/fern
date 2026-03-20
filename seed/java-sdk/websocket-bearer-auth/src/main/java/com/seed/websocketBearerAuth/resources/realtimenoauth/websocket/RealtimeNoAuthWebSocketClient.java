@@ -192,7 +192,7 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive(Consumer<NoAuthReceiveEvent> handler) {
@@ -269,13 +269,8 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -298,22 +293,21 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            if ("receive".equals(type)) {
-                if (receiveHandler != null) {
-                    NoAuthReceiveEvent event = objectMapper.treeToValue(node, NoAuthReceiveEvent.class);
-                    if (event != null) {
-                        receiveHandler.accept(event);
+            switch (type) {
+                case "receive":
+                    if (receiveHandler != null) {
+                        NoAuthReceiveEvent event = objectMapper.treeToValue(node, NoAuthReceiveEvent.class);
+                        if (event != null) {
+                            receiveHandler.accept(event);
+                        }
                     }
-                }
-            } else {
-                if (onErrorHandler != null) {
-                    onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                            + "'. Update your SDK version to support new message types."));
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
+                    break;
+                default:
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
+                    break;
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

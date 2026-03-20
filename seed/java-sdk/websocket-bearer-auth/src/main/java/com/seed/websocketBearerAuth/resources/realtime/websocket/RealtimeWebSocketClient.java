@@ -225,7 +225,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive(Consumer<ReceiveEvent> handler) {
@@ -233,7 +233,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive_snake_case messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceiveSnakeCase(Consumer<ReceiveSnakeCase> handler) {
@@ -241,7 +241,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive2 messages from the server.
+     * Registers a handler for Receive2 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive2(Consumer<ReceiveEvent2> handler) {
@@ -249,7 +249,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive3 messages from the server.
+     * Registers a handler for Receive3 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive3(Consumer<ReceiveEvent3> handler) {
@@ -326,13 +326,8 @@ public class RealtimeWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -355,43 +350,45 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Message missing 'type' field");
             }
             String type = typeNode.asText();
-            if ("receive".equals(type)) {
-                if (receiveHandler != null) {
-                    ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
-                    if (event != null) {
-                        receiveHandler.accept(event);
+            switch (type) {
+                case "receive":
+                    if (receiveHandler != null) {
+                        ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
+                        if (event != null) {
+                            receiveHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive_snake_case".equals(type)) {
-                if (receiveSnakeCaseHandler != null) {
-                    ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
-                    if (event != null) {
-                        receiveSnakeCaseHandler.accept(event);
+                    break;
+                case "receive_snake_case":
+                    if (receiveSnakeCaseHandler != null) {
+                        ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
+                        if (event != null) {
+                            receiveSnakeCaseHandler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive2".equals(type)) {
-                if (receive2Handler != null) {
-                    ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
-                    if (event != null) {
-                        receive2Handler.accept(event);
+                    break;
+                case "receive2":
+                    if (receive2Handler != null) {
+                        ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
+                        if (event != null) {
+                            receive2Handler.accept(event);
+                        }
                     }
-                }
-            } else if ("receive3".equals(type)) {
-                if (receive3Handler != null) {
-                    ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
-                    if (event != null) {
-                        receive3Handler.accept(event);
+                    break;
+                case "receive3":
+                    if (receive3Handler != null) {
+                        ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
+                        if (event != null) {
+                            receive3Handler.accept(event);
+                        }
                     }
-                }
-            } else {
-                if (onErrorHandler != null) {
-                    onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                            + "'. Update your SDK version to support new message types."));
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
+                    break;
+                default:
+                    if (onErrorHandler != null) {
+                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
+                                + "'. Update your SDK version to support new message types."));
+                    }
+                    break;
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {
