@@ -1,5 +1,7 @@
 package com.fern.java.output;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
@@ -8,8 +10,12 @@ import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.output.gradle.RootProjectGradleDependency;
+import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class GeneratedBuildGradleTest {
 
@@ -50,5 +56,73 @@ public class GeneratedBuildGradleTest {
                 .build();
 
         System.out.println(buildGradle.getContents());
+    }
+
+    @TempDir
+    Path tempDir;
+
+    private String invokeExtractLicenseFromFile(String filename) throws Exception {
+        GeneratedBuildGradle instance = GeneratedBuildGradle.builder()
+                .shouldSignPackage(false)
+                .build();
+        Method method = GeneratedBuildGradle.class.getDeclaredMethod("extractLicenseFromFile", String.class);
+        method.setAccessible(true);
+        return (String) method.invoke(instance, filename);
+    }
+
+    @Test
+    public void test_extractLicense_mitLicense() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "MIT License\n\nCopyright (c) 2024 Example Corp\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("MIT");
+    }
+
+    @Test
+    public void test_extractLicense_apacheLicense() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(
+                licenseFile, "Apache License\nVersion 2.0, January 2004\nhttp://www.apache.org/licenses/\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("Apache-2.0");
+    }
+
+    @Test
+    public void test_extractLicense_unknownLicenseReturnsCustomLicense() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "Anduril Technologies Proprietary License\nAll rights reserved.\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("Custom License");
+    }
+
+    @Test
+    public void test_extractLicense_markdownHeadingStripped() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "# MIT License\n\nCopyright (c) 2024 Example Corp\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("MIT");
+    }
+
+    @Test
+    public void test_extractLicense_markdownHeadingWithUnknownLicense() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "# Anduril Custom License\n\nSome proprietary terms.\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("Custom License");
+    }
+
+    @Test
+    public void test_extractLicense_fileNotFound() throws Exception {
+        assertThat(invokeExtractLicenseFromFile("/nonexistent/path/LICENSE"))
+                .isEqualTo("Custom License (LICENSE)");
+    }
+
+    @Test
+    public void test_extractLicense_bsd3Clause() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "BSD 3-Clause License\n\nCopyright...\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("BSD-3-Clause");
+    }
+
+    @Test
+    public void test_extractLicense_multipleMarkdownHeadings() throws Exception {
+        Path licenseFile = tempDir.resolve("LICENSE");
+        Files.writeString(licenseFile, "## Apache License\n## Version 2.0\nSome text\n");
+        assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("Apache-2.0");
     }
 }

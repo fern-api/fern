@@ -179,7 +179,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     /**
      * Reads a license file and extracts the license name. For standard licenses (Apache, MIT, etc.), returns the SPDX
-     * identifier. For custom licenses, returns the first line of the file as the license name.
+     * identifier. For unrecognized licenses, returns "Custom License".
      */
     private String extractLicenseFromFile(String filename) {
         try {
@@ -191,6 +191,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             }
 
             String content = Files.readString(licensePath);
+            // Strip leading markdown heading markers for safety
+            content = content.replaceAll("(?m)^#{1,6}\\s+", "");
             String contentLower = content.toLowerCase();
 
             if (contentLower.contains("apache license") && contentLower.contains("version 2.0")) {
@@ -210,16 +212,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             } else if (contentLower.contains("isc license")) {
                 return "ISC";
             } else {
-                String firstLine = content.lines()
-                        .filter(line -> !line.trim().isEmpty())
-                        .findFirst()
-                        .orElse("Custom License");
-
-                firstLine = firstLine.trim().replaceAll("[.:;]+$", "").replaceAll("\\s+", " ");
-
-                firstLine = firstLine.replace("'", "\\'");
-
-                return firstLine;
+                return "Custom License";
             }
         } catch (IOException e) {
             // Return a descriptive name instead of null
@@ -242,39 +235,6 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                     @Override
                     public String visitCustom(CustomLicense customLicense) {
-
-                        // First check if we have a license name passed from the CLI in custom config
-                        if (generatorConfig().isPresent()
-                                && generatorConfig().get().getCustomConfig().isPresent()) {
-                            Object customConfig =
-                                    generatorConfig().get().getCustomConfig().get();
-
-                            // Check if customConfig is a Map (which it usually is when coming from JSON)
-                            if (customConfig instanceof java.util.Map) {
-                                @SuppressWarnings("unchecked")
-                                java.util.Map<String, Object> configMap = (java.util.Map<String, Object>) customConfig;
-                                Object licenseNameObj = configMap.get("_fernLicenseName");
-                                if (licenseNameObj != null) {
-                                    String licenseName = licenseNameObj.toString();
-                                    return licenseName;
-                                }
-                            } else {
-                                // Fallback to reflection for non-Map types
-                                try {
-                                    java.lang.reflect.Field fernLicenseNameField =
-                                            customConfig.getClass().getDeclaredField("_fernLicenseName");
-                                    fernLicenseNameField.setAccessible(true);
-                                    Object value = fernLicenseNameField.get(customConfig);
-                                    if (value instanceof String && !((String) value).isEmpty()) {
-                                        return (String) value;
-                                    }
-                                } catch (Exception e) {
-                                    // Silently fall back to file extraction
-                                }
-                            }
-                        }
-
-                        // Fallback to extracting from file
                         return extractLicenseFromFile(customLicense.getFilename());
                     }
 
@@ -283,19 +243,6 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                         return null;
                     }
                 }));
-
-        // Workaround: If license is not present but publishMetadata indicates custom license,
-        // extract from description
-        if (!license.isPresent()) {
-            Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
-            if (pm.isPresent() && pm.get().getPackageDescription().isPresent()) {
-                String description = pm.get().getPackageDescription().get();
-                if (description.toLowerCase().contains("custom license")) {
-                    // Look for LICENSE file in standard locations
-                    license = Optional.of(extractLicenseFromFile("LICENSE"));
-                }
-            }
-        }
 
         Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
         String organizationName = config.getOrganization();
