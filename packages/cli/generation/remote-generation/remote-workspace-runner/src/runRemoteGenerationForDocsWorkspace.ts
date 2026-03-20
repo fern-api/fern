@@ -12,7 +12,7 @@ const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
 ];
 
 export interface CISource {
-    type: string;
+    type: "github" | "gitlab" | "bitbucket";
     repo?: string;
     runId?: string;
     runUrl?: string;

@@ -78,7 +78,7 @@ export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): R
 }
 
 interface CISource {
-    type: string;
+    type: "github" | "gitlab" | "bitbucket";
     repo?: string;
     runId?: string;
     runUrl?: string;
