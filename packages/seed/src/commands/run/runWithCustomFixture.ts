@@ -48,7 +48,7 @@ export async function runWithCustomFixture({
     if (!skipScripts) {
         scriptRunner = local
             ? new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel)
-            : new ContainerScriptRunner(workspace, skipScripts, taskContext, logLevel);
+            : new ContainerScriptRunner(workspace, skipScripts, taskContext, logLevel, undefined, 1);
     }
 
     if (local) {
