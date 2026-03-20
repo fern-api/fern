@@ -5418,8 +5418,8 @@
                                                         }
                                                     },
                                                     "jsonExample": {
-                                                        "event": "completion",
-                                                        "content": "hello"
+                                                        "content": "hello",
+                                                        "event": "completion"
                                                     }
                                                 }
                                             },
@@ -5659,8 +5659,8 @@
                                                         }
                                                     },
                                                     "jsonExample": {
-                                                        "event": "error",
-                                                        "error": "something went wrong"
+                                                        "error": "something went wrong",
+                                                        "event": "error"
                                                     }
                                                 }
                                             }
