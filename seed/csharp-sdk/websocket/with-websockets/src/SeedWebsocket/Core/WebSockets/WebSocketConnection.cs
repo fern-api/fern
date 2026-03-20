@@ -204,9 +204,11 @@ internal partial class WebSocketConnection
     /// In case of connection error it throws an exception.
     /// Fail fast approach.
     /// </summary>
-    public global::System.Threading.Tasks.Task StartOrFail()
+    public global::System.Threading.Tasks.Task StartOrFail(
+        CancellationToken cancellationToken = default
+    )
     {
-        return StartInternal(true);
+        return StartInternal(true, cancellationToken);
     }
 
     /// <summary>
@@ -232,10 +234,18 @@ internal partial class WebSocketConnection
     /// <returns>Returns true if close was initiated successfully</returns>
     public async global::System.Threading.Tasks.Task<bool> StopOrFail(
         WebSocketCloseStatus status,
-        string statusDescription
+        string statusDescription,
+        CancellationToken cancellationToken = default
     )
     {
-        var result = await StopInternal(_client, status, statusDescription, null, true, false)
+        var result = await StopInternal(
+                _client,
+                status,
+                statusDescription,
+                cancellationToken,
+                true,
+                false
+            )
             .ConfigureAwait(false);
         OnDisconnectionHappened(DisconnectionInfo.Create(DisconnectionType.ByUser, _client, null));
         return result;
@@ -260,7 +270,10 @@ internal partial class WebSocketConnection
         );
     }
 
-    private async global::System.Threading.Tasks.Task StartInternal(bool failFast)
+    private async global::System.Threading.Tasks.Task StartInternal(
+        bool failFast,
+        CancellationToken cancellationToken = default
+    )
     {
         if (_disposing)
         {
@@ -276,7 +289,10 @@ internal partial class WebSocketConnection
 
         IsStarted = true;
 
-        _cancellation = new CancellationTokenSource();
+        _cancellation =
+            cancellationToken != default
+                ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
+                : new CancellationTokenSource();
         _cancellationTotal = new CancellationTokenSource();
 
         await StartClient(Url, _cancellation.Token).ConfigureAwait(false);

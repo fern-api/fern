@@ -90,17 +90,17 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
-    public async Task ConnectAsync()
+    public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
-        await _client.ConnectAsync().ConfigureAwait(false);
+        await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously closes the WebSocket connection.
     /// </summary>
-    public async Task CloseAsync()
+    public async Task CloseAsync(CancellationToken cancellationToken = default)
     {
-        await _client.CloseAsync().ConfigureAwait(false);
+        await _client.CloseAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

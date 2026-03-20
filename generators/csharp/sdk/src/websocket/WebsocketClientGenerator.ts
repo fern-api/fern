@@ -788,6 +788,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                     this.csharp.parameter({
                         name: "message",
                         type: each.type
+                    }),
+                    this.csharp.parameter({
+                        name: "cancellationToken",
+                        type: this.System.Threading.CancellationToken,
+                        initializer: "default"
                     })
                 ],
                 doc: this.csharp.xmlDocBlockOf({
@@ -795,9 +800,13 @@ export class WebSocketClientGenerator extends WithGeneration {
                 }),
                 body: this.csharp.codeblock((writer) => {
                     if (isBinaryMessage) {
-                        writer.writeTextStatement(`await SendBinaryAsync(message).ConfigureAwait(false)`);
+                        writer.writeTextStatement(
+                            `await SendBinaryAsync(message, cancellationToken).ConfigureAwait(false)`
+                        );
                     } else {
-                        writer.writeTextStatement(`await SendJsonAsync(message).ConfigureAwait(false)`);
+                        writer.writeTextStatement(
+                            `await SendJsonAsync(message, cancellationToken).ConfigureAwait(false)`
+                        );
                     }
                 })
             });
@@ -812,6 +821,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                     this.csharp.parameter({
                         name: "message",
                         type: this.Primitive.object
+                    }),
+                    this.csharp.parameter({
+                        name: "cancellationToken",
+                        type: this.System.Threading.CancellationToken,
+                        initializer: "default"
                     })
                 ],
                 doc: this.csharp.xmlDocBlockOf({
@@ -820,7 +834,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine(`await _client.SendInstant(`);
                     writer.writeNode(this.Types.JsonUtils);
-                    writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                    writer.writeTextStatement(`.Serialize(message), cancellationToken).ConfigureAwait(false)`);
                 })
             });
         }
@@ -834,13 +848,20 @@ export class WebSocketClientGenerator extends WithGeneration {
                     this.csharp.parameter({
                         name: "message",
                         type: this.Value.binary
+                    }),
+                    this.csharp.parameter({
+                        name: "cancellationToken",
+                        type: this.System.Threading.CancellationToken,
+                        initializer: "default"
                     })
                 ],
                 doc: this.csharp.xmlDocBlockOf({
                     summary: "Sends a binary message to the server"
                 }),
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeTextStatement(`await _client.SendInstant(message).ConfigureAwait(false)`);
+                    writer.writeTextStatement(
+                        `await _client.SendInstant(message, cancellationToken).ConfigureAwait(false)`
+                    );
                 })
             });
         }
@@ -906,12 +927,19 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "ConnectAsync",
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
             // Note: Don't specify return_ for async void methods - the AST handles Task return type automatically
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously establishes a WebSocket connection."
             }),
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("await _client.ConnectAsync().ConfigureAwait(false)");
+                writer.writeTextStatement("await _client.ConnectAsync(cancellationToken).ConfigureAwait(false)");
             })
         });
     }
@@ -924,12 +952,19 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "CloseAsync",
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
             // Note: Don't specify return_ for async void methods - the AST handles Task return type automatically
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously closes the WebSocket connection."
             }),
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("await _client.CloseAsync().ConfigureAwait(false)");
+                writer.writeTextStatement("await _client.CloseAsync(cancellationToken).ConfigureAwait(false)");
             })
         });
     }

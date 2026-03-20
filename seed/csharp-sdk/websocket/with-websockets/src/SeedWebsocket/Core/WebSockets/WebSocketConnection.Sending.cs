@@ -14,9 +14,12 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public global::System.Threading.Tasks.Task SendInstant(string message)
+    public global::System.Threading.Tasks.Task SendInstant(
+        string message,
+        CancellationToken cancellationToken = default
+    )
     {
-        return SendInternalSynchronized(new RequestTextMessage(message));
+        return SendInternalSynchronized(new RequestTextMessage(message), cancellationToken);
     }
 
     /// <summary>
@@ -26,9 +29,12 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public global::System.Threading.Tasks.Task SendInstant(Memory<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(
+        Memory<byte> message,
+        CancellationToken cancellationToken = default
+    )
     {
-        return SendInternalSynchronized(message);
+        return SendInternalSynchronized(message, cancellationToken);
     }
 
     /// <summary>
@@ -38,9 +44,12 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public global::System.Threading.Tasks.Task SendInstant(ArraySegment<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(
+        ArraySegment<byte> message,
+        CancellationToken cancellationToken = default
+    )
     {
-        return SendInternalSynchronized(message);
+        return SendInternalSynchronized(message, cancellationToken);
     }
 
     /// <summary>
@@ -50,22 +59,29 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public global::System.Threading.Tasks.Task SendInstant(byte[] message)
+    public global::System.Threading.Tasks.Task SendInstant(
+        byte[] message,
+        CancellationToken cancellationToken = default
+    )
     {
-        return SendInternalSynchronized(new ArraySegment<byte>(message));
+        return SendInternalSynchronized(new ArraySegment<byte>(message), cancellationToken);
     }
 
     private async global::System.Threading.Tasks.Task SendInternalSynchronized(
-        RequestMessage message
+        RequestMessage message,
+        CancellationToken cancellationToken = default
     )
     {
         using (await _locker.LockAsync())
         {
-            await SendInternal(message);
+            await SendInternal(message, cancellationToken);
         }
     }
 
-    private async global::System.Threading.Tasks.Task SendInternal(RequestMessage message)
+    private async global::System.Threading.Tasks.Task SendInternal(
+        RequestMessage message,
+        CancellationToken cancellationToken = default
+    )
     {
         if (!IsClientConnected())
         {
@@ -93,63 +109,92 @@ internal partial class WebSocketConnection
                 throw new ArgumentException($"Unknown message type: {message.GetType()}");
         }
 
+        using var linkedCts = CreateLinkedToken(cancellationToken);
         await _client
-            .SendAsync(payload, messageType, true, _cancellation?.Token ?? CancellationToken.None)
+            .SendAsync(
+                payload,
+                messageType,
+                true,
+                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
+            )
             .ConfigureAwait(false);
     }
 
     private async global::System.Threading.Tasks.Task SendInternalSynchronized(
-        ArraySegment<byte> message
+        ArraySegment<byte> message,
+        CancellationToken cancellationToken = default
     )
     {
         using (await _locker.LockAsync())
         {
-            await SendInternal(message);
+            await SendInternal(message, cancellationToken);
         }
     }
 
-    private async global::System.Threading.Tasks.Task SendInternalSynchronized(Memory<byte> message)
+    private async global::System.Threading.Tasks.Task SendInternalSynchronized(
+        Memory<byte> message,
+        CancellationToken cancellationToken = default
+    )
     {
         using (await _locker.LockAsync())
         {
-            await SendInternal(message);
+            await SendInternal(message, cancellationToken);
         }
     }
 
-    private async global::System.Threading.Tasks.Task SendInternal(ArraySegment<byte> payload)
+    private async global::System.Threading.Tasks.Task SendInternal(
+        ArraySegment<byte> payload,
+        CancellationToken cancellationToken = default
+    )
     {
         if (!IsClientConnected())
         {
             return;
         }
 
+        using var linkedCts = CreateLinkedToken(cancellationToken);
         await _client
             .SendAsync(
                 payload,
                 WebSocketMessageType.Binary,
                 true,
-                _cancellation?.Token ?? CancellationToken.None
+                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
             )
             .ConfigureAwait(false);
     }
 
-    private async global::System.Threading.Tasks.Task SendInternal(ReadOnlyMemory<byte> payload)
+    private async global::System.Threading.Tasks.Task SendInternal(
+        ReadOnlyMemory<byte> payload,
+        CancellationToken cancellationToken = default
+    )
     {
         if (!IsClientConnected())
         {
             return;
         }
+
+        using var linkedCts = CreateLinkedToken(cancellationToken);
+        var token = linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None);
 #if NET6_0_OR_GREATER
         await _client
-            .SendAsync(
-                payload,
-                WebSocketMessageType.Binary,
-                true,
-                _cancellation?.Token ?? CancellationToken.None
-            )
+            .SendAsync(payload, WebSocketMessageType.Binary, true, token)
             .ConfigureAwait(false);
 #else
-        await SendInternal(new ArraySegment<byte>(payload.ToArray())).ConfigureAwait(false);
+        await SendInternal(new ArraySegment<byte>(payload.ToArray()), cancellationToken)
+            .ConfigureAwait(false);
 #endif
+    }
+
+    private CancellationTokenSource? CreateLinkedToken(CancellationToken cancellationToken)
+    {
+        if (cancellationToken == default)
+        {
+            return null;
+        }
+
+        var internalToken = _cancellation?.Token ?? CancellationToken.None;
+        return internalToken != CancellationToken.None
+            ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, internalToken)
+            : CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
     }
 }
