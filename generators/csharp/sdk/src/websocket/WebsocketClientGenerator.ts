@@ -416,6 +416,16 @@ export class WebSocketClientGenerator extends WithGeneration {
             });
         }
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("EnableCompression"),
+            access: ast.Access.Public,
+            type: this.Primitive.boolean,
+            summary: "Enable per-message deflate compression (RFC 7692). Default: false.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("false")
+        });
+
         for (const queryParameter of this.websocketChannel.queryParameters) {
             // add to the options class
             const type = this.context.csharpTypeMapper.convert({
@@ -939,6 +949,12 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: "Asynchronously establishes a WebSocket connection."
             }),
             body: this.csharp.codeblock((writer) => {
+                writer.writeLine("if (_options.EnableCompression)");
+                writer.pushScope();
+                writer.writeTextStatement(
+                    "_client.DeflateOptions = new System.Net.WebSockets.WebSocketDeflateOptions()"
+                );
+                writer.popScope();
                 writer.writeTextStatement("await _client.ConnectAsync(cancellationToken).ConfigureAwait(false)");
             })
         });
