@@ -546,21 +546,21 @@ function convertExampleResponse({
                 ExampleEndpointSuccessResponse.sse(
                     example.stream
                         .map(({ event, data }) => {
-                            if (rawTypeBeingExemplified == null) {
+                            if (rawTypeBeingExemplified == null || data == null) {
                                 return undefined;
                             }
-
-                            // Skip SSE events that have no data payload — they cannot be
-                            // converted into a typed example and would cause convertTypeReferenceExample
-                            // to throw (e.g., event-only lines like `event: heartbeat` with no data).
-                            if (data == null) {
-                                return undefined;
-                            }
+                            // Default to empty string when no event field is provided
+                            // (e.g. data-level discriminated unions where the SSE event
+                            // name is not meaningful).
+                            const eventName = event ?? "";
 
                             // For protocol-discriminated unions, the discriminant travels as the SSE
                             // `event:` field rather than inside the data payload. Inject the event
                             // value as the discriminant key so that convertTypeReferenceExample can
-                            // resolve the correct union variant.
+                            // resolve the correct union variant. The injected value must take
+                            // precedence over any same-named property already present in the data
+                            // (e.g. when a variant itself has a property that shadows the
+                            // discriminant name).
                             let effectiveData: RawSchemas.ExampleTypeReferenceSchema = data;
                             const resolvedType = typeResolver.resolveType({
                                 type: rawTypeBeingExemplified,
@@ -573,13 +573,10 @@ function convertExampleResponse({
                                 resolvedType.declaration.discriminant?.context === "protocol"
                             ) {
                                 const discriminantField = getUnionDiscriminant(resolvedType.declaration);
-                                if (
-                                    isPlainObject(data) &&
-                                    (data as Record<string, unknown>)[discriminantField] == null
-                                ) {
+                                if (isPlainObject(data)) {
                                     effectiveData = {
-                                        [discriminantField]: event,
-                                        ...(data as Record<string, unknown>)
+                                        ...(data as Record<string, unknown>),
+                                        [discriminantField]: eventName
                                     };
                                 }
                             }
@@ -594,7 +591,7 @@ function convertExampleResponse({
                                 workspace
                             });
 
-                            return { event, data: convertedExample };
+                            return { event: eventName, data: convertedExample };
                         })
                         .filter(isNonNullish)
                 )

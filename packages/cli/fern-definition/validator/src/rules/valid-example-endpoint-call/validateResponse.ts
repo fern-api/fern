@@ -246,9 +246,12 @@ function validateSseResponse({
         }
 
         for (const event of example.stream) {
+            if (event.data == null) {
+                continue;
+            }
             const exampleData =
                 isProtocolDiscriminated && discriminantName != null && isPlainObject(event.data)
-                    ? { [discriminantName]: event.event, ...(event.data as Record<string, unknown>) }
+                    ? { ...(event.data as Record<string, unknown>), [discriminantName]: event.event }
                     : event.data;
 
             violations.push(

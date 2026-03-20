@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.36.1
+  changelogEntry:
+    - summary: |
+        Fix IR generation for SSE endpoint examples with protocol-discriminated unions.
+        The injected discriminant value from the SSE `event:` field now takes precedence
+        over any same-named property in the data payload (reversed spread order). Also
+        skip SSE events with missing data and default the event name to an empty string
+        when not provided in the example definition.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 4.36.0
   changelogEntry:
     - summary: |
