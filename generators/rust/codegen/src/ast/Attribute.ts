@@ -132,4 +132,10 @@ export class Attribute extends AstNode {
                 args: ["transparent"]
             })
     };
+
+    public static nonExhaustive(): Attribute {
+        return new Attribute({
+            name: "non_exhaustive"
+        });
+    }
 }
