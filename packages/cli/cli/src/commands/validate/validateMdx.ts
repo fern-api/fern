@@ -9,7 +9,9 @@ import grayMatter from "gray-matter";
 
 interface MdxValidationError {
     filepath: AbsoluteFilePath;
-    error: string;
+    message: string;
+    line?: number;
+    column?: number;
 }
 
 export async function validateMdxFiles({
@@ -47,25 +49,35 @@ export async function validateMdxFiles({
             const contentLines = contentWithoutFrontmatter.split("\n").length;
             const frontmatterLineCount = totalLines - contentLines;
 
-            let errorMessage = error instanceof Error ? error.message : String(error);
+            const message = error instanceof Error ? error.message : String(error);
+            let line: number | undefined;
+            let column: number | undefined;
 
             if (error && typeof error === "object") {
                 const errorObj = error as {
+                    line?: number;
+                    column?: number;
                     place?: { line?: number; column?: number };
                     position?: { start?: { line?: number; column?: number } };
                 };
-                if (errorObj.place?.line != null && errorObj.place?.column != null) {
-                    const adjustedLine = errorObj.place.line + frontmatterLineCount;
-                    errorMessage = `${adjustedLine}:${errorObj.place.column} ${errorMessage}`;
-                } else if (errorObj.position?.start?.line != null && errorObj.position?.start?.column != null) {
-                    const adjustedLine = errorObj.position.start.line + frontmatterLineCount;
-                    errorMessage = `${adjustedLine}:${errorObj.position.start.column} ${errorMessage}`;
+
+                if (errorObj.line != null) {
+                    line = errorObj.line + frontmatterLineCount;
+                    column = errorObj.column;
+                } else if (errorObj.place?.line != null) {
+                    line = errorObj.place.line + frontmatterLineCount;
+                    column = errorObj.place.column;
+                } else if (errorObj.position?.start?.line != null) {
+                    line = errorObj.position.start.line + frontmatterLineCount;
+                    column = errorObj.position.start.column;
                 }
             }
 
             errors.push({
                 filepath,
-                error: errorMessage
+                message,
+                line,
+                column
             });
         }
     }
@@ -73,34 +85,17 @@ export async function validateMdxFiles({
     return { errors, totalFiles: filesToCheck.length };
 }
 
-function extractLineColumn(error: string): { line?: number; column?: number } {
-    const match = error.match(/(?:at )?(\d+):(\d+)/);
-    if (match && match[1] && match[2]) {
-        return {
-            line: parseInt(match[1], 10),
-            column: parseInt(match[2], 10)
-        };
-    }
-    return {};
-}
+function formatErrorWithContext(error: MdxValidationError): string {
+    let formatted = chalk.red(`\n  ${error.filepath}`);
 
-function formatErrorWithContext(filepath: AbsoluteFilePath, error: string): string {
-    const { line, column } = extractLineColumn(error);
-
-    let formatted = chalk.red(`\n  ${filepath}`);
-
-    if (line != null) {
-        formatted += chalk.yellow(`:${line}`);
-        if (column != null) {
-            formatted += chalk.yellow(`:${column}`);
+    if (error.line != null) {
+        formatted += chalk.yellow(`:${error.line}`);
+        if (error.column != null) {
+            formatted += chalk.yellow(`:${error.column}`);
         }
     }
 
-    let cleanError = error;
-    cleanError = cleanError.replace(/\s*at \d+:\d+/, "");
-    cleanError = cleanError.replace(/^\d+:\d+\s*/, "");
-
-    formatted += chalk.gray(`\n    ${cleanError}`);
+    formatted += chalk.gray(`\n    ${error.message}`);
 
     return formatted;
 }
@@ -119,8 +114,8 @@ export function logMdxValidationResults({
         return;
     }
 
-    for (const { filepath, error } of errors) {
-        context.logger.error(formatErrorWithContext(filepath, error));
+    for (const error of errors) {
+        context.logger.error(formatErrorWithContext(error));
     }
 
     context.logger.error("");
