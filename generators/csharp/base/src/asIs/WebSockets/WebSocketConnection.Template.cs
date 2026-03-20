@@ -40,7 +40,7 @@ internal partial class WebSocketConnection
     /// A simple websocket client with built-in reconnection and error handling
     /// </summary>
     /// <param name="url">Target websocket url (wss://)</param>
-    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc)</param>
+    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc). Note: when providing a factory, you are responsible for configuring keep-alive on the returned ClientWebSocket instance.</param>
     public WebSocketConnection(Uri url, Func<ClientWebSocket>? clientFactory = null)
         : this(url, null, GetClientFactory(clientFactory)) { }
 
@@ -49,7 +49,7 @@ internal partial class WebSocketConnection
     /// </summary>
     /// <param name="url">Target websocket url (wss://)</param>
     /// <param name="logger">Logger instance, can be null</param>
-    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc)</param>
+    /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc). Note: when providing a factory, you are responsible for configuring keep-alive on the returned ClientWebSocket instance.</param>
     public WebSocketConnection(
         Uri url,
         ILogger<WebSocketConnection> logger,
@@ -76,16 +76,10 @@ internal partial class WebSocketConnection
             ?? (
                 async (uri, token) =>
                 {
-                    //var client = new ClientWebSocket
-                    //{
-                    //    Options = { KeepAliveInterval = new TimeSpan(0, 0, 5, 0) }
-                    //};
                     var client = new ClientWebSocket();
-#if NET6_0_OR_GREATER
-                    if (DeflateOptions != null)
-                    {
-                        client.Options.DangerousDeflateOptions = DeflateOptions;
-                    }
+                    client.Options.KeepAliveInterval = KeepAliveInterval;
+#if NET9_0_OR_GREATER
+                    client.Options.KeepAliveTimeout = KeepAliveTimeout;
 #endif
                     await client.ConnectAsync(uri, token).ConfigureAwait(false);
                     return client;
@@ -95,23 +89,18 @@ internal partial class WebSocketConnection
 
     public Uri Url { get; set; }
 
-#if NET6_0_OR_GREATER
     /// <summary>
-    /// Optional per-message deflate compression options (RFC 7692).
-    /// When set, the <see cref="ClientWebSocket" /> created by the default connection factory
-    /// assigns this value to <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
-    /// Compression is negotiated during the WebSocket handshake; if the server does not
-    /// support it, the connection proceeds without compression.
-    /// <para>
-    /// <b>Security warning:</b> Do not enable compression when transmitting data that
-    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
-    /// side-channel attacks.
-    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
-    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
-    /// </para>
+    /// Interval for sending keep-alive frames. Default: 30 seconds.
+    /// Set to TimeSpan.Zero to disable keep-alive.
     /// </summary>
-    public WebSocketDeflateOptions? DeflateOptions { get; set; }
-#endif
+    public TimeSpan KeepAliveInterval { get; set; } = WebSocket.DefaultKeepAliveInterval;
+
+    /// <summary>
+    /// Timeout for expecting a PONG response to a PING keep-alive frame (.NET 9+).
+    /// Set to a positive finite TimeSpan to enable PING/PONG keep-alive strategy.
+    /// Default: 20 seconds.
+    /// </summary>
+    public TimeSpan KeepAliveTimeout { get; set; } = TimeSpan.FromSeconds(20);
 
     public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
     public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }

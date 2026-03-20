@@ -2,12 +2,11 @@
 - version: 2.40.0
   changelogEntry:
     - summary: |
-        Add per-message deflate compression support (RFC 7692) for WebSocket connections.
-        A new `EnableCompression` option on the generated WebSocket Options class enables
-        `WebSocketDeflateOptions` via `ClientWebSocketOptions.DangerousDeflateOptions`.
-        This can significantly reduce bandwidth for text-heavy (JSON) WebSocket APIs.
-        Warning: Do not use compression when sending data containing secrets
-        (CRIME/BREACH vulnerability).
+        Configure PING/PONG keep-alive on `ClientWebSocket`. The default connection factory
+        now sets `KeepAliveInterval` (default: 30 s) and, on .NET 9+, `KeepAliveTimeout`
+        (default: 20 s) to enable the PING/PONG keep-alive strategy that detects unresponsive
+        servers at the transport level. Both values are exposed as public properties on
+        `WebSocketConnection` for caller customization.
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
