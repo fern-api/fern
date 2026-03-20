@@ -1,4 +1,4 @@
-use chrono::{DateTime, TimeZone, Utc};
+use chrono::{DateTime, TimeZone};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
