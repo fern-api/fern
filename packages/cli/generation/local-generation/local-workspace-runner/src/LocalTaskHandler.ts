@@ -921,13 +921,16 @@ export class LocalTaskHandler {
      * (case-insensitive). This lets API authors force a specific version bump level
      * when the AI analysis might not detect the intent correctly.
      */
-    private parseVersionBumpOverride(specCommitMessage: string | null): "MAJOR" | "MINOR" | "PATCH" | null {
+    private parseVersionBumpOverride(specCommitMessage: string | null): VersionBump | null {
         if (specCommitMessage == null) {
             return null;
         }
         const match = specCommitMessage.match(/^version-bump:\s*(MAJOR|MINOR|PATCH)\s*$/im);
         if (match?.[1] != null) {
-            return match[1].toUpperCase() as "MAJOR" | "MINOR" | "PATCH";
+            const val = match[1].toUpperCase();
+            if (val === "MAJOR") return VersionBump.MAJOR;
+            if (val === "MINOR") return VersionBump.MINOR;
+            if (val === "PATCH") return VersionBump.PATCH;
         }
         return null;
     }
