@@ -35,6 +35,7 @@ internal partial class WebSocketConnection
     private WebSocket _client;
     private CancellationTokenSource _cancellation;
     private CancellationTokenSource _cancellationTotal;
+    private readonly Func<ClientWebSocket>? _clientFactory;
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
@@ -42,7 +43,7 @@ internal partial class WebSocketConnection
     /// <param name="url">Target websocket url (wss://)</param>
     /// <param name="clientFactory">Optional factory for native ClientWebSocket, use it whenever you need some custom features (proxy, settings, etc). Note: when providing a factory, you are responsible for configuring keep-alive on the returned ClientWebSocket instance.</param>
     public WebSocketConnection(Uri url, Func<ClientWebSocket>? clientFactory = null)
-        : this(url, null, GetClientFactory(clientFactory)) { }
+        : this(url, null, null, clientFactory) { }
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
@@ -55,7 +56,7 @@ internal partial class WebSocketConnection
         ILogger<WebSocketConnection> logger,
         Func<ClientWebSocket>? clientFactory = null
     )
-        : this(url, logger, GetClientFactory(clientFactory)) { }
+        : this(url, logger, null, clientFactory) { }
 
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling
@@ -72,15 +73,28 @@ internal partial class WebSocketConnection
             global::System.Threading.Tasks.Task<WebSocket>
         > connectionFactory
     )
+        : this(url, logger, connectionFactory, null) { }
+
+    private WebSocketConnection(
+        Uri url,
+        ILogger<WebSocketConnection> logger,
+        Func<
+            Uri,
+            CancellationToken,
+            global::System.Threading.Tasks.Task<WebSocket>
+        > connectionFactory,
+        Func<ClientWebSocket>? clientFactory
+    )
     {
         _logger = logger ?? NullLogger<WebSocketConnection>.Instance;
         Url = url;
+        _clientFactory = clientFactory;
         _connectionFactory =
             connectionFactory
             ?? (
                 async (uri, token) =>
                 {
-                    var client = new ClientWebSocket();
+                    var client = _clientFactory != null ? _clientFactory() : new ClientWebSocket();
                     client.Options.KeepAliveInterval = KeepAliveInterval;
 #if NET9_0_OR_GREATER
                     client.Options.KeepAliveTimeout = KeepAliveTimeout;
@@ -286,25 +300,6 @@ internal partial class WebSocketConnection
             .ConfigureAwait(false);
         OnDisconnectionHappened(DisconnectionInfo.Create(DisconnectionType.ByUser, _client, null));
         return result;
-    }
-
-    private static Func<
-        Uri,
-        CancellationToken,
-        global::System.Threading.Tasks.Task<WebSocket>
-    > GetClientFactory(Func<ClientWebSocket> clientFactory)
-    {
-        if (clientFactory is null)
-            return null;
-
-        return (
-            async (uri, token) =>
-            {
-                var client = clientFactory();
-                await client.ConnectAsync(uri, token).ConfigureAwait(false);
-                return client;
-            }
-        );
     }
 
     private async global::System.Threading.Tasks.Task StartInternal(
