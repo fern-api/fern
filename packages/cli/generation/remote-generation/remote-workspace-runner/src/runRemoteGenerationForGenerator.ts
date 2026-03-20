@@ -40,7 +40,8 @@ export async function runRemoteGenerationForGenerator({
     readme,
     fernignorePath,
     dynamicIrOnly,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -58,6 +59,7 @@ export async function runRemoteGenerationForGenerator({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -68,12 +70,13 @@ export async function runRemoteGenerationForGenerator({
 
     /** Sugar to substitute templated env vars in a standard way */
     const isPreview = absolutePathToPreview != null;
+    const shouldSubstituteAsEmpty = isPreview || !requireEnvVars;
 
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
             { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-            { substituteAsEmpty: isPreview }
+            { substituteAsEmpty: shouldSubstituteAsEmpty }
         );
 
     const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);

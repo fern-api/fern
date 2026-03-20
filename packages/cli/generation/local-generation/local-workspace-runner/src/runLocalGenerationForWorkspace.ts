@@ -46,7 +46,8 @@ export async function runLocalGenerationForWorkspace({
     ai,
     replay,
     noReplay,
-    validateWorkspace
+    validateWorkspace,
+    requireEnvVars
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -62,6 +63,7 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    requireEnvVars?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -89,8 +91,13 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const shouldSubstituteAsEmpty = absolutePathToPreview != null || !(requireEnvVars ?? true);
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+                        { substituteAsEmpty: shouldSubstituteAsEmpty }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
