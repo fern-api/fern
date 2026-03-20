@@ -1,4 +1,5 @@
 import datetime as dt
+import enum
 import inspect
 import typing
 import uuid
@@ -335,6 +336,12 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
             return bool(object_)
         except Exception:
+            return object_
+
+    if inspect.isclass(base_type) and issubclass(base_type, enum.Enum):
+        try:
+            return base_type(object_)
+        except (ValueError, KeyError):
             return object_
 
     return object_

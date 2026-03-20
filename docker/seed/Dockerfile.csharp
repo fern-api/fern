@@ -27,7 +27,7 @@ WORKDIR /
 RUN dotnet tool install -g csharpier --version "1.2.6" && \
     echo '<Project Sdk="Microsoft.NET.Sdk"> \
   <PropertyGroup> \
-      <TargetFrameworks>net462;net8.0;netstandard2.0</TargetFrameworks> \
+      <TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks> \
   </PropertyGroup> \
   <ItemGroup> \
       <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" /> \
