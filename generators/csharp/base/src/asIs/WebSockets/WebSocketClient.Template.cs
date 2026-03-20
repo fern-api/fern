@@ -80,6 +80,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
     public ConnectionStatus Status
@@ -260,6 +268,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 #endif
             HttpInvoker = HttpInvoker,
             ConnectTimeout = ConnectTimeout,
+            SendTimeout = SendTimeout,
             IsReconnectionEnabled = IsReconnectionEnabled,
             ReconnectTimeout = ReconnectTimeout,
             ErrorReconnectTimeout = ErrorReconnectTimeout,

@@ -170,6 +170,14 @@ internal partial class WebSocketConnection
     public TimeSpan? LostReconnectTimeout { get; set; }
 
     /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// How often to check the WebSocket state for silent disconnections.
     /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
     /// See: https://github.com/dotnet/runtime/issues/110496
