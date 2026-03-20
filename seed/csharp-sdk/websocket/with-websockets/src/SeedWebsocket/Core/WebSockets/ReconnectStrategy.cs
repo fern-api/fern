@@ -1,6 +1,6 @@
 // ReSharper disable All
 #pragma warning disable
-namespace <%= namespace%>.WebSockets;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Configures the backoff strategy for automatic reconnection.
@@ -57,7 +57,9 @@ internal class ReconnectStrategy
             _currentInterval = TimeSpan.FromMilliseconds(
                 Math.Min(
                     _currentInterval.TotalMilliseconds * 2,
-                    MaxReconnectInterval.TotalMilliseconds));
+                    MaxReconnectInterval.TotalMilliseconds
+                )
+            );
         }
 
         _attemptsMade++;
@@ -84,6 +86,5 @@ internal class ReconnectStrategy
     /// <summary>
     /// Returns true if the maximum number of attempts has been reached.
     /// </summary>
-    public bool AreAttemptsExhausted =>
-        MaxAttempts.HasValue && _attemptsMade >= MaxAttempts.Value;
+    public bool AreAttemptsExhausted => MaxAttempts.HasValue && _attemptsMade >= MaxAttempts.Value;
 }

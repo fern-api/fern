@@ -181,6 +181,14 @@ internal partial class WebSocketConnection
     /// </summary>
     public TimeSpan? LostReconnectTimeout { get; set; }
 
+    /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
@@ -708,10 +716,52 @@ internal partial class WebSocketConnection
             return;
         }
 
+        // Consult backoff strategy for delay
+        if (Backoff != null)
+        {
+            var delay = Backoff.GetNextDelay();
+            if (delay == null)
+            {
+                // Max attempts exhausted
+                _logger.LogWarning(
+                    "Reconnection attempts exhausted after {Attempts} tries",
+                    Backoff.MaxAttempts
+                );
+                IsStarted = false;
+                _reconnecting = false;
+                var info = new DisconnectionInfo(
+                    DisconnectionType.Exit,
+                    null,
+                    null,
+                    null,
+                    causedException
+                );
+                await OnDisconnectionHappened(info).ConfigureAwait(false);
+                return;
+            }
+
+            try
+            {
+                await global::System
+                    .Threading.Tasks.Task.Delay(
+                        delay.Value,
+                        _cancellationTotal?.Token ?? CancellationToken.None
+                    )
+                    .ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                _reconnecting = false;
+                return;
+            }
+        }
+
         _cancellation = new CancellationTokenSource();
         await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
         if (IsRunning)
         {
+            // Reset backoff on successful reconnection
+            Backoff?.Reset();
             await OnReconnectionHappened(ReconnectionInfo.Create(type)).ConfigureAwait(false);
         }
         _reconnecting = false;

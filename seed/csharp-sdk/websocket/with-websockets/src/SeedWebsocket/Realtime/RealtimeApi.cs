@@ -93,6 +93,7 @@ public partial class RealtimeApi
         _client.ReconnectTimeout = _options.ReconnectTimeout;
         _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
         _client.LostReconnectTimeout = _options.LostReconnectTimeout;
+        _client.Backoff = _options.ReconnectBackoff;
     }
 
     /// <summary>
@@ -341,5 +342,10 @@ public partial class RealtimeApi
         /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
         /// </summary>
         public TimeSpan? LostReconnectTimeout { get; set; }
+
+        /// <summary>
+        /// Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. Set to null to use fixed-interval reconnection (legacy behavior). Default: exponential backoff, 1s→60s, unlimited attempts, with jitter.
+        /// </summary>
+        public ReconnectStrategy? ReconnectBackoff { get; set; } = new ReconnectStrategy();
     }
 }

@@ -644,8 +644,8 @@ internal partial class WebSocketConnection
                     Backoff.MaxAttempts);
                 IsStarted = false;
                 _reconnecting = false;
-                var info = DisconnectionInfo.Create(
-                    DisconnectionType.Exit, _client, causedException);
+                var info = new DisconnectionInfo(
+                    DisconnectionType.Exit, null, null, null, causedException);
                 await OnDisconnectionHappened(info).ConfigureAwait(false);
                 return;
             }
