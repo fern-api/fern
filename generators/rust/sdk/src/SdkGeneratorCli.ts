@@ -317,6 +317,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateCoreModFile(context: SdkGeneratorContext): RustFile {
         const hasStreaming = context.hasStreamingEndpoints();
         const hasWebSocket = context.hasWebSocketChannels();
+        const hasDateTime = context.usesDateTime();
+        const hasBase64 = context.usesBase64();
+        const hasBigInteger = context.usesBigInteger();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -334,9 +337,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
-        lines.push("pub mod flexible_datetime;");
-        lines.push("pub mod base64_bytes;");
-        lines.push("pub mod bigint_string;");
+        if (hasDateTime) {
+            lines.push("pub mod flexible_datetime;");
+        }
+        if (hasBase64) {
+            lines.push("pub mod base64_bytes;");
+        }
+        if (hasBigInteger) {
+            lines.push("pub mod bigint_string;");
+        }
         lines.push("");
         lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
