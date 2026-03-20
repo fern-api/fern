@@ -97,9 +97,18 @@ internal partial class WebSocketConnection
 
 #if NET6_0_OR_GREATER
     /// <summary>
-    /// Optional per-message deflate compression options.
-    /// When set, enables WebSocket compression (RFC 7692).
-    /// Warning: Do not use compression when sending data containing secrets (CRIME/BREACH vulnerability).
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, the <see cref="ClientWebSocket" /> created by the default connection factory
+    /// assigns this value to <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
     /// </summary>
     public WebSocketDeflateOptions? DeflateOptions { get; set; }
 #endif

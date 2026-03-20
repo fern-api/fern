@@ -502,7 +502,16 @@ export class WebSocketClientGenerator extends WithGeneration {
             origin: optionsClass.explicit("EnableCompression"),
             access: ast.Access.Public,
             type: this.Primitive.boolean,
-            summary: "Enable per-message deflate compression (RFC 7692). Default: false.",
+            summary:
+                "Enable per-message deflate compression (RFC 7692). " +
+                "When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> " +
+                "before connecting. Compression is negotiated during the handshake; if the server " +
+                "does not support it, the connection proceeds uncompressed. " +
+                "Default: <c>false</c>.\n" +
+                "<para><b>Security warning:</b> do not enable compression when transmitting data " +
+                "containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH " +
+                'side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">' +
+                "ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>",
             get: true,
             set: true,
             initializer: this.csharp.codeblock("false")
