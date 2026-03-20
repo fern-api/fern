@@ -97,6 +97,12 @@ internal partial class WebSocketConnection
                 {
                     var client = _clientFactory != null ? _clientFactory() : new ClientWebSocket();
                     client.Options.KeepAliveInterval = KeepAliveInterval;
+#if NET6_0_OR_GREATER
+                    if (DeflateOptions != null)
+                    {
+                        client.Options.DangerousDeflateOptions = DeflateOptions;
+                    }
+#endif
 #if NET9_0_OR_GREATER
                     client.Options.KeepAliveTimeout = KeepAliveTimeout;
 #endif
@@ -144,6 +150,24 @@ internal partial class WebSocketConnection
     /// Default: 20 seconds.
     /// </summary>
     public TimeSpan KeepAliveTimeout { get; set; } = TimeSpan.FromSeconds(20);
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, the <see cref="ClientWebSocket" /> created by the default connection factory
+    /// assigns this value to <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
 
     public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
     public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }

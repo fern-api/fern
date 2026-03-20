@@ -97,6 +97,12 @@ public partial class EmptyRealtimeApi
     /// </summary>
     public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
+#if NET6_0_OR_GREATER
+        if (_options.EnableCompression)
+        {
+            _client.DeflateOptions = new System.Net.WebSockets.WebSocketDeflateOptions();
+        }
+#endif
         await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
     }
 
@@ -137,6 +143,12 @@ public partial class EmptyRealtimeApi
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Enable per-message deflate compression (RFC 7692). When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> before connecting. Compression is negotiated during the handshake; if the server does not support it, the connection proceeds uncompressed. Default: <c>false</c>.
+        /// <para><b>Security warning:</b> do not enable compression when transmitting data containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>
+        /// </summary>
+        public bool EnableCompression { get; set; } = false;
 
         /// <summary>
         /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).

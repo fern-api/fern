@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add per-message deflate compression support (RFC 7692) for WebSocket connections.
+        A new `EnableCompression` option on the generated WebSocket Options class enables
+        `WebSocketDeflateOptions` via `ClientWebSocketOptions.DangerousDeflateOptions`.
+        This can significantly reduce bandwidth for text-heavy (JSON) WebSocket APIs.
+        Warning: Do not use compression when sending data containing secrets
+        (CRIME/BREACH vulnerability).
+        See https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions
+        for details.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.42.0
   changelogEntry:
     - summary: |
