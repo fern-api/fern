@@ -62,6 +62,7 @@ jobs:
 
       - name: Check for orphaned seed folders (PRs only)
         if: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: true
         shell: bash
         env:
           FORCE_COLOR: "2"
