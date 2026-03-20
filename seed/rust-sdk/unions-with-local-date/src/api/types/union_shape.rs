@@ -19,7 +19,7 @@ pub enum Shape {
 }
 
 impl Shape {
-    pub fn get_id(&self) -> &String {
+    pub fn get_id(&self) -> &str {
         match self {
             Self::Circle { id, .. } => id,
             Self::Square { id, .. } => id,

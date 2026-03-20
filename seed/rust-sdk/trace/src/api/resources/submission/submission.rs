@@ -49,7 +49,7 @@ impl SubmissionClient {
     /// JSON response from the API
     pub async fn get_execution_session(
         &self,
-        session_id: &String,
+        session_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Option<ExecutionSessionResponse>, ApiError> {
         self.http_client
@@ -74,7 +74,7 @@ impl SubmissionClient {
     /// Empty response
     pub async fn stop_execution_session(
         &self,
-        session_id: &String,
+        session_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

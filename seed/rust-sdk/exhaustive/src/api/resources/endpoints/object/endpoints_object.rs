@@ -79,7 +79,7 @@ impl ObjectClient {
 
     pub async fn get_and_return_nested_with_required_field(
         &self,
-        string: &String,
+        string: &str,
         request: &NestedObjectWithRequiredField,
         options: Option<RequestOptions>,
     ) -> Result<NestedObjectWithRequiredField, ApiError> {

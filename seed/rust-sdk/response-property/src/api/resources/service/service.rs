@@ -15,7 +15,7 @@ impl ServiceClient {
 
     pub async fn get_movie(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         self.http_client
@@ -31,7 +31,7 @@ impl ServiceClient {
 
     pub async fn get_movie_docs(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         self.http_client
@@ -47,7 +47,7 @@ impl ServiceClient {
 
     pub async fn get_movie_name(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<StringResponse, ApiError> {
         self.http_client
@@ -63,7 +63,7 @@ impl ServiceClient {
 
     pub async fn get_movie_metadata(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         self.http_client
@@ -79,7 +79,7 @@ impl ServiceClient {
 
     pub async fn get_optional_movie(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<Option<Response>, ApiError> {
         self.http_client
@@ -95,7 +95,7 @@ impl ServiceClient {
 
     pub async fn get_optional_movie_docs(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<OptionalWithDocs, ApiError> {
         self.http_client
@@ -111,7 +111,7 @@ impl ServiceClient {
 
     pub async fn get_optional_movie_name(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<OptionalStringResponse, ApiError> {
         self.http_client

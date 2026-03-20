@@ -285,7 +285,10 @@ export class UndiscriminatedUnionGenerator {
                 generatedMethods.add(methodName);
                 generatedMethods.add(ownedMethodName);
 
-                writer.writeBlock(`pub fn ${methodName}(&self) -> Option<&${memberType.toString()}>`, () => {
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                const borrowedType = memberType.toString() === "String" ? "&str" : `&${memberType.toString()}`;
+
+                writer.writeBlock(`pub fn ${methodName}(&self) -> Option<${borrowedType}>`, () => {
                     writer.writeLine("match self {");
                     writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
                     writer.writeLine("            _ => None,");

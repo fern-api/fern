@@ -38,7 +38,7 @@ impl ExamplesClient {
 
     pub async fn echo(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
