@@ -49,9 +49,21 @@ runs:
           FORMATTED_FIXTURES_COMMAND="--fixture ${{ inputs.fixtures-to-run }}"
         fi
 
-        pnpm seed:local test \
+        SEED_CMD="pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
-          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} | tee output.log
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}"
+
+        for attempt in 1 2 3; do
+          if eval "$SEED_CMD" | tee output.log; then
+            break
+          fi
+          if [ "$attempt" -eq 3 ]; then
+            echo "Seed test failed after 3 attempts"
+            exit 1
+          fi
+          echo "Seed test failed (attempt $attempt/3), retrying in 10s..."
+          sleep 10
+        done

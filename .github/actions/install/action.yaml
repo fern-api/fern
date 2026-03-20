@@ -31,4 +31,13 @@ runs:
 
     - name: 📥 Install dependencies
       shell: bash
-      run: pnpm install
+      run: |
+        for attempt in 1 2 3; do
+          pnpm install && break
+          if [ "$attempt" -eq 3 ]; then
+            echo "pnpm install failed after 3 attempts"
+            exit 1
+          fi
+          echo "pnpm install failed (attempt $attempt/3), retrying in 10s..."
+          sleep 10
+        done
