@@ -36,6 +36,8 @@ internal sealed class TestWebSocketServer : IAsyncDisposable
     /// </summary>
     public Action? OnClientDisconnected { get; set; }
 
+    private TaskCompletionSource<bool>? _clientConnectedTcs;
+
     public int Port { get; }
     public Uri Uri => new($"ws://localhost:{Port}/");
 
@@ -103,6 +105,7 @@ internal sealed class TestWebSocketServer : IAsyncDisposable
     {
         lock (_clientsLock)
             _connectedClients.Add(ws);
+        _clientConnectedTcs?.TrySetResult(true);
         OnClientConnected?.Invoke();
 
         try
@@ -278,6 +281,16 @@ internal sealed class TestWebSocketServer : IAsyncDisposable
                 // Client may already be closed
             }
         }
+    }
+
+    /// <summary>
+    /// Returns a task that completes when the next client connects.
+    /// Call this BEFORE the client connects to avoid race conditions.
+    /// </summary>
+    public Task WaitForClientAsync()
+    {
+        _clientConnectedTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        return _clientConnectedTcs.Task;
     }
 
     public async ValueTask DisposeAsync()

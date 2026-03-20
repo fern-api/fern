@@ -11,8 +11,10 @@ namespace SeedWebsocket.Test.Core.WebSockets;
 /// that span connect → send → receive → reconnect → close flows.
 /// </summary>
 [TestFixture]
+[Parallelizable(ParallelScope.Children)]
 public class E2eWebSocketTests
 {
+    private const int TimeoutMs = 3000;
     // ───────────────────────────────────────────────────────────────
     // Echo conversation: send text, receive echo, verify round-trip
     // ───────────────────────────────────────────────────────────────
@@ -34,13 +36,13 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
         await client.SendInstant("hello");
 
-        var result = await Task.WhenAny(received.Task, Task.Delay(5000));
+        var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for echo");
         Assert.That(received.Task.Result, Is.EqualTo("echo:hello"));
     }
@@ -64,7 +66,7 @@ public class E2eWebSocketTests
         await client.Start();
         await client.SendInstant(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF });
 
-        var result = await Task.WhenAny(received.Task, Task.Delay(5000));
+        var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for binary echo");
         Assert.That(received.Task.Result, Is.EqualTo(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF }));
 
@@ -97,7 +99,7 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
@@ -105,7 +107,7 @@ public class E2eWebSocketTests
         for (int i = 0; i < 5; i++)
             await client.SendInstant($"msg-{i}");
 
-        var result = await Task.WhenAny(allReceived.Task, Task.Delay(10000));
+        var result = await Task.WhenAny(allReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(allReceived.Task), "Timed out waiting for all echoes");
         Assert.That(responses.Count, Is.EqualTo(5));
 
@@ -136,7 +138,7 @@ public class E2eWebSocketTests
 
         await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
@@ -144,7 +146,7 @@ public class E2eWebSocketTests
         for (int i = 0; i < messageCount; i++)
             await client.SendInstant($"rapid-{i}");
 
-        var result = await Task.WhenAny(allReceived.Task, Task.Delay(15000));
+        var result = await Task.WhenAny(allReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(allReceived.Task), "Timed out waiting for all messages");
         Assert.That(serverReceived.Count, Is.EqualTo(messageCount));
     }
@@ -167,7 +169,7 @@ public class E2eWebSocketTests
 
         await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
@@ -178,7 +180,7 @@ public class E2eWebSocketTests
             Assert.That(queued, Is.True, $"Message {i} should have been queued");
         }
 
-        var result = await Task.WhenAny(allReceived.Task, Task.Delay(15000));
+        var result = await Task.WhenAny(allReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(allReceived.Task), "Timed out waiting for queued messages");
         Assert.That(serverReceived.Count, Is.EqualTo(messageCount));
     }
@@ -203,15 +205,16 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
+        var clientConnected = server.WaitForClientAsync();
         await client.ConnectAsync();
-        await Task.Delay(200); // let connection stabilize
+        await clientConnected;
 
         await server.BroadcastTextAsync("server-push");
 
-        var result = await Task.WhenAny(received.Task, Task.Delay(5000));
+        var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for broadcast");
         Assert.That(received.Task.Result, Is.EqualTo("server-push"));
     }
@@ -231,12 +234,13 @@ public class E2eWebSocketTests
             received.TrySetResult(ms.ToArray());
         };
 
+        var clientConnected = server.WaitForClientAsync();
         await conn.Start();
-        await Task.Delay(200);
+        await clientConnected;
 
         await server.BroadcastBinaryAsync(new byte[] { 0xCA, 0xFE });
 
-        var result = await Task.WhenAny(received.Task, Task.Delay(5000));
+        var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for binary broadcast");
         Assert.That(received.Task.Result, Is.EqualTo(new byte[] { 0xCA, 0xFE }));
 
@@ -274,13 +278,13 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
         await client.SendInstant("multi-test");
 
-        var result = await Task.WhenAny(bothReceived.Task, Task.Delay(5000));
+        var result = await Task.WhenAny(bothReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(bothReceived.Task), "Timed out waiting for subscribers");
         Assert.That(subscriber1Count, Is.GreaterThanOrEqualTo(1));
         Assert.That(subscriber2Count, Is.GreaterThanOrEqualTo(1));
@@ -309,7 +313,7 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         client.PropertyChanged += (_, args) =>
@@ -325,7 +329,7 @@ public class E2eWebSocketTests
 
         // Phase 2: Send + Receive
         await client.SendInstant("lifecycle-test");
-        var echoResult = await Task.WhenAny(received.Task, Task.Delay(5000));
+        var echoResult = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(echoResult, Is.EqualTo(received.Task), "Timed out waiting for echo");
         Assert.That(received.Task.Result, Is.EqualTo("ack:lifecycle-test"));
 
@@ -366,15 +370,15 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
             IsReconnectionEnabled = true,
-            StateCheckInterval = TimeSpan.FromMilliseconds(100),
-            ReconnectTimeout = TimeSpan.FromMilliseconds(500),
-            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(500),
+            StateCheckInterval = TimeSpan.FromMilliseconds(50),
+            ReconnectTimeout = TimeSpan.FromMilliseconds(200),
+            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(200),
             Backoff = new ReconnectStrategy
             {
                 MinReconnectInterval = TimeSpan.Zero,
-                MaxReconnectInterval = TimeSpan.FromMilliseconds(100),
+                MaxReconnectInterval = TimeSpan.FromMilliseconds(50),
                 UseJitter = false,
             },
         };
@@ -384,22 +388,31 @@ public class E2eWebSocketTests
         await client.ConnectAsync();
         Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected));
 
-        // Server closes all clients — should trigger reconnection
+        // Server closes all clients -- should trigger reconnection
         await server.CloseAllClientsAsync();
 
-        var reconnectResult = await Task.WhenAny(reconnected.Task, Task.Delay(5000));
+        var reconnectResult = await Task.WhenAny(reconnected.Task, Task.Delay(TimeoutMs));
         Assert.That(reconnectResult, Is.EqualTo(reconnected.Task),
             "Timed out waiting for reconnection");
 
-        // Wait for reconnection to complete
-        await Task.Delay(200);
+        // Wait for Connected status after reconnection
+        var connectedTcs = new TaskCompletionSource<bool>();
+        if (client.Status == ConnectionStatus.Connected)
+            connectedTcs.TrySetResult(true);
+        else
+            client.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(client.Status) && client.Status == ConnectionStatus.Connected)
+                    connectedTcs.TrySetResult(true);
+            };
+        await Task.WhenAny(connectedTcs.Task, Task.Delay(TimeoutMs));
         Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected),
             "Client should be connected after reconnection");
 
         // Verify we can still send/receive after reconnection
         await client.SendInstant("after-reconnect");
 
-        var echoResult = await Task.WhenAny(postReconnectEcho.Task, Task.Delay(5000));
+        var echoResult = await Task.WhenAny(postReconnectEcho.Task, Task.Delay(TimeoutMs));
         Assert.That(echoResult, Is.EqualTo(postReconnectEcho.Task),
             "Timed out waiting for post-reconnect echo");
         Assert.That(postReconnectEcho.Task.Result, Is.EqualTo("echo:after-reconnect"));
@@ -416,17 +429,18 @@ public class E2eWebSocketTests
         server.Start();
 
         var disconnected = new TaskCompletionSource<bool>();
+        var clientConnected = server.WaitForClientAsync();
         var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
             IsReconnectionEnabled = true,
-            StateCheckInterval = TimeSpan.FromMilliseconds(100),
-            ReconnectTimeout = TimeSpan.FromMilliseconds(500),
-            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(500),
+            StateCheckInterval = TimeSpan.FromMilliseconds(50),
+            ReconnectTimeout = TimeSpan.FromMilliseconds(200),
+            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(200),
             Backoff = new ReconnectStrategy
             {
                 MinReconnectInterval = TimeSpan.Zero,
-                MaxReconnectInterval = TimeSpan.FromMilliseconds(100),
+                MaxReconnectInterval = TimeSpan.FromMilliseconds(50),
                 UseJitter = false,
             },
         };
@@ -440,12 +454,12 @@ public class E2eWebSocketTests
             });
 
             await client.ConnectAsync();
-            await Task.Delay(100);
+            await clientConnected;
 
             // Abort = no close handshake, simulates crash
             server.AbortAllClients();
 
-            var result = await Task.WhenAny(disconnected.Task, Task.Delay(5000));
+            var result = await Task.WhenAny(disconnected.Task, Task.Delay(TimeoutMs));
             // Either reconnection fires or the client detects the abort
             if (result == disconnected.Task)
             {
@@ -455,7 +469,6 @@ public class E2eWebSocketTests
             {
                 // Server abort may not always trigger reconnect callback reliably,
                 // but the client should detect the disconnect
-                await Task.Delay(500);
                 Assert.That(client.Status,
                     Is.AnyOf(ConnectionStatus.Connected, ConnectionStatus.Disconnected),
                     "Client should have detected server abort");
@@ -477,14 +490,14 @@ public class E2eWebSocketTests
         await using var server = new TestWebSocketServer();
         server.OnTextMessage = msg =>
         {
-            Thread.Sleep(100); // simulate slow response
+            Thread.Sleep(10); // simulate slow response
             return $"slow:{msg}";
         };
         server.Start();
 
         var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
@@ -515,7 +528,7 @@ public class E2eWebSocketTests
 
         await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         client.Connected.Subscribe(_ =>
@@ -531,12 +544,12 @@ public class E2eWebSocketTests
 
         await client.ConnectAsync();
 
-        var connResult = await Task.WhenAny(connectedFired.Task, Task.Delay(5000));
+        var connResult = await Task.WhenAny(connectedFired.Task, Task.Delay(TimeoutMs));
         Assert.That(connResult, Is.EqualTo(connectedFired.Task), "Connected event not fired");
 
         await client.CloseAsync();
 
-        var closeResult = await Task.WhenAny(closedFired.Task, Task.Delay(5000));
+        var closeResult = await Task.WhenAny(closedFired.Task, Task.Delay(TimeoutMs));
         Assert.That(closeResult, Is.EqualTo(closedFired.Task), "Closed event not fired");
     }
 
@@ -552,7 +565,7 @@ public class E2eWebSocketTests
             _ => Task.CompletedTask
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(2),
+            ConnectTimeout = TimeSpan.FromMilliseconds(500),
         };
 
         try
@@ -596,7 +609,7 @@ public class E2eWebSocketTests
 
         await using var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
@@ -604,11 +617,11 @@ public class E2eWebSocketTests
         await client.SendInstant("text-msg");
         await client.SendInstant(new byte[] { 0x01, 0x02 });
 
-        var textResult = await Task.WhenAny(textReceived.Task, Task.Delay(5000));
+        var textResult = await Task.WhenAny(textReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(textResult, Is.EqualTo(textReceived.Task), "Timed out waiting for text");
         Assert.That(textReceived.Task.Result, Is.EqualTo("text-msg"));
 
-        var binResult = await Task.WhenAny(binaryReceived.Task, Task.Delay(5000));
+        var binResult = await Task.WhenAny(binaryReceived.Task, Task.Delay(TimeoutMs));
         Assert.That(binResult, Is.EqualTo(binaryReceived.Task), "Timed out waiting for binary");
         Assert.That(binaryReceived.Task.Result, Is.EqualTo(new byte[] { 0x01, 0x02 }));
     }
@@ -642,13 +655,13 @@ public class E2eWebSocketTests
                     }
                 )
                 {
-                    ConnectTimeout = TimeSpan.FromSeconds(5),
+                    ConnectTimeout = TimeSpan.FromSeconds(2),
                 };
 
                 await client.ConnectAsync();
                 await client.SendInstant($"client-{idx}");
 
-                var result = await Task.WhenAny(received.Task, Task.Delay(10000));
+                var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
                 Assert.That(result, Is.EqualTo(received.Task),
                     $"Client {idx} timed out waiting for echo");
                 Assert.That(received.Task.Result, Is.EqualTo($"echo:client-{idx}"));
@@ -673,19 +686,20 @@ public class E2eWebSocketTests
         var closedTcs = new TaskCompletionSource<Closed>();
         var client = new WebSocketClient(server.Uri, _ => Task.CompletedTask)
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         try
         {
             client.Closed.Subscribe(c => closedTcs.TrySetResult(c));
 
+            var clientConnected = server.WaitForClientAsync();
             await client.ConnectAsync();
-            await Task.Delay(200);
+            await clientConnected;
 
             await server.CloseAllClientsAsync();
 
-            var result = await Task.WhenAny(closedTcs.Task, Task.Delay(10000));
+            var result = await Task.WhenAny(closedTcs.Task, Task.Delay(TimeoutMs));
             Assert.That(result, Is.EqualTo(closedTcs.Task), "Timed out waiting for Closed event");
             Assert.That(closedTcs.Task.Result, Is.Not.Null);
         }
@@ -718,13 +732,13 @@ public class E2eWebSocketTests
             }
         )
         {
-            ConnectTimeout = TimeSpan.FromSeconds(5),
+            ConnectTimeout = TimeSpan.FromSeconds(2),
         };
 
         await client.ConnectAsync();
         await client.SendInstant(largePayload);
 
-        var result = await Task.WhenAny(received.Task, Task.Delay(10000));
+        var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for large echo");
         Assert.That(received.Task.Result.Length, Is.EqualTo(largePayload.Length));
         Assert.That(received.Task.Result, Is.EqualTo(largePayload));
