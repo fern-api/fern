@@ -211,11 +211,7 @@ public class WebSocketConnectionTests
             Assert.That(queued, Is.True);
 
             var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(serverReceived.Task),
-                "Timed out waiting for queued message"
-            );
+            Assert.That(result, Is.EqualTo(serverReceived.Task), "Timed out waiting for queued message");
             Assert.That(serverReceived.Task.Result, Is.EqualTo("queued-message"));
         }
         finally
@@ -245,11 +241,7 @@ public class WebSocketConnectionTests
             Assert.That(queued, Is.True);
 
             var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(serverReceived.Task),
-                "Timed out waiting for queued binary"
-            );
+            Assert.That(result, Is.EqualTo(serverReceived.Task), "Timed out waiting for queued binary");
             Assert.That(serverReceived.Task.Result, Is.EqualTo(data));
         }
         finally
@@ -306,12 +298,7 @@ public class WebSocketConnectionTests
                 await ws.StartOrFail();
                 Assert.Fail("Expected an exception");
             }
-            catch (Exception ex)
-                when (ex
-                        is TaskCanceledException
-                            or OperationCanceledException
-                            or WebSocketException
-                )
+            catch (Exception ex) when (ex is TaskCanceledException or OperationCanceledException or WebSocketException)
             {
                 // Expected: ConnectTimeout triggers cancellation
             }
@@ -382,11 +369,7 @@ public class WebSocketConnectionTests
 
             // Wait for the disconnection callback
             var result = await Task.WhenAny(disconnected.Task, Task.Delay(10000));
-            Assert.That(
-                result,
-                Is.EqualTo(disconnected.Task),
-                "Timed out waiting for server disconnect"
-            );
+            Assert.That(result, Is.EqualTo(disconnected.Task), "Timed out waiting for server disconnect");
         }
         finally
         {
@@ -794,11 +777,7 @@ public class WebSocketConnectionTests
             await ws.SendInstant(new ArraySegment<byte>(data));
 
             var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(serverReceived.Task),
-                "Timed out waiting for ArraySegment message"
-            );
+            Assert.That(result, Is.EqualTo(serverReceived.Task), "Timed out waiting for ArraySegment message");
             Assert.That(serverReceived.Task.Result, Is.EqualTo(data));
         }
         finally
@@ -827,11 +806,7 @@ public class WebSocketConnectionTests
             await ws.SendInstant((Memory<byte>)data);
 
             var result = await Task.WhenAny(serverReceived.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(serverReceived.Task),
-                "Timed out waiting for Memory<byte> message"
-            );
+            Assert.That(result, Is.EqualTo(serverReceived.Task), "Timed out waiting for Memory<byte> message");
             Assert.That(serverReceived.Task.Result, Is.EqualTo(data));
         }
         finally
@@ -867,11 +842,7 @@ public class WebSocketConnectionTests
             ws.Send("msg3");
 
             var result = await Task.WhenAny(allReceived.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(allReceived.Task),
-                "Timed out waiting for unbounded queue messages"
-            );
+            Assert.That(result, Is.EqualTo(allReceived.Task), "Timed out waiting for unbounded queue messages");
         }
         finally
         {
@@ -926,16 +897,9 @@ public class WebSocketConnectionTests
             await ws.Stop(WebSocketCloseStatus.NormalClosure, "done");
 
             var result = await Task.WhenAny(disconnected.Task, Task.Delay(5000));
-            Assert.That(
-                result,
-                Is.EqualTo(disconnected.Task),
-                "Timed out waiting for disconnection"
-            );
+            Assert.That(result, Is.EqualTo(disconnected.Task), "Timed out waiting for disconnection");
             // Stop triggers disconnection — could be ByUser or ByServer depending on timing
-            Assert.That(
-                disconnected.Task.Result.Type,
-                Is.AnyOf(DisconnectionType.ByUser, DisconnectionType.ByServer)
-            );
+            Assert.That(disconnected.Task.Result.Type, Is.AnyOf(DisconnectionType.ByUser, DisconnectionType.ByServer));
         }
         finally
         {
@@ -1033,11 +997,7 @@ public class WebSocketConnectionTests
 
             // Wait for exit disconnection or timeout
             var result = await Task.WhenAny(exitDisconnection.Task, Task.Delay(15000));
-            Assert.That(
-                result,
-                Is.EqualTo(exitDisconnection.Task),
-                "Timed out waiting for max attempts exhaustion"
-            );
+            Assert.That(result, Is.EqualTo(exitDisconnection.Task), "Timed out waiting for max attempts exhaustion");
             Assert.That(ws.IsStarted, Is.False);
         }
         finally
@@ -1089,7 +1049,10 @@ public class WebSocketConnectionTests
         server.Start();
 
         // TextMessageReceived is null — should not throw when server sends a message
-        var ws = new WebSocketConnection(server.Uri) { ConnectTimeout = TimeSpan.FromSeconds(5) };
+        var ws = new WebSocketConnection(server.Uri)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+        };
 
         try
         {
@@ -1111,7 +1074,10 @@ public class WebSocketConnectionTests
         server.Start();
 
         // BinaryMessageReceived is null — should not throw
-        var ws = new WebSocketConnection(server.Uri) { ConnectTimeout = TimeSpan.FromSeconds(5) };
+        var ws = new WebSocketConnection(server.Uri)
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(5),
+        };
 
         try
         {
@@ -1195,11 +1161,7 @@ public class WebSocketConnectionTests
 
             var result = await Task.WhenAny(reconnected.Task, Task.Delay(30000));
             sw.Stop();
-            Assert.That(
-                result,
-                Is.EqualTo(reconnected.Task),
-                "Timed out waiting for delayed reconnection"
-            );
+            Assert.That(result, Is.EqualTo(reconnected.Task), "Timed out waiting for delayed reconnection");
 
             // Should have waited at least the LostReconnectTimeout
             Assert.That(sw.Elapsed.TotalMilliseconds, Is.GreaterThan(400));

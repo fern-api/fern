@@ -1,9 +1,9 @@
-#if !NET8_0_OR_GREATER
+#if !NET5_0_OR_GREATER
 namespace Contoso.Net.Core;
 
 /// <summary>
 /// Polyfill extension providing a <c>ReadAsStringAsync(CancellationToken)</c> overload
-/// for target frameworks older than .NET 8, where only the parameterless
+/// for target frameworks older than .NET 5, where only the parameterless
 /// <c>ReadAsStringAsync()</c> is available.
 /// </summary>
 internal static class HttpContentExtensions

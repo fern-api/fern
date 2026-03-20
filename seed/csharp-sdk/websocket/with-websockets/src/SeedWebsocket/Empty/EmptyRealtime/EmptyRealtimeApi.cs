@@ -116,7 +116,7 @@ public partial class EmptyRealtimeApi
     /// </summary>
     public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
         _client.DeflateOptions = _options.EnableCompression
             ? new System.Net.WebSockets.WebSocketDeflateOptions()
             : null;

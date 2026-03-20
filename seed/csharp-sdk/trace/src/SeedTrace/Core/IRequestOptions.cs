@@ -6,7 +6,7 @@ internal interface IRequestOptions
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -17,7 +17,7 @@ internal interface IRequestOptions
     /// The http client used to make requests.
     /// </summary>
     public HttpClient? HttpClient { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -32,7 +32,7 @@ internal interface IRequestOptions
         string,
         string?
     >> AdditionalHeaders { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -43,7 +43,7 @@ internal interface IRequestOptions
     /// The max number of retries to attempt.
     /// </summary>
     public int? MaxRetries { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -54,7 +54,7 @@ internal interface IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -68,7 +68,7 @@ internal interface IRequestOptions
         string,
         string
     >> AdditionalQueryParameters { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -80,7 +80,7 @@ internal interface IRequestOptions
     /// This is only applied to JSON requests.
     /// </summary>
     public object? AdditionalBodyProperties { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;

@@ -14,7 +14,7 @@ public record TranscriptEvent : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("type")]
     public TranscriptEvent.TypeLiteral Type { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;

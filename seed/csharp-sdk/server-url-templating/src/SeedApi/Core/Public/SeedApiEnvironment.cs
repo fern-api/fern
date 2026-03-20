@@ -13,7 +13,7 @@ public class SeedApiEnvironment
     /// URL for the Base service
     /// </summary>
     public string Base { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -24,7 +24,7 @@ public class SeedApiEnvironment
     /// URL for the Auth service
     /// </summary>
     public string Auth { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;

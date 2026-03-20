@@ -14,7 +14,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("literal1")]
     public NestedObjectWithLiterals.Literal1Literal Literal1 { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;
@@ -24,7 +24,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("literal2")]
     public NestedObjectWithLiterals.Literal2Literal Literal2 { get;
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         init;
 #else
         set;

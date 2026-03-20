@@ -5,7 +5,7 @@ namespace <%= namespace%>;
 /// </summary>
 public record FileParameter :
     IDisposable
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     , IAsyncDisposable
 #endif
 {
@@ -45,7 +45,7 @@ public record FileParameter :
         _disposed = true;
     }
 
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     /// <inheritdoc/>
     public async ValueTask DisposeAsync()
     {

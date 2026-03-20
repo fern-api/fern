@@ -1,6 +1,6 @@
 using global::System.Buffers;
 using global::System.Runtime.CompilerServices;
-#if !NET8_0_OR_GREATER
+#if !NET6_0_OR_GREATER
 using global::System.Text;
 #endif
 
@@ -8,7 +8,7 @@ namespace SeedVariables.Core;
 
 /// <summary>
 /// High-performance query string builder with cross-platform optimizations.
-/// Uses span-based APIs on .NET 8+ and StringBuilder fallback for older targets.
+/// Uses span-based APIs on .NET 6+ and StringBuilder fallback for older targets.
 /// </summary>
 internal static class QueryStringBuilder
 {
@@ -21,7 +21,7 @@ internal static class QueryStringBuilder
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
 #endif
 
-#if NET8_0_OR_GREATER
+#if NET7_0_OR_GREATER
     private static ReadOnlySpan<byte> UpperHexChars => "0123456789ABCDEF"u8;
 #else
     private static readonly byte[] UpperHexChars =
@@ -48,7 +48,7 @@ internal static class QueryStringBuilder
     /// <summary>
     /// Builds a query string from the provided parameters.
     /// </summary>
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     public static string Build(ReadOnlySpan<KeyValuePair<string, string>> parameters)
     {
         if (parameters.IsEmpty)
@@ -88,7 +88,7 @@ internal static class QueryStringBuilder
     /// </summary>
     public static string Build(IEnumerable<KeyValuePair<string, string>> parameters)
     {
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
         // Try to get span access for collections that support it
         if (parameters is ICollection<KeyValuePair<string, string>> collection)
         {
@@ -165,7 +165,7 @@ internal static class QueryStringBuilder
 #endif
     }
 
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     private static int BuildCore(
         ReadOnlySpan<KeyValuePair<string, string>> parameters,
         Span<char> buffer
@@ -230,7 +230,7 @@ internal static class QueryStringBuilder
                 output[position++] = '2';
                 output[position++] = '0';
             }
-#if NET8_0_OR_GREATER
+#if NET7_0_OR_GREATER
             else if (char.IsAscii(c))
 #else
             else if (c <= 127)
@@ -315,6 +315,8 @@ internal static class QueryStringBuilder
     {
 #if NET8_0_OR_GREATER
         return UnreservedChars.Contains(c);
+#elif NET7_0_OR_GREATER
+        return char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or '~';
 #else
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')

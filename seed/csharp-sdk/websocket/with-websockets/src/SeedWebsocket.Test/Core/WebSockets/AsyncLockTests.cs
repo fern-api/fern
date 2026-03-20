@@ -17,22 +17,20 @@ public class AsyncLockTests
 
         for (int i = 0; i < 10; i++)
         {
-            tasks.Add(
-                Task.Run(async () =>
+            tasks.Add(Task.Run(async () =>
+            {
+                using (await asyncLock.LockAsync())
                 {
-                    using (await asyncLock.LockAsync())
-                    {
-                        var c = Interlocked.Increment(ref currentConcurrent);
-                        if (c > maxConcurrent)
-                            Interlocked.Exchange(ref maxConcurrent, c);
+                    var c = Interlocked.Increment(ref currentConcurrent);
+                    if (c > maxConcurrent)
+                        Interlocked.Exchange(ref maxConcurrent, c);
 
-                        Interlocked.Increment(ref counter);
-                        await Task.Delay(10); // Simulate work
+                    Interlocked.Increment(ref counter);
+                    await Task.Delay(10); // Simulate work
 
-                        Interlocked.Decrement(ref currentConcurrent);
-                    }
-                })
-            );
+                    Interlocked.Decrement(ref currentConcurrent);
+                }
+            }));
         }
 
         await Task.WhenAll(tasks);
@@ -50,16 +48,14 @@ public class AsyncLockTests
 
         for (int i = 0; i < 10; i++)
         {
-            tasks.Add(
-                Task.Run(() =>
+            tasks.Add(Task.Run(() =>
+            {
+                using (asyncLock.Lock())
                 {
-                    using (asyncLock.Lock())
-                    {
-                        counter++;
-                        Thread.Sleep(5);
-                    }
-                })
-            );
+                    counter++;
+                    Thread.Sleep(5);
+                }
+            }));
         }
 
         Task.WhenAll(tasks).Wait();

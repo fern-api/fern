@@ -101,7 +101,7 @@ internal partial class WebSocketConnection
                 {
                     var client = _clientFactory != null ? _clientFactory() : new ClientWebSocket();
                     client.Options.KeepAliveInterval = KeepAliveInterval;
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
                     if (DeflateOptions != null)
                     {
                         client.Options.DangerousDeflateOptions = DeflateOptions;
@@ -112,7 +112,7 @@ internal partial class WebSocketConnection
 #endif
                     if (HttpInvoker != null)
                     {
-#if NET8_0_OR_GREATER
+#if NET7_0_OR_GREATER
                         client.Options.HttpVersion = System.Net.HttpVersion.Version20;
                         client.Options.HttpVersionPolicy = System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
                         await client.ConnectAsync(uri, HttpInvoker, token).ConfigureAwait(false);
@@ -193,7 +193,7 @@ internal partial class WebSocketConnection
     /// </summary>
     public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
 
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
     /// When set, the <see cref="ClientWebSocket" /> created by the default connection factory
