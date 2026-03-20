@@ -38,14 +38,14 @@ impl ExamplesClient {
 
     pub async fn echo(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -61,7 +61,7 @@ impl ExamplesClient {
             .execute_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

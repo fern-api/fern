@@ -934,7 +934,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return this.context.hasWebSocketEndpoints
             ? [
                   '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
+                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />',
+                  '    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />'
               ]
             : [];
     }

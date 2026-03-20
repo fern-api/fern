@@ -14,14 +14,14 @@ impl ReqWithHeadersClient {
 
     pub async fn get_with_custom_header(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 "/test-headers/custom-header",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

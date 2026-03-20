@@ -15,7 +15,7 @@ impl ServiceClient {
 
     pub async fn get_exception(
         &self,
-        notification_id: &String,
+        notification_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Exception, ApiError> {
         self.http_client

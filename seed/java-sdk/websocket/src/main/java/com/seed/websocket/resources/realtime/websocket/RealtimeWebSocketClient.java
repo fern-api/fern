@@ -69,9 +69,9 @@ public class RealtimeWebSocketClient implements AutoCloseable {
 
     private volatile Consumer<ReceiveEvent3> receive3Handler;
 
-    private volatile Consumer<TranscriptEvent> receiveTranscriptHandler;
+    private volatile Consumer<TranscriptEvent> transcriptHandler;
 
-    private volatile Consumer<FlushedEvent> receiveFlushedHandler;
+    private volatile Consumer<FlushedEvent> flushedHandler;
 
     private volatile Consumer<ErrorEvent> errorHandler;
 
@@ -238,7 +238,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive(Consumer<ReceiveEvent> handler) {
@@ -246,7 +246,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive_snake_case messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceiveSnakeCase(Consumer<ReceiveSnakeCase> handler) {
@@ -254,7 +254,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive2 messages from the server.
+     * Registers a handler for Receive2 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive2(Consumer<ReceiveEvent2> handler) {
@@ -262,7 +262,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive3 messages from the server.
+     * Registers a handler for Receive3 messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive3(Consumer<ReceiveEvent3> handler) {
@@ -270,23 +270,23 @@ public class RealtimeWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive_transcript messages from the server.
+     * Registers a handler for ReceiveTranscript messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onReceiveTranscript(Consumer<TranscriptEvent> handler) {
-        this.receiveTranscriptHandler = handler;
+    public void onTranscript(Consumer<TranscriptEvent> handler) {
+        this.transcriptHandler = handler;
     }
 
     /**
-     * Registers a handler for receive_flushed messages from the server.
+     * Registers a handler for ReceiveFlushed messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onReceiveFlushed(Consumer<FlushedEvent> handler) {
-        this.receiveFlushedHandler = handler;
+    public void onFlushed(Consumer<FlushedEvent> handler) {
+        this.flushedHandler = handler;
     }
 
     /**
-     * Registers a handler for error messages from the server.
+     * Registers a handler for Error messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onErrorMessage(Consumer<ErrorEvent> handler) {
@@ -363,13 +363,8 @@ public class RealtimeWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -425,19 +420,19 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                         }
                     }
                     break;
-                case "receive_transcript":
-                    if (receiveTranscriptHandler != null) {
+                case "transcript":
+                    if (transcriptHandler != null) {
                         TranscriptEvent event = objectMapper.treeToValue(node, TranscriptEvent.class);
                         if (event != null) {
-                            receiveTranscriptHandler.accept(event);
+                            transcriptHandler.accept(event);
                         }
                     }
                     break;
-                case "receive_flushed":
-                    if (receiveFlushedHandler != null) {
+                case "flushed":
+                    if (flushedHandler != null) {
                         FlushedEvent event = objectMapper.treeToValue(node, FlushedEvent.class);
                         if (event != null) {
-                            receiveFlushedHandler.accept(event);
+                            flushedHandler.accept(event);
                         }
                     }
                     break;
@@ -455,10 +450,6 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                                 + "'. Update your SDK version to support new message types."));
                     }
                     break;
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

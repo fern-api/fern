@@ -15,6 +15,37 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     private readonly Func<Stream, global::System.Threading.Tasks.Task> _onTextMessage;
 
     /// <summary>
+    /// Enable or disable automatic reconnection. Default: false.
+    /// </summary>
+    public bool IsReconnectionEnabled { get; set; }
+
+    /// <summary>
+    /// Time to wait before reconnecting if no message comes from the server.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the last reconnection attempt failed.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the connection is lost with a transient error.
+    /// Set null to disable (reconnect immediately). Default: null.
+    /// </summary>
+    public TimeSpan? LostReconnectTimeout { get; set; }
+
+    /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -24,6 +55,45 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _uri = uri;
         _onTextMessage = onTextMessage;
     }
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, enables WebSocket compression via
+    /// <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
+
+    /// <summary>
+    /// Optional HttpMessageInvoker for HTTP/2 WebSocket connections.
+    /// When set, enables multiplexing multiple WebSocket streams over a single TCP connection.
+    /// Requires .NET 7+.
+    /// </summary>
+    public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+    /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Gets the current connection status of the WebSocket.
@@ -101,6 +171,24 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Queues a text message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(string message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
+    /// Queues a binary message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(byte[] message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
     /// Asynchronously disposes the WebSocketClient instance, closing any active connections and cleaning up resources.
     /// </summary>
     /// <returns>A ValueTask representing the asynchronous dispose operation.</returns>
@@ -148,6 +236,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         ExceptionOccurred.Dispose();
         Closed.Dispose();
         Connected.Dispose();
+        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -180,8 +269,19 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         Status = ConnectionStatus.Connecting;
 
-        _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
+        _webSocket = new WebSocketConnection(_uri)
         {
+#if NET6_0_OR_GREATER
+            DeflateOptions = DeflateOptions,
+#endif
+            HttpInvoker = HttpInvoker,
+            ConnectTimeout = ConnectTimeout,
+            SendTimeout = SendTimeout,
+            IsReconnectionEnabled = IsReconnectionEnabled,
+            ReconnectTimeout = ReconnectTimeout,
+            ErrorReconnectTimeout = ErrorReconnectTimeout,
+            LostReconnectTimeout = LostReconnectTimeout,
+            Backoff = Backoff,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
@@ -191,11 +291,17 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             },
             DisconnectionHappened = async d =>
             {
+                Status = ConnectionStatus.Disconnected;
                 await Closed
                     .RaiseEvent(
                         new Closed { Code = (int?)d.CloseStatus, Reason = d.CloseStatusDescription }
                     )
                     .ConfigureAwait(false);
+            },
+            ReconnectionHappened = async info =>
+            {
+                Status = ConnectionStatus.Connected;
+                await Reconnecting.RaiseEvent(info).ConfigureAwait(false);
             },
         };
 
@@ -226,6 +332,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public readonly Event<Exception> ExceptionOccurred = new();
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public readonly Event<ReconnectionInfo> Reconnecting = new();
 
     /// <summary>
     /// Event that is raised when a property value changes.
