@@ -60,7 +60,7 @@ internal class NdJsonContent : HttpContent, IIsRetryableContent
     protected override SystemTask SerializeToStreamAsync(Stream stream, TransportContext? context) =>
         SerializeToStreamAsyncInternal(stream, CancellationToken.None);
 
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
     protected override SystemTask SerializeToStreamAsync(
         Stream stream,
         TransportContext? context,

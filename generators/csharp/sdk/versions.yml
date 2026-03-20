@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.51.0
+  changelogEntry:
+    - summary: |
+        Replace `#if NET5_0_OR_GREATER`, `#if NET6_0_OR_GREATER`, and `#if NET7_0_OR_GREATER`
+        conditional compilation directives with `#if NET8_0_OR_GREATER`. Since the supported
+        target frameworks are now `net462`, `netstandard2.0`, `net8.0`, and `net9.0`, all three
+        older directives evaluate identically to `NET8_0_OR_GREATER`. Dead `#elif` branches
+        (e.g. `#elif NET7_0_OR_GREATER` after `#if NET8_0_OR_GREATER`) are removed.
+      type: chore
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.50.0
   changelogEntry:
     - summary: |

@@ -242,7 +242,13 @@ public class WebSocketClientTests
             await client.ConnectAsync();
             Assert.Fail("Expected connection to fail");
         }
-        catch (Exception ex) when (ex is WebSocketException or TaskCanceledException or OperationCanceledException or InvalidOperationException)
+        catch (Exception ex)
+            when (ex
+                    is WebSocketException
+                        or TaskCanceledException
+                        or OperationCanceledException
+                        or InvalidOperationException
+            )
         {
             // Expected: connection to invalid URI should fail
         }
@@ -450,7 +456,10 @@ public class WebSocketClientTests
 
         Assert.Throws<Exception>(() =>
         {
-            client.SendInstant(new ArraySegment<byte>(new byte[] { 1, 2 })).GetAwaiter().GetResult();
+            client
+                .SendInstant(new ArraySegment<byte>(new byte[] { 1, 2 }))
+                .GetAwaiter()
+                .GetResult();
         });
 
         client.Dispose();
@@ -505,7 +514,11 @@ public class WebSocketClientTests
         await server.CloseAllClientsAsync();
 
         var result = await Task.WhenAny(reconnecting.Task, Task.Delay(30000));
-        Assert.That(result, Is.EqualTo(reconnecting.Task), "Timed out waiting for reconnecting event");
+        Assert.That(
+            result,
+            Is.EqualTo(reconnecting.Task),
+            "Timed out waiting for reconnecting event"
+        );
         Assert.That(reconnecting.Task.Result, Is.Not.Null);
 
         // After reconnection, status should be Connected again
@@ -577,6 +590,12 @@ public class WebSocketClientTests
 
         // Dispose manually — the connection is already closed by server,
         // so Dispose may throw if it tries to close an already-closed socket.
-        try { client.Dispose(); } catch { /* already closed */ }
+        try
+        {
+            client.Dispose();
+        }
+        catch
+        { /* already closed */
+        }
     }
 }

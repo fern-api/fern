@@ -10,7 +10,7 @@ public partial class GrpcRequestOptions
     /// </summary>
     public int? MaxRetries {
         get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -22,7 +22,7 @@ public partial class GrpcRequestOptions
     /// </summary>
     public TimeSpan? Timeout {
         get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -34,7 +34,7 @@ public partial class GrpcRequestOptions
     /// </summary>
     public WriteOptions? WriteOptions {
         get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -46,7 +46,7 @@ public partial class GrpcRequestOptions
     /// </summary>
     public CallCredentials? CallCredentials {
         get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -59,7 +59,7 @@ public partial class GrpcRequestOptions
     /// </summary>
     public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders {
         get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

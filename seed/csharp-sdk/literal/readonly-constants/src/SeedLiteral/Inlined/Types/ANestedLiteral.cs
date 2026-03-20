@@ -14,7 +14,7 @@ public record ANestedLiteral : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("myLiteral")]
     public ANestedLiteral.MyLiteralLiteral MyLiteral { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

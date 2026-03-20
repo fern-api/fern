@@ -295,7 +295,7 @@ internal partial class WebSocketConnection
 
         try
         {
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
             await _client
                 .SendAsync(payload, WebSocketMessageType.Binary, true, sendCts.Token)
                 .ConfigureAwait(false);

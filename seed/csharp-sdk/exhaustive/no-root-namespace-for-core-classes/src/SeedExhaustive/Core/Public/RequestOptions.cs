@@ -7,7 +7,7 @@ public partial class RequestOptions : IRequestOptions
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -18,7 +18,7 @@ public partial class RequestOptions : IRequestOptions
     /// The http client used to make requests.
     /// </summary>
     public HttpClient? HttpClient { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -30,7 +30,7 @@ public partial class RequestOptions : IRequestOptions
     /// Headers previously set with matching keys will be overwritten.
     /// </summary>
     public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -41,7 +41,7 @@ public partial class RequestOptions : IRequestOptions
     /// The max number of retries to attempt.
     /// </summary>
     public int? MaxRetries { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -52,7 +52,7 @@ public partial class RequestOptions : IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -63,7 +63,7 @@ public partial class RequestOptions : IRequestOptions
     /// Additional query parameters sent with the request.
     /// </summary>
     public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -75,7 +75,7 @@ public partial class RequestOptions : IRequestOptions
     /// This is only applied to JSON requests.
     /// </summary>
     public object? AdditionalBodyProperties { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

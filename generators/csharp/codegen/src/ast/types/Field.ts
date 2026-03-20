@@ -320,7 +320,7 @@ export class Field extends MemberNode {
                     (this.init === true || this.init === Access.Public || this.init === Access.Protected);
                 if (needsFallback) {
                     writer.writeLine();
-                    writer.writeNoIndent("#if NET5_0_OR_GREATER\n");
+                    writer.writeNoIndent("#if NET8_0_OR_GREATER\n");
                     if (!this.hasSameAccess(this.init)) {
                         writer.write(`${this.init} `);
                     }

@@ -20,7 +20,7 @@ public record SendResponse : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("success")]
     public SendResponse.SuccessLiteral Success { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

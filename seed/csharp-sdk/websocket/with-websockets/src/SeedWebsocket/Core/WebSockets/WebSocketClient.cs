@@ -64,7 +64,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _onTextMessage = onTextMessage;
     }
 
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
     /// When set, enables WebSocket compression via
@@ -295,7 +295,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         _webSocket = new WebSocketConnection(_uri)
         {
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
             DeflateOptions = DeflateOptions,
 #endif
             HttpInvoker = HttpInvoker,

@@ -14,7 +14,7 @@ public partial class ClientOptions
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -25,7 +25,7 @@ public partial class ClientOptions
     /// The http client used to make requests.
     /// </summary>
     public HttpClient HttpClient { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -37,7 +37,7 @@ public partial class ClientOptions
     /// Headers with matching keys will be overwritten by headers set on the request.
     /// </summary>
     public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -48,7 +48,7 @@ public partial class ClientOptions
     /// The max number of retries to attempt.
     /// </summary>
     public int MaxRetries { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -59,7 +59,7 @@ public partial class ClientOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan Timeout { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -67,7 +67,7 @@ public partial class ClientOptions
     } = TimeSpan.FromSeconds(30);
 
     public string? Version { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

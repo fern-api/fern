@@ -10,7 +10,7 @@ public record SendLiteralsInlinedRequest
     [JsonRequired]
     [JsonPropertyName("prompt")]
     public SendLiteralsInlinedRequest.PromptLiteral Prompt { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -29,7 +29,7 @@ public record SendLiteralsInlinedRequest
     [JsonRequired]
     [JsonPropertyName("stream")]
     public SendLiteralsInlinedRequest.StreamLiteral Stream { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -39,7 +39,7 @@ public record SendLiteralsInlinedRequest
     [JsonRequired]
     [JsonPropertyName("aliasedContext")]
     public SomeAliasedLiteral AliasedContext { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

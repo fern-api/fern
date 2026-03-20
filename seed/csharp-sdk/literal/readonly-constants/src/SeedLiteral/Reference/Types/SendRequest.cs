@@ -14,7 +14,7 @@ public record SendRequest : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("prompt")]
     public SendRequest.PromptLiteral Prompt { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -27,7 +27,7 @@ public record SendRequest : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("stream")]
     public SendRequest.StreamLiteral Stream { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -37,7 +37,7 @@ public record SendRequest : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("ending")]
     public SendRequest.EndingLiteral Ending { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -47,7 +47,7 @@ public record SendRequest : IJsonOnDeserialized
     [JsonRequired]
     [JsonPropertyName("context")]
     public SomeLiteral Context { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;

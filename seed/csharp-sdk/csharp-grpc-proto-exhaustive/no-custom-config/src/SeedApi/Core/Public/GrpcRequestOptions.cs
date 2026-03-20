@@ -9,7 +9,7 @@ public partial class GrpcRequestOptions
     /// The maximum number of retry attempts.
     /// </summary>
     public int? MaxRetries { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -20,7 +20,7 @@ public partial class GrpcRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -31,7 +31,7 @@ public partial class GrpcRequestOptions
     /// Options for write operations.
     /// </summary>
     public WriteOptions? WriteOptions { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -42,7 +42,7 @@ public partial class GrpcRequestOptions
     /// Client-side call credentials. Provide authorization with per-call granularity.
     /// </summary>
     public CallCredentials? CallCredentials { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
@@ -54,7 +54,7 @@ public partial class GrpcRequestOptions
     /// Headers with matching keys will be overwritten by headers set on the client options.
     /// </summary>
     public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
-#if NET5_0_OR_GREATER
+#if NET8_0_OR_GREATER
         init;
 #else
         set;
