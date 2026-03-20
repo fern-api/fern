@@ -88,6 +88,7 @@ public partial class RealtimeApi
         };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.HttpInvoker = _options.HttpInvoker;
     }
 
     /// <summary>
@@ -278,6 +279,11 @@ public partial class RealtimeApi
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
 
         public string? Model { get; set; }
 
