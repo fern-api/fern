@@ -1,3 +1,4 @@
+import { sentryEsbuildPlugin } from "@sentry/esbuild-plugin";
 import { exec } from "child_process";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -67,6 +68,21 @@ export async function buildCli(config) {
         tsupOverrides = {}
     } = config;
 
+    const version = process.argv[2] || packageJson.version;
+
+    const esbuildPlugins = [];
+    if (process.env.FERN_SENTRY_AUTH_TOKEN) {
+        esbuildPlugins.push(
+            sentryEsbuildPlugin({
+                org: "buildwithfern",
+                project: "cli",
+                authToken: process.env.FERN_SENTRY_AUTH_TOKEN,
+                release: { name: `cli@${version}` },
+                sourcemaps: { filesToDeleteAfterUpload: ["**/*.cjs.map"] }
+            })
+        );
+    }
+
     // Build with tsup
     await tsup.build({
         entry: { cli: "src/main.ts" },
@@ -77,8 +93,9 @@ export async function buildCli(config) {
         clean: true,
         env: {
             ...env,
-            CLI_VERSION: process.argv[2] || packageJson.version
+            CLI_VERSION: version
         },
+        esbuildPlugins,
         ...tsupOverrides
     });
 
