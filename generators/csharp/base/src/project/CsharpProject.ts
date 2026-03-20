@@ -919,17 +919,23 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         );
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        // When use-undiscriminated-unions is false, we need the OneOf package
+        // When use-undiscriminated-unions is false, we need the OneOf package.
+        // System.Net.Http and System.Text.RegularExpressions are kept unconditional
+        // because OneOf.Extended has unpatched transitive references to vulnerable
+        // versions of these packages — these version-floor overrides apply to all TFMs.
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
             result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
             result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+            result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         }
         for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
-        // WebSocket packages that are NOT in-box on net6.0+
         if (this.context.hasWebSocketEndpoints) {
             result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
+            result.push('<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />');
+            result.push('<PackageReference Include="System.Threading.Channels" Version="8.0.0" />');
         }
         // SSE package — only in-box starting with net9.0, so keep unconditional for
         // multi-targeted projects that include net8.0
@@ -947,11 +953,6 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         const result: string[] = [];
         for (const pkg of NET8_INBOX_PACKAGES) {
             result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
-        }
-        if (this.context.hasWebSocketEndpoints) {
-            for (const pkg of NET8_INBOX_WEBSOCKET_PACKAGES) {
-                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
-            }
         }
         return result;
     }
@@ -1103,16 +1104,5 @@ const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
  * Extend this list as more packages become in-box in future .NET versions.
  */
 const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
-    { name: "System.Text.Json", version: "8.0.5" },
-    { name: "System.Net.Http", version: "[4.3.4,)" },
-    { name: "System.Text.RegularExpressions", version: "[4.3.1,)" }
-];
-
-/**
- * Packages from the websocket dependencies that are included in the .NET shared
- * framework for net8.0+ and should only be emitted as PackageReference for legacy TFMs.
- */
-const NET8_INBOX_WEBSOCKET_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
-    { name: "Microsoft.Extensions.Logging.Abstractions", version: "8.0.2" },
-    { name: "System.Threading.Channels", version: "8.0.0" }
+    { name: "System.Text.Json", version: "8.0.5" }
 ];

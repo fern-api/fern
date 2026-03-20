@@ -2,14 +2,10 @@
 - version: 2.52.0
   changelogEntry:
     - summary: |
-        Conditionally emit PackageReference entries for packages that ship in-box
-        with net6.0+. Packages like System.Text.Json, System.Net.Http,
-        System.Text.RegularExpressions, Microsoft.Extensions.Logging.Abstractions,
-        and System.Threading.Channels are now wrapped in an ItemGroup with an MSBuild
-        condition so they are only referenced when targeting legacy TFMs
-        (netstandard2.0, net462). For WebSocket-enabled SDKs, a FrameworkReference
-        to Microsoft.AspNetCore.App is emitted for net6.0+ instead of individual
-        Microsoft.Extensions.* package references.
+        Conditionally emit System.Text.Json as a PackageReference only when
+        targeting pre-net8.0 TFMs (netstandard2.0, net462). The package is
+        wrapped in an ItemGroup with an MSBuild IsTargetFrameworkCompatible
+        condition so it is skipped for net8.0+ where it ships in-box.
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
