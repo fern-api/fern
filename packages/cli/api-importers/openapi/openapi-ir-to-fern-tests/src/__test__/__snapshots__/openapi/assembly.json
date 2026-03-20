@@ -6072,7 +6072,7 @@ docs: Transcript related operations
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "channel": {
-          "auth": false,
+          "auth": true,
           "examples": [
             {
               "messages": [
@@ -6178,7 +6178,7 @@ The parameter should map to a JSON encoded list of strings.
       "rawContents": "channel:
   path: /{userId}
   url: API
-  auth: false
+  auth: true
   path-parameters:
     userId:
       type: string
