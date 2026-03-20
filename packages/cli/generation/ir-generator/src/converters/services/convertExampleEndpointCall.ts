@@ -550,6 +550,13 @@ function convertExampleResponse({
                                 return undefined;
                             }
 
+                            // Skip SSE events that have no data payload — they cannot be
+                            // converted into a typed example and would cause convertTypeReferenceExample
+                            // to throw (e.g., event-only lines like `event: heartbeat` with no data).
+                            if (data == null) {
+                                return undefined;
+                            }
+
                             // For protocol-discriminated unions, the discriminant travels as the SSE
                             // `event:` field rather than inside the data payload. Inject the event
                             // value as the discriminant key so that convertTypeReferenceExample can

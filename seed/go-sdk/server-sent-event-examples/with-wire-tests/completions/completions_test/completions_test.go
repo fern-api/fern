@@ -10,6 +10,7 @@ import (
 	client "github.com/fern-api/sse-examples-go/client"
 	option "github.com/fern-api/sse-examples-go/option"
 	require "github.com/stretchr/testify/require"
+	io "io"
 	http "net/http"
 	os "os"
 	testing "testing"
@@ -75,7 +76,7 @@ func TestCompletionsStreamWithWireMock(
 	request := &sse.StreamCompletionRequest{
 		Query: "foo",
 	}
-	_, invocationErr := client.Completions.Stream(
+	stream, invocationErr := client.Completions.Stream(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -84,6 +85,19 @@ func TestCompletionsStreamWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	defer stream.Close()
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			require.NoError(t, err, "Expected no error while reading SSE stream")
+		}
+		eventCount++
+	}
+	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
 	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
 }
 
@@ -98,9 +112,9 @@ func TestCompletionsStreamEventsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamEventsRequest{
-		Query: "",
+		Query: "query",
 	}
-	_, invocationErr := client.Completions.StreamEvents(
+	stream, invocationErr := client.Completions.StreamEvents(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -109,6 +123,19 @@ func TestCompletionsStreamEventsWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	defer stream.Close()
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			require.NoError(t, err, "Expected no error while reading SSE stream")
+		}
+		eventCount++
+	}
+	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
 }
 
@@ -123,9 +150,9 @@ func TestCompletionsStreamEventsContextProtocolWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamEventsRequest{
-		Query: "",
+		Query: "query",
 	}
-	_, invocationErr := client.Completions.StreamEventsContextProtocol(
+	stream, invocationErr := client.Completions.StreamEventsContextProtocol(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -134,5 +161,18 @@ func TestCompletionsStreamEventsContextProtocolWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	defer stream.Close()
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			require.NoError(t, err, "Expected no error while reading SSE stream")
+		}
+		eventCount++
+	}
+	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
 }

@@ -97,10 +97,14 @@ service:
             query: "query"
           response:
             stream:
-              - event: ignoredField
-              - data:
+              - event: completion
+                data:
                   event: completion
-                  content: "content"
+                  content: "hello"
+              - event: error
+                data:
+                  event: error
+                  error: "something went wrong"
         - name: "Bad request"
           request:
             query: ""
@@ -130,10 +134,10 @@ service:
             stream:
               - event: completion
                 data:
-                  content: "content"
-              - event: event
+                  content: "hello"
+              - event: error
                 data:
-                  event: "something-completely-different"
+                  error: "something went wrong"
         - name: "Bad request"
           request:
             query: ""

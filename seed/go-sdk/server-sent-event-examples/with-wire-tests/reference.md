@@ -61,7 +61,7 @@ client.Completions.Stream(
 
 ```go
 request := &sse.StreamEventsRequest{
-        Query: "",
+        Query: "query",
     }
 client.Completions.StreamEvents(
         context.TODO(),
@@ -108,7 +108,7 @@ client.Completions.StreamEvents(
 
 ```go
 request := &sse.StreamEventsRequest{
-        Query: "",
+        Query: "query",
     }
 client.Completions.StreamEventsContextProtocol(
         context.TODO(),

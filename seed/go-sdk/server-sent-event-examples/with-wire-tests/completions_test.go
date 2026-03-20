@@ -522,18 +522,18 @@ func TestGettersStreamEvent(t *testing.T) {
 }
 
 func TestGettersStreamEventContextProtocol(t *testing.T) {
-	t.Run("GetEvent", func(t *testing.T) {
+	t.Run("GetEventDiscriminant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &StreamEventContextProtocol{}
 		var expected string
-		obj.Event = expected
+		obj.EventDiscriminant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEvent(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventDiscriminant(), "getter should return the property value")
 	})
 
-	t.Run("GetEvent_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventDiscriminant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *StreamEventContextProtocol
 		// Should not panic - getters should handle nil receiver gracefully
@@ -542,7 +542,7 @@ func TestGettersStreamEventContextProtocol(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEvent() // Should return zero value
+		_ = obj.GetEventDiscriminant() // Should return zero value
 	})
 
 	t.Run("GetCompletion", func(t *testing.T) {
