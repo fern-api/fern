@@ -45,14 +45,6 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a big integer parameter (accept both required/optional)
-    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
     /// Add multiple integer parameters with the same key (for allow-multiple query params)
     /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
     pub fn int_array<I, T>(mut self, key: &str, values: I) -> Self
@@ -128,14 +120,6 @@ impl QueryBuilder {
                 key.to_string(),
                 v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
             ));
-        }
-        self
-    }
-
-    /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
@@ -372,19 +356,6 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_param() {
-        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
-        let result = QueryBuilder::new().uuid("id", Some(id)).build();
-        assert_eq!(
-            result,
-            Some(vec![(
-                "id".to_string(),
-                "550e8400-e29b-41d4-a716-446655440000".to_string()
-            )])
-        );
-    }
-
-    #[test]
     fn test_datetime_param_formats_rfc3339() {
         let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
         let result = QueryBuilder::new().datetime("since", Some(dt)).build();
@@ -520,16 +491,6 @@ mod tests {
                 ("page".to_string(), "1".to_string()),
                 ("active".to_string(), "true".to_string()),
             ])
-        );
-    }
-
-    #[test]
-    fn test_big_int_param() {
-        let big = num_bigint::BigInt::from(999_999_999_999i64);
-        let result = QueryBuilder::new().big_int("value", Some(big)).build();
-        assert_eq!(
-            result,
-            Some(vec![("value".to_string(), "999999999999".to_string())])
         );
     }
 
