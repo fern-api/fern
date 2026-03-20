@@ -203,7 +203,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         Status = ConnectionStatus.Connecting;
 
-        _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
+        _webSocket = new WebSocketConnection(_uri)
         {
             HttpInvoker = HttpInvoker,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
