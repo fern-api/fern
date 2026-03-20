@@ -4,15 +4,11 @@ use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum RealtimeServerMessage {
-    #[serde(rename = "receive")]
     ReceiveEvent(ReceiveEvent),
-    #[serde(rename = "receive_snake_case")]
     ReceiveSnakeCase(ReceiveSnakeCase),
-    #[serde(rename = "receive2")]
     ReceiveEvent2(ReceiveEvent2),
-    #[serde(rename = "receive3")]
     ReceiveEvent3(ReceiveEvent3),
 }
 pub struct RealtimeClient {
@@ -23,12 +19,15 @@ impl RealtimeClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
+        authorization: &str,
         model: Option<&str>,
         temperature: Option<&str>,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime/{session_id}", url);
         let mut options = WebSocketOptions::default();
-
+        options
+            .headers
+            .insert("Authorization".to_string(), authorization.to_string());
         if let Some(v) = model {
             options
                 .query_params
@@ -81,11 +80,12 @@ impl RealtimeClient {
 /// Provides access to the WebSocket channel through the root client.
 pub struct RealtimeConnector {
     base_url: String,
+    token: Option<String>,
 }
 
 impl RealtimeConnector {
-    pub fn new(base_url: String) -> Self {
-        Self { base_url }
+    pub fn new(base_url: String, token: Option<String>) -> Self {
+        Self { base_url, token }
     }
 
     pub async fn connect(
@@ -94,6 +94,11 @@ impl RealtimeConnector {
         model: Option<&str>,
         temperature: Option<&str>,
     ) -> Result<RealtimeClient, ApiError> {
-        RealtimeClient::connect(&self.base_url, session_id, model, temperature).await
+        let auth_header = self
+            .token
+            .as_ref()
+            .map(|t| format!("Bearer {}", t))
+            .unwrap_or_default();
+        RealtimeClient::connect(&self.base_url, session_id, &auth_header, model, temperature).await
     }
 }

@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct BuildingExecutorResponse {
     #[serde(rename = "submissionId")]
+    #[serde(default)]
     pub submission_id: SubmissionId,
     pub status: ExecutionSessionStatus,
 }

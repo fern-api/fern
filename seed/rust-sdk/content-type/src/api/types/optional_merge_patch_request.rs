@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct OptionalMergePatchRequest {
     #[serde(rename = "requiredField")]
+    #[serde(default)]
     pub required_field: String,
     #[serde(rename = "optionalString")]
     #[serde(skip_serializing_if = "Option::is_none")]

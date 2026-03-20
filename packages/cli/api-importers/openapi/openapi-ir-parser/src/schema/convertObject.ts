@@ -180,11 +180,39 @@ export function convertObject({
                 return property;
             });
 
+            // Merge base property schemas from referenced allOf parents into inline
+            // override properties. This handles cases like allOf narrowing array items
+            // without redeclaring type: array — the base schema's type/structure is
+            // carried forward so the property is correctly recognized.
+            // We build a new element to avoid mutating the parsed OpenAPI document.
+            let mergedAllOfElement = allOfElement;
+            if (allOfElement.properties != null) {
+                const mergedProperties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+                for (const [key, overridePropSchema] of Object.entries(allOfElement.properties)) {
+                    let merged: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject = overridePropSchema;
+                    if (!isReferenceObject(overridePropSchema)) {
+                        for (const otherAllOfElement of allOf) {
+                            if (otherAllOfElement === allOfElement || !isReferenceObject(otherAllOfElement)) {
+                                continue;
+                            }
+                            const resolvedParent = context.resolveSchemaReference(otherAllOfElement);
+                            const basePropSchema = resolvedParent.properties?.[key];
+                            if (basePropSchema != null && !isReferenceObject(basePropSchema)) {
+                                merged = { ...basePropSchema, ...overridePropSchema };
+                                break;
+                            }
+                        }
+                    }
+                    mergedProperties[key] = merged;
+                }
+                mergedAllOfElement = { ...allOfElement, properties: mergedProperties };
+            }
+
             // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
             // extract properties from each variant and make them optional.
             // This handles patterns like allOf + oneOf used for mutual exclusion (e.g. content vs templateId).
-            const variants = allOfElement.oneOf ?? allOfElement.anyOf;
-            if (variants != null && allOfElement.type == null && allOfElement.properties == null) {
+            const variants = mergedAllOfElement.oneOf ?? mergedAllOfElement.anyOf;
+            if (variants != null && mergedAllOfElement.type == null && mergedAllOfElement.properties == null) {
                 const seenKeys = new Set(inlinedParentProperties.map((p) => p.key));
                 for (const variantSchema of variants) {
                     const resolvedVariantSchema = isReferenceObject(variantSchema)
@@ -229,7 +257,15 @@ export function convertObject({
                     }
                 }
             } else {
-                const allOfSchema = convertSchema(allOfElement, false, false, context, breadcrumbs, source, namespace);
+                const allOfSchema = convertSchema(
+                    mergedAllOfElement,
+                    false,
+                    false,
+                    context,
+                    breadcrumbs,
+                    source,
+                    namespace
+                );
                 if (allOfSchema.type === "object") {
                     inlinedParentProperties.push(...allOfSchema.properties);
                 }

@@ -32,6 +32,23 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+/**
+ * Sanitizes a preview ID to be valid in a DNS subdomain label.
+ * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
+ * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
+ */
+function sanitizePreviewId(id: string): string {
+    const sanitized = id
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-{2,}/g, "-")
+        .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
+}
+
 export class DocsPublishConflictError extends Error {
     constructor() {
         super("Another docs publish is currently in progress for this domain.");
@@ -60,6 +77,16 @@ export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): R
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
+interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
+}
+
 export async function publishDocs({
     token,
     organization,
@@ -79,7 +106,8 @@ export async function publishDocs({
     excludeApis = false,
     targetAudiences,
     docsUrl,
-    cliVersion
+    cliVersion,
+    ciSource
 }: {
     token: FernToken;
     organization: string;
@@ -100,6 +128,7 @@ export async function publishDocs({
     targetAudiences?: string[];
     docsUrl?: string;
     cliVersion?: string;
+    ciSource?: CISource;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -107,9 +136,17 @@ export async function publishDocs({
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }
 
+    const headers: Record<string, string> = {};
+    if (cliVersion != null) {
+        headers["X-CLI-Version"] = cliVersion;
+    }
+    if (ciSource != null) {
+        headers["X-CI-Source"] = JSON.stringify(ciSource);
+        context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
     const fdr = createFdrService({
         token: token.value,
-        ...(cliVersion != null && { headers: { "X-CLI-Version": cliVersion } })
+        ...(Object.keys(headers).length > 0 && { headers })
     });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
@@ -226,7 +263,7 @@ export async function publishDocs({
                     filepaths: filepaths,
                     images,
                     basePath,
-                    previewId
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                 } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;

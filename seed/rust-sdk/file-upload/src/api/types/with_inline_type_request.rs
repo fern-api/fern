@@ -2,8 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct WithInlineTypeRequest {
+    #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
+    #[serde(default)]
     pub request: MyInlineType,
 }
 impl WithInlineTypeRequest {

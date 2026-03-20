@@ -24,7 +24,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<UserResponse, ApiError> {
         self.http_client
@@ -56,7 +56,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -74,7 +74,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &UpdateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<UserResponse, ApiError> {
@@ -82,7 +82,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PATCH,
                 &format!("/api/users/{}", user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -167,7 +167,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/profiles/complex",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -185,7 +185,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_complex_profile(
         &self,
-        profile_id: &String,
+        profile_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
         self.http_client
@@ -210,7 +210,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_complex_profile(
         &self,
-        profile_id: &String,
+        profile_id: &str,
         request: &UpdateComplexProfileRequest,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
@@ -218,7 +218,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PATCH,
                 &format!("/api/profiles/complex/{}", profile_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -243,7 +243,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/test/deserialization",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -290,7 +290,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_notification_settings(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Option<NotificationMethod>, ApiError> {
         self.http_client
@@ -315,7 +315,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_tags(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &UpdateTagsRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<String>, ApiError> {
@@ -323,7 +323,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::PUT,
                 &format!("/api/users/{}/tags", user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -348,7 +348,7 @@ impl NullableOptionalClient2 {
             .execute_request(
                 Method::POST,
                 "/api/search",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

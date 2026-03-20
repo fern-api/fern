@@ -57,6 +57,7 @@ export const AsIsFiles = {
         Query: "WebSockets/Query.Template.cs",
         ReconnectionInfo: "WebSockets/ReconnectionInfo.Template.cs",
         ReconnectionType: "WebSockets/ReconnectionType.Template.cs",
+        ReconnectStrategy: "WebSockets/ReconnectStrategy.Template.cs",
         RequestMessage: "WebSockets/RequestMessage.Template.cs",
         WebSocketClient: "WebSockets/WebSocketClient.Template.cs",
         WebSocketConnection: "WebSockets/WebSocketConnection.Template.cs",
@@ -75,8 +76,7 @@ export const AsIsFiles = {
         Nullable: "NullableAttribute.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
         Optional: "Optional.Template.cs",
-        OptionalAttribute: "OptionalAttribute.Template.cs",
-        StringEnumSerializer: "StringEnumSerializer.Template.cs"
+        OptionalAttribute: "OptionalAttribute.Template.cs"
     },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
@@ -111,6 +111,20 @@ export const AsIsFiles = {
             "test/Pagination/StepOffsetTest.Template.cs",
             "test/Pagination/StringCursorTest.Template.cs"
         ],
+        WebSockets: {
+            AsyncLockTests: "test/WebSockets/AsyncLockTests.Template.cs",
+            DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",
+            E2eWebSocketTests: "test/WebSockets/E2eWebSocketTests.Template.cs",
+            EventTests: "test/WebSockets/EventTests.Template.cs",
+            QueryTests: "test/WebSockets/QueryTests.Template.cs",
+            ReconnectionInfoTests: "test/WebSockets/ReconnectionInfoTests.Template.cs",
+            ReconnectStrategyTests: "test/WebSockets/ReconnectStrategyTests.Template.cs",
+            RequestMessageTests: "test/WebSockets/RequestMessageTests.Template.cs",
+            TestWebSocketServer: "test/WebSockets/TestWebSocketServer.Template.cs",
+            WebSocketClientTests: "test/WebSockets/WebSocketClientTests.Template.cs",
+            WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs",
+            WebsocketExceptionTests: "test/WebSockets/WebsocketExceptionTests.Template.cs"
+        },
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",

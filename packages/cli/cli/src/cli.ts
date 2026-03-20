@@ -12,7 +12,13 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    extractErrorMessage,
+    haveSameNullishness,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
@@ -54,6 +60,7 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
@@ -238,6 +245,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGeneratorCommands(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
+    addInstallDependenciesCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -2144,6 +2152,18 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     });
 }
 
+function addInstallDependenciesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "install-dependencies",
+        false, // hidden from --help
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+        (yargs) => {},
+        async () => {
+            await installDependencies({ cliContext });
+        }
+    );
+}
+
 function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command({
         command: "replay",
@@ -2250,9 +2270,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     cliContext.logger.info("\nDry run complete. No changes made.");
                 }
             } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2324,7 +2342,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
             }
         }
     );

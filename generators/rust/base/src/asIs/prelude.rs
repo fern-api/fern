@@ -11,8 +11,7 @@ pub use crate::error::ApiError;
 // Main client and resource clients
 pub use crate::api::*;
 
-// Re-export commonly used external types{{CHRONO_EXPORTS}}
-pub use ordered_float::OrderedFloat;
+// Re-export commonly used external types{{CHRONO_EXPORTS}}{{ORDERED_FLOAT_EXPORTS}}
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};

@@ -577,7 +577,7 @@ function AnalyzeSdkDiff(
     - For NO_CHANGE: use type "chore" and state that no functional changes were made
     - Be specific and action-oriented
     - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
-    - NEVER include the literal version "505.503.4455" in the commit message - if you see this placeholder
+    - NEVER include the literal version "0.0.0-fern-placeholder" in the commit message - if you see this placeholder
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
     - The previous version is provided for context only. Do not include it
     literally in the commit message summary line.

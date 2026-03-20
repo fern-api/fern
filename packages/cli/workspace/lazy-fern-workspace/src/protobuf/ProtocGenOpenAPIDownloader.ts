@@ -126,11 +126,20 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     }
     try {
         await mkdir(lockPath, { recursive: false });
-    } catch (err) {
-        // Another process grabbed the lock between our rm and mkdir — wait briefly and retry
-        logger.debug(`Failed to re-acquire lock after break: ${err instanceof Error ? err.message : String(err)}`);
-        await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
-        await mkdir(lockPath, { recursive: false });
+    } catch {
+        // Another process grabbed the lock between our rm and mkdir — retry with remaining time
+        const remaining = Math.max(LOCK_RETRY_INTERVAL_MS * 5, deadline - Date.now());
+        const retryDeadline = Date.now() + remaining;
+        while (Date.now() < retryDeadline) {
+            try {
+                await mkdir(lockPath, { recursive: false });
+                return createLockReleaser(lockPath, logger);
+            } catch {
+                logger.debug(`Waiting for lock on ${lockPath} (post-break retry)...`);
+                await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+            }
+        }
+        throw new Error(`Failed to acquire lock after timeout and retry`);
     }
     return createLockReleaser(lockPath, logger);
 }
@@ -185,19 +194,19 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
     if (await fileExists(versionedPath)) {
         const currentMarker = await readVersionMarker(versionMarkerPath, logger);
         if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
-            logger.debug(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+            logger.info(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
             return getCacheDir();
         }
         // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
-        logger.debug(`Updated canonical protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
+        logger.info(`Updated protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     }
 
     // Download the binary
     const downloadUrl = getDownloadUrl();
-    logger.debug(`Downloading protoc-gen-openapi from ${downloadUrl}`);
+    logger.info(`Downloading protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}...`);
 
     const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
@@ -218,7 +227,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
 
-        logger.debug(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
+        logger.info(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     } catch (error) {
         logger.debug(

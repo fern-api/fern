@@ -123,6 +123,10 @@ public final class TestCaseFunction {
   @JsonIgnoreProperties("type")
   private static final class WithActualResultValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseWithActualResultImplementation value;
 
     @JsonCreator(
@@ -165,6 +169,10 @@ public final class TestCaseFunction {
   @JsonIgnoreProperties("type")
   private static final class CustomValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private VoidFunctionDefinition value;
 
     @JsonCreator(

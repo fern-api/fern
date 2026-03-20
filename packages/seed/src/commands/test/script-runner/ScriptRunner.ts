@@ -2,7 +2,6 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
-import { Semaphore } from "../../../Semaphore.js";
 
 export declare namespace ScriptRunner {
     interface RunArgs {
@@ -33,8 +32,6 @@ export declare namespace ScriptRunner {
  * Abstract base class for running scripts on generated code to verify the output.
  */
 export abstract class ScriptRunner {
-    protected readonly lock = new Semaphore(1);
-
     constructor(
         protected readonly workspace: GeneratorWorkspace,
         protected readonly skipScripts: boolean,
