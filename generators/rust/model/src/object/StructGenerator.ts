@@ -223,6 +223,16 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.properties.length !== 1 || this.objectTypeDeclaration.extends.length > 0) {
             return false;
         }
+        // Don't apply transparent if the single property is an enum type.
+        // Enums serialize as their variant string (e.g. "text.done"), so transparent
+        // would lose the enclosing object structure (e.g. {"type":"text.done"}).
+        const singleProperty = this.objectTypeDeclaration.properties[0]!;
+        if (singleProperty.valueType.type === "named") {
+            const referencedType = this.context.ir.types[singleProperty.valueType.typeId];
+            if (referencedType?.shape.type === "enum") {
+                return false;
+            }
+        }
         // Check if this type is referenced by any undiscriminated union
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
         return typeId != null && this.context.undiscriminatedUnionMemberTypeIds.has(typeId);
