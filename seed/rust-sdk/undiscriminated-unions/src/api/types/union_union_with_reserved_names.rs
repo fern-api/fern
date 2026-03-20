@@ -23,7 +23,7 @@ impl UnionWithReservedNames {
         matches!(self, Self::String(_))
     }
 
-    pub fn as_literal0(&self) -> Option<&String> {
+    pub fn as_literal0(&self) -> Option<&str> {
         match self {
             Self::Literal0(value) => Some(value),
             _ => None,
@@ -37,7 +37,7 @@ impl UnionWithReservedNames {
         }
     }
 
-    pub fn as_literal1(&self) -> Option<&String> {
+    pub fn as_literal1(&self) -> Option<&str> {
         match self {
             Self::Literal1(value) => Some(value),
             _ => None,
@@ -51,7 +51,7 @@ impl UnionWithReservedNames {
         }
     }
 
-    pub fn as_string(&self) -> Option<&String> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
             Self::String(value) => Some(value),
             _ => None,

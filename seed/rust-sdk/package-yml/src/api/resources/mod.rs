@@ -26,7 +26,7 @@ impl PackageYmlClient {
 
     pub async fn echo(
         &self,
-        id: &String,
+        id: &str,
         request: &EchoRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {

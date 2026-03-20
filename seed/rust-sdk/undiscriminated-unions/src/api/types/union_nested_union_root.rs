@@ -23,7 +23,7 @@ impl NestedUnionRoot {
         matches!(self, Self::NestedUnionL1(_))
     }
 
-    pub fn as_string(&self) -> Option<&String> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
             Self::String(value) => Some(value),
             _ => None,

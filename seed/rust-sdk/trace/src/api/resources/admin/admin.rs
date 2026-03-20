@@ -90,7 +90,7 @@ impl AdminClient {
     pub async fn store_traced_test_case(
         &self,
         submission_id: &SubmissionId,
-        test_case_id: &String,
+        test_case_id: &str,
         request: &StoreTracedTestCaseRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {

@@ -16,7 +16,7 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_string(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client

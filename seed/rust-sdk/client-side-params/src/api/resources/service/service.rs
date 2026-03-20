@@ -66,7 +66,7 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn get_resource(
         &self,
-        resource_id: &String,
+        resource_id: &str,
         request: &GetResourceQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Resource, ApiError> {
@@ -169,7 +169,7 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn get_user_by_id(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &GetUserByIdQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
@@ -223,7 +223,7 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn update_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &UpdateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
@@ -249,7 +249,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn delete_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -307,7 +307,7 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn get_connection(
         &self,
-        connection_id: &String,
+        connection_id: &str,
         request: &GetConnectionQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Connection, ApiError> {
@@ -379,7 +379,7 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn get_client(
         &self,
-        client_id: &String,
+        client_id: &str,
         request: &GetClientQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Client, ApiError> {

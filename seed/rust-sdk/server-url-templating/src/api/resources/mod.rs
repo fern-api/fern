@@ -27,7 +27,7 @@ impl ApiClient {
 
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client

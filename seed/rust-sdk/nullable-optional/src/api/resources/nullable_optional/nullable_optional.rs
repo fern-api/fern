@@ -24,7 +24,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<UserResponse, ApiError> {
         self.http_client
@@ -74,7 +74,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &UpdateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<UserResponse, ApiError> {
@@ -185,7 +185,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_complex_profile(
         &self,
-        profile_id: &String,
+        profile_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
         self.http_client
@@ -210,7 +210,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_complex_profile(
         &self,
-        profile_id: &String,
+        profile_id: &str,
         request: &UpdateComplexProfileRequest,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
@@ -290,7 +290,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn get_notification_settings(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Option<NotificationMethod>, ApiError> {
         self.http_client
@@ -315,7 +315,7 @@ impl NullableOptionalClient2 {
     /// JSON response from the API
     pub async fn update_tags(
         &self,
-        user_id: &String,
+        user_id: &str,
         request: &UpdateTagsRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<String>, ApiError> {

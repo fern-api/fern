@@ -16,7 +16,7 @@ impl BigunionClient {
 
     pub async fn get(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<BigUnion, ApiError> {
         self.http_client

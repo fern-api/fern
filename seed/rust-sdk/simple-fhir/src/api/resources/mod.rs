@@ -21,7 +21,7 @@ impl ApiClient {
 
     pub async fn get_account(
         &self,
-        account_id: &String,
+        account_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Account, ApiError> {
         self.http_client

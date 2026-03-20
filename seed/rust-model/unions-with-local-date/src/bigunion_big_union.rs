@@ -440,7 +440,7 @@ pub enum BigUnion {
 }
 
 impl BigUnion {
-    pub fn get_id(&self) -> &String {
+    pub fn get_id(&self) -> &str {
         match self {
                     Self::NormalSweet { id, .. } => id,
                     Self::ThankfulFactor { id, .. } => id,

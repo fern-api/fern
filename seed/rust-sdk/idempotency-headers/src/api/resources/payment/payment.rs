@@ -32,7 +32,7 @@ impl PaymentClient {
 
     pub async fn delete(
         &self,
-        payment_id: &String,
+        payment_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

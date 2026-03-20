@@ -15,7 +15,7 @@ impl ComplexClient {
 
     pub async fn search(
         &self,
-        index: &String,
+        index: &str,
         request: &SearchRequest,
         options: Option<RequestOptions>,
     ) -> Result<PaginatedConversationResponse, ApiError> {

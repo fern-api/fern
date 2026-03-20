@@ -15,7 +15,7 @@ impl TypesClient {
 
     pub async fn get(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<UnionWithTime, ApiError> {
         self.http_client
