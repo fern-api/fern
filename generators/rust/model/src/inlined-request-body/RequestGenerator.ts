@@ -51,13 +51,7 @@ export class RequestGenerator {
         let docs = undefined;
         if (this.docsContent) {
             docs = rust.docComment({
-                summary: this.docsContent,
-                description: `Request type for the ${this.name} operation.`
-            });
-        } else {
-            // Fallback documentation
-            docs = rust.docComment({
-                summary: `Request type for API operation`
+                summary: this.docsContent
             });
         }
 
