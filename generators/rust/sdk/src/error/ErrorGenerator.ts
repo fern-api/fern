@@ -90,6 +90,7 @@ export class ErrorGenerator {
             this.buildStandardVariant("InvalidHeader", "Invalid header value"),
             this.buildStandardVariant("RequestClone", "Could not clone request for retry"),
             this.buildStandardVariant("StreamTerminated", "SSE stream terminated"),
+            this.buildStandardVariant("StreamTimeout", "SSE stream timed out waiting for next event"),
             this.buildStandardVariant("SseParseError", "SSE parse error: {0}", undefined, [Type.string()])
         ];
 
