@@ -79,7 +79,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 });
                 if (resolved?.properties != null) {
                     for (const [key, propSchema] of Object.entries(resolved.properties)) {
-                        if (!this.context.isReferenceObject(propSchema)) {
+                        if (!this.context.isReferenceObject(propSchema) && resolvedParentProperties[key] == null) {
                             resolvedParentProperties[key] = propSchema;
                         }
                     }
