@@ -116,15 +116,29 @@ internal partial class WebSocketConnection
                 throw new ArgumentException($"Unknown message type: {message.GetType()}");
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        await _client
-            .SendAsync(
-                payload,
-                messageType,
-                true,
-                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
-            )
-            .ConfigureAwait(false);
+        using var sendCts = cancellationToken != default
+            ? CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None, cancellationToken)
+            : CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None);
+        sendCts.CancelAfter(SendTimeout);
+
+        try
+        {
+            await _client
+                .SendAsync(payload, messageType, true, sendCts.Token)
+                .ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (sendCts.IsCancellationRequested)
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds);
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                + "The remote peer may be unreachable. Connection has been aborted.");
+        }
     }
 
     private async global::System.Threading.Tasks.Task SendInternalSynchronized(ArraySegment<byte> message, CancellationToken cancellationToken = default)
@@ -150,15 +164,34 @@ internal partial class WebSocketConnection
             return;
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        await _client
-            .SendAsync(
-                payload,
-                WebSocketMessageType.Binary,
-                true,
-                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
-            )
-            .ConfigureAwait(false);
+        using var sendCts = cancellationToken != default
+            ? CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None, cancellationToken)
+            : CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None);
+        sendCts.CancelAfter(SendTimeout);
+
+        try
+        {
+            await _client
+                .SendAsync(
+                    payload,
+                    WebSocketMessageType.Binary,
+                    true,
+                    sendCts.Token
+                )
+                .ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (sendCts.IsCancellationRequested)
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds);
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                + "The remote peer may be unreachable. Connection has been aborted.");
+        }
     }
 
     private async global::System.Threading.Tasks.Task SendInternal(ReadOnlyMemory<byte> payload, CancellationToken cancellationToken = default)
@@ -168,20 +201,38 @@ internal partial class WebSocketConnection
             return;
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        var token = linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None);
+        using var sendCts = cancellationToken != default
+            ? CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None, cancellationToken)
+            : CancellationTokenSource.CreateLinkedTokenSource(
+                _cancellation?.Token ?? CancellationToken.None);
+        sendCts.CancelAfter(SendTimeout);
+
+        try
+        {
 #if NET6_0_OR_GREATER
-        await _client
-            .SendAsync(
-                payload,
-                WebSocketMessageType.Binary,
-                true,
-                token
-            )
-            .ConfigureAwait(false);
+            await _client
+                .SendAsync(
+                    payload,
+                    WebSocketMessageType.Binary,
+                    true,
+                    sendCts.Token
+                )
+                .ConfigureAwait(false);
 #else
-        await SendInternal(new ArraySegment<byte>(payload.ToArray()), cancellationToken).ConfigureAwait(false);
+            await SendInternal(new ArraySegment<byte>(payload.ToArray()), cancellationToken).ConfigureAwait(false);
 #endif
+        }
+        catch (OperationCanceledException) when (sendCts.IsCancellationRequested)
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds);
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                + "The remote peer may be unreachable. Connection has been aborted.");
+        }
     }
 
     private CancellationTokenSource? CreateLinkedToken(CancellationToken cancellationToken)
