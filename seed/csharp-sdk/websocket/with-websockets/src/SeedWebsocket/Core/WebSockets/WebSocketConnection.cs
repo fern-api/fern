@@ -532,8 +532,7 @@ internal partial class WebSocketConnection
 
     private async global::System.Threading.Tasks.Task MonitorState(
         WebSocket client,
-        CancellationTokenSource receiveCts,
-        CancellationToken token
+        CancellationTokenSource receiveCts
     )
     {
         if (StateCheckInterval == null)
@@ -541,10 +540,10 @@ internal partial class WebSocketConnection
 
         try
         {
-            while (!token.IsCancellationRequested)
+            while (!receiveCts.Token.IsCancellationRequested)
             {
                 await global::System
-                    .Threading.Tasks.Task.Delay(StateCheckInterval.Value, token)
+                    .Threading.Tasks.Task.Delay(StateCheckInterval.Value, receiveCts.Token)
                     .ConfigureAwait(false);
 
                 if (
@@ -578,7 +577,7 @@ internal partial class WebSocketConnection
         using var receiveCts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
         // Start the state monitor as a background task
-        var monitorTask = MonitorState(client, receiveCts, token);
+        var monitorTask = MonitorState(client, receiveCts);
 
         Exception causedException = null;
         try
