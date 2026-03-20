@@ -44,6 +44,13 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 #endif
 
     /// <summary>
+    /// Optional HttpMessageInvoker for HTTP/2 WebSocket connections.
+    /// When set, enables multiplexing multiple WebSocket streams over a single TCP connection.
+    /// Requires .NET 7+.
+    /// </summary>
+    public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+    /// <summary>
     /// Time range for how long to wait while connecting.
     /// Default: 5 seconds.
     /// </summary>
@@ -209,6 +216,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 #if NET6_0_OR_GREATER
             DeflateOptions = DeflateOptions,
 #endif
+            HttpInvoker = HttpInvoker,
             ConnectTimeout = ConnectTimeout,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,

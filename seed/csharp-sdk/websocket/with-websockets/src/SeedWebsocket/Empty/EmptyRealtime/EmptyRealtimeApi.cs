@@ -43,6 +43,7 @@ public partial class EmptyRealtimeApi
         var uri = new UriBuilder(_options.BaseUrl);
         uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.HttpInvoker = _options.HttpInvoker;
     }
 
     /// <summary>
@@ -148,5 +149,10 @@ public partial class EmptyRealtimeApi
         /// <para><b>Security warning:</b> do not enable compression when transmitting data containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>
         /// </summary>
         public bool EnableCompression { get; set; } = false;
+
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
     }
 }
