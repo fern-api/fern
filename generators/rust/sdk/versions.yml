@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Add per-event timeout to SSE stream methods. The `SseStream` now accepts a timeout
+        duration and yields `ApiError::StreamTimeout` if no event is received within that
+        period. The timeout is derived from `RequestOptions.timeout_seconds` (per-request)
+        or `ClientConfig.timeout` (client-level), preventing indefinite blocking when the
+        server stops sending events.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.21.0
   changelogEntry:
     - summary: |
