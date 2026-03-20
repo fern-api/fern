@@ -104,7 +104,7 @@ pub struct SseStream<T> {
     terminator: Option<String>,
     timeout: Duration,
     #[pin]
-    deadline: Pin<Box<tokio::time::Sleep>>,
+    deadline: tokio::time::Sleep,
     _phantom: PhantomData<T>,
 }
 
@@ -156,7 +156,7 @@ where
             inner: Box::pin(events),
             terminator,
             timeout,
-            deadline: Box::pin(tokio::time::sleep(timeout)),
+            deadline: tokio::time::sleep(timeout),
             _phantom: PhantomData,
         })
     }
