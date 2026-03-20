@@ -92,6 +92,12 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// </summary>
     public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
+#if NET6_0_OR_GREATER
+        if (_options.EnableCompression)
+        {
+            _client.DeflateOptions = new System.Net.WebSockets.WebSocketDeflateOptions();
+        }
+#endif
         await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
     }
 
@@ -132,5 +138,10 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Enable per-message deflate compression (RFC 7692). Default: false.
+        /// </summary>
+        public bool EnableCompression { get; set; } = false;
     }
 }

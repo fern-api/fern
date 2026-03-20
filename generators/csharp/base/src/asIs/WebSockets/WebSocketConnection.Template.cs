@@ -81,10 +81,12 @@ internal partial class WebSocketConnection
                     //    Options = { KeepAliveInterval = new TimeSpan(0, 0, 5, 0) }
                     //};
                     var client = new ClientWebSocket();
+#if NET6_0_OR_GREATER
                     if (DeflateOptions != null)
                     {
                         client.Options.DangerousDeflateOptions = DeflateOptions;
                     }
+#endif
                     await client.ConnectAsync(uri, token).ConfigureAwait(false);
                     return client;
                 }
@@ -93,12 +95,14 @@ internal partial class WebSocketConnection
 
     public Uri Url { get; set; }
 
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options.
     /// When set, enables WebSocket compression (RFC 7692).
     /// Warning: Do not use compression when sending data containing secrets (CRIME/BREACH vulnerability).
     /// </summary>
     public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
 
     public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
     public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }

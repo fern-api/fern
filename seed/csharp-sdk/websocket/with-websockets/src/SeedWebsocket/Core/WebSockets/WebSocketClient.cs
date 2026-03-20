@@ -25,6 +25,15 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _onTextMessage = onTextMessage;
     }
 
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options.
+    /// When set, enables WebSocket compression (RFC 7692).
+    /// Warning: Do not use compression when sending data containing secrets (CRIME/BREACH vulnerability).
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
+
     /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
@@ -196,8 +205,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         Status = ConnectionStatus.Connecting;
 
-        _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
+        _webSocket = new WebSocketConnection(_uri, (Func<ClientWebSocket>?)null)
         {
+#if NET6_0_OR_GREATER
+            DeflateOptions = DeflateOptions,
+#endif
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
