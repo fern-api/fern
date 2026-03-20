@@ -119,6 +119,35 @@ export class ContainerScriptRunner extends ScriptRunner {
         outputDir: AbsoluteFilePath;
         skipScripts?: boolean | string[];
     }): Promise<ScriptRunner.RunResponse> {
+        const workDir = id.replace(":", "_");
+        try {
+            return await this.executeScriptsInSlot({ slot, taskContext, id, outputDir, skipScripts });
+        } finally {
+            // Clean up the fixture's working directory to free disk space.
+            // Package manager caches (npm, nuget, yarn, pip, etc.) live in global
+            // paths (e.g. ~/.npm, ~/.nuget) and are preserved across fixtures.
+            for (const script of slot.scripts) {
+                await loggingExeca(undefined, this.runner, ["exec", script.containerId, "rm", "-rf", `/${workDir}`], {
+                    doNotPipeOutput: true,
+                    reject: false
+                });
+            }
+        }
+    }
+
+    private async executeScriptsInSlot({
+        slot,
+        taskContext,
+        id,
+        outputDir,
+        skipScripts
+    }: {
+        slot: ContainerSlot;
+        taskContext: TaskContext;
+        id: string;
+        outputDir: AbsoluteFilePath;
+        skipScripts?: boolean | string[];
+    }): Promise<ScriptRunner.RunResponse> {
         let buildTimeMs: number | undefined;
         let testTimeMs: number | undefined;
         let anyBuildCommands = false;
