@@ -271,6 +271,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             },
             DisconnectionHappened = async d =>
             {
+                Status = ConnectionStatus.Disconnected;
                 await Closed
                     .RaiseEvent(
                         new Closed { Code = (int?)d.CloseStatus, Reason = d.CloseStatusDescription }
