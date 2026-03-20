@@ -368,10 +368,13 @@ public class E2eWebSocketTests
         {
             ConnectTimeout = TimeSpan.FromSeconds(5),
             IsReconnectionEnabled = true,
+            StateCheckInterval = TimeSpan.FromMilliseconds(100),
+            ReconnectTimeout = TimeSpan.FromMilliseconds(500),
+            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(500),
             Backoff = new ReconnectStrategy
             {
-                MinReconnectInterval = TimeSpan.FromMilliseconds(300),
-                MaxReconnectInterval = TimeSpan.FromSeconds(2),
+                MinReconnectInterval = TimeSpan.Zero,
+                MaxReconnectInterval = TimeSpan.FromMilliseconds(100),
                 UseJitter = false,
             },
         };
@@ -384,12 +387,12 @@ public class E2eWebSocketTests
         // Server closes all clients — should trigger reconnection
         await server.CloseAllClientsAsync();
 
-        var reconnectResult = await Task.WhenAny(reconnected.Task, Task.Delay(30000));
+        var reconnectResult = await Task.WhenAny(reconnected.Task, Task.Delay(5000));
         Assert.That(reconnectResult, Is.EqualTo(reconnected.Task),
             "Timed out waiting for reconnection");
 
         // Wait for reconnection to complete
-        await Task.Delay(1000);
+        await Task.Delay(200);
         Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected),
             "Client should be connected after reconnection");
 
@@ -417,10 +420,13 @@ public class E2eWebSocketTests
         {
             ConnectTimeout = TimeSpan.FromSeconds(5),
             IsReconnectionEnabled = true,
+            StateCheckInterval = TimeSpan.FromMilliseconds(100),
+            ReconnectTimeout = TimeSpan.FromMilliseconds(500),
+            ErrorReconnectTimeout = TimeSpan.FromMilliseconds(500),
             Backoff = new ReconnectStrategy
             {
-                MinReconnectInterval = TimeSpan.FromMilliseconds(300),
-                MaxReconnectInterval = TimeSpan.FromSeconds(2),
+                MinReconnectInterval = TimeSpan.Zero,
+                MaxReconnectInterval = TimeSpan.FromMilliseconds(100),
                 UseJitter = false,
             },
         };
@@ -434,12 +440,12 @@ public class E2eWebSocketTests
             });
 
             await client.ConnectAsync();
-            await Task.Delay(200);
+            await Task.Delay(100);
 
             // Abort = no close handshake, simulates crash
             server.AbortAllClients();
 
-            var result = await Task.WhenAny(disconnected.Task, Task.Delay(30000));
+            var result = await Task.WhenAny(disconnected.Task, Task.Delay(5000));
             // Either reconnection fires or the client detects the abort
             if (result == disconnected.Task)
             {
@@ -449,7 +455,7 @@ public class E2eWebSocketTests
             {
                 // Server abort may not always trigger reconnect callback reliably,
                 // but the client should detect the disconnect
-                await Task.Delay(2000);
+                await Task.Delay(500);
                 Assert.That(client.Status,
                     Is.AnyOf(ConnectionStatus.Connected, ConnectionStatus.Disconnected),
                     "Client should have detected server abort");
