@@ -8,7 +8,7 @@
         they are now represented as structured multipart responses with per-part
         schema information including content type, type reference, name, and description.
       type: feat
-  createdAt: "2026-03-05"
+  createdAt: "2026-03-20"
   irVersion: 65
 
 
