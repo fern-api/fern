@@ -90,6 +90,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         for (const [index, allOfSchemaOrReference] of (this.schema.allOf ?? []).entries()) {
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
             let allOfSchema: OpenAPIV3_1.SchemaObject;
+            let isInlineAllOf = false;
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
                 const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: allOfSchemaOrReference,
@@ -123,6 +124,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 }
             } else {
                 allOfSchema = allOfSchemaOrReference;
+                isInlineAllOf = true;
             }
 
             if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
@@ -207,13 +209,19 @@ export class ObjectSchemaConverter extends AbstractConverter<
             // override properties. This handles cases like allOf narrowing array items
             // without redeclaring type: array — the base schema's type/structure is
             // carried forward so the property is correctly recognized.
-            const mergedProperties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> = {};
-            for (const [key, propSchema] of Object.entries(allOfSchema.properties ?? {})) {
-                const parentProp = resolvedParentProperties[key];
-                if (parentProp != null && !this.context.isReferenceObject(propSchema)) {
-                    mergedProperties[key] = { ...parentProp, ...propSchema };
-                } else {
-                    mergedProperties[key] = propSchema;
+            // Only apply to inline allOf elements — resolved references that fell through
+            // the extends_ check already have their own complete property schemas.
+            let mergedProperties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> =
+                allOfSchema.properties ?? {};
+            if (isInlineAllOf) {
+                mergedProperties = {};
+                for (const [key, propSchema] of Object.entries(allOfSchema.properties ?? {})) {
+                    const parentProp = resolvedParentProperties[key];
+                    if (parentProp != null && !this.context.isReferenceObject(propSchema)) {
+                        mergedProperties[key] = { ...parentProp, ...propSchema };
+                    } else {
+                        mergedProperties[key] = propSchema;
+                    }
                 }
             }
 
