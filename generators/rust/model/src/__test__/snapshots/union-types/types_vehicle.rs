@@ -32,7 +32,7 @@ pub enum Vehicle {
 }
 
 impl Vehicle {
-    pub fn get_id(&self) -> &String {
+    pub fn get_id(&self) -> &str {
         match self {
                     Self::Car { id, .. } => id,
                     Self::Motorcycle { id, .. } => id,
@@ -40,7 +40,7 @@ impl Vehicle {
                 }
     }
 
-    pub fn get_manufacturer(&self) -> &String {
+    pub fn get_manufacturer(&self) -> &str {
         match self {
                     Self::Car { manufacturer, .. } => manufacturer,
                     Self::Motorcycle { manufacturer, .. } => manufacturer,
