@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.20.1
+  changelogEntry:
+    - summary: |
+        Fix unexpected_cfgs warnings for multipart and sse features by conditionally including
+        the execute_multipart_request and execute_sse_request methods in http_client.rs only when
+        the corresponding features are needed. Also fix unused Utc import in query_parameter_builder.rs
+        and unused SerdeError import in http_client.rs.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
 - version: 0.20.0
   changelogEntry:
     - summary: |
