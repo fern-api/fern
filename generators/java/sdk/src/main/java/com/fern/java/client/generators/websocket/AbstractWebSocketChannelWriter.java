@@ -507,11 +507,11 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Extracts the wire discriminant value for a WebSocket message by examining the body's
-     * literal "type" property. Falls back to the message ID if no literal type is found.
+     * Extracts the wire discriminant value for a WebSocket message by examining the body's literal "type" property.
+     * Falls back to the message ID if no literal type is found.
      *
-     * For inlined bodies, looks for a property with wire name "type" that has a literal value.
-     * For reference bodies, resolves the type declaration and checks its object properties.
+     * <p>For inlined bodies, looks for a property with wire name "type" that has a literal value. For reference bodies,
+     * resolves the type declaration and checks its object properties.
      */
     protected String getWireDiscriminantValue(WebSocketMessage message) {
         String messageId = message.getType().get();
@@ -520,8 +520,8 @@ public abstract class AbstractWebSocketChannelWriter {
             public String visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
                 for (InlinedWebSocketMessageBodyProperty property : inlinedBody.getProperties()) {
                     if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
-                        Optional<String> value = extractDiscriminantFromTypeProperty(
-                                property.getValueType(), messageId);
+                        Optional<String> value =
+                                extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
                         if (value.isPresent()) {
                             return value.get();
                         }
@@ -547,16 +547,13 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Extracts the wire discriminant string from a TypeReference for the "type" property.
-     * First checks for a literal container, then for an enum type where one value matches
-     * the message ID suffix.
+     * Extracts the wire discriminant string from a TypeReference for the "type" property. First checks for a literal
+     * container, then for an enum type where one value matches the message ID suffix.
      */
     private Optional<String> extractDiscriminantFromTypeProperty(TypeReference typeReference, String messageId) {
         // Check for literal container (e.g., literal<"Welcome">)
-        Optional<String> literal = typeReference
-                .getContainer()
-                .flatMap(ContainerType::getLiteral)
-                .flatMap(Literal::getString);
+        Optional<String> literal =
+                typeReference.getContainer().flatMap(ContainerType::getLiteral).flatMap(Literal::getString);
         if (literal.isPresent()) {
             return literal;
         }
@@ -565,23 +562,24 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * For an enum-typed property, finds the enum value whose wire value matches the
-     * message ID. Tries exact match first, then suffix match (e.g., message ID
-     * "SpeakV1Flushed" with enum values ["Flushed", "Cleared"] → returns "Flushed").
+     * For an enum-typed property, finds the enum value whose wire value matches the message ID. Tries exact match
+     * first, then suffix match (e.g., message ID "SpeakV1Flushed" with enum values ["Flushed", "Cleared"] → returns
+     * "Flushed").
      */
     private Optional<String> extractMatchingEnumValue(TypeReference typeReference, String messageId) {
         if (!typeReference.isNamed()) {
             return Optional.empty();
         }
         try {
-            TypeDeclaration typeDeclaration =
-                    clientGeneratorContext.getTypeDeclaration(typeReference.getNamed().get().getTypeId());
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    typeReference.getNamed().get().getTypeId());
             if (!typeDeclaration.getShape().isEnum()) {
                 return Optional.empty();
             }
             // Prefer exact match over suffix match to avoid ambiguity
             Optional<String> suffixMatch = Optional.empty();
-            for (EnumValue enumValue : typeDeclaration.getShape().getEnum().get().getValues()) {
+            for (EnumValue enumValue :
+                    typeDeclaration.getShape().getEnum().get().getValues()) {
                 String wireValue = enumValue.getName().getWireValue();
                 if (messageId.equals(wireValue)) {
                     return Optional.of(wireValue);
@@ -598,16 +596,16 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * For a reference body type, resolves the type declaration and looks for a literal or
-     * enum-based "type" property in the object's properties.
+     * For a reference body type, resolves the type declaration and looks for a literal or enum-based "type" property in
+     * the object's properties.
      */
     private Optional<String> extractTypeLiteralFromReference(TypeReference bodyType, String messageId) {
         if (!bodyType.isNamed()) {
             return Optional.empty();
         }
         try {
-            TypeDeclaration typeDeclaration =
-                    clientGeneratorContext.getTypeDeclaration(bodyType.getNamed().get().getTypeId());
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    bodyType.getNamed().get().getTypeId());
             Type shape = typeDeclaration.getShape();
             if (!shape.isObject()) {
                 return Optional.empty();
