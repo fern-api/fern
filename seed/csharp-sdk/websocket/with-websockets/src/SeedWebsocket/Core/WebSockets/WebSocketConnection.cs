@@ -46,6 +46,7 @@ internal partial class WebSocketConnection
 
     private WebSocket _client;
     private CancellationTokenSource _cancellation;
+    private CancellationTokenSource _cancellationConnection;
     private CancellationTokenSource _cancellationTotal;
 
     /// <summary>
@@ -203,6 +204,12 @@ internal partial class WebSocketConnection
     /// </summary>
     public bool IsStreamDisposedAutomatically { get; set; } = true;
 
+    /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
     public Encoding MessageEncoding { get; set; }
 
     public ClientWebSocket NativeClient => GetSpecificOrThrow(_client);
@@ -217,10 +224,12 @@ internal partial class WebSocketConnection
         {
             _lastChanceTimer?.Dispose();
             _errorReconnectTimer?.Dispose();
+            _cancellationConnection?.Cancel();
             _cancellation?.Cancel();
             _cancellationTotal?.Cancel();
             _client?.Abort();
             _client?.Dispose();
+            _cancellationConnection?.Dispose();
             _cancellation?.Dispose();
             _cancellationTotal?.Dispose();
         }
@@ -413,7 +422,10 @@ internal partial class WebSocketConnection
         DeactivateLastChance();
         try
         {
-            _client = await _connectionFactory(uri, token).ConfigureAwait(false);
+            _cancellationConnection = CancellationTokenSource.CreateLinkedTokenSource(token);
+            _cancellationConnection.CancelAfter(ConnectTimeout);
+            _client = await _connectionFactory(uri, _cancellationConnection.Token)
+                .ConfigureAwait(false);
             _ = Listen(_client, token);
             IsRunning = true;
             IsStarted = true;
