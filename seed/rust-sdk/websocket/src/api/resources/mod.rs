@@ -20,10 +20,7 @@ impl WebsocketClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            empty_realtime: EmptyRealtimeConnector::new(
-                config.base_url.clone(),
-                config.token.clone(),
-            ),
+            empty_realtime: EmptyRealtimeConnector::new(config.base_url.clone()),
             realtime: RealtimeConnector::new(config.base_url.clone(), config.token.clone()),
         })
     }

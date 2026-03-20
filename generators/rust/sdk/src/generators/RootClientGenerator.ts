@@ -312,7 +312,8 @@ export class RootClientGenerator {
             const hasExplicitAuth = channel.headers.some(
                 (h) => h.name.wireValue.toLowerCase() === "authorization"
             );
-            if (!hasExplicitAuth) {
+            const needsImplicitAuth = channel.auth && !hasExplicitAuth;
+            if (needsImplicitAuth) {
                 allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
             } else {
                 allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone())`);

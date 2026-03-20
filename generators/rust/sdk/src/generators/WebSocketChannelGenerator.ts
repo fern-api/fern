@@ -341,6 +341,9 @@ ${methods.join("\n\n")}
      * inject a Bearer token from the stored ClientConfig token.
      */
     private needsImplicitAuth(channel: FernIr.WebSocketChannel): boolean {
+        if (!channel.auth) {
+            return false;
+        }
         const hasExplicitAuth = channel.headers.some(
             (h) => h.name.wireValue.toLowerCase() === "authorization"
         );

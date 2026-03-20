@@ -20,10 +20,7 @@ impl WebsocketBearerAuthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            realtime_no_auth: RealtimeNoAuthConnector::new(
-                config.base_url.clone(),
-                config.token.clone(),
-            ),
+            realtime_no_auth: RealtimeNoAuthConnector::new(config.base_url.clone()),
             realtime: RealtimeConnector::new(config.base_url.clone(), config.token.clone()),
         })
     }
