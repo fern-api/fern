@@ -164,6 +164,9 @@ export class ClassReference extends Node implements Type {
         const shouldGlobal =
             // if the type is global, then we need to globally qualify the type
             this.global ||
+            // Always qualify System namespaces to prevent ambiguity when customer
+            // projects define a type or namespace named "System"
+            this.namespaceSegments[0] === "System" ||
             // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
             this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
             this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||

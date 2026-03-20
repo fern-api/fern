@@ -1,5 +1,5 @@
-using System.ComponentModel;
-using System.Text.Json;
+using global::System.ComponentModel;
+using global::System.Text.Json;
 using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket.Empty;

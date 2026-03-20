@@ -1,4 +1,4 @@
-using System.Net.ServerSentEvents;
+using global::System.Net.ServerSentEvents;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;

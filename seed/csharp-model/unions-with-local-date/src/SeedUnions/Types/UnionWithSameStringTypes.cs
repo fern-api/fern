@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -78,7 +78,9 @@ public record UnionWithSameStringTypes
     public string AsCustomFormat() =>
         IsCustomFormat
             ? (string)Value!
-            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'customFormat'");
+            : throw new global::System.Exception(
+                "UnionWithSameStringTypes.Type is not 'customFormat'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'regularString', otherwise throws an exception.
@@ -87,7 +89,9 @@ public record UnionWithSameStringTypes
     public string AsRegularString() =>
         IsRegularString
             ? (string)Value!
-            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'regularString'");
+            : throw new global::System.Exception(
+                "UnionWithSameStringTypes.Type is not 'regularString'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'patternString', otherwise throws an exception.
@@ -96,7 +100,9 @@ public record UnionWithSameStringTypes
     public string AsPatternString() =>
         IsPatternString
             ? (string)Value!
-            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'patternString'");
+            : throw new global::System.Exception(
+                "UnionWithSameStringTypes.Type is not 'patternString'"
+            );
 
     public T Match<T>(
         Func<string, T> onCustomFormat,
@@ -197,12 +203,12 @@ public record UnionWithSameStringTypes
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSameStringTypes>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithSameStringTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSameStringTypes Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -269,7 +275,7 @@ public record UnionWithSameStringTypes
 
         public override UnionWithSameStringTypes ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

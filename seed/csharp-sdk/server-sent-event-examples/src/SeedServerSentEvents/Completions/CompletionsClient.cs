@@ -1,5 +1,5 @@
-using System.Net.ServerSentEvents;
-using System.Text.Json;
+using global::System.Net.ServerSentEvents;
+using global::System.Text.Json;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;

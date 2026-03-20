@@ -151,7 +151,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 )
                 .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
                 .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
-                .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
+                .replace(/<\/Project>/, `<ItemGroup><Using Include="global::System" /></ItemGroup></Project>`)
         );
 
         // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
@@ -870,11 +870,11 @@ ${projectGroup.join("\n")}
         <UsePortableDateOnly>true</UsePortableDateOnly>
     </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-      <Using Include="System.Net.Http" />
-      <Using Include="System.Collections.Generic" />
-      <Using Include="System.Linq" />
-      <Using Include="System.Threading" />
-      <Using Include="System.Threading.Tasks" />
+      <Using Include="global::System.Net.Http" />
+      <Using Include="global::System.Collections.Generic" />
+      <Using Include="global::System.Linq" />
+      <Using Include="global::System.Threading" />
+      <Using Include="global::System.Threading.Tasks" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />

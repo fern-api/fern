@@ -134,11 +134,15 @@ ${this.buffer}`;
                 const resolvedNs = refs.length > 0 ? (refs[0] as ClassReference).resolveNamespace() : ns;
                 const firstSegment = resolvedNs.split(".")[0];
                 // Add global:: prefix when:
-                // 1. Any ref explicitly requires global qualification, OR
-                // 2. The first segment of the namespace is both a type name and a namespace root,
+                // 1. The namespace starts with "System" — always qualify to prevent
+                //    ambiguity when customer projects define a type or namespace named "System", OR
+                // 2. Any ref explicitly requires global qualification, OR
+                // 3. The first segment of the namespace is both a type name and a namespace root,
                 //    which would cause CS0426 in C# (e.g., class "Candid" shadowing namespace "Candid.Net")
                 const needsGlobal =
-                    refs.some((ref) => ref?.global) || this.generation.registry.hasTypeNamespaceConflict(firstSegment);
+                    firstSegment === "System" ||
+                    refs.some((ref) => ref?.global) ||
+                    this.generation.registry.hasTypeNamespaceConflict(firstSegment);
                 return `using ${needsGlobal ? "global::" : ""}${resolvedNs};`;
             })
             .join("\n");
@@ -148,7 +152,9 @@ ${this.buffer}`;
         }
 
         for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
-            result = `${result}using ${alias} = ${namespace};\n`;
+            const aliasFirstSegment = namespace.split(".")[0];
+            const aliasNeedsGlobal = aliasFirstSegment === "System";
+            result = `${result}using ${alias} = ${aliasNeedsGlobal ? "global::" : ""}${namespace};\n`;
         }
 
         return result;

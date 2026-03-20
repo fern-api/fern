@@ -51,6 +51,17 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 scripts:
+  - commands:
+      build:
+        - |
+          # Enforce global:: prefix for System namespace references in generated .cs files.
+          # This prevents compile breaks when customers have namespace conflicts (e.g., a class named "System").
+          violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v '^\s*//' || true)
+          if [ -n "$violations" ]; then
+            echo "ERROR: Found unqualified 'using System' references. Use 'using global::System' instead:"
+            echo "$violations"
+            exit 1
+          fi
   - image: fernapi/csharp-seed
     commands:
       build:

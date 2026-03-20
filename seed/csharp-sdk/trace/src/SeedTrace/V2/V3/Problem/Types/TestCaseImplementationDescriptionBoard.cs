@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -66,7 +66,7 @@ public record TestCaseImplementationDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationDescriptionBoard.Type is not 'html'"
             );
 
@@ -77,7 +77,7 @@ public record TestCaseImplementationDescriptionBoard
     public string AsParamId() =>
         IsParamId
             ? (string)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationDescriptionBoard.Type is not 'paramId'"
             );
 
@@ -156,12 +156,12 @@ public record TestCaseImplementationDescriptionBoard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationDescriptionBoard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseImplementationDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -222,7 +222,7 @@ public record TestCaseImplementationDescriptionBoard
 
         public override TestCaseImplementationDescriptionBoard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
