@@ -1,5 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Add per-event timeout to SSE stream methods. The `SseStream` now accepts a timeout
+        duration and yields `ApiError::StreamTimeout` if no event is received within that
+        period. The timeout is derived from `RequestOptions.timeout_seconds` (per-request)
+        or `ClientConfig.timeout` (client-level), preventing indefinite blocking when the
+        server stops sending events.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add forward-compatible enum support. When `forward-compatible: true` is set on an enum
+        type, the generated Rust enum includes a `#[non_exhaustive]` attribute, a hidden
+        `__Unknown(String)` variant for unrecognized values, and custom Serialize/Deserialize
+        implementations that gracefully handle unknown enum values from the server.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.20.4
   changelogEntry:
     - summary: |

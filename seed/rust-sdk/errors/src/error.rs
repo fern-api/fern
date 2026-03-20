@@ -44,6 +44,8 @@ pub enum ApiError {
     RequestClone,
     #[error("SSE stream terminated")]
     StreamTerminated,
+    #[error("SSE stream timed out waiting for next event")]
+    StreamTimeout,
     #[error("SSE parse error: {0}")]
     SseParseError(String),
 }
