@@ -9,7 +9,7 @@ import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
-import { isCI } from "../../utils/environment.js";
+import { detectCISource, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
@@ -187,7 +187,8 @@ export async function generateDocsWorkspace({
             previewId,
             disableTemplates,
             skipUpload,
-            cliVersion: cliContext.environment.packageVersion
+            cliVersion: cliContext.environment.packageVersion,
+            ciSource: detectCISource()
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
