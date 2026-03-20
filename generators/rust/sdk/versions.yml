@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.20.5
+- version: 0.21.0
   changelogEntry:
     - summary: |
         Add forward-compatible enum support. When `forward-compatible: true` is set on an enum

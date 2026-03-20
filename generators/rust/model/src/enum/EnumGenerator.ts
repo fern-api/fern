@@ -22,7 +22,7 @@ export class EnumGenerator {
     private isForwardCompatible(): boolean {
         // The forwardCompatible field exists in the IR wire format but may not be typed
         // in the current IR SDK version. Access it safely via type assertion.
-        return (this.enumTypeDeclaration as Record<string, unknown>).forwardCompatible === true;
+        return (this.enumTypeDeclaration as unknown as Record<string, unknown>).forwardCompatible === true;
     }
 
     public generate(): RustFile {
