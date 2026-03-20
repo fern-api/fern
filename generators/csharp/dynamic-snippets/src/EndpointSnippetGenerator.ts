@@ -29,7 +29,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
             namespace: "Usage",
             generation: this.generation,
             allNamespaceSegments: new Set(),
-            allTypeClassReferences: new Map()
+            allTypeClassReferences: new Map(),
+            skipGlobalQualifier: true
         });
     }
 
@@ -47,7 +48,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
             namespace: "Usage",
             generation: this.generation,
             allNamespaceSegments: new Set(),
-            allTypeClassReferences: new Map()
+            allTypeClassReferences: new Map(),
+            skipGlobalQualifier: true
         });
     }
 

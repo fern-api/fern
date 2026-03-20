@@ -17,6 +17,8 @@ export declare namespace Writer {
         generation: Generation;
         /* Whether or not to skip writing imports */
         skipImports?: boolean;
+        /* Whether or not to skip adding global:: qualifier to System namespaces (e.g. for user-facing snippets) */
+        skipGlobalQualifier?: boolean;
     }
 }
 
@@ -36,12 +38,16 @@ export class Writer extends AbstractWriter {
     /* Whether or not to skip writing imports */
     public readonly skipImports: boolean;
 
+    /* Whether or not to skip adding global:: qualifier to System namespaces */
+    public readonly skipGlobalQualifier: boolean;
+
     constructor({
         namespace,
         allNamespaceSegments,
         allTypeClassReferences,
         generation,
-        skipImports = false
+        skipImports = false,
+        skipGlobalQualifier = false
     }: Writer.Args) {
         super();
         this.namespace = namespace;
@@ -49,6 +55,7 @@ export class Writer extends AbstractWriter {
         this.allTypeClassReferences = allTypeClassReferences;
         this.generation = generation;
         this.skipImports = skipImports;
+        this.skipGlobalQualifier = skipGlobalQualifier;
     }
 
     public addReference(reference: ClassReference): void {
@@ -140,9 +147,10 @@ ${this.buffer}`;
                 // 3. The first segment of the namespace is both a type name and a namespace root,
                 //    which would cause CS0426 in C# (e.g., class "Candid" shadowing namespace "Candid.Net")
                 const needsGlobal =
-                    firstSegment === "System" ||
-                    refs.some((ref) => ref?.global) ||
-                    this.generation.registry.hasTypeNamespaceConflict(firstSegment);
+                    !this.skipGlobalQualifier &&
+                    (firstSegment === "System" ||
+                        refs.some((ref) => ref?.global) ||
+                        this.generation.registry.hasTypeNamespaceConflict(firstSegment));
                 return `using ${needsGlobal ? "global::" : ""}${resolvedNs};`;
             })
             .join("\n");
@@ -153,7 +161,7 @@ ${this.buffer}`;
 
         for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
             const aliasFirstSegment = namespace.split(".")[0];
-            const aliasNeedsGlobal = aliasFirstSegment === "System";
+            const aliasNeedsGlobal = !this.skipGlobalQualifier && aliasFirstSegment === "System";
             result = `${result}using ${alias} = ${aliasNeedsGlobal ? "global::" : ""}${namespace};\n`;
         }
 

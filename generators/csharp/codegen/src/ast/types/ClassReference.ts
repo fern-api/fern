@@ -162,7 +162,8 @@ export class ClassReference extends Node implements Type {
                 .some((each) => each !== this.namespace && this.registry.isRegisteredTypeName(`${each}.${this.name}`));
 
         const shouldGlobal =
-            // if the type is global, then we need to globally qualify the type
+            !writer.skipGlobalQualifier &&
+            (// if the type is global, then we need to globally qualify the type
             this.global ||
             // Always qualify System namespaces to prevent ambiguity when customer
             // projects define a type or namespace named "System"
@@ -174,7 +175,7 @@ export class ClassReference extends Node implements Type {
             // the C# compiler will resolve it to the type instead of the namespace (CS0426)
             this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
             // or we always are going to be using fully qualified namespaces
-            writer.generation.settings.useFullyQualifiedNamespaces;
+            writer.generation.settings.useFullyQualifiedNamespaces);
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         // For attributes, strip the "Attribute" suffix from the fully qualified name

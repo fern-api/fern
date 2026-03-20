@@ -87,7 +87,8 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences,
         generation,
         formatter,
-        skipImports = false
+        skipImports = false,
+        skipGlobalQualifier = false
     }: {
         namespace: string;
         allNamespaceSegments: Set<string>;
@@ -95,13 +96,15 @@ export abstract class AstNode extends AbstractAstNode {
         generation: Generation;
         formatter?: AbstractFormatter;
         skipImports?: boolean;
+        skipGlobalQualifier?: boolean;
     }): string {
         const writer = new Writer({
             namespace,
             allNamespaceSegments,
             allTypeClassReferences,
             generation,
-            skipImports
+            skipImports,
+            skipGlobalQualifier
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
@@ -113,7 +116,8 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences,
         generation,
         formatter,
-        skipImports = false
+        skipImports = false,
+        skipGlobalQualifier = false
     }: {
         namespace: string;
         allNamespaceSegments: Set<string>;
@@ -121,13 +125,15 @@ export abstract class AstNode extends AbstractAstNode {
         generation: Generation;
         formatter?: AbstractFormatter;
         skipImports?: boolean;
+        skipGlobalQualifier?: boolean;
     }): Promise<string> {
         const writer = new Writer({
             namespace,
             allNamespaceSegments,
             allTypeClassReferences,
             generation,
-            skipImports
+            skipImports,
+            skipGlobalQualifier
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
