@@ -1,19 +1,7 @@
 export type { ApiSpec, ApiSpecType } from "./convertApiSpecToFdrDefinition.js";
-export {
-    apiSpecToFdr,
-    apiSpecToIr,
-    convertApiSpecToFdrDefinition,
-    convertApiSpecToIr,
-    detectApiSpecType
-} from "./convertApiSpecToFdrDefinition.js";
-export {
-    convertAsyncApiSpecToFdrDefinition,
-    convertAsyncApiSpecToIr
-} from "./convertAsyncApiSpecToFdrDefinition.js";
-export { convertOpenApiSpecToFdrDefinition, convertOpenApiSpecToIr } from "./convertOpenApiSpecToFdrDefinition.js";
-export {
-    convertOpenRpcSpecToFdrDefinition,
-    convertOpenRpcSpecToIr
-} from "./convertOpenRpcSpecToFdrDefinition.js";
+export { apiSpecToFdr, convertApiSpecToFdrDefinition, detectApiSpecType } from "./convertApiSpecToFdrDefinition.js";
+export { convertAsyncApiSpecToFdrDefinition } from "./convertAsyncApiSpecToFdrDefinition.js";
+export { convertOpenApiSpecToFdrDefinition } from "./convertOpenApiSpecToFdrDefinition.js";
+export { convertOpenRpcSpecToFdrDefinition } from "./convertOpenRpcSpecToFdrDefinition.js";
 export { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader.js";
 export { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";

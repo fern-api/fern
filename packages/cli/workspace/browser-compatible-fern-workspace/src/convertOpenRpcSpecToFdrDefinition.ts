@@ -1,9 +1,10 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 
@@ -17,18 +18,19 @@ import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
  */
 export async function convertOpenRpcSpecToFdrDefinition({
     spec,
-    context,
     apiName,
     namespace,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: OpenrpcDocument;
-    context: TaskContext;
     apiName?: string;
     namespace?: string;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<FdrAPI.api.v1.register.ApiDefinition> {
-    const ir = await convertOpenRpcSpecToIr({ spec, context, namespace, settings });
+    const context = createMockTaskContext();
+    const ir = await convertOpenRpcSpecToIr({ spec, namespace, settings, generationLanguage });
 
     return convertIrToFdrApi({
         ir,
@@ -54,22 +56,23 @@ export async function convertOpenRpcSpecToFdrDefinition({
  */
 export async function convertOpenRpcSpecToIr({
     spec,
-    context,
     namespace,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: OpenrpcDocument;
-    context: TaskContext;
     namespace?: string;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<IntermediateRepresentation> {
+    const context = createMockTaskContext();
     const openApiSettings = getOpenAPISettings({ options: settings });
 
     const errorCollector = new ErrorCollector({ logger: context.logger });
 
     const converterContext = new OpenRPCConverterContext3_1({
         namespace,
-        generationLanguage: "typescript",
+        generationLanguage: generationLanguage ?? "typescript",
         logger: context.logger,
         smartCasing: false,
         spec,

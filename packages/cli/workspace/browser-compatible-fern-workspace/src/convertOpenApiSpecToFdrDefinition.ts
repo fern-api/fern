@@ -1,9 +1,10 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -19,18 +20,19 @@ import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
  */
 export async function convertOpenApiSpecToFdrDefinition({
     spec,
-    context,
     apiName,
     overrides,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: OpenAPIV3_1.Document;
-    context: TaskContext;
     apiName?: string;
     overrides?: Partial<OpenAPIV3_1.Document>;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<FdrAPI.api.v1.register.ApiDefinition> {
-    const ir = await convertOpenApiSpecToIr({ spec, context, overrides, settings });
+    const context = createMockTaskContext();
+    const ir = await convertOpenApiSpecToIr({ spec, overrides, settings, generationLanguage });
 
     return convertIrToFdrApi({
         ir,
@@ -56,15 +58,16 @@ export async function convertOpenApiSpecToFdrDefinition({
  */
 export async function convertOpenApiSpecToIr({
     spec,
-    context,
     overrides,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: OpenAPIV3_1.Document;
-    context: TaskContext;
     overrides?: Partial<OpenAPIV3_1.Document>;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<IntermediateRepresentation> {
+    const context = createMockTaskContext();
     const loader = new InMemoryOpenAPILoader();
     const document = loader.loadDocument({
         parsed: spec,
@@ -81,7 +84,7 @@ export async function convertOpenApiSpecToIr({
 
     const converterContext = new OpenAPIConverterContext3_1({
         namespace,
-        generationLanguage: "typescript",
+        generationLanguage: generationLanguage ?? "typescript",
         logger: context.logger,
         smartCasing: false,
         spec: openApiSpec,

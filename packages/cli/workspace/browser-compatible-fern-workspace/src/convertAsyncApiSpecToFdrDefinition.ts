@@ -1,9 +1,10 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
+import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
@@ -16,16 +17,17 @@ import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
  */
 export async function convertAsyncApiSpecToFdrDefinition({
     spec,
-    context,
     apiName,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: Record<string, unknown>;
-    context: TaskContext;
     apiName?: string;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<FdrAPI.api.v1.register.ApiDefinition> {
-    const ir = await convertAsyncApiSpecToIr({ spec, context, settings });
+    const context = createMockTaskContext();
+    const ir = await convertAsyncApiSpecToIr({ spec, settings, generationLanguage });
 
     return convertIrToFdrApi({
         ir,
@@ -51,13 +53,14 @@ export async function convertAsyncApiSpecToFdrDefinition({
  */
 export async function convertAsyncApiSpecToIr({
     spec,
-    context,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: Record<string, unknown>;
-    context: TaskContext;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<IntermediateRepresentation> {
+    const context = createMockTaskContext();
     const openApiSettings = getOpenAPISettings({ options: settings });
 
     const errorCollector = new ErrorCollector({ logger: context.logger });
@@ -66,7 +69,7 @@ export async function convertAsyncApiSpecToIr({
 
     const converterContext = new AsyncAPIConverterContext({
         namespace,
-        generationLanguage: "typescript",
+        generationLanguage: generationLanguage ?? "typescript",
         logger: context.logger,
         smartCasing: false,
         // biome-ignore lint/suspicious/noExplicitAny: AsyncAPI document types are complex union types

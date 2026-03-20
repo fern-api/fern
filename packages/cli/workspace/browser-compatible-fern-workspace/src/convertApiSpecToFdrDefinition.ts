@@ -1,6 +1,6 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -55,7 +55,7 @@ export function detectApiSpecType(spec: Record<string, unknown>): ApiSpecType | 
  *
  * Usage:
  * ```ts
- * const apiDef = await apiSpecToFdr({ spec: parsedDocument, context });
+ * const apiDef = await apiSpecToFdr({ spec: parsedDocument });
  * ```
  *
  * Supports OpenAPI 3.x, Swagger 2.0, AsyncAPI v2/v3, and OpenRPC 1.x.
@@ -67,14 +67,14 @@ export function detectApiSpecType(spec: Record<string, unknown>): ApiSpecType | 
  */
 export async function apiSpecToFdr({
     spec,
-    context,
     apiName,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: Record<string, unknown>;
-    context: TaskContext;
     apiName?: string;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<FdrAPI.api.v1.register.ApiDefinition> {
     const detectedType = detectApiSpecType(spec);
 
@@ -93,24 +93,24 @@ export async function apiSpecToFdr({
             }
             return convertOpenApiSpecToFdrDefinition({
                 spec: spec as unknown as OpenAPIV3_1.Document,
-                context,
                 apiName,
-                settings
+                settings,
+                generationLanguage
             });
         }
         case "asyncapi":
             return convertAsyncApiSpecToFdrDefinition({
                 spec,
-                context,
                 apiName,
-                settings
+                settings,
+                generationLanguage
             });
         case "openrpc":
             return convertOpenRpcSpecToFdrDefinition({
                 spec: spec as unknown as OpenrpcDocument,
-                context,
                 apiName,
-                settings
+                settings,
+                generationLanguage
             });
     }
 }
@@ -121,12 +121,12 @@ export async function apiSpecToFdr({
  */
 export async function apiSpecToIr({
     spec,
-    context,
-    settings
+    settings,
+    generationLanguage
 }: {
     spec: Record<string, unknown>;
-    context: TaskContext;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<IntermediateRepresentation> {
     const detectedType = detectApiSpecType(spec);
 
@@ -145,21 +145,21 @@ export async function apiSpecToIr({
             }
             return convertOpenApiSpecToIr({
                 spec: spec as unknown as OpenAPIV3_1.Document,
-                context,
-                settings
+                settings,
+                generationLanguage
             });
         }
         case "asyncapi":
             return convertAsyncApiSpecToIr({
                 spec,
-                context,
-                settings
+                settings,
+                generationLanguage
             });
         case "openrpc":
             return convertOpenRpcSpecToIr({
                 spec: spec as unknown as OpenrpcDocument,
-                context,
-                settings
+                settings,
+                generationLanguage
             });
     }
 }
@@ -173,38 +173,38 @@ export async function apiSpecToIr({
  */
 export async function convertApiSpecToFdrDefinition({
     apiSpec,
-    context,
     apiName,
-    settings
+    settings,
+    generationLanguage
 }: {
     apiSpec: ApiSpec;
-    context: TaskContext;
     apiName?: string;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<FdrAPI.api.v1.register.ApiDefinition> {
     switch (apiSpec.type) {
         case "openapi":
             return convertOpenApiSpecToFdrDefinition({
                 spec: apiSpec.spec,
-                context,
                 apiName,
                 overrides: apiSpec.overrides,
-                settings
+                settings,
+                generationLanguage
             });
         case "asyncapi":
             return convertAsyncApiSpecToFdrDefinition({
                 spec: apiSpec.spec,
-                context,
                 apiName,
-                settings
+                settings,
+                generationLanguage
             });
         case "openrpc":
             return convertOpenRpcSpecToFdrDefinition({
                 spec: apiSpec.spec,
-                context,
                 apiName,
                 namespace: apiSpec.namespace,
-                settings
+                settings,
+                generationLanguage
             });
     }
 }
@@ -217,33 +217,33 @@ export async function convertApiSpecToFdrDefinition({
  */
 export async function convertApiSpecToIr({
     apiSpec,
-    context,
-    settings
+    settings,
+    generationLanguage
 }: {
     apiSpec: ApiSpec;
-    context: TaskContext;
     settings?: OpenAPIWorkspace.Settings;
+    generationLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<IntermediateRepresentation> {
     switch (apiSpec.type) {
         case "openapi":
             return convertOpenApiSpecToIr({
                 spec: apiSpec.spec,
-                context,
                 overrides: apiSpec.overrides,
-                settings
+                settings,
+                generationLanguage
             });
         case "asyncapi":
             return convertAsyncApiSpecToIr({
                 spec: apiSpec.spec,
-                context,
-                settings
+                settings,
+                generationLanguage
             });
         case "openrpc":
             return convertOpenRpcSpecToIr({
                 spec: apiSpec.spec,
-                context,
                 namespace: apiSpec.namespace,
-                settings
+                settings,
+                generationLanguage
             });
     }
 }
