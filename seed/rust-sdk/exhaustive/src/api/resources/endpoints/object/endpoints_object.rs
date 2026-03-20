@@ -22,7 +22,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-optional-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -38,7 +38,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-required-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -54,7 +54,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-map-of-map",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -70,7 +70,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-nested-with-optional-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -90,7 +90,7 @@ impl ObjectClient {
                     "/object/get-and-return-nested-with-required-field/{}",
                     string
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -106,7 +106,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-nested-with-required-field-list",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -122,7 +122,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-unknown-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -138,7 +138,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-documented-unknown-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -154,7 +154,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-map-of-documented-unknown-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -181,7 +181,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-datetime-like-string",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
