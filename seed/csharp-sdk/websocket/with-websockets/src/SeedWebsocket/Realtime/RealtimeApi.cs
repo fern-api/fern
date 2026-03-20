@@ -198,25 +198,27 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Serializes and sends a JSON message to the server
     /// </summary>
-    private async Task SendJsonAsync(object message)
+    private async Task SendJsonAsync(object message, CancellationToken cancellationToken = default)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await _client
+            .SendInstant(JsonUtils.Serialize(message), cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
-    public async Task ConnectAsync()
+    public async Task ConnectAsync(CancellationToken cancellationToken = default)
     {
-        await _client.ConnectAsync().ConfigureAwait(false);
+        await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously closes the WebSocket connection.
     /// </summary>
-    public async Task CloseAsync()
+    public async Task CloseAsync(CancellationToken cancellationToken = default)
     {
-        await _client.CloseAsync().ConfigureAwait(false);
+        await _client.CloseAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -242,25 +244,25 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Sends a SendEvent message to the server
     /// </summary>
-    public async Task Send(SendEvent message)
+    public async Task Send(SendEvent message, CancellationToken cancellationToken = default)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendSnakeCase message to the server
     /// </summary>
-    public async Task Send(SendSnakeCase message)
+    public async Task Send(SendSnakeCase message, CancellationToken cancellationToken = default)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendEvent2 message to the server
     /// </summary>
-    public async Task Send(SendEvent2 message)
+    public async Task Send(SendEvent2 message, CancellationToken cancellationToken = default)
     {
-        await SendJsonAsync(message).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.37.3
+- version: 2.38.1
   changelogEntry:
     - summary: |
         Fix `Event<T>` thread-safety issue. `RaiseEvent` now snapshots the subscriber
@@ -7,6 +7,18 @@
         `UnsubscribeAll` are synchronized to prevent `InvalidOperationException` when
         handlers are added or removed concurrently from different threads.
       type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 2.38.0
+  changelogEntry:
+    - summary: |
+        Add optional `CancellationToken` parameter to all public async WebSocket methods
+        (`ConnectAsync`, `CloseAsync`, and `Send` overloads). The token is threaded through
+        the internal `WebSocketClient`, `WebSocketConnection`, and down to the underlying
+        `ClientWebSocket.SendAsync`/`ConnectAsync`/`CloseAsync` calls, enabling callers to
+        cancel long-running WebSocket operations.
+      type: feat
   createdAt: "2026-03-19"
   irVersion: 65
 
@@ -20,7 +32,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.37.1
   changelogEntry:
     - summary: |
