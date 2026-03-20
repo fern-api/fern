@@ -1,0 +1,6 @@
+name: my-api
+auth: apiKey
+auth-schemes:
+  apiKey:
+    header: X_API_KEY
+    name: apiKey

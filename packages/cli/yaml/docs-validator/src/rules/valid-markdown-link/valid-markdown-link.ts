@@ -210,7 +210,7 @@ export const ValidMarkdownLinks: Rule = {
                                         name: ValidMarkdownLinks.name,
                                         severity: "error" as const,
                                         message,
-                                        relFilepath: relFilePath
+                                        relativeFilepath: relFilePath
                                     };
                                 });
                             })

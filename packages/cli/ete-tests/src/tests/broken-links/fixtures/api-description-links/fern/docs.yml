@@ -1,0 +1,7 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+navigation:
+  - page: Getting Started
+    path: getting-started.md
+  - api: API Reference

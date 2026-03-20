@@ -53,6 +53,21 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("broken links in API descriptions should be detected", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("api-description-links")),
+            reject: false,
+            signal
+        });
+        const output = stripAnsi(stdout);
+        // Should detect broken links in API endpoint and type descriptions
+        expect(output).toContain("/does-not-exist");
+        expect(output).toContain("/this-page-does-not-exist");
+        // Valid links should not be flagged
+        expect(output).not.toContain("/getting-started");
+        expect(output).not.toContain("/api-reference/user/get-user");
+    }, 30_000);
+
     it("broken links in sections with path property should be detected", async ({ signal }) => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),

@@ -1,0 +1,31 @@
+types:
+  UserId:
+    type: string
+    docs: See [getting started](/getting-started) for more info.
+  User:
+    docs: |
+      A user object. See [nonexistent page](/does-not-exist) for details.
+    properties:
+      id: UserId
+      name: string
+
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      docs: |
+        Get a user by ID. Check [getting started](/getting-started) for auth info.
+        Also see [broken link](/this-page-does-not-exist) for more.
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: UserId
+      response: User
+    createUser:
+      docs: |
+        Create a new user. See [valid link](/api-reference/user/get-user) for the get endpoint.
+      method: POST
+      path: ""
+      request: User
+      response: UserId
