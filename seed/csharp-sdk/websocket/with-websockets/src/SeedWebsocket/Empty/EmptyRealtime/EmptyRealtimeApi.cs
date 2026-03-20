@@ -132,5 +132,10 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         /// The Websocket URL for the API connection.
         /// </summary>
         public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
     }
 }

@@ -275,6 +275,11 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         /// </summary>
         public string BaseUrl { get; set; } = "";
 
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
         public string? Model { get; set; }
 
         public int? Temperature { get; set; }

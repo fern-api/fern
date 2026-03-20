@@ -416,6 +416,15 @@ export class WebSocketClientGenerator extends WithGeneration {
             });
         }
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("HttpInvoker"),
+            access: ast.Access.Public,
+            type: this.Types.Arbitrary("System.Net.Http.HttpMessageInvoker?"),
+            summary: "Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).",
+            get: true,
+            set: true
+        });
+
         for (const queryParameter of this.websocketChannel.queryParameters) {
             // add to the options class
             const type = this.context.csharpTypeMapper.convert({
