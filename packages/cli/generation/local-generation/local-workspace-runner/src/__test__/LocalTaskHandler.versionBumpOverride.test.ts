@@ -99,21 +99,15 @@ describe("version bump override source integration", () => {
     });
 
     it("respects bumpOverride in the large-diff fallback path", () => {
-        expect(localTaskHandlerSource).toContain(
-            "Diff too large for analysis but applying version bump override"
-        );
+        expect(localTaskHandlerSource).toContain("Diff too large for analysis but applying version bump override");
     });
 
     it("respects bumpOverride in the AI-failure fallback path", () => {
-        expect(localTaskHandlerSource).toContain(
-            "AI analysis failed but applying version bump override"
-        );
+        expect(localTaskHandlerSource).toContain("AI analysis failed but applying version bump override");
     });
 
     it("respects bumpOverride in the NO_CHANGE path", () => {
-        expect(localTaskHandlerSource).toContain(
-            "AI detected no semantic changes but applying version bump override"
-        );
+        expect(localTaskHandlerSource).toContain("AI detected no semantic changes but applying version bump override");
     });
 
     it("applies bumpOverride over AI recommendation on success path", () => {
@@ -125,6 +119,6 @@ describe("version bump override source integration", () => {
         const matches = localTaskHandlerSource.match(/writeAutoVersioningArtifacts\(/g);
         // Should be called in: large-diff fallback, AI-failure fallback, NO_CHANGE+override, and success path
         expect(matches).not.toBeNull();
-        expect(matches!.length).toBeGreaterThanOrEqual(4);
+        expect(matches?.length).toBeGreaterThanOrEqual(4);
     });
 });
