@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listUsers
-///
-/// Request type for the ListUsersQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListUsersQueryRequest {
     /// Page index of the results to return. First page is 0.

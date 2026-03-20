@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getFoo
-///
-/// Request type for the GetFooQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct GetFooQueryRequest {
     /// An optional baz

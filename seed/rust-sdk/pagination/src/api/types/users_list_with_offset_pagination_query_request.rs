@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listWithOffsetPagination
-///
-/// Request type for the UsersListWithOffsetPaginationQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UsersListWithOffsetPaginationQueryRequest {
     /// Defaults to first page
