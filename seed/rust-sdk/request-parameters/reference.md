@@ -170,11 +170,11 @@ async fn main() {
     client
         .user
         .create_username_optional(
-            &Some(Some(CreateUsernameBodyOptionalProperties {
+            &Some(CreateUsernameBodyOptionalProperties {
                 username: None,
                 password: None,
                 name: None,
-            })),
+            }),
             None,
         )
         .await;
