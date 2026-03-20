@@ -52,7 +52,8 @@ export class WireTestDataExtractor {
             },
             response: {
                 statusCode: this.getResponseStatusCode(example.response),
-                body: this.extractResponseBody(example.response)
+                body: this.extractResponseBody(example.response),
+                sseEvents: this.extractSseEvents(example.response)
             }
         };
     }
@@ -231,6 +232,33 @@ export class WireTestDataExtractor {
         });
     }
 
+    private extractSseEvents(response: FernIr.ExampleResponse | undefined): SseEventData[] | undefined {
+        if (!response) {
+            return undefined;
+        }
+
+        return response._visit({
+            ok: (value) => {
+                return value._visit({
+                    body: () => undefined,
+                    stream: () => undefined,
+                    sse: (events: FernIr.ExampleServerSideEvent[]) => {
+                        if (events.length === 0) {
+                            return undefined;
+                        }
+                        return events.map((event) => ({
+                            event: event.event,
+                            data: this.createRawJsonExample(event.data)
+                        }));
+                    },
+                    _other: () => undefined
+                });
+            },
+            error: () => undefined,
+            _other: () => undefined
+        });
+    }
+
     private getResponseStatusCode(response: FernIr.ExampleResponse | undefined): number {
         if (!response) {
             return 200;
@@ -285,6 +313,11 @@ export class WireTestDataExtractor {
     }
 }
 
+export interface SseEventData {
+    event: string;
+    data: unknown;
+}
+
 export interface WireTestExample {
     id: string;
     name?: string;
@@ -297,5 +330,6 @@ export interface WireTestExample {
     response: {
         statusCode: number;
         body?: unknown;
+        sseEvents?: SseEventData[];
     };
 }

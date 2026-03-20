@@ -2,7 +2,7 @@ import { java, Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { SnippetExtractor } from "../extractors/SnippetExtractor.js";
-import { WireTestExample } from "../extractors/TestDataExtractor.js";
+import { SseEventData, WireTestExample } from "../extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "../resources/TestResourceWriter.js";
 import { HeaderValidator } from "../validators/HeaderValidator.js";
 import { JsonValidator } from "../validators/JsonValidator.js";
@@ -82,47 +82,54 @@ export class TestMethodBuilder {
             const expectedRequestJson = testExample.request.body;
             const rawResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
+            const sseEvents = testExample.response.sseEvents;
+            const isSseEndpoint = this.isSseStreamingEndpoint(endpoint);
 
-            // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
-            // the mock response body (served by MockWebServer) and the expected response assertion.
-            // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
-            // RFC 2822 dates would cause DateTimeParseException during deserialization.
-            const expectedResponseJson = rawResponseJson
-                ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
-                : rawResponseJson;
-
-            const mockResponseBody = expectedResponseJson
-                ? JSON.stringify(expectedResponseJson)
-                : this.generateMockResponseForEndpoint(endpoint);
-
-            // Pre-register response resource file if needed - used for both mock setup and validation
-            // to avoid creating duplicate files with identical content
-            let responseResourcePath: string | undefined;
-            if (
-                this.resourceWriter &&
-                this.currentTestClassName &&
-                expectedResponseJson &&
-                this.jsonValidator.shouldUseResourceFile(expectedResponseJson)
-            ) {
-                responseResourcePath = this.resourceWriter.registerResource(
-                    this.currentTestClassName,
-                    testMethodName,
-                    "response",
-                    expectedResponseJson
-                );
-            }
-
-            writer.writeLine("server.enqueue(new MockResponse()");
-            writer.indent();
-            writer.writeLine(`.setResponseCode(${responseStatusCode})`);
-
-            if (responseResourcePath) {
-                writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                writer.writeLine(`.setBody(TestResources.loadResource("${responseResourcePath}")));`);
+            // For SSE endpoints with events, generate SSE-formatted mock response
+            if (isSseEndpoint && sseEvents && sseEvents.length > 0) {
+                this.generateSseMockResponse(writer, endpoint, sseEvents, responseStatusCode);
             } else {
-                writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+                // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
+                // the mock response body (served by MockWebServer) and the expected response assertion.
+                // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
+                // RFC 2822 dates would cause DateTimeParseException during deserialization.
+                const expectedResponseJson = rawResponseJson
+                    ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                    : rawResponseJson;
+
+                const mockResponseBody = expectedResponseJson
+                    ? JSON.stringify(expectedResponseJson)
+                    : this.generateMockResponseForEndpoint(endpoint);
+
+                // Pre-register response resource file if needed - used for both mock setup and validation
+                // to avoid creating duplicate files with identical content
+                let responseResourcePath: string | undefined;
+                if (
+                    this.resourceWriter &&
+                    this.currentTestClassName &&
+                    expectedResponseJson &&
+                    this.jsonValidator.shouldUseResourceFile(expectedResponseJson)
+                ) {
+                    responseResourcePath = this.resourceWriter.registerResource(
+                        this.currentTestClassName,
+                        testMethodName,
+                        "response",
+                        expectedResponseJson
+                    );
+                }
+
+                writer.writeLine("server.enqueue(new MockResponse()");
+                writer.indent();
+                writer.writeLine(`.setResponseCode(${responseStatusCode})`);
+
+                if (responseResourcePath) {
+                    writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                    writer.writeLine(`.setBody(TestResources.loadResource("${responseResourcePath}")));`);
+                } else {
+                    writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+                }
+                writer.dedent();
             }
-            writer.dedent();
 
             const hasResponseBody = endpoint.response?.body != null;
             if (hasResponseBody) {
@@ -207,7 +214,14 @@ export class TestMethodBuilder {
                 }
             }
 
-            if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
+            // SSE endpoint: iterate stream and validate events
+            if (isSseEndpoint && sseEvents && sseEvents.length > 0 && responseStatusCode < 400) {
+                this.generateSseStreamValidation(writer, endpoint, sseEvents);
+            } else if (hasResponseBody && rawResponseJson && responseStatusCode < 400) {
+                const expectedResponseJson = rawResponseJson
+                    ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                    : rawResponseJson;
+
                 writer.writeLine("");
                 writer.writeLine("// Validate response body");
                 writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
@@ -220,6 +234,22 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
+                    // Pre-register response resource file if needed
+                    let responseResourcePath: string | undefined;
+                    if (
+                        this.resourceWriter &&
+                        this.currentTestClassName &&
+                        expectedResponseJson &&
+                        this.jsonValidator.shouldUseResourceFile(expectedResponseJson)
+                    ) {
+                        responseResourcePath = this.resourceWriter.registerResource(
+                            this.currentTestClassName,
+                            testMethodName,
+                            "response",
+                            expectedResponseJson
+                        );
+                    }
+
                     // RFC 2822 dates are already converted to ISO 8601 upfront (before mock response registration),
                     // so the response resource file and expected response use the same normalized data.
                     if (responseResourcePath) {
@@ -227,7 +257,7 @@ export class TestMethodBuilder {
                         writer.writeLine(
                             `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
                         );
-                    } else {
+                    } else if (expectedResponseJson) {
                         this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
                     }
 
@@ -255,6 +285,140 @@ export class TestMethodBuilder {
             writer.dedent();
             writer.writeLine("}");
         };
+    }
+
+    /**
+     * Checks if the endpoint is an SSE streaming endpoint.
+     */
+    private isSseStreamingEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming") {
+            return false;
+        }
+        return responseBody.value.type === "sse";
+    }
+
+    /**
+     * Gets the SSE stream terminator from the endpoint's streaming response config.
+     */
+    private getSseTerminator(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming" || responseBody.value.type !== "sse") {
+            return undefined;
+        }
+        return responseBody.value.terminator ?? undefined;
+    }
+
+    /**
+     * Checks if the SSE payload type is a protocol-discriminated union.
+     * Protocol-discriminated unions use the SSE `event:` field as the discriminant.
+     */
+    private isProtocolDiscriminatedSse(endpoint: FernIr.HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming" || responseBody.value.type !== "sse") {
+            return false;
+        }
+
+        const payloadType = responseBody.value.payload;
+        if (payloadType.type !== "named") {
+            return false;
+        }
+
+        const typeDecl = this.context.ir.types[payloadType.typeId];
+        if (!typeDecl || typeDecl.shape.type !== "union") {
+            return false;
+        }
+
+        return typeDecl.shape.discriminatorContext === "protocol";
+    }
+
+    /**
+     * Generates a mock response in proper SSE format with Content-Type: text/event-stream header.
+     */
+    private generateSseMockResponse(
+        writer: Writer,
+        endpoint: FernIr.HttpEndpoint,
+        sseEvents: SseEventData[],
+        statusCode: number
+    ): void {
+        // Build SSE-formatted body string
+        const sseLines: string[] = [];
+        for (const event of sseEvents) {
+            if (event.event) {
+                sseLines.push(`event: ${event.event}`);
+            }
+            sseLines.push(`data: ${JSON.stringify(event.data)}`);
+            sseLines.push(""); // blank line separates events
+        }
+
+        // Add stream terminator if configured
+        const terminator = this.getSseTerminator(endpoint);
+        if (terminator) {
+            sseLines.push(`data: ${terminator}`);
+            sseLines.push("");
+        }
+
+        const sseBody = sseLines.join("\n");
+
+        writer.writeLine("server.enqueue(new MockResponse()");
+        writer.indent();
+        writer.writeLine(`.setResponseCode(${statusCode})`);
+        writer.writeLine('.setHeader("Content-Type", "text/event-stream")');
+        writer.writeLine(`.setBody("${this.escapeJavaString(sseBody)}"));`);
+        writer.dedent();
+    }
+
+    /**
+     * Generates stream iteration and validation code for SSE endpoints.
+     */
+    private generateSseStreamValidation(
+        writer: Writer,
+        endpoint: FernIr.HttpEndpoint,
+        sseEvents: SseEventData[]
+    ): void {
+        writer.writeLine("");
+        writer.writeLine("// Validate SSE stream events");
+        writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
+        writer.writeLine("java.util.List<Object> events = new java.util.ArrayList<>();");
+        writer.writeLine("for (Object event : response) {");
+        writer.indent();
+        writer.writeLine("events.add(event);");
+        writer.dedent();
+        writer.writeLine("}");
+
+        writer.writeLine(
+            `Assertions.assertEquals(${sseEvents.length}, events.size(), "Expected ${sseEvents.length} SSE event(s)");`
+        );
+
+        // Validate each event's content by serializing to JSON and comparing
+        for (let i = 0; i < sseEvents.length; i++) {
+            const event = sseEvents[i];
+            if (!event) {
+                continue;
+            }
+
+            writer.writeLine("");
+            writer.writeLine(`// Validate event ${i}`);
+            writer.writeLine(`String event${i}Json = objectMapper.writeValueAsString(events.get(${i}));`);
+            writer.writeLine(`JsonNode event${i}Node = objectMapper.readTree(event${i}Json);`);
+
+            // Build the expected JSON for the event
+            const expectedEventJson = event.data;
+            if (expectedEventJson !== undefined && expectedEventJson !== null) {
+                this.jsonValidator.formatMultilineJson(writer, `expectedEvent${i}Json`, expectedEventJson);
+                writer.writeLine(`JsonNode expectedEvent${i}Node = objectMapper.readTree(expectedEvent${i}Json);`);
+                writer.writeLine(
+                    `Assertions.assertTrue(jsonEquals(expectedEvent${i}Node, event${i}Node), "SSE event ${i} content does not match expected");`
+                );
+            }
+        }
+    }
+
+    /**
+     * Escapes a string for use in a Java string literal.
+     */
+    private escapeJavaString(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
     }
 
     /**

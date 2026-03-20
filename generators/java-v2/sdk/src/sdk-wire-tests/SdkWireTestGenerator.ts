@@ -178,8 +178,25 @@ export class SdkWireTestGenerator {
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstDynamicExample = dynamicEndpoint.examples[0];
-                if (firstDynamicExample) {
+                // For SSE endpoints, try to find the best example pair (dynamic + test) that has SSE events.
+                // The dynamic and test examples are aligned by index, so we iterate through them together.
+                const isSseEndpoint =
+                    endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
+
+                let selectedExampleIndex = 0;
+                if (isSseEndpoint) {
+                    // Find the first test example with SSE events and a matching dynamic example
+                    for (let i = 0; i < testExamples.length && i < dynamicEndpoint.examples.length; i++) {
+                        const testEx = testExamples[i];
+                        if (testEx?.response.sseEvents && testEx.response.sseEvents.length > 0) {
+                            selectedExampleIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                const selectedDynamicExample = dynamicEndpoint.examples[selectedExampleIndex];
+                if (selectedDynamicExample) {
                     try {
                         this.context.logger.debug(
                             `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with FernIr.dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
@@ -197,7 +214,7 @@ export class SdkWireTestGenerator {
                             endpoint,
                             expectedServiceName,
                             dynamicServiceName,
-                            firstDynamicExample,
+                            selectedDynamicExample,
                             dynamicIr,
                             dynamicSnippetsGenerator,
                             serviceName
@@ -228,11 +245,24 @@ export class SdkWireTestGenerator {
                         const imports = snippetExtractor.extractImports(fullSnippet);
                         imports.forEach((imp) => allImports.add(imp));
 
-                        const firstTestExample = testExamples[0];
-                        if (firstTestExample) {
+                        // For SSE endpoints, prefer a test example with SSE events for the mock response,
+                        // even if the dynamic snippet was generated from a different example (e.g., error case).
+                        // MockWebServer doesn't validate request parameters, so the snippet's request params
+                        // don't need to match the SSE test example's request params.
+                        let selectedTestExample = testExamples[selectedExampleIndex] ?? testExamples[0];
+                        if (isSseEndpoint) {
+                            const sseTestExample = testExamples.find(
+                                (ex) => ex.response.sseEvents && ex.response.sseEvents.length > 0
+                            );
+                            if (sseTestExample) {
+                                selectedTestExample = sseTestExample;
+                            }
+                        }
+
+                        if (selectedTestExample) {
                             endpointTests.set(endpoint.id, {
                                 snippet: fullSnippet,
-                                testExample: firstTestExample
+                                testExample: selectedTestExample
                             });
                         }
 
