@@ -528,6 +528,13 @@ internal partial class WebSocketConnection
             if (info.CancelReconnection)
                 return;
 
+            if (Backoff != null)
+            {
+                // Let the backoff strategy control retry timing
+                _ = ReconnectSynchronized(ReconnectionType.Error, false, e);
+                return;
+            }
+
             if (ErrorReconnectTimeout == null)
                 return;
 
