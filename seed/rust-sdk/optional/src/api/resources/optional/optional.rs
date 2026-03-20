@@ -58,8 +58,8 @@ impl OptionalClient {
     /// JSON response from the API
     pub async fn send_optional_nullable_with_all_optional_properties(
         &self,
-        action_id: &String,
-        id: &String,
+        action_id: &str,
+        id: &str,
         request: &Option<DeployParams>,
         options: Option<RequestOptions>,
     ) -> Result<DeployResponse, ApiError> {

@@ -43,7 +43,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn patch_complex(
         &self,
-        id: &String,
+        id: &str,
         request: &PatchComplexRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -70,7 +70,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn named_patch_with_mixed(
         &self,
-        id: &String,
+        id: &str,
         request: &NamedMixedPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -124,7 +124,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn regular_patch(
         &self,
-        id: &String,
+        id: &str,
         request: &RegularPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {

@@ -930,7 +930,8 @@ export class SubClientGenerator {
             let paramType = param.type.toString();
 
             if (param.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
 
             if (param.optional) {
@@ -953,7 +954,8 @@ export class SubClientGenerator {
         if (requestBodyParam) {
             let paramType = requestBodyParam.type.toString();
             if (requestBodyParam.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }

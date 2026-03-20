@@ -14,7 +14,7 @@ impl ReqWithHeadersClient {
 
     pub async fn get_with_custom_header(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

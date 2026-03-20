@@ -24,7 +24,7 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn get_with_path(
         &self,
-        param: &String,
+        param: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -49,7 +49,7 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn get_with_inline_path(
         &self,
-        param: &String,
+        param: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -130,7 +130,7 @@ impl ParamsClient {
     /// Empty response
     pub async fn get_with_path_and_query(
         &self,
-        param: &String,
+        param: &str,
         request: &GetWithPathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -158,7 +158,7 @@ impl ParamsClient {
     /// Empty response
     pub async fn get_with_inline_path_and_query(
         &self,
-        param: &String,
+        param: &str,
         request: &GetWithInlinePathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -186,8 +186,8 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn modify_with_path(
         &self,
-        param: &String,
-        request: &String,
+        param: &str,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -212,8 +212,8 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn modify_with_inline_path(
         &self,
-        param: &String,
-        request: &String,
+        param: &str,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -238,7 +238,7 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn upload_with_path(
         &self,
-        param: &String,
+        param: &str,
         request: &Vec<u8>,
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithRequiredField, ApiError> {
