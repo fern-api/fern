@@ -89,6 +89,9 @@ public partial class RealtimeApi
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
         _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
+        _client.ReconnectTimeout = _options.ReconnectTimeout;
+        _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
+        _client.LostReconnectTimeout = _options.LostReconnectTimeout;
     }
 
     /// <summary>
@@ -129,7 +132,6 @@ public partial class RealtimeApi
         FlushedEvent.Dispose();
         ErrorEvent.Dispose();
         UnknownMessage.Dispose();
-        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -298,5 +300,20 @@ public partial class RealtimeApi
         /// Enable or disable automatic reconnection. Default: false.
         /// </summary>
         public bool IsReconnectionEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
+        /// </summary>
+        public TimeSpan? LostReconnectTimeout { get; set; }
     }
 }

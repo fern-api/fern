@@ -1112,7 +1112,6 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.writeTextStatement(`${event.name}.Dispose()`);
                 }
                 writer.writeTextStatement(`UnknownMessage.Dispose()`);
-                writer.writeTextStatement(`Reconnecting.Dispose()`);
             })
         });
     }
@@ -1278,6 +1277,15 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             type: this.Types.WebSocketEvent(this.System.Exception)
+        });
+
+        // Reconnecting event
+        interface_.addField({
+            name: "Reconnecting",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo)
         });
 
         // Status property
