@@ -320,11 +320,18 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                 .map_err(|_| ApiError::InvalidHeader)?,
         );
 
+        // Determine per-event timeout: request-level overrides client-level
+        let timeout = options
+            .as_ref()
+            .and_then(|opts| opts.timeout_seconds)
+            .map(std::time::Duration::from_secs)
+            .unwrap_or(self.config.timeout);
+
         // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
 
-        // Return SSE stream
-        crate::SseStream::new(response, terminator).await
+        // Return SSE stream with per-event timeout
+        crate::SseStream::new(response, terminator, timeout).await
     }
 
 `
