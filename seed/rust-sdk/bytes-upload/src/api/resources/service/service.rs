@@ -31,7 +31,7 @@ impl ServiceClient {
 
     pub async fn upload_with_query_params(
         &self,
-        model: &String,
+        model: &str,
         language: &Option<String>,
         request: &Vec<u8>,
         options: Option<RequestOptions>,
