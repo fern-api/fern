@@ -25,6 +25,24 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _onTextMessage = onTextMessage;
     }
 
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, enables WebSocket compression via
+    /// <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
+
     /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
@@ -198,6 +216,9 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         _webSocket = new WebSocketConnection(_uri)
         {
+#if NET6_0_OR_GREATER
+            DeflateOptions = DeflateOptions,
+#endif
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
