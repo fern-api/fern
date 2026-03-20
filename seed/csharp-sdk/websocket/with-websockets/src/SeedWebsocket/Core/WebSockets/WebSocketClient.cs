@@ -33,6 +33,12 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
 
     /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
     public ConnectionStatus Status
@@ -206,6 +212,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         _webSocket = new WebSocketConnection(_uri)
         {
             HttpInvoker = HttpInvoker,
+            ConnectTimeout = ConnectTimeout,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
