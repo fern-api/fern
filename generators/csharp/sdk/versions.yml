@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.42.0
+- version: 2.43.0
   changelogEntry:
     - summary: |
         Add queued sending via `Channel<T>` to the WebSocket connection layer. Two
@@ -9,6 +9,19 @@
         `SendInstant` async-per-send path remains unchanged. Queues are completed in `Dispose`
         before cancellation tokens are signalled. Drain loop errors are surfaced through the
         `ExceptionOccurred` event.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.42.0
+  changelogEntry:
+    - summary: |
+        Add support for HTTP/2 WebSockets via `SocketsHttpHandler`. A new `HttpInvoker`
+        property on the WebSocket Options class allows passing an `HttpMessageInvoker` to
+        enable multiplexing multiple WebSocket streams over a single TCP connection. When
+        set, the connection factory configures `HttpVersion.Version20` and uses the
+        `ConnectAsync(Uri, HttpMessageInvoker, CancellationToken)` overload on .NET 7+.
+        On older targets the invoker is ignored and the standard connect path is used.
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
