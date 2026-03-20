@@ -920,16 +920,17 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
         // When use-undiscriminated-unions is false, we need the OneOf package.
+        // System.Net.Http and System.Text.RegularExpressions are security version-floor
+        // overrides for OneOf.Extended's unpatched transitive dependencies — only needed
+        // when OneOf is present. System.Net.Http is also needed on net462 for the
+        // HttpClient assembly reference, which is handled separately via
+        // getLegacyFrameworkDependencies().
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
             result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
             result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+            result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         }
-        // System.Net.Http is needed unconditionally: on net462 it provides the
-        // HttpClient / HttpRequestMessage assembly reference, and when OneOf.Extended
-        // is present it acts as a security version-floor override for its unpatched
-        // transitive dependency. System.Text.RegularExpressions is the same for OneOf.
-        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
@@ -954,6 +955,13 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         const result: string[] = [];
         for (const pkg of NET8_INBOX_PACKAGES) {
             result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+        }
+        // System.Net.Http is in-box on net8.0+ but needed on legacy TFMs for the
+        // net462 assembly reference. When OneOf is used, it's already in the
+        // unconditional group as a security version-floor override, so skip here
+        // to avoid a duplicate PackageReference.
+        if (this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         }
         return result;
     }
