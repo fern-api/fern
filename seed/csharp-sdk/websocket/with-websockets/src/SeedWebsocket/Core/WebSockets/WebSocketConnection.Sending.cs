@@ -2,11 +2,38 @@
 #pragma warning disable
 using global::System.Net.WebSockets;
 using global::System.Text;
+using global::System.Threading.Channels;
 
 namespace SeedWebsocket.Core.WebSockets;
 
 internal partial class WebSocketConnection
 {
+    private readonly Channel<string> _textSendQueue = Channel.CreateUnbounded<string>(
+        new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
+    );
+
+    private readonly Channel<byte[]> _binarySendQueue = Channel.CreateUnbounded<byte[]>(
+        new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
+    );
+
+    /// <summary>
+    /// Queues a text message for sending. Actual send happens on a background thread.
+    /// </summary>
+    /// <returns>true if the message was written to the queue</returns>
+    public bool Send(string message)
+    {
+        return _textSendQueue.Writer.TryWrite(message);
+    }
+
+    /// <summary>
+    /// Queues a binary message for sending. Actual send happens on a background thread.
+    /// </summary>
+    /// <returns>true if the message was written to the queue</returns>
+    public bool Send(byte[] message)
+    {
+        return _binarySendQueue.Writer.TryWrite(message);
+    }
+
     /// <summary>
     /// Send text message to the websocket channel.
     /// It doesn't use a sending queue,
@@ -196,5 +223,51 @@ internal partial class WebSocketConnection
         return internalToken != CancellationToken.None
             ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, internalToken)
             : CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+    }
+
+    private async global::System.Threading.Tasks.Task DrainTextQueue(CancellationToken token)
+    {
+        try
+        {
+            while (await _textSendQueue.Reader.WaitToReadAsync(token))
+            {
+                while (_textSendQueue.Reader.TryRead(out var message))
+                {
+                    try
+                    {
+                        await SendInternalSynchronized(new RequestTextMessage(message));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception e)
+                    {
+                        await OnExceptionOccurred(e).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+        catch (OperationCanceledException) { }
+    }
+
+    private async global::System.Threading.Tasks.Task DrainBinaryQueue(CancellationToken token)
+    {
+        try
+        {
+            while (await _binarySendQueue.Reader.WaitToReadAsync(token))
+            {
+                while (_binarySendQueue.Reader.TryRead(out var message))
+                {
+                    try
+                    {
+                        await SendInternalSynchronized(new ArraySegment<byte>(message));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception e)
+                    {
+                        await OnExceptionOccurred(e).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+        catch (OperationCanceledException) { }
     }
 }
