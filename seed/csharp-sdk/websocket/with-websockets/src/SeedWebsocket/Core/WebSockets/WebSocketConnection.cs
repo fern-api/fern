@@ -261,6 +261,20 @@ internal partial class WebSocketConnection
     public bool IsRunning { get; private set; }
 
     /// <summary>
+    /// Maximum number of messages allowed in the send queue.
+    /// When the queue is full, new messages are silently dropped (DropWrite).
+    /// Default: 10,000. Set to 0 for unbounded.
+    /// </summary>
+    public int SendQueueLimit { get; set; } = 10_000;
+
+    /// <summary>
+    /// Maximum age for messages in the send queue.
+    /// Messages older than this are silently dropped during drain.
+    /// Default: 30 minutes. Set to null to disable expiration.
+    /// </summary>
+    public TimeSpan? SendCacheItemTimeout { get; set; } = TimeSpan.FromMinutes(30);
+
+    /// <summary>
     /// Enable or disable text message conversion from binary to string (via 'MessageEncoding' property).
     /// Default: true
     /// </summary>
@@ -295,8 +309,8 @@ internal partial class WebSocketConnection
         {
             _lastChanceTimer?.Dispose();
             _errorReconnectTimer?.Dispose();
-            _textSendQueue.Writer.TryComplete();
-            _binarySendQueue.Writer.TryComplete();
+            _textSendQueue?.Writer.TryComplete();
+            _binarySendQueue?.Writer.TryComplete();
             _cancellationConnection?.Cancel();
             _cancellation?.Cancel();
             _client?.Abort();
@@ -408,6 +422,8 @@ internal partial class WebSocketConnection
                 ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
                 : new CancellationTokenSource();
         _cancellationTotal = new CancellationTokenSource();
+
+        InitializeSendQueues();
 
         await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
 
