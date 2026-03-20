@@ -18,6 +18,7 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { publishPackage } from "./publishPackage.js";
+import { GeneratorSentryClient } from "./telemetry/GeneratorSentryClient.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
@@ -55,6 +56,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
     public async run(pathToConfig: string, options?: AbstractGeneratorCli.Options): Promise<void> {
         const config = await parseGeneratorConfig(pathToConfig);
+        const version = getVersion(config);
+        const sentryClient = new GeneratorSentryClient({
+            config,
+            release: `typescript-sdk-generator@${version ?? "unknown"}`
+        });
         const generatorNotificationService = options?.disableNotifications
             ? new NopGeneratorNotificationService()
             : new GeneratorNotificationService(config.environment);
@@ -104,13 +110,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined
                 })
             );
-
-            const version = config.output?.mode._visit({
-                downloadFiles: () => undefined,
-                github: (github) => github.version,
-                publish: (publish) => publish.version,
-                _other: () => undefined
-            });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
             const codeGenStartTime = Date.now();
@@ -272,6 +271,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
         } catch (e) {
+            await sentryClient.captureException(e);
             // This call tears down generator service
             // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
             // SEE: go-v2
@@ -285,6 +285,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
             throw e;
+        } finally {
+            await sentryClient.flush();
         }
     }
 
@@ -391,4 +393,13 @@ class GeneratorContextImpl implements GeneratorContext {
     public didSucceed(): boolean {
         return this.isSuccess;
     }
+}
+
+function getVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
+    return config.output?.mode._visit({
+        downloadFiles: () => undefined,
+        github: (github) => github.version,
+        publish: (publish) => publish.version,
+        _other: () => undefined
+    });
 }

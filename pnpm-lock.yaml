@@ -3859,6 +3859,9 @@ importers:
       '@fern-typescript/contexts':
         specifier: workspace:*
         version: link:../contexts
+      '@sentry/node':
+        specifier: ^10.45.0
+        version: 10.45.0
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3

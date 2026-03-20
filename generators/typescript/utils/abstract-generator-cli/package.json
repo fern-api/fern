@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -40,6 +42,7 @@
     "@fern-fern/ir-sdk": "^65.3.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
+    "@sentry/node": "^10.45.0",
     "tmp-promise": "catalog:"
   },
   "devDependencies": {
