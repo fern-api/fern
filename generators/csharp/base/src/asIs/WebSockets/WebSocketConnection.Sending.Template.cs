@@ -3,6 +3,7 @@
 using global::System.Net.WebSockets;
 using global::System.Text;
 using global::System.Threading.Channels;
+using Microsoft.Extensions.Logging;
 
 namespace <%= namespace%>.WebSockets;
 

@@ -226,7 +226,7 @@ internal partial class WebSocketConnection
 
     /// <summary>
     /// Maximum number of messages allowed in the send queue.
-    /// When the queue is full, Send() returns false and the message is dropped.
+    /// When the queue is full, new messages are silently dropped (DropWrite).
     /// Default: 10,000. Set to 0 for unbounded.
     /// </summary>
     public int SendQueueLimit { get; set; } = 10_000;
