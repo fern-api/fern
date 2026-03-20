@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.2
+  changelogEntry:
+    - summary: |
+        Add `using` declaration to `JsonDocument` in WebSocket `OnTextMessage` handler.
+        `JsonDocument` implements `IDisposable` and holds pooled memory buffers; without
+        disposal, high message throughput causes memory pressure. The generated code now
+        emits `using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);`
+        so the document is disposed when the method returns.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.38.1
   changelogEntry:
     - summary: |
@@ -9,7 +21,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.38.0
   changelogEntry:
     - summary: |
@@ -21,7 +32,6 @@
       type: feat
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.37.2
   changelogEntry:
     - summary: |
