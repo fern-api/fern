@@ -181,6 +181,14 @@ internal partial class WebSocketConnection
     /// </summary>
     public TimeSpan? LostReconnectTimeout { get; set; }
 
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
