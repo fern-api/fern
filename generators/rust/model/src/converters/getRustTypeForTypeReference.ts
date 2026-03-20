@@ -149,6 +149,35 @@ export function generateRustTypeForTypeReference(
                         })
                     );
                 },
+                dateTimeRfc2822: () => {
+                    // RFC 2822 datetime - treat same as dateTime
+                    if (context.getDateTimeType() === "utc") {
+                        return rust.Type.reference(
+                            rust.reference({
+                                name: "DateTime",
+                                genericArgs: [
+                                    rust.Type.reference(
+                                        rust.reference({
+                                            name: "Utc"
+                                        })
+                                    )
+                                ]
+                            })
+                        );
+                    }
+                    return rust.Type.reference(
+                        rust.reference({
+                            name: "DateTime",
+                            genericArgs: [
+                                rust.Type.reference(
+                                    rust.reference({
+                                        name: "FixedOffset"
+                                    })
+                                )
+                            ]
+                        })
+                    );
+                },
                 _other: () => {
                     // Fallback for unknown primitive types
                     return rust.Type.primitive(rust.PrimitiveType.String);

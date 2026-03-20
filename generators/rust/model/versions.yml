@@ -8,7 +8,7 @@
         implementations that gracefully handle unknown enum values from the server.
       type: feat
   createdAt: "2026-03-20"
-  irVersion: 61
+  irVersion: 65
 
 - version: 0.1.5
   changelogEntry:
