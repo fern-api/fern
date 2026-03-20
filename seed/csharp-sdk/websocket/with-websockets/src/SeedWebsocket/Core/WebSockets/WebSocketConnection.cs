@@ -625,7 +625,7 @@ internal partial class WebSocketConnection
                                 client,
                                 WebSocketCloseStatus.NormalClosure,
                                 "Closing",
-                                receiveCts.Token,
+                                token,
                                 false,
                                 true
                             );
