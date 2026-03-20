@@ -180,7 +180,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         Status = ConnectionStatus.Connecting;
 
-        _webSocket = new WebSocketConnection(_uri, () => new ClientWebSocket())
+        _webSocket = new WebSocketConnection(_uri)
         {
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
