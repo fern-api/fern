@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.1
+  changelogEntry:
+    - summary: |
+        Fix `Event<T>` thread-safety issue. `RaiseEvent` now snapshots the subscriber
+        collections under a lock before iterating, and `Subscribe`, `Unsubscribe`, and
+        `UnsubscribeAll` are synchronized to prevent `InvalidOperationException` when
+        handlers are added or removed concurrently from different threads.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.38.0
   changelogEntry:
     - summary: |
@@ -33,7 +44,6 @@
       type: fix
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.37.0
   changelogEntry:
     - summary: |
