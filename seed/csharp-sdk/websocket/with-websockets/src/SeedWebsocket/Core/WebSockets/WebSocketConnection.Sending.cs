@@ -73,29 +73,28 @@ internal partial class WebSocketConnection
         }
 
         ArraySegment<byte> payload;
+        WebSocketMessageType messageType;
 
         switch (message)
         {
             case RequestTextMessage textMessage:
                 payload = new ArraySegment<byte>(Encoding.UTF8.GetBytes(textMessage.Text));
+                messageType = WebSocketMessageType.Text;
                 break;
             case RequestBinaryMessage binaryMessage:
                 payload = new ArraySegment<byte>(binaryMessage.Data);
+                messageType = WebSocketMessageType.Binary;
                 break;
             case RequestBinarySegmentMessage segmentMessage:
                 payload = segmentMessage.Data;
+                messageType = WebSocketMessageType.Binary;
                 break;
             default:
                 throw new ArgumentException($"Unknown message type: {message.GetType()}");
         }
 
         await _client
-            .SendAsync(
-                payload,
-                WebSocketMessageType.Text,
-                true,
-                _cancellation?.Token ?? CancellationToken.None
-            )
+            .SendAsync(payload, messageType, true, _cancellation?.Token ?? CancellationToken.None)
             .ConfigureAwait(false);
     }
 
