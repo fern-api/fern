@@ -558,6 +558,48 @@ export class WebSocketClientGenerator extends WithGeneration {
             });
         }
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("IsReconnectionEnabled"),
+            access: ast.Access.Public,
+            type: this.Primitive.boolean,
+            summary: "Enable or disable automatic reconnection. Default: false.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("false")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("ReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("TimeSpan.FromMinutes(1)")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("ErrorReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("TimeSpan.FromMinutes(1)")
+        });
+
+        optionsClass.addField({
+            origin: optionsClass.explicit("LostReconnectTimeout"),
+            access: ast.Access.Public,
+            type: this.System.TimeSpan.asOptional(),
+            summary:
+                "Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.",
+            get: true,
+            set: true
+        });
+
         return optionsClass;
     }
 
@@ -699,6 +741,10 @@ export class WebSocketClientGenerator extends WithGeneration {
                 );
                 writer.writeTextStatement("");
                 writer.writeTextStatement("_client.HttpInvoker = _options.HttpInvoker");
+                writer.writeTextStatement("_client.IsReconnectionEnabled = _options.IsReconnectionEnabled");
+                writer.writeTextStatement("_client.ReconnectTimeout = _options.ReconnectTimeout");
+                writer.writeTextStatement("_client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout");
+                writer.writeTextStatement("_client.LostReconnectTimeout = _options.LostReconnectTimeout");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
@@ -1206,6 +1252,16 @@ export class WebSocketClientGenerator extends WithGeneration {
             get: true,
             initializer: this.csharp.codeblock("_client.ExceptionOccurred")
         });
+
+        // Reconnecting event
+        cls.addField({
+            origin: cls.explicit("Reconnecting"),
+            access: ast.Access.Public,
+            type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo),
+            summary: "Event raised when the WebSocket connection is re-established after a disconnect.",
+            get: true,
+            initializer: this.csharp.codeblock("_client.Reconnecting")
+        });
     }
 
     /**
@@ -1255,6 +1311,15 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             type: this.Types.WebSocketEvent(this.System.Exception)
+        });
+
+        // Reconnecting event
+        interface_.addField({
+            name: "Reconnecting",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo)
         });
 
         // Status property

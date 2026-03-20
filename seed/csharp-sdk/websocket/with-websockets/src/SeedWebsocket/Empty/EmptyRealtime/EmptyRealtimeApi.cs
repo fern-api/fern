@@ -44,6 +44,10 @@ public partial class EmptyRealtimeApi
         uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
         _client.HttpInvoker = _options.HttpInvoker;
+        _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
+        _client.ReconnectTimeout = _options.ReconnectTimeout;
+        _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
+        _client.LostReconnectTimeout = _options.LostReconnectTimeout;
     }
 
     /// <summary>
@@ -65,6 +69,11 @@ public partial class EmptyRealtimeApi
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Event raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
 
     /// <summary>
     /// Disposes of event subscriptions
@@ -162,5 +171,25 @@ public partial class EmptyRealtimeApi
         /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
         /// </summary>
         public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+        /// <summary>
+        /// Enable or disable automatic reconnection. Default: false.
+        /// </summary>
+        public bool IsReconnectionEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
+        /// </summary>
+        public TimeSpan? LostReconnectTimeout { get; set; }
     }
 }
