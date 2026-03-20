@@ -167,6 +167,27 @@ public record CreateProblemError
             json["_type"] = value.ErrorType;
             json.WriteTo(writer, options);
         }
+
+        public override CreateProblemError ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new CreateProblemError(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            CreateProblemError value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.ErrorType);
+        }
     }
 
     /// <summary>

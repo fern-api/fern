@@ -52,3 +52,48 @@ $client->submitFormData(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;getToken($request) -> TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->getToken(
+    new TokenRequest([
+        'clientId' => 'client_id',
+        'clientSecret' => 'client_secret',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TokenRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

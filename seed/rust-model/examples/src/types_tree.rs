@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct Tree {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nodes: Option<Vec<Box<Node>>>,

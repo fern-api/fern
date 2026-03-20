@@ -56,7 +56,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
         public override string ToString() => Value;
 
         public override int GetHashCode() =>
-            Value.GetHashCode(global::System.StringComparison.Ordinal);
+            global::System.StringComparer.Ordinal.GetHashCode(Value);
 
         public override bool Equals(object? obj) => obj is Literal1Literal;
 
@@ -91,6 +91,32 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
                 Literal1Literal value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(Literal1Literal.Value);
+
+            public override Literal1Literal ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != Literal1Literal.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + Literal1Literal.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new Literal1Literal();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                Literal1Literal value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(Literal1Literal.Value);
         }
     }
 
@@ -104,7 +130,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
         public override string ToString() => Value;
 
         public override int GetHashCode() =>
-            Value.GetHashCode(global::System.StringComparison.Ordinal);
+            global::System.StringComparer.Ordinal.GetHashCode(Value);
 
         public override bool Equals(object? obj) => obj is Literal2Literal;
 
@@ -139,6 +165,32 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
                 Literal2Literal value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(Literal2Literal.Value);
+
+            public override Literal2Literal ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != Literal2Literal.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + Literal2Literal.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new Literal2Literal();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                Literal2Literal value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(Literal2Literal.Value);
         }
     }
 }

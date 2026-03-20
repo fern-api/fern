@@ -57,6 +57,7 @@ export const AsIsFiles = {
         Query: "WebSockets/Query.Template.cs",
         ReconnectionInfo: "WebSockets/ReconnectionInfo.Template.cs",
         ReconnectionType: "WebSockets/ReconnectionType.Template.cs",
+        ReconnectStrategy: "WebSockets/ReconnectStrategy.Template.cs",
         RequestMessage: "WebSockets/RequestMessage.Template.cs",
         WebSocketClient: "WebSockets/WebSocketClient.Template.cs",
         WebSocketConnection: "WebSockets/WebSocketConnection.Template.cs",
@@ -75,8 +76,7 @@ export const AsIsFiles = {
         Nullable: "NullableAttribute.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
         Optional: "Optional.Template.cs",
-        OptionalAttribute: "OptionalAttribute.Template.cs",
-        StringEnumSerializer: "StringEnumSerializer.Template.cs"
+        OptionalAttribute: "OptionalAttribute.Template.cs"
     },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",

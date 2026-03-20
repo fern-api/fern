@@ -4,9 +4,12 @@ pub use crate::prelude::*;
 pub struct PostRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_string: Option<String>,
+    #[serde(default)]
     pub integer: i64,
+    #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
+    #[serde(default)]
     pub file_list: Vec<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
@@ -18,6 +21,7 @@ pub struct PostRequest {
     pub maybe_integer: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_list_of_strings: Option<Vec<String>>,
+    #[serde(default)]
     pub list_of_objects: Vec<MyObject>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_metadata: Option<serde_json::Value>,
@@ -25,8 +29,11 @@ pub struct PostRequest {
     pub optional_object_type: Option<ObjectType>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_id: Option<Id>,
+    #[serde(default)]
     pub alias_object: MyAliasObject,
+    #[serde(default)]
     pub list_of_alias_object: Vec<MyAliasObject>,
+    #[serde(default)]
     pub alias_list_of_object: MyCollectionAliasObject,
 }
 impl PostRequest {

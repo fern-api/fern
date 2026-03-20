@@ -1,10 +1,175 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.35.1
+
+- version: 4.37.12
   changelogEntry:
     - summary: |
         Scope allOf property merge to inline elements only in ObjectSchemaConverter and use first-match-wins for parent property resolution in V3 importer to match legacy behavior
       type: fix
   createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 4.37.11
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-IR conversion to propagate schema-level descriptions to inlined request
+        bodies. Previously, the `InlinedRequestBody.docs` field was only populated from the
+        requestBody-level `description`, ignoring the referenced schema's own `description`.
+        Now falls back to `typeDeclaration.docs` from the converted schema when the requestBody
+        description is missing.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 4.37.10
+  changelogEntry:
+    - summary: |
+        Guard concurrent `npm install -g fern-api` invocations with an async lock to prevent race conditions during protobuf toolchain setup
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.9
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 parser to read WebSocket query parameters and headers
+        from `channel.bindings.ws.query` and `channel.bindings.ws.headers`, which
+        is the standard location per the AsyncAPI WebSocket bindings spec.
+        Previously the v3 parser only read from `channel.parameters`, which the
+        AsyncAPI spec reserves for path parameters. This caused WebSocket connect
+        options classes (e.g. `ConnectOptions`) to be missing from generated SDKs
+        when specs used the standard bindings location.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.8
+  changelogEntry:
+    - summary: |
+        Map magic placeholder version to PEP 440-compatible format for Python
+        generators during local auto-versioning. Poetry validates versions during
+        generation and rejects semver pre-release tags with hyphens. Python
+        generators now receive `0.0.0.dev0` instead of `0.0.0-fern-placeholder`.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.7
+  changelogEntry:
+    - summary: |
+        Fix `getLatestRelease` fetching all GitHub releases when falling back
+        from a semver prerelease tag. The fallback now uses a single
+        `listReleases` API call (up to 100 results) instead of paginating
+        through every release in the repository.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.6
+  changelogEntry:
+    - summary: |
+        Fix Go SDK auto-versioning producing malformed code with duplicate imports
+        and mixed module paths during major version bumps (e.g. v1 to v2). The magic
+        placeholder version now uses major version 0, which avoids polluting generated
+        code with artificial `/vN` suffixes. After auto-versioning computes the real
+        version, the correct `/vN` suffix is added to `go.mod` and all import paths
+        when the major version is 2 or higher. Also filters Go module path suffix
+        changes from the AI diff analysis to prevent version-bump noise.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 4.37.5
+  changelogEntry:
+    - summary: |
+        Always prefer the auto-downloaded fern fork of `protoc-gen-openapi` over
+        an arbitrary `protoc-gen-openapi` binary found on PATH. Users with the
+        original Google/gnostic `protoc-gen-openapi` installed would encounter
+        `no such flag -flatten_oneofs` errors because that version does not
+        support fern-specific plugin options. The CLI now downloads the fern fork
+        first and only falls back to PATH if the download fails. Set
+        `FERN_USE_LOCAL_PROTOC_GEN_OPENAPI=true` to force the PATH version
+        (e.g. for testing a custom build).
+      type: fix
+    - summary: |
+        Add hidden `install-dependencies` CLI command that pre-downloads `buf`
+        and `protoc-gen-openapi` binaries into the Fern cache. CI workflows now
+        use this command instead of `bufbuild/buf-setup-action` and
+        `go install protoc-gen-openapi`, removing the Go toolchain dependency
+        from CI.
+      type: chore
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.4
+  changelogEntry:
+    - summary: |
+        Sanitize preview IDs before sending to FDR API to ensure valid DNS subdomains.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 4.37.3
+  changelogEntry:
+    - summary: |
+        Sanitize preview IDs passed via `--id` to produce valid DNS subdomain
+        labels.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.2
+  changelogEntry:
+    - summary: |
+        Remove `cli-progress` from the published `fern-api` package's runtime
+        dependencies. The package is a pure JS library that is already bundled
+        into the CLI output by tsup, so it does not need to be installed
+        separately at runtime.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 4.37.1
+  changelogEntry:
+    - summary: |
+        Optimize protobuf buf generate to reuse a single working directory
+        across all proto files. Instead of creating a new temp dir, copying
+        the proto root, checking binaries, and resolving deps for every file,
+        setup is done once and only `buf generate <target>` runs per file.
+        The two buf generate passes (protoc-gen-openapi and protoc-gen-fern)
+        also now run concurrently.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Auto-download `buf` CLI binary from GitHub Releases when it is not found
+        on PATH. This eliminates the need for users to pre-install `buf` before
+        running proto-based SDK generation. The binary is cached at `~/.fern/bin/`
+        with versioning, filesystem locking, and atomic file operations.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+- version: 4.36.1
+  changelogEntry:
+    - summary: |
+        Fix `getLatestRelease` returning semver prerelease tags (e.g.
+        `0.0.0-dev-babaf54d`) as the latest release. When GitHub's "latest
+        release" API returns a tag that is a semver prerelease, the CLI now
+        falls back to scanning recent releases for the first stable
+        (non-prerelease, non-draft) version. This prevents
+        `computeSemanticVersion` from computing incorrect next versions.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+- version: 4.36.0
+  changelogEntry:
+    - summary: |
+        Auto-download `protoc-gen-openapi` binary from GitHub Releases when it is
+        not found on PATH. This eliminates the need to install Go and compile
+        `protoc-gen-openapi` from source on every CI run, reducing proto-based
+        SDK generation setup time by ~40 seconds.
+      type: feat
+  createdAt: "2026-03-18"
   irVersion: 65
 
 - version: 4.35.0
@@ -19,7 +184,6 @@
       type: feat
   createdAt: "2026-03-17"
   irVersion: 65
-
 - version: 4.34.1
   changelogEntry:
     - summary: |

@@ -202,6 +202,7 @@ public final class UnionWithBaseProperties {
     @JsonIgnoreProperties("type")
     private static final class FooValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Foo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

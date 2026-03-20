@@ -249,6 +249,10 @@ export class Class extends DefinedType {
     private writeConstructors(writer: Writer): void {
         this.constructors.forEach((constructor) => {
             writer.writeNode(this.csharp.xmlDocBlockOf(constructor.doc));
+            constructor.annotations.forEach((annotation) => {
+                annotation.write(writer);
+                writer.writeNewLineIfLastLineNot();
+            });
             writer.write(`${constructor.access} ${this.name} (`);
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer);
@@ -440,6 +444,8 @@ export namespace Class {
             access?: Access;
             /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
             baseConstructorCall?: MethodInvocation;
+            /* Any annotations to add to the constructor */
+            annotations?: Annotation[];
         }
     }
     export class Constructor {
@@ -453,14 +459,17 @@ export namespace Class {
         access: Access;
         /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
         baseConstructorCall?: MethodInvocation;
+        /* Any annotations on the constructor */
+        annotations: Annotation[];
 
         constructor(
-            { doc, body, parameters, access, baseConstructorCall }: Constructor.Args,
+            { doc, body, parameters, access, baseConstructorCall, annotations }: Constructor.Args,
             private readonly generation: Generation
         ) {
             this.parameters = parameters ?? [];
             this.access = access ?? Access.Public;
             this.doc = doc;
+            this.annotations = annotations ?? [];
             this.body = new Block({}, this.generation);
             if (body != null) {
                 this.body.append(body as CodeBlock);

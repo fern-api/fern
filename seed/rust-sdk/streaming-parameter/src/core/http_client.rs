@@ -1,11 +1,11 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
-use base64::Engine;
 use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
-use serde::de::{DeserializeOwned, Error as SerdeError};
+use serde::de::DeserializeOwned;
+
 use std::{
     pin::Pin,
     str::FromStr,
@@ -188,74 +188,6 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
-    /// Execute a multipart/form-data request with the given method, path, and options
-    ///
-    /// This method is used for file uploads using reqwest's built-in multipart support.
-    /// Note: Multipart requests are not retried because they cannot be cloned.
-    ///
-    /// # Example
-    /// ```no_run
-    /// let form = reqwest::multipart::Form::new()
-    ///     .part("file", reqwest::multipart::Part::bytes(vec![1, 2, 3]));
-    ///
-    /// let response: MyResponse = client.execute_multipart_request(
-    ///     Method::POST,
-    ///     "/upload",
-    ///     form,
-    ///     None,
-    ///     None,
-    /// ).await?;
-    /// ```
-    #[cfg(feature = "multipart")]
-    pub async fn execute_multipart_request<T>(
-        &self,
-        method: Method,
-        path: &str,
-        form: reqwest::multipart::Form,
-        query_params: Option<Vec<(String, String)>>,
-        options: Option<RequestOptions>,
-    ) -> Result<T, ApiError>
-    where
-        T: DeserializeOwned,
-    {
-        let url = join_url(&self.config.base_url, path);
-        let mut request = self.client.request(method, &url);
-
-        // Apply query parameters if provided
-        if let Some(params) = query_params {
-            request = request.query(&params);
-        }
-
-        // Apply additional query parameters from options
-        if let Some(opts) = &options {
-            if !opts.additional_query_params.is_empty() {
-                request = request.query(&opts.additional_query_params);
-            }
-        }
-
-        // Use reqwest's built-in multipart support
-        request = request.multipart(form);
-
-        // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
-
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute directly without retries (multipart requests cannot be cloned)
-        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
-
-        // Check response status
-        if !response.status().is_success() {
-            let status_code = response.status().as_u16();
-            let body = response.text().await.ok();
-            return Err(ApiError::from_response(status_code, body.as_deref()));
-        }
-
-        self.parse_response(response).await
-    }
-
     async fn apply_auth_headers(
         &self,
         request: &mut Request,
@@ -431,61 +363,18 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
+        let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
+
+        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
+        if text.is_empty() {
+            return Err(ApiError::Http {
+                status,
+                message: String::new(),
+            });
+        }
+
         serde_json::from_str(&text).map_err(ApiError::Serialization)
-    }
-
-    /// Execute a request that returns a base64-encoded string and decode it to bytes
-    ///
-    /// This method is used for endpoints that return raw base64-encoded data as a JSON string.
-    /// The response is expected to be a JSON string (e.g., `"SGVsbG8gd29ybGQh"`) which is
-    /// decoded from base64 to raw bytes.
-    pub async fn execute_request_base64(
-        &self,
-        method: Method,
-        path: &str,
-        body: Option<serde_json::Value>,
-        query_params: Option<Vec<(String, String)>>,
-        options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ApiError> {
-        let url = join_url(&self.config.base_url, path);
-        let mut request = self.client.request(method, &url);
-
-        // Apply query parameters if provided
-        if let Some(params) = query_params {
-            request = request.query(&params);
-        }
-
-        // Apply additional query parameters from options
-        if let Some(opts) = &options {
-            if !opts.additional_query_params.is_empty() {
-                request = request.query(&opts.additional_query_params);
-            }
-        }
-
-        // Apply body if provided
-        if let Some(body) = body {
-            request = request.json(&body);
-        }
-
-        // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
-
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
-
-        // Parse response as JSON string and decode base64
-        let text = response.text().await.map_err(ApiError::Network)?;
-        let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
-        base64::engine::general_purpose::STANDARD
-            .decode(&base64_string)
-            .map_err(|e| {
-                ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e)))
-            })
     }
 
     /// Execute a request and return a streaming response (for large file downloads)

@@ -179,6 +179,29 @@ export class Enum extends Node {
             `writer.WriteStringValue(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : null);`
         );
         writer.popScope();
+        writer.newLine();
+
+        // Write ReadAsPropertyName method
+        writer.writeLine(
+            `public override ${this.name} ReadAsPropertyName(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)`
+        );
+        writer.pushScope();
+        writer.writeLine(
+            `var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON property name could not be read as a string.");`
+        );
+        writer.writeLine(`return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;`);
+        writer.popScope();
+        writer.newLine();
+
+        // Write WriteAsPropertyName method
+        writer.writeLine(
+            `public override void WriteAsPropertyName(global::System.Text.Json.Utf8JsonWriter writer, ${this.name} value, global::System.Text.Json.JsonSerializerOptions options)`
+        );
+        writer.pushScope();
+        writer.writeLine(
+            `writer.WritePropertyName(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString());`
+        );
+        writer.popScope();
 
         writer.popScope();
     }

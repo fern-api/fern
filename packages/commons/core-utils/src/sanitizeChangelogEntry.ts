@@ -10,11 +10,14 @@
  */
 export function sanitizeChangelogEntry(entry: string): string {
     // Split the text into alternating segments: plain text and backtick-delimited code spans.
-    // Odd-indexed segments are inside backticks and must be preserved as-is.
-    const parts = entry.split(/(`[^`]+`)/g);
+    // Match triple-backtick fenced code blocks first (```...```), then single-backtick
+    // inline code spans (`...`). This prevents triple backticks from being partially
+    // consumed by the single-backtick pattern, which would leave stray backticks that
+    // corrupt subsequent inline code span detection.
+    const parts = entry.split(/(```[\s\S]*?```|`[^`]+`)/g);
     return parts
         .map((part) => {
-            // If this part is a code span, leave it as-is
+            // If this part is a code span or fenced code block, leave it as-is
             if (part.startsWith("`") && part.endsWith("`")) {
                 return part;
             }

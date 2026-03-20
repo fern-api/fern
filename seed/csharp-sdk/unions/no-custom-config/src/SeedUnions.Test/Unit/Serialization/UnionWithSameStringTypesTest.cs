@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -28,18 +28,13 @@ public class UnionWithSameStringTypesTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "customFormat",
               "value": "custom-123"
             }
             """;
-        var actualObj = new UnionWithSameStringTypes(
-            new UnionWithSameStringTypes.CustomFormat("custom-123")
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithSameStringTypes>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -61,18 +56,13 @@ public class UnionWithSameStringTypesTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "regularString",
               "value": "regular text"
             }
             """;
-        var actualObj = new UnionWithSameStringTypes(
-            new UnionWithSameStringTypes.RegularString("regular text")
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithSameStringTypes>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -94,17 +84,12 @@ public class UnionWithSameStringTypesTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "patternString",
               "value": "PATTERN123"
             }
             """;
-        var actualObj = new UnionWithSameStringTypes(
-            new UnionWithSameStringTypes.PatternString("PATTERN123")
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithSameStringTypes>(inputJson);
     }
 }

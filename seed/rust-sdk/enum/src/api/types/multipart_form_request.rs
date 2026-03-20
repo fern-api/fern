@@ -7,6 +7,7 @@ pub struct MultipartFormRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_color: Option<Color>,
     #[serde(rename = "colorList")]
+    #[serde(default)]
     pub color_list: Vec<Color>,
     #[serde(rename = "maybeColorList")]
     #[serde(skip_serializing_if = "Option::is_none")]

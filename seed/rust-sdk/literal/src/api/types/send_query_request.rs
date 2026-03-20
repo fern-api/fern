@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for send
-///
-/// Request type for the SendQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendQueryRequest {
     pub prompt: String,
@@ -11,6 +9,7 @@ pub struct SendQueryRequest {
     pub alias_prompt: AliasToPrompt,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub alias_optional_prompt: Option<AliasToPrompt>,
+    #[serde(default)]
     pub query: String,
     pub stream: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
