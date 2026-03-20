@@ -10,11 +10,11 @@ async fn main() {
     client
         .user
         .create_username_optional(
-            &Some(Some(CreateUsernameBodyOptionalProperties {
+            &Some(CreateUsernameBodyOptionalProperties {
                 username: Some("username".to_string()),
                 password: Some("password".to_string()),
                 name: Some("test".to_string()),
-            })),
+            }),
             None,
         )
         .await;
