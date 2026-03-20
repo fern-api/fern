@@ -87,13 +87,13 @@ internal partial class WebSocketConnection
                 throw new ArgumentException($"Unknown message type: {message.GetType()}");
         }
 
-        var token = cancellationToken != default ? cancellationToken : (_cancellation?.Token ?? CancellationToken.None);
+        using var linkedCts = CreateLinkedToken(cancellationToken);
         await _client
             .SendAsync(
                 payload,
                 WebSocketMessageType.Text,
                 true,
-                token
+                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
             )
             .ConfigureAwait(false);
     }
@@ -121,13 +121,13 @@ internal partial class WebSocketConnection
             return;
         }
 
-        var token = cancellationToken != default ? cancellationToken : (_cancellation?.Token ?? CancellationToken.None);
+        using var linkedCts = CreateLinkedToken(cancellationToken);
         await _client
             .SendAsync(
                 payload,
                 WebSocketMessageType.Binary,
                 true,
-                token
+                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
             )
             .ConfigureAwait(false);
     }
@@ -139,7 +139,8 @@ internal partial class WebSocketConnection
             return;
         }
 
-        var token = cancellationToken != default ? cancellationToken : (_cancellation?.Token ?? CancellationToken.None);
+        using var linkedCts = CreateLinkedToken(cancellationToken);
+        var token = linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None);
 #if NET6_0_OR_GREATER
         await _client
             .SendAsync(
@@ -152,5 +153,18 @@ internal partial class WebSocketConnection
 #else
         await SendInternal(new ArraySegment<byte>(payload.ToArray()), cancellationToken).ConfigureAwait(false);
 #endif
+    }
+
+    private CancellationTokenSource? CreateLinkedToken(CancellationToken cancellationToken)
+    {
+        if (cancellationToken == default)
+        {
+            return null;
+        }
+
+        var internalToken = _cancellation?.Token ?? CancellationToken.None;
+        return internalToken != CancellationToken.None
+            ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, internalToken)
+            : CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
     }
 }
