@@ -259,10 +259,12 @@ internal partial class WebSocketConnection
         {
             _lastChanceTimer?.Dispose();
             _errorReconnectTimer?.Dispose();
+            _textSendQueue.Writer.TryComplete();
+            _binarySendQueue.Writer.TryComplete();
             _cancellationConnection?.Cancel();
             _cancellation?.Cancel();
-            _cancellationTotal?.Cancel();
             _client?.Abort();
+            _cancellationTotal?.Cancel();
             _client?.Dispose();
             _cancellationConnection?.Dispose();
             _cancellation?.Dispose();
@@ -352,6 +354,12 @@ internal partial class WebSocketConnection
         _cancellationTotal = new CancellationTokenSource();
 
         await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
+
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainTextQueue(_cancellationTotal.Token));
+
+        _ = global::System.Threading.Tasks.Task.Run(
+            () => DrainBinaryQueue(_cancellationTotal.Token));
     }
 
     private async global::System.Threading.Tasks.Task<bool> StopInternal(
