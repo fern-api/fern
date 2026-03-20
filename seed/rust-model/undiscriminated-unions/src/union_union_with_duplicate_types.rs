@@ -5,11 +5,11 @@ pub use crate::prelude::*;
 pub enum UnionWithDuplicateTypes {
         String(String),
 
-        List1(Vec<String>),
+        StringList(Vec<String>),
 
         Integer(i64),
 
-        Set3(HashSet<String>),
+        StringSet(HashSet<String>),
 }
 
 impl UnionWithDuplicateTypes {
@@ -17,16 +17,16 @@ impl UnionWithDuplicateTypes {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list1(&self) -> bool {
-        matches!(self, Self::List1(_))
+    pub fn is_stringlist(&self) -> bool {
+        matches!(self, Self::StringList(_))
     }
 
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_set3(&self) -> bool {
-        matches!(self, Self::Set3(_))
+    pub fn is_stringset(&self) -> bool {
+        matches!(self, Self::StringSet(_))
     }
 
 
@@ -44,16 +44,16 @@ impl UnionWithDuplicateTypes {
                 }
     }
 
-    pub fn as_list1(&self) -> Option<&Vec<String>> {
+    pub fn as_stringlist(&self) -> Option<&Vec<String>> {
         match self {
-                    Self::List1(value) => Some(value),
+                    Self::StringList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list1(self) -> Option<Vec<String>> {
+    pub fn into_stringlist(self) -> Option<Vec<String>> {
         match self {
-                    Self::List1(value) => Some(value),
+                    Self::StringList(value) => Some(value),
                     _ => None,
                 }
     }
@@ -72,16 +72,16 @@ impl UnionWithDuplicateTypes {
                 }
     }
 
-    pub fn as_set3(&self) -> Option<&HashSet<String>> {
+    pub fn as_stringset(&self) -> Option<&HashSet<String>> {
         match self {
-                    Self::Set3(value) => Some(value),
+                    Self::StringSet(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_set3(self) -> Option<HashSet<String>> {
+    pub fn into_stringset(self) -> Option<HashSet<String>> {
         match self {
-                    Self::Set3(value) => Some(value),
+                    Self::StringSet(value) => Some(value),
                     _ => None,
                 }
     }

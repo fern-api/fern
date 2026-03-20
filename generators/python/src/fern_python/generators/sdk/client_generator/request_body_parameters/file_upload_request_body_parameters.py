@@ -144,17 +144,22 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         if self._is_primitive_type(property_as_union.value_type):
                             writer.write_line(f'"{property_as_union.name.wire_value}": {prop_name},')
                         else:
-                            writer.write(f'"{property_as_union.name.wire_value}": ')
-                            writer.write_node(
-                                AST.Expression(
-                                    self._get_json_dumps(
-                                        AST.Expression(
-                                            self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
-                                        )
+                            type_hint = self._get_property_type(property)
+                            json_dumps_expr = AST.Expression(
+                                self._get_json_dumps(
+                                    AST.Expression(
+                                        self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
                                     )
                                 )
                             )
-                            writer.write_line(",")
+                            if type_hint.is_optional:
+                                writer.write(f'"{property_as_union.name.wire_value}": ')
+                                writer.write_node(json_dumps_expr)
+                                writer.write_line(f" if {prop_name} is not OMIT else OMIT,")
+                            else:
+                                writer.write(f'"{property_as_union.name.wire_value}": ')
+                                writer.write_node(json_dumps_expr)
+                                writer.write_line(",")
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))

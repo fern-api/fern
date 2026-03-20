@@ -104,7 +104,7 @@ impl ServiceClient {
             .execute_request(
                 Method::POST,
                 "/api/resources/search",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
                     .int("offset", request.offset.clone())
@@ -205,7 +205,7 @@ impl ServiceClient {
             .execute_request(
                 Method::POST,
                 "/api/users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -231,7 +231,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("/api/users/{}", user_id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

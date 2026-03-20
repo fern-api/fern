@@ -16,11 +16,21 @@
 
 package com.fern.java.client.generators.websocket;
 
+import com.fern.ir.model.http.HttpPath;
+import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.EnumValue;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.websocket.InlinedWebSocketMessageBody;
+import com.fern.ir.model.websocket.InlinedWebSocketMessageBodyProperty;
 import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
@@ -89,6 +99,8 @@ public abstract class AbstractWebSocketChannelWriter {
     // produces the same method name, Java type-erasure makes the two
     // overloads ambiguous. We append "Message" to disambiguate.
     private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
+
+    private static final String DISCRIMINANT_FIELD = "type";
 
     // Connect options class name (present when channel has query parameters)
     protected final Optional<ClassName> connectOptionsClassName;
@@ -308,7 +320,7 @@ public abstract class AbstractWebSocketChannelWriter {
                         .build())
                 .addJavadoc(
                         "Registers a handler for $L messages from the server.\n",
-                        message.getType().get())
+                        message.getDisplayName().orElse(message.getType().get()))
                 .addJavadoc("@param handler the handler to invoke when a message is received\n")
                 .addStatement("this.$L = handler", handlerFieldName)
                 .build();
@@ -431,16 +443,19 @@ public abstract class AbstractWebSocketChannelWriter {
                 .beginControlFlow("if (typeNode == null || typeNode.isNull())")
                 .addStatement("throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
                 .endControlFlow()
-                .addStatement("String type = typeNode.asText()")
-                .beginControlFlow("switch (type)");
+                .addStatement("String type = typeNode.asText()");
 
-        // Add cases for each non-binary server message (binary messages are handled by onBinaryMessage)
+        // Switch on wire discriminant values extracted from each message body's literal/enum
+        // "type" property, rather than the Fern-internal message ID.
+        builder.beginControlFlow("switch (type)");
+
         for (WebSocketMessage message : websocketChannel.getMessages()) {
             if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 TypeName messageType = getMessageBodyType(message);
                 String handlerFieldName = getHandlerFieldName(message);
+                String wireDiscriminantValue = getWireDiscriminantValue(message);
 
-                builder.addCode("case $S:\n", message.getType().get())
+                builder.addCode("case $S:\n", wireDiscriminantValue)
                         .beginControlFlow("if ($L != null)", handlerFieldName)
                         .addStatement(
                                 "$T event = $N.treeToValue(node, $T.class)",
@@ -455,24 +470,12 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
 
-        builder.addCode("default:\n")
-                .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                .addStatement(
-                        "$N.accept(new $T($S + type + $S))",
-                        onErrorHandlerField,
-                        RuntimeException.class,
-                        "Unknown WebSocket message type: '",
-                        "'. Update your SDK version to support new message types.")
-                .endControlFlow()
-                .addStatement("break");
+        builder.addCode("default:\n");
+        addUnknownTypeErrorHandler(builder);
+        builder.addStatement("break");
 
         builder.endControlFlow() // end switch
                 .endControlFlow() // end try
-                .beginControlFlow("catch ($T e)", IllegalArgumentException.class)
-                .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                .addStatement("$N.accept(e)", onErrorHandlerField)
-                .endControlFlow()
-                .endControlFlow() // end catch
                 .beginControlFlow("catch ($T e)", Exception.class)
                 .beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement("$N.accept(e)", onErrorHandlerField)
@@ -482,12 +485,167 @@ public abstract class AbstractWebSocketChannelWriter {
         return builder.build();
     }
 
+    private void addUnknownTypeErrorHandler(MethodSpec.Builder builder) {
+        builder.beginControlFlow("if ($N != null)", onErrorHandlerField)
+                .addStatement(
+                        "$N.accept(new $T($S + type + $S))",
+                        onErrorHandlerField,
+                        RuntimeException.class,
+                        "Unknown WebSocket message type: '",
+                        "'. Update your SDK version to support new message types.")
+                .endControlFlow();
+    }
+
+    /**
+     * Extracts the wire discriminant value for a WebSocket message by examining the body's literal "type" property.
+     * Falls back to the message ID if no literal type is found.
+     *
+     * <p>For inlined bodies, looks for a property with wire name "type" that has a literal value. For reference bodies,
+     * resolves the type declaration and checks its object properties.
+     */
+    protected String getWireDiscriminantValue(WebSocketMessage message) {
+        String messageId = message.getType().get();
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<String>() {
+            @Override
+            public String visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
+                for (InlinedWebSocketMessageBodyProperty property : inlinedBody.getProperties()) {
+                    if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                        Optional<String> value =
+                                extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
+                        if (value.isPresent()) {
+                            return value.get();
+                        }
+                    }
+                }
+                return messageId;
+            }
+
+            @Override
+            public String visitReference(WebSocketMessageBodyReference reference) {
+                Optional<String> value = extractTypeLiteralFromReference(reference.getBodyType(), messageId);
+                if (value.isPresent()) {
+                    return value.get();
+                }
+                return messageId;
+            }
+
+            @Override
+            public String _visitUnknown(Object unknown) {
+                return messageId;
+            }
+        });
+    }
+
+    /**
+     * Extracts the wire discriminant string from a TypeReference for the "type" property. First checks for a literal
+     * container, then for an enum type where one value matches the message ID suffix.
+     */
+    private Optional<String> extractDiscriminantFromTypeProperty(TypeReference typeReference, String messageId) {
+        // Check for literal container (e.g., literal<"Welcome">)
+        Optional<String> literal =
+                typeReference.getContainer().flatMap(ContainerType::getLiteral).flatMap(Literal::getString);
+        if (literal.isPresent()) {
+            return literal;
+        }
+        // Check for enum type where a value matches the message ID suffix
+        return extractMatchingEnumValue(typeReference, messageId);
+    }
+
+    /**
+     * For an enum-typed property, finds the enum value whose wire value matches the message ID. Tries exact match
+     * first, then suffix match (e.g., message ID "SpeakV1Flushed" with enum values ["Flushed", "Cleared"] → returns
+     * "Flushed").
+     */
+    private Optional<String> extractMatchingEnumValue(TypeReference typeReference, String messageId) {
+        if (!typeReference.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    typeReference.getNamed().get().getTypeId());
+            if (!typeDeclaration.getShape().isEnum()) {
+                return Optional.empty();
+            }
+            // Prefer exact match over suffix match to avoid ambiguity
+            Optional<String> suffixMatch = Optional.empty();
+            for (EnumValue enumValue :
+                    typeDeclaration.getShape().getEnum().get().getValues()) {
+                String wireValue = enumValue.getName().getWireValue();
+                if (messageId.equals(wireValue)) {
+                    return Optional.of(wireValue);
+                }
+                if (suffixMatch.isEmpty() && messageId.endsWith(wireValue)) {
+                    suffixMatch = Optional.of(wireValue);
+                }
+            }
+            return suffixMatch;
+        } catch (IllegalArgumentException e) {
+            // Type not found in IR declarations, fall back to message ID
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * For a reference body type, resolves the type declaration and looks for a literal or enum-based "type" property in
+     * the object's properties.
+     */
+    private Optional<String> extractTypeLiteralFromReference(TypeReference bodyType, String messageId) {
+        if (!bodyType.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    bodyType.getNamed().get().getTypeId());
+            Type shape = typeDeclaration.getShape();
+            if (!shape.isObject()) {
+                return Optional.empty();
+            }
+            ObjectTypeDeclaration objectType = shape.getObject().get();
+            for (ObjectProperty property : objectType.getProperties()) {
+                if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                    return extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            // Type not found in declarations, fall back
+        }
+        return Optional.empty();
+    }
+
     protected FieldSpec generatePathParameterField(PathParameter pathParam) {
         TypeName paramType =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
         return FieldSpec.builder(
                         paramType, pathParam.getName().getCamelCase().getSafeName(), Modifier.PRIVATE, Modifier.FINAL)
                 .build();
+    }
+
+    /**
+     * Appends path-building code to the method builder. For static paths (no path parameters), emits a simple string
+     * literal. For dynamic paths, uses a StringBuilder to concatenate the head, path parameters, and tails.
+     */
+    protected void appendPathBuildingCode(MethodSpec.Builder builder) {
+        HttpPath path = websocketChannel.getPath();
+        if (path.getParts().isEmpty()) {
+            builder.addStatement("String fullPath = $S", path.getHead());
+        } else {
+            builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
+            builder.addStatement("pathBuilder.append($S)", path.getHead());
+            for (HttpPathPart part : path.getParts()) {
+                String pathParamId = part.getPathParameter();
+                if (pathParamId != null && !pathParamId.isEmpty()) {
+                    PathParameter matchingParam = websocketChannel.getPathParameters().stream()
+                            .filter(p -> p.getName().getOriginalName().equals(pathParamId))
+                            .findFirst()
+                            .orElseThrow();
+                    String paramFieldName =
+                            matchingParam.getName().getCamelCase().getSafeName();
+                    builder.addStatement("pathBuilder.append($L)", paramFieldName);
+                }
+                builder.addStatement("pathBuilder.append($S)", part.getTail());
+            }
+            builder.addStatement("String fullPath = pathBuilder.toString()");
+        }
     }
 
     protected TypeName getMessageBodyType(WebSocketMessage message) {
@@ -629,30 +787,15 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected String getHandlerFieldName(WebSocketMessage message) {
-        // Use custom methodName if available, otherwise fall back to message type
+        // Use custom methodName if available, otherwise fall back to wire discriminant value
         String baseName;
         if (message.getMethodName().isPresent()) {
             // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Fall back to converting message type from snake_case to camelCase
-            String messageType = message.getType().get();
-            String[] parts = messageType.split("_");
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < parts.length; i++) {
-                String part = parts[i];
-                if (!part.isEmpty()) {
-                    if (i == 0) {
-                        sb.append(part.toLowerCase());
-                    } else {
-                        sb.append(Character.toUpperCase(part.charAt(0)));
-                        if (part.length() > 1) {
-                            sb.append(part.substring(1).toLowerCase());
-                        }
-                    }
-                }
-            }
-            baseName = sb.toString();
+            // Use the wire discriminant value (e.g., "Welcome" → "welcome", not "AgentV1Welcome")
+            String wireValue = getWireDiscriminantValue(message);
+            baseName = decapitalize(toCamelCase(wireValue));
         }
         return baseName + "Handler";
     }
@@ -674,6 +817,21 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
         return result.toString();
+    }
+
+    protected String decapitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toLowerCase(str.charAt(0)) + str.substring(1);
+    }
+
+    /** Returns "an X" or "a X" depending on whether X starts with a vowel sound. */
+    protected String articleFor(String name) {
+        if (name != null && !name.isEmpty() && "AEIOUaeiou".indexOf(name.charAt(0)) >= 0) {
+            return "an " + name;
+        }
+        return "a " + name;
     }
 
     protected String toPascalCase(String str) {
@@ -729,7 +887,8 @@ public abstract class AbstractWebSocketChannelWriter {
         if (message.getMethodName().isPresent()) {
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            baseName = "on" + toPascalCase(message.getType().get());
+            // Use the wire discriminant value (e.g., "Welcome" instead of "AgentV1Welcome")
+            baseName = "on" + toPascalCase(getWireDiscriminantValue(message));
         }
         if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
             return baseName + "Message";

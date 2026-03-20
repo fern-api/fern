@@ -12,6 +12,18 @@
                 "type": "csharp",
                 "client": "using SeedBytesUpload;\nusing System.IO;\nusing System.Text;\n\nvar client = new SeedBytesUploadClient();\nawait client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\")));\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/upload-content-with-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.uploadWithQueryParams"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBytesUpload;\n\nvar client = new SeedBytesUploadClient();\nawait client.Service.UploadWithQueryParamsAsync(\n    new UploadWithQueryParamsRequest { Model = \"nova-2\" }\n);\n"
+            }
         }
     ]
 }

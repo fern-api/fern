@@ -194,7 +194,7 @@ impl ParamsClient {
             .execute_request(
                 Method::PUT,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -220,7 +220,7 @@ impl ParamsClient {
             .execute_request(
                 Method::PUT,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -246,7 +246,7 @@ impl ParamsClient {
             .execute_request(
                 Method::POST,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
