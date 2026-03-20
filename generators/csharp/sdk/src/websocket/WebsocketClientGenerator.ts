@@ -1236,6 +1236,13 @@ export class WebSocketClientGenerator extends WithGeneration {
         interface_.addMethod({
             name: "ConnectAsync",
             noBody: true,
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
             return_: this.System.Threading.Tasks.Task()
         });
 
@@ -1248,6 +1255,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                     this.csharp.parameter({
                         name: "message",
                         type: each.type
+                    }),
+                    this.csharp.parameter({
+                        name: "cancellationToken",
+                        type: this.System.Threading.CancellationToken,
+                        initializer: "default"
                     })
                 ],
                 return_: this.System.Threading.Tasks.Task()
@@ -1258,6 +1270,13 @@ export class WebSocketClientGenerator extends WithGeneration {
         interface_.addMethod({
             name: "CloseAsync",
             noBody: true,
+            parameters: [
+                this.csharp.parameter({
+                    name: "cancellationToken",
+                    type: this.System.Threading.CancellationToken,
+                    initializer: "default"
+                })
+            ],
             return_: this.System.Threading.Tasks.Task()
         });
 

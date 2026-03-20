@@ -8,7 +8,7 @@ public partial interface IEmptyRealtimeApi : IAsyncDisposable, IDisposable
     public Event<Closed> Closed { get; }
     public Event<Exception> ExceptionOccurred { get; }
     public ConnectionStatus Status { get; }
-    Task ConnectAsync();
+    Task ConnectAsync(CancellationToken cancellationToken = default);
 
-    Task CloseAsync();
+    Task CloseAsync(CancellationToken cancellationToken = default);
 }

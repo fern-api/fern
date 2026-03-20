@@ -8,13 +8,13 @@ public partial interface IRealtimeApi : IAsyncDisposable, IDisposable
     public Event<Closed> Closed { get; }
     public Event<Exception> ExceptionOccurred { get; }
     public ConnectionStatus Status { get; }
-    Task ConnectAsync();
+    Task ConnectAsync(CancellationToken cancellationToken = default);
 
-    Task Send(SendEvent message);
+    Task Send(SendEvent message, CancellationToken cancellationToken = default);
 
-    Task Send(SendSnakeCase message);
+    Task Send(SendSnakeCase message, CancellationToken cancellationToken = default);
 
-    Task Send(SendEvent2 message);
+    Task Send(SendEvent2 message, CancellationToken cancellationToken = default);
 
-    Task CloseAsync();
+    Task CloseAsync(CancellationToken cancellationToken = default);
 }
