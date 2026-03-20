@@ -6,7 +6,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, mkdir, readdir, readFile, rm, writeFile as writeFileFs } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -242,6 +242,14 @@ export class LocalTaskHandler {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
+            // Check for version bump override in spec commit message
+            const bumpOverride = this.parseVersionBumpOverride(specCommitMessage);
+            if (bumpOverride != null) {
+                this.context.logger.info(
+                    `Version bump override detected in spec commit message: ${bumpOverride}`
+                );
+            }
+
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
@@ -412,11 +420,14 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            const finalBump = analysis.versionBump;
+            // Apply version bump override if present
+            const finalBump = bumpOverride ?? analysis.versionBump;
             const finalMessage = analysis.message;
             const finalChangelogEntry = analysis.changelogEntry;
             const finalPrDescription = analysis.prDescription;
-            const finalVersionBumpReason = analysis.versionBumpReason;
+            const finalVersionBumpReason = bumpOverride
+                ? `Version bump overridden to ${bumpOverride} via spec commit message.`
+                : analysis.versionBumpReason;
 
             const newVersion = this.incrementVersion(previousVersion, finalBump);
             this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
@@ -429,6 +440,19 @@ export class LocalTaskHandler {
                 : undefined;
             const prDescription = finalPrDescription?.trim() || undefined;
             const versionBumpReason = finalVersionBumpReason?.trim() || undefined;
+
+            // Write observability artifacts for debugging
+            await this.writeAutoVersioningArtifacts({
+                rawDiff: diffContent,
+                cleanedDiff: cleanedDiff,
+                previousVersion: previousVersion ?? "unknown",
+                versionBump: finalBump,
+                newVersion,
+                commitMessage,
+                changelogEntry,
+                versionBumpReason,
+                bumpOverride: bumpOverride ?? undefined
+            });
 
             return {
                 version: newVersion,
@@ -890,6 +914,75 @@ export class LocalTaskHandler {
         } catch (error) {
             this.context.logger.debug(`Failed to read spec repo commit message: ${error}`);
             return "";
+        }
+    }
+
+    /**
+     * Parses a version bump override directive from the spec commit message.
+     * Looks for a line matching `version-bump: MAJOR`, `version-bump: MINOR`, or `version-bump: PATCH`
+     * (case-insensitive). This lets API authors force a specific version bump level
+     * when the AI analysis might not detect the intent correctly.
+     */
+    private parseVersionBumpOverride(specCommitMessage: string | null): "MAJOR" | "MINOR" | "PATCH" | null {
+        if (specCommitMessage == null) {
+            return null;
+        }
+        const match = specCommitMessage.match(/^version-bump:\s*(MAJOR|MINOR|PATCH)\s*$/im);
+        if (match?.[1] != null) {
+            return match[1] as "MAJOR" | "MINOR" | "PATCH";
+        }
+        return null;
+    }
+
+    /**
+     * Writes auto-versioning artifacts to a temporary directory for debugging and observability.
+     * Files are written to `$TMPDIR/fern-auto-versioning/<timestamp>/` and include:
+     * - raw-diff.patch: The original git diff before cleaning
+     * - cleaned-diff.patch: The diff after removing version-only changes and noise files
+     * - result.json: A summary of the versioning decision (bump, version, changelog, etc.)
+     */
+    private async writeAutoVersioningArtifacts(artifacts: {
+        rawDiff: string;
+        cleanedDiff: string;
+        previousVersion: string;
+        versionBump: string;
+        newVersion: string;
+        commitMessage: string;
+        changelogEntry: string | undefined;
+        versionBumpReason: string | undefined;
+        bumpOverride: string | undefined;
+    }): Promise<void> {
+        try {
+            const artifactDir = pathJoin(tmpdir(), "fern-auto-versioning", `${Date.now()}`);
+            await mkdir(artifactDir, { recursive: true });
+
+            await Promise.all([
+                writeFileFs(pathJoin(artifactDir, "raw-diff.patch"), artifacts.rawDiff, "utf-8"),
+                writeFileFs(pathJoin(artifactDir, "cleaned-diff.patch"), artifacts.cleanedDiff, "utf-8"),
+                writeFileFs(
+                    pathJoin(artifactDir, "result.json"),
+                    JSON.stringify(
+                        {
+                            previousVersion: artifacts.previousVersion,
+                            versionBump: artifacts.versionBump,
+                            newVersion: artifacts.newVersion,
+                            commitMessage: artifacts.commitMessage,
+                            changelogEntry: artifacts.changelogEntry ?? null,
+                            versionBumpReason: artifacts.versionBumpReason ?? null,
+                            bumpOverride: artifacts.bumpOverride ?? null
+                        },
+                        null,
+                        2
+                    ),
+                    "utf-8"
+                )
+            ]);
+
+            this.context.logger.info(`Auto-versioning artifacts written to: ${artifactDir}`);
+        } catch (error) {
+            this.context.logger.debug(
+                `Failed to write auto-versioning artifacts (non-fatal): ${error instanceof Error ? error.message : String(error)}`
+            );
         }
     }
 
