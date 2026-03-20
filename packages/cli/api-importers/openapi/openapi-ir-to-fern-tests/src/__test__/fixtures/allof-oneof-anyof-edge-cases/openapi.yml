@@ -207,3 +207,57 @@ components:
                   type: string
                 templateId:
                   not: {}
+
+    # Edge case: string property narrowing via allOf on a single property
+    RuleExecutionContext:
+      type: string
+      enum:
+        - prod
+        - staging
+        - dev
+
+    RuleConfig:
+      type: object
+      properties:
+        name:
+          type: string
+        executionContext:
+          allOf:
+            - $ref: "#/components/schemas/RuleExecutionContext"
+            - type: string
+              pattern: "^(?!prod$)[a-z0-9_-]+$"
+
+    # Reproduces allOf narrowing array items without redeclaring type: array
+    PaginatedList:
+      type: object
+      properties:
+        results:
+          type: array
+          items: {}
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    ItemList:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedList"
+        - properties:
+            results:
+              items:
+                $ref: "#/components/schemas/Item"
+
+    # Edge case: override explicitly includes type: array alongside items narrowing
+    ItemListExplicitType:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedList"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/Item"
