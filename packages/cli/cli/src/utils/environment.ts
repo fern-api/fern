@@ -5,6 +5,7 @@ export interface CISource {
     runUrl?: string;
     commitSha?: string;
     branch?: string;
+    actor?: string;
 }
 
 /**
@@ -22,7 +23,8 @@ export function detectCISource(): CISource | undefined {
             runId,
             runUrl: repo && runId ? `${serverUrl}/${repo}/actions/runs/${runId}` : undefined,
             commitSha: process.env.GITHUB_SHA,
-            branch: process.env.GITHUB_REF_NAME
+            branch: process.env.GITHUB_REF_NAME,
+            actor: process.env.GITHUB_ACTOR
         };
     }
     if (process.env.GITLAB_CI === "true") {
@@ -32,7 +34,8 @@ export function detectCISource(): CISource | undefined {
             runId: process.env.CI_PIPELINE_ID,
             runUrl: process.env.CI_PIPELINE_URL,
             commitSha: process.env.CI_COMMIT_SHA,
-            branch: process.env.CI_COMMIT_REF_NAME
+            branch: process.env.CI_COMMIT_REF_NAME,
+            actor: process.env.GITLAB_USER_LOGIN
         };
     }
     if (process.env.BITBUCKET_BUILD_NUMBER != null) {

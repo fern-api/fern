@@ -84,6 +84,7 @@ interface CISource {
     runUrl?: string;
     commitSha?: string;
     branch?: string;
+    actor?: string;
 }
 
 export async function publishDocs({
