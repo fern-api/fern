@@ -209,9 +209,9 @@ internal partial class WebSocketConnection
                     {
                         await SendInternalSynchronized(new RequestTextMessage(message));
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // individual message send failed, continue draining
+                        await OnExceptionOccurred(e).ConfigureAwait(false);
                     }
                 }
             }
@@ -231,9 +231,9 @@ internal partial class WebSocketConnection
                     {
                         await SendInternalSynchronized(new ArraySegment<byte>(message));
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // individual message send failed, continue draining
+                        await OnExceptionOccurred(e).ConfigureAwait(false);
                     }
                 }
             }

@@ -154,8 +154,8 @@ internal partial class WebSocketConnection
             _textSendQueue.Writer.TryComplete();
             _binarySendQueue.Writer.TryComplete();
             _cancellation?.Cancel();
-            _cancellationTotal?.Cancel();
             _client?.Abort();
+            _cancellationTotal?.Cancel();
             _client?.Dispose();
             _cancellation?.Dispose();
             _cancellationTotal?.Dispose();
