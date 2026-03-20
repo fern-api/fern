@@ -203,13 +203,14 @@ export class ContainerScriptRunner extends ScriptRunner {
 
     public async stop(): Promise<void> {
         const logger = this.shouldStreamOutput() ? this.context.logger : undefined;
-        for (const slot of this.allSlots) {
-            for (const script of slot.scripts) {
-                await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+        const killPromises = this.allSlots.flatMap((slot) =>
+            slot.scripts.map((script) =>
+                loggingExeca(logger, this.runner, ["kill", script.containerId], {
                     doNotPipeOutput: !this.shouldStreamOutput()
-                });
-            }
-        }
+                })
+            )
+        );
+        await Promise.all(killPromises);
     }
 
     protected async initialize(): Promise<void> {
