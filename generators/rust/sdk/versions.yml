@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add forward-compatible enum support. When `forward-compatible: true` is set on an enum
+        type, the generated Rust enum includes a `#[non_exhaustive]` attribute, a hidden
+        `__Unknown(String)` variant for unrecognized values, and custom Serialize/Deserialize
+        implementations that gracefully handle unknown enum values from the server.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.20.4
   changelogEntry:
     - summary: |
