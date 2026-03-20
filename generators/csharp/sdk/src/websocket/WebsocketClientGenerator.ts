@@ -1181,6 +1181,23 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param typeReference - The type reference to check
      * @returns True if the type is a named/object type, false for primitives and containers
      */
+    private isComplexType(typeReference: TypeReference): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                // For optional types, check the inner type
+                if (container.type === "optional") {
+                    return this.isComplexType(container.optional);
+                }
+                // Lists, maps, sets are not deep objects
+                return false;
+            },
+            named: () => true,
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
     /**
      * Creates an internal method for injecting fake text messages during unit testing.
      *
@@ -1212,23 +1229,6 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeLine(`    System.Text.Encoding.UTF8.GetBytes(rawJson));`);
                 writer.writeTextStatement(`await OnTextMessage(stream).ConfigureAwait(false)`);
             })
-        });
-    }
-
-    private isComplexType(typeReference: TypeReference): boolean {
-        return typeReference._visit({
-            container: (container) => {
-                // For optional types, check the inner type
-                if (container.type === "optional") {
-                    return this.isComplexType(container.optional);
-                }
-                // Lists, maps, sets are not deep objects
-                return false;
-            },
-            named: () => true,
-            primitive: () => false,
-            unknown: () => false,
-            _other: () => false
         });
     }
 
