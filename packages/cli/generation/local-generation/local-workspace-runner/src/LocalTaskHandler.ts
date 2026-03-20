@@ -251,11 +251,18 @@ export class LocalTaskHandler {
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
-                this.context.logger.warn(
-                    `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
-                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
-                );
-                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const effectiveBump = bumpOverride ?? VersionBump.PATCH;
+                if (bumpOverride != null) {
+                    this.context.logger.info(
+                        `Diff too large for analysis but applying version bump override: ${bumpOverride}`
+                    );
+                } else {
+                    this.context.logger.warn(
+                        `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
+                            `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
+                    );
+                }
+                const newVersion = this.incrementVersion(previousVersion, effectiveBump);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
@@ -393,16 +400,23 @@ export class LocalTaskHandler {
                 }
             } catch (aiError) {
                 const errorMessage = extractErrorMessage(aiError);
-                this.context.logger.warn(
-                    `AI analysis failed, falling back to PATCH increment. ` +
-                        `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
-                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
-                        (cappedChunks.length > 1
-                            ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
-                            : "") +
-                        `Error: ${errorMessage}`
-                );
-                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const effectiveBump = bumpOverride ?? VersionBump.PATCH;
+                if (bumpOverride != null) {
+                    this.context.logger.info(
+                        `AI analysis failed but applying version bump override: ${bumpOverride}. Error: ${errorMessage}`
+                    );
+                } else {
+                    this.context.logger.warn(
+                        `AI analysis failed, falling back to PATCH increment. ` +
+                            `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
+                            `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
+                            (cappedChunks.length > 1
+                                ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
+                                : "") +
+                            `Error: ${errorMessage}`
+                    );
+                }
+                const newVersion = this.incrementVersion(previousVersion, effectiveBump);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
@@ -414,6 +428,19 @@ export class LocalTaskHandler {
 
             // Each generator applies its own previousVersion and branding
             if (analysis == null) {
+                if (bumpOverride != null) {
+                    this.context.logger.info(
+                        `AI detected no semantic changes but applying version bump override: ${bumpOverride}`
+                    );
+                    const newVersion = this.incrementVersion(previousVersion, bumpOverride);
+                    const overrideMessage = this.isWhitelabel
+                        ? "SDK regeneration"
+                        : `SDK regeneration (version bump override: ${bumpOverride})\n\n🌿 Generated with Fern`;
+                    return {
+                        version: newVersion,
+                        commitMessage: overrideMessage
+                    };
+                }
                 this.context.logger.info("AI detected no semantic changes");
                 return null;
             }
