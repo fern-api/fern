@@ -43,6 +43,7 @@ public partial class EmptyRealtimeApi
         var uri = new UriBuilder(_options.BaseUrl);
         uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.HttpInvoker = _options.HttpInvoker;
     }
 
     /// <summary>
