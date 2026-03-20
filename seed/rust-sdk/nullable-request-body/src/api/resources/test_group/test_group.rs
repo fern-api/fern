@@ -24,7 +24,7 @@ impl TestGroupClient {
     /// JSON response from the API
     pub async fn test_method_name(
         &self,
-        path_param: &String,
+        path_param: &str,
         request: &TestMethodNameRequest,
         options: Option<RequestOptions>,
     ) -> Result<serde_json::Value, ApiError> {

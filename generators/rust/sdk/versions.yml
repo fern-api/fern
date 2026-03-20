@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.11
+  changelogEntry:
+    - summary: |
+        Use `&str` instead of `&String` in generated method signatures, union getter methods,
+        and undiscriminated union accessor methods. `&str` is more idiomatic Rust and more
+        flexible, accepting both `&String` and string literals.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
 - version: 0.19.10
   changelogEntry:
     - summary: |
@@ -10,7 +20,6 @@
       type: fix
   createdAt: "2026-03-20"
   irVersion: 62
-
 - version: 0.19.9
   changelogEntry:
     - summary: |

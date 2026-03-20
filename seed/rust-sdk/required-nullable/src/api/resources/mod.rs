@@ -48,7 +48,7 @@ impl ApiClient {
 
     pub async fn update_foo(
         &self,
-        id: &String,
+        id: &str,
         request: &UpdateFooRequest,
         options: Option<RequestOptions>,
     ) -> Result<Foo, ApiError> {

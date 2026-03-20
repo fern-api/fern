@@ -15,7 +15,7 @@ impl HttpMethodsClient {
 
     pub async fn test_get(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -47,7 +47,7 @@ impl HttpMethodsClient {
 
     pub async fn test_put(
         &self,
-        id: &String,
+        id: &str,
         request: &ObjectWithRequiredField,
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithOptionalField, ApiError> {
@@ -64,7 +64,7 @@ impl HttpMethodsClient {
 
     pub async fn test_patch(
         &self,
-        id: &String,
+        id: &str,
         request: &ObjectWithOptionalField,
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithOptionalField, ApiError> {
@@ -81,7 +81,7 @@ impl HttpMethodsClient {
 
     pub async fn test_delete(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client
