@@ -54,7 +54,7 @@ export async function convertOpenRpcSpecToFdrDefinition({
  * Converts a parsed OpenRPC spec to Fern Intermediate Representation (IR),
  * without requiring filesystem access.
  */
-export async function convertOpenRpcSpecToIr({
+async function convertOpenRpcSpecToIr({
     spec,
     namespace,
     settings,

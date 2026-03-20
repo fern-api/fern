@@ -56,7 +56,7 @@ export async function convertOpenApiSpecToFdrDefinition({
  * Converts a parsed OpenAPI 3.1 spec to Fern Intermediate Representation (IR),
  * without requiring filesystem access.
  */
-export async function convertOpenApiSpecToIr({
+async function convertOpenApiSpecToIr({
     spec,
     overrides,
     settings,
