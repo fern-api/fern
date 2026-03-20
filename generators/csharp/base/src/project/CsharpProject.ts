@@ -858,6 +858,9 @@ class CsProj extends WithGeneration {
     public override toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
+        const indent = this.generation.constants.formatting.indent;
+        const legacyDeps = this.getLegacyFrameworkDependencies();
+        const modernRefs = this.getModernFrameworkReferences();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
@@ -883,15 +886,23 @@ ${projectGroup.join("\n")}
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
     <ItemGroup>
-        ${dependencies.join(`\n${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}`)}
-        ${this.getSseDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
-        ${this.getWebSocketAsyncDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
+        ${dependencies.join(`\n${indent}${indent}`)}
     </ItemGroup>
-${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
+    <ItemGroup Condition="${LEGACY_FRAMEWORK_CONDITION}">
+        ${legacyDeps.join(`\n${indent}${indent}`)}
+    </ItemGroup>
+${
+    modernRefs.length > 0
+        ? `    <ItemGroup Condition="${NET6_COMPATIBLE_CONDITION}">
+        ${modernRefs.join(`\n${indent}${indent}`)}
+    </ItemGroup>\n`
+        : ``
+}\
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
         <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
     </ItemGroup>
-${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.indent}`)}
+${this.getAdditionalItemGroups().join(`\n${indent}`)}
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>${this.generation.names.files.testProject}</_Parameter1>
@@ -903,6 +914,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 `;
     }
 
+    /**
+     * Returns package references that are needed on all target frameworks.
+     * Packages that ship in-box with net6.0+ are excluded here and emitted
+     * conditionally via {@link getLegacyFrameworkDependencies}.
+     */
     private getDependencies(): string[] {
         const result: string[] = [];
         result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
@@ -916,34 +932,48 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
             result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
             result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         }
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
-        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
+        }
+        // WebSocket packages that are NOT in-box on net6.0+
+        if (this.context.hasWebSocketEndpoints) {
+            result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
         }
         return result;
     }
 
     /**
-     * Adds the nuget dependencies for the websocket api client.
-     *
-     * @returns an array of strings that represent the nuget dependencies.
+     * Returns package references that should only be emitted for legacy (pre-net6.0) TFMs.
+     * These packages are included in the .NET shared framework starting with net6.0.
      */
-    private getWebSocketAsyncDependencies(): string[] {
-        return this.context.hasWebSocketEndpoints
-            ? [
-                  '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />',
-                  '    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />'
-              ]
-            : [];
+    private getLegacyFrameworkDependencies(): string[] {
+        const result: string[] = [];
+        for (const pkg of NET6_INBOX_PACKAGES) {
+            result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+        }
+        if (this.context.hasWebSocketEndpoints) {
+            for (const pkg of NET6_INBOX_WEBSOCKET_PACKAGES) {
+                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+            }
+        }
+        if (this.context.hasSseEndpoints) {
+            for (const pkg of NET6_INBOX_SSE_PACKAGES) {
+                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+            }
+        }
+        return result;
     }
 
-    private getSseDependencies(): string[] {
-        return this.context.hasSseEndpoints
-            ? ['    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />']
-            : [];
+    /**
+     * Returns FrameworkReference entries for modern (net6.0+) TFMs.
+     * Microsoft.AspNetCore.App includes Microsoft.Extensions.* and other packages
+     * that would otherwise need to be referenced individually.
+     */
+    private getModernFrameworkReferences(): string[] {
+        if (!this.context.hasWebSocketEndpoints) {
+            return [];
+        }
+        return ['<FrameworkReference Include="Microsoft.AspNetCore.App" />'];
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
@@ -1074,3 +1104,43 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
  * Grpc.Tools compilation to avoid conflicting type definitions.
  */
 const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];
+
+/**
+ * MSBuild condition that matches target frameworks compatible with net6.0 or later.
+ * Uses IsTargetFrameworkCompatible for >= semantics rather than hardcoded TFM equality.
+ */
+const NET6_COMPATIBLE_CONDITION = "$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))";
+
+/**
+ * MSBuild condition that matches legacy (pre-net6.0) target frameworks.
+ * This is the negation of NET6_COMPATIBLE_CONDITION.
+ */
+const LEGACY_FRAMEWORK_CONDITION = `!${NET6_COMPATIBLE_CONDITION}`;
+
+/**
+ * Packages that are included in the .NET shared framework for net6.0+ and should
+ * only be emitted as PackageReference when targeting legacy TFMs (netstandard2.0, net462, etc.).
+ * Extend this list as more packages become in-box in future .NET versions.
+ */
+const NET6_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+    { name: "System.Text.Json", version: "8.0.5" },
+    { name: "System.Net.Http", version: "[4.3.4,)" },
+    { name: "System.Text.RegularExpressions", version: "[4.3.1,)" }
+];
+
+/**
+ * Packages from the websocket dependencies that are included in the .NET shared
+ * framework for net6.0+ and should only be emitted as PackageReference for legacy TFMs.
+ */
+const NET6_INBOX_WEBSOCKET_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+    { name: "Microsoft.Extensions.Logging.Abstractions", version: "8.0.2" },
+    { name: "System.Threading.Channels", version: "8.0.0" }
+];
+
+/**
+ * Packages from the SSE dependencies that are included in the .NET shared
+ * framework for net6.0+ and should only be emitted as PackageReference for legacy TFMs.
+ */
+const NET6_INBOX_SSE_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+    { name: "System.Net.ServerSentEvents", version: "9.0.9" }
+];
