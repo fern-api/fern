@@ -939,6 +939,11 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         if (this.context.hasWebSocketEndpoints) {
             result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
         }
+        // SSE package — only in-box starting with net9.0, so keep unconditional for
+        // multi-targeted projects that include net8.0
+        if (this.context.hasSseEndpoints) {
+            result.push('<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />');
+        }
         return result;
     }
 
@@ -953,11 +958,6 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         }
         if (this.context.hasWebSocketEndpoints) {
             for (const pkg of NET6_INBOX_WEBSOCKET_PACKAGES) {
-                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
-            }
-        }
-        if (this.context.hasSseEndpoints) {
-            for (const pkg of NET6_INBOX_SSE_PACKAGES) {
                 result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
             }
         }
@@ -1135,12 +1135,4 @@ const NET6_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
 const NET6_INBOX_WEBSOCKET_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
     { name: "Microsoft.Extensions.Logging.Abstractions", version: "8.0.2" },
     { name: "System.Threading.Channels", version: "8.0.0" }
-];
-
-/**
- * Packages from the SSE dependencies that are included in the .NET shared
- * framework for net6.0+ and should only be emitted as PackageReference for legacy TFMs.
- */
-const NET6_INBOX_SSE_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
-    { name: "System.Net.ServerSentEvents", version: "9.0.9" }
 ];
