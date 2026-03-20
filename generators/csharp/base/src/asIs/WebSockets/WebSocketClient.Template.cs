@@ -26,6 +26,12 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
     public ConnectionStatus Status
@@ -182,6 +188,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 
         _webSocket = new WebSocketConnection(_uri)
         {
+            ConnectTimeout = ConnectTimeout,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
