@@ -359,8 +359,27 @@ export class ContainerScriptRunner extends ScriptRunner {
             startPromises.push(this.startSlot(scriptConfigs, cliVolumeBind, logger));
         }
 
-        this.allSlots = await Promise.all(startPromises);
-        this.availableSlots = [...this.allSlots];
+        try {
+            this.allSlots = await Promise.all(startPromises);
+            this.availableSlots = [...this.allSlots];
+        } catch (error) {
+            // Clean up any containers that started successfully before the failure
+            const settledPromises = await Promise.allSettled(startPromises);
+            for (const result of settledPromises) {
+                if (result.status === "fulfilled") {
+                    for (const script of result.value.scripts) {
+                        await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                            doNotPipeOutput: true
+                        }).catch(() => {
+                            // Best-effort cleanup
+                        });
+                    }
+                }
+            }
+            this.allSlots = [];
+            this.availableSlots = [];
+            throw error;
+        }
     }
 
     private async startSlot(
