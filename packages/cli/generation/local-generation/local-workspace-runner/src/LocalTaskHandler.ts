@@ -928,9 +928,15 @@ export class LocalTaskHandler {
         const match = specCommitMessage.match(/^version-bump:\s*(MAJOR|MINOR|PATCH)\s*$/im);
         if (match?.[1] != null) {
             const val = match[1].toUpperCase();
-            if (val === "MAJOR") return VersionBump.MAJOR;
-            if (val === "MINOR") return VersionBump.MINOR;
-            if (val === "PATCH") return VersionBump.PATCH;
+            if (val === "MAJOR") {
+                return VersionBump.MAJOR;
+            }
+            if (val === "MINOR") {
+                return VersionBump.MINOR;
+            }
+            if (val === "PATCH") {
+                return VersionBump.PATCH;
+            }
         }
         return null;
     }
