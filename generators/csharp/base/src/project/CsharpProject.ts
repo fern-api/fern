@@ -997,7 +997,7 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
             );
         }
         result.push(
-            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(
             `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
