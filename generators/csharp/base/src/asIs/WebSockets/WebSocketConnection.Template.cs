@@ -151,6 +151,8 @@ internal partial class WebSocketConnection
         {
             _lastChanceTimer?.Dispose();
             _errorReconnectTimer?.Dispose();
+            _textSendQueue.Writer.TryComplete();
+            _binarySendQueue.Writer.TryComplete();
             _cancellation?.Cancel();
             _cancellationTotal?.Cancel();
             _client?.Abort();
@@ -259,6 +261,18 @@ internal partial class WebSocketConnection
         _cancellationTotal = new CancellationTokenSource();
 
         await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
+
+        _ = global::System.Threading.Tasks.Task.Factory.StartNew(
+            () => DrainTextQueue(_cancellationTotal.Token),
+            _cancellationTotal.Token,
+            TaskCreationOptions.LongRunning,
+            TaskScheduler.Default);
+
+        _ = global::System.Threading.Tasks.Task.Factory.StartNew(
+            () => DrainBinaryQueue(_cancellationTotal.Token),
+            _cancellationTotal.Token,
+            TaskCreationOptions.LongRunning,
+            TaskScheduler.Default);
     }
 
     private async global::System.Threading.Tasks.Task<bool> StopInternal(
