@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"net/http"
 	"sort"
 	"strings"
@@ -34,7 +33,7 @@ var sensitiveHeaders = map[string]bool{
 // Does nothing if the logger is silent.
 type LoggingHTTPClient struct {
 	client HTTPClient
-	logger *Logger
+	logger *leveledLogger
 }
 
 // NewLoggingHTTPClient creates a new LoggingHTTPClient that wraps the given client.
@@ -50,29 +49,22 @@ func NewLoggingHTTPClient(client HTTPClient, config *LogConfig) HTTPClient {
 
 // Do implements the HTTPClient interface.
 func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
-	// Log the request if debug is enabled
-	if c.logger.IsDebug() {
+	if c.logger.Enabled(LogLevelDebug) {
 		c.logRequest(req)
 	}
 
-	// Perform the request
 	resp, err := c.client.Do(req)
 
-	// Log the full response at debug level (includes headers, status, url).
-	if c.logger.IsDebug() && resp != nil {
+	if c.logger.Enabled(LogLevelDebug) && resp != nil {
 		c.logResponse(resp)
 	}
 
-	// Log transport errors at error level.
-	if c.logger.IsError() && err != nil {
-		c.logger.Error(fmt.Sprintf("HTTP Error: url=%s error=%v", req.URL, err))
+	if c.logger.Enabled(LogLevelError) && err != nil {
+		c.logger.Log(LogLevelError, "HTTP Error", "url", req.URL, "error", err)
 	}
 
-	// Log 4xx/5xx responses at error level as a concise alert.
-	// This is intentionally separate from the debug-level response log above,
-	// which includes full headers. Consistent with Java/Python SDK implementations.
-	if c.logger.IsError() && resp != nil && resp.StatusCode >= 400 {
-		c.logger.Error(fmt.Sprintf("HTTP Error: status=%d url=%s", resp.StatusCode, req.URL))
+	if c.logger.Enabled(LogLevelError) && resp != nil && resp.StatusCode >= 400 {
+		c.logger.Log(LogLevelError, "HTTP Error", "status", resp.StatusCode, "url", req.URL)
 	}
 
 	return resp, err
@@ -80,52 +72,34 @@ func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 // logRequest logs the HTTP request details.
 func (c *LoggingHTTPClient) logRequest(req *http.Request) {
-	var sb strings.Builder
-	sb.WriteString("HTTP Request: ")
-	sb.WriteString(req.Method)
-	sb.WriteString(" ")
-	sb.WriteString(req.URL.String())
-	sb.WriteString(" headers={")
-
-	// Sort header names for consistent output
-	headerNames := make([]string, 0, len(req.Header))
-	for name := range req.Header {
-		headerNames = append(headerNames, name)
-	}
-	sort.Strings(headerNames)
-
-	for i, name := range headerNames {
-		if i > 0 {
-			sb.WriteString(", ")
-		}
-		sb.WriteString(name)
-		sb.WriteString("=")
-		if sensitiveHeaders[strings.ToLower(name)] {
-			sb.WriteString("[REDACTED]")
-		} else {
-			sb.WriteString(strings.Join(req.Header.Values(name), ";"))
-		}
-	}
-
-	sb.WriteString("}")
-	sb.WriteString(" has_body=")
-	fmt.Fprintf(&sb, "%v", req.Body != nil)
-
-	c.logger.Debug(sb.String())
+	c.logger.Log(
+		LogLevelDebug,
+		"HTTP Request",
+		"method", req.Method,
+		"url", req.URL.String(),
+		"headers", formatHeaders(req.Header),
+		"has_body", req.Body != nil,
+	)
 }
 
 // logResponse logs the HTTP response details.
 func (c *LoggingHTTPClient) logResponse(resp *http.Response) {
-	var sb strings.Builder
-	sb.WriteString("HTTP Response: status=")
-	fmt.Fprintf(&sb, "%d", resp.StatusCode)
-	sb.WriteString(" url=")
-	sb.WriteString(resp.Request.URL.String())
-	sb.WriteString(" headers={")
+	c.logger.Log(
+		LogLevelDebug,
+		"HTTP Response",
+		"status", resp.StatusCode,
+		"url", resp.Request.URL.String(),
+		"headers", formatHeaders(resp.Header),
+	)
+}
 
-	// Sort header names for consistent output
-	headerNames := make([]string, 0, len(resp.Header))
-	for name := range resp.Header {
+// formatHeaders formats HTTP headers for logging, redacting sensitive values.
+func formatHeaders(headers http.Header) string {
+	var sb strings.Builder
+	sb.WriteString("{")
+
+	headerNames := make([]string, 0, len(headers))
+	for name := range headers {
 		headerNames = append(headerNames, name)
 	}
 	sort.Strings(headerNames)
@@ -139,13 +113,12 @@ func (c *LoggingHTTPClient) logResponse(resp *http.Response) {
 		if sensitiveHeaders[strings.ToLower(name)] {
 			sb.WriteString("[REDACTED]")
 		} else {
-			sb.WriteString(strings.Join(resp.Header.Values(name), ";"))
+			sb.WriteString(strings.Join(headers.Values(name), ";"))
 		}
 	}
 
 	sb.WriteString("}")
-
-	c.logger.Debug(sb.String())
+	return sb.String()
 }
 
 // Ensure LoggingHTTPClient implements HTTPClient interface.
