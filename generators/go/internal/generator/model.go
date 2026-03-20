@@ -380,7 +380,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
-	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	discriminantName := resolveUnionDiscriminantName(union)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
@@ -1381,7 +1381,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:             goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName),
+			Name:             resolveUnionDiscriminantName(union),
 			GoType:           "string",
 			ZeroValue:        `""`,
 			Optional:         false,
@@ -2387,6 +2387,25 @@ func capitalizeFirstLetter(s string) string {
 // We will just add to this list as needed
 var goReservedIdentifiers = map[string]bool{
 	"string": true,
+}
+
+// resolveUnionDiscriminantName returns the Go field name for a union's discriminant,
+// renaming it if it collides with any variant field name, base property, or extended
+// property. Go does not allow two fields with the same name in a struct, so we append
+// "Discriminant" to disambiguate (e.g. Event -> EventDiscriminant).
+func resolveUnionDiscriminantName(union *ir.UnionTypeDeclaration) string {
+	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	usedNames := make(map[string]bool)
+	for _, unionType := range union.Types {
+		usedNames[goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)] = true
+	}
+	for _, property := range union.BaseProperties {
+		usedNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = true
+	}
+	if usedNames[discriminantName] {
+		discriminantName = discriminantName + "Discriminant"
+	}
+	return discriminantName
 }
 
 // goExportedFieldName converts a name to a valid Go exported identifier.

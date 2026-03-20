@@ -336,10 +336,19 @@ export class Streamer {
             return undefined;
         }
         const location = this.context.getLocationForTypeId(payload.typeId);
+        // Apply the same rename logic as the Go type generator (resolveUnionDiscriminantName):
+        // if the discriminant field name collides with any variant field name, append "Discriminant".
+        let discriminantFieldName = this.context.getFieldName(union.discriminant.name);
+        const variantFieldNames = new Set(
+            union.types.map((singleUnionType) => this.context.getFieldName(singleUnionType.discriminantValue.name))
+        );
+        if (variantFieldNames.has(discriminantFieldName)) {
+            discriminantFieldName = discriminantFieldName + "Discriminant";
+        }
         return {
             unionTypeName: this.context.getClassName(typeDeclaration.name.name),
             unionTypeImportPath: location.importPath,
-            discriminantFieldName: this.context.getFieldName(union.discriminant.name),
+            discriminantFieldName,
             variants: union.types.map((singleUnionType) => ({
                 wireValue: singleUnionType.discriminantValue.wireValue,
                 fieldName: this.context.getFieldName(singleUnionType.discriminantValue.name),
@@ -397,15 +406,9 @@ export class Streamer {
                     writer.writeLine(`}`);
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
-                    if (unionInfo.discriminantFieldName === variant.fieldName) {
-                        // When discriminant field and variant field have the same name, only set the variant field
-                        // with the deserialized value (the discriminant is the same field).
-                        writer.writeLine(`{${variant.fieldName}: value}, nil`);
-                    } else {
-                        writer.writeLine(
-                            `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
-                        );
-                    }
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
                 } else if (variant.variantType.propertiesType === "noProperties") {
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
@@ -427,13 +430,9 @@ export class Streamer {
                     writer.writeLine(`}`);
                     writer.write(`return &`);
                     writer.writeNode(unionRef);
-                    if (unionInfo.discriminantFieldName === variant.fieldName) {
-                        writer.writeLine(`{${variant.fieldName}: value}, nil`);
-                    } else {
-                        writer.writeLine(
-                            `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
-                        );
-                    }
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
                 }
                 writer.dedent();
             }
