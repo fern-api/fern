@@ -52,7 +52,8 @@ export function buildChannel({
         }
     }
 
-    const hasAuth = context.authOverrides?.auth != null;
+    const hasAuth =
+        context.authOverrides?.auth != null || (context.ir.security != null && context.ir.security.length > 0);
 
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: convertedPath,

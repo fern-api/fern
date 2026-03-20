@@ -3,11 +3,12 @@
 - version: 0.20.5
   changelogEntry:
     - summary: |
-        Fix WebSocket connector auth injection for channels with `auth: false`. Previously,
-        `needsImplicitAuth` only checked for an explicit Authorization header and ignored the
-        channel's `auth` flag, causing channels with `auth: false` to still generate Bearer
-        token injection code. Now channels with `auth: false` correctly skip implicit auth,
-        matching the expected behavior documented in the test fixtures.
+        Fix WebSocket TTS channel failures caused by incorrect `#[serde(transparent)]` on
+        single-property structs whose field is an enum discriminator (e.g. `type`). Previously,
+        `{"type": "text.done"}` was collapsed to `"text.done"`, breaking untagged enum
+        deserialization. Also fix `buildChannel` to propagate server-level security schemes
+        to the channel `auth` field, and teach the Rust generator to respect `channel.auth`
+        when deciding whether to inject implicit Bearer auth.
       type: fix
   createdAt: "2026-03-20"
   irVersion: 62

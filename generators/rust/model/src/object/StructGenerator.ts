@@ -217,6 +217,11 @@ export class StructGenerator {
      * Check if this struct is a single-property wrapper used in an undiscriminated union.
      * Such structs need #[serde(transparent)] so they serialize/deserialize as the
      * inner value directly, enabling correct untagged enum variant matching.
+     *
+     * However, structs whose single property is a named enum (e.g. a discriminator
+     * field like `type`) must NOT be transparent. Making them transparent collapses
+     * the JSON object `{"type": "text.done"}` to just `"text.done"`, which breaks
+     * serialization for untagged enum variant matching in WebSocket message payloads.
      */
     private isSinglePropertyUndiscriminatedUnionMember(): boolean {
         // Must have exactly one property and no extends (inheritance)
@@ -225,7 +230,20 @@ export class StructGenerator {
         }
         // Check if this type is referenced by any undiscriminated union
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-        return typeId != null && this.context.undiscriminatedUnionMemberTypeIds.has(typeId);
+        if (typeId == null || !this.context.undiscriminatedUnionMemberTypeIds.has(typeId)) {
+            return false;
+        }
+        // Don't apply transparent when the single property's type is an enum.
+        // Enum-typed single properties are typically discriminator fields (e.g. `type`)
+        // that need the JSON object envelope for correct untagged deserialization.
+        const singleProperty = this.objectTypeDeclaration.properties[0];
+        if (singleProperty != null && singleProperty.valueType.type === "named") {
+            const referencedType = this.context.ir.types[singleProperty.valueType.typeId];
+            if (referencedType != null && referencedType.shape.type === "enum") {
+                return false;
+            }
+        }
+        return true;
     }
 
     private canDeriveDefault(): boolean {
