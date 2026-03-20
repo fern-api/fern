@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.2
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary messages being sent with `WebSocketMessageType.Text` instead of
+        `WebSocketMessageType.Binary`. `RequestBinaryMessage` and `RequestBinarySegmentMessage`
+        now correctly use `WebSocketMessageType.Binary` when calling `SendAsync`, ensuring
+        audio data (e.g. webm/opus chunks) is sent as binary frames.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 2.37.1
   changelogEntry:
     - summary: |
