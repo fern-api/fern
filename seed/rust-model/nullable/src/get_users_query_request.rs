@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getUsers
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetUsersQueryRequest {
     #[serde(default)]
     pub usernames: Vec<Option<String>>,

@@ -117,14 +117,14 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-                email: Some(Some("email".to_string())),
-                nickname: Some(Some("nickname".to_string())),
-                bio: Some(Some("bio".to_string())),
-                profile_image_url: Some(Some("profileImageUrl".to_string())),
-                settings: Some(Some(HashMap::from([(
+                email: Some("email".to_string()),
+                nickname: Some("nickname".to_string()),
+                bio: Some("bio".to_string()),
+                profile_image_url: Some("profileImageUrl".to_string()),
+                settings: Some(HashMap::from([(
                     "settings".to_string(),
                     serde_json::json!({"key":"value"}),
-                )]))),
+                )])),
             },
             None,
         )

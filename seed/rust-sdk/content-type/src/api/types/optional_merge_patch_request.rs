@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct OptionalMergePatchRequest {
     #[serde(rename = "requiredField")]
     #[serde(default)]
