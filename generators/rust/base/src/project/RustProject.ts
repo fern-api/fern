@@ -127,6 +127,249 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "");
         }
 
+        // Conditionally include ordered-float exports in prelude
+        if (this.context.usesOrderedFloat()) {
+            content = content.replace(
+                /\{\{ORDERED_FLOAT_EXPORTS\}\}/g,
+                "\npub use ordered_float::OrderedFloat;"
+            );
+        } else {
+            content = content.replace(/\{\{ORDERED_FLOAT_EXPORTS\}\}/g, "");
+        }
+
+        // Conditionally include base64 import in http_client
+        if (this.context.usesBase64()) {
+            content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "use base64::Engine;\n");
+        } else {
+            content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include base64 method in http_client
+        if (this.context.usesBase64()) {
+            content = content.replace(
+                /\{\{BASE64_METHOD\}\}/g,
+                `    /// Execute a request that returns a base64-encoded string and decode it to bytes
+    ///
+    /// This method is used for endpoints that return raw base64-encoded data as a JSON string.
+    /// The response is expected to be a JSON string (e.g., \`"SGVsbG8gd29ybGQh"\`) which is
+    /// decoded from base64 to raw bytes.
+    pub async fn execute_request_base64(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<u8>, ApiError> {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Parse response as JSON string and decode base64
+        let text = response.text().await.map_err(ApiError::Network)?;
+        let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
+        base64::engine::general_purpose::STANDARD
+            .decode(&base64_string)
+            .map_err(|e| ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e))))
+    }
+`
+            );
+        } else {
+            content = content.replace(/\{\{BASE64_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include chrono import in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_CHRONO_IMPORT\}\}/g,
+                "use chrono::{DateTime, TimeZone, Utc};\n"
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_CHRONO_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include datetime/date methods in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_DATETIME_METHODS\}\}/g,
+                `    /// Add a datetime parameter (any DateTime timezone)
+    pub fn datetime<Tz: TimeZone>(mut self, key: &str, value: impl Into<Option<DateTime<Tz>>>) -> Self
+    where
+        Tz::Offset: std::fmt::Display,
+    {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+
+    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
+            // Convert NaiveDate to DateTime<Utc> at start of day
+            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
+            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_DATETIME_METHODS\}\}/g, "");
+        }
+
+        // Conditionally include uuid method in query_parameter_builder
+        if (this.context.usesUuid()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_UUID_METHOD\}\}/g,
+                `    /// Add a UUID parameter (converts to string)
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_UUID_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include big_int method in query_parameter_builder
+        if (this.context.usesBigInteger()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_BIGINT_METHOD\}\}/g,
+                `    /// Add a big integer parameter (accept both required/optional)
+    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_BIGINT_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include chrono test imports in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_TEST_CHRONO_IMPORT\}\}/g,
+                "\n    use chrono::{NaiveDate, TimeZone, Utc};"
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_TEST_CHRONO_IMPORT\}\}/g, "");
+        }
+
+        // Conditionally include uuid tests in query_parameter_builder
+        if (this.context.usesUuid()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_UUID_TESTS\}\}/g,
+                `    #[test]
+    fn test_uuid_param() {
+        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
+        let result = QueryBuilder::new().uuid("id", Some(id)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "id".to_string(),
+                "550e8400-e29b-41d4-a716-446655440000".to_string()
+            )])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_UUID_TESTS\}\}/g, "");
+        }
+
+        // Conditionally include datetime tests in query_parameter_builder
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_DATETIME_TESTS\}\}/g,
+                `    #[test]
+    fn test_datetime_param_formats_rfc3339() {
+        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
+        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "since".to_string(),
+                "2024-01-15T09:30:00Z".to_string()
+            )])
+        );
+    }
+
+    #[test]
+    fn test_date_param_converts_to_midnight_utc() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "on".to_string(),
+                "2024-01-15T00:00:00Z".to_string()
+            )])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_DATETIME_TESTS\}\}/g, "");
+        }
+
+        // Conditionally include bigint tests in query_parameter_builder
+        if (this.context.usesBigInteger()) {
+            content = content.replace(
+                /\{\{QUERY_BUILDER_BIGINT_TESTS\}\}/g,
+                `    #[test]
+    fn test_big_int_param() {
+        let big = num_bigint::BigInt::from(999_999_999_999i64);
+        let result = QueryBuilder::new().big_int("value", Some(big)).build();
+        assert_eq!(
+            result,
+            Some(vec![("value".to_string(), "999999999999".to_string())])
+        );
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{QUERY_BUILDER_BIGINT_TESTS\}\}/g, "");
+        }
+
         // Replace API key header name from IR auth schemes
         content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
 

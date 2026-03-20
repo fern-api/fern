@@ -75,16 +75,31 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
-        this.dependencyManager.add("percent-encoding", "2.3");
-        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
-        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
 
-        // Always include chrono and uuid for QueryBuilder support
-        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
-        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        // Conditionally include ordered-float only when floating-point sets are used
+        if (this.usesOrderedFloat()) {
+            this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        }
 
-        // Add base64 for encoding/decoding base64 fields in JSON
-        this.dependencyManager.add("base64", "0.22");
+        // Conditionally include num-bigint only when big integer types are used
+        if (this.usesBigInteger()) {
+            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include chrono only when datetime/date types are used
+        if (this.usesDateTime()) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include uuid only when UUID types are used
+        if (this.usesUuid()) {
+            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        }
+
+        // Conditionally include base64 only when base64 types are used
+        if (this.usesBase64()) {
+            this.dependencyManager.add("base64", "0.22");
+        }
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
 
@@ -161,7 +176,7 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -350,6 +365,108 @@ export abstract class AbstractRustGeneratorContext<
      */
     public usesBigInteger(): boolean {
         return this.irUsesType("BIG_INTEGER");
+    }
+
+    /**
+     * Check if IR uses base64 types
+     */
+    public usesBase64(): boolean {
+        return this.irUsesType("BASE_64");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double) in sets,
+     * which requires ordered-float for Hash/Ord implementations.
+     */
+    public usesOrderedFloat(): boolean {
+        for (const typeDecl of Object.values(this.ir.types)) {
+            if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if a type shape uses floating point types inside sets
+     * (which requires OrderedFloat for Hash/Ord)
+     */
+    private typeShapeUsesOrderedFloat(shape: FernIr.Type): boolean {
+        return shape._visit({
+            alias: (alias: FernIr.AliasTypeDeclaration) =>
+                this.typeReferenceUsesOrderedFloat(alias.aliasOf),
+            enum: () => false,
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesOrderedFloat(property.valueType)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: FernIr.UnionTypeDeclaration) => {
+                for (const variant of union.types) {
+                    const uses = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesOrderedFloat(property.type),
+                        samePropertiesAsObject: () => false,
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (uses) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesOrderedFloat(member.type)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a floating-point type inside a set container
+     */
+    private typeReferenceUsesOrderedFloat(typeRef: FernIr.TypeReference): boolean {
+        return typeRef._visit({
+            primitive: () => false,
+            container: (container: FernIr.ContainerType) => {
+                return container._visit({
+                    list: () => false,
+                    set: (setType: FernIr.TypeReference) => {
+                        // Check if the set element type is a float/double
+                        return setType._visit({
+                            primitive: (primitive: FernIr.PrimitiveType) => {
+                                return primitive.v1 === "FLOAT" || primitive.v1 === "DOUBLE";
+                            },
+                            container: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(optional),
+                    nullable: (nullable: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(nullable),
+                    map: (map: FernIr.MapType) =>
+                        this.typeReferenceUsesOrderedFloat(map.keyType) ||
+                        this.typeReferenceUsesOrderedFloat(map.valueType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     /**
