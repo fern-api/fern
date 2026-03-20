@@ -77,6 +77,16 @@ export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): R
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
+interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
+}
+
 export async function publishDocs({
     token,
     organization,
@@ -96,7 +106,8 @@ export async function publishDocs({
     excludeApis = false,
     targetAudiences,
     docsUrl,
-    cliVersion
+    cliVersion,
+    ciSource
 }: {
     token: FernToken;
     organization: string;
@@ -117,6 +128,7 @@ export async function publishDocs({
     targetAudiences?: string[];
     docsUrl?: string;
     cliVersion?: string;
+    ciSource?: CISource;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -124,9 +136,17 @@ export async function publishDocs({
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }
 
+    const headers: Record<string, string> = {};
+    if (cliVersion != null) {
+        headers["X-CLI-Version"] = cliVersion;
+    }
+    if (ciSource != null) {
+        headers["X-CI-Source"] = JSON.stringify(ciSource);
+        context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
     const fdr = createFdrService({
         token: token.value,
-        ...(cliVersion != null && { headers: { "X-CLI-Version": cliVersion } })
+        ...(Object.keys(headers).length > 0 && { headers })
     });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
