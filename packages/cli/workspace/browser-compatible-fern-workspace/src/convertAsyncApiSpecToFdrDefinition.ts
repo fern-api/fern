@@ -51,7 +51,7 @@ export async function convertAsyncApiSpecToFdrDefinition({
  * Converts a parsed AsyncAPI spec (v2 or v3) to Fern Intermediate Representation (IR),
  * without requiring filesystem access.
  */
-export async function convertAsyncApiSpecToIr({
+async function convertAsyncApiSpecToIr({
     spec,
     settings,
     generationLanguage
