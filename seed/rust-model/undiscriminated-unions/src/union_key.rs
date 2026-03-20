@@ -32,7 +32,7 @@ impl Key {
                 }
     }
 
-    pub fn as_literal1(&self) -> Option<&String> {
+    pub fn as_literal1(&self) -> Option<&str> {
         match self {
                     Self::Literal1(value) => Some(value),
                     _ => None,

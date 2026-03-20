@@ -1,7 +1,6 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct PostWithObjectBody {
     #[serde(default)]
     pub string: String,

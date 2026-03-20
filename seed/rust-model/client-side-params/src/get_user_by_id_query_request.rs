@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getUserById
-///
-/// Request type for the GetUserByIdQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetUserByIdQueryRequest {
     /// Comma-separated list of fields to include or exclude

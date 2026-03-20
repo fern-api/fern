@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Request for createUsernameWithReferencedType (body + query parameters)
-///
-/// Request type for the CreateUsernameWithReferencedTypeRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct CreateUsernameWithReferencedTypeRequest {
     #[serde(default)]
     pub tags: Vec<String>,

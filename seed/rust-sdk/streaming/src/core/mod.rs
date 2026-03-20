@@ -1,8 +1,5 @@
 //! Core client infrastructure
 
-pub mod base64_bytes;
-pub mod bigint_string;
-pub mod flexible_datetime;
 mod http_client;
 mod oauth_token_provider;
 mod query_parameter_builder;

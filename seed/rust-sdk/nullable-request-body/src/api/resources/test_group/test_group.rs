@@ -24,7 +24,7 @@ impl TestGroupClient {
     /// JSON response from the API
     pub async fn test_method_name(
         &self,
-        path_param: &String,
+        path_param: &str,
         request: &TestMethodNameRequest,
         options: Option<RequestOptions>,
     ) -> Result<serde_json::Value, ApiError> {
@@ -32,7 +32,7 @@ impl TestGroupClient {
             .execute_request(
                 Method::POST,
                 &format!("optional-request-body/{}", path_param),
-                Some(serde_json::to_value(&request.body).unwrap_or_default()),
+                Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
                     .serialize("query_param_object", request.query_param_object.clone())
                     .serialize("query_param_integer", request.query_param_integer.clone())

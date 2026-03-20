@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getResource
-///
-/// Request type for the GetResourceQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetResourceQueryRequest {
     /// Include metadata in response
     #[serde(default)]

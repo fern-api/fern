@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getWithQuery
-///
-/// Request type for the GetWithQueryQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetWithQueryQueryRequest {
     #[serde(default)]
     pub query: String,

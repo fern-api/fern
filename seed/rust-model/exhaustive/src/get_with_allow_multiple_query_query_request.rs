@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getWithAllowMultipleQuery
-///
-/// Request type for the GetWithAllowMultipleQueryQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetWithAllowMultipleQueryQueryRequest {
     #[serde(default)]
     pub query: Vec<String>,

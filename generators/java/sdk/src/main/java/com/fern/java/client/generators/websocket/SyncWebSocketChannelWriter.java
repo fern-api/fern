@@ -16,8 +16,6 @@
 
 package com.fern.java.client.generators.websocket;
 
-import com.fern.ir.model.http.HttpPath;
-import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.ir.Subpackage;
@@ -144,27 +142,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
-        builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
-
-        HttpPath path = websocketChannel.getPath();
-        builder.addStatement("pathBuilder.append($S)", path.getHead());
-
-        for (HttpPathPart part : path.getParts()) {
-            String pathParamId = part.getPathParameter();
-            if (pathParamId != null && !pathParamId.isEmpty()) {
-                // Find the matching path parameter
-                PathParameter matchingParam = websocketChannel.getPathParameters().stream()
-                        .filter(p -> p.getName().getOriginalName().equals(pathParamId))
-                        .findFirst()
-                        .orElseThrow();
-                String paramFieldName = matchingParam.getName().getCamelCase().getSafeName();
-                builder.addStatement("pathBuilder.append($L)", paramFieldName);
-            }
-            builder.addStatement("pathBuilder.append($S)", part.getTail());
-        }
-
-        // Build HttpUrl with query parameters
-        builder.addStatement("String fullPath = pathBuilder.toString()");
+        appendPathBuildingCode(builder);
         builder.beginControlFlow("if (baseUrl.endsWith(\"/\") && fullPath.startsWith(\"/\"))");
         builder.addStatement("fullPath = fullPath.substring(1)");
         builder.endControlFlow();
@@ -379,7 +357,8 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(messageType, "message")
                 .addJavadoc(
-                        "Sends a $L message to the server.\n", message.getType().get())
+                        "Sends $L message to the server.\n",
+                        articleFor(message.getType().get()))
                 .addJavadoc("@param message the message to send\n")
                 .addJavadoc("@throws RuntimeException if send fails\n");
 

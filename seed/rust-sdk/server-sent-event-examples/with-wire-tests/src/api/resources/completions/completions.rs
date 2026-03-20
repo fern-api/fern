@@ -22,7 +22,7 @@ impl CompletionsClient {
             .execute_sse_request(
                 Method::POST,
                 "stream",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
                 Some("[[DONE]]".to_string()),
@@ -39,7 +39,7 @@ impl CompletionsClient {
             .execute_sse_request(
                 Method::POST,
                 "stream-events",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
                 Some("[DONE]".to_string()),
