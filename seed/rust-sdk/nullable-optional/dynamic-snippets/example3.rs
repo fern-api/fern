@@ -14,7 +14,7 @@ async fn main() {
                 limit: Some(1),
                 offset: Some(1),
                 include_deleted: Some(true),
-                sort_by: Some(Some("sortBy".to_string())),
+                sort_by: Some("sortBy".to_string()),
             },
             None,
         )

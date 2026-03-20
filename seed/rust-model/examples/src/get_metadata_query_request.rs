@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getMetadata
-///
-/// Request type for the GetMetadataQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetMetadataQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shallow: Option<bool>,

@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.5
+  changelogEntry:
+    - summary: |
+        Add enum handling to `construct_type()` to prevent Pydantic serialization warnings
+        when enum values pass through untyped model construction paths.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 5.0.4
   changelogEntry:
     - summary: |

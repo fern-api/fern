@@ -368,6 +368,12 @@ export class DynamicTypeLiteralMapper {
         const innerTypeRef =
             (typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable).value ||
             ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        // If the inner type is also optional or nullable, skip the outer Some() wrapping.
+        // This matches the type generator's behavior where Type.option() collapses
+        // Option<Option<T>> into Option<T>, so the value should be Some(value) not Some(Some(value)).
+        if (innerTypeRef.type === "optional" || innerTypeRef.type === "nullable") {
+            return this.convertOptional({ typeReference: innerTypeRef, value });
+        }
         const innerValue = this.convert({ typeReference: innerTypeRef, value });
         return rust.Expression.functionCall("Some", [innerValue]);
     }

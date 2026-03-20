@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
@@ -70,8 +70,8 @@ export class RequestGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
-        // Default - only add if all properties are optional
-        if (this.allPropertiesAreOptional()) {
+        // Default - add if all fields support Default
+        if (this.canDeriveDefault()) {
             derives.push("Default");
         }
 
@@ -90,15 +90,18 @@ export class RequestGenerator {
         return attributes;
     }
 
-    private allPropertiesAreOptional(): boolean {
-        // Check if all regular properties are optional
-        const allRegularPropsOptional = this.properties.every((property) => isOptionalType(property.valueType));
+    private canDeriveDefault(): boolean {
+        // Check if all regular properties have types that implement Default in Rust
+        const propertiesSupport = this.properties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        // Check if there are any extended properties (inheritance fields)
-        // If there are extended properties, we can't derive Default because we can't default the parent type
-        const hasExtendedProperties = this.extendedProperties.length > 0;
+        // Check if all extended properties (inheritance fields) support Default
+        const extendsSupport = this.extendedProperties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        return allRegularPropsOptional && !hasExtendedProperties;
+        return propertiesSupport && extendsSupport;
     }
 
     private needsPartialEq(): boolean {

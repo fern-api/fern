@@ -421,6 +421,157 @@ func (r *ReceiveEvent3) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+type TranscriptEvent struct {
+	Data string `json:"data" url:"data"`
+
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TranscriptEvent) GetType_() string {
+	if t == nil {
+		return ""
+	}
+	return t.type_
+}
+
+func (t *TranscriptEvent) GetData() string {
+	if t == nil {
+		return ""
+	}
+	return t.Data
+}
+
+func (t *TranscriptEvent) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TranscriptEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed TranscriptEvent
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*t = TranscriptEvent(unmarshaler.embed)
+	if unmarshaler.Type != "transcript" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "transcript", unmarshaler.Type)
+	}
+	t.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *t, "type_")
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TranscriptEvent) MarshalJSON() ([]byte, error) {
+	type embed TranscriptEvent
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*t),
+		Type:  "transcript",
+	}
+	return json.Marshal(marshaler)
+}
+
+func (t *TranscriptEvent) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type FlushedEvent struct {
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FlushedEvent) GetType_() string {
+	if f == nil {
+		return ""
+	}
+	return f.type_
+}
+
+func (f *FlushedEvent) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FlushedEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed FlushedEvent
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FlushedEvent(unmarshaler.embed)
+	if unmarshaler.Type != "flushed" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "flushed", unmarshaler.Type)
+	}
+	f.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *f, "type_")
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlushedEvent) MarshalJSON() ([]byte, error) {
+	type embed FlushedEvent
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*f),
+		Type:  "flushed",
+	}
+	return json.Marshal(marshaler)
+}
+
+func (f *FlushedEvent) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 type ErrorEvent struct {
 	ErrorCode    int    `json:"errorCode" url:"errorCode"`
 	ErrorMessage string `json:"errorMessage" url:"errorMessage"`

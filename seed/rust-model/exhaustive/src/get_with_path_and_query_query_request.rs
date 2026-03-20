@@ -1,9 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getWithPathAndQuery
-///
-/// Request type for the GetWithPathAndQueryQueryRequest operation.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct GetWithPathAndQueryQueryRequest {
     #[serde(default)]
     pub query: String,
