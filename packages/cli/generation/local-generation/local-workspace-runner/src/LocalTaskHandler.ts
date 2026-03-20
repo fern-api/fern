@@ -229,14 +229,8 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
-            if (cleanedDiff.trim().length === 0) {
-                this.context.logger.info(
-                    "No actual changes detected after filtering version-only changes. Cancelling generation."
-                );
-                return null;
-            }
-
-            // Read spec repo commit message for AI context
+            // Read spec repo commit message for AI context (must happen before empty-diff check
+            // so that version-bump override directives are respected even when the cleaned diff is empty)
             const specCommitMessage = await this.readSpecCommitMessage();
             if (specCommitMessage) {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
@@ -246,6 +240,37 @@ export class LocalTaskHandler {
             const bumpOverride = this.parseVersionBumpOverride(specCommitMessage);
             if (bumpOverride != null) {
                 this.context.logger.info(`Version bump override detected in spec commit message: ${bumpOverride}`);
+            }
+
+            if (cleanedDiff.trim().length === 0) {
+                if (bumpOverride != null) {
+                    this.context.logger.info(
+                        `No actual changes after filtering but applying version bump override: ${bumpOverride}`
+                    );
+                    const newVersion = this.incrementVersion(previousVersion, bumpOverride);
+                    const overrideMessage = this.isWhitelabel
+                        ? "SDK regeneration"
+                        : `SDK regeneration (version bump override: ${bumpOverride})\n\n🌿 Generated with Fern`;
+                    await this.writeAutoVersioningArtifacts({
+                        rawDiff: diffContent,
+                        cleanedDiff: cleanedDiff,
+                        previousVersion: previousVersion ?? "unknown",
+                        versionBump: bumpOverride,
+                        newVersion,
+                        commitMessage: overrideMessage,
+                        changelogEntry: undefined,
+                        versionBumpReason: `No actual changes but version bump overridden to ${bumpOverride}`,
+                        bumpOverride
+                    });
+                    return {
+                        version: newVersion,
+                        commitMessage: overrideMessage
+                    };
+                }
+                this.context.logger.info(
+                    "No actual changes detected after filtering version-only changes. Cancelling generation."
+                );
+                return null;
             }
 
             // Reject absurdly large diffs before chunking to prevent excessive resource usage

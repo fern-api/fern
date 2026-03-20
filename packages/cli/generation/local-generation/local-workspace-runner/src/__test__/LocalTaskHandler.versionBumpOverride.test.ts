@@ -106,6 +106,12 @@ describe("version bump override source integration", () => {
         expect(localTaskHandlerSource).toContain("AI analysis failed but applying version bump override");
     });
 
+    it("respects bumpOverride in the empty-cleaned-diff path", () => {
+        expect(localTaskHandlerSource).toContain(
+            "No actual changes after filtering but applying version bump override"
+        );
+    });
+
     it("respects bumpOverride in the NO_CHANGE path", () => {
         expect(localTaskHandlerSource).toContain("AI detected no semantic changes but applying version bump override");
     });
@@ -117,8 +123,8 @@ describe("version bump override source integration", () => {
     it("writes observability artifacts in all fallback paths", () => {
         // Count occurrences of writeAutoVersioningArtifacts calls
         const matches = localTaskHandlerSource.match(/writeAutoVersioningArtifacts\(/g);
-        // Should be called in: large-diff fallback, AI-failure fallback, NO_CHANGE+override, and success path
+        // Should be called in: empty-diff+override, large-diff fallback, AI-failure fallback, NO_CHANGE+override, and success path
         expect(matches).not.toBeNull();
-        expect(matches?.length).toBeGreaterThanOrEqual(4);
+        expect(matches?.length).toBeGreaterThanOrEqual(5);
     });
 });
