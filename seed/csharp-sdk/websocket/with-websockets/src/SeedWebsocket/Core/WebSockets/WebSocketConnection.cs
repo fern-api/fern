@@ -196,6 +196,7 @@ internal partial class WebSocketConnection
     /// Set to null to disable. Default: 5 seconds.
     /// </summary>
     public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Optional per-message deflate compression options (RFC 7692).
