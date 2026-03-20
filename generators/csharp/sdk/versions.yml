@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.45.1
+  changelogEntry:
+    - summary: |
+        Fix sticky compression on reconnect. `DeflateOptions` is now explicitly reset to
+        `null` when `EnableCompression` is `false`, preventing a previous non-null value
+        from persisting across connection cycles.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.45.0
   changelogEntry:
     - summary: |
