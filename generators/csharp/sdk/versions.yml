@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.45.0
+  changelogEntry:
+    - summary: |
+        Add `InjectTestMessage` internal method to generated WebSocket client classes.
+        This allows unit tests to simulate incoming WebSocket messages by injecting raw
+        JSON strings through the normal `OnTextMessage` pipeline without requiring a real
+        WebSocket connection. The method is marked `internal` so it is only accessible
+        via `[InternalsVisibleTo]` in test projects, keeping the public API surface clean.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.44.0
   changelogEntry:
     - summary: |
@@ -12,7 +24,6 @@
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 2.43.0
   changelogEntry:
     - summary: |
@@ -27,7 +38,6 @@
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 2.42.0
   changelogEntry:
     - summary: |
@@ -40,7 +50,6 @@
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 2.41.0
   changelogEntry:
     - summary: |
@@ -51,7 +60,6 @@
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 2.40.0
   changelogEntry:
     - summary: |
@@ -74,7 +82,6 @@
       type: feat
   createdAt: "2026-03-19"
   irVersion: 65
-
 - version: 2.38.2
   changelogEntry:
     - summary: |

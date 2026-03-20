@@ -211,6 +211,15 @@ public partial class RealtimeApi
     }
 
     /// <summary>
+    /// Injects a fake text message for testing. Dispatches through the normal message handling pipeline.
+    /// </summary>
+    internal async Task InjectTestMessage(string rawJson)
+    {
+        using var stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(rawJson));
+        await OnTextMessage(stream).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
     public async Task ConnectAsync(CancellationToken cancellationToken = default)

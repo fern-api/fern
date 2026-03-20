@@ -1399,6 +1399,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         this.createOnTextMessageMethod(cls);
 
         this.createSendMessageMethods(cls);
+        this.createInjectTestMessageMethod(cls);
         this.createEventFields(cls);
         const environmentsClass = this.createEnvironmentsClass();
         if (environmentsClass != null) {
@@ -1429,6 +1430,40 @@ export class WebSocketClientGenerator extends WithGeneration {
             primitive: () => false,
             unknown: () => false,
             _other: () => false
+        });
+    }
+
+    /**
+     * Creates an internal method for injecting fake text messages during unit testing.
+     *
+     * The method converts a raw JSON string into a MemoryStream and dispatches it
+     * through the normal OnTextMessage handler, allowing tests to simulate incoming
+     * WebSocket messages without a real connection.
+     *
+     * Marked as `internal` so it is only accessible via [InternalsVisibleTo] in test projects.
+     *
+     * @param cls - The class to add the method to
+     */
+    private createInjectTestMessageMethod(cls: ast.Class): void {
+        cls.addMethod({
+            access: ast.Access.Internal,
+            isAsync: true,
+            name: "InjectTestMessage",
+            doc: this.csharp.xmlDocBlockOf({
+                summary:
+                    "Injects a fake text message for testing. Dispatches through the normal message handling pipeline."
+            }),
+            parameters: [
+                this.csharp.parameter({
+                    name: "rawJson",
+                    type: this.Primitive.string
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(`using var stream = new System.IO.MemoryStream(`);
+                writer.writeLine(`    System.Text.Encoding.UTF8.GetBytes(rawJson));`);
+                writer.writeTextStatement(`await OnTextMessage(stream).ConfigureAwait(false)`);
+            })
         });
     }
 
