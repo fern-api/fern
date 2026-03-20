@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listWithCursorPagination
-///
-/// Request type for the UsersListWithCursorPaginationQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UsersListWithCursorPaginationQueryRequest {
     /// Defaults to first page

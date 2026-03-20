@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listUsernames
-///
-/// Request type for the InlineUsersInlineUsersListUsernamesQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListUsernamesQueryRequest {
     /// The cursor used for pagination in order to fetch

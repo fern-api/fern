@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for getUsers
-///
-/// Request type for the GetUsersQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct GetUsersQueryRequest {
     #[serde(default)]
