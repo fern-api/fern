@@ -50,6 +50,20 @@ describe("no-component-schema-collisions", () => {
         expect(violations).toEqual([]);
     }, 10_000);
 
+    it("should not report violations when all specs have unique namespaces", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoComponentSchemaCollisionsRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("multi-spec-collision-namespaced")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
     it("should not report violations for a single spec", async () => {
         const violations = await getViolationsForRule({
             rule: NoComponentSchemaCollisionsRule,

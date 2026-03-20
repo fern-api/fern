@@ -28,6 +28,15 @@ export const NoComponentSchemaCollisionsRule: Rule = {
             return violations;
         }
 
+        // Check if all specs have unique namespaces configured (namespace-based separation)
+        const allHaveNamespaces = openapiSpecs.every((spec) => spec.namespace != null);
+        if (allHaveNamespaces) {
+            const namespaces = new Set(openapiSpecs.map((spec) => spec.namespace));
+            if (namespaces.size === openapiSpecs.length) {
+                return violations;
+            }
+        }
+
         // Global schema ID registry across all specs
         const schemaIdRegistry = new Map<string, SchemaEntry>();
 
