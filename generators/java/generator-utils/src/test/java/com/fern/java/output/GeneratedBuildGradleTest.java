@@ -62,9 +62,8 @@ public class GeneratedBuildGradleTest {
     Path tempDir;
 
     private String invokeExtractLicenseFromFile(String filename) throws Exception {
-        GeneratedBuildGradle instance = GeneratedBuildGradle.builder()
-                .shouldSignPackage(false)
-                .build();
+        GeneratedBuildGradle instance =
+                GeneratedBuildGradle.builder().shouldSignPackage(false).build();
         Method method = GeneratedBuildGradle.class.getDeclaredMethod("extractLicenseFromFile", String.class);
         method.setAccessible(true);
         return (String) method.invoke(instance, filename);
@@ -80,8 +79,7 @@ public class GeneratedBuildGradleTest {
     @Test
     public void test_extractLicense_apacheLicense() throws Exception {
         Path licenseFile = tempDir.resolve("LICENSE");
-        Files.writeString(
-                licenseFile, "Apache License\nVersion 2.0, January 2004\nhttp://www.apache.org/licenses/\n");
+        Files.writeString(licenseFile, "Apache License\nVersion 2.0, January 2004\nhttp://www.apache.org/licenses/\n");
         assertThat(invokeExtractLicenseFromFile(licenseFile.toString())).isEqualTo("Apache-2.0");
     }
 
@@ -108,8 +106,7 @@ public class GeneratedBuildGradleTest {
 
     @Test
     public void test_extractLicense_fileNotFound() throws Exception {
-        assertThat(invokeExtractLicenseFromFile("/nonexistent/path/LICENSE"))
-                .isEqualTo("Custom License (LICENSE)");
+        assertThat(invokeExtractLicenseFromFile("/nonexistent/path/LICENSE")).isEqualTo("Custom License (LICENSE)");
     }
 
     @Test
