@@ -91,12 +91,18 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                const shouldSubstituteAsEmpty = absolutePathToPreview != null || !(requireEnvVars ?? true);
+                const isPreview = absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
                     replaceEnvVariables(
                         stringOrObject,
-                        { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-                        { substituteAsEmpty: shouldSubstituteAsEmpty }
+                        {
+                            onError: (e) => {
+                                if (!isPreview && (requireEnvVars ?? true)) {
+                                    interactiveTaskContext.failAndThrow(e);
+                                }
+                            }
+                        },
+                        { substituteAsEmpty: isPreview }
                     );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);

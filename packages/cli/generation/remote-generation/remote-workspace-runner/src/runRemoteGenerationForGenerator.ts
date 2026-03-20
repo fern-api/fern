@@ -70,13 +70,18 @@ export async function runRemoteGenerationForGenerator({
 
     /** Sugar to substitute templated env vars in a standard way */
     const isPreview = absolutePathToPreview != null;
-    const shouldSubstituteAsEmpty = isPreview || !requireEnvVars;
 
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-            { substituteAsEmpty: shouldSubstituteAsEmpty }
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
+            { substituteAsEmpty: isPreview }
         );
 
     const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);

@@ -3,13 +3,13 @@
 - version: 4.39.0
   changelogEntry:
     - summary: |
-        Add `--require-env-vars` flag to `fern generate`. When set to `false`,
-        undefined environment variables referenced in `generators.yml` are
-        substituted with empty strings instead of causing an error. This is
-        useful for local development when registry credentials are not needed.
+        Add `--require-env-vars` flag to `fern generate`. Use `--no-require-env-vars`
+        to substitute empty strings for undefined environment variables instead of
+        causing an error. Defined environment variables are still resolved normally.
+        This is useful for local development when registry credentials are not needed.
 
         ```bash
-        fern generate --group csharp-sdk --require-env-vars false
+        fern generate --group csharp-sdk --no-require-env-vars
         ```
       type: feat
   createdAt: "2026-03-20"

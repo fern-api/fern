@@ -748,7 +748,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: true,
                     description:
-                        "Require all referenced environment variables to be defined. Use --require-env-vars false to substitute empty strings for missing variables."
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
