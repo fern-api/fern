@@ -1,5 +1,7 @@
 import datetime as dt
+import enum
 import inspect
+import sys
 import typing
 import uuid
 
@@ -29,6 +31,28 @@ class UnionMetadata:
 
 
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
+
+
+def _maybe_resolve_forward_ref(
+    type_: typing.Any,
+    host: typing.Optional[typing.Type[typing.Any]],
+) -> typing.Any:
+    """Resolve a ForwardRef using the module where *host* is defined.
+
+    Pydantic v2 + ``from __future__ import annotations`` can leave field
+    annotations as ``list[ForwardRef('Block')]`` even after ``model_rebuild``.
+    Without resolution, ``construct_type`` sees a ForwardRef (not a class) and
+    skips recursive model construction, leaving nested data as raw dicts.
+    """
+    if host is None or not isinstance(type_, typing.ForwardRef):
+        return type_
+    mod = sys.modules.get(host.__module__)
+    if mod is None:
+        return type_
+    try:
+        return eval(type_.__forward_arg__, vars(mod))
+    except Exception:
+        return type_
 
 
 class UncheckedBaseModel(UniversalBaseModel):
@@ -84,7 +108,7 @@ class UncheckedBaseModel(UniversalBaseModel):
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
                 fields_values[name] = (
-                    construct_type(object_=values[key], type_=type_) if type_ is not None else values[key]
+                    construct_type(object_=values[key], type_=type_, host=cls) if type_ is not None else values[key]
                 )
                 _fields_set.add(name)
             else:
@@ -148,15 +172,70 @@ def _validate_collection_items_compatible(collection: typing.Any, target_type: t
     return True
 
 
-def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def _get_literal_field_value(
+    inner_type: typing.Type[typing.Any], field_name: str, field: typing.Any, object_: typing.Any
+) -> typing.Any:
+    """Get the value of a Literal field from *object_*, checking both alias and field name."""
+    name_or_alias = get_field_to_alias_mapping(inner_type).get(field_name, field_name)
+    if isinstance(object_, dict):
+        return object_.get(name_or_alias)
+    return getattr(object_, name_or_alias, None)
+
+
+def _literal_fields_match_strict(inner_type: typing.Type[typing.Any], object_: typing.Any) -> bool:
+    """Return True iff every Literal-typed field in *inner_type* is **present** in
+    *object_* and its value equals the field's declared default.
+
+    This prevents models whose fields are all optional (e.g. ``FigureDetails``)
+    from vacuously matching inputs that don't carry the discriminant key at all
+    (e.g. ``{}`` for text blocks).  For types with no Literal fields this
+    returns True unconditionally.
+    """
+    fields = _get_model_fields(inner_type)
+    for field_name, field in fields.items():
+        if IS_PYDANTIC_V2:
+            field_type = field.annotation  # type: ignore # Pydantic v2
+        else:
+            field_type = field.outer_type_  # type: ignore # Pydantic v1
+
+        if is_literal_type(field_type):  # type: ignore[arg-type]
+            field_default = _get_field_default(field)
+            object_value = _get_literal_field_value(inner_type, field_name, field, object_)
+            if field_default != object_value:
+                return False
+    return True
+
+
+def _convert_undiscriminated_union_type(
+    union_type: typing.Type[typing.Any],
+    object_: typing.Any,
+    host: typing.Optional[typing.Type[typing.Any]] = None,
+) -> typing.Any:
     inner_types = get_args(union_type)
     if typing.Any in inner_types:
         return object_
 
+    # When any union member carries a Literal discriminant field, require the
+    # discriminant key to be present AND matching before accepting a candidate.
+    # This prevents models with all-optional fields (e.g. FigureDetails) from
+    # greedily matching inputs that belong to a different variant or to a
+    # plain-dict fallback (e.g. EmptyBlockDetails = Dict[str, Any]).
+    has_literal_discriminant = any(
+        inspect.isclass(t)
+        and issubclass(t, pydantic.BaseModel)
+        and any(
+            is_literal_type(
+                f.annotation if IS_PYDANTIC_V2 else f.outer_type_  # type: ignore
+            )
+            for f in _get_model_fields(t).values()
+        )
+        for t in inner_types
+    )
+
     for inner_type in inner_types:
         # Handle lists of objects that need parsing
         if get_origin(inner_type) is list and isinstance(object_, list):
-            list_inner_type = get_args(inner_type)[0]
+            list_inner_type = _maybe_resolve_forward_ref(get_args(inner_type)[0], host)
             try:
                 if inspect.isclass(list_inner_type) and issubclass(list_inner_type, pydantic.BaseModel):
                     # Validate that all items in the list are compatible with the target type
@@ -168,20 +247,63 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
 
         try:
             if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
+                if has_literal_discriminant and not _literal_fields_match_strict(inner_type, object_):
+                    continue
                 # Attempt a validated parse until one works
                 return parse_obj_as(inner_type, object_)
         except Exception:
             continue
 
-    # If none of the types work, just return the first successful cast
+    # First pass: try types where all literal fields match the object's values.
+    for inner_type in inner_types:
+        if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
+            if has_literal_discriminant:
+                if not _literal_fields_match_strict(inner_type, object_):
+                    continue
+            else:
+                # Legacy lenient check: skip only when a Literal value is
+                # present but doesn't match (allows absent-discriminant inputs).
+                fields = _get_model_fields(inner_type)
+                literal_fields_match = True
+                for field_name, field in fields.items():
+                    if IS_PYDANTIC_V2:
+                        field_type = field.annotation  # type: ignore # Pydantic v2
+                    else:
+                        field_type = field.outer_type_  # type: ignore # Pydantic v1
+
+                    if is_literal_type(field_type):  # type: ignore[arg-type]
+                        field_default = _get_field_default(field)
+                        object_value = _get_literal_field_value(inner_type, field_name, field, object_)
+                        if object_value is not None and field_default != object_value:
+                            literal_fields_match = False
+                            break
+
+                if not literal_fields_match:
+                    continue
+
+            try:
+                return construct_type(object_=object_, type_=inner_type, host=host)
+            except Exception:
+                continue
+
+    # Second pass: if no literal matches, return the first successful cast.
+    # When a Literal discriminant is present, skip Pydantic models whose
+    # discriminant doesn't match so that plain-dict fallback types are reached.
     for inner_type in inner_types:
         try:
-            return construct_type(object_=object_, type_=inner_type)
+            if has_literal_discriminant and inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
+                if not _literal_fields_match_strict(inner_type, object_):
+                    continue
+            return construct_type(object_=object_, type_=inner_type, host=host)
         except Exception:
             continue
 
 
-def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def _convert_union_type(
+    type_: typing.Type[typing.Any],
+    object_: typing.Any,
+    host: typing.Optional[typing.Type[typing.Any]] = None,
+) -> typing.Any:
     base_type = get_origin(type_) or type_
     union_type = type_
     if base_type == typing_extensions.Annotated:  # type: ignore[comparison-overlap]
@@ -197,14 +319,19 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                         except:
                             objects_discriminant = object_[metadata.discriminant]
                         if inner_type.__fields__[metadata.discriminant].default == objects_discriminant:
-                            return construct_type(object_=object_, type_=inner_type)
+                            return construct_type(object_=object_, type_=inner_type, host=host)
                 except Exception:
                     # Allow to fall through to our regular union handling
                     pass
-    return _convert_undiscriminated_union_type(union_type, object_)
+    return _convert_undiscriminated_union_type(union_type, object_, host)
 
 
-def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
+def construct_type(
+    *,
+    type_: typing.Type[typing.Any],
+    object_: typing.Any,
+    host: typing.Optional[typing.Type[typing.Any]] = None,
+) -> typing.Any:
     """
     Here we are essentially creating the same `construct` method in spirit as the above, but for all types, not just
     Pydantic models.
@@ -227,8 +354,12 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
             return object_
 
         key_type, items_type = get_args(type_)
+        key_type = _maybe_resolve_forward_ref(key_type, host)
+        items_type = _maybe_resolve_forward_ref(items_type, host)
         d = {
-            construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
+            construct_type(object_=key, type_=key_type, host=host): construct_type(
+                object_=item, type_=items_type, host=host
+            )
             for key, item in object_.items()
         }
         return d
@@ -237,18 +368,18 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         if not isinstance(object_, list):
             return object_
 
-        inner_type = get_args(type_)[0]
-        return [construct_type(object_=entry, type_=inner_type) for entry in object_]
+        inner_type = _maybe_resolve_forward_ref(get_args(type_)[0], host)
+        return [construct_type(object_=entry, type_=inner_type, host=host) for entry in object_]
 
     if base_type == set:
         if not isinstance(object_, set) and not isinstance(object_, list):
             return object_
 
-        inner_type = get_args(type_)[0]
-        return {construct_type(object_=entry, type_=inner_type) for entry in object_}
+        inner_type = _maybe_resolve_forward_ref(get_args(type_)[0], host)
+        return {construct_type(object_=entry, type_=inner_type, host=host) for entry in object_}
 
     if is_union(base_type) or is_annotated_union:
-        return _convert_union_type(type_, object_)
+        return _convert_union_type(type_, object_, host)
 
     # Cannot do an `issubclass` with a literal type, let's also just confirm we have a class before this call
     if (
@@ -300,6 +431,12 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
             return bool(object_)
         except Exception:
+            return object_
+
+    if inspect.isclass(base_type) and issubclass(base_type, enum.Enum):
+        try:
+            return base_type(object_)
+        except (ValueError, KeyError):
             return object_
 
     return object_
