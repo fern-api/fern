@@ -1016,7 +1016,7 @@ def test_forward_ref_list_field_resolved_in_construct() -> None:
         ],
     }
 
-    chunk = Chunk.construct(**raw)
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
 
     # blocks should be a list of Block model instances, not raw dicts
     assert chunk.blocks is not None
@@ -1044,7 +1044,7 @@ def test_literal_discriminant_strict_matching_figure_details() -> None:
         ],
     }
 
-    chunk = Chunk.construct(**raw)
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
     assert chunk.blocks is not None
 
     text_block = chunk.blocks[0]
@@ -1089,7 +1089,7 @@ def test_model_dump_by_alias_uses_camel_case_after_construct() -> None:
         ],
     }
 
-    chunk = Chunk.construct(**raw)
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
     assert chunk.blocks is not None
 
     figure_block = chunk.blocks[0]
@@ -1127,7 +1127,7 @@ def test_empty_details_does_not_greedily_match_figure() -> None:
         "details": {},
     }
 
-    block = Block.construct(**raw_block)
+    block = Block.construct(**raw_block)  # type: ignore[arg-type]
 
     # An empty dict should NOT become a FigureDetails (or TextDetails)
     # because the Literal 'type' field is absent
