@@ -22,7 +22,7 @@ impl UnionClient {
             .execute_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -47,7 +47,7 @@ impl UnionClient {
             .execute_request(
                 Method::PUT,
                 "/metadata",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -63,7 +63,7 @@ impl UnionClient {
             .execute_request(
                 Method::POST,
                 "/call",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -79,7 +79,7 @@ impl UnionClient {
             .execute_request(
                 Method::POST,
                 "/duplicate",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -95,7 +95,7 @@ impl UnionClient {
             .execute_request(
                 Method::POST,
                 "/nested",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -111,7 +111,7 @@ impl UnionClient {
             .execute_request(
                 Method::POST,
                 "/camel-case",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

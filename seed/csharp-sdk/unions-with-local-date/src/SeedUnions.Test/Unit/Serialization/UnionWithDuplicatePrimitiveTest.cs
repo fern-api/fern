@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
@@ -28,18 +28,13 @@ public class UnionWithDuplicatePrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "integer1",
               "value": 9
             }
             """;
-        var actualObj = new UnionWithDuplicatePrimitive(
-            new UnionWithDuplicatePrimitive.Integer1(9)
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -61,18 +56,13 @@ public class UnionWithDuplicatePrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "integer2",
               "value": 5
             }
             """;
-        var actualObj = new UnionWithDuplicatePrimitive(
-            new UnionWithDuplicatePrimitive.Integer2(5)
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -94,18 +84,13 @@ public class UnionWithDuplicatePrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "string1",
               "value": "bar1"
             }
             """;
-        var actualObj = new UnionWithDuplicatePrimitive(
-            new UnionWithDuplicatePrimitive.String1("bar1")
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -127,17 +112,12 @@ public class UnionWithDuplicatePrimitiveTest
     [NUnit.Framework.Test]
     public void TestSerialization_4()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "string1",
               "value": "bar2"
             }
             """;
-        var actualObj = new UnionWithDuplicatePrimitive(
-            new UnionWithDuplicatePrimitive.String1("bar2")
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
     }
 }

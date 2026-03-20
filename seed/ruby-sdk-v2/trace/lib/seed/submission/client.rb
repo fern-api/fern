@@ -27,7 +27,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/sessions/create-session/#{params[:language]}",
+          path: "/sessions/create-session/#{URI.encode_uri_component(params[:language].to_s)}",
           request_options: request_options
         )
         begin
@@ -61,7 +61,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/sessions/#{params[:session_id]}",
+          path: "/sessions/#{URI.encode_uri_component(params[:session_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -93,7 +93,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/sessions/stop/#{params[:session_id]}",
+          path: "/sessions/stop/#{URI.encode_uri_component(params[:session_id].to_s)}",
           request_options: request_options
         )
         begin

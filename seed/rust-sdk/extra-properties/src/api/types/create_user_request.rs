@@ -7,5 +7,6 @@ pub struct CreateUserRequest {
     pub r#type: String,
     #[serde(rename = "_version")]
     pub version: String,
+    #[serde(default)]
     pub name: String,
 }

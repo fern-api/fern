@@ -1,6 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedAlias.Core;
+using SeedAlias.Test.Utils;
 
 namespace SeedAlias.Test;
 
@@ -25,15 +25,12 @@ public class TypeTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "id": "type-df89sdg1",
               "name": "foo"
             }
             """;
-        var actualObj = new SeedAlias.Type { Id = "type-df89sdg1", Name = "foo" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedAlias.Type>(inputJson);
     }
 }

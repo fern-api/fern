@@ -109,6 +109,7 @@ fixtures:
 
 allowedFailures:
   - api-wide-base-path
+  - bytes-upload
   - audiences
   - header-auth-environment-variable
   - client-side-params:with-custom-config

@@ -9,6 +9,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Service\Requests\UploadWithQueryParamsRequest;
 
 class ServiceClient
 {
@@ -67,6 +68,51 @@ class ServiceClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "upload-content",
                     method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param UploadWithQueryParamsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function uploadWithQueryParams(UploadWithQueryParamsRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        $query['model'] = $request->model;
+        if ($request->language != null) {
+            $query['language'] = $request->language;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "upload-content-with-query-params",
+                    method: HttpMethod::POST,
+                    query: $query,
                 ),
                 $options,
             );

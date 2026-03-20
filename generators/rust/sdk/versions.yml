@@ -1,5 +1,56 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.10
+  changelogEntry:
+    - summary: |
+        Replace `unwrap_or_default()` with proper error propagation via `map_err(ApiError::Serialization)?`
+        when serializing request bodies with `serde_json::to_value`. Previously, serialization failures
+        were silently swallowed and replaced with a default JSON null value. Now they correctly return
+        an `ApiError::Serialization` error to the caller.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.19.9
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant naming for container types with primitive inner types.
+        Previously, variants like `Vec<f64>` produced index-based names (e.g. `List1`). Now they
+        derive meaningful names from the inner type (e.g. `DoubleList`). Also applies to set, map,
+        optional, and nullable containers.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.8
+  changelogEntry:
+    - summary: |
+        Fixes an issue where redundant, duplicative `Option<T>` type references were generated.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.7
+  changelogEntry:
+    - summary: |
+        Add root-level service endpoint support on the main client struct. WebSocket
+        connectors now support implicit Bearer auth, auto-injecting the token from
+        ClientConfig when no explicit Authorization header is defined.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.6
+  changelogEntry:
+    - summary: |
+        Handle empty HTTP response bodies by returning an ApiError::Http instead of
+        attempting JSON deserialization. Normalize HTTP(S) URLs to WS(S) schemes for
+        WebSocket connections. Switch WebSocket server message enums to untagged serde
+        representation.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
 - version: 0.19.5
   changelogEntry:
     - summary: |

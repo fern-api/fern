@@ -808,30 +808,85 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getUndiscriminatedUnionVariantName(typeReference: FernIr.dynamic.TypeReference): string {
+        const name = this.getInnerTypeVariantName(typeReference);
+        if (name) {
+            return name;
+        }
+
+        // Handle container types with inner type information
+        switch (typeReference.type) {
+            case "list": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `${innerName}List` : "List";
+            }
+            case "set": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `${innerName}Set` : "Set";
+            }
+            case "map": {
+                const keyName = this.getInnerTypeVariantName(typeReference.key);
+                const valueName = this.getInnerTypeVariantName(typeReference.value);
+                if (keyName && valueName) {
+                    return `${keyName}To${valueName}Map`;
+                }
+                return "Map";
+            }
+            case "optional": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `Optional${innerName}` : "Optional";
+            }
+            case "nullable": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `Nullable${innerName}` : "Nullable";
+            }
+            default:
+                return "Unknown";
+        }
+    }
+
+    /**
+     * Gets a meaningful variant name for a named or primitive type reference.
+     * Returns undefined for container or unknown types.
+     */
+    private getInnerTypeVariantName(typeReference: FernIr.dynamic.TypeReference): string | undefined {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
-                if (namedType) {
-                    return namedType.declaration.name.pascalCase.safeName;
-                }
-                return "Unknown";
+                return namedType?.declaration.name.pascalCase.safeName;
             }
             case "primitive":
-                // Map primitive types to Rust variant names
                 switch (typeReference.value) {
                     case "STRING":
                         return "String";
-                    case "INTEGER":
-                        return "Integer";
                     case "BOOLEAN":
                         return "Boolean";
+                    case "INTEGER":
+                        return "Integer";
+                    case "LONG":
+                        return "Long";
                     case "DOUBLE":
                         return "Double";
+                    case "FLOAT":
+                        return "Float";
+                    case "DATE_TIME":
+                        return "DateTime";
+                    case "DATE":
+                        return "Date";
+                    case "UUID":
+                        return "Uuid";
+                    case "BASE_64":
+                        return "Base64";
+                    case "BIG_INTEGER":
+                        return "BigInteger";
+                    case "UINT":
+                        return "Uint";
+                    case "UINT_64":
+                        return "Uint64";
                     default:
-                        return "Unknown";
+                        return undefined;
                 }
             default:
-                return "Unknown";
+                return undefined;
         }
     }
 

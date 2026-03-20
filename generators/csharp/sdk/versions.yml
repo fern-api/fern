@@ -1,4 +1,361 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.50.0
+  changelogEntry:
+    - summary: |
+        Add exponential backoff reconnection strategy for WebSocket connections.
+        A new `ReconnectStrategy` class provides configurable exponential backoff
+        (doubling intervals from 1s to 60s), optional random jitter (0-25%) to
+        prevent thundering herd, and configurable max attempts. The strategy is
+        exposed as a `ReconnectBackoff` property on the generated Options class
+        and wired through `WebSocketClient` to `WebSocketConnection.Reconnect()`.
+        When max attempts are exhausted, reconnection stops and a disconnection
+        event is raised. The backoff resets on successful reconnection.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.49.0
+  changelogEntry:
+    - summary: |
+        Add per-send timeout to prevent `SendAsync` hangs. A new `SendTimeout` property
+        (default: 30 seconds) on `WebSocketConnection` wraps every `SendAsync` call with a
+        linked `CancellationTokenSource` that fires `CancelAfter(SendTimeout)`. When the
+        timeout elapses the connection is aborted and a `WebsocketException` is thrown,
+        preventing a single dead connection from blocking the send lock for up to 30 minutes.
+        See: https://github.com/dotnet/runtime/issues/125257
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.48.0
+  changelogEntry:
+    - summary: |
+        Add bounded send queue with message expiration to `WebSocketConnection`. The
+        unbounded `Channel<T>` queues are replaced with configurable bounded channels
+        (`SendQueueLimit`, default: 10,000) that use `BoundedChannelFullMode.DropWrite`
+        to reject new messages when the queue is full. A `SendCacheItemTimeout` property
+        (default: 30 minutes) causes stale messages to be silently dropped during drain,
+        preventing memory growth during network outages and avoiding sending outdated
+        messages after reconnection. Set `SendQueueLimit` to 0 for unbounded or
+        `SendCacheItemTimeout` to null to disable expiration.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.47.0
+  changelogEntry:
+    - summary: |
+        Add receive hang detection via a background state monitor task. A new
+        `StateCheckInterval` property (default: 5 seconds) controls how often the
+        monitor polls `WebSocket.State`. When the state transitions to `Closed`,
+        `Aborted`, or `CloseReceived` — indicating the TCP connection died without
+        notifying the receive loop — the monitor cancels the pending `ReceiveAsync`
+        via a linked `CancellationTokenSource`. This works around known .NET runtime
+        issues where `ReceiveAsync` hangs indefinitely on silent TCP disconnections
+        (dotnet/runtime#110496) and `Abort()` fails to cancel a pending receive
+        (dotnet/runtime#44272). Set `StateCheckInterval` to `null` to disable.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.46.0
+  changelogEntry:
+    - summary: |
+        Wire up WebSocket reconnection logic. The `WebSocketConnection` template now
+        contains a complete reconnection implementation ported from the Marfusios library:
+        heartbeat timer (`ReconnectTimeout`), error-retry timer (`ErrorReconnectTimeout`),
+        lost-connection delay (`LostReconnectTimeout`), and `Reconnect()`/`ReconnectOrFail()`
+        public methods. The generated WebSocket API classes expose a `Reconnecting` event
+        and an `IsReconnectionEnabled` option (default: `false`) so callers can opt in to
+        automatic reconnection. All timeout properties are configurable with sensible defaults.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.45.1
+  changelogEntry:
+    - summary: |
+        Fix sticky compression on reconnect. `DeflateOptions` is now explicitly reset to
+        `null` when `EnableCompression` is `false`, preventing a previous non-null value
+        from persisting across connection cycles.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.45.0
+  changelogEntry:
+    - summary: |
+        Add `InjectTestMessage` internal method to generated WebSocket client classes.
+        This allows unit tests to simulate incoming WebSocket messages by injecting raw
+        JSON strings through the normal `OnTextMessage` pipeline without requiring a real
+        WebSocket connection. The method is marked `internal` so it is only accessible
+        via `[InternalsVisibleTo]` in test projects, keeping the public API surface clean.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.44.0
+  changelogEntry:
+    - summary: |
+        Add queued sending via `Channel<T>` to the WebSocket connection layer. Two
+        unbounded channels (text and binary) are drained by dedicated background tasks
+        started alongside the connection. The non-blocking `Send(string)` and `Send(byte[])`
+        methods return `bool` indicating whether the message was queued, while the existing
+        `SendInstant` async-per-send path remains unchanged. Queues are completed in `Dispose`
+        before cancellation tokens are signalled. Drain loop errors are surfaced through the
+        `ExceptionOccurred` event.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add per-message deflate compression support (RFC 7692) for WebSocket connections.
+        A new `EnableCompression` option on the generated WebSocket Options class enables
+        `WebSocketDeflateOptions` via `ClientWebSocketOptions.DangerousDeflateOptions`.
+        This can significantly reduce bandwidth for text-heavy (JSON) WebSocket APIs.
+        Warning: Do not use compression when sending data containing secrets
+        (CRIME/BREACH vulnerability).
+        See https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions
+        for details.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.42.0
+  changelogEntry:
+    - summary: |
+        Add support for HTTP/2 WebSockets via `SocketsHttpHandler`. A new `HttpInvoker`
+        property on the WebSocket Options class allows passing an `HttpMessageInvoker` to
+        enable multiplexing multiple WebSocket streams over a single TCP connection. When
+        set, the connection factory configures `HttpVersion.Version20` and uses the
+        `ConnectAsync(Uri, HttpMessageInvoker, CancellationToken)` overload on .NET 7+.
+        On older targets the invoker is ignored and the standard connect path is used.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.41.0
+  changelogEntry:
+    - summary: |
+        Add `ConnectTimeout` property to `WebSocketConnection` and `WebSocketClient` with a
+        default of 5 seconds. The connection factory call in `StartClient` now uses a linked
+        `CancellationTokenSource` with `CancelAfter(ConnectTimeout)`, preventing indefinite
+        hangs when the server is unresponsive.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.40.0
+  changelogEntry:
+    - summary: |
+        Configure PING/PONG keep-alive on `ClientWebSocket`. The default connection factory
+        now sets `KeepAliveInterval` (default: 30 s) and, on .NET 9+, `KeepAliveTimeout`
+        (default: 20 s) to enable the PING/PONG keep-alive strategy that detects unresponsive
+        servers at the transport level. Both values are exposed as public properties on
+        `WebSocketConnection` for caller customization.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.39.0
+  changelogEntry:
+    - summary: |
+        Generate interfaces for WebSocket API classes (e.g., `IStreamApi`, `ITranscribeApi`)
+        to improve testability. Each WebSocket client now implements a corresponding interface
+        that declares all public event properties, `Status`, `ConnectAsync`, `Send`, and
+        `CloseAsync`. The root client interface (`ICortiClient`) also includes factory method
+        signatures (`CreateStreamApi`, `CreateTranscribeApi`) when WebSockets are enabled.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 2.38.2
+  changelogEntry:
+    - summary: |
+        Add `using` declaration to `JsonDocument` in WebSocket `OnTextMessage` handler.
+        `JsonDocument` implements `IDisposable` and holds pooled memory buffers; without
+        disposal, high message throughput causes memory pressure. The generated code now
+        emits `using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);`
+        so the document is disposed when the method returns.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.38.1
+  changelogEntry:
+    - summary: |
+        Fix `Event<T>` thread-safety issue. `RaiseEvent` now snapshots the subscriber
+        collections under a lock before iterating, and `Subscribe`, `Unsubscribe`, and
+        `UnsubscribeAll` are synchronized to prevent `InvalidOperationException` when
+        handlers are added or removed concurrently from different threads.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 2.38.0
+  changelogEntry:
+    - summary: |
+        Add optional `CancellationToken` parameter to all public async WebSocket methods
+        (`ConnectAsync`, `CloseAsync`, and `Send` overloads). The token is threaded through
+        the internal `WebSocketClient`, `WebSocketConnection`, and down to the underlying
+        `ClientWebSocket.SendAsync`/`ConnectAsync`/`CloseAsync` calls, enabling callers to
+        cancel long-running WebSocket operations.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 2.37.2
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary messages being sent with `WebSocketMessageType.Text` instead of
+        `WebSocketMessageType.Binary`. `RequestBinaryMessage` and `RequestBinarySegmentMessage`
+        now correctly use `WebSocketMessageType.Binary` when calling `SendAsync`, ensuring
+        audio data (e.g. webm/opus chunks) is sent as binary frames.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 2.37.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to all remaining
+        custom `JsonConverter` types: `EnumSerializer<TEnum>` (native C# enums),
+        `DateTimeSerializer`, `DateAsDateTimeConverter`, discriminated union converters,
+        and literal type converters. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` when any of these types is used as a `Dictionary<TKey, TValue>`
+        key. This complements the `IStringEnum` fix in 2.35.1.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 2.37.0
+  changelogEntry:
+    - summary: |
+        Replace separate deserialization and serialization tests with a single round-trip
+        serialization test using `JsonAssert.Roundtrips<T>(inputJson)`. The helper deserializes
+        JSON to `T`, re-serializes, and compares to the original JSON via `JsonElement` deep
+        equality, producing diff-reportable failures.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 2.36.0
+  changelogEntry:
+    - summary: |
+        Add `UsingObjectDictionaryComparer` to test comparers for handling
+        `Dictionary<string, object?>` fields. System.Text.Json deserializes
+        `object?` values as `JsonElement`, so structural equality comparisons
+        need to serialize both sides before comparing. The `UsingDefaults()`
+        chain now includes this comparer automatically.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 2.35.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to the generated
+        `IStringEnum` JsonConverter. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` at runtime when serializing or deserializing a
+        `Dictionary<TStringEnum, TValue>`. This is applied to all generated `IStringEnum`
+        types so dictionary-key usage works without requiring regeneration.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 2.35.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary message sending. Binary messages (e.g. audio bytes) are now
+        sent as raw bytes instead of being JSON-serialized, which caused servers to reject
+        them with CONFIG_DENIED.
+      type: fix
+    - summary: |
+        Fix WebSocket incoming message deserialization. `TryDeserialize` now passes
+        `JsonSerializerOptions` so the generated literal property setters correctly
+        validate const discriminator fields (e.g. `type: "transcript"` vs `type: "flushed"`)
+        during deserialization.
+      type: fix
+    - summary: |
+        Add forward-compatible `UnknownMessage` event to WebSocket clients. When the server
+        sends an event type not recognized by the SDK, it is now dispatched to the
+        `UnknownMessage` event handler (as a `JsonElement`) instead of raising an exception.
+        This allows SDKs to gracefully handle new server event types without requiring
+        regeneration.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 2.34.0
+  changelogEntry:
+    - summary: |
+        Add `unified-client-options` configuration flag. When enabled, all auth parameters,
+        global headers, and `BaseUrl` are consolidated into `ClientOptions` so the client
+        constructor takes a single argument with no positional parameters:
+
+        ```yaml
+        # generators.yml
+        groups:
+          dotnet-sdk:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                config:
+                  unified-client-options: true
+        ```
+
+        **Before** (default):
+        ```csharp
+        var client = new MyClient(
+            "my-api-key",
+            clientOptions: new ClientOptions { BaseUrl = "..." }
+        );
+        ```
+
+        **After** (with `unified-client-options: true`):
+        ```csharp
+        var client = new MyClient(
+            new ClientOptions
+            {
+                ApiKey = "my-api-key",
+                BaseUrl = "https://api.example.com",
+            }
+        );
+        ```
+
+        Supported auth schemes: bearer token, basic auth (username/password), header auth,
+        OAuth client credentials (clientId/clientSecret + custom params), and inferred auth.
+        Global headers (non-literal) are also included.
+
+        Properties on `ClientOptions` use the appropriate C# semantics based on the
+        parameter's characteristics:
+
+        - **Has environment variable fallback** — `public string? ApiKey { get; set; }`.
+          Nullable and mutable so the constructor can apply the fallback via
+          `clientOptions.ApiKey ??= GetFromEnvironmentOrThrow(...)`.
+        - **Optional (no environment variable)** — `public string? ApiKey { get; init; }`.
+          Nullable, immutable after construction.
+        - **Required (no environment variable, not optional)** — `public required string ApiKey { get; init; }`.
+          Non-nullable, enforced at the call site by the compiler. `BaseUrl` is also
+          `required` when no default environment is configured, replacing the previous
+          behavior of silently defaulting to `""`.
+
+        When any `ClientOptions` field is `required`, the constructor parameter becomes
+        non-nullable (`ClientOptions clientOptions` instead of `ClientOptions? clientOptions = null`),
+        and `Clone()` uses an internal copy constructor annotated with `[SetsRequiredMembers]`.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.33.1
+  changelogEntry:
+    - summary: |
+        Fix README generation to use the `package-name` field from `generator.yml` for the
+        NuGet package name in installation instructions and shields. Previously, the README
+        always used the namespace (or `package-id` custom config) instead of the configured
+        `package-name`, which is the actual NuGet package identifier.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 2.33.0
+  changelogEntry:
+    - summary: |
+        WebSocket factory methods now resolve the base URL from the main client's
+        multi-URL environment when the channel specifies a `baseUrl`. This allows
+        WebSocket clients to use environments defined on the root client (e.g.,
+        `Environment.Wss`) instead of requiring separate per-WebSocket environment
+        classes.
+      type: feat
+  createdAt: "2026-03-18"
+  irVersion: 65
 - version: 2.32.2
   changelogEntry:
     - summary: |
@@ -31,7 +388,6 @@
       type: fix
   createdAt: "2026-03-17"
   irVersion: 65
-
 - version: 2.31.1
   changelogEntry:
     - summary: |

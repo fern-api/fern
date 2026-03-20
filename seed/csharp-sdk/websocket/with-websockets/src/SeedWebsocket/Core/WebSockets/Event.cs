@@ -8,6 +8,7 @@ namespace SeedWebsocket.Core.WebSockets;
 /// <typeparam name="T">The type of event data passed to event handlers.</typeparam>
 public class Event<T> : IDisposable
 {
+    private readonly object _lock = new();
     private readonly HashSet<Action<T>> _subscribers = [];
     private readonly HashSet<Func<T, global::System.Threading.Tasks.Task>> _subscribersAsync = [];
 
@@ -23,12 +24,20 @@ public class Event<T> : IDisposable
     /// <returns>A task representing the asynchronous operation.</returns>
     internal async global::System.Threading.Tasks.Task RaiseEvent(T eventObject)
     {
-        foreach (var subscriber in _subscribers)
+        Action<T>[] syncSnapshot;
+        Func<T, global::System.Threading.Tasks.Task>[] asyncSnapshot;
+        lock (_lock)
+        {
+            syncSnapshot = [.. _subscribers];
+            asyncSnapshot = [.. _subscribersAsync];
+        }
+
+        foreach (var subscriber in syncSnapshot)
         {
             subscriber.Invoke(eventObject);
         }
 
-        foreach (var subscriber in _subscribersAsync)
+        foreach (var subscriber in asyncSnapshot)
         {
             await subscriber.Invoke(eventObject).ConfigureAwait(false);
         }
@@ -40,7 +49,10 @@ public class Event<T> : IDisposable
     /// <param name="eventHandler">The synchronous event handler to subscribe.</param>
     public void Subscribe(Action<T> eventHandler)
     {
-        _subscribers.Add(eventHandler);
+        lock (_lock)
+        {
+            _subscribers.Add(eventHandler);
+        }
     }
 
     /// <summary>
@@ -49,7 +61,10 @@ public class Event<T> : IDisposable
     /// <param name="eventHandler">The asynchronous event handler to subscribe.</param>
     public void Subscribe(Func<T, global::System.Threading.Tasks.Task> eventHandler)
     {
-        _subscribersAsync.Add(eventHandler);
+        lock (_lock)
+        {
+            _subscribersAsync.Add(eventHandler);
+        }
     }
 
     /// <summary>
@@ -58,7 +73,7 @@ public class Event<T> : IDisposable
     /// <param name="eventHandler">The synchronous event handler to unsubscribe.</param>
     public void Unsubscribe(Action<T> eventHandler)
     {
-        if (_subscribers.Contains(eventHandler))
+        lock (_lock)
         {
             _subscribers.Remove(eventHandler);
         }
@@ -70,7 +85,7 @@ public class Event<T> : IDisposable
     /// <param name="eventHandler">The asynchronous event handler to unsubscribe.</param>
     public void Unsubscribe(Func<T, global::System.Threading.Tasks.Task> eventHandler)
     {
-        if (_subscribersAsync.Contains(eventHandler))
+        lock (_lock)
         {
             _subscribersAsync.Remove(eventHandler);
         }
@@ -81,8 +96,11 @@ public class Event<T> : IDisposable
     /// </summary>
     public void UnsubscribeAll()
     {
-        _subscribers.Clear();
-        _subscribersAsync.Clear();
+        lock (_lock)
+        {
+            _subscribers.Clear();
+            _subscribersAsync.Clear();
+        }
     }
 
     /// <summary>
