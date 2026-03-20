@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for get
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct GetQueryRequest {
     #[serde(default)]
     pub decimal: f64,

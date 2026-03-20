@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for searchUsers
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct SearchUsersQueryRequest {
     #[serde(default)]
     pub query: String,
