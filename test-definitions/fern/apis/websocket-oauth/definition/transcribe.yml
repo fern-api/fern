@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+channel:
+  path: /transcribe
+  auth: true
+  query-parameters:
+    tenant-name: optional<string>
+    token: optional<string>
+    model: optional<string>
+  messages:
+    send_audio:
+      display-name: SendAudio
+      origin: client
+      body: AudioEvent
+    receive_transcript:
+      display-name: ReceiveTranscript
+      origin: server
+      body: TranscriptEvent
+  examples:
+    - name: Default example
+      messages:
+        - type: send_audio
+          body:
+            data: "base64encodedaudio"
+        - type: receive_transcript
+          body:
+            text: "Hello world"
+            confidence: 0.95
+
+types:
+  AudioEvent:
+    properties:
+      data: string
+  TranscriptEvent:
+    properties:
+      text: string
+      confidence: double

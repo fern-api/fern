@@ -8,6 +8,7 @@ type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { RootClientGenerator } from "./RootClientGenerator.js";
 
 export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private serviceId: ServiceId | undefined;
@@ -76,16 +77,26 @@ export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkG
      */
     private generateWebsocketInterfaceFactories(interface_: ast.Interface) {
         if (this.settings.enableWebsockets) {
+            const constructorParamNames = RootClientGenerator.getConstructorParamNamesFromIr(this.context);
+            const hasOAuth = this.context.getOauth() != null;
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
+                        // Compute auth context so the interface knows which params are auto-propagated
+                        const authContext = RootClientGenerator.buildWebSocketAuthContextStatic(
+                            websocketChannel,
+                            constructorParamNames,
+                            hasOAuth,
+                            this.settings.temporaryWebsocketEnvironments
+                        );
                         WebSocketClientGenerator.createWebSocketApiInterfaceFactories(
                             interface_,
                             subpackage,
                             this.context,
                             this.namespaces.root,
-                            websocketChannel
+                            websocketChannel,
+                            authContext
                         );
                     }
                 }

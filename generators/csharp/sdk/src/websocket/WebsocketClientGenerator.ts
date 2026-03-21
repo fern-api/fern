@@ -28,6 +28,8 @@ export interface WebSocketAuthContext {
     oauthTokenPropertyName?: string;
     /** Whether to inject the environment from ClientOptions */
     hasEnvironments: boolean;
+    /** The PascalCase property name for the environment URL (e.g., "Wss"), resolved from IR baseUrl */
+    environmentPropertyName?: string;
 }
 
 /**

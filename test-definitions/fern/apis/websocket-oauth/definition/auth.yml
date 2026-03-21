@@ -1,0 +1,33 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getTokenWithClientCredentials:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        content-type: application/x-www-form-urlencoded
+        body:
+          properties:
+            client_id: string
+            client_secret: string
+            grant_type: literal<"client_credentials">
+      response: TokenResponse
+      examples:
+        - request:
+            client_id: "my_oauth_app_123"
+            client_secret: "sk_live_abcdef123456789"
+            grant_type: "client_credentials"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 3600

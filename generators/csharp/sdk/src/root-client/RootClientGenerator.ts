@@ -138,11 +138,25 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         websocketChannel: FernIr.WebSocketChannel,
         constructorParams: ConstructorParameter[]
     ): WebSocketAuthContext | undefined {
+        // Resolve the environment property name from the IR baseUrl definition
+        let environmentPropertyName: string | undefined;
+        if (
+            websocketChannel.baseUrl != null &&
+            this.context.ir.environments?.environments.type === "multipleBaseUrls"
+        ) {
+            const baseUrl = this.context.ir.environments.environments.baseUrls.find(
+                (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
+            );
+            if (baseUrl != null) {
+                environmentPropertyName = baseUrl.name.pascalCase.safeName;
+            }
+        }
         return RootClientGenerator.buildWebSocketAuthContextStatic(
             websocketChannel,
             constructorParams.map((cp) => cp.name),
             this.oauth != null,
-            this.settings.temporaryWebsocketEnvironments
+            this.settings.temporaryWebsocketEnvironments,
+            environmentPropertyName
         );
     }
 
@@ -157,7 +171,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         temporaryWebsocketEnvironments?: Record<
             string,
             { "default-environment"?: string; environments: Record<string, string> }
-        >
+        >,
+        environmentPropertyName?: string
     ): WebSocketAuthContext | undefined {
         const matchedParamFields: WebSocketAuthContext["matchedParamFields"] = [];
         let oauthTokenPropertyName: string | undefined;
@@ -204,7 +219,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             matchedParamFields,
             hasOAuth,
             oauthTokenPropertyName,
-            hasEnvironments
+            hasEnvironments,
+            environmentPropertyName
         };
     }
 
@@ -263,8 +279,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
         }
 
-        // If OAuth token is needed, _tokenProvider is promoted from local to field
-        // (done in getConstructorMethod via needsWebSocketOAuthToken check)
+        // Add _tokenProvider field when OAuth token needs to be injected into WebSocket options
+        if (needsOAuthToken) {
+            cls.addField({
+                access: ast.Access.Private,
+                origin: cls.explicit("_tokenProvider"),
+                type: this.Types.OAuthTokenProvider,
+                readonly: true
+            });
+        }
     }
 
     /**
@@ -333,7 +356,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                         "if",
                                         this.csharp.codeblock("string.IsNullOrEmpty(options.Environment)")
                                     );
-                                    writer.writeLine(`options.Environment = _clientOptions.Environment?.Wss ?? "";`);
+                                    const envProp = authContext.environmentPropertyName ?? "Wss";
+                                    writer.writeLine(
+                                        `options.Environment = _clientOptions.Environment?.${envProp} ?? "";`
+                                    );
                                     writer.endControlFlow();
                                 }
                             })
