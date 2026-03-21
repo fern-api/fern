@@ -28,3 +28,38 @@ impl WithJsonPropertyRequest {
     form
 }
 }
+
+impl WithJsonPropertyRequest {
+    pub fn builder() -> WithJsonPropertyRequestBuilder {
+        WithJsonPropertyRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct WithJsonPropertyRequestBuilder {
+    file: Option<Vec<u8>>,
+    json: Option<MyObject>,
+}
+
+impl WithJsonPropertyRequestBuilder {
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+
+    pub fn json(mut self, value: MyObject) -> Self {
+        self.json = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`WithJsonPropertyRequest`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`file`](WithJsonPropertyRequestBuilder::file)
+    pub fn build(self) -> Result<WithJsonPropertyRequest, BuildError> {
+        Ok(WithJsonPropertyRequest {
+            file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
+            json: self.json,
+        })
+    }
+}
