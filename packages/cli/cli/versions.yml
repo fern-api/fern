@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Exclude files and folders whose names start with `_` from folder-based
+        navigation. This follows the convention used by other documentation
+        platforms (e.g. Docusaurus) where prefixing a file or directory with `_`
+        hides it from the generated navigation tree.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
 - version: 4.39.0
   changelogEntry:
     - summary: |
