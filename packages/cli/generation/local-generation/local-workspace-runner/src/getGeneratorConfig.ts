@@ -456,6 +456,8 @@ function buildRegistriesFromPublishTarget(publishTarget: FernGeneratorExec.Gener
                 packageName: publishTarget.packageName
             };
             break;
+        default:
+            break;
     }
 
     return { registries, registriesV2 };

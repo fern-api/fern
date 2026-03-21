@@ -10,26 +10,7 @@ import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
-
-/**
- * Transforms a package name into a preview-scoped package name.
- * Uses the Fern org name to create a dedicated preview scope,
- * stripping any existing scope from the original package name.
- *
- * Examples (org = "fern"):
- *   @fern-fern/docs-parsers → @fern-preview/docs-parsers
- *   my-package → @fern-preview/my-package
- * Examples (org = "acme"):
- *   @acme/python-sdk → @acme-preview/python-sdk
- */
-function toPreviewPackageName(packageName: string, org: string): string {
-    const scopeMatch = packageName.match(/^@[^/]+\/(.+)$/);
-    if (scopeMatch != null) {
-        const [, name] = scopeMatch;
-        return `@${org}-preview/${name}`;
-    }
-    return `@${org}-preview/${packageName}`;
-}
+import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
 interface SdkPreviewSuccess {
     status: "success";
@@ -154,7 +135,7 @@ export async function sdkPreview({
                 }
 
                 const previewPackageName = toPreviewPackageName(originalPackageName, project.config.organization);
-                const previewVersion = await computePreviewVersion({ packageName: previewPackageName, previewId });
+                const previewVersion = computePreviewVersion({ previewId });
                 cliContext.logger.info(`Preview version: ${previewVersion}`);
 
                 // Override group output to publish to preview registry.
@@ -209,7 +190,8 @@ export async function sdkPreview({
                 status: "error",
                 message: error instanceof Error ? error.message : String(error)
             };
-            process.stdout.write(JSON.stringify(result, null, 2));
+            process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+            process.exit(1);
         }
         throw error;
     }
