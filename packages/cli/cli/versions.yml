@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 4.42.0
+- version: 4.43.0
   changelogEntry:
     - summary: |
         Add multipart/mixed response support to the OpenAPI parser and IR.
@@ -11,6 +11,22 @@
   createdAt: "2026-03-21"
   irVersion: 65
 
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-fernignore` flag to `fern generate`. When set, the
+        `.fernignore` file is ignored so that no generated files are excluded,
+        effectively overwriting all files in the output. For remote generation,
+        an empty `.fernignore` is uploaded. For local generation, the existing
+        `.fernignore` in the output directory is skipped. This is useful when
+        you want to ensure a clean generation without any `.fernignore` exclusions.
+
+        ```bash
+        fern generate --group my-sdk --skip-fernignore
+        ```
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
 - version: 4.41.0
   changelogEntry:
     - summary: |

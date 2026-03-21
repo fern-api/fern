@@ -7,3 +7,38 @@ pub struct Metadata {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<HashMap<String, String>>,
 }
+
+impl Metadata {
+    pub fn builder() -> MetadataBuilder {
+        MetadataBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct MetadataBuilder {
+    id: Option<String>,
+    data: Option<HashMap<String, String>>,
+}
+
+impl MetadataBuilder {
+    pub fn id(mut self, value: impl Into<String>) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+
+    pub fn data(mut self, value: HashMap<String, String>) -> Self {
+        self.data = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`Metadata`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`id`](MetadataBuilder::id)
+    pub fn build(self) -> Result<Metadata, BuildError> {
+        Ok(Metadata {
+            id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
+            data: self.data,
+        })
+    }
+}
