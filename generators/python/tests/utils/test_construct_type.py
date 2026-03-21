@@ -987,3 +987,150 @@ def test_construct_dict_with_primitive_types() -> None:
 #     assert len(result) == 1
 #     assert isinstance(list(result.values())[0], Circle)
 #     assert list(result.values())[0].radius == 1.0
+
+
+# ---------------------------------------------------------------------------
+# Reproduction tests for ForwardRef resolution + strict Literal discriminant
+# matching in undiscriminated unions.
+#
+# These mirror the customer-reported bug where Block.details came back as a
+# raw dict instead of a FigureDetails model instance, causing
+# model_dump(by_alias=True) to emit snake_case keys.
+#
+# See: https://github.com/extend-hq/extend-python-sdk/pull/50
+# ---------------------------------------------------------------------------
+
+
+def test_forward_ref_list_field_resolved_in_construct() -> None:
+    """Chunk.blocks is typed as List[Block] but with `from __future__ import
+    annotations` the annotation stays as a ForwardRef under Pydantic v2.
+    construct_type must resolve the ForwardRef so nested dicts become Block
+    instances."""
+    from .example_models.manual_types.block import Chunk, Block
+
+    raw = {
+        "title": "Page 1",
+        "blocks": [
+            {"type": "text", "details": {"type": "text", "content": "Hello"}},
+            {"type": "figure", "details": {"type": "figure", "imageUrl": "https://img.png", "figureType": "photo"}},
+        ],
+    }
+
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
+
+    # blocks should be a list of Block model instances, not raw dicts
+    assert chunk.blocks is not None
+    assert len(chunk.blocks) == 2
+    for block in chunk.blocks:
+        assert isinstance(block, Block), f"Expected Block instance, got {type(block)}"
+
+
+def test_literal_discriminant_strict_matching_figure_details() -> None:
+    """When the undiscriminated union has Literal-typed discriminant fields,
+    the correct variant must be selected based on the 'type' value.
+    FigureDetails (type='figure') should not greedily match text blocks."""
+    from .example_models.manual_types.block import (
+        Chunk,
+        Block,
+        TextDetails,
+        FigureDetails,
+    )
+
+    raw = {
+        "title": "Mixed content",
+        "blocks": [
+            {"type": "text", "details": {"type": "text", "content": "Some text"}},
+            {"type": "figure", "details": {"type": "figure", "imageUrl": "https://example.com/img.png", "figureType": "chart"}},
+        ],
+    }
+
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
+    assert chunk.blocks is not None
+
+    text_block = chunk.blocks[0]
+    figure_block = chunk.blocks[1]
+
+    assert isinstance(text_block, Block)
+    assert isinstance(figure_block, Block)
+
+    # The text block's details should be TextDetails, not FigureDetails
+    assert isinstance(text_block.details, TextDetails), (
+        f"Expected TextDetails for text block, got {type(text_block.details)}"
+    )
+    assert text_block.details.type == "text"
+    assert text_block.details.content == "Some text"
+
+    # The figure block's details should be FigureDetails
+    assert isinstance(figure_block.details, FigureDetails), (
+        f"Expected FigureDetails for figure block, got {type(figure_block.details)}"
+    )
+    assert figure_block.details.type == "figure"
+
+
+def test_model_dump_by_alias_uses_camel_case_after_construct() -> None:
+    """The original customer bug: model_dump(by_alias=True) returned
+    snake_case keys because details was a raw dict, not a model instance.
+    After the fix, FigureDetails should be properly constructed so
+    by_alias=True emits camelCase keys."""
+    from .example_models.manual_types.block import Chunk, FigureDetails
+    from .example_models.types.core.pydantic_utilities import IS_PYDANTIC_V2
+
+    raw = {
+        "title": "Doc",
+        "blocks": [
+            {
+                "type": "figure",
+                "details": {
+                    "type": "figure",
+                    "imageUrl": "https://example.com/photo.jpg",
+                    "figureType": "photo",
+                },
+            },
+        ],
+    }
+
+    chunk = Chunk.construct(**raw)  # type: ignore[arg-type]
+    assert chunk.blocks is not None
+
+    figure_block = chunk.blocks[0]
+    assert isinstance(figure_block.details, FigureDetails), (
+        f"details should be FigureDetails, got {type(figure_block.details)}"
+    )
+
+    # Verify by_alias serialization produces camelCase keys
+    if IS_PYDANTIC_V2:
+        details_dict = figure_block.details.model_dump(by_alias=True)
+    else:
+        details_dict = figure_block.details.dict(by_alias=True)
+
+    assert "imageUrl" in details_dict, (
+        f"Expected 'imageUrl' (camelCase) in serialized output, got keys: {list(details_dict.keys())}"
+    )
+    assert "figureType" in details_dict, (
+        f"Expected 'figureType' (camelCase) in serialized output, got keys: {list(details_dict.keys())}"
+    )
+    assert details_dict["imageUrl"] == "https://example.com/photo.jpg"
+    assert details_dict["figureType"] == "photo"
+
+
+def test_empty_details_does_not_greedily_match_figure() -> None:
+    """An empty details dict {} should not be matched as FigureDetails just
+    because all its fields are optional. With strict Literal matching, the
+    missing 'type' field should prevent FigureDetails from matching."""
+    from .example_models.manual_types.block import (
+        Block,
+        FigureDetails,
+    )
+
+    raw_block = {
+        "type": "unknown",
+        "details": {},
+    }
+
+    block = Block.construct(**raw_block)  # type: ignore[arg-type]
+
+    # An empty dict should NOT become a FigureDetails (or TextDetails)
+    # because the Literal 'type' field is absent
+    assert not isinstance(block.details, FigureDetails), (
+        "Empty dict should not greedily match FigureDetails"
+    )
