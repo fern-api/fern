@@ -18,8 +18,9 @@ import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputF
  *
  * Examples (org = "fern"):
  *   @fern-fern/docs-parsers → @fern-preview/docs-parsers
- *   @acme/python-sdk → @fern-preview/python-sdk
  *   my-package → @fern-preview/my-package
+ * Examples (org = "acme"):
+ *   @acme/python-sdk → @acme-preview/python-sdk
  */
 function toPreviewPackageName(packageName: string, org: string): string {
     const scopeMatch = packageName.match(/^@[^/]+\/(.+)$/);
