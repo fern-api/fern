@@ -55,7 +55,7 @@ export class ModuleConfigWriter extends FileGenerator<
             return "";
         }
         return Object.entries(this.moduleConfig.imports)
-            .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+            .sort(([pathA], [pathB]) => (pathA < pathB ? -1 : pathA > pathB ? 1 : 0))
             .map(([importPath, version]) => this.writeImport({ importPath, version }))
             .join("\n");
     }

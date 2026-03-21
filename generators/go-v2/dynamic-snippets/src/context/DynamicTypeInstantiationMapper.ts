@@ -194,7 +194,7 @@ export class DynamicTypeInstantiationMapper {
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
             entries: Object.entries(value)
-                .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+                .sort(([keyA], [keyB]) => (keyA < keyB ? -1 : keyA > keyB ? 1 : 0))
                 .map(([key, value]) => {
                     this.context.errors.scope(key);
                     try {
