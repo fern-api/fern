@@ -311,9 +311,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                         "if",
                                         this.csharp.codeblock(`options.${field.optionsPropertyName} == null`)
                                     );
-                                    writer.writeLine(
-                                        `options.${field.optionsPropertyName} = ${field.fieldName};`
-                                    );
+                                    writer.writeLine(`options.${field.optionsPropertyName} = ${field.fieldName};`);
                                     writer.endControlFlow();
                                 }
 
@@ -321,9 +319,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 if (authContext.oauthTokenPropertyName != null) {
                                     writer.controlFlow(
                                         "if",
-                                        this.csharp.codeblock(
-                                            `options.${authContext.oauthTokenPropertyName} == null`
-                                        )
+                                        this.csharp.codeblock(`options.${authContext.oauthTokenPropertyName} == null`)
                                     );
                                     writer.writeLine(
                                         `options.${authContext.oauthTokenPropertyName} = GetRawAccessToken();`
