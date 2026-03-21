@@ -227,7 +227,10 @@ export class WebSocketClientGenerator extends WithGeneration {
             const type = context.csharpTypeMapper.convert({ reference: pathParam.valueType });
             if (!type.isOptional) {
                 const propName = pathParam.name.pascalCase.safeName;
-                lines.push(`    ${propName} = "",`);
+                // Use "" for strings, default! for other types to satisfy the required constraint
+                const isString = type.toString().includes("string");
+                const placeholder = isString ? '""' : "default!";
+                lines.push(`    ${propName} = ${placeholder},`);
             }
         }
         lines.push("};");
@@ -833,7 +836,10 @@ export class WebSocketClientGenerator extends WithGeneration {
                     const propName = pathParameter.name.pascalCase.safeName;
                     const type = this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType });
                     if (!type.isOptional) {
-                        writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName} ?? "",`);
+                        // Use "" for strings, default! for other types
+                        const isString = type.toString().includes("string");
+                        const fallback = isString ? '""' : "default!";
+                        writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName} ?? ${fallback},`);
                     } else {
                         writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
                     }
