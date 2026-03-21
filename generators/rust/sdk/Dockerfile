@@ -1,21 +1,21 @@
+# Rust stage: provides the full toolchain (cargo, rustc, rustfmt) needed for
+# publishing to crates.io and running tests.
+# Using the official Rust image handles multi-arch (amd64/arm64) automatically.
+# See: https://hub.docker.com/_/rust
+FROM rust:1.82-alpine3.20 AS rust
+
 FROM node:22.12-alpine3.20
 
-# Install system dependencies and Rust toolchain.
-# Rust installation follows the pattern from the official Rust Docker images:
-# https://github.com/rust-lang/docker-rust/blob/master/stable/alpine3.21/Dockerfile
+# Install system dependencies
+RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
+
+# Copy the full Rust toolchain from the official image
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
-
-RUN set -eux; \
-    apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig wget; \
-    url="https://static.rust-lang.org/rustup/archive/1.29.0/x86_64-unknown-linux-musl/rustup-init"; \
-    wget "$url"; \
-    echo "9cd3fda5fd293890e36ab271af6a786ee22084b5f6c2b83fd8323cec6f0992c1 *rustup-init" | sha256sum -c -; \
-    chmod +x rustup-init; \
-    ./rustup-init -y --no-modify-path --profile minimal --default-toolchain 1.82.0 --component rustfmt; \
-    rm rustup-init; \
-    rustfmt --version
+COPY --from=rust /usr/local/rustup /usr/local/rustup
+COPY --from=rust /usr/local/cargo /usr/local/cargo
+RUN rustfmt --version && cargo --version
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
