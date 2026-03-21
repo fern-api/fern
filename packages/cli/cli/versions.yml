@@ -6,9 +6,7 @@
         Support `hidden` and `noindex` frontmatter in folder-based navigation.
         Pages with `hidden: true` or `noindex: true` in their frontmatter are now
         respected when using `folder:` entries in `docs.yml`. Sections whose
-        `index.mdx` has `hidden: true` are also hidden. All frontmatter fields
-        (position, title, hidden, noindex) are now parsed in a single pass per file
-        for improved performance.
+        `index.mdx` has `hidden: true` are also hidden.
       type: feat
   createdAt: "2026-03-21"
   irVersion: 65
