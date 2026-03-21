@@ -13,3 +13,44 @@ pub struct ListConnectionsQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fields: Option<String>,
 }
+
+impl ListConnectionsQueryRequest {
+    pub fn builder() -> ListConnectionsQueryRequestBuilder {
+        ListConnectionsQueryRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct ListConnectionsQueryRequestBuilder {
+    strategy: Option<String>,
+    name: Option<String>,
+    fields: Option<String>,
+}
+
+impl ListConnectionsQueryRequestBuilder {
+    pub fn strategy(mut self, value: impl Into<String>) -> Self {
+        self.strategy = Some(value.into());
+        self
+    }
+
+    pub fn name(mut self, value: impl Into<String>) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+
+    pub fn fields(mut self, value: impl Into<String>) -> Self {
+        self.fields = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`ListConnectionsQueryRequest`].
+    pub fn build(self) -> Result<ListConnectionsQueryRequest, BuildError> {
+        Ok(ListConnectionsQueryRequest {
+            strategy: self.strategy,
+            name: self.name,
+            fields: self.fields,
+        })
+    }
+}
+

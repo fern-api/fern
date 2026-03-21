@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
 import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -206,6 +207,11 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+
+        // Write builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
+
         writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();
