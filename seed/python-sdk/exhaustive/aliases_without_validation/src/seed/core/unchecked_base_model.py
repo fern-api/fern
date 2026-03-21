@@ -177,9 +177,14 @@ def _get_literal_field_value(
 ) -> typing.Any:
     """Get the value of a Literal field from *object_*, checking both alias and field name."""
     name_or_alias = get_field_to_alias_mapping(inner_type).get(field_name, field_name)
+    pydantic_alias = getattr(field, "alias", None)
     if isinstance(object_, dict):
-        return object_.get(name_or_alias)
-    return getattr(object_, name_or_alias, None)
+        if name_or_alias in object_:
+            return object_[name_or_alias]
+        if pydantic_alias and pydantic_alias != name_or_alias and pydantic_alias in object_:
+            return object_[pydantic_alias]
+        return None
+    return getattr(object_, name_or_alias, getattr(object_, pydantic_alias, None) if pydantic_alias else None)
 
 
 def _literal_fields_match_strict(inner_type: typing.Type[typing.Any], object_: typing.Any) -> bool:
