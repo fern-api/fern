@@ -297,8 +297,7 @@ export class DocsDefinitionResolver {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
         }
 
-        // Store raw markdown content before any processing, stripping MDX comments
-        // so they don't appear in text/markdown responses served to LLMs/agents
+        // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(markdown);
@@ -328,7 +327,7 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
-                            // Also store the raw content for changelog files, stripping MDX comments
+                            // Also store raw content for changelog files, stripping MDX comments
                             this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(file.contents);
                         });
                     }

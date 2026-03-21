@@ -3,9 +3,7 @@
 - version: 4.40.1
   changelogEntry:
     - summary: |
-        Strip MDX comments (`{/* ... */}`) from raw markdown content served to
-        LLMs and agents via `Accept: text/markdown`. Comments inside code fences
-        and inline code are preserved.
+        Strip MDX comments (`{/* ... */}`) from raw markdown served to LLMs and agents.
       type: fix
   createdAt: "2026-03-21"
   irVersion: 65
