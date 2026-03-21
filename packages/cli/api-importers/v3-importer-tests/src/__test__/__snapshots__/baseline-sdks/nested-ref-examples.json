@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              }
+              },
+              "wireValue": "results"
             },
             "valueType": {
               "container": {
@@ -168,7 +168,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "asset_kind",
               "name": {
                 "originalName": "asset_kind",
                 "camelCase": {
@@ -187,7 +186,8 @@
                   "unsafeName": "AssetKind",
                   "safeName": "AssetKind"
                 }
-              }
+              },
+              "wireValue": "asset_kind"
             },
             "valueType": {
               "container": {
@@ -211,7 +211,6 @@
           },
           {
             "name": {
-              "wireValue": "base_currency",
               "name": {
                 "originalName": "base_currency",
                 "camelCase": {
@@ -230,7 +229,8 @@
                   "unsafeName": "BaseCurrency",
                   "safeName": "BaseCurrency"
                 }
-              }
+              },
+              "wireValue": "base_currency"
             },
             "valueType": {
               "container": {
@@ -254,7 +254,6 @@
           },
           {
             "name": {
-              "wireValue": "option_cross_margin_params",
               "name": {
                 "originalName": "option_cross_margin_params",
                 "camelCase": {
@@ -273,7 +272,8 @@
                   "unsafeName": "OptionCrossMarginParams",
                   "safeName": "OptionCrossMarginParams"
                 }
-              }
+              },
+              "wireValue": "option_cross_margin_params"
             },
             "valueType": {
               "container": {
@@ -357,7 +357,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "imf",
               "name": {
                 "originalName": "imf",
                 "camelCase": {
@@ -376,7 +375,8 @@
                   "unsafeName": "Imf",
                   "safeName": "Imf"
                 }
-              }
+              },
+              "wireValue": "imf"
             },
             "valueType": {
               "container": {
@@ -418,7 +418,6 @@
           },
           {
             "name": {
-              "wireValue": "mmf",
               "name": {
                 "originalName": "mmf",
                 "camelCase": {
@@ -437,7 +436,8 @@
                   "unsafeName": "Mmf",
                   "safeName": "Mmf"
                 }
-              }
+              },
+              "wireValue": "mmf"
             },
             "valueType": {
               "container": {
@@ -521,7 +521,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "long_itm",
               "name": {
                 "originalName": "long_itm",
                 "camelCase": {
@@ -540,7 +539,8 @@
                   "unsafeName": "LongItm",
                   "safeName": "LongItm"
                 }
-              }
+              },
+              "wireValue": "long_itm"
             },
             "valueType": {
               "container": {
@@ -564,7 +564,6 @@
           },
           {
             "name": {
-              "wireValue": "premium_multiplier",
               "name": {
                 "originalName": "premium_multiplier",
                 "camelCase": {
@@ -583,7 +582,8 @@
                   "unsafeName": "PremiumMultiplier",
                   "safeName": "PremiumMultiplier"
                 }
-              }
+              },
+              "wireValue": "premium_multiplier"
             },
             "valueType": {
               "container": {
@@ -607,7 +607,6 @@
           },
           {
             "name": {
-              "wireValue": "short_itm",
               "name": {
                 "originalName": "short_itm",
                 "camelCase": {
@@ -626,7 +625,8 @@
                   "unsafeName": "ShortItm",
                   "safeName": "ShortItm"
                 }
-              }
+              },
+              "wireValue": "short_itm"
             },
             "valueType": {
               "container": {
@@ -768,7 +768,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -787,7 +786,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -871,7 +871,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -890,7 +889,8 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              }
+              },
+              "wireValue": "results"
             },
             "typeReference": {
               "value": {
@@ -936,7 +936,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "asset_kind",
               "name": {
                 "originalName": "asset_kind",
                 "camelCase": {
@@ -955,7 +954,8 @@
                   "unsafeName": "AssetKind",
                   "safeName": "AssetKind"
                 }
-              }
+              },
+              "wireValue": "asset_kind"
             },
             "typeReference": {
               "value": {
@@ -967,7 +967,6 @@
           },
           {
             "name": {
-              "wireValue": "base_currency",
               "name": {
                 "originalName": "base_currency",
                 "camelCase": {
@@ -986,7 +985,8 @@
                   "unsafeName": "BaseCurrency",
                   "safeName": "BaseCurrency"
                 }
-              }
+              },
+              "wireValue": "base_currency"
             },
             "typeReference": {
               "value": {
@@ -998,7 +998,6 @@
           },
           {
             "name": {
-              "wireValue": "option_cross_margin_params",
               "name": {
                 "originalName": "option_cross_margin_params",
                 "camelCase": {
@@ -1017,7 +1016,8 @@
                   "unsafeName": "OptionCrossMarginParams",
                   "safeName": "OptionCrossMarginParams"
                 }
-              }
+              },
+              "wireValue": "option_cross_margin_params"
             },
             "typeReference": {
               "value": {
@@ -1060,7 +1060,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "imf",
               "name": {
                 "originalName": "imf",
                 "camelCase": {
@@ -1079,7 +1078,8 @@
                   "unsafeName": "Imf",
                   "safeName": "Imf"
                 }
-              }
+              },
+              "wireValue": "imf"
             },
             "typeReference": {
               "value": {
@@ -1091,7 +1091,6 @@
           },
           {
             "name": {
-              "wireValue": "mmf",
               "name": {
                 "originalName": "mmf",
                 "camelCase": {
@@ -1110,7 +1109,8 @@
                   "unsafeName": "Mmf",
                   "safeName": "Mmf"
                 }
-              }
+              },
+              "wireValue": "mmf"
             },
             "typeReference": {
               "value": {
@@ -1153,7 +1153,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "long_itm",
               "name": {
                 "originalName": "long_itm",
                 "camelCase": {
@@ -1172,7 +1171,8 @@
                   "unsafeName": "LongItm",
                   "safeName": "LongItm"
                 }
-              }
+              },
+              "wireValue": "long_itm"
             },
             "typeReference": {
               "value": {
@@ -1184,7 +1184,6 @@
           },
           {
             "name": {
-              "wireValue": "premium_multiplier",
               "name": {
                 "originalName": "premium_multiplier",
                 "camelCase": {
@@ -1203,7 +1202,8 @@
                   "unsafeName": "PremiumMultiplier",
                   "safeName": "PremiumMultiplier"
                 }
-              }
+              },
+              "wireValue": "premium_multiplier"
             },
             "typeReference": {
               "value": {
@@ -1215,7 +1215,6 @@
           },
           {
             "name": {
-              "wireValue": "short_itm",
               "name": {
                 "originalName": "short_itm",
                 "camelCase": {
@@ -1234,7 +1233,8 @@
                   "unsafeName": "ShortItm",
                   "safeName": "ShortItm"
                 }
-              }
+              },
+              "wireValue": "short_itm"
             },
             "typeReference": {
               "value": {
@@ -1325,9 +1325,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

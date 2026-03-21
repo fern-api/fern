@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -105,7 +105,6 @@
           },
           {
             "name": {
-              "wireValue": "metadata",
               "name": {
                 "originalName": "metadata",
                 "camelCase": {
@@ -124,7 +123,8 @@
                   "unsafeName": "Metadata",
                   "safeName": "Metadata"
                 }
-              }
+              },
+              "wireValue": "metadata"
             },
             "valueType": {
               "container": {
@@ -157,7 +157,6 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -176,7 +175,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -224,7 +224,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -243,7 +242,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": {
@@ -255,7 +255,6 @@
           },
           {
             "name": {
-              "wireValue": "metadata",
               "name": {
                 "originalName": "metadata",
                 "camelCase": {
@@ -274,7 +273,8 @@
                   "unsafeName": "Metadata",
                   "safeName": "Metadata"
                 }
-              }
+              },
+              "wireValue": "metadata"
             },
             "typeReference": {
               "value": {
@@ -293,9 +293,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

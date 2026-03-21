@@ -99,7 +99,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -118,7 +117,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -136,7 +136,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -155,7 +154,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "primitive": {
@@ -255,7 +255,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -274,7 +273,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -292,7 +292,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -311,7 +310,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "primitive": {
@@ -1291,7 +1291,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1310,7 +1309,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -1403,7 +1403,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -1422,7 +1421,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": "INTEGER",
@@ -1431,7 +1431,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -1450,7 +1449,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": "STRING",
@@ -1530,7 +1530,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -1549,7 +1548,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": "INTEGER",
@@ -1558,7 +1558,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -1577,7 +1576,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": "STRING",
@@ -1925,9 +1925,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {
     "subpackage_petsV1": {
       "fernFilepath": {

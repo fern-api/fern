@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -175,7 +175,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "VALUE_1",
               "name": {
                 "originalName": "VALUE_1",
                 "camelCase": {
@@ -194,12 +193,12 @@
                   "unsafeName": "Value1",
                   "safeName": "Value1"
                 }
-              }
+              },
+              "wireValue": "VALUE_1"
             }
           },
           {
             "name": {
-              "wireValue": "VALUE_2",
               "name": {
                 "originalName": "VALUE_2",
                 "camelCase": {
@@ -218,12 +217,12 @@
                   "unsafeName": "Value2",
                   "safeName": "Value2"
                 }
-              }
+              },
+              "wireValue": "VALUE_2"
             }
           },
           {
             "name": {
-              "wireValue": "VALUE_3",
               "name": {
                 "originalName": "VALUE_3",
                 "camelCase": {
@@ -242,7 +241,8 @@
                   "unsafeName": "Value3",
                   "safeName": "Value3"
                 }
-              }
+              },
+              "wireValue": "VALUE_3"
             }
           }
         ],
@@ -359,7 +359,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "string_primitive",
               "name": {
                 "originalName": "string_primitive",
                 "camelCase": {
@@ -378,7 +377,8 @@
                   "unsafeName": "StringPrimitive",
                   "safeName": "StringPrimitive"
                 }
-              }
+              },
+              "wireValue": "string_primitive"
             },
             "valueType": {
               "container": {
@@ -406,7 +406,6 @@
           },
           {
             "name": {
-              "wireValue": "number_primitive",
               "name": {
                 "originalName": "number_primitive",
                 "camelCase": {
@@ -425,7 +424,8 @@
                   "unsafeName": "NumberPrimitive",
                   "safeName": "NumberPrimitive"
                 }
-              }
+              },
+              "wireValue": "number_primitive"
             },
             "valueType": {
               "container": {
@@ -453,7 +453,6 @@
           },
           {
             "name": {
-              "wireValue": "boolean_primitive",
               "name": {
                 "originalName": "boolean_primitive",
                 "camelCase": {
@@ -472,7 +471,8 @@
                   "unsafeName": "BooleanPrimitive",
                   "safeName": "BooleanPrimitive"
                 }
-              }
+              },
+              "wireValue": "boolean_primitive"
             },
             "valueType": {
               "container": {
@@ -499,7 +499,6 @@
           },
           {
             "name": {
-              "wireValue": "object_type",
               "name": {
                 "originalName": "object_type",
                 "camelCase": {
@@ -518,7 +517,8 @@
                   "unsafeName": "ObjectType",
                   "safeName": "ObjectType"
                 }
-              }
+              },
+              "wireValue": "object_type"
             },
             "valueType": {
               "container": {
@@ -564,7 +564,6 @@
           },
           {
             "name": {
-              "wireValue": "array_type",
               "name": {
                 "originalName": "array_type",
                 "camelCase": {
@@ -583,7 +582,8 @@
                   "unsafeName": "ArrayType",
                   "safeName": "ArrayType"
                 }
-              }
+              },
+              "wireValue": "array_type"
             },
             "valueType": {
               "container": {
@@ -619,7 +619,6 @@
           },
           {
             "name": {
-              "wireValue": "enum_type",
               "name": {
                 "originalName": "enum_type",
                 "camelCase": {
@@ -638,7 +637,8 @@
                   "unsafeName": "EnumType",
                   "safeName": "EnumType"
                 }
-              }
+              },
+              "wireValue": "enum_type"
             },
             "valueType": {
               "container": {
@@ -684,7 +684,6 @@
           },
           {
             "name": {
-              "wireValue": "anyof_type",
               "name": {
                 "originalName": "anyof_type",
                 "camelCase": {
@@ -703,7 +702,8 @@
                   "unsafeName": "AnyofType",
                   "safeName": "AnyofType"
                 }
-              }
+              },
+              "wireValue": "anyof_type"
             },
             "valueType": {
               "container": {
@@ -828,7 +828,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "string_primitive",
                                 "name": {
                                   "originalName": "string_primitive",
                                   "camelCase": {
@@ -847,7 +846,8 @@
                                     "unsafeName": "StringPrimitive",
                                     "safeName": "StringPrimitive"
                                   }
-                                }
+                                },
+                                "wireValue": "string_primitive"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -909,7 +909,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "number_primitive",
                                 "name": {
                                   "originalName": "number_primitive",
                                   "camelCase": {
@@ -928,7 +927,8 @@
                                     "unsafeName": "NumberPrimitive",
                                     "safeName": "NumberPrimitive"
                                   }
-                                }
+                                },
+                                "wireValue": "number_primitive"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -988,7 +988,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "boolean_primitive",
                                 "name": {
                                   "originalName": "boolean_primitive",
                                   "camelCase": {
@@ -1007,7 +1006,8 @@
                                     "unsafeName": "BooleanPrimitive",
                                     "safeName": "BooleanPrimitive"
                                   }
-                                }
+                                },
+                                "wireValue": "boolean_primitive"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -1066,7 +1066,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "object_type",
                                 "name": {
                                   "originalName": "object_type",
                                   "camelCase": {
@@ -1085,7 +1084,8 @@
                                     "unsafeName": "ObjectType",
                                     "safeName": "ObjectType"
                                   }
-                                }
+                                },
+                                "wireValue": "object_type"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -1130,7 +1130,6 @@
                                           "properties": [
                                             {
                                               "name": {
-                                                "wireValue": "id",
                                                 "name": {
                                                   "originalName": "id",
                                                   "camelCase": {
@@ -1149,7 +1148,8 @@
                                                     "unsafeName": "Id",
                                                     "safeName": "Id"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "id"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "Object Example",
@@ -1211,7 +1211,6 @@
                                             },
                                             {
                                               "name": {
-                                                "wireValue": "name",
                                                 "name": {
                                                   "originalName": "name",
                                                   "camelCase": {
@@ -1230,7 +1229,8 @@
                                                     "unsafeName": "Name",
                                                     "safeName": "Name"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "name"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "Object Example",
@@ -1358,7 +1358,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "array_type",
                                 "name": {
                                   "originalName": "array_type",
                                   "camelCase": {
@@ -1377,7 +1376,8 @@
                                     "unsafeName": "ArrayType",
                                     "safeName": "ArrayType"
                                   }
-                                }
+                                },
+                                "wireValue": "array_type"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -1484,7 +1484,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "enum_type",
                                 "name": {
                                   "originalName": "enum_type",
                                   "camelCase": {
@@ -1503,7 +1502,8 @@
                                     "unsafeName": "EnumType",
                                     "safeName": "EnumType"
                                   }
-                                }
+                                },
+                                "wireValue": "enum_type"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -1540,7 +1540,6 @@
                                       "shape": {
                                         "shape": {
                                           "value": {
-                                            "wireValue": "VALUE_1",
                                             "name": {
                                               "originalName": "VALUE_1",
                                               "camelCase": {
@@ -1559,7 +1558,8 @@
                                                 "unsafeName": "Value1",
                                                 "safeName": "Value1"
                                               }
-                                            }
+                                            },
+                                            "wireValue": "VALUE_1"
                                           },
                                           "type": "enum"
                                         },
@@ -1628,7 +1628,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "anyof_type",
                                 "name": {
                                   "originalName": "anyof_type",
                                   "camelCase": {
@@ -1647,7 +1646,8 @@
                                     "unsafeName": "AnyofType",
                                     "safeName": "AnyofType"
                                   }
-                                }
+                                },
+                                "wireValue": "anyof_type"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getWorkspaceAuditLogs_Response_200",
@@ -2050,7 +2050,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2069,7 +2068,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -27,7 +27,6 @@
   "headers": [
     {
       "name": {
-        "wireValue": "some-header",
         "name": {
           "originalName": "someHeader",
           "camelCase": {
@@ -46,7 +45,8 @@
             "unsafeName": "SomeHeader",
             "safeName": "SomeHeader"
           }
-        }
+        },
+        "wireValue": "some-header"
       },
       "valueType": {
         "primitive": {
@@ -197,7 +197,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "some-query-param",
                 "name": {
                   "originalName": "some-query-param",
                   "camelCase": {
@@ -216,7 +215,8 @@
                     "unsafeName": "SomeQueryParam",
                     "safeName": "SomeQueryParam"
                   }
-                }
+                },
+                "wireValue": "some-query-param"
               },
               "valueType": {
                 "primitive": {
@@ -235,7 +235,6 @@
             },
             {
               "name": {
-                "wireValue": "some-query-param-ref-examples",
                 "name": {
                   "originalName": "some-query-param-ref-examples",
                   "camelCase": {
@@ -254,7 +253,8 @@
                     "unsafeName": "SomeQueryParamRefExamples",
                     "safeName": "SomeQueryParamRefExamples"
                   }
-                }
+                },
+                "wireValue": "some-query-param-ref-examples"
               },
               "valueType": {
                 "primitive": {
@@ -367,7 +367,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -386,7 +385,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -406,7 +406,6 @@
     "headers": [
       {
         "name": {
-          "wireValue": "some-header",
           "name": {
             "originalName": "someHeader",
             "camelCase": {
@@ -425,7 +424,8 @@
               "unsafeName": "SomeHeader",
               "safeName": "SomeHeader"
             }
-          }
+          },
+          "wireValue": "some-header"
         },
         "typeReference": {
           "value": "STRING",
@@ -523,7 +523,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "some-query-param",
                 "name": {
                   "originalName": "some-query-param",
                   "camelCase": {
@@ -542,7 +541,8 @@
                     "unsafeName": "SomeQueryParam",
                     "safeName": "SomeQueryParam"
                   }
-                }
+                },
+                "wireValue": "some-query-param"
               },
               "typeReference": {
                 "value": "STRING",
@@ -551,7 +551,6 @@
             },
             {
               "name": {
-                "wireValue": "some-query-param-ref-examples",
                 "name": {
                   "originalName": "some-query-param-ref-examples",
                   "camelCase": {
@@ -570,7 +569,8 @@
                     "unsafeName": "SomeQueryParamRefExamples",
                     "safeName": "SomeQueryParamRefExamples"
                   }
-                }
+                },
+                "wireValue": "some-query-param-ref-examples"
               },
               "typeReference": {
                 "value": "STRING",
@@ -594,9 +594,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -199,7 +199,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "public_property",
                   "name": {
                     "originalName": "public_property",
                     "camelCase": {
@@ -218,7 +217,8 @@
                       "unsafeName": "PublicProperty",
                       "safeName": "PublicProperty"
                     }
-                  }
+                  },
+                  "wireValue": "public_property"
                 },
                 "valueType": {
                   "container": {
@@ -242,7 +242,6 @@
               },
               {
                 "name": {
-                  "wireValue": "private_property",
                   "name": {
                     "originalName": "private_property",
                     "camelCase": {
@@ -261,7 +260,8 @@
                       "unsafeName": "PrivateProperty",
                       "safeName": "PrivateProperty"
                     }
-                  }
+                  },
+                  "wireValue": "private_property"
                 },
                 "valueType": {
                   "container": {
@@ -363,7 +363,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -382,7 +381,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -490,7 +490,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -509,7 +508,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": {
@@ -589,7 +589,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "public_property",
                   "name": {
                     "originalName": "public_property",
                     "camelCase": {
@@ -608,7 +607,8 @@
                       "unsafeName": "PublicProperty",
                       "safeName": "PublicProperty"
                     }
-                  }
+                  },
+                  "wireValue": "public_property"
                 },
                 "typeReference": {
                   "value": {
@@ -620,7 +620,6 @@
               },
               {
                 "name": {
-                  "wireValue": "private_property",
                   "name": {
                     "originalName": "private_property",
                     "camelCase": {
@@ -639,7 +638,8 @@
                       "unsafeName": "PrivateProperty",
                       "safeName": "PrivateProperty"
                     }
-                  }
+                  },
+                  "wireValue": "private_property"
                 },
                 "typeReference": {
                   "value": {
@@ -690,7 +690,10 @@
                 "safeName": "Production"
               }
             },
-            "url": "https://api.com"
+            "url": "https://api.com",
+            "audiences": [
+              "public"
+            ]
           },
           {
             "id": "sandbox",
@@ -713,7 +716,10 @@
                 "safeName": "Sandbox"
               }
             },
-            "url": "https://private.api.com"
+            "url": "https://private.api.com",
+            "audiences": [
+              "private"
+            ]
           }
         ],
         "type": "singleBaseUrl"
@@ -721,9 +727,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

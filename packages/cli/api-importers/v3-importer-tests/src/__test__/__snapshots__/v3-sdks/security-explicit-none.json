@@ -79,7 +79,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -98,7 +97,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -125,7 +125,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -144,7 +143,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -317,7 +317,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -336,7 +335,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getPlantById_Response_200",
@@ -396,7 +396,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "name",
                                 "name": {
                                   "originalName": "name",
                                   "camelCase": {
@@ -415,7 +414,8 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                   }
-                                }
+                                },
+                                "wireValue": "name"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getPlantById_Response_200",
@@ -812,7 +812,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -831,7 +830,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -99,7 +99,6 @@
           {
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost.",
             "name": {
-              "wireValue": "nano",
               "name": {
                 "originalName": "Nano",
                 "camelCase": {
@@ -118,7 +117,8 @@
                   "unsafeName": "Nano",
                   "safeName": "Nano"
                 }
-              }
+              },
+              "wireValue": "nano"
             }
           }
         ],
@@ -136,7 +136,6 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -155,7 +154,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -241,7 +241,6 @@
         },
         "values": [
           {
-            "wireValue": "nano",
             "name": {
               "originalName": "Nano",
               "camelCase": {
@@ -260,7 +259,8 @@
                 "unsafeName": "Nano",
                 "safeName": "Nano"
               }
-            }
+            },
+            "wireValue": "nano"
           }
         ],
         "type": "enum"
@@ -271,9 +271,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {
     "subpackage_transcripts": {
       "fernFilepath": {

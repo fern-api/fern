@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -96,7 +96,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -115,7 +114,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "primitive": {
@@ -133,7 +133,6 @@
           },
           {
             "name": {
-              "wireValue": "tag",
               "name": {
                 "originalName": "tag",
                 "camelCase": {
@@ -152,7 +151,8 @@
                   "unsafeName": "Tag",
                   "safeName": "Tag"
                 }
-              }
+              },
+              "wireValue": "tag"
             },
             "valueType": {
               "container": {
@@ -191,7 +191,6 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -210,7 +209,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -332,7 +332,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "id",
                         "name": {
                           "originalName": "id",
                           "camelCase": {
@@ -351,7 +350,8 @@
                             "unsafeName": "ID",
                             "safeName": "ID"
                           }
-                        }
+                        },
+                        "wireValue": "id"
                       },
                       "value": {
                         "shape": {
@@ -392,7 +392,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "name",
                         "name": {
                           "originalName": "name",
                           "camelCase": {
@@ -411,7 +410,8 @@
                             "unsafeName": "Name",
                             "safeName": "Name"
                           }
-                        }
+                        },
+                        "wireValue": "name"
                       },
                       "value": {
                         "shape": {
@@ -454,7 +454,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "tag",
                         "name": {
                           "originalName": "tag",
                           "camelCase": {
@@ -473,7 +472,8 @@
                             "unsafeName": "Tag",
                             "safeName": "Tag"
                           }
-                        }
+                        },
+                        "wireValue": "tag"
                       },
                       "value": {
                         "shape": {
@@ -633,7 +633,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "id",
                         "name": {
                           "originalName": "id",
                           "camelCase": {
@@ -652,7 +651,8 @@
                             "unsafeName": "ID",
                             "safeName": "ID"
                           }
-                        }
+                        },
+                        "wireValue": "id"
                       },
                       "value": {
                         "shape": {
@@ -693,7 +693,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "name",
                         "name": {
                           "originalName": "name",
                           "camelCase": {
@@ -712,7 +711,8 @@
                             "unsafeName": "Name",
                             "safeName": "Name"
                           }
-                        }
+                        },
+                        "wireValue": "name"
                       },
                       "value": {
                         "shape": {
@@ -801,7 +801,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -820,7 +819,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": "LONG",
@@ -829,7 +829,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -848,7 +847,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": "STRING",
@@ -857,7 +857,6 @@
           },
           {
             "name": {
-              "wireValue": "tag",
               "name": {
                 "originalName": "tag",
                 "camelCase": {
@@ -876,7 +875,8 @@
                   "unsafeName": "Tag",
                   "safeName": "Tag"
                 }
-              }
+              },
+              "wireValue": "tag"
             },
             "typeReference": {
               "value": {
@@ -896,9 +896,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

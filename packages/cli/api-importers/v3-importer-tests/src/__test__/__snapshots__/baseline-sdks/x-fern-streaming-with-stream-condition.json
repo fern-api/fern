@@ -28,7 +28,6 @@
     {
       "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
       "name": {
-        "wireValue": "Request-Timeout",
         "name": {
           "originalName": "requestTimeout",
           "camelCase": {
@@ -47,7 +46,8 @@
             "unsafeName": "RequestTimeout",
             "safeName": "RequestTimeout"
           }
-        }
+        },
+        "wireValue": "Request-Timeout"
       },
       "valueType": {
         "container": {
@@ -72,7 +72,6 @@
     {
       "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
       "name": {
-        "wireValue": "Request-Timeout-Millis",
         "name": {
           "originalName": "requestTimeoutMillis",
           "camelCase": {
@@ -91,7 +90,8 @@
             "unsafeName": "RequestTimeoutMillis",
             "safeName": "RequestTimeoutMillis"
           }
-        }
+        },
+        "wireValue": "Request-Timeout-Millis"
       },
       "valueType": {
         "container": {
@@ -150,7 +150,6 @@
           {
             "docs": "If the chat response was stored, the ID of the chat.",
             "name": {
-              "wireValue": "chat_id",
               "name": {
                 "originalName": "chat_id",
                 "camelCase": {
@@ -169,7 +168,8 @@
                   "unsafeName": "ChatID",
                   "safeName": "ChatID"
                 }
-              }
+              },
+              "wireValue": "chat_id"
             },
             "valueType": {
               "container": {
@@ -194,7 +194,6 @@
           {
             "docs": "If the chat response was stored, the ID of the turn.",
             "name": {
-              "wireValue": "turn_id",
               "name": {
                 "originalName": "turn_id",
                 "camelCase": {
@@ -213,7 +212,8 @@
                   "unsafeName": "TurnID",
                   "safeName": "TurnID"
                 }
-              }
+              },
+              "wireValue": "turn_id"
             },
             "valueType": {
               "container": {
@@ -238,7 +238,6 @@
           {
             "docs": "The message from the chat model for the chat message.",
             "name": {
-              "wireValue": "answer",
               "name": {
                 "originalName": "answer",
                 "camelCase": {
@@ -257,7 +256,8 @@
                   "unsafeName": "Answer",
                   "safeName": "Answer"
                 }
-              }
+              },
+              "wireValue": "answer"
             },
             "valueType": {
               "container": {
@@ -325,7 +325,6 @@
           {
             "docs": "The chunk of the response.",
             "name": {
-              "wireValue": "chunk",
               "name": {
                 "originalName": "chunk",
                 "camelCase": {
@@ -344,7 +343,8 @@
                   "unsafeName": "Chunk",
                   "safeName": "Chunk"
                 }
-              }
+              },
+              "wireValue": "chunk"
             },
             "valueType": {
               "container": {
@@ -465,7 +465,6 @@
               {
                 "docs": "The chat message or question.",
                 "name": {
-                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -484,7 +483,8 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  }
+                  },
+                  "wireValue": "query"
                 },
                 "valueType": {
                   "primitive": {
@@ -503,7 +503,6 @@
               {
                 "docs": "Indicates whether the response should be streamed or not.",
                 "name": {
-                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -522,7 +521,8 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  }
+                  },
+                  "wireValue": "stream_response"
                 },
                 "valueType": {
                   "container": {
@@ -713,7 +713,6 @@
               {
                 "docs": "The chat message or question.",
                 "name": {
-                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -732,7 +731,8 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  }
+                  },
+                  "wireValue": "query"
                 },
                 "valueType": {
                   "primitive": {
@@ -751,7 +751,6 @@
               {
                 "docs": "Indicates whether the response should be streamed or not.",
                 "name": {
-                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -770,7 +769,8 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  }
+                  },
+                  "wireValue": "stream_response"
                 },
                 "valueType": {
                   "container": {
@@ -904,7 +904,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -923,7 +922,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -1005,7 +1005,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "chat_id",
               "name": {
                 "originalName": "chat_id",
                 "camelCase": {
@@ -1024,7 +1023,8 @@
                   "unsafeName": "ChatID",
                   "safeName": "ChatID"
                 }
-              }
+              },
+              "wireValue": "chat_id"
             },
             "typeReference": {
               "value": {
@@ -1036,7 +1036,6 @@
           },
           {
             "name": {
-              "wireValue": "turn_id",
               "name": {
                 "originalName": "turn_id",
                 "camelCase": {
@@ -1055,7 +1054,8 @@
                   "unsafeName": "TurnID",
                   "safeName": "TurnID"
                 }
-              }
+              },
+              "wireValue": "turn_id"
             },
             "typeReference": {
               "value": {
@@ -1067,7 +1067,6 @@
           },
           {
             "name": {
-              "wireValue": "answer",
               "name": {
                 "originalName": "answer",
                 "camelCase": {
@@ -1086,7 +1085,8 @@
                   "unsafeName": "Answer",
                   "safeName": "Answer"
                 }
-              }
+              },
+              "wireValue": "answer"
             },
             "typeReference": {
               "value": {
@@ -1129,7 +1129,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "chunk",
               "name": {
                 "originalName": "chunk",
                 "camelCase": {
@@ -1148,7 +1147,8 @@
                   "unsafeName": "Chunk",
                   "safeName": "Chunk"
                 }
-              }
+              },
+              "wireValue": "chunk"
             },
             "typeReference": {
               "value": {
@@ -1166,7 +1166,6 @@
     "headers": [
       {
         "name": {
-          "wireValue": "Request-Timeout",
           "name": {
             "originalName": "requestTimeout",
             "camelCase": {
@@ -1185,7 +1184,8 @@
               "unsafeName": "RequestTimeout",
               "safeName": "RequestTimeout"
             }
-          }
+          },
+          "wireValue": "Request-Timeout"
         },
         "typeReference": {
           "value": {
@@ -1197,7 +1197,6 @@
       },
       {
         "name": {
-          "wireValue": "Request-Timeout-Millis",
           "name": {
             "originalName": "requestTimeoutMillis",
             "camelCase": {
@@ -1216,7 +1215,8 @@
               "unsafeName": "RequestTimeoutMillis",
               "safeName": "RequestTimeoutMillis"
             }
-          }
+          },
+          "wireValue": "Request-Timeout-Millis"
         },
         "typeReference": {
           "value": {
@@ -1291,7 +1291,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -1310,7 +1309,8 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  }
+                  },
+                  "wireValue": "query"
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -1319,7 +1319,6 @@
               },
               {
                 "name": {
-                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -1338,7 +1337,8 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  }
+                  },
+                  "wireValue": "stream_response"
                 },
                 "typeReference": {
                   "value": {
@@ -1425,7 +1425,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -1444,7 +1443,8 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  }
+                  },
+                  "wireValue": "query"
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -1453,7 +1453,6 @@
               },
               {
                 "name": {
-                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -1472,7 +1471,8 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  }
+                  },
+                  "wireValue": "stream_response"
                 },
                 "typeReference": {
                   "value": {
@@ -1531,9 +1531,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

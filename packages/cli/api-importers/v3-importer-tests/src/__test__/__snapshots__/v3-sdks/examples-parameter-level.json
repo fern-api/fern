@@ -71,7 +71,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "some-query-param",
                 "name": {
                   "originalName": "some-query-param",
                   "camelCase": {
@@ -90,7 +89,8 @@
                     "unsafeName": "SomeQueryParam",
                     "safeName": "SomeQueryParam"
                   }
-                }
+                },
+                "wireValue": "some-query-param"
               },
               "valueType": {
                 "primitive": {
@@ -112,7 +112,6 @@
             },
             {
               "name": {
-                "wireValue": "some-query-param-ref-examples",
                 "name": {
                   "originalName": "some-query-param-ref-examples",
                   "camelCase": {
@@ -131,7 +130,8 @@
                     "unsafeName": "SomeQueryParamRefExamples",
                     "safeName": "SomeQueryParamRefExamples"
                   }
-                }
+                },
+                "wireValue": "some-query-param-ref-examples"
               },
               "valueType": {
                 "primitive": {
@@ -156,7 +156,6 @@
           "headers": [
             {
               "name": {
-                "wireValue": "some-header",
                 "name": {
                   "originalName": "some-header",
                   "camelCase": {
@@ -175,7 +174,8 @@
                     "unsafeName": "SomeHeader",
                     "safeName": "SomeHeader"
                   }
-                }
+                },
+                "wireValue": "some-header"
               },
               "valueType": {
                 "primitive": {
@@ -208,7 +208,6 @@
                 "endpointHeaders": [
                   {
                     "name": {
-                      "wireValue": "some-header",
                       "name": {
                         "originalName": "some-header",
                         "camelCase": {
@@ -227,7 +226,8 @@
                           "unsafeName": "SomeHeader",
                           "safeName": "SomeHeader"
                         }
-                      }
+                      },
+                      "wireValue": "some-header"
                     },
                     "value": {
                       "jsonExample": "some-header",
@@ -281,7 +281,6 @@
                 "queryParameters": [
                   {
                     "name": {
-                      "wireValue": "some-query-param",
                       "name": {
                         "originalName": "some-query-param",
                         "camelCase": {
@@ -300,7 +299,8 @@
                           "unsafeName": "SomeQueryParam",
                           "safeName": "SomeQueryParam"
                         }
-                      }
+                      },
+                      "wireValue": "some-query-param"
                     },
                     "shape": {
                       "type": "single"
@@ -320,7 +320,6 @@
                   },
                   {
                     "name": {
-                      "wireValue": "some-query-param-ref-examples",
                       "name": {
                         "originalName": "some-query-param-ref-examples",
                         "camelCase": {
@@ -339,7 +338,8 @@
                           "unsafeName": "SomeQueryParamRefExamples",
                           "safeName": "SomeQueryParamRefExamples"
                         }
-                      }
+                      },
+                      "wireValue": "some-query-param-ref-examples"
                     },
                     "shape": {
                       "type": "single"
@@ -604,7 +604,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -623,7 +622,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

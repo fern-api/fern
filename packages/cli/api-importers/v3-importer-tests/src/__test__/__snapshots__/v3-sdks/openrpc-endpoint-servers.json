@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "paymasterAndData",
               "name": {
                 "originalName": "paymasterAndData",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "PaymasterAndData",
                   "safeName": "PaymasterAndData"
                 }
-              }
+              },
+              "wireValue": "paymasterAndData"
             },
             "valueType": {
               "container": {
@@ -83,7 +83,6 @@
           },
           {
             "name": {
-              "wireValue": "callGasLimit",
               "name": {
                 "originalName": "callGasLimit",
                 "camelCase": {
@@ -102,7 +101,8 @@
                   "unsafeName": "CallGasLimit",
                   "safeName": "CallGasLimit"
                 }
-              }
+              },
+              "wireValue": "callGasLimit"
             },
             "valueType": {
               "container": {
@@ -130,7 +130,6 @@
           },
           {
             "name": {
-              "wireValue": "verificationGasLimit",
               "name": {
                 "originalName": "verificationGasLimit",
                 "camelCase": {
@@ -149,7 +148,8 @@
                   "unsafeName": "VerificationGasLimit",
                   "safeName": "VerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "verificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -177,7 +177,6 @@
           },
           {
             "name": {
-              "wireValue": "preVerificationGas",
               "name": {
                 "originalName": "preVerificationGas",
                 "camelCase": {
@@ -196,7 +195,8 @@
                   "unsafeName": "PreVerificationGas",
                   "safeName": "PreVerificationGas"
                 }
-              }
+              },
+              "wireValue": "preVerificationGas"
             },
             "valueType": {
               "container": {
@@ -224,7 +224,6 @@
           },
           {
             "name": {
-              "wireValue": "maxFeePerGas",
               "name": {
                 "originalName": "maxFeePerGas",
                 "camelCase": {
@@ -243,7 +242,8 @@
                   "unsafeName": "MaxFeePerGas",
                   "safeName": "MaxFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxFeePerGas"
             },
             "valueType": {
               "container": {
@@ -271,7 +271,6 @@
           },
           {
             "name": {
-              "wireValue": "maxPriorityFeePerGas",
               "name": {
                 "originalName": "maxPriorityFeePerGas",
                 "camelCase": {
@@ -290,7 +289,8 @@
                   "unsafeName": "MaxPriorityFeePerGas",
                   "safeName": "MaxPriorityFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxPriorityFeePerGas"
             },
             "valueType": {
               "container": {
@@ -364,7 +364,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "paymaster",
               "name": {
                 "originalName": "paymaster",
                 "camelCase": {
@@ -383,7 +382,8 @@
                   "unsafeName": "Paymaster",
                   "safeName": "Paymaster"
                 }
-              }
+              },
+              "wireValue": "paymaster"
             },
             "valueType": {
               "container": {
@@ -411,7 +411,6 @@
           },
           {
             "name": {
-              "wireValue": "paymasterData",
               "name": {
                 "originalName": "paymasterData",
                 "camelCase": {
@@ -430,7 +429,8 @@
                   "unsafeName": "PaymasterData",
                   "safeName": "PaymasterData"
                 }
-              }
+              },
+              "wireValue": "paymasterData"
             },
             "valueType": {
               "container": {
@@ -458,7 +458,6 @@
           },
           {
             "name": {
-              "wireValue": "callGasLimit",
               "name": {
                 "originalName": "callGasLimit",
                 "camelCase": {
@@ -477,7 +476,8 @@
                   "unsafeName": "CallGasLimit",
                   "safeName": "CallGasLimit"
                 }
-              }
+              },
+              "wireValue": "callGasLimit"
             },
             "valueType": {
               "container": {
@@ -505,7 +505,6 @@
           },
           {
             "name": {
-              "wireValue": "verificationGasLimit",
               "name": {
                 "originalName": "verificationGasLimit",
                 "camelCase": {
@@ -524,7 +523,8 @@
                   "unsafeName": "VerificationGasLimit",
                   "safeName": "VerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "verificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -552,7 +552,6 @@
           },
           {
             "name": {
-              "wireValue": "preVerificationGas",
               "name": {
                 "originalName": "preVerificationGas",
                 "camelCase": {
@@ -571,7 +570,8 @@
                   "unsafeName": "PreVerificationGas",
                   "safeName": "PreVerificationGas"
                 }
-              }
+              },
+              "wireValue": "preVerificationGas"
             },
             "valueType": {
               "container": {
@@ -599,7 +599,6 @@
           },
           {
             "name": {
-              "wireValue": "maxFeePerGas",
               "name": {
                 "originalName": "maxFeePerGas",
                 "camelCase": {
@@ -618,7 +617,8 @@
                   "unsafeName": "MaxFeePerGas",
                   "safeName": "MaxFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxFeePerGas"
             },
             "valueType": {
               "container": {
@@ -646,7 +646,6 @@
           },
           {
             "name": {
-              "wireValue": "maxPriorityFeePerGas",
               "name": {
                 "originalName": "maxPriorityFeePerGas",
                 "camelCase": {
@@ -665,7 +664,8 @@
                   "unsafeName": "MaxPriorityFeePerGas",
                   "safeName": "MaxPriorityFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxPriorityFeePerGas"
             },
             "valueType": {
               "container": {
@@ -693,7 +693,6 @@
           },
           {
             "name": {
-              "wireValue": "paymasterVerificationGasLimit",
               "name": {
                 "originalName": "paymasterVerificationGasLimit",
                 "camelCase": {
@@ -712,7 +711,8 @@
                   "unsafeName": "PaymasterVerificationGasLimit",
                   "safeName": "PaymasterVerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "paymasterVerificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -740,7 +740,6 @@
           },
           {
             "name": {
-              "wireValue": "paymasterPostOpGasLimit",
               "name": {
                 "originalName": "paymasterPostOpGasLimit",
                 "camelCase": {
@@ -759,7 +758,8 @@
                   "unsafeName": "PaymasterPostOpGasLimit",
                   "safeName": "PaymasterPostOpGasLimit"
                 }
-              }
+              },
+              "wireValue": "paymasterPostOpGasLimit"
             },
             "valueType": {
               "container": {
@@ -833,7 +833,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "entrypointV06Response",
               "name": {
                 "originalName": "entrypointV06Response",
                 "camelCase": {
@@ -852,7 +851,8 @@
                   "unsafeName": "EntrypointV06Response",
                   "safeName": "EntrypointV06Response"
                 }
-              }
+              },
+              "wireValue": "entrypointV06Response"
             },
             "valueType": {
               "fernFilepath": {
@@ -891,7 +891,6 @@
           },
           {
             "name": {
-              "wireValue": "entrypointV07Response",
               "name": {
                 "originalName": "entrypointV07Response",
                 "camelCase": {
@@ -910,7 +909,8 @@
                   "unsafeName": "EntrypointV07Response",
                   "safeName": "EntrypointV07Response"
                 }
-              }
+              },
+              "wireValue": "entrypointV07Response"
             },
             "valueType": {
               "fernFilepath": {
@@ -1090,7 +1090,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "balance",
               "name": {
                 "originalName": "balance",
                 "camelCase": {
@@ -1109,7 +1108,8 @@
                   "unsafeName": "Balance",
                   "safeName": "Balance"
                 }
-              }
+              },
+              "wireValue": "balance"
             },
             "valueType": {
               "container": {
@@ -1137,7 +1137,6 @@
           },
           {
             "name": {
-              "wireValue": "nonce",
               "name": {
                 "originalName": "nonce",
                 "camelCase": {
@@ -1156,7 +1155,8 @@
                   "unsafeName": "Nonce",
                   "safeName": "Nonce"
                 }
-              }
+              },
+              "wireValue": "nonce"
             },
             "valueType": {
               "container": {
@@ -1184,7 +1184,6 @@
           },
           {
             "name": {
-              "wireValue": "code",
               "name": {
                 "originalName": "code",
                 "camelCase": {
@@ -1203,7 +1202,8 @@
                   "unsafeName": "Code",
                   "safeName": "Code"
                 }
-              }
+              },
+              "wireValue": "code"
             },
             "valueType": {
               "container": {
@@ -1231,7 +1231,6 @@
           },
           {
             "name": {
-              "wireValue": "state",
               "name": {
                 "originalName": "state",
                 "camelCase": {
@@ -1250,7 +1249,8 @@
                   "unsafeName": "State",
                   "safeName": "State"
                 }
-              }
+              },
+              "wireValue": "state"
             },
             "valueType": {
               "container": {
@@ -1296,7 +1296,6 @@
           },
           {
             "name": {
-              "wireValue": "stateDiff",
               "name": {
                 "originalName": "stateDiff",
                 "camelCase": {
@@ -1315,7 +1314,8 @@
                   "unsafeName": "StateDiff",
                   "safeName": "StateDiff"
                 }
-              }
+              },
+              "wireValue": "stateDiff"
             },
             "valueType": {
               "container": {
@@ -1407,7 +1407,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "multiplier",
               "name": {
                 "originalName": "multiplier",
                 "camelCase": {
@@ -1426,7 +1425,8 @@
                   "unsafeName": "Multiplier",
                   "safeName": "Multiplier"
                 }
-              }
+              },
+              "wireValue": "multiplier"
             },
             "valueType": {
               "container": {
@@ -1587,7 +1587,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "multiplier",
               "name": {
                 "originalName": "multiplier",
                 "camelCase": {
@@ -1606,7 +1605,8 @@
                   "unsafeName": "Multiplier",
                   "safeName": "Multiplier"
                 }
-              }
+              },
+              "wireValue": "multiplier"
             },
             "valueType": {
               "container": {
@@ -1767,7 +1767,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "multiplier",
               "name": {
                 "originalName": "multiplier",
                 "camelCase": {
@@ -1786,7 +1785,8 @@
                   "unsafeName": "Multiplier",
                   "safeName": "Multiplier"
                 }
-              }
+              },
+              "wireValue": "multiplier"
             },
             "valueType": {
               "container": {
@@ -1947,7 +1947,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "multiplier",
               "name": {
                 "originalName": "multiplier",
                 "camelCase": {
@@ -1966,7 +1965,8 @@
                   "unsafeName": "Multiplier",
                   "safeName": "Multiplier"
                 }
-              }
+              },
+              "wireValue": "multiplier"
             },
             "valueType": {
               "container": {
@@ -2127,7 +2127,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "multiplier",
               "name": {
                 "originalName": "multiplier",
                 "camelCase": {
@@ -2146,7 +2145,8 @@
                   "unsafeName": "Multiplier",
                   "safeName": "Multiplier"
                 }
-              }
+              },
+              "wireValue": "multiplier"
             },
             "valueType": {
               "container": {
@@ -2307,7 +2307,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "maxFeePerGas",
               "name": {
                 "originalName": "maxFeePerGas",
                 "camelCase": {
@@ -2326,7 +2325,8 @@
                   "unsafeName": "MaxFeePerGas",
                   "safeName": "MaxFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxFeePerGas"
             },
             "valueType": {
               "container": {
@@ -2371,7 +2371,6 @@
           },
           {
             "name": {
-              "wireValue": "maxPriorityFeePerGas",
               "name": {
                 "originalName": "maxPriorityFeePerGas",
                 "camelCase": {
@@ -2390,7 +2389,8 @@
                   "unsafeName": "MaxPriorityFeePerGas",
                   "safeName": "MaxPriorityFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxPriorityFeePerGas"
             },
             "valueType": {
               "container": {
@@ -2435,7 +2435,6 @@
           },
           {
             "name": {
-              "wireValue": "callGasLimit",
               "name": {
                 "originalName": "callGasLimit",
                 "camelCase": {
@@ -2454,7 +2453,8 @@
                   "unsafeName": "CallGasLimit",
                   "safeName": "CallGasLimit"
                 }
-              }
+              },
+              "wireValue": "callGasLimit"
             },
             "valueType": {
               "container": {
@@ -2499,7 +2499,6 @@
           },
           {
             "name": {
-              "wireValue": "verificationGasLimit",
               "name": {
                 "originalName": "verificationGasLimit",
                 "camelCase": {
@@ -2518,7 +2517,8 @@
                   "unsafeName": "VerificationGasLimit",
                   "safeName": "VerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "verificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -2563,7 +2563,6 @@
           },
           {
             "name": {
-              "wireValue": "preVerificationGas",
               "name": {
                 "originalName": "preVerificationGas",
                 "camelCase": {
@@ -2582,7 +2581,8 @@
                   "unsafeName": "PreVerificationGas",
                   "safeName": "PreVerificationGas"
                 }
-              }
+              },
+              "wireValue": "preVerificationGas"
             },
             "valueType": {
               "container": {
@@ -2674,7 +2674,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "sender",
               "name": {
                 "originalName": "sender",
                 "camelCase": {
@@ -2693,7 +2692,8 @@
                   "unsafeName": "Sender",
                   "safeName": "Sender"
                 }
-              }
+              },
+              "wireValue": "sender"
             },
             "valueType": {
               "container": {
@@ -2723,7 +2723,6 @@
           },
           {
             "name": {
-              "wireValue": "nonce",
               "name": {
                 "originalName": "nonce",
                 "camelCase": {
@@ -2742,7 +2741,8 @@
                   "unsafeName": "Nonce",
                   "safeName": "Nonce"
                 }
-              }
+              },
+              "wireValue": "nonce"
             },
             "valueType": {
               "container": {
@@ -2772,7 +2772,6 @@
           },
           {
             "name": {
-              "wireValue": "initCode",
               "name": {
                 "originalName": "initCode",
                 "camelCase": {
@@ -2791,7 +2790,8 @@
                   "unsafeName": "InitCode",
                   "safeName": "InitCode"
                 }
-              }
+              },
+              "wireValue": "initCode"
             },
             "valueType": {
               "container": {
@@ -2821,7 +2821,6 @@
           },
           {
             "name": {
-              "wireValue": "callData",
               "name": {
                 "originalName": "callData",
                 "camelCase": {
@@ -2840,7 +2839,8 @@
                   "unsafeName": "CallData",
                   "safeName": "CallData"
                 }
-              }
+              },
+              "wireValue": "callData"
             },
             "valueType": {
               "container": {
@@ -2870,7 +2870,6 @@
           },
           {
             "name": {
-              "wireValue": "callGasLimit",
               "name": {
                 "originalName": "callGasLimit",
                 "camelCase": {
@@ -2889,7 +2888,8 @@
                   "unsafeName": "CallGasLimit",
                   "safeName": "CallGasLimit"
                 }
-              }
+              },
+              "wireValue": "callGasLimit"
             },
             "valueType": {
               "container": {
@@ -2917,7 +2917,6 @@
           },
           {
             "name": {
-              "wireValue": "verificationGasLimit",
               "name": {
                 "originalName": "verificationGasLimit",
                 "camelCase": {
@@ -2936,7 +2935,8 @@
                   "unsafeName": "VerificationGasLimit",
                   "safeName": "VerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "verificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -2964,7 +2964,6 @@
           },
           {
             "name": {
-              "wireValue": "preVerificationGas",
               "name": {
                 "originalName": "preVerificationGas",
                 "camelCase": {
@@ -2983,7 +2982,8 @@
                   "unsafeName": "PreVerificationGas",
                   "safeName": "PreVerificationGas"
                 }
-              }
+              },
+              "wireValue": "preVerificationGas"
             },
             "valueType": {
               "container": {
@@ -3011,7 +3011,6 @@
           },
           {
             "name": {
-              "wireValue": "maxFeePerGas",
               "name": {
                 "originalName": "maxFeePerGas",
                 "camelCase": {
@@ -3030,7 +3029,8 @@
                   "unsafeName": "MaxFeePerGas",
                   "safeName": "MaxFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxFeePerGas"
             },
             "valueType": {
               "container": {
@@ -3058,7 +3058,6 @@
           },
           {
             "name": {
-              "wireValue": "maxPriorityFeePerGas",
               "name": {
                 "originalName": "maxPriorityFeePerGas",
                 "camelCase": {
@@ -3077,7 +3076,8 @@
                   "unsafeName": "MaxPriorityFeePerGas",
                   "safeName": "MaxPriorityFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxPriorityFeePerGas"
             },
             "valueType": {
               "container": {
@@ -3152,7 +3152,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "sender",
               "name": {
                 "originalName": "sender",
                 "camelCase": {
@@ -3171,7 +3170,8 @@
                   "unsafeName": "Sender",
                   "safeName": "Sender"
                 }
-              }
+              },
+              "wireValue": "sender"
             },
             "valueType": {
               "container": {
@@ -3201,7 +3201,6 @@
           },
           {
             "name": {
-              "wireValue": "nonce",
               "name": {
                 "originalName": "nonce",
                 "camelCase": {
@@ -3220,7 +3219,8 @@
                   "unsafeName": "Nonce",
                   "safeName": "Nonce"
                 }
-              }
+              },
+              "wireValue": "nonce"
             },
             "valueType": {
               "container": {
@@ -3250,7 +3250,6 @@
           },
           {
             "name": {
-              "wireValue": "callData",
               "name": {
                 "originalName": "callData",
                 "camelCase": {
@@ -3269,7 +3268,8 @@
                   "unsafeName": "CallData",
                   "safeName": "CallData"
                 }
-              }
+              },
+              "wireValue": "callData"
             },
             "valueType": {
               "container": {
@@ -3299,7 +3299,6 @@
           },
           {
             "name": {
-              "wireValue": "callGasLimit",
               "name": {
                 "originalName": "callGasLimit",
                 "camelCase": {
@@ -3318,7 +3317,8 @@
                   "unsafeName": "CallGasLimit",
                   "safeName": "CallGasLimit"
                 }
-              }
+              },
+              "wireValue": "callGasLimit"
             },
             "valueType": {
               "container": {
@@ -3346,7 +3346,6 @@
           },
           {
             "name": {
-              "wireValue": "verificationGasLimit",
               "name": {
                 "originalName": "verificationGasLimit",
                 "camelCase": {
@@ -3365,7 +3364,8 @@
                   "unsafeName": "VerificationGasLimit",
                   "safeName": "VerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "verificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -3393,7 +3393,6 @@
           },
           {
             "name": {
-              "wireValue": "maxFeePerGas",
               "name": {
                 "originalName": "maxFeePerGas",
                 "camelCase": {
@@ -3412,7 +3411,8 @@
                   "unsafeName": "MaxFeePerGas",
                   "safeName": "MaxFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxFeePerGas"
             },
             "valueType": {
               "container": {
@@ -3440,7 +3440,6 @@
           },
           {
             "name": {
-              "wireValue": "maxPriorityFeePerGas",
               "name": {
                 "originalName": "maxPriorityFeePerGas",
                 "camelCase": {
@@ -3459,7 +3458,8 @@
                   "unsafeName": "MaxPriorityFeePerGas",
                   "safeName": "MaxPriorityFeePerGas"
                 }
-              }
+              },
+              "wireValue": "maxPriorityFeePerGas"
             },
             "valueType": {
               "container": {
@@ -3487,7 +3487,6 @@
           },
           {
             "name": {
-              "wireValue": "paymasterVerificationGasLimit",
               "name": {
                 "originalName": "paymasterVerificationGasLimit",
                 "camelCase": {
@@ -3506,7 +3505,8 @@
                   "unsafeName": "PaymasterVerificationGasLimit",
                   "safeName": "PaymasterVerificationGasLimit"
                 }
-              }
+              },
+              "wireValue": "paymasterVerificationGasLimit"
             },
             "valueType": {
               "container": {
@@ -3534,7 +3534,6 @@
           },
           {
             "name": {
-              "wireValue": "factory",
               "name": {
                 "originalName": "factory",
                 "camelCase": {
@@ -3553,7 +3552,8 @@
                   "unsafeName": "Factory",
                   "safeName": "Factory"
                 }
-              }
+              },
+              "wireValue": "factory"
             },
             "valueType": {
               "container": {
@@ -3583,7 +3583,6 @@
           },
           {
             "name": {
-              "wireValue": "factoryData",
               "name": {
                 "originalName": "factoryData",
                 "camelCase": {
@@ -3602,7 +3601,8 @@
                   "unsafeName": "FactoryData",
                   "safeName": "FactoryData"
                 }
-              }
+              },
+              "wireValue": "factoryData"
             },
             "valueType": {
               "container": {
@@ -3632,7 +3632,6 @@
           },
           {
             "name": {
-              "wireValue": "preVerificationGas",
               "name": {
                 "originalName": "preVerificationGas",
                 "camelCase": {
@@ -3651,7 +3650,8 @@
                   "unsafeName": "PreVerificationGas",
                   "safeName": "PreVerificationGas"
                 }
-              }
+              },
+              "wireValue": "preVerificationGas"
             },
             "valueType": {
               "container": {
@@ -3679,7 +3679,6 @@
           },
           {
             "name": {
-              "wireValue": "paymasterPostOpGasLimit",
               "name": {
                 "originalName": "paymasterPostOpGasLimit",
                 "camelCase": {
@@ -3698,7 +3697,8 @@
                   "unsafeName": "PaymasterPostOpGasLimit",
                   "safeName": "PaymasterPostOpGasLimit"
                 }
-              }
+              },
+              "wireValue": "paymasterPostOpGasLimit"
             },
             "valueType": {
               "container": {
@@ -4141,7 +4141,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "entrypointV06Response",
               "name": {
                 "originalName": "entrypointV06Response",
                 "camelCase": {
@@ -4160,7 +4159,8 @@
                   "unsafeName": "EntrypointV06Response",
                   "safeName": "EntrypointV06Response"
                 }
-              }
+              },
+              "wireValue": "entrypointV06Response"
             },
             "valueType": {
               "fernFilepath": {
@@ -4199,7 +4199,6 @@
           },
           {
             "name": {
-              "wireValue": "entrypointV07Response",
               "name": {
                 "originalName": "entrypointV07Response",
                 "camelCase": {
@@ -4218,7 +4217,8 @@
                   "unsafeName": "EntrypointV07Response",
                   "safeName": "EntrypointV07Response"
                 }
-              }
+              },
+              "wireValue": "entrypointV07Response"
             },
             "valueType": {
               "fernFilepath": {
@@ -4306,7 +4306,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "serializedTransaction",
               "name": {
                 "originalName": "serializedTransaction",
                 "camelCase": {
@@ -4325,7 +4324,8 @@
                   "unsafeName": "SerializedTransaction",
                   "safeName": "SerializedTransaction"
                 }
-              }
+              },
+              "wireValue": "serializedTransaction"
             },
             "valueType": {
               "primitive": {
@@ -4598,7 +4598,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "serializedTransaction",
               "name": {
                 "originalName": "serializedTransaction",
                 "camelCase": {
@@ -4617,7 +4616,8 @@
                   "unsafeName": "SerializedTransaction",
                   "safeName": "SerializedTransaction"
                 }
-              }
+              },
+              "wireValue": "serializedTransaction"
             },
             "valueType": {
               "primitive": {
@@ -4734,7 +4734,6 @@
               {
                 "docs": "The Gas Policy ID or list of Gas Policy IDs.",
                 "name": {
-                  "wireValue": "policyId",
                   "name": {
                     "originalName": "policyId",
                     "camelCase": {
@@ -4753,7 +4752,8 @@
                       "unsafeName": "PolicyId",
                       "safeName": "PolicyId"
                     }
-                  }
+                  },
+                  "wireValue": "policyId"
                 },
                 "valueType": {
                   "fernFilepath": {
@@ -4793,7 +4793,6 @@
               {
                 "docs": "The entrypoint address the request should be sent through. This MUST be one of the entry points returned by the `supportedEntryPoints` RPC call and match the version of the user operation in the `userOperation` field.",
                 "name": {
-                  "wireValue": "entryPoint",
                   "name": {
                     "originalName": "entryPoint",
                     "camelCase": {
@@ -4812,7 +4811,8 @@
                       "unsafeName": "EntryPoint",
                       "safeName": "EntryPoint"
                     }
-                  }
+                  },
+                  "wireValue": "entryPoint"
                 },
                 "valueType": {
                   "primitive": {
@@ -4836,7 +4836,6 @@
               {
                 "docs": "Dummy signature for the operation. This is useful for estimating gas costs.\n  <Warning>\n    This endpoint requires a dummy signature in the `userOp`. Check our [FAQs](/docs/reference/account-abstraction-faq#signatures) to learn what a dummy signature is and which dummy signature you should use.\n  </Warning>\n",
                 "name": {
-                  "wireValue": "dummySignature",
                   "name": {
                     "originalName": "dummySignature",
                     "camelCase": {
@@ -4855,7 +4854,8 @@
                       "unsafeName": "DummySignature",
                       "safeName": "DummySignature"
                     }
-                  }
+                  },
+                  "wireValue": "dummySignature"
                 },
                 "valueType": {
                   "primitive": {
@@ -4877,7 +4877,6 @@
               {
                 "docs": "An object containing optional gas parameters, `paymasterAndData`, and signature fields. It can be either a v0.6 or v0.7 user operation but must match the version of the entry point at the specified `entryPoint`.",
                 "name": {
-                  "wireValue": "userOperation",
                   "name": {
                     "originalName": "userOperation",
                     "camelCase": {
@@ -4896,7 +4895,8 @@
                       "unsafeName": "UserOperation",
                       "safeName": "UserOperation"
                     }
-                  }
+                  },
+                  "wireValue": "userOperation"
                 },
                 "valueType": {
                   "fernFilepath": {
@@ -4936,7 +4936,6 @@
               {
                 "docs": "Optional fields that override our gas and fee estimates. Use this parameter to optionally override available fields: `maxFeePerGas`, `maxPriorityFeePerGas`, `callGasLimit`, `verificationGasLimit`, or `preVerificationGas`. \n\nThis will apply either:\n- absolutes overrides (using a hex string) simply overriding estimated values entirely OR\n- multiplier overrides relative to our estimates (in the format of { \"multiplier\": number } with max precision of 4 decimal places). For example, if the override value is { multiplier: 1.1 } for the `maxPriorityFeePerGas` field, then a 1.1 multiplier, or a 10% increase, is applied to the estimated `maxPriorityFeePerGas` of the userOp.\n\nThese overrides will be applied for every userOp sent with this provider. A higher buffer may give userOps a better chance to mine if the L1/L2 gas and fees change.\n\n```json\n\"overrides\": {\n  \"maxFeePerGas\": \"hex string\" | { \"multiplier\": number },\n  \"maxPriorityFeePerGas\": \"hex string\" | { \"multiplier\": number },\n  \"callGasLimit\": \"hex string\" | { \"multiplier\": number },\n  \"verificationGasLimit\": \"hex string\" | { \"multiplier\": number },\n  \"preVerificationGas\": \"hex string\" | { \"multiplier\": number },\n}\n```\n\n<Warning>\n  Previous override using \"percentage\" has been deprecated in favor of \"multiplier\" values\n</Warning>\n",
                 "name": {
-                  "wireValue": "overrides",
                   "name": {
                     "originalName": "overrides",
                     "camelCase": {
@@ -4955,7 +4954,8 @@
                       "unsafeName": "Overrides",
                       "safeName": "Overrides"
                     }
-                  }
+                  },
+                  "wireValue": "overrides"
                 },
                 "valueType": {
                   "container": {
@@ -5001,7 +5001,6 @@
               {
                 "docs": "Optional.Allows changes to the state of a contract before executing the call. For example, you can modify variable values (like balances or approvals) for that call without changing the contract itself on the blockchain. \n\nIn more technical terms, the state override set is an optional parameter that allows executing the call against a modified chain state. It is an address-to-state mapping, where each entry specifies some state to be overridden prior to executing the call.\n",
                 "name": {
-                  "wireValue": "stateOverrideSet",
                   "name": {
                     "originalName": "stateOverrideSet",
                     "camelCase": {
@@ -5020,7 +5019,8 @@
                       "unsafeName": "StateOverrideSet",
                       "safeName": "StateOverrideSet"
                     }
-                  }
+                  },
+                  "wireValue": "stateOverrideSet"
                 },
                 "valueType": {
                   "container": {
@@ -5066,7 +5066,6 @@
               {
                 "docs": "Additional data you wish to include in the request, such as proof of humanity.",
                 "name": {
-                  "wireValue": "webhookData",
                   "name": {
                     "originalName": "webhookData",
                     "camelCase": {
@@ -5085,7 +5084,8 @@
                       "unsafeName": "WebhookData",
                       "safeName": "WebhookData"
                     }
-                  }
+                  },
+                  "wireValue": "webhookData"
                 },
                 "valueType": {
                   "container": {
@@ -5188,7 +5188,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "policyId",
                         "name": {
                           "originalName": "policyId",
                           "camelCase": {
@@ -5207,7 +5206,8 @@
                             "unsafeName": "PolicyId",
                             "safeName": "PolicyId"
                           }
-                        }
+                        },
+                        "wireValue": "policyId"
                       },
                       "value": {
                         "jsonExample": "policyId",
@@ -5260,7 +5260,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "entryPoint",
                         "name": {
                           "originalName": "entryPoint",
                           "camelCase": {
@@ -5279,7 +5278,8 @@
                             "unsafeName": "EntryPoint",
                             "safeName": "EntryPoint"
                           }
-                        }
+                        },
+                        "wireValue": "entryPoint"
                       },
                       "value": {
                         "jsonExample": "entryPoint",
@@ -5296,7 +5296,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "dummySignature",
                         "name": {
                           "originalName": "dummySignature",
                           "camelCase": {
@@ -5315,7 +5314,8 @@
                             "unsafeName": "DummySignature",
                             "safeName": "DummySignature"
                           }
-                        }
+                        },
+                        "wireValue": "dummySignature"
                       },
                       "value": {
                         "jsonExample": "dummySignature",
@@ -5332,7 +5332,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "userOperation",
                         "name": {
                           "originalName": "userOperation",
                           "camelCase": {
@@ -5351,7 +5350,8 @@
                             "unsafeName": "UserOperation",
                             "safeName": "UserOperation"
                           }
-                        }
+                        },
+                        "wireValue": "userOperation"
                       },
                       "value": {
                         "jsonExample": {},
@@ -5365,7 +5365,6 @@
                                   "properties": [
                                     {
                                       "name": {
-                                        "wireValue": "sender",
                                         "name": {
                                           "originalName": "sender",
                                           "camelCase": {
@@ -5384,7 +5383,8 @@
                                             "unsafeName": "Sender",
                                             "safeName": "Sender"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "sender"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5436,7 +5436,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "nonce",
                                         "name": {
                                           "originalName": "nonce",
                                           "camelCase": {
@@ -5455,7 +5454,8 @@
                                             "unsafeName": "Nonce",
                                             "safeName": "Nonce"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "nonce"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5507,7 +5507,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "initCode",
                                         "name": {
                                           "originalName": "initCode",
                                           "camelCase": {
@@ -5526,7 +5525,8 @@
                                             "unsafeName": "InitCode",
                                             "safeName": "InitCode"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "initCode"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5578,7 +5578,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "callData",
                                         "name": {
                                           "originalName": "callData",
                                           "camelCase": {
@@ -5597,7 +5596,8 @@
                                             "unsafeName": "CallData",
                                             "safeName": "CallData"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "callData"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5649,7 +5649,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "callGasLimit",
                                         "name": {
                                           "originalName": "callGasLimit",
                                           "camelCase": {
@@ -5668,7 +5667,8 @@
                                             "unsafeName": "CallGasLimit",
                                             "safeName": "CallGasLimit"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "callGasLimit"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5718,7 +5718,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "verificationGasLimit",
                                         "name": {
                                           "originalName": "verificationGasLimit",
                                           "camelCase": {
@@ -5737,7 +5736,8 @@
                                             "unsafeName": "VerificationGasLimit",
                                             "safeName": "VerificationGasLimit"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "verificationGasLimit"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5787,7 +5787,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "preVerificationGas",
                                         "name": {
                                           "originalName": "preVerificationGas",
                                           "camelCase": {
@@ -5806,7 +5805,8 @@
                                             "unsafeName": "PreVerificationGas",
                                             "safeName": "PreVerificationGas"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "preVerificationGas"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5856,7 +5856,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "maxFeePerGas",
                                         "name": {
                                           "originalName": "maxFeePerGas",
                                           "camelCase": {
@@ -5875,7 +5874,8 @@
                                             "unsafeName": "MaxFeePerGas",
                                             "safeName": "MaxFeePerGas"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "maxFeePerGas"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -5925,7 +5925,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "maxPriorityFeePerGas",
                                         "name": {
                                           "originalName": "maxPriorityFeePerGas",
                                           "camelCase": {
@@ -5944,7 +5943,8 @@
                                             "unsafeName": "MaxPriorityFeePerGas",
                                             "safeName": "MaxPriorityFeePerGas"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "maxPriorityFeePerGas"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "AlchemyRequestGasAndPaymasterAndDataParamUserOperation0",
@@ -6059,7 +6059,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "overrides",
                         "name": {
                           "originalName": "overrides",
                           "camelCase": {
@@ -6078,7 +6077,8 @@
                             "unsafeName": "Overrides",
                             "safeName": "Overrides"
                           }
-                        }
+                        },
+                        "wireValue": "overrides"
                       },
                       "value": {
                         "shape": {
@@ -6119,7 +6119,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "stateOverrideSet",
                         "name": {
                           "originalName": "stateOverrideSet",
                           "camelCase": {
@@ -6138,7 +6137,8 @@
                             "unsafeName": "StateOverrideSet",
                             "safeName": "StateOverrideSet"
                           }
-                        }
+                        },
+                        "wireValue": "stateOverrideSet"
                       },
                       "value": {
                         "shape": {
@@ -6179,7 +6179,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "webhookData",
                         "name": {
                           "originalName": "webhookData",
                           "camelCase": {
@@ -6198,7 +6197,8 @@
                             "unsafeName": "WebhookData",
                             "safeName": "WebhookData"
                           }
-                        }
+                        },
+                        "wireValue": "webhookData"
                       },
                       "value": {
                         "shape": {
@@ -6251,7 +6251,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "entrypointV06Response",
                                 "name": {
                                   "originalName": "entrypointV06Response",
                                   "camelCase": {
@@ -6270,7 +6269,8 @@
                                     "unsafeName": "EntrypointV06Response",
                                     "safeName": "EntrypointV06Response"
                                   }
-                                }
+                                },
+                                "wireValue": "entrypointV06Response"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "AlchemyRequestGasAndPaymasterAndDataResult",
@@ -6312,7 +6312,6 @@
                                     "properties": [
                                       {
                                         "name": {
-                                          "wireValue": "paymasterAndData",
                                           "name": {
                                             "originalName": "paymasterAndData",
                                             "camelCase": {
@@ -6331,7 +6330,8 @@
                                               "unsafeName": "PaymasterAndData",
                                               "safeName": "PaymasterAndData"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "paymasterAndData"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6393,7 +6393,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "callGasLimit",
                                           "name": {
                                             "originalName": "callGasLimit",
                                             "camelCase": {
@@ -6412,7 +6411,8 @@
                                               "unsafeName": "CallGasLimit",
                                               "safeName": "CallGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "callGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6474,7 +6474,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "verificationGasLimit",
                                           "name": {
                                             "originalName": "verificationGasLimit",
                                             "camelCase": {
@@ -6493,7 +6492,8 @@
                                               "unsafeName": "VerificationGasLimit",
                                               "safeName": "VerificationGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "verificationGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6555,7 +6555,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "preVerificationGas",
                                           "name": {
                                             "originalName": "preVerificationGas",
                                             "camelCase": {
@@ -6574,7 +6573,8 @@
                                               "unsafeName": "PreVerificationGas",
                                               "safeName": "PreVerificationGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "preVerificationGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6636,7 +6636,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "maxFeePerGas",
                                           "name": {
                                             "originalName": "maxFeePerGas",
                                             "camelCase": {
@@ -6655,7 +6654,8 @@
                                               "unsafeName": "MaxFeePerGas",
                                               "safeName": "MaxFeePerGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "maxFeePerGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6717,7 +6717,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "maxPriorityFeePerGas",
                                           "name": {
                                             "originalName": "maxPriorityFeePerGas",
                                             "camelCase": {
@@ -6736,7 +6735,8 @@
                                               "unsafeName": "MaxPriorityFeePerGas",
                                               "safeName": "MaxPriorityFeePerGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "maxPriorityFeePerGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV06Response",
@@ -6831,7 +6831,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "entrypointV07Response",
                                 "name": {
                                   "originalName": "entrypointV07Response",
                                   "camelCase": {
@@ -6850,7 +6849,8 @@
                                     "unsafeName": "EntrypointV07Response",
                                     "safeName": "EntrypointV07Response"
                                   }
-                                }
+                                },
+                                "wireValue": "entrypointV07Response"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "AlchemyRequestGasAndPaymasterAndDataResult",
@@ -6895,7 +6895,6 @@
                                     "properties": [
                                       {
                                         "name": {
-                                          "wireValue": "paymaster",
                                           "name": {
                                             "originalName": "paymaster",
                                             "camelCase": {
@@ -6914,7 +6913,8 @@
                                               "unsafeName": "Paymaster",
                                               "safeName": "Paymaster"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "paymaster"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -6976,7 +6976,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "paymasterData",
                                           "name": {
                                             "originalName": "paymasterData",
                                             "camelCase": {
@@ -6995,7 +6994,8 @@
                                               "unsafeName": "PaymasterData",
                                               "safeName": "PaymasterData"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "paymasterData"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7057,7 +7057,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "callGasLimit",
                                           "name": {
                                             "originalName": "callGasLimit",
                                             "camelCase": {
@@ -7076,7 +7075,8 @@
                                               "unsafeName": "CallGasLimit",
                                               "safeName": "CallGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "callGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7138,7 +7138,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "verificationGasLimit",
                                           "name": {
                                             "originalName": "verificationGasLimit",
                                             "camelCase": {
@@ -7157,7 +7156,8 @@
                                               "unsafeName": "VerificationGasLimit",
                                               "safeName": "VerificationGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "verificationGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7219,7 +7219,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "preVerificationGas",
                                           "name": {
                                             "originalName": "preVerificationGas",
                                             "camelCase": {
@@ -7238,7 +7237,8 @@
                                               "unsafeName": "PreVerificationGas",
                                               "safeName": "PreVerificationGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "preVerificationGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7300,7 +7300,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "maxFeePerGas",
                                           "name": {
                                             "originalName": "maxFeePerGas",
                                             "camelCase": {
@@ -7319,7 +7318,8 @@
                                               "unsafeName": "MaxFeePerGas",
                                               "safeName": "MaxFeePerGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "maxFeePerGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7381,7 +7381,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "maxPriorityFeePerGas",
                                           "name": {
                                             "originalName": "maxPriorityFeePerGas",
                                             "camelCase": {
@@ -7400,7 +7399,8 @@
                                               "unsafeName": "MaxPriorityFeePerGas",
                                               "safeName": "MaxPriorityFeePerGas"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "maxPriorityFeePerGas"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7462,7 +7462,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "paymasterVerificationGasLimit",
                                           "name": {
                                             "originalName": "paymasterVerificationGasLimit",
                                             "camelCase": {
@@ -7481,7 +7480,8 @@
                                               "unsafeName": "PaymasterVerificationGasLimit",
                                               "safeName": "PaymasterVerificationGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "paymasterVerificationGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7543,7 +7543,6 @@
                                       },
                                       {
                                         "name": {
-                                          "wireValue": "paymasterPostOpGasLimit",
                                           "name": {
                                             "originalName": "paymasterPostOpGasLimit",
                                             "camelCase": {
@@ -7562,7 +7561,8 @@
                                               "unsafeName": "PaymasterPostOpGasLimit",
                                               "safeName": "PaymasterPostOpGasLimit"
                                             }
-                                          }
+                                          },
+                                          "wireValue": "paymasterPostOpGasLimit"
                                         },
                                         "originalTypeDeclaration": {
                                           "typeId": "AlchemyRequestGasAndPaymasterAndDataResultEntrypointV07Response",
@@ -7820,7 +7820,6 @@
               {
                 "docs": "The policy ID (_or list of IDs_) that governs sponsorship.",
                 "name": {
-                  "wireValue": "policyId",
                   "name": {
                     "originalName": "policyId",
                     "camelCase": {
@@ -7839,7 +7838,8 @@
                       "unsafeName": "PolicyId",
                       "safeName": "PolicyId"
                     }
-                  }
+                  },
+                  "wireValue": "policyId"
                 },
                 "valueType": {
                   "fernFilepath": {
@@ -7879,7 +7879,6 @@
               {
                 "docs": "The unsigned transaction produced by `tx.serialize()`.\nIt may already contain a `feePayer`; the service will overwrite it\nwith the sponsoring account and add the fee-payer signature.\n",
                 "name": {
-                  "wireValue": "serializedTransaction",
                   "name": {
                     "originalName": "serializedTransaction",
                     "camelCase": {
@@ -7898,7 +7897,8 @@
                       "unsafeName": "SerializedTransaction",
                       "safeName": "SerializedTransaction"
                     }
-                  }
+                  },
+                  "wireValue": "serializedTransaction"
                 },
                 "valueType": {
                   "primitive": {
@@ -7922,7 +7922,6 @@
               {
                 "docs": "Optional metadata (e.g. proof-of-humanity) that is forwarded to any policy-level webhooks.\n",
                 "name": {
-                  "wireValue": "webhookData",
                   "name": {
                     "originalName": "webhookData",
                     "camelCase": {
@@ -7941,7 +7940,8 @@
                       "unsafeName": "WebhookData",
                       "safeName": "WebhookData"
                     }
-                  }
+                  },
+                  "wireValue": "webhookData"
                 },
                 "valueType": {
                   "container": {
@@ -8041,7 +8041,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "policyId",
                         "name": {
                           "originalName": "policyId",
                           "camelCase": {
@@ -8060,7 +8059,8 @@
                             "unsafeName": "PolicyId",
                             "safeName": "PolicyId"
                           }
-                        }
+                        },
+                        "wireValue": "policyId"
                       },
                       "value": {
                         "jsonExample": "policyId",
@@ -8113,7 +8113,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "serializedTransaction",
                         "name": {
                           "originalName": "serializedTransaction",
                           "camelCase": {
@@ -8132,7 +8131,8 @@
                             "unsafeName": "SerializedTransaction",
                             "safeName": "SerializedTransaction"
                           }
-                        }
+                        },
+                        "wireValue": "serializedTransaction"
                       },
                       "value": {
                         "jsonExample": "serializedTransaction",
@@ -8149,7 +8149,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "webhookData",
                         "name": {
                           "originalName": "webhookData",
                           "camelCase": {
@@ -8168,7 +8167,8 @@
                             "unsafeName": "WebhookData",
                             "safeName": "WebhookData"
                           }
-                        }
+                        },
+                        "wireValue": "webhookData"
                       },
                       "value": {
                         "shape": {
@@ -8203,7 +8203,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "serializedTransaction",
                                 "name": {
                                   "originalName": "serializedTransaction",
                                   "camelCase": {
@@ -8222,7 +8221,8 @@
                                     "unsafeName": "SerializedTransaction",
                                     "safeName": "SerializedTransaction"
                                   }
-                                }
+                                },
+                                "wireValue": "serializedTransaction"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "AlchemyRequestFeePayerResult",
@@ -8534,7 +8534,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -8553,7 +8552,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

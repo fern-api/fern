@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              }
+              },
+              "wireValue": "foo"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              }
+              },
+              "wireValue": "bar"
             },
             "valueType": {
               "container": {
@@ -174,7 +174,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -193,7 +192,8 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              }
+              },
+              "wireValue": "foo"
             },
             "valueType": {
               "container": {
@@ -220,7 +220,6 @@
           },
           {
             "name": {
-              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -239,7 +238,8 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              }
+              },
+              "wireValue": "bar"
             },
             "valueType": {
               "container": {
@@ -359,7 +359,6 @@
                                         "properties": [
                                           {
                                             "name": {
-                                              "wireValue": "foo",
                                               "name": {
                                                 "originalName": "foo",
                                                 "camelCase": {
@@ -378,7 +377,8 @@
                                                   "unsafeName": "Foo",
                                                   "safeName": "Foo"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "foo"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -427,7 +427,6 @@
                                           },
                                           {
                                             "name": {
-                                              "wireValue": "bar",
                                               "name": {
                                                 "originalName": "bar",
                                                 "camelCase": {
@@ -446,7 +445,8 @@
                                                   "unsafeName": "Bar",
                                                   "safeName": "Bar"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "bar"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -532,7 +532,6 @@
                                         "properties": [
                                           {
                                             "name": {
-                                              "wireValue": "foo",
                                               "name": {
                                                 "originalName": "foo",
                                                 "camelCase": {
@@ -551,7 +550,8 @@
                                                   "unsafeName": "Foo",
                                                   "safeName": "Foo"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "foo"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -600,7 +600,6 @@
                                           },
                                           {
                                             "name": {
-                                              "wireValue": "bar",
                                               "name": {
                                                 "originalName": "bar",
                                                 "camelCase": {
@@ -619,7 +618,8 @@
                                                   "unsafeName": "Bar",
                                                   "safeName": "Bar"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "bar"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -1102,7 +1102,6 @@
                                         "properties": [
                                           {
                                             "name": {
-                                              "wireValue": "foo",
                                               "name": {
                                                 "originalName": "foo",
                                                 "camelCase": {
@@ -1121,7 +1120,8 @@
                                                   "unsafeName": "Foo",
                                                   "safeName": "Foo"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "foo"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -1170,7 +1170,6 @@
                                           },
                                           {
                                             "name": {
-                                              "wireValue": "bar",
                                               "name": {
                                                 "originalName": "bar",
                                                 "camelCase": {
@@ -1189,7 +1188,8 @@
                                                   "unsafeName": "Bar",
                                                   "safeName": "Bar"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "bar"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -1275,7 +1275,6 @@
                                         "properties": [
                                           {
                                             "name": {
-                                              "wireValue": "foo",
                                               "name": {
                                                 "originalName": "foo",
                                                 "camelCase": {
@@ -1294,7 +1293,8 @@
                                                   "unsafeName": "Foo",
                                                   "safeName": "Foo"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "foo"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -1343,7 +1343,6 @@
                                           },
                                           {
                                             "name": {
-                                              "wireValue": "bar",
                                               "name": {
                                                 "originalName": "bar",
                                                 "camelCase": {
@@ -1362,7 +1361,8 @@
                                                   "unsafeName": "Bar",
                                                   "safeName": "Bar"
                                                 }
-                                              }
+                                              },
+                                              "wireValue": "bar"
                                             },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
@@ -1844,7 +1844,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1863,7 +1862,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

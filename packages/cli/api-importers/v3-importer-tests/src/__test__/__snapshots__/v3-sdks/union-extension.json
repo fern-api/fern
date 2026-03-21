@@ -140,7 +140,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "iban",
               "name": {
                 "originalName": "iban",
                 "camelCase": {
@@ -159,7 +158,8 @@
                   "unsafeName": "Iban",
                   "safeName": "Iban"
                 }
-              }
+              },
+              "wireValue": "iban"
             },
             "valueType": {
               "container": {
@@ -238,7 +238,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "other",
               "name": {
                 "originalName": "other",
                 "camelCase": {
@@ -257,7 +256,8 @@
                   "unsafeName": "Other",
                   "safeName": "Other"
                 }
-              }
+              },
+              "wireValue": "other"
             },
             "valueType": {
               "container": {
@@ -357,7 +357,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "identification",
               "name": {
                 "originalName": "identification",
                 "camelCase": {
@@ -376,7 +375,8 @@
                   "unsafeName": "Identification",
                   "safeName": "Identification"
                 }
-              }
+              },
+              "wireValue": "identification"
             },
             "valueType": {
               "container": {
@@ -403,7 +403,6 @@
           },
           {
             "name": {
-              "wireValue": "schemeNameCone",
               "name": {
                 "originalName": "schemeNameCone",
                 "camelCase": {
@@ -422,7 +421,8 @@
                   "unsafeName": "SchemeNameCone",
                   "safeName": "SchemeNameCone"
                 }
-              }
+              },
+              "wireValue": "schemeNameCone"
             },
             "valueType": {
               "container": {
@@ -495,7 +495,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "currency",
               "name": {
                 "originalName": "currency",
                 "camelCase": {
@@ -514,7 +513,8 @@
                   "unsafeName": "Currency",
                   "safeName": "Currency"
                 }
-              }
+              },
+              "wireValue": "currency"
             },
             "valueType": {
               "container": {
@@ -648,7 +648,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -667,7 +666,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

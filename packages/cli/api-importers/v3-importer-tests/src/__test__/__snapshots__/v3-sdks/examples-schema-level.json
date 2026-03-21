@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "latitude",
               "name": {
                 "originalName": "latitude",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Latitude",
                   "safeName": "Latitude"
                 }
-              }
+              },
+              "wireValue": "latitude"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "longitude",
               "name": {
                 "originalName": "longitude",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Longitude",
                   "safeName": "Longitude"
                 }
-              }
+              },
+              "wireValue": "longitude"
             },
             "valueType": {
               "container": {
@@ -185,7 +185,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "species",
               "name": {
                 "originalName": "species",
                 "camelCase": {
@@ -204,7 +203,8 @@
                   "unsafeName": "Species",
                   "safeName": "Species"
                 }
-              }
+              },
+              "wireValue": "species"
             },
             "valueType": {
               "primitive": {
@@ -225,7 +225,6 @@
           },
           {
             "name": {
-              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -244,7 +243,8 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              }
+              },
+              "wireValue": "height"
             },
             "valueType": {
               "primitive": {
@@ -265,7 +265,6 @@
           },
           {
             "name": {
-              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -284,7 +283,8 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              }
+              },
+              "wireValue": "age"
             },
             "valueType": {
               "container": {
@@ -311,7 +311,6 @@
           },
           {
             "name": {
-              "wireValue": "location",
               "name": {
                 "originalName": "location",
                 "camelCase": {
@@ -330,7 +329,8 @@
                   "unsafeName": "Location",
                   "safeName": "Location"
                 }
-              }
+              },
+              "wireValue": "location"
             },
             "valueType": {
               "container": {
@@ -440,7 +440,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -459,7 +458,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -482,7 +482,6 @@
           },
           {
             "name": {
-              "wireValue": "plantedDate",
               "name": {
                 "originalName": "plantedDate",
                 "camelCase": {
@@ -501,7 +500,8 @@
                   "unsafeName": "PlantedDate",
                   "safeName": "PlantedDate"
                 }
-              }
+              },
+              "wireValue": "plantedDate"
             },
             "valueType": {
               "container": {
@@ -723,7 +723,6 @@
                                   "properties": [
                                     {
                                       "name": {
-                                        "wireValue": "species",
                                         "name": {
                                           "originalName": "species",
                                           "camelCase": {
@@ -742,7 +741,8 @@
                                             "unsafeName": "Species",
                                             "safeName": "Species"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "species"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -785,7 +785,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "height",
                                         "name": {
                                           "originalName": "height",
                                           "camelCase": {
@@ -804,7 +803,8 @@
                                             "unsafeName": "Height",
                                             "safeName": "Height"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "height"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -845,7 +845,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "age",
                                         "name": {
                                           "originalName": "age",
                                           "camelCase": {
@@ -864,7 +863,8 @@
                                             "unsafeName": "Age",
                                             "safeName": "Age"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "age"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -924,7 +924,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "location",
                                         "name": {
                                           "originalName": "location",
                                           "camelCase": {
@@ -943,7 +942,8 @@
                                             "unsafeName": "Location",
                                             "safeName": "Location"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "location"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -988,7 +988,6 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "wireValue": "latitude",
                                                         "name": {
                                                           "originalName": "latitude",
                                                           "camelCase": {
@@ -1007,7 +1006,8 @@
                                                             "unsafeName": "Latitude",
                                                             "safeName": "Latitude"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "latitude"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "TreeCreateLocation",
@@ -1067,7 +1067,6 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "wireValue": "longitude",
                                                         "name": {
                                                           "originalName": "longitude",
                                                           "camelCase": {
@@ -1086,7 +1085,8 @@
                                                             "unsafeName": "Longitude",
                                                             "safeName": "Longitude"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "longitude"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "TreeCreateLocation",
@@ -1212,7 +1212,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -1231,7 +1230,8 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "id"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "Tree",
@@ -1274,7 +1274,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "plantedDate",
                                         "name": {
                                           "originalName": "plantedDate",
                                           "camelCase": {
@@ -1293,7 +1292,8 @@
                                             "unsafeName": "PlantedDate",
                                             "safeName": "PlantedDate"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "plantedDate"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "Tree",
@@ -1400,7 +1400,6 @@
                                   "properties": [
                                     {
                                       "name": {
-                                        "wireValue": "species",
                                         "name": {
                                           "originalName": "species",
                                           "camelCase": {
@@ -1419,7 +1418,8 @@
                                             "unsafeName": "Species",
                                             "safeName": "Species"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "species"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -1462,7 +1462,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "height",
                                         "name": {
                                           "originalName": "height",
                                           "camelCase": {
@@ -1481,7 +1480,8 @@
                                             "unsafeName": "Height",
                                             "safeName": "Height"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "height"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -1522,7 +1522,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "age",
                                         "name": {
                                           "originalName": "age",
                                           "camelCase": {
@@ -1541,7 +1540,8 @@
                                             "unsafeName": "Age",
                                             "safeName": "Age"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "age"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -1601,7 +1601,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "location",
                                         "name": {
                                           "originalName": "location",
                                           "camelCase": {
@@ -1620,7 +1619,8 @@
                                             "unsafeName": "Location",
                                             "safeName": "Location"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "location"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "TreeCreate",
@@ -1665,7 +1665,6 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "wireValue": "latitude",
                                                         "name": {
                                                           "originalName": "latitude",
                                                           "camelCase": {
@@ -1684,7 +1683,8 @@
                                                             "unsafeName": "Latitude",
                                                             "safeName": "Latitude"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "latitude"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "TreeCreateLocation",
@@ -1744,7 +1744,6 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "wireValue": "longitude",
                                                         "name": {
                                                           "originalName": "longitude",
                                                           "camelCase": {
@@ -1763,7 +1762,8 @@
                                                             "unsafeName": "Longitude",
                                                             "safeName": "Longitude"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "longitude"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "TreeCreateLocation",
@@ -1889,7 +1889,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -1908,7 +1907,8 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "id"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "Tree",
@@ -1951,7 +1951,6 @@
                                     },
                                     {
                                       "name": {
-                                        "wireValue": "plantedDate",
                                         "name": {
                                           "originalName": "plantedDate",
                                           "camelCase": {
@@ -1970,7 +1969,8 @@
                                             "unsafeName": "PlantedDate",
                                             "safeName": "PlantedDate"
                                           }
-                                        }
+                                        },
+                                        "wireValue": "plantedDate"
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "Tree",
@@ -2334,7 +2334,6 @@
                       "properties": [
                         {
                           "name": {
-                            "wireValue": "species",
                             "name": {
                               "originalName": "species",
                               "camelCase": {
@@ -2353,7 +2352,8 @@
                                 "unsafeName": "Species",
                                 "safeName": "Species"
                               }
-                            }
+                            },
+                            "wireValue": "species"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
@@ -2396,7 +2396,6 @@
                         },
                         {
                           "name": {
-                            "wireValue": "height",
                             "name": {
                               "originalName": "height",
                               "camelCase": {
@@ -2415,7 +2414,8 @@
                                 "unsafeName": "Height",
                                 "safeName": "Height"
                               }
-                            }
+                            },
+                            "wireValue": "height"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
@@ -2456,7 +2456,6 @@
                         },
                         {
                           "name": {
-                            "wireValue": "age",
                             "name": {
                               "originalName": "age",
                               "camelCase": {
@@ -2475,7 +2474,8 @@
                                 "unsafeName": "Age",
                                 "safeName": "Age"
                               }
-                            }
+                            },
+                            "wireValue": "age"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
@@ -2524,7 +2524,6 @@
                         },
                         {
                           "name": {
-                            "wireValue": "location",
                             "name": {
                               "originalName": "location",
                               "camelCase": {
@@ -2543,7 +2542,8 @@
                                 "unsafeName": "Location",
                                 "safeName": "Location"
                               }
-                            }
+                            },
+                            "wireValue": "location"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
@@ -2660,7 +2660,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "species",
                                 "name": {
                                   "originalName": "species",
                                   "camelCase": {
@@ -2679,7 +2678,8 @@
                                     "unsafeName": "Species",
                                     "safeName": "Species"
                                   }
-                                }
+                                },
+                                "wireValue": "species"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -2722,7 +2722,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "height",
                                 "name": {
                                   "originalName": "height",
                                   "camelCase": {
@@ -2741,7 +2740,8 @@
                                     "unsafeName": "Height",
                                     "safeName": "Height"
                                   }
-                                }
+                                },
+                                "wireValue": "height"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -2782,7 +2782,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "age",
                                 "name": {
                                   "originalName": "age",
                                   "camelCase": {
@@ -2801,7 +2800,8 @@
                                     "unsafeName": "Age",
                                     "safeName": "Age"
                                   }
-                                }
+                                },
+                                "wireValue": "age"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -2861,7 +2861,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "location",
                                 "name": {
                                   "originalName": "location",
                                   "camelCase": {
@@ -2880,7 +2879,8 @@
                                     "unsafeName": "Location",
                                     "safeName": "Location"
                                   }
-                                }
+                                },
+                                "wireValue": "location"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -2925,7 +2925,6 @@
                                           "properties": [
                                             {
                                               "name": {
-                                                "wireValue": "latitude",
                                                 "name": {
                                                   "originalName": "latitude",
                                                   "camelCase": {
@@ -2944,7 +2943,8 @@
                                                     "unsafeName": "Latitude",
                                                     "safeName": "Latitude"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "latitude"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeCreateLocation",
@@ -3004,7 +3004,6 @@
                                             },
                                             {
                                               "name": {
-                                                "wireValue": "longitude",
                                                 "name": {
                                                   "originalName": "longitude",
                                                   "camelCase": {
@@ -3023,7 +3022,8 @@
                                                     "unsafeName": "Longitude",
                                                     "safeName": "Longitude"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "longitude"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeCreateLocation",
@@ -3149,7 +3149,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -3168,7 +3167,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Tree",
@@ -3211,7 +3211,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "plantedDate",
                                 "name": {
                                   "originalName": "plantedDate",
                                   "camelCase": {
@@ -3230,7 +3229,8 @@
                                     "unsafeName": "PlantedDate",
                                     "safeName": "PlantedDate"
                                   }
-                                }
+                                },
+                                "wireValue": "plantedDate"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Tree",
@@ -3720,7 +3720,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "species",
                                 "name": {
                                   "originalName": "species",
                                   "camelCase": {
@@ -3739,7 +3738,8 @@
                                     "unsafeName": "Species",
                                     "safeName": "Species"
                                   }
-                                }
+                                },
+                                "wireValue": "species"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -3782,7 +3782,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "height",
                                 "name": {
                                   "originalName": "height",
                                   "camelCase": {
@@ -3801,7 +3800,8 @@
                                     "unsafeName": "Height",
                                     "safeName": "Height"
                                   }
-                                }
+                                },
+                                "wireValue": "height"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -3842,7 +3842,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "age",
                                 "name": {
                                   "originalName": "age",
                                   "camelCase": {
@@ -3861,7 +3860,8 @@
                                     "unsafeName": "Age",
                                     "safeName": "Age"
                                   }
-                                }
+                                },
+                                "wireValue": "age"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -3921,7 +3921,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "location",
                                 "name": {
                                   "originalName": "location",
                                   "camelCase": {
@@ -3940,7 +3939,8 @@
                                     "unsafeName": "Location",
                                     "safeName": "Location"
                                   }
-                                }
+                                },
+                                "wireValue": "location"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeCreate",
@@ -3985,7 +3985,6 @@
                                           "properties": [
                                             {
                                               "name": {
-                                                "wireValue": "latitude",
                                                 "name": {
                                                   "originalName": "latitude",
                                                   "camelCase": {
@@ -4004,7 +4003,8 @@
                                                     "unsafeName": "Latitude",
                                                     "safeName": "Latitude"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "latitude"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeCreateLocation",
@@ -4064,7 +4064,6 @@
                                             },
                                             {
                                               "name": {
-                                                "wireValue": "longitude",
                                                 "name": {
                                                   "originalName": "longitude",
                                                   "camelCase": {
@@ -4083,7 +4082,8 @@
                                                     "unsafeName": "Longitude",
                                                     "safeName": "Longitude"
                                                   }
-                                                }
+                                                },
+                                                "wireValue": "longitude"
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeCreateLocation",
@@ -4209,7 +4209,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -4228,7 +4227,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Tree",
@@ -4271,7 +4271,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "plantedDate",
                                 "name": {
                                   "originalName": "plantedDate",
                                   "camelCase": {
@@ -4290,7 +4289,8 @@
                                     "unsafeName": "PlantedDate",
                                     "safeName": "PlantedDate"
                                   }
-                                }
+                                },
+                                "wireValue": "plantedDate"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Tree",
@@ -4630,7 +4630,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "color",
                         "name": {
                           "originalName": "color",
                           "camelCase": {
@@ -4649,7 +4648,8 @@
                             "unsafeName": "Color",
                             "safeName": "Color"
                           }
-                        }
+                        },
+                        "wireValue": "color"
                       },
                       "value": {
                         "shape": {
@@ -4672,7 +4672,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "name",
                         "name": {
                           "originalName": "name",
                           "camelCase": {
@@ -4691,7 +4690,8 @@
                             "unsafeName": "Name",
                             "safeName": "Name"
                           }
-                        }
+                        },
+                        "wireValue": "name"
                       },
                       "value": {
                         "shape": {
@@ -4792,7 +4792,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "color",
                   "name": {
                     "originalName": "color",
                     "camelCase": {
@@ -4811,7 +4810,8 @@
                       "unsafeName": "Color",
                       "safeName": "Color"
                     }
-                  }
+                  },
+                  "wireValue": "color"
                 },
                 "valueType": {
                   "container": {
@@ -4838,7 +4838,6 @@
               },
               {
                 "name": {
-                  "wireValue": "name",
                   "name": {
                     "originalName": "name",
                     "camelCase": {
@@ -4857,7 +4856,8 @@
                       "unsafeName": "Name",
                       "safeName": "Name"
                     }
-                  }
+                  },
+                  "wireValue": "name"
                 },
                 "valueType": {
                   "container": {
@@ -4923,7 +4923,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "color",
                       "name": {
                         "originalName": "color",
                         "camelCase": {
@@ -4942,7 +4941,8 @@
                           "unsafeName": "Color",
                           "safeName": "Color"
                         }
-                      }
+                      },
+                      "wireValue": "color"
                     },
                     "valueType": {
                       "container": {
@@ -4969,7 +4969,6 @@
                   },
                   {
                     "name": {
-                      "wireValue": "name",
                       "name": {
                         "originalName": "name",
                         "camelCase": {
@@ -4988,7 +4987,8 @@
                           "unsafeName": "Name",
                           "safeName": "Name"
                         }
-                      }
+                      },
+                      "wireValue": "name"
                     },
                     "valueType": {
                       "container": {
@@ -5501,7 +5501,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "annual",
                         "name": {
                           "originalName": "annual",
                           "camelCase": {
@@ -5520,7 +5519,8 @@
                             "unsafeName": "Annual",
                             "safeName": "Annual"
                           }
-                        }
+                        },
+                        "wireValue": "annual"
                       },
                       "value": {
                         "shape": {
@@ -5542,7 +5542,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "foo",
                         "name": {
                           "originalName": "foo",
                           "camelCase": {
@@ -5561,7 +5560,8 @@
                             "unsafeName": "Foo",
                             "safeName": "Foo"
                           }
-                        }
+                        },
+                        "wireValue": "foo"
                       },
                       "value": {
                         "shape": {
@@ -5584,7 +5584,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "bar",
                         "name": {
                           "originalName": "bar",
                           "camelCase": {
@@ -5603,7 +5602,8 @@
                             "unsafeName": "Bar",
                             "safeName": "Bar"
                           }
-                        }
+                        },
+                        "wireValue": "bar"
                       },
                       "value": {
                         "shape": {
@@ -5692,7 +5692,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "annual",
                   "name": {
                     "originalName": "annual",
                     "camelCase": {
@@ -5711,7 +5710,8 @@
                       "unsafeName": "Annual",
                       "safeName": "Annual"
                     }
-                  }
+                  },
+                  "wireValue": "annual"
                 },
                 "valueType": {
                   "container": {
@@ -5737,7 +5737,6 @@
               },
               {
                 "name": {
-                  "wireValue": "foo",
                   "name": {
                     "originalName": "foo",
                     "camelCase": {
@@ -5756,7 +5755,8 @@
                       "unsafeName": "Foo",
                       "safeName": "Foo"
                     }
-                  }
+                  },
+                  "wireValue": "foo"
                 },
                 "valueType": {
                   "container": {
@@ -5783,7 +5783,6 @@
               },
               {
                 "name": {
-                  "wireValue": "bar",
                   "name": {
                     "originalName": "bar",
                     "camelCase": {
@@ -5802,7 +5801,8 @@
                       "unsafeName": "Bar",
                       "safeName": "Bar"
                     }
-                  }
+                  },
+                  "wireValue": "bar"
                 },
                 "valueType": {
                   "container": {
@@ -5869,7 +5869,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "annual",
                       "name": {
                         "originalName": "annual",
                         "camelCase": {
@@ -5888,7 +5887,8 @@
                           "unsafeName": "Annual",
                           "safeName": "Annual"
                         }
-                      }
+                      },
+                      "wireValue": "annual"
                     },
                     "valueType": {
                       "container": {
@@ -5914,7 +5914,6 @@
                   },
                   {
                     "name": {
-                      "wireValue": "foo",
                       "name": {
                         "originalName": "foo",
                         "camelCase": {
@@ -5933,7 +5932,8 @@
                           "unsafeName": "Foo",
                           "safeName": "Foo"
                         }
-                      }
+                      },
+                      "wireValue": "foo"
                     },
                     "valueType": {
                       "container": {
@@ -5960,7 +5960,6 @@
                   },
                   {
                     "name": {
-                      "wireValue": "bar",
                       "name": {
                         "originalName": "bar",
                         "camelCase": {
@@ -5979,7 +5978,8 @@
                           "unsafeName": "Bar",
                           "safeName": "Bar"
                         }
-                      }
+                      },
+                      "wireValue": "bar"
                     },
                     "valueType": {
                       "container": {
@@ -6109,7 +6109,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -6128,7 +6127,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

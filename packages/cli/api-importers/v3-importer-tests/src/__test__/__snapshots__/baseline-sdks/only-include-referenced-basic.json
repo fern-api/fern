@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "items",
               "name": {
                 "originalName": "items",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Items",
                   "safeName": "Items"
                 }
-              }
+              },
+              "wireValue": "items"
             },
             "valueType": {
               "container": {
@@ -162,7 +162,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -181,7 +180,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -199,7 +199,6 @@
           },
           {
             "name": {
-              "wireValue": "details",
               "name": {
                 "originalName": "details",
                 "camelCase": {
@@ -218,7 +217,8 @@
                   "unsafeName": "Details",
                   "safeName": "Details"
                 }
-              }
+              },
+              "wireValue": "details"
             },
             "valueType": {
               "name": {
@@ -296,7 +296,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -315,7 +314,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -339,7 +339,6 @@
           },
           {
             "name": {
-              "wireValue": "description",
               "name": {
                 "originalName": "description",
                 "camelCase": {
@@ -358,7 +357,8 @@
                   "unsafeName": "Description",
                   "safeName": "Description"
                 }
-              }
+              },
+              "wireValue": "description"
             },
             "valueType": {
               "container": {
@@ -500,7 +500,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -519,7 +518,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -571,7 +571,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "items",
               "name": {
                 "originalName": "items",
                 "camelCase": {
@@ -590,7 +589,8 @@
                   "unsafeName": "Items",
                   "safeName": "Items"
                 }
-              }
+              },
+              "wireValue": "items"
             },
             "typeReference": {
               "value": {
@@ -633,7 +633,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -652,7 +651,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": "INTEGER",
@@ -661,7 +661,6 @@
           },
           {
             "name": {
-              "wireValue": "details",
               "name": {
                 "originalName": "details",
                 "camelCase": {
@@ -680,7 +679,8 @@
                   "unsafeName": "Details",
                   "safeName": "Details"
                 }
-              }
+              },
+              "wireValue": "details"
             },
             "typeReference": {
               "value": "type_:ItemDetails",
@@ -720,7 +720,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -739,7 +738,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": {
@@ -751,7 +751,6 @@
           },
           {
             "name": {
-              "wireValue": "description",
               "name": {
                 "originalName": "description",
                 "camelCase": {
@@ -770,7 +769,8 @@
                   "unsafeName": "Description",
                   "safeName": "Description"
                 }
-              }
+              },
+              "wireValue": "description"
             },
             "typeReference": {
               "value": {
@@ -830,9 +830,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

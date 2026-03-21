@@ -74,7 +74,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "foo",
                 "name": {
                   "originalName": "foo",
                   "camelCase": {
@@ -93,7 +92,8 @@
                     "unsafeName": "Foo",
                     "safeName": "Foo"
                   }
-                }
+                },
+                "wireValue": "foo"
               },
               "valueType": {
                 "primitive": {
@@ -117,7 +117,6 @@
           "headers": [
             {
               "name": {
-                "wireValue": "X-API-Version",
                 "name": {
                   "originalName": "X-API-Version",
                   "camelCase": {
@@ -136,7 +135,8 @@
                     "unsafeName": "XApiVersion",
                     "safeName": "XApiVersion"
                   }
-                }
+                },
+                "wireValue": "X-API-Version"
               },
               "valueType": {
                 "primitive": {
@@ -168,7 +168,6 @@
                 "endpointHeaders": [
                   {
                     "name": {
-                      "wireValue": "X-API-Version",
                       "name": {
                         "originalName": "X-API-Version",
                         "camelCase": {
@@ -187,7 +186,8 @@
                           "unsafeName": "XApiVersion",
                           "safeName": "XApiVersion"
                         }
-                      }
+                      },
+                      "wireValue": "X-API-Version"
                     },
                     "value": {
                       "jsonExample": "X-API-Version",
@@ -241,7 +241,6 @@
                 "queryParameters": [
                   {
                     "name": {
-                      "wireValue": "foo",
                       "name": {
                         "originalName": "foo",
                         "camelCase": {
@@ -260,7 +259,8 @@
                           "unsafeName": "Foo",
                           "safeName": "Foo"
                         }
-                      }
+                      },
+                      "wireValue": "foo"
                     },
                     "shape": {
                       "type": "single"
@@ -528,7 +528,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -547,7 +546,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

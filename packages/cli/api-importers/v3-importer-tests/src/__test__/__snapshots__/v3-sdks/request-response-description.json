@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -278,7 +278,6 @@
                                 "properties": [
                                   {
                                     "name": {
-                                      "wireValue": "id",
                                       "name": {
                                         "originalName": "id",
                                         "camelCase": {
@@ -297,7 +296,8 @@
                                           "unsafeName": "Id",
                                           "safeName": "Id"
                                         }
-                                      }
+                                      },
+                                      "wireValue": "id"
                                     },
                                     "originalTypeDeclaration": {
                                       "typeId": "Schema1",
@@ -357,7 +357,6 @@
                                   },
                                   {
                                     "name": {
-                                      "wireValue": "name",
                                       "name": {
                                         "originalName": "name",
                                         "camelCase": {
@@ -376,7 +375,8 @@
                                           "unsafeName": "Name",
                                           "safeName": "Name"
                                         }
-                                      }
+                                      },
+                                      "wireValue": "name"
                                     },
                                     "originalTypeDeclaration": {
                                       "typeId": "Schema1",
@@ -728,7 +728,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -747,7 +746,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

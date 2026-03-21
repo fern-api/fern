@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              }
+              },
+              "wireValue": "message"
             },
             "valueType": {
               "container": {
@@ -128,7 +128,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -147,7 +146,8 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              }
+              },
+              "wireValue": "message"
             },
             "valueType": {
               "container": {
@@ -240,7 +240,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "message",
                                 "name": {
                                   "originalName": "message",
                                   "camelCase": {
@@ -259,7 +258,8 @@
                                     "unsafeName": "Message",
                                     "safeName": "Message"
                                   }
-                                }
+                                },
+                                "wireValue": "message"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "getStatus_Response_200",
@@ -643,7 +643,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -662,7 +661,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -60,7 +60,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -79,7 +78,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -146,7 +146,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -165,7 +164,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -331,7 +331,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -350,7 +349,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "primitive": {
@@ -462,7 +462,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "fields",
                   "name": {
                     "originalName": "fields",
                     "camelCase": {
@@ -481,7 +480,8 @@
                       "unsafeName": "Fields",
                       "safeName": "Fields"
                     }
-                  }
+                  },
+                  "wireValue": "fields"
                 },
                 "valueType": {
                   "container": {
@@ -642,7 +642,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -661,7 +660,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -714,7 +714,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -733,7 +732,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": {
@@ -776,7 +776,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -795,7 +794,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": {
@@ -876,7 +876,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -895,7 +894,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": "STRING",
@@ -972,7 +972,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "fields",
                   "name": {
                     "originalName": "fields",
                     "camelCase": {
@@ -991,7 +990,8 @@
                       "unsafeName": "Fields",
                       "safeName": "Fields"
                     }
-                  }
+                  },
+                  "wireValue": "fields"
                 },
                 "typeReference": {
                   "value": {
@@ -1022,9 +1022,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

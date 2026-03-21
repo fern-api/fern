@@ -257,7 +257,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "circle",
               "name": {
                 "originalName": "circle",
                 "camelCase": {
@@ -276,7 +275,8 @@
                   "unsafeName": "Circle",
                   "safeName": "Circle"
                 }
-              }
+              },
+              "wireValue": "circle"
             }
           }
         ],
@@ -321,7 +321,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -340,7 +339,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "valueType": {
               "name": {
@@ -376,7 +376,6 @@
           },
           {
             "name": {
-              "wireValue": "radius",
               "name": {
                 "originalName": "radius",
                 "camelCase": {
@@ -395,7 +394,8 @@
                   "unsafeName": "Radius",
                   "safeName": "Radius"
                 }
-              }
+              },
+              "wireValue": "radius"
             },
             "valueType": {
               "primitive": {
@@ -455,7 +455,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "square",
               "name": {
                 "originalName": "square",
                 "camelCase": {
@@ -474,7 +473,8 @@
                   "unsafeName": "Square",
                   "safeName": "Square"
                 }
-              }
+              },
+              "wireValue": "square"
             }
           }
         ],
@@ -519,7 +519,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -538,7 +537,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "valueType": {
               "name": {
@@ -574,7 +574,6 @@
           },
           {
             "name": {
-              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -593,7 +592,8 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              }
+              },
+              "wireValue": "sideLength"
             },
             "valueType": {
               "primitive": {
@@ -814,7 +814,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -833,7 +832,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -963,7 +963,6 @@
         },
         "values": [
           {
-            "wireValue": "circle",
             "name": {
               "originalName": "circle",
               "camelCase": {
@@ -982,7 +981,8 @@
                 "unsafeName": "Circle",
                 "safeName": "Circle"
               }
-            }
+            },
+            "wireValue": "circle"
           }
         ],
         "type": "enum"
@@ -1016,7 +1016,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -1035,7 +1034,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "typeReference": {
               "value": "type_:CircleType",
@@ -1044,7 +1044,6 @@
           },
           {
             "name": {
-              "wireValue": "radius",
               "name": {
                 "originalName": "radius",
                 "camelCase": {
@@ -1063,7 +1062,8 @@
                   "unsafeName": "Radius",
                   "safeName": "Radius"
                 }
-              }
+              },
+              "wireValue": "radius"
             },
             "typeReference": {
               "value": "DOUBLE",
@@ -1102,7 +1102,6 @@
         },
         "values": [
           {
-            "wireValue": "square",
             "name": {
               "originalName": "square",
               "camelCase": {
@@ -1121,7 +1120,8 @@
                 "unsafeName": "Square",
                 "safeName": "Square"
               }
-            }
+            },
+            "wireValue": "square"
           }
         ],
         "type": "enum"
@@ -1155,7 +1155,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -1174,7 +1173,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "typeReference": {
               "value": "type_:SquareType",
@@ -1183,7 +1183,6 @@
           },
           {
             "name": {
-              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -1202,7 +1201,8 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              }
+              },
+              "wireValue": "sideLength"
             },
             "typeReference": {
               "value": "DOUBLE",
@@ -1266,9 +1266,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

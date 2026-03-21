@@ -51,7 +51,6 @@
   "headers": [
     {
       "name": {
-        "wireValue": "x-api-key",
         "name": {
           "originalName": "apiKey",
           "camelCase": {
@@ -70,7 +69,8 @@
             "unsafeName": "APIKey",
             "safeName": "APIKey"
           }
-        }
+        },
+        "wireValue": "x-api-key"
       },
       "valueType": {
         "primitive": {
@@ -121,7 +121,6 @@
           {
             "docs": "Read access to plant information",
             "name": {
-              "wireValue": "read:plants",
               "name": {
                 "originalName": "ReadPlants",
                 "camelCase": {
@@ -140,7 +139,8 @@
                   "unsafeName": "ReadPlants",
                   "safeName": "ReadPlants"
                 }
-              }
+              },
+              "wireValue": "read:plants"
             }
           }
         ],
@@ -185,7 +185,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -204,7 +203,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -228,7 +228,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -247,7 +246,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -542,7 +542,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -561,7 +560,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -643,7 +643,6 @@
         },
         "values": [
           {
-            "wireValue": "read:plants",
             "name": {
               "originalName": "ReadPlants",
               "camelCase": {
@@ -662,7 +661,8 @@
                 "unsafeName": "ReadPlants",
                 "safeName": "ReadPlants"
               }
-            }
+            },
+            "wireValue": "read:plants"
           }
         ],
         "type": "enum"
@@ -696,7 +696,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -715,7 +714,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": {
@@ -727,7 +727,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -746,7 +745,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": {
@@ -764,7 +764,6 @@
     "headers": [
       {
         "name": {
-          "wireValue": "x-api-key",
           "name": {
             "originalName": "apiKey",
             "camelCase": {
@@ -783,7 +782,8 @@
               "unsafeName": "APIKey",
               "safeName": "APIKey"
             }
-          }
+          },
+          "wireValue": "x-api-key"
         },
         "typeReference": {
           "value": "STRING",
@@ -794,6 +794,7 @@
     "endpoints": {
       "endpoint_.getPlantById": {
         "auth": {
+          "key": "OAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -948,9 +949,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

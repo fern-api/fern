@@ -59,7 +59,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "error",
               "name": {
                 "originalName": "error",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Error",
                   "safeName": "Error"
                 }
-              }
+              },
+              "wireValue": "error"
             }
           }
         ],
@@ -124,7 +124,6 @@
           {
             "docs": "Error message",
             "name": {
-              "wireValue": "error",
               "name": {
                 "originalName": "error",
                 "camelCase": {
@@ -143,7 +142,8 @@
                   "unsafeName": "Error",
                   "safeName": "Error"
                 }
-              }
+              },
+              "wireValue": "error"
             },
             "valueType": {
               "primitive": {
@@ -161,7 +161,6 @@
           },
           {
             "name": {
-              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -180,7 +179,8 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              }
+              },
+              "wireValue": "status"
             },
             "valueType": {
               "container": {
@@ -262,7 +262,6 @@
         "errorId": "error_:BadRequestError"
       },
       "discriminantValue": {
-        "wireValue": "BadRequestError",
         "name": {
           "originalName": "BadRequestError",
           "camelCase": {
@@ -281,7 +280,8 @@
             "unsafeName": "BadRequestError",
             "safeName": "BadRequestError"
           }
-        }
+        },
+        "wireValue": "BadRequestError"
       },
       "docs": "Bad Request",
       "statusCode": 400,
@@ -349,7 +349,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "error",
                       "name": {
                         "originalName": "error",
                         "camelCase": {
@@ -368,7 +367,8 @@
                           "unsafeName": "Error",
                           "safeName": "Error"
                         }
-                      }
+                      },
+                      "wireValue": "error"
                     },
                     "value": {
                       "shape": {
@@ -450,7 +450,6 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
-        "wireValue": "UnauthorizedError",
         "name": {
           "originalName": "UnauthorizedError",
           "camelCase": {
@@ -469,7 +468,8 @@
             "unsafeName": "UnauthorizedError",
             "safeName": "UnauthorizedError"
           }
-        }
+        },
+        "wireValue": "UnauthorizedError"
       },
       "docs": "Unauthorized",
       "statusCode": 401,
@@ -537,7 +537,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "error",
                       "name": {
                         "originalName": "error",
                         "camelCase": {
@@ -556,7 +555,8 @@
                           "unsafeName": "Error",
                           "safeName": "Error"
                         }
-                      }
+                      },
+                      "wireValue": "error"
                     },
                     "value": {
                       "shape": {
@@ -638,7 +638,6 @@
         "errorId": "error_:NotFoundError"
       },
       "discriminantValue": {
-        "wireValue": "NotFoundError",
         "name": {
           "originalName": "NotFoundError",
           "camelCase": {
@@ -657,7 +656,8 @@
             "unsafeName": "NotFoundError",
             "safeName": "NotFoundError"
           }
-        }
+        },
+        "wireValue": "NotFoundError"
       },
       "docs": "Not Found",
       "statusCode": 404,
@@ -725,7 +725,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "error",
                       "name": {
                         "originalName": "error",
                         "camelCase": {
@@ -744,7 +743,8 @@
                           "unsafeName": "Error",
                           "safeName": "Error"
                         }
-                      }
+                      },
+                      "wireValue": "error"
                     },
                     "value": {
                       "shape": {
@@ -826,7 +826,6 @@
         "errorId": "error_:InternalServerError"
       },
       "discriminantValue": {
-        "wireValue": "InternalServerError",
         "name": {
           "originalName": "InternalServerError",
           "camelCase": {
@@ -845,7 +844,8 @@
             "unsafeName": "InternalServerError",
             "safeName": "InternalServerError"
           }
-        }
+        },
+        "wireValue": "InternalServerError"
       },
       "docs": "Internal Server Error",
       "statusCode": 500,
@@ -913,7 +913,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "error",
                       "name": {
                         "originalName": "error",
                         "camelCase": {
@@ -932,7 +931,8 @@
                           "unsafeName": "Error",
                           "safeName": "Error"
                         }
-                      }
+                      },
+                      "wireValue": "error"
                     },
                     "value": {
                       "shape": {
@@ -1187,7 +1187,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1206,7 +1205,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -1285,7 +1285,6 @@
         },
         "values": [
           {
-            "wireValue": "error",
             "name": {
               "originalName": "error",
               "camelCase": {
@@ -1304,7 +1303,8 @@
                 "unsafeName": "Error",
                 "safeName": "Error"
               }
-            }
+            },
+            "wireValue": "error"
           }
         ],
         "type": "enum"
@@ -1338,7 +1338,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "error",
               "name": {
                 "originalName": "error",
                 "camelCase": {
@@ -1357,7 +1356,8 @@
                   "unsafeName": "Error",
                   "safeName": "Error"
                 }
-              }
+              },
+              "wireValue": "error"
             },
             "typeReference": {
               "value": "STRING",
@@ -1366,7 +1366,6 @@
           },
           {
             "name": {
-              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -1385,7 +1384,8 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              }
+              },
+              "wireValue": "status"
             },
             "typeReference": {
               "value": {
@@ -1476,9 +1476,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

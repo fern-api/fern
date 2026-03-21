@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "separator",
               "name": {
                 "originalName": "separator",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Separator",
                   "safeName": "Separator"
                 }
-              }
+              },
+              "wireValue": "separator"
             },
             "valueType": {
               "container": {
@@ -161,7 +161,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "/",
               "name": {
                 "originalName": "SLASH",
                 "camelCase": {
@@ -180,12 +179,12 @@
                   "unsafeName": "Slash",
                   "safeName": "Slash"
                 }
-              }
+              },
+              "wireValue": "/"
             }
           },
           {
             "name": {
-              "wireValue": "-",
               "name": {
                 "originalName": "HYPHEN",
                 "camelCase": {
@@ -204,12 +203,12 @@
                   "unsafeName": "Hyphen",
                   "safeName": "Hyphen"
                 }
-              }
+              },
+              "wireValue": "-"
             }
           },
           {
             "name": {
-              "wireValue": "|",
               "name": {
                 "originalName": "PIPE",
                 "camelCase": {
@@ -228,12 +227,12 @@
                   "unsafeName": "Pipe",
                   "safeName": "Pipe"
                 }
-              }
+              },
+              "wireValue": "|"
             }
           },
           {
             "name": {
-              "wireValue": ".",
               "name": {
                 "originalName": "DOT",
                 "camelCase": {
@@ -252,12 +251,12 @@
                   "unsafeName": "Dot",
                   "safeName": "Dot"
                 }
-              }
+              },
+              "wireValue": "."
             }
           },
           {
             "name": {
-              "wireValue": "",
               "name": {
                 "originalName": "EMPTY",
                 "camelCase": {
@@ -276,7 +275,8 @@
                   "unsafeName": "Empty",
                   "safeName": "Empty"
                 }
-              }
+              },
+              "wireValue": ""
             }
           }
         ],
@@ -481,7 +481,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -500,7 +499,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -551,7 +551,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "separator",
               "name": {
                 "originalName": "separator",
                 "camelCase": {
@@ -570,7 +569,8 @@
                   "unsafeName": "Separator",
                   "safeName": "Separator"
                 }
-              }
+              },
+              "wireValue": "separator"
             },
             "typeReference": {
               "value": {
@@ -612,7 +612,6 @@
         },
         "values": [
           {
-            "wireValue": "/",
             "name": {
               "originalName": "SLASH",
               "camelCase": {
@@ -631,10 +630,10 @@
                 "unsafeName": "Slash",
                 "safeName": "Slash"
               }
-            }
+            },
+            "wireValue": "/"
           },
           {
-            "wireValue": "-",
             "name": {
               "originalName": "HYPHEN",
               "camelCase": {
@@ -653,10 +652,10 @@
                 "unsafeName": "Hyphen",
                 "safeName": "Hyphen"
               }
-            }
+            },
+            "wireValue": "-"
           },
           {
-            "wireValue": "|",
             "name": {
               "originalName": "PIPE",
               "camelCase": {
@@ -675,10 +674,10 @@
                 "unsafeName": "Pipe",
                 "safeName": "Pipe"
               }
-            }
+            },
+            "wireValue": "|"
           },
           {
-            "wireValue": ".",
             "name": {
               "originalName": "DOT",
               "camelCase": {
@@ -697,10 +696,10 @@
                 "unsafeName": "Dot",
                 "safeName": "Dot"
               }
-            }
+            },
+            "wireValue": "."
           },
           {
-            "wireValue": "",
             "name": {
               "originalName": "EMPTY",
               "camelCase": {
@@ -719,7 +718,8 @@
                 "unsafeName": "Empty",
                 "safeName": "Empty"
               }
-            }
+            },
+            "wireValue": ""
           }
         ],
         "type": "enum"
@@ -777,9 +777,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

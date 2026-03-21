@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -136,7 +136,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -155,7 +154,8 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              }
+              },
+              "wireValue": "value"
             },
             "valueType": {
               "container": {
@@ -235,7 +235,6 @@
       "shape": {
         "baseProperties": [],
         "discriminant": {
-          "wireValue": "type",
           "name": {
             "originalName": "type",
             "camelCase": {
@@ -254,13 +253,13 @@
               "unsafeName": "Type",
               "safeName": "Type"
             }
-          }
+          },
+          "wireValue": "type"
         },
         "extends": [],
         "types": [
           {
             "discriminantValue": {
-              "wireValue": "request",
               "name": {
                 "originalName": "request",
                 "camelCase": {
@@ -279,7 +278,8 @@
                   "unsafeName": "Request",
                   "safeName": "Request"
                 }
-              }
+              },
+              "wireValue": "request"
             },
             "displayName": "request",
             "shape": {
@@ -313,7 +313,6 @@
           },
           {
             "discriminantValue": {
-              "wireValue": "response",
               "name": {
                 "originalName": "response",
                 "camelCase": {
@@ -332,7 +331,8 @@
                   "unsafeName": "Response",
                   "safeName": "Response"
                 }
-              }
+              },
+              "wireValue": "response"
             },
             "displayName": "response",
             "shape": {
@@ -425,7 +425,6 @@
                       "properties": [
                         {
                           "name": {
-                            "wireValue": "id",
                             "name": {
                               "originalName": "id",
                               "camelCase": {
@@ -444,7 +443,8 @@
                                 "unsafeName": "Id",
                                 "safeName": "Id"
                               }
-                            }
+                            },
+                            "wireValue": "id"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "Request",
@@ -541,7 +541,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "value",
                                 "name": {
                                   "originalName": "value",
                                   "camelCase": {
@@ -560,7 +559,8 @@
                                     "unsafeName": "Value",
                                     "safeName": "Value"
                                   }
-                                }
+                                },
+                                "wireValue": "value"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Response",
@@ -985,7 +985,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1004,7 +1003,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

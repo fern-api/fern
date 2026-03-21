@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "content",
               "name": {
                 "originalName": "content",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Content",
                   "safeName": "Content"
                 }
-              }
+              },
+              "wireValue": "content"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "timestamp",
               "name": {
                 "originalName": "timestamp",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Timestamp",
                   "safeName": "Timestamp"
                 }
-              }
+              },
+              "wireValue": "timestamp"
             },
             "valueType": {
               "container": {
@@ -174,7 +174,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "content",
               "name": {
                 "originalName": "content",
                 "camelCase": {
@@ -193,7 +192,8 @@
                   "unsafeName": "Content",
                   "safeName": "Content"
                 }
-              }
+              },
+              "wireValue": "content"
             },
             "valueType": {
               "container": {
@@ -360,7 +360,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -379,7 +378,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimePublish",
@@ -469,7 +469,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -488,7 +487,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
@@ -537,7 +537,6 @@
                       },
                       {
                         "name": {
-                          "wireValue": "timestamp",
                           "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -556,7 +555,8 @@
                               "unsafeName": "Timestamp",
                               "safeName": "Timestamp"
                             }
-                          }
+                          },
+                          "wireValue": "timestamp"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
@@ -654,7 +654,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -673,7 +672,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimePublish",
@@ -763,7 +763,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -782,7 +781,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
@@ -831,7 +831,6 @@
                       },
                       {
                         "name": {
-                          "wireValue": "timestamp",
                           "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -850,7 +849,8 @@
                               "unsafeName": "Timestamp",
                               "safeName": "Timestamp"
                             }
-                          }
+                          },
+                          "wireValue": "timestamp"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
@@ -1098,7 +1098,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1117,7 +1116,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "$anchor",
               "name": {
                 "originalName": "$anchor",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Anchor",
                   "safeName": "Anchor"
                 }
-              }
+              },
+              "wireValue": "$anchor"
             },
             "valueType": {
               "container": {
@@ -102,7 +102,6 @@
           },
           {
             "name": {
-              "wireValue": "$comment",
               "name": {
                 "originalName": "$comment",
                 "camelCase": {
@@ -121,7 +120,8 @@
                   "unsafeName": "Comment",
                   "safeName": "Comment"
                 }
-              }
+              },
+              "wireValue": "$comment"
             },
             "valueType": {
               "container": {
@@ -145,7 +145,6 @@
           },
           {
             "name": {
-              "wireValue": "$defs",
               "name": {
                 "originalName": "$defs",
                 "camelCase": {
@@ -164,7 +163,8 @@
                   "unsafeName": "Defs",
                   "safeName": "Defs"
                 }
-              }
+              },
+              "wireValue": "$defs"
             },
             "valueType": {
               "container": {
@@ -182,7 +182,6 @@
           },
           {
             "name": {
-              "wireValue": "$dynamicRef",
               "name": {
                 "originalName": "$dynamicRef",
                 "camelCase": {
@@ -201,7 +200,8 @@
                   "unsafeName": "DynamicRef",
                   "safeName": "DynamicRef"
                 }
-              }
+              },
+              "wireValue": "$dynamicRef"
             },
             "valueType": {
               "container": {
@@ -225,7 +225,6 @@
           },
           {
             "name": {
-              "wireValue": "$id",
               "name": {
                 "originalName": "$id",
                 "camelCase": {
@@ -244,7 +243,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "$id"
             },
             "valueType": {
               "container": {
@@ -268,7 +268,6 @@
           },
           {
             "name": {
-              "wireValue": "$ref",
               "name": {
                 "originalName": "$ref",
                 "camelCase": {
@@ -287,7 +286,8 @@
                   "unsafeName": "Ref",
                   "safeName": "Ref"
                 }
-              }
+              },
+              "wireValue": "$ref"
             },
             "valueType": {
               "container": {
@@ -311,7 +311,6 @@
           },
           {
             "name": {
-              "wireValue": "$schema",
               "name": {
                 "originalName": "$schema",
                 "camelCase": {
@@ -330,7 +329,8 @@
                   "unsafeName": "Schema",
                   "safeName": "Schema"
                 }
-              }
+              },
+              "wireValue": "$schema"
             },
             "valueType": {
               "container": {
@@ -354,7 +354,6 @@
           },
           {
             "name": {
-              "wireValue": "additionalProperties",
               "name": {
                 "originalName": "additionalProperties",
                 "camelCase": {
@@ -373,7 +372,8 @@
                   "unsafeName": "AdditionalProperties",
                   "safeName": "AdditionalProperties"
                 }
-              }
+              },
+              "wireValue": "additionalProperties"
             },
             "valueType": {
               "container": {
@@ -415,7 +415,6 @@
           },
           {
             "name": {
-              "wireValue": "allOf",
               "name": {
                 "originalName": "allOf",
                 "camelCase": {
@@ -434,7 +433,8 @@
                   "unsafeName": "AllOf",
                   "safeName": "AllOf"
                 }
-              }
+              },
+              "wireValue": "allOf"
             },
             "valueType": {
               "container": {
@@ -482,7 +482,6 @@
           },
           {
             "name": {
-              "wireValue": "anyOf",
               "name": {
                 "originalName": "anyOf",
                 "camelCase": {
@@ -501,7 +500,8 @@
                   "unsafeName": "AnyOf",
                   "safeName": "AnyOf"
                 }
-              }
+              },
+              "wireValue": "anyOf"
             },
             "valueType": {
               "container": {
@@ -549,7 +549,6 @@
           },
           {
             "name": {
-              "wireValue": "const",
               "name": {
                 "originalName": "const",
                 "camelCase": {
@@ -568,7 +567,8 @@
                   "unsafeName": "Const",
                   "safeName": "Const"
                 }
-              }
+              },
+              "wireValue": "const"
             },
             "valueType": {
               "container": {
@@ -586,7 +586,6 @@
           },
           {
             "name": {
-              "wireValue": "contains",
               "name": {
                 "originalName": "contains",
                 "camelCase": {
@@ -605,7 +604,8 @@
                   "unsafeName": "Contains",
                   "safeName": "Contains"
                 }
-              }
+              },
+              "wireValue": "contains"
             },
             "valueType": {
               "container": {
@@ -647,7 +647,6 @@
           },
           {
             "name": {
-              "wireValue": "contentEncoding",
               "name": {
                 "originalName": "contentEncoding",
                 "camelCase": {
@@ -666,7 +665,8 @@
                   "unsafeName": "ContentEncoding",
                   "safeName": "ContentEncoding"
                 }
-              }
+              },
+              "wireValue": "contentEncoding"
             },
             "valueType": {
               "container": {
@@ -690,7 +690,6 @@
           },
           {
             "name": {
-              "wireValue": "contentMediaType",
               "name": {
                 "originalName": "contentMediaType",
                 "camelCase": {
@@ -709,7 +708,8 @@
                   "unsafeName": "ContentMediaType",
                   "safeName": "ContentMediaType"
                 }
-              }
+              },
+              "wireValue": "contentMediaType"
             },
             "valueType": {
               "container": {
@@ -733,7 +733,6 @@
           },
           {
             "name": {
-              "wireValue": "contentSchema",
               "name": {
                 "originalName": "contentSchema",
                 "camelCase": {
@@ -752,7 +751,8 @@
                   "unsafeName": "ContentSchema",
                   "safeName": "ContentSchema"
                 }
-              }
+              },
+              "wireValue": "contentSchema"
             },
             "valueType": {
               "container": {
@@ -794,7 +794,6 @@
           },
           {
             "name": {
-              "wireValue": "default",
               "name": {
                 "originalName": "default",
                 "camelCase": {
@@ -813,7 +812,8 @@
                   "unsafeName": "Default",
                   "safeName": "Default"
                 }
-              }
+              },
+              "wireValue": "default"
             },
             "valueType": {
               "container": {
@@ -831,7 +831,6 @@
           },
           {
             "name": {
-              "wireValue": "dependentRequired",
               "name": {
                 "originalName": "dependentRequired",
                 "camelCase": {
@@ -850,7 +849,8 @@
                   "unsafeName": "DependentRequired",
                   "safeName": "DependentRequired"
                 }
-              }
+              },
+              "wireValue": "dependentRequired"
             },
             "valueType": {
               "container": {
@@ -895,7 +895,6 @@
           },
           {
             "name": {
-              "wireValue": "dependentSchemas",
               "name": {
                 "originalName": "dependentSchemas",
                 "camelCase": {
@@ -914,7 +913,8 @@
                   "unsafeName": "DependentSchemas",
                   "safeName": "DependentSchemas"
                 }
-              }
+              },
+              "wireValue": "dependentSchemas"
             },
             "valueType": {
               "container": {
@@ -971,7 +971,6 @@
           },
           {
             "name": {
-              "wireValue": "deprecated",
               "name": {
                 "originalName": "deprecated",
                 "camelCase": {
@@ -990,7 +989,8 @@
                   "unsafeName": "Deprecated",
                   "safeName": "Deprecated"
                 }
-              }
+              },
+              "wireValue": "deprecated"
             },
             "valueType": {
               "container": {
@@ -1014,7 +1014,6 @@
           },
           {
             "name": {
-              "wireValue": "description",
               "name": {
                 "originalName": "description",
                 "camelCase": {
@@ -1033,7 +1032,8 @@
                   "unsafeName": "Description",
                   "safeName": "Description"
                 }
-              }
+              },
+              "wireValue": "description"
             },
             "valueType": {
               "container": {
@@ -1057,7 +1057,6 @@
           },
           {
             "name": {
-              "wireValue": "else",
               "name": {
                 "originalName": "else",
                 "camelCase": {
@@ -1076,7 +1075,8 @@
                   "unsafeName": "Else",
                   "safeName": "Else"
                 }
-              }
+              },
+              "wireValue": "else"
             },
             "valueType": {
               "container": {
@@ -1118,7 +1118,6 @@
           },
           {
             "name": {
-              "wireValue": "enum",
               "name": {
                 "originalName": "enum",
                 "camelCase": {
@@ -1137,7 +1136,8 @@
                   "unsafeName": "Enum",
                   "safeName": "Enum"
                 }
-              }
+              },
+              "wireValue": "enum"
             },
             "valueType": {
               "container": {
@@ -1161,7 +1161,6 @@
           },
           {
             "name": {
-              "wireValue": "examples",
               "name": {
                 "originalName": "examples",
                 "camelCase": {
@@ -1180,7 +1179,8 @@
                   "unsafeName": "Examples",
                   "safeName": "Examples"
                 }
-              }
+              },
+              "wireValue": "examples"
             },
             "valueType": {
               "container": {
@@ -1204,7 +1204,6 @@
           },
           {
             "name": {
-              "wireValue": "exclusiveMaximum",
               "name": {
                 "originalName": "exclusiveMaximum",
                 "camelCase": {
@@ -1223,7 +1222,8 @@
                   "unsafeName": "ExclusiveMaximum",
                   "safeName": "ExclusiveMaximum"
                 }
-              }
+              },
+              "wireValue": "exclusiveMaximum"
             },
             "valueType": {
               "container": {
@@ -1247,7 +1247,6 @@
           },
           {
             "name": {
-              "wireValue": "exclusiveMinimum",
               "name": {
                 "originalName": "exclusiveMinimum",
                 "camelCase": {
@@ -1266,7 +1265,8 @@
                   "unsafeName": "ExclusiveMinimum",
                   "safeName": "ExclusiveMinimum"
                 }
-              }
+              },
+              "wireValue": "exclusiveMinimum"
             },
             "valueType": {
               "container": {
@@ -1290,7 +1290,6 @@
           },
           {
             "name": {
-              "wireValue": "format",
               "name": {
                 "originalName": "format",
                 "camelCase": {
@@ -1309,7 +1308,8 @@
                   "unsafeName": "Format",
                   "safeName": "Format"
                 }
-              }
+              },
+              "wireValue": "format"
             },
             "valueType": {
               "container": {
@@ -1333,7 +1333,6 @@
           },
           {
             "name": {
-              "wireValue": "if",
               "name": {
                 "originalName": "if",
                 "camelCase": {
@@ -1352,7 +1351,8 @@
                   "unsafeName": "If",
                   "safeName": "If"
                 }
-              }
+              },
+              "wireValue": "if"
             },
             "valueType": {
               "container": {
@@ -1394,7 +1394,6 @@
           },
           {
             "name": {
-              "wireValue": "items",
               "name": {
                 "originalName": "items",
                 "camelCase": {
@@ -1413,7 +1412,8 @@
                   "unsafeName": "Items",
                   "safeName": "Items"
                 }
-              }
+              },
+              "wireValue": "items"
             },
             "valueType": {
               "container": {
@@ -1455,7 +1455,6 @@
           },
           {
             "name": {
-              "wireValue": "maxContains",
               "name": {
                 "originalName": "maxContains",
                 "camelCase": {
@@ -1474,7 +1473,8 @@
                   "unsafeName": "MaxContains",
                   "safeName": "MaxContains"
                 }
-              }
+              },
+              "wireValue": "maxContains"
             },
             "valueType": {
               "container": {
@@ -1507,7 +1507,6 @@
           },
           {
             "name": {
-              "wireValue": "maxItems",
               "name": {
                 "originalName": "maxItems",
                 "camelCase": {
@@ -1526,7 +1525,8 @@
                   "unsafeName": "MaxItems",
                   "safeName": "MaxItems"
                 }
-              }
+              },
+              "wireValue": "maxItems"
             },
             "valueType": {
               "container": {
@@ -1559,7 +1559,6 @@
           },
           {
             "name": {
-              "wireValue": "maxLength",
               "name": {
                 "originalName": "maxLength",
                 "camelCase": {
@@ -1578,7 +1577,8 @@
                   "unsafeName": "MaxLength",
                   "safeName": "MaxLength"
                 }
-              }
+              },
+              "wireValue": "maxLength"
             },
             "valueType": {
               "container": {
@@ -1611,7 +1611,6 @@
           },
           {
             "name": {
-              "wireValue": "maxProperties",
               "name": {
                 "originalName": "maxProperties",
                 "camelCase": {
@@ -1630,7 +1629,8 @@
                   "unsafeName": "MaxProperties",
                   "safeName": "MaxProperties"
                 }
-              }
+              },
+              "wireValue": "maxProperties"
             },
             "valueType": {
               "container": {
@@ -1663,7 +1663,6 @@
           },
           {
             "name": {
-              "wireValue": "maximum",
               "name": {
                 "originalName": "maximum",
                 "camelCase": {
@@ -1682,7 +1681,8 @@
                   "unsafeName": "Maximum",
                   "safeName": "Maximum"
                 }
-              }
+              },
+              "wireValue": "maximum"
             },
             "valueType": {
               "container": {
@@ -1706,7 +1706,6 @@
           },
           {
             "name": {
-              "wireValue": "minContains",
               "name": {
                 "originalName": "minContains",
                 "camelCase": {
@@ -1725,7 +1724,8 @@
                   "unsafeName": "MinContains",
                   "safeName": "MinContains"
                 }
-              }
+              },
+              "wireValue": "minContains"
             },
             "valueType": {
               "container": {
@@ -1758,7 +1758,6 @@
           },
           {
             "name": {
-              "wireValue": "minItems",
               "name": {
                 "originalName": "minItems",
                 "camelCase": {
@@ -1777,7 +1776,8 @@
                   "unsafeName": "MinItems",
                   "safeName": "MinItems"
                 }
-              }
+              },
+              "wireValue": "minItems"
             },
             "valueType": {
               "container": {
@@ -1810,7 +1810,6 @@
           },
           {
             "name": {
-              "wireValue": "minLength",
               "name": {
                 "originalName": "minLength",
                 "camelCase": {
@@ -1829,7 +1828,8 @@
                   "unsafeName": "MinLength",
                   "safeName": "MinLength"
                 }
-              }
+              },
+              "wireValue": "minLength"
             },
             "valueType": {
               "container": {
@@ -1862,7 +1862,6 @@
           },
           {
             "name": {
-              "wireValue": "minProperties",
               "name": {
                 "originalName": "minProperties",
                 "camelCase": {
@@ -1881,7 +1880,8 @@
                   "unsafeName": "MinProperties",
                   "safeName": "MinProperties"
                 }
-              }
+              },
+              "wireValue": "minProperties"
             },
             "valueType": {
               "container": {
@@ -1914,7 +1914,6 @@
           },
           {
             "name": {
-              "wireValue": "minimum",
               "name": {
                 "originalName": "minimum",
                 "camelCase": {
@@ -1933,7 +1932,8 @@
                   "unsafeName": "Minimum",
                   "safeName": "Minimum"
                 }
-              }
+              },
+              "wireValue": "minimum"
             },
             "valueType": {
               "container": {
@@ -1957,7 +1957,6 @@
           },
           {
             "name": {
-              "wireValue": "multipleOf",
               "name": {
                 "originalName": "multipleOf",
                 "camelCase": {
@@ -1976,7 +1975,8 @@
                   "unsafeName": "MultipleOf",
                   "safeName": "MultipleOf"
                 }
-              }
+              },
+              "wireValue": "multipleOf"
             },
             "valueType": {
               "container": {
@@ -2000,7 +2000,6 @@
           },
           {
             "name": {
-              "wireValue": "not",
               "name": {
                 "originalName": "not",
                 "camelCase": {
@@ -2019,7 +2018,8 @@
                   "unsafeName": "Not",
                   "safeName": "Not"
                 }
-              }
+              },
+              "wireValue": "not"
             },
             "valueType": {
               "container": {
@@ -2061,7 +2061,6 @@
           },
           {
             "name": {
-              "wireValue": "oneOf",
               "name": {
                 "originalName": "oneOf",
                 "camelCase": {
@@ -2080,7 +2079,8 @@
                   "unsafeName": "OneOf",
                   "safeName": "OneOf"
                 }
-              }
+              },
+              "wireValue": "oneOf"
             },
             "valueType": {
               "container": {
@@ -2128,7 +2128,6 @@
           },
           {
             "name": {
-              "wireValue": "pattern",
               "name": {
                 "originalName": "pattern",
                 "camelCase": {
@@ -2147,7 +2146,8 @@
                   "unsafeName": "Pattern",
                   "safeName": "Pattern"
                 }
-              }
+              },
+              "wireValue": "pattern"
             },
             "valueType": {
               "container": {
@@ -2171,7 +2171,6 @@
           },
           {
             "name": {
-              "wireValue": "patternProperties",
               "name": {
                 "originalName": "patternProperties",
                 "camelCase": {
@@ -2190,7 +2189,8 @@
                   "unsafeName": "PatternProperties",
                   "safeName": "PatternProperties"
                 }
-              }
+              },
+              "wireValue": "patternProperties"
             },
             "valueType": {
               "container": {
@@ -2247,7 +2247,6 @@
           },
           {
             "name": {
-              "wireValue": "prefixItems",
               "name": {
                 "originalName": "prefixItems",
                 "camelCase": {
@@ -2266,7 +2265,8 @@
                   "unsafeName": "PrefixItems",
                   "safeName": "PrefixItems"
                 }
-              }
+              },
+              "wireValue": "prefixItems"
             },
             "valueType": {
               "container": {
@@ -2314,7 +2314,6 @@
           },
           {
             "name": {
-              "wireValue": "properties",
               "name": {
                 "originalName": "properties",
                 "camelCase": {
@@ -2333,7 +2332,8 @@
                   "unsafeName": "Properties",
                   "safeName": "Properties"
                 }
-              }
+              },
+              "wireValue": "properties"
             },
             "valueType": {
               "container": {
@@ -2351,7 +2351,6 @@
           },
           {
             "name": {
-              "wireValue": "propertyNames",
               "name": {
                 "originalName": "propertyNames",
                 "camelCase": {
@@ -2370,7 +2369,8 @@
                   "unsafeName": "PropertyNames",
                   "safeName": "PropertyNames"
                 }
-              }
+              },
+              "wireValue": "propertyNames"
             },
             "valueType": {
               "container": {
@@ -2412,7 +2412,6 @@
           },
           {
             "name": {
-              "wireValue": "readOnly",
               "name": {
                 "originalName": "readOnly",
                 "camelCase": {
@@ -2431,7 +2430,8 @@
                   "unsafeName": "ReadOnly",
                   "safeName": "ReadOnly"
                 }
-              }
+              },
+              "wireValue": "readOnly"
             },
             "valueType": {
               "container": {
@@ -2455,7 +2455,6 @@
           },
           {
             "name": {
-              "wireValue": "required",
               "name": {
                 "originalName": "required",
                 "camelCase": {
@@ -2474,7 +2473,8 @@
                   "unsafeName": "Required",
                   "safeName": "Required"
                 }
-              }
+              },
+              "wireValue": "required"
             },
             "valueType": {
               "container": {
@@ -2504,7 +2504,6 @@
           },
           {
             "name": {
-              "wireValue": "then",
               "name": {
                 "originalName": "then",
                 "camelCase": {
@@ -2523,7 +2522,8 @@
                   "unsafeName": "Then",
                   "safeName": "Then"
                 }
-              }
+              },
+              "wireValue": "then"
             },
             "valueType": {
               "container": {
@@ -2565,7 +2565,6 @@
           },
           {
             "name": {
-              "wireValue": "title",
               "name": {
                 "originalName": "title",
                 "camelCase": {
@@ -2584,7 +2583,8 @@
                   "unsafeName": "Title",
                   "safeName": "Title"
                 }
-              }
+              },
+              "wireValue": "title"
             },
             "valueType": {
               "container": {
@@ -2608,7 +2608,6 @@
           },
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -2627,7 +2626,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "valueType": {
               "container": {
@@ -2651,7 +2651,6 @@
           },
           {
             "name": {
-              "wireValue": "uniqueItems",
               "name": {
                 "originalName": "uniqueItems",
                 "camelCase": {
@@ -2670,7 +2669,8 @@
                   "unsafeName": "UniqueItems",
                   "safeName": "UniqueItems"
                 }
-              }
+              },
+              "wireValue": "uniqueItems"
             },
             "valueType": {
               "container": {
@@ -2694,7 +2694,6 @@
           },
           {
             "name": {
-              "wireValue": "writeOnly",
               "name": {
                 "originalName": "writeOnly",
                 "camelCase": {
@@ -2713,7 +2712,8 @@
                   "unsafeName": "WriteOnly",
                   "safeName": "WriteOnly"
                 }
-              }
+              },
+              "wireValue": "writeOnly"
             },
             "valueType": {
               "container": {
@@ -2807,7 +2807,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "someParam",
                 "name": {
                   "originalName": "someParam",
                   "camelCase": {
@@ -2826,7 +2825,8 @@
                     "unsafeName": "SomeParam",
                     "safeName": "SomeParam"
                   }
-                }
+                },
+                "wireValue": "someParam"
               },
               "valueType": {
                 "container": {
@@ -2963,7 +2963,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2982,7 +2981,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -3032,7 +3032,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "$anchor",
               "name": {
                 "originalName": "$anchor",
                 "camelCase": {
@@ -3051,7 +3050,8 @@
                   "unsafeName": "Anchor",
                   "safeName": "Anchor"
                 }
-              }
+              },
+              "wireValue": "$anchor"
             },
             "typeReference": {
               "value": {
@@ -3063,7 +3063,6 @@
           },
           {
             "name": {
-              "wireValue": "$comment",
               "name": {
                 "originalName": "$comment",
                 "camelCase": {
@@ -3082,7 +3081,8 @@
                   "unsafeName": "Comment",
                   "safeName": "Comment"
                 }
-              }
+              },
+              "wireValue": "$comment"
             },
             "typeReference": {
               "value": {
@@ -3094,7 +3094,6 @@
           },
           {
             "name": {
-              "wireValue": "$defs",
               "name": {
                 "originalName": "$defs",
                 "camelCase": {
@@ -3113,7 +3112,8 @@
                   "unsafeName": "Defs",
                   "safeName": "Defs"
                 }
-              }
+              },
+              "wireValue": "$defs"
             },
             "typeReference": {
               "value": {
@@ -3124,7 +3124,6 @@
           },
           {
             "name": {
-              "wireValue": "$dynamicRef",
               "name": {
                 "originalName": "$dynamicRef",
                 "camelCase": {
@@ -3143,7 +3142,8 @@
                   "unsafeName": "DynamicRef",
                   "safeName": "DynamicRef"
                 }
-              }
+              },
+              "wireValue": "$dynamicRef"
             },
             "typeReference": {
               "value": {
@@ -3155,7 +3155,6 @@
           },
           {
             "name": {
-              "wireValue": "$id",
               "name": {
                 "originalName": "$id",
                 "camelCase": {
@@ -3174,7 +3173,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "$id"
             },
             "typeReference": {
               "value": {
@@ -3186,7 +3186,6 @@
           },
           {
             "name": {
-              "wireValue": "$ref",
               "name": {
                 "originalName": "$ref",
                 "camelCase": {
@@ -3205,7 +3204,8 @@
                   "unsafeName": "Ref",
                   "safeName": "Ref"
                 }
-              }
+              },
+              "wireValue": "$ref"
             },
             "typeReference": {
               "value": {
@@ -3217,7 +3217,6 @@
           },
           {
             "name": {
-              "wireValue": "$schema",
               "name": {
                 "originalName": "$schema",
                 "camelCase": {
@@ -3236,7 +3235,8 @@
                   "unsafeName": "Schema",
                   "safeName": "Schema"
                 }
-              }
+              },
+              "wireValue": "$schema"
             },
             "typeReference": {
               "value": {
@@ -3248,7 +3248,6 @@
           },
           {
             "name": {
-              "wireValue": "additionalProperties",
               "name": {
                 "originalName": "additionalProperties",
                 "camelCase": {
@@ -3267,7 +3266,8 @@
                   "unsafeName": "AdditionalProperties",
                   "safeName": "AdditionalProperties"
                 }
-              }
+              },
+              "wireValue": "additionalProperties"
             },
             "typeReference": {
               "value": {
@@ -3279,7 +3279,6 @@
           },
           {
             "name": {
-              "wireValue": "allOf",
               "name": {
                 "originalName": "allOf",
                 "camelCase": {
@@ -3298,7 +3297,8 @@
                   "unsafeName": "AllOf",
                   "safeName": "AllOf"
                 }
-              }
+              },
+              "wireValue": "allOf"
             },
             "typeReference": {
               "value": {
@@ -3313,7 +3313,6 @@
           },
           {
             "name": {
-              "wireValue": "anyOf",
               "name": {
                 "originalName": "anyOf",
                 "camelCase": {
@@ -3332,7 +3331,8 @@
                   "unsafeName": "AnyOf",
                   "safeName": "AnyOf"
                 }
-              }
+              },
+              "wireValue": "anyOf"
             },
             "typeReference": {
               "value": {
@@ -3347,7 +3347,6 @@
           },
           {
             "name": {
-              "wireValue": "const",
               "name": {
                 "originalName": "const",
                 "camelCase": {
@@ -3366,7 +3365,8 @@
                   "unsafeName": "Const",
                   "safeName": "Const"
                 }
-              }
+              },
+              "wireValue": "const"
             },
             "typeReference": {
               "value": {
@@ -3377,7 +3377,6 @@
           },
           {
             "name": {
-              "wireValue": "contains",
               "name": {
                 "originalName": "contains",
                 "camelCase": {
@@ -3396,7 +3395,8 @@
                   "unsafeName": "Contains",
                   "safeName": "Contains"
                 }
-              }
+              },
+              "wireValue": "contains"
             },
             "typeReference": {
               "value": {
@@ -3408,7 +3408,6 @@
           },
           {
             "name": {
-              "wireValue": "contentEncoding",
               "name": {
                 "originalName": "contentEncoding",
                 "camelCase": {
@@ -3427,7 +3426,8 @@
                   "unsafeName": "ContentEncoding",
                   "safeName": "ContentEncoding"
                 }
-              }
+              },
+              "wireValue": "contentEncoding"
             },
             "typeReference": {
               "value": {
@@ -3439,7 +3439,6 @@
           },
           {
             "name": {
-              "wireValue": "contentMediaType",
               "name": {
                 "originalName": "contentMediaType",
                 "camelCase": {
@@ -3458,7 +3457,8 @@
                   "unsafeName": "ContentMediaType",
                   "safeName": "ContentMediaType"
                 }
-              }
+              },
+              "wireValue": "contentMediaType"
             },
             "typeReference": {
               "value": {
@@ -3470,7 +3470,6 @@
           },
           {
             "name": {
-              "wireValue": "contentSchema",
               "name": {
                 "originalName": "contentSchema",
                 "camelCase": {
@@ -3489,7 +3488,8 @@
                   "unsafeName": "ContentSchema",
                   "safeName": "ContentSchema"
                 }
-              }
+              },
+              "wireValue": "contentSchema"
             },
             "typeReference": {
               "value": {
@@ -3501,7 +3501,6 @@
           },
           {
             "name": {
-              "wireValue": "default",
               "name": {
                 "originalName": "default",
                 "camelCase": {
@@ -3520,7 +3519,8 @@
                   "unsafeName": "Default",
                   "safeName": "Default"
                 }
-              }
+              },
+              "wireValue": "default"
             },
             "typeReference": {
               "value": {
@@ -3531,7 +3531,6 @@
           },
           {
             "name": {
-              "wireValue": "dependentRequired",
               "name": {
                 "originalName": "dependentRequired",
                 "camelCase": {
@@ -3550,7 +3549,8 @@
                   "unsafeName": "DependentRequired",
                   "safeName": "DependentRequired"
                 }
-              }
+              },
+              "wireValue": "dependentRequired"
             },
             "typeReference": {
               "value": {
@@ -3572,7 +3572,6 @@
           },
           {
             "name": {
-              "wireValue": "dependentSchemas",
               "name": {
                 "originalName": "dependentSchemas",
                 "camelCase": {
@@ -3591,7 +3590,8 @@
                   "unsafeName": "DependentSchemas",
                   "safeName": "DependentSchemas"
                 }
-              }
+              },
+              "wireValue": "dependentSchemas"
             },
             "typeReference": {
               "value": {
@@ -3610,7 +3610,6 @@
           },
           {
             "name": {
-              "wireValue": "deprecated",
               "name": {
                 "originalName": "deprecated",
                 "camelCase": {
@@ -3629,7 +3628,8 @@
                   "unsafeName": "Deprecated",
                   "safeName": "Deprecated"
                 }
-              }
+              },
+              "wireValue": "deprecated"
             },
             "typeReference": {
               "value": {
@@ -3641,7 +3641,6 @@
           },
           {
             "name": {
-              "wireValue": "description",
               "name": {
                 "originalName": "description",
                 "camelCase": {
@@ -3660,7 +3659,8 @@
                   "unsafeName": "Description",
                   "safeName": "Description"
                 }
-              }
+              },
+              "wireValue": "description"
             },
             "typeReference": {
               "value": {
@@ -3672,7 +3672,6 @@
           },
           {
             "name": {
-              "wireValue": "else",
               "name": {
                 "originalName": "else",
                 "camelCase": {
@@ -3691,7 +3690,8 @@
                   "unsafeName": "Else",
                   "safeName": "Else"
                 }
-              }
+              },
+              "wireValue": "else"
             },
             "typeReference": {
               "value": {
@@ -3703,7 +3703,6 @@
           },
           {
             "name": {
-              "wireValue": "enum",
               "name": {
                 "originalName": "enum",
                 "camelCase": {
@@ -3722,7 +3721,8 @@
                   "unsafeName": "Enum",
                   "safeName": "Enum"
                 }
-              }
+              },
+              "wireValue": "enum"
             },
             "typeReference": {
               "value": {
@@ -3736,7 +3736,6 @@
           },
           {
             "name": {
-              "wireValue": "examples",
               "name": {
                 "originalName": "examples",
                 "camelCase": {
@@ -3755,7 +3754,8 @@
                   "unsafeName": "Examples",
                   "safeName": "Examples"
                 }
-              }
+              },
+              "wireValue": "examples"
             },
             "typeReference": {
               "value": {
@@ -3769,7 +3769,6 @@
           },
           {
             "name": {
-              "wireValue": "exclusiveMaximum",
               "name": {
                 "originalName": "exclusiveMaximum",
                 "camelCase": {
@@ -3788,7 +3787,8 @@
                   "unsafeName": "ExclusiveMaximum",
                   "safeName": "ExclusiveMaximum"
                 }
-              }
+              },
+              "wireValue": "exclusiveMaximum"
             },
             "typeReference": {
               "value": {
@@ -3800,7 +3800,6 @@
           },
           {
             "name": {
-              "wireValue": "exclusiveMinimum",
               "name": {
                 "originalName": "exclusiveMinimum",
                 "camelCase": {
@@ -3819,7 +3818,8 @@
                   "unsafeName": "ExclusiveMinimum",
                   "safeName": "ExclusiveMinimum"
                 }
-              }
+              },
+              "wireValue": "exclusiveMinimum"
             },
             "typeReference": {
               "value": {
@@ -3831,7 +3831,6 @@
           },
           {
             "name": {
-              "wireValue": "format",
               "name": {
                 "originalName": "format",
                 "camelCase": {
@@ -3850,7 +3849,8 @@
                   "unsafeName": "Format",
                   "safeName": "Format"
                 }
-              }
+              },
+              "wireValue": "format"
             },
             "typeReference": {
               "value": {
@@ -3862,7 +3862,6 @@
           },
           {
             "name": {
-              "wireValue": "if",
               "name": {
                 "originalName": "if",
                 "camelCase": {
@@ -3881,7 +3880,8 @@
                   "unsafeName": "If",
                   "safeName": "If"
                 }
-              }
+              },
+              "wireValue": "if"
             },
             "typeReference": {
               "value": {
@@ -3893,7 +3893,6 @@
           },
           {
             "name": {
-              "wireValue": "items",
               "name": {
                 "originalName": "items",
                 "camelCase": {
@@ -3912,7 +3911,8 @@
                   "unsafeName": "Items",
                   "safeName": "Items"
                 }
-              }
+              },
+              "wireValue": "items"
             },
             "typeReference": {
               "value": {
@@ -3924,7 +3924,6 @@
           },
           {
             "name": {
-              "wireValue": "maxContains",
               "name": {
                 "originalName": "maxContains",
                 "camelCase": {
@@ -3943,7 +3942,8 @@
                   "unsafeName": "MaxContains",
                   "safeName": "MaxContains"
                 }
-              }
+              },
+              "wireValue": "maxContains"
             },
             "typeReference": {
               "value": {
@@ -3958,7 +3958,6 @@
           },
           {
             "name": {
-              "wireValue": "maxItems",
               "name": {
                 "originalName": "maxItems",
                 "camelCase": {
@@ -3977,7 +3976,8 @@
                   "unsafeName": "MaxItems",
                   "safeName": "MaxItems"
                 }
-              }
+              },
+              "wireValue": "maxItems"
             },
             "typeReference": {
               "value": {
@@ -3992,7 +3992,6 @@
           },
           {
             "name": {
-              "wireValue": "maxLength",
               "name": {
                 "originalName": "maxLength",
                 "camelCase": {
@@ -4011,7 +4010,8 @@
                   "unsafeName": "MaxLength",
                   "safeName": "MaxLength"
                 }
-              }
+              },
+              "wireValue": "maxLength"
             },
             "typeReference": {
               "value": {
@@ -4026,7 +4026,6 @@
           },
           {
             "name": {
-              "wireValue": "maxProperties",
               "name": {
                 "originalName": "maxProperties",
                 "camelCase": {
@@ -4045,7 +4044,8 @@
                   "unsafeName": "MaxProperties",
                   "safeName": "MaxProperties"
                 }
-              }
+              },
+              "wireValue": "maxProperties"
             },
             "typeReference": {
               "value": {
@@ -4060,7 +4060,6 @@
           },
           {
             "name": {
-              "wireValue": "maximum",
               "name": {
                 "originalName": "maximum",
                 "camelCase": {
@@ -4079,7 +4078,8 @@
                   "unsafeName": "Maximum",
                   "safeName": "Maximum"
                 }
-              }
+              },
+              "wireValue": "maximum"
             },
             "typeReference": {
               "value": {
@@ -4091,7 +4091,6 @@
           },
           {
             "name": {
-              "wireValue": "minContains",
               "name": {
                 "originalName": "minContains",
                 "camelCase": {
@@ -4110,7 +4109,8 @@
                   "unsafeName": "MinContains",
                   "safeName": "MinContains"
                 }
-              }
+              },
+              "wireValue": "minContains"
             },
             "typeReference": {
               "value": {
@@ -4125,7 +4125,6 @@
           },
           {
             "name": {
-              "wireValue": "minItems",
               "name": {
                 "originalName": "minItems",
                 "camelCase": {
@@ -4144,7 +4143,8 @@
                   "unsafeName": "MinItems",
                   "safeName": "MinItems"
                 }
-              }
+              },
+              "wireValue": "minItems"
             },
             "typeReference": {
               "value": {
@@ -4159,7 +4159,6 @@
           },
           {
             "name": {
-              "wireValue": "minLength",
               "name": {
                 "originalName": "minLength",
                 "camelCase": {
@@ -4178,7 +4177,8 @@
                   "unsafeName": "MinLength",
                   "safeName": "MinLength"
                 }
-              }
+              },
+              "wireValue": "minLength"
             },
             "typeReference": {
               "value": {
@@ -4193,7 +4193,6 @@
           },
           {
             "name": {
-              "wireValue": "minProperties",
               "name": {
                 "originalName": "minProperties",
                 "camelCase": {
@@ -4212,7 +4211,8 @@
                   "unsafeName": "MinProperties",
                   "safeName": "MinProperties"
                 }
-              }
+              },
+              "wireValue": "minProperties"
             },
             "typeReference": {
               "value": {
@@ -4227,7 +4227,6 @@
           },
           {
             "name": {
-              "wireValue": "minimum",
               "name": {
                 "originalName": "minimum",
                 "camelCase": {
@@ -4246,7 +4245,8 @@
                   "unsafeName": "Minimum",
                   "safeName": "Minimum"
                 }
-              }
+              },
+              "wireValue": "minimum"
             },
             "typeReference": {
               "value": {
@@ -4258,7 +4258,6 @@
           },
           {
             "name": {
-              "wireValue": "multipleOf",
               "name": {
                 "originalName": "multipleOf",
                 "camelCase": {
@@ -4277,7 +4276,8 @@
                   "unsafeName": "MultipleOf",
                   "safeName": "MultipleOf"
                 }
-              }
+              },
+              "wireValue": "multipleOf"
             },
             "typeReference": {
               "value": {
@@ -4289,7 +4289,6 @@
           },
           {
             "name": {
-              "wireValue": "not",
               "name": {
                 "originalName": "not",
                 "camelCase": {
@@ -4308,7 +4307,8 @@
                   "unsafeName": "Not",
                   "safeName": "Not"
                 }
-              }
+              },
+              "wireValue": "not"
             },
             "typeReference": {
               "value": {
@@ -4320,7 +4320,6 @@
           },
           {
             "name": {
-              "wireValue": "oneOf",
               "name": {
                 "originalName": "oneOf",
                 "camelCase": {
@@ -4339,7 +4338,8 @@
                   "unsafeName": "OneOf",
                   "safeName": "OneOf"
                 }
-              }
+              },
+              "wireValue": "oneOf"
             },
             "typeReference": {
               "value": {
@@ -4354,7 +4354,6 @@
           },
           {
             "name": {
-              "wireValue": "pattern",
               "name": {
                 "originalName": "pattern",
                 "camelCase": {
@@ -4373,7 +4372,8 @@
                   "unsafeName": "Pattern",
                   "safeName": "Pattern"
                 }
-              }
+              },
+              "wireValue": "pattern"
             },
             "typeReference": {
               "value": {
@@ -4385,7 +4385,6 @@
           },
           {
             "name": {
-              "wireValue": "patternProperties",
               "name": {
                 "originalName": "patternProperties",
                 "camelCase": {
@@ -4404,7 +4403,8 @@
                   "unsafeName": "PatternProperties",
                   "safeName": "PatternProperties"
                 }
-              }
+              },
+              "wireValue": "patternProperties"
             },
             "typeReference": {
               "value": {
@@ -4423,7 +4423,6 @@
           },
           {
             "name": {
-              "wireValue": "prefixItems",
               "name": {
                 "originalName": "prefixItems",
                 "camelCase": {
@@ -4442,7 +4441,8 @@
                   "unsafeName": "PrefixItems",
                   "safeName": "PrefixItems"
                 }
-              }
+              },
+              "wireValue": "prefixItems"
             },
             "typeReference": {
               "value": {
@@ -4457,7 +4457,6 @@
           },
           {
             "name": {
-              "wireValue": "properties",
               "name": {
                 "originalName": "properties",
                 "camelCase": {
@@ -4476,7 +4475,8 @@
                   "unsafeName": "Properties",
                   "safeName": "Properties"
                 }
-              }
+              },
+              "wireValue": "properties"
             },
             "typeReference": {
               "value": {
@@ -4487,7 +4487,6 @@
           },
           {
             "name": {
-              "wireValue": "propertyNames",
               "name": {
                 "originalName": "propertyNames",
                 "camelCase": {
@@ -4506,7 +4505,8 @@
                   "unsafeName": "PropertyNames",
                   "safeName": "PropertyNames"
                 }
-              }
+              },
+              "wireValue": "propertyNames"
             },
             "typeReference": {
               "value": {
@@ -4518,7 +4518,6 @@
           },
           {
             "name": {
-              "wireValue": "readOnly",
               "name": {
                 "originalName": "readOnly",
                 "camelCase": {
@@ -4537,7 +4536,8 @@
                   "unsafeName": "ReadOnly",
                   "safeName": "ReadOnly"
                 }
-              }
+              },
+              "wireValue": "readOnly"
             },
             "typeReference": {
               "value": {
@@ -4549,7 +4549,6 @@
           },
           {
             "name": {
-              "wireValue": "required",
               "name": {
                 "originalName": "required",
                 "camelCase": {
@@ -4568,7 +4567,8 @@
                   "unsafeName": "Required",
                   "safeName": "Required"
                 }
-              }
+              },
+              "wireValue": "required"
             },
             "typeReference": {
               "value": {
@@ -4583,7 +4583,6 @@
           },
           {
             "name": {
-              "wireValue": "then",
               "name": {
                 "originalName": "then",
                 "camelCase": {
@@ -4602,7 +4601,8 @@
                   "unsafeName": "Then",
                   "safeName": "Then"
                 }
-              }
+              },
+              "wireValue": "then"
             },
             "typeReference": {
               "value": {
@@ -4614,7 +4614,6 @@
           },
           {
             "name": {
-              "wireValue": "title",
               "name": {
                 "originalName": "title",
                 "camelCase": {
@@ -4633,7 +4632,8 @@
                   "unsafeName": "Title",
                   "safeName": "Title"
                 }
-              }
+              },
+              "wireValue": "title"
             },
             "typeReference": {
               "value": {
@@ -4645,7 +4645,6 @@
           },
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -4664,7 +4663,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "typeReference": {
               "value": {
@@ -4676,7 +4676,6 @@
           },
           {
             "name": {
-              "wireValue": "uniqueItems",
               "name": {
                 "originalName": "uniqueItems",
                 "camelCase": {
@@ -4695,7 +4694,8 @@
                   "unsafeName": "UniqueItems",
                   "safeName": "UniqueItems"
                 }
-              }
+              },
+              "wireValue": "uniqueItems"
             },
             "typeReference": {
               "value": {
@@ -4707,7 +4707,6 @@
           },
           {
             "name": {
-              "wireValue": "writeOnly",
               "name": {
                 "originalName": "writeOnly",
                 "camelCase": {
@@ -4726,7 +4725,8 @@
                   "unsafeName": "WriteOnly",
                   "safeName": "WriteOnly"
                 }
-              }
+              },
+              "wireValue": "writeOnly"
             },
             "typeReference": {
               "value": {
@@ -4803,7 +4803,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "someParam",
                 "name": {
                   "originalName": "someParam",
                   "camelCase": {
@@ -4822,7 +4821,8 @@
                     "unsafeName": "SomeParam",
                     "safeName": "SomeParam"
                   }
-                }
+                },
+                "wireValue": "someParam"
               },
               "typeReference": {
                 "value": {
@@ -4849,9 +4849,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

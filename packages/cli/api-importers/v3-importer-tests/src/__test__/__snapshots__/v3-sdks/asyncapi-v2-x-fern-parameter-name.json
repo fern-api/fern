@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "content",
               "name": {
                 "originalName": "content",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Content",
                   "safeName": "Content"
                 }
-              }
+              },
+              "wireValue": "content"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "timestamp",
               "name": {
                 "originalName": "timestamp",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Timestamp",
                   "safeName": "Timestamp"
                 }
-              }
+              },
+              "wireValue": "timestamp"
             },
             "valueType": {
               "container": {
@@ -174,7 +174,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "content",
               "name": {
                 "originalName": "content",
                 "camelCase": {
@@ -193,7 +192,8 @@
                   "unsafeName": "Content",
                   "safeName": "Content"
                 }
-              }
+              },
+              "wireValue": "content"
             },
             "valueType": {
               "container": {
@@ -437,7 +437,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -456,7 +455,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesPublish",
@@ -546,7 +546,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -565,7 +564,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
@@ -614,7 +614,6 @@
                       },
                       {
                         "name": {
-                          "wireValue": "timestamp",
                           "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -633,7 +632,8 @@
                               "unsafeName": "Timestamp",
                               "safeName": "Timestamp"
                             }
-                          }
+                          },
+                          "wireValue": "timestamp"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
@@ -765,7 +765,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -784,7 +783,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesPublish",
@@ -874,7 +874,6 @@
                     "properties": [
                       {
                         "name": {
-                          "wireValue": "content",
                           "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -893,7 +892,8 @@
                               "unsafeName": "Content",
                               "safeName": "Content"
                             }
-                          }
+                          },
+                          "wireValue": "content"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
@@ -942,7 +942,6 @@
                       },
                       {
                         "name": {
-                          "wireValue": "timestamp",
                           "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -961,7 +960,8 @@
                               "unsafeName": "Timestamp",
                               "safeName": "Timestamp"
                             }
-                          }
+                          },
+                          "wireValue": "timestamp"
                         },
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
@@ -1209,7 +1209,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1228,7 +1227,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

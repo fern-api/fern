@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "valueType": {
               "container": {
@@ -144,7 +144,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -163,7 +162,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "valueType": {
               "container": {
@@ -320,7 +320,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "stream",
                   "name": {
                     "originalName": "stream",
                     "camelCase": {
@@ -339,7 +338,8 @@
                       "unsafeName": "Stream",
                       "safeName": "Stream"
                     }
-                  }
+                  },
+                  "wireValue": "stream"
                 },
                 "valueType": {
                   "container": {
@@ -363,7 +363,6 @@
               },
               {
                 "name": {
-                  "wireValue": "prompt",
                   "name": {
                     "originalName": "prompt",
                     "camelCase": {
@@ -382,7 +381,8 @@
                       "unsafeName": "Prompt",
                       "safeName": "Prompt"
                     }
-                  }
+                  },
+                  "wireValue": "prompt"
                 },
                 "valueType": {
                   "primitive": {
@@ -495,7 +495,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -514,7 +513,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -563,7 +563,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -582,7 +581,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "typeReference": {
               "value": {
@@ -625,7 +625,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -644,7 +643,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "typeReference": {
               "value": {
@@ -802,7 +802,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "stream",
                   "name": {
                     "originalName": "stream",
                     "camelCase": {
@@ -821,7 +820,8 @@
                       "unsafeName": "Stream",
                       "safeName": "Stream"
                     }
-                  }
+                  },
+                  "wireValue": "stream"
                 },
                 "typeReference": {
                   "value": {
@@ -833,7 +833,6 @@
               },
               {
                 "name": {
-                  "wireValue": "prompt",
                   "name": {
                     "originalName": "prompt",
                     "camelCase": {
@@ -852,7 +851,8 @@
                       "unsafeName": "Prompt",
                       "safeName": "Prompt"
                     }
-                  }
+                  },
+                  "wireValue": "prompt"
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -877,9 +877,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {
     "subpackage_chatCompletions": {
       "fernFilepath": {

@@ -59,7 +59,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -78,7 +77,8 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              }
+              },
+              "wireValue": "status"
             },
             "valueType": {
               "container": {
@@ -102,7 +102,6 @@
           },
           {
             "name": {
-              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -121,7 +120,8 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              }
+              },
+              "wireValue": "message"
             },
             "valueType": {
               "container": {
@@ -241,7 +241,6 @@
               {
                 "docs": "The user's username",
                 "name": {
-                  "wireValue": "username",
                   "name": {
                     "originalName": "username",
                     "camelCase": {
@@ -260,7 +259,8 @@
                       "unsafeName": "Username",
                       "safeName": "Username"
                     }
-                  }
+                  },
+                  "wireValue": "username"
                 },
                 "valueType": {
                   "primitive": {
@@ -279,7 +279,6 @@
               {
                 "docs": "The user's email address",
                 "name": {
-                  "wireValue": "email",
                   "name": {
                     "originalName": "email",
                     "camelCase": {
@@ -298,7 +297,8 @@
                       "unsafeName": "Email",
                       "safeName": "Email"
                     }
-                  }
+                  },
+                  "wireValue": "email"
                 },
                 "valueType": {
                   "primitive": {
@@ -434,7 +434,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -453,7 +452,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -503,7 +503,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -522,7 +521,8 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              }
+              },
+              "wireValue": "status"
             },
             "typeReference": {
               "value": {
@@ -534,7 +534,6 @@
           },
           {
             "name": {
-              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -553,7 +552,8 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              }
+              },
+              "wireValue": "message"
             },
             "typeReference": {
               "value": {
@@ -633,7 +633,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "username",
                   "name": {
                     "originalName": "username",
                     "camelCase": {
@@ -652,7 +651,8 @@
                       "unsafeName": "Username",
                       "safeName": "Username"
                     }
-                  }
+                  },
+                  "wireValue": "username"
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -661,7 +661,6 @@
               },
               {
                 "name": {
-                  "wireValue": "email",
                   "name": {
                     "originalName": "email",
                     "camelCase": {
@@ -680,7 +679,8 @@
                       "unsafeName": "Email",
                       "safeName": "Email"
                     }
-                  }
+                  },
+                  "wireValue": "email"
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -705,9 +705,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

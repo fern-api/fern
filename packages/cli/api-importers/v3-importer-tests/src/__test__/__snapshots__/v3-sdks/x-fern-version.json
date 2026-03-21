@@ -124,7 +124,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -143,7 +142,8 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              }
+              },
+              "wireValue": "stream"
             },
             "valueType": {
               "container": {
@@ -169,7 +169,6 @@
           },
           {
             "name": {
-              "wireValue": "prompt",
               "name": {
                 "originalName": "prompt",
                 "camelCase": {
@@ -188,7 +187,8 @@
                   "unsafeName": "Prompt",
                   "safeName": "Prompt"
                 }
-              }
+              },
+              "wireValue": "prompt"
             },
             "valueType": {
               "primitive": {
@@ -257,7 +257,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -276,7 +275,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "valueType": {
               "container": {
@@ -349,7 +349,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -368,7 +367,8 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              }
+              },
+              "wireValue": "text"
             },
             "valueType": {
               "container": {
@@ -498,7 +498,6 @@
                       "properties": [
                         {
                           "name": {
-                            "wireValue": "stream",
                             "name": {
                               "originalName": "stream",
                               "camelCase": {
@@ -517,7 +516,8 @@
                                 "unsafeName": "Stream",
                                 "safeName": "Stream"
                               }
-                            }
+                            },
+                            "wireValue": "stream"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "CreateCompletionRequest",
@@ -565,7 +565,6 @@
                         },
                         {
                           "name": {
-                            "wireValue": "prompt",
                             "name": {
                               "originalName": "prompt",
                               "camelCase": {
@@ -584,7 +583,8 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                               }
-                            }
+                            },
+                            "wireValue": "prompt"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "CreateCompletionRequest",
@@ -1015,7 +1015,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1034,7 +1033,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

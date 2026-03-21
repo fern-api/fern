@@ -26,7 +26,6 @@
       {
         "key": "ApiKeyAuth",
         "name": {
-          "wireValue": "x-api-key",
           "name": {
             "originalName": "apiKey",
             "camelCase": {
@@ -45,7 +44,8 @@
               "unsafeName": "APIKey",
               "safeName": "APIKey"
             }
-          }
+          },
+          "wireValue": "x-api-key"
         },
         "valueType": {
           "primitive": {
@@ -95,7 +95,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -114,7 +113,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -138,7 +138,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -157,7 +156,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -445,7 +445,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -464,7 +463,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "environments": {
@@ -545,7 +545,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -564,7 +563,8 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "typeReference": {
               "value": {
@@ -576,7 +576,6 @@
           },
           {
             "name": {
-              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -595,7 +594,8 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              }
+              },
+              "wireValue": "name"
             },
             "typeReference": {
               "value": {
@@ -616,7 +616,6 @@
         "auth": {
           "header": {
             "name": {
-              "wireValue": "x-api-key",
               "name": {
                 "originalName": "apiKey",
                 "camelCase": {
@@ -635,7 +634,8 @@
                   "unsafeName": "APIKey",
                   "safeName": "APIKey"
                 }
-              }
+              },
+              "wireValue": "x-api-key"
             },
             "typeReference": {
               "value": "STRING",
@@ -777,9 +777,6 @@
     }
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

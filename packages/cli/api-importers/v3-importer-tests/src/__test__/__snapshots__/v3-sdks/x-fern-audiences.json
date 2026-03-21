@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -144,7 +144,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "public_property",
                         "name": {
                           "originalName": "public_property",
                           "camelCase": {
@@ -163,7 +162,8 @@
                             "unsafeName": "PublicProperty",
                             "safeName": "PublicProperty"
                           }
-                        }
+                        },
+                        "wireValue": "public_property"
                       },
                       "value": {
                         "shape": {
@@ -186,7 +186,6 @@
                     },
                     {
                       "name": {
-                        "wireValue": "private_property",
                         "name": {
                           "originalName": "private_property",
                           "camelCase": {
@@ -205,7 +204,8 @@
                             "unsafeName": "PrivateProperty",
                             "safeName": "PrivateProperty"
                           }
-                        }
+                        },
+                        "wireValue": "private_property"
                       },
                       "value": {
                         "shape": {
@@ -294,7 +294,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "public_property",
                   "name": {
                     "originalName": "public_property",
                     "camelCase": {
@@ -313,7 +312,8 @@
                       "unsafeName": "PublicProperty",
                       "safeName": "PublicProperty"
                     }
-                  }
+                  },
+                  "wireValue": "public_property"
                 },
                 "valueType": {
                   "container": {
@@ -340,7 +340,6 @@
               },
               {
                 "name": {
-                  "wireValue": "private_property",
                   "name": {
                     "originalName": "private_property",
                     "camelCase": {
@@ -359,7 +358,8 @@
                       "unsafeName": "PrivateProperty",
                       "safeName": "PrivateProperty"
                     }
-                  }
+                  },
+                  "wireValue": "private_property"
                 },
                 "valueType": {
                   "container": {
@@ -422,7 +422,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "public_property",
                       "name": {
                         "originalName": "public_property",
                         "camelCase": {
@@ -441,7 +440,8 @@
                           "unsafeName": "PublicProperty",
                           "safeName": "PublicProperty"
                         }
-                      }
+                      },
+                      "wireValue": "public_property"
                     },
                     "valueType": {
                       "container": {
@@ -468,7 +468,6 @@
                   },
                   {
                     "name": {
-                      "wireValue": "private_property",
                       "name": {
                         "originalName": "private_property",
                         "camelCase": {
@@ -487,7 +486,8 @@
                           "unsafeName": "PrivateProperty",
                           "safeName": "PrivateProperty"
                         }
-                      }
+                      },
+                      "wireValue": "private_property"
                     },
                     "valueType": {
                       "container": {
@@ -669,7 +669,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -688,7 +687,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

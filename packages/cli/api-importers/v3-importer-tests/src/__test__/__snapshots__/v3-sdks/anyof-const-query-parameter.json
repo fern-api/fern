@@ -105,7 +105,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "success",
               "name": {
                 "originalName": "success",
                 "camelCase": {
@@ -124,7 +123,8 @@
                   "unsafeName": "Success",
                   "safeName": "Success"
                 }
-              }
+              },
+              "wireValue": "success"
             },
             "valueType": {
               "container": {
@@ -232,7 +232,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "team_id",
                 "name": {
                   "originalName": "team_id",
                   "camelCase": {
@@ -251,7 +250,8 @@
                     "unsafeName": "TeamId",
                     "safeName": "TeamId"
                   }
-                }
+                },
+                "wireValue": "team_id"
               },
               "valueType": {
                 "fernFilepath": {
@@ -305,7 +305,6 @@
                 "queryParameters": [
                   {
                     "name": {
-                      "wireValue": "team_id",
                       "name": {
                         "originalName": "team_id",
                         "camelCase": {
@@ -324,7 +323,8 @@
                           "unsafeName": "TeamId",
                           "safeName": "TeamId"
                         }
-                      }
+                      },
+                      "wireValue": "team_id"
                     },
                     "shape": {
                       "type": "single"
@@ -390,7 +390,6 @@
                   "properties": [
                     {
                       "name": {
-                        "wireValue": "ids",
                         "name": {
                           "originalName": "ids",
                           "camelCase": {
@@ -409,7 +408,8 @@
                             "unsafeName": "Ids",
                             "safeName": "Ids"
                           }
-                        }
+                        },
+                        "wireValue": "ids"
                       },
                       "value": {
                         "shape": {
@@ -450,7 +450,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "success",
                                 "name": {
                                   "originalName": "success",
                                   "camelCase": {
@@ -469,7 +468,8 @@
                                     "unsafeName": "Success",
                                     "safeName": "Success"
                                   }
-                                }
+                                },
+                                "wireValue": "success"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "link_bulk_trigger_historical_pull_Response_200",
@@ -621,7 +621,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "ids",
                   "name": {
                     "originalName": "ids",
                     "camelCase": {
@@ -640,7 +639,8 @@
                       "unsafeName": "Ids",
                       "safeName": "Ids"
                     }
-                  }
+                  },
+                  "wireValue": "ids"
                 },
                 "valueType": {
                   "container": {
@@ -711,7 +711,6 @@
                 "properties": [
                   {
                     "name": {
-                      "wireValue": "ids",
                       "name": {
                         "originalName": "ids",
                         "camelCase": {
@@ -730,7 +729,8 @@
                           "unsafeName": "Ids",
                           "safeName": "Ids"
                         }
-                      }
+                      },
+                      "wireValue": "ids"
                     },
                     "valueType": {
                       "container": {
@@ -1035,7 +1035,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1054,7 +1053,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -60,7 +60,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "datum",
               "name": {
                 "originalName": "datum",
                 "camelCase": {
@@ -79,7 +78,8 @@
                   "unsafeName": "Datum",
                   "safeName": "Datum"
                 }
-              }
+              },
+              "wireValue": "datum"
             },
             "valueType": {
               "container": {
@@ -198,7 +198,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "file",
                     "name": {
                       "originalName": "file",
                       "camelCase": {
@@ -217,7 +216,8 @@
                         "unsafeName": "File",
                         "safeName": "File"
                       }
-                    }
+                    },
+                    "wireValue": "file"
                   },
                   "isOptional": false,
                   "docs": "The file to upload",
@@ -228,7 +228,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "maybe_file",
                     "name": {
                       "originalName": "maybe_file",
                       "camelCase": {
@@ -247,7 +246,8 @@
                         "unsafeName": "MaybeFile",
                         "safeName": "MaybeFile"
                       }
-                    }
+                    },
+                    "wireValue": "maybe_file"
                   },
                   "isOptional": true,
                   "docs": "An optional file to upload",
@@ -390,7 +390,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "list_file",
                     "name": {
                       "originalName": "list_file",
                       "camelCase": {
@@ -409,7 +408,8 @@
                         "unsafeName": "ListFile",
                         "safeName": "ListFile"
                       }
-                    }
+                    },
+                    "wireValue": "list_file"
                   },
                   "isOptional": false,
                   "docs": "A list of files to upload",
@@ -420,7 +420,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "maybe_list_file",
                     "name": {
                       "originalName": "maybe_list_file",
                       "camelCase": {
@@ -439,7 +438,8 @@
                         "unsafeName": "MaybeListFile",
                         "safeName": "MaybeListFile"
                       }
-                    }
+                    },
+                    "wireValue": "maybe_list_file"
                   },
                   "isOptional": true,
                   "docs": "An optional list of files to upload",
@@ -582,7 +582,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "file",
                     "name": {
                       "originalName": "file",
                       "camelCase": {
@@ -601,7 +600,8 @@
                         "unsafeName": "File",
                         "safeName": "File"
                       }
-                    }
+                    },
+                    "wireValue": "file"
                   },
                   "isOptional": false,
                   "contentType": "application/octet-stream",
@@ -613,7 +613,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "maybe_file",
                     "name": {
                       "originalName": "maybe_file",
                       "camelCase": {
@@ -632,7 +631,8 @@
                         "unsafeName": "MaybeFile",
                         "safeName": "MaybeFile"
                       }
-                    }
+                    },
+                    "wireValue": "maybe_file"
                   },
                   "isOptional": true,
                   "docs": "An optional file to upload",
@@ -643,7 +643,6 @@
               {
                 "docs": "This is a metadata field",
                 "name": {
-                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -662,7 +661,8 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  }
+                  },
+                  "wireValue": "metadata"
                 },
                 "valueType": {
                   "container": {
@@ -698,7 +698,6 @@
               },
               {
                 "name": {
-                  "wireValue": "data",
                   "name": {
                     "originalName": "data",
                     "camelCase": {
@@ -717,7 +716,8 @@
                       "unsafeName": "Data",
                       "safeName": "Data"
                     }
-                  }
+                  },
+                  "wireValue": "data"
                 },
                 "valueType": {
                   "container": {
@@ -895,7 +895,6 @@
               {
                 "docs": "Name of the conversation.",
                 "name": {
-                  "wireValue": "name",
                   "name": {
                     "originalName": "name",
                     "camelCase": {
@@ -914,7 +913,8 @@
                       "unsafeName": "Name",
                       "safeName": "Name"
                     }
-                  }
+                  },
+                  "wireValue": "name"
                 },
                 "valueType": {
                   "container": {
@@ -940,7 +940,6 @@
               {
                 "docs": "Description of the conversation.",
                 "name": {
-                  "wireValue": "description",
                   "name": {
                     "originalName": "description",
                     "camelCase": {
@@ -959,7 +958,8 @@
                       "unsafeName": "Description",
                       "safeName": "Description"
                     }
-                  }
+                  },
+                  "wireValue": "description"
                 },
                 "valueType": {
                   "container": {
@@ -985,7 +985,6 @@
               {
                 "value": {
                   "key": {
-                    "wireValue": "file",
                     "name": {
                       "originalName": "file",
                       "camelCase": {
@@ -1004,7 +1003,8 @@
                         "unsafeName": "File",
                         "safeName": "File"
                       }
-                    }
+                    },
+                    "wireValue": "file"
                   },
                   "isOptional": true,
                   "docs": "An optional file to attach.",
@@ -1090,7 +1090,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1109,7 +1108,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -1159,7 +1159,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "datum",
               "name": {
                 "originalName": "datum",
                 "camelCase": {
@@ -1178,7 +1177,8 @@
                   "unsafeName": "Datum",
                   "safeName": "Datum"
                 }
-              }
+              },
+              "wireValue": "datum"
             },
             "typeReference": {
               "value": {
@@ -1257,7 +1257,6 @@
           "body": {
             "properties": [
               {
-                "wireValue": "file",
                 "name": {
                   "originalName": "file",
                   "camelCase": {
@@ -1277,10 +1276,10 @@
                     "safeName": "File"
                   }
                 },
+                "wireValue": "file",
                 "type": "file"
               },
               {
-                "wireValue": "maybe_file",
                 "name": {
                   "originalName": "maybe_file",
                   "camelCase": {
@@ -1300,6 +1299,7 @@
                     "safeName": "MaybeFile"
                   }
                 },
+                "wireValue": "maybe_file",
                 "type": "file"
               }
             ],
@@ -1378,7 +1378,6 @@
           "body": {
             "properties": [
               {
-                "wireValue": "list_file",
                 "name": {
                   "originalName": "list_file",
                   "camelCase": {
@@ -1398,10 +1397,10 @@
                     "safeName": "ListFile"
                   }
                 },
+                "wireValue": "list_file",
                 "type": "fileArray"
               },
               {
-                "wireValue": "maybe_list_file",
                 "name": {
                   "originalName": "maybe_list_file",
                   "camelCase": {
@@ -1421,6 +1420,7 @@
                     "safeName": "MaybeListFile"
                   }
                 },
+                "wireValue": "maybe_list_file",
                 "type": "fileArray"
               }
             ],
@@ -1499,7 +1499,6 @@
           "body": {
             "properties": [
               {
-                "wireValue": "file",
                 "name": {
                   "originalName": "file",
                   "camelCase": {
@@ -1519,10 +1518,10 @@
                     "safeName": "File"
                   }
                 },
+                "wireValue": "file",
                 "type": "file"
               },
               {
-                "wireValue": "maybe_file",
                 "name": {
                   "originalName": "maybe_file",
                   "camelCase": {
@@ -1542,11 +1541,11 @@
                     "safeName": "MaybeFile"
                   }
                 },
+                "wireValue": "maybe_file",
                 "type": "file"
               },
               {
                 "name": {
-                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -1565,7 +1564,8 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  }
+                  },
+                  "wireValue": "metadata"
                 },
                 "typeReference": {
                   "value": {
@@ -1584,7 +1584,6 @@
               },
               {
                 "name": {
-                  "wireValue": "data",
                   "name": {
                     "originalName": "data",
                     "camelCase": {
@@ -1603,7 +1602,8 @@
                       "unsafeName": "Data",
                       "safeName": "Data"
                     }
-                  }
+                  },
+                  "wireValue": "data"
                 },
                 "typeReference": {
                   "value": {
@@ -1691,7 +1691,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "name",
                   "name": {
                     "originalName": "name",
                     "camelCase": {
@@ -1710,7 +1709,8 @@
                       "unsafeName": "Name",
                       "safeName": "Name"
                     }
-                  }
+                  },
+                  "wireValue": "name"
                 },
                 "typeReference": {
                   "value": {
@@ -1723,7 +1723,6 @@
               },
               {
                 "name": {
-                  "wireValue": "description",
                   "name": {
                     "originalName": "description",
                     "camelCase": {
@@ -1742,7 +1741,8 @@
                       "unsafeName": "Description",
                       "safeName": "Description"
                     }
-                  }
+                  },
+                  "wireValue": "description"
                 },
                 "typeReference": {
                   "value": {
@@ -1754,7 +1754,6 @@
                 "type": "bodyProperty"
               },
               {
-                "wireValue": "file",
                 "name": {
                   "originalName": "file",
                   "camelCase": {
@@ -1774,6 +1773,7 @@
                     "safeName": "File"
                   }
                 },
+                "wireValue": "file",
                 "type": "file"
               }
             ],
@@ -1794,9 +1794,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

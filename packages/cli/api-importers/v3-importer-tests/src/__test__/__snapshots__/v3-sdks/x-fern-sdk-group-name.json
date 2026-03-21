@@ -158,7 +158,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -177,7 +176,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -206,7 +206,6 @@
           },
           {
             "name": {
-              "wireValue": "associatedPersons",
               "name": {
                 "originalName": "associatedPersons",
                 "camelCase": {
@@ -225,7 +224,8 @@
                   "unsafeName": "AssociatedPersons",
                   "safeName": "AssociatedPersons"
                 }
-              }
+              },
+              "wireValue": "associatedPersons"
             },
             "valueType": {
               "container": {
@@ -325,7 +325,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -344,7 +343,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -447,7 +447,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -466,7 +465,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -530,7 +530,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "associatedPersons",
                                 "name": {
                                   "originalName": "associatedPersons",
                                   "camelCase": {
@@ -549,7 +548,8 @@
                                     "unsafeName": "AssociatedPersons",
                                     "safeName": "AssociatedPersons"
                                   }
-                                }
+                                },
+                                "wireValue": "associatedPersons"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -609,7 +609,6 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "wireValue": "id",
                                                         "name": {
                                                           "originalName": "id",
                                                           "camelCase": {
@@ -628,7 +627,8 @@
                                                             "unsafeName": "Id",
                                                             "safeName": "Id"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "id"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Person",
@@ -731,7 +731,6 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "wireValue": "id",
                                                         "name": {
                                                           "originalName": "id",
                                                           "camelCase": {
@@ -750,7 +749,8 @@
                                                             "unsafeName": "Id",
                                                             "safeName": "Id"
                                                           }
-                                                        }
+                                                        },
+                                                        "wireValue": "id"
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Person",
@@ -1195,7 +1195,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1214,7 +1213,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

@@ -35,7 +35,6 @@
       "shape": {
         "baseProperties": [],
         "discriminant": {
-          "wireValue": "type",
           "name": {
             "originalName": "type",
             "camelCase": {
@@ -54,13 +53,13 @@
               "unsafeName": "Type",
               "safeName": "Type"
             }
-          }
+          },
+          "wireValue": "type"
         },
         "extends": [],
         "types": [
           {
             "discriminantValue": {
-              "wireValue": "EMBEDDING_GENERATION",
               "name": {
                 "originalName": "EMBEDDING_GENERATION",
                 "camelCase": {
@@ -79,7 +78,8 @@
                   "unsafeName": "EmbeddingGeneration",
                   "safeName": "EmbeddingGeneration"
                 }
-              }
+              },
+              "wireValue": "EMBEDDING_GENERATION"
             },
             "displayName": "EMBEDDING_GENERATION",
             "shape": {
@@ -113,7 +113,6 @@
           },
           {
             "discriminantValue": {
-              "wireValue": "INFERENCE",
               "name": {
                 "originalName": "INFERENCE",
                 "camelCase": {
@@ -132,7 +131,8 @@
                   "unsafeName": "Inference",
                   "safeName": "Inference"
                 }
-              }
+              },
+              "wireValue": "INFERENCE"
             },
             "displayName": "INFERENCE",
             "shape": {
@@ -166,7 +166,6 @@
           },
           {
             "discriminantValue": {
-              "wireValue": "TL_INFERENCE",
               "name": {
                 "originalName": "TL_INFERENCE",
                 "camelCase": {
@@ -185,7 +184,8 @@
                   "unsafeName": "TlInference",
                   "safeName": "TlInference"
                 }
-              }
+              },
+              "wireValue": "TL_INFERENCE"
             },
             "displayName": "TL_INFERENCE",
             "shape": {
@@ -219,7 +219,6 @@
           },
           {
             "discriminantValue": {
-              "wireValue": "TRAINING",
               "name": {
                 "originalName": "TRAINING",
                 "camelCase": {
@@ -238,7 +237,8 @@
                   "unsafeName": "Training",
                   "safeName": "Training"
                 }
-              }
+              },
+              "wireValue": "TRAINING"
             },
             "displayName": "TRAINING",
             "shape": {
@@ -345,7 +345,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -364,7 +363,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

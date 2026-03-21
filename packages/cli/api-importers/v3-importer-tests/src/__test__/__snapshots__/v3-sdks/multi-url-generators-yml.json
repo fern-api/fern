@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              }
+              },
+              "wireValue": "id"
             },
             "valueType": {
               "container": {
@@ -82,7 +82,6 @@
           },
           {
             "name": {
-              "wireValue": "username",
               "name": {
                 "originalName": "username",
                 "camelCase": {
@@ -101,7 +100,8 @@
                   "unsafeName": "Username",
                   "safeName": "Username"
                 }
-              }
+              },
+              "wireValue": "username"
             },
             "valueType": {
               "container": {
@@ -128,7 +128,6 @@
           },
           {
             "name": {
-              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -147,7 +146,8 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              }
+              },
+              "wireValue": "email"
             },
             "valueType": {
               "container": {
@@ -174,7 +174,6 @@
           },
           {
             "name": {
-              "wireValue": "createdAt",
               "name": {
                 "originalName": "createdAt",
                 "camelCase": {
@@ -193,7 +192,8 @@
                   "unsafeName": "CreatedAt",
                   "safeName": "CreatedAt"
                 }
-              }
+              },
+              "wireValue": "createdAt"
             },
             "valueType": {
               "container": {
@@ -265,7 +265,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "accessToken",
               "name": {
                 "originalName": "accessToken",
                 "camelCase": {
@@ -284,7 +283,8 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              }
+              },
+              "wireValue": "accessToken"
             },
             "valueType": {
               "container": {
@@ -311,7 +311,6 @@
           },
           {
             "name": {
-              "wireValue": "tokenType",
               "name": {
                 "originalName": "tokenType",
                 "camelCase": {
@@ -330,7 +329,8 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              }
+              },
+              "wireValue": "tokenType"
             },
             "valueType": {
               "container": {
@@ -357,7 +357,6 @@
           },
           {
             "name": {
-              "wireValue": "expiresIn",
               "name": {
                 "originalName": "expiresIn",
                 "camelCase": {
@@ -376,7 +375,8 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              }
+              },
+              "wireValue": "expiresIn"
             },
             "valueType": {
               "container": {
@@ -533,7 +533,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -552,7 +551,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -614,7 +614,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "username",
                                 "name": {
                                   "originalName": "username",
                                   "camelCase": {
@@ -633,7 +632,8 @@
                                     "unsafeName": "Username",
                                     "safeName": "Username"
                                   }
-                                }
+                                },
+                                "wireValue": "username"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -695,7 +695,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "email",
                                 "name": {
                                   "originalName": "email",
                                   "camelCase": {
@@ -714,7 +713,8 @@
                                     "unsafeName": "Email",
                                     "safeName": "Email"
                                   }
-                                }
+                                },
+                                "wireValue": "email"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -776,7 +776,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "createdAt",
                                 "name": {
                                   "originalName": "createdAt",
                                   "camelCase": {
@@ -795,7 +794,8 @@
                                     "unsafeName": "CreatedAt",
                                     "safeName": "CreatedAt"
                                   }
-                                }
+                                },
+                                "wireValue": "createdAt"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1340,7 +1340,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -1359,7 +1358,8 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                }
+                                },
+                                "wireValue": "id"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1421,7 +1421,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "username",
                                 "name": {
                                   "originalName": "username",
                                   "camelCase": {
@@ -1440,7 +1439,8 @@
                                     "unsafeName": "Username",
                                     "safeName": "Username"
                                   }
-                                }
+                                },
+                                "wireValue": "username"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1502,7 +1502,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "email",
                                 "name": {
                                   "originalName": "email",
                                   "camelCase": {
@@ -1521,7 +1520,8 @@
                                     "unsafeName": "Email",
                                     "safeName": "Email"
                                   }
-                                }
+                                },
+                                "wireValue": "email"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1583,7 +1583,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "createdAt",
                                 "name": {
                                   "originalName": "createdAt",
                                   "camelCase": {
@@ -1602,7 +1601,8 @@
                                     "unsafeName": "CreatedAt",
                                     "safeName": "CreatedAt"
                                   }
-                                }
+                                },
+                                "wireValue": "createdAt"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -2153,7 +2153,6 @@
                           "properties": [
                             {
                               "name": {
-                                "wireValue": "accessToken",
                                 "name": {
                                   "originalName": "accessToken",
                                   "camelCase": {
@@ -2172,7 +2171,8 @@
                                     "unsafeName": "AccessToken",
                                     "safeName": "AccessToken"
                                   }
-                                }
+                                },
+                                "wireValue": "accessToken"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Token",
@@ -2234,7 +2234,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "tokenType",
                                 "name": {
                                   "originalName": "tokenType",
                                   "camelCase": {
@@ -2253,7 +2252,8 @@
                                     "unsafeName": "TokenType",
                                     "safeName": "TokenType"
                                   }
-                                }
+                                },
+                                "wireValue": "tokenType"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Token",
@@ -2315,7 +2315,6 @@
                             },
                             {
                               "name": {
-                                "wireValue": "expiresIn",
                                 "name": {
                                   "originalName": "expiresIn",
                                   "camelCase": {
@@ -2334,7 +2333,8 @@
                                     "unsafeName": "ExpiresIn",
                                     "safeName": "ExpiresIn"
                                   }
-                                }
+                                },
+                                "wireValue": "expiresIn"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Token",
@@ -2867,7 +2867,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2886,7 +2885,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

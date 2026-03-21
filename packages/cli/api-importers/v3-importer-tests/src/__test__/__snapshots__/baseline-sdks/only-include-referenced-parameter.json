@@ -60,7 +60,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -79,7 +78,8 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              }
+              },
+              "wireValue": "query"
             },
             "valueType": {
               "container": {
@@ -103,7 +103,6 @@
           },
           {
             "name": {
-              "wireValue": "limit",
               "name": {
                 "originalName": "limit",
                 "camelCase": {
@@ -122,7 +121,8 @@
                   "unsafeName": "Limit",
                   "safeName": "Limit"
                 }
-              }
+              },
+              "wireValue": "limit"
             },
             "valueType": {
               "container": {
@@ -217,7 +217,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -236,7 +235,8 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                }
+                },
+                "wireValue": "filter"
               },
               "valueType": {
                 "name": {
@@ -373,7 +373,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -392,7 +391,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -442,7 +442,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -461,7 +460,8 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              }
+              },
+              "wireValue": "query"
             },
             "typeReference": {
               "value": {
@@ -473,7 +473,6 @@
           },
           {
             "name": {
-              "wireValue": "limit",
               "name": {
                 "originalName": "limit",
                 "camelCase": {
@@ -492,7 +491,8 @@
                   "unsafeName": "Limit",
                   "safeName": "Limit"
                 }
-              }
+              },
+              "wireValue": "limit"
             },
             "typeReference": {
               "value": {
@@ -569,7 +569,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -588,7 +587,8 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                }
+                },
+                "wireValue": "filter"
               },
               "typeReference": {
                 "value": "type_:SearchFilter",
@@ -612,9 +612,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

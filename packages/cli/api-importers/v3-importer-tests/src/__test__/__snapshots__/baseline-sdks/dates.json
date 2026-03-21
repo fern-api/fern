@@ -27,7 +27,6 @@
   "headers": [
     {
       "name": {
-        "wireValue": "date_header",
         "name": {
           "originalName": "dateHeader",
           "camelCase": {
@@ -46,7 +45,8 @@
             "unsafeName": "DateHeader",
             "safeName": "DateHeader"
           }
-        }
+        },
+        "wireValue": "date_header"
       },
       "valueType": {
         "container": {
@@ -67,7 +67,6 @@
     },
     {
       "name": {
-        "wireValue": "date_time_header",
         "name": {
           "originalName": "dateTimeHeader",
           "camelCase": {
@@ -86,7 +85,8 @@
             "unsafeName": "DateTimeHeader",
             "safeName": "DateTimeHeader"
           }
-        }
+        },
+        "wireValue": "date_time_header"
       },
       "valueType": {
         "container": {
@@ -140,7 +140,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "date_only",
               "name": {
                 "originalName": "date_only",
                 "camelCase": {
@@ -159,7 +158,8 @@
                   "unsafeName": "DateOnly",
                   "safeName": "DateOnly"
                 }
-              }
+              },
+              "wireValue": "date_only"
             },
             "valueType": {
               "container": {
@@ -180,7 +180,6 @@
           },
           {
             "name": {
-              "wireValue": "date_time",
               "name": {
                 "originalName": "date_time",
                 "camelCase": {
@@ -199,7 +198,8 @@
                   "unsafeName": "DateTime",
                   "safeName": "DateTime"
                 }
-              }
+              },
+              "wireValue": "date_time"
             },
             "valueType": {
               "container": {
@@ -290,7 +290,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "date_query",
                 "name": {
                   "originalName": "date_query",
                   "camelCase": {
@@ -309,7 +308,8 @@
                     "unsafeName": "DateQuery",
                     "safeName": "DateQuery"
                   }
-                }
+                },
+                "wireValue": "date_query"
               },
               "valueType": {
                 "container": {
@@ -331,7 +331,6 @@
             },
             {
               "name": {
-                "wireValue": "date_time_query",
                 "name": {
                   "originalName": "date_time_query",
                   "camelCase": {
@@ -350,7 +349,8 @@
                     "unsafeName": "DateTimeQuery",
                     "safeName": "DateTimeQuery"
                   }
-                }
+                },
+                "wireValue": "date_time_query"
               },
               "valueType": {
                 "container": {
@@ -397,7 +397,6 @@
             "properties": [
               {
                 "name": {
-                  "wireValue": "date_only",
                   "name": {
                     "originalName": "date_only",
                     "camelCase": {
@@ -416,7 +415,8 @@
                       "unsafeName": "DateOnly",
                       "safeName": "DateOnly"
                     }
-                  }
+                  },
+                  "wireValue": "date_only"
                 },
                 "valueType": {
                   "container": {
@@ -437,7 +437,6 @@
               },
               {
                 "name": {
-                  "wireValue": "date_time",
                   "name": {
                     "originalName": "date_time",
                     "camelCase": {
@@ -456,7 +455,8 @@
                       "unsafeName": "DateTime",
                       "safeName": "DateTime"
                     }
-                  }
+                  },
+                  "wireValue": "date_time"
                 },
                 "valueType": {
                   "container": {
@@ -592,7 +592,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -611,7 +610,8 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   },
   "errorDiscriminationStrategy": {
@@ -661,7 +661,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "date_only",
               "name": {
                 "originalName": "date_only",
                 "camelCase": {
@@ -680,7 +679,8 @@
                   "unsafeName": "DateOnly",
                   "safeName": "DateOnly"
                 }
-              }
+              },
+              "wireValue": "date_only"
             },
             "typeReference": {
               "value": {
@@ -692,7 +692,6 @@
           },
           {
             "name": {
-              "wireValue": "date_time",
               "name": {
                 "originalName": "date_time",
                 "camelCase": {
@@ -711,7 +710,8 @@
                   "unsafeName": "DateTime",
                   "safeName": "DateTime"
                 }
-              }
+              },
+              "wireValue": "date_time"
             },
             "typeReference": {
               "value": {
@@ -729,7 +729,6 @@
     "headers": [
       {
         "name": {
-          "wireValue": "date_header",
           "name": {
             "originalName": "dateHeader",
             "camelCase": {
@@ -748,7 +747,8 @@
               "unsafeName": "DateHeader",
               "safeName": "DateHeader"
             }
-          }
+          },
+          "wireValue": "date_header"
         },
         "typeReference": {
           "value": {
@@ -760,7 +760,6 @@
       },
       {
         "name": {
-          "wireValue": "date_time_header",
           "name": {
             "originalName": "dateTimeHeader",
             "camelCase": {
@@ -779,7 +778,8 @@
               "unsafeName": "DateTimeHeader",
               "safeName": "DateTimeHeader"
             }
-          }
+          },
+          "wireValue": "date_time_header"
         },
         "typeReference": {
           "value": {
@@ -851,7 +851,6 @@
           "queryParameters": [
             {
               "name": {
-                "wireValue": "date_query",
                 "name": {
                   "originalName": "date_query",
                   "camelCase": {
@@ -870,7 +869,8 @@
                     "unsafeName": "DateQuery",
                     "safeName": "DateQuery"
                   }
-                }
+                },
+                "wireValue": "date_query"
               },
               "typeReference": {
                 "value": {
@@ -882,7 +882,6 @@
             },
             {
               "name": {
-                "wireValue": "date_time_query",
                 "name": {
                   "originalName": "date_time_query",
                   "camelCase": {
@@ -901,7 +900,8 @@
                     "unsafeName": "DateTimeQuery",
                     "safeName": "DateTimeQuery"
                   }
-                }
+                },
+                "wireValue": "date_time_query"
               },
               "typeReference": {
                 "value": {
@@ -917,7 +917,6 @@
             "value": [
               {
                 "name": {
-                  "wireValue": "date_only",
                   "name": {
                     "originalName": "date_only",
                     "camelCase": {
@@ -936,7 +935,8 @@
                       "unsafeName": "DateOnly",
                       "safeName": "DateOnly"
                     }
-                  }
+                  },
+                  "wireValue": "date_only"
                 },
                 "typeReference": {
                   "value": {
@@ -948,7 +948,6 @@
               },
               {
                 "name": {
-                  "wireValue": "date_time",
                   "name": {
                     "originalName": "date_time",
                     "camelCase": {
@@ -967,7 +966,8 @@
                       "unsafeName": "DateTime",
                       "safeName": "DateTime"
                     }
-                  }
+                  },
+                  "wireValue": "date_time"
                 },
                 "typeReference": {
                   "value": {
@@ -995,9 +995,6 @@
     "pathParameters": []
   },
   "apiPlayground": true,
-  "casingsConfig": {
-    "smartCasing": true
-  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

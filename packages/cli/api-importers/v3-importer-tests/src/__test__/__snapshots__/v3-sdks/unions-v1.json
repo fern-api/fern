@@ -35,7 +35,6 @@
       "shape": {
         "baseProperties": [],
         "discriminant": {
-          "wireValue": "type",
           "name": {
             "originalName": "type",
             "camelCase": {
@@ -54,7 +53,8 @@
               "unsafeName": "Type",
               "safeName": "Type"
             }
-          }
+          },
+          "wireValue": "type"
         },
         "extends": [],
         "types": [],
@@ -106,7 +106,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "triangle",
               "name": {
                 "originalName": "triangle",
                 "camelCase": {
@@ -125,7 +124,8 @@
                   "unsafeName": "Triangle",
                   "safeName": "Triangle"
                 }
-              }
+              },
+              "wireValue": "triangle"
             }
           }
         ],
@@ -173,7 +173,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -192,7 +191,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "valueType": {
               "fernFilepath": {
@@ -231,7 +231,6 @@
           },
           {
             "name": {
-              "wireValue": "base",
               "name": {
                 "originalName": "base",
                 "camelCase": {
@@ -250,7 +249,8 @@
                   "unsafeName": "Base",
                   "safeName": "Base"
                 }
-              }
+              },
+              "wireValue": "base"
             },
             "valueType": {
               "primitive": {
@@ -271,7 +271,6 @@
           },
           {
             "name": {
-              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -290,7 +289,8 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              }
+              },
+              "wireValue": "height"
             },
             "valueType": {
               "primitive": {
@@ -361,7 +361,6 @@
         "values": [
           {
             "name": {
-              "wireValue": "square",
               "name": {
                 "originalName": "square",
                 "camelCase": {
@@ -380,7 +379,8 @@
                   "unsafeName": "Square",
                   "safeName": "Square"
                 }
-              }
+              },
+              "wireValue": "square"
             }
           }
         ],
@@ -428,7 +428,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -447,7 +446,8 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              }
+              },
+              "wireValue": "type"
             },
             "valueType": {
               "fernFilepath": {
@@ -486,7 +486,6 @@
           },
           {
             "name": {
-              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -505,7 +504,8 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              }
+              },
+              "wireValue": "sideLength"
             },
             "valueType": {
               "primitive": {
@@ -607,7 +607,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -626,7 +625,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }

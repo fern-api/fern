@@ -36,7 +36,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -55,7 +54,8 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              }
+              },
+              "wireValue": "foo"
             },
             "valueType": {
               "container": {
@@ -129,7 +129,6 @@
         "properties": [
           {
             "name": {
-              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -148,7 +147,8 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              }
+              },
+              "wireValue": "bar"
             },
             "valueType": {
               "container": {
@@ -221,7 +221,6 @@
       "shape": {
         "baseProperties": [],
         "discriminant": {
-          "wireValue": "variant",
           "name": {
             "originalName": "variant",
             "camelCase": {
@@ -240,13 +239,13 @@
               "unsafeName": "Variant",
               "safeName": "Variant"
             }
-          }
+          },
+          "wireValue": "variant"
         },
         "extends": [],
         "types": [
           {
             "discriminantValue": {
-              "wireValue": "request",
               "name": {
                 "originalName": "request",
                 "camelCase": {
@@ -265,7 +264,8 @@
                   "unsafeName": "Request",
                   "safeName": "Request"
                 }
-              }
+              },
+              "wireValue": "request"
             },
             "displayName": "request",
             "shape": {
@@ -299,7 +299,6 @@
           },
           {
             "discriminantValue": {
-              "wireValue": "response",
               "name": {
                 "originalName": "response",
                 "camelCase": {
@@ -318,7 +317,8 @@
                   "unsafeName": "Response",
                   "safeName": "Response"
                 }
-              }
+              },
+              "wireValue": "response"
             },
             "displayName": "response",
             "shape": {
@@ -411,7 +411,6 @@
                       "properties": [
                         {
                           "name": {
-                            "wireValue": "foo",
                             "name": {
                               "originalName": "foo",
                               "camelCase": {
@@ -430,7 +429,8 @@
                                 "unsafeName": "Foo",
                                 "safeName": "Foo"
                               }
-                            }
+                            },
+                            "wireValue": "foo"
                           },
                           "originalTypeDeclaration": {
                             "typeId": "RequestOne",
@@ -758,7 +758,6 @@
                   "shape": {
                     "shape": {
                       "discriminant": {
-                        "wireValue": "variant",
                         "name": {
                           "originalName": "variant",
                           "camelCase": {
@@ -777,11 +776,11 @@
                             "unsafeName": "Variant",
                             "safeName": "Variant"
                           }
-                        }
+                        },
+                        "wireValue": "variant"
                       },
                       "singleUnionType": {
                         "wireDiscriminantValue": {
-                          "wireValue": "request",
                           "name": {
                             "originalName": "request",
                             "camelCase": {
@@ -800,7 +799,8 @@
                               "unsafeName": "Request",
                               "safeName": "Request"
                             }
-                          }
+                          },
+                          "wireValue": "request"
                         },
                         "shape": {
                           "typeId": "RequestOne",
@@ -808,7 +808,6 @@
                             "properties": [
                               {
                                 "name": {
-                                  "wireValue": "foo",
                                   "name": {
                                     "originalName": "foo",
                                     "camelCase": {
@@ -827,7 +826,8 @@
                                       "unsafeName": "Foo",
                                       "safeName": "Foo"
                                     }
-                                  }
+                                  },
+                                  "wireValue": "foo"
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "RequestOne",
@@ -1196,7 +1196,6 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1215,7 +1214,8 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      }
+      },
+      "wireValue": "errorInstanceId"
     }
   }
 }
