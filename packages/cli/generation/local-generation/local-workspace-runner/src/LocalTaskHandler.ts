@@ -309,7 +309,8 @@ export class LocalTaskHandler {
                 });
                 return {
                     version: newVersion,
-                    commitMessage: fallbackMessage
+                    commitMessage: fallbackMessage,
+                    versionBumpReason: "Diff too large for AI analysis"
                 };
             }
 
@@ -474,7 +475,8 @@ export class LocalTaskHandler {
                 });
                 return {
                     version: newVersion,
-                    commitMessage: fallbackMessage
+                    commitMessage: fallbackMessage,
+                    versionBumpReason: `AI analysis failed: ${errorMessage}`
                 };
             }
 
