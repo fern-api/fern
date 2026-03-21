@@ -60,18 +60,10 @@ impl LightweightProblemInfoV22Builder {
     /// - [`variable_types`](LightweightProblemInfoV22Builder::variable_types)
     pub fn build(self) -> Result<LightweightProblemInfoV22, BuildError> {
         Ok(LightweightProblemInfoV22 {
-            problem_id: self
-                .problem_id
-                .ok_or_else(|| BuildError::missing_field("problem_id"))?,
-            problem_name: self
-                .problem_name
-                .ok_or_else(|| BuildError::missing_field("problem_name"))?,
-            problem_version: self
-                .problem_version
-                .ok_or_else(|| BuildError::missing_field("problem_version"))?,
-            variable_types: self
-                .variable_types
-                .ok_or_else(|| BuildError::missing_field("variable_types"))?,
+            problem_id: self.problem_id.ok_or_else(|| BuildError::missing_field("problem_id"))?,
+            problem_name: self.problem_name.ok_or_else(|| BuildError::missing_field("problem_name"))?,
+            problem_version: self.problem_version.ok_or_else(|| BuildError::missing_field("problem_version"))?,
+            variable_types: self.variable_types.ok_or_else(|| BuildError::missing_field("variable_types"))?,
         })
     }
 }

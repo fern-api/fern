@@ -29,9 +29,7 @@ impl NodesWrapperBuilder {
     /// - [`nodes`](NodesWrapperBuilder::nodes)
     pub fn build(self) -> Result<NodesWrapper, BuildError> {
         Ok(NodesWrapper {
-            nodes: self
-                .nodes
-                .ok_or_else(|| BuildError::missing_field("nodes"))?,
+            nodes: self.nodes.ok_or_else(|| BuildError::missing_field("nodes"))?,
         })
     }
 }

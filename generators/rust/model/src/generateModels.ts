@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BUILD_ERROR_RS, RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias/index.js";

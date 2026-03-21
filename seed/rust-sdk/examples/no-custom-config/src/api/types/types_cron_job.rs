@@ -29,9 +29,7 @@ impl CronJobBuilder {
     /// - [`expression`](CronJobBuilder::expression)
     pub fn build(self) -> Result<CronJob, BuildError> {
         Ok(CronJob {
-            expression: self
-                .expression
-                .ok_or_else(|| BuildError::missing_field("expression"))?,
+            expression: self.expression.ok_or_else(|| BuildError::missing_field("expression"))?,
         })
     }
 }

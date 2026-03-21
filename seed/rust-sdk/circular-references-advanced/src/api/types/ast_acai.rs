@@ -29,9 +29,7 @@ impl AcaiBuilder {
     /// - [`berry_fields`](AcaiBuilder::berry_fields)
     pub fn build(self) -> Result<Acai, BuildError> {
         Ok(Acai {
-            berry_fields: self
-                .berry_fields
-                .ok_or_else(|| BuildError::missing_field("berry_fields"))?,
+            berry_fields: self.berry_fields.ok_or_else(|| BuildError::missing_field("berry_fields"))?,
         })
     }
 }

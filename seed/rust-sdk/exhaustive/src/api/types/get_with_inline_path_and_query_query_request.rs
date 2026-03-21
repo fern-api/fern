@@ -30,9 +30,8 @@ impl GetWithInlinePathAndQueryQueryRequestBuilder {
     /// - [`query`](GetWithInlinePathAndQueryQueryRequestBuilder::query)
     pub fn build(self) -> Result<GetWithInlinePathAndQueryQueryRequest, BuildError> {
         Ok(GetWithInlinePathAndQueryQueryRequest {
-            query: self
-                .query
-                .ok_or_else(|| BuildError::missing_field("query"))?,
+            query: self.query.ok_or_else(|| BuildError::missing_field("query"))?,
         })
     }
 }
+

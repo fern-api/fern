@@ -29,9 +29,7 @@ impl WorkspaceStarterFilesResponseBuilder {
     /// - [`files`](WorkspaceStarterFilesResponseBuilder::files)
     pub fn build(self) -> Result<WorkspaceStarterFilesResponse, BuildError> {
         Ok(WorkspaceStarterFilesResponse {
-            files: self
-                .files
-                .ok_or_else(|| BuildError::missing_field("files"))?,
+            files: self.files.ok_or_else(|| BuildError::missing_field("files"))?,
         })
     }
 }

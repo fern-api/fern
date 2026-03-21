@@ -28,9 +28,7 @@ impl RequestBuilder {
     /// - [`request`](RequestBuilder::request)
     pub fn build(self) -> Result<Request, BuildError> {
         Ok(Request {
-            request: self
-                .request
-                .ok_or_else(|| BuildError::missing_field("request"))?,
+            request: self.request.ok_or_else(|| BuildError::missing_field("request"))?,
         })
     }
 }

@@ -35,16 +35,10 @@ pub mod client;
 pub mod prelude;
 pub mod environment;
 
-pub use error::{ApiError};
+pub use error::{ApiError, BuildError};
 pub use environment::{*};
 pub use api::{*};
 pub use core::{*};
 pub use config::{*};
 pub use client::{*};
 
-pub use api::*;
-pub use client::*;
-pub use config::*;
-pub use core::*;
-pub use environment::*;
-pub use error::{ApiError, BuildError};

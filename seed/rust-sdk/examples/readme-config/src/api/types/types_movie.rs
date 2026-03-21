@@ -110,24 +110,14 @@ impl MovieBuilder {
         Ok(Movie {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
             prequel: self.prequel,
-            title: self
-                .title
-                .ok_or_else(|| BuildError::missing_field("title"))?,
+            title: self.title.ok_or_else(|| BuildError::missing_field("title"))?,
             from: self.from.ok_or_else(|| BuildError::missing_field("from"))?,
-            rating: self
-                .rating
-                .ok_or_else(|| BuildError::missing_field("rating"))?,
-            r#type: self
-                .r#type
-                .ok_or_else(|| BuildError::missing_field("r#type"))?,
+            rating: self.rating.ok_or_else(|| BuildError::missing_field("rating"))?,
+            r#type: self.r#type.ok_or_else(|| BuildError::missing_field("r#type"))?,
             tag: self.tag.ok_or_else(|| BuildError::missing_field("tag"))?,
             book: self.book,
-            metadata: self
-                .metadata
-                .ok_or_else(|| BuildError::missing_field("metadata"))?,
-            revenue: self
-                .revenue
-                .ok_or_else(|| BuildError::missing_field("revenue"))?,
+            metadata: self.metadata.ok_or_else(|| BuildError::missing_field("metadata"))?,
+            revenue: self.revenue.ok_or_else(|| BuildError::missing_field("revenue"))?,
         })
     }
 }

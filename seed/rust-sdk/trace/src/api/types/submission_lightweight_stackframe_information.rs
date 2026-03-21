@@ -40,12 +40,8 @@ impl LightweightStackframeInformationBuilder {
     /// - [`top_stack_frame_method_name`](LightweightStackframeInformationBuilder::top_stack_frame_method_name)
     pub fn build(self) -> Result<LightweightStackframeInformation, BuildError> {
         Ok(LightweightStackframeInformation {
-            num_stack_frames: self
-                .num_stack_frames
-                .ok_or_else(|| BuildError::missing_field("num_stack_frames"))?,
-            top_stack_frame_method_name: self
-                .top_stack_frame_method_name
-                .ok_or_else(|| BuildError::missing_field("top_stack_frame_method_name"))?,
+            num_stack_frames: self.num_stack_frames.ok_or_else(|| BuildError::missing_field("num_stack_frames"))?,
+            top_stack_frame_method_name: self.top_stack_frame_method_name.ok_or_else(|| BuildError::missing_field("top_stack_frame_method_name"))?,
         })
     }
 }

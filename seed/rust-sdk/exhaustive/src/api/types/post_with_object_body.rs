@@ -48,15 +48,10 @@ impl PostWithObjectBodyBuilder {
     /// - [`nested_object`](PostWithObjectBodyBuilder::nested_object)
     pub fn build(self) -> Result<PostWithObjectBody, BuildError> {
         Ok(PostWithObjectBody {
-            string: self
-                .string
-                .ok_or_else(|| BuildError::missing_field("string"))?,
-            integer: self
-                .integer
-                .ok_or_else(|| BuildError::missing_field("integer"))?,
-            nested_object: self
-                .nested_object
-                .ok_or_else(|| BuildError::missing_field("nested_object"))?,
+            string: self.string.ok_or_else(|| BuildError::missing_field("string"))?,
+            integer: self.integer.ok_or_else(|| BuildError::missing_field("integer"))?,
+            nested_object: self.nested_object.ok_or_else(|| BuildError::missing_field("nested_object"))?,
         })
     }
 }
+

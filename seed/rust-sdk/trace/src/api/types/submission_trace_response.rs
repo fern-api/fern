@@ -75,17 +75,11 @@ impl TraceResponseBuilder {
     /// - [`stack`](TraceResponseBuilder::stack)
     pub fn build(self) -> Result<TraceResponse, BuildError> {
         Ok(TraceResponse {
-            submission_id: self
-                .submission_id
-                .ok_or_else(|| BuildError::missing_field("submission_id"))?,
-            line_number: self
-                .line_number
-                .ok_or_else(|| BuildError::missing_field("line_number"))?,
+            submission_id: self.submission_id.ok_or_else(|| BuildError::missing_field("submission_id"))?,
+            line_number: self.line_number.ok_or_else(|| BuildError::missing_field("line_number"))?,
             return_value: self.return_value,
             expression_location: self.expression_location,
-            stack: self
-                .stack
-                .ok_or_else(|| BuildError::missing_field("stack"))?,
+            stack: self.stack.ok_or_else(|| BuildError::missing_field("stack"))?,
             stdout: self.stdout,
         })
     }

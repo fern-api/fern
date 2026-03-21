@@ -29,9 +29,7 @@ impl Files2Builder {
     /// - [`files`](Files2Builder::files)
     pub fn build(self) -> Result<Files2, BuildError> {
         Ok(Files2 {
-            files: self
-                .files
-                .ok_or_else(|| BuildError::missing_field("files"))?,
+            files: self.files.ok_or_else(|| BuildError::missing_field("files"))?,
         })
     }
 }
