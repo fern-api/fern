@@ -66,6 +66,21 @@ export async function getFrontmatterMetadata({
     }
 }
 
+function resolveTitle({
+    frontmatterTitle,
+    useFrontmatterTitles,
+    fallbackName
+}: {
+    frontmatterTitle: string | undefined;
+    useFrontmatterTitles: boolean;
+    fallbackName: string;
+}): string {
+    if (useFrontmatterTitles && frontmatterTitle != null) {
+        return frontmatterTitle;
+    }
+    return nameToTitle({ name: fallbackName });
+}
+
 interface NavigationItemWithMeta {
     item: docsYml.DocsNavigationItem;
     title: string;
@@ -102,7 +117,7 @@ export async function buildNavigationForDirectory({
         const metadata = pageMetadata[index];
         return {
             type: "page" as const,
-            title: (useFrontmatterTitles ? metadata?.title : undefined) ?? nameToTitle({ name: file.name }),
+            title: resolveTitle({ frontmatterTitle: metadata?.title, useFrontmatterTitles, fallbackName: file.name }),
             absolutePath: file.absolutePath,
             slug: nameToSlug({ name: file.name }),
             icon: undefined,
@@ -144,8 +159,11 @@ export async function buildNavigationForDirectory({
                     ? await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath, readFileFn })
                     : undefined;
 
-            const sectionTitle =
-                (useFrontmatterTitles ? indexMetadata?.title : undefined) ?? nameToTitle({ name: dir.name });
+            const sectionTitle = resolveTitle({
+                frontmatterTitle: indexMetadata?.title,
+                useFrontmatterTitles,
+                fallbackName: dir.name
+            });
 
             return {
                 section: {
