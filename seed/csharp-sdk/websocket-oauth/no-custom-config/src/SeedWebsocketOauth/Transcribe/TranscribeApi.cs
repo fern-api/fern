@@ -250,5 +250,28 @@ public partial class TranscribeApi
         /// Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. Set to null to use fixed-interval reconnection (legacy behavior). Default: exponential backoff, 1s→60s, unlimited attempts, with jitter.
         /// </summary>
         public ReconnectStrategy? ReconnectBackoff { get; set; } = new ReconnectStrategy();
+
+        internal static TranscribeApi.Options WithDefaults(
+            TranscribeApi.Options? options,
+            string? tenantName,
+            string? token
+        )
+        {
+            return new Options
+            {
+                BaseUrl = options?.BaseUrl ?? "",
+                EnableCompression = options?.EnableCompression ?? false,
+                HttpInvoker = options?.HttpInvoker,
+                TenantName = options?.TenantName ?? tenantName,
+                Token = options?.Token ?? token,
+                Model = options?.Model,
+                Token = options?.Token ?? token,
+                IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,
+                ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),
+                ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),
+                LostReconnectTimeout = options?.LostReconnectTimeout,
+                ReconnectBackoff = options?.ReconnectBackoff ?? new ReconnectStrategy(),
+            };
+        }
     }
 }

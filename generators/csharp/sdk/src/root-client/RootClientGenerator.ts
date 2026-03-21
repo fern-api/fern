@@ -121,7 +121,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
             if (hasAnyAuthContext) {
                 this.generateWebSocketAuthFields(cls, allConstructorParams);
-                this.generateInjectDefaultsMethods(cls, allConstructorParams);
+                this.generateGetRawAccessTokenMethod(cls, allConstructorParams);
             }
         }
     }
@@ -301,118 +301,46 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * Generates InjectDefaults methods that auto-populate WebSocket Options
-     * from stored root client credentials.
+     * Generates the GetRawAccessToken helper method on the root client if any
+     * WebSocket channel needs an OAuth token injected via Options.WithDefaults.
      */
-    private generateInjectDefaultsMethods(cls: ast.Class, constructorParams: ConstructorParameter[]) {
+    private generateGetRawAccessTokenMethod(cls: ast.Class, constructorParams: ConstructorParameter[]) {
+        if (this.oauth == null) {
+            return;
+        }
+
+        let needsOAuthHelper = false;
         for (const subpackage of this.getSubpackages()) {
             if (subpackage.websocket != null) {
                 const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                 if (websocketChannel != null) {
                     const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
-                    if (authContext != null) {
-                        const websocketApiName =
-                            WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
-                        const optionsClassRef = this.csharp.classReference({
-                            origin: this.csharp
-                                .classReference({
-                                    origin: websocketChannel,
-                                    name: websocketApiName,
-                                    namespace: this.Types.RootClient.namespace
-                                })
-                                .explicit("Options"),
-                            enclosingType: this.csharp.classReference({
-                                origin: websocketChannel,
-                                name: websocketApiName,
-                                namespace: this.Types.RootClient.namespace
-                            })
-                        });
-
-                        cls.addMethod({
-                            name: "InjectDefaults",
-                            access: ast.Access.Private,
-                            parameters: [
-                                this.csharp.parameter({
-                                    name: "options",
-                                    type: optionsClassRef
-                                })
-                            ],
-                            body: this.csharp.codeblock((writer) => {
-                                // Inject matched param fields
-                                for (const field of authContext.matchedParamFields) {
-                                    writer.controlFlow(
-                                        "if",
-                                        this.csharp.codeblock(`options.${field.optionsPropertyName} == null`)
-                                    );
-                                    writer.writeLine(`options.${field.optionsPropertyName} = ${field.fieldName};`);
-                                    writer.endControlFlow();
-                                }
-
-                                // Inject OAuth token
-                                if (authContext.oauthTokenPropertyName != null) {
-                                    writer.controlFlow(
-                                        "if",
-                                        this.csharp.codeblock(`options.${authContext.oauthTokenPropertyName} == null`)
-                                    );
-                                    writer.writeLine(
-                                        `options.${authContext.oauthTokenPropertyName} = GetRawAccessToken();`
-                                    );
-                                    writer.endControlFlow();
-                                }
-
-                                // Inject environment from ClientOptions
-                                if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
-                                    writer.controlFlow(
-                                        "if",
-                                        this.csharp.codeblock("string.IsNullOrEmpty(options.Environment)")
-                                    );
-                                    writer.writeLine(
-                                        `options.Environment = _clientOptions.Environment?.${authContext.environmentPropertyName} ?? "";`
-                                    );
-                                    writer.endControlFlow();
-                                }
-                            })
-                        });
+                    if (authContext?.oauthTokenPropertyName != null) {
+                        needsOAuthHelper = true;
+                        break;
                     }
                 }
             }
         }
 
-        // Generate GetRawAccessToken helper if any WebSocket channel needs OAuth
-        if (this.oauth != null) {
-            let needsOAuthHelper = false;
-            for (const subpackage of this.getSubpackages()) {
-                if (subpackage.websocket != null) {
-                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
-                    if (websocketChannel != null) {
-                        const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
-                        if (authContext?.oauthTokenPropertyName != null) {
-                            needsOAuthHelper = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (needsOAuthHelper) {
-                cls.addMethod({
-                    name: "GetRawAccessToken",
-                    access: ast.Access.Private,
-                    return_: this.Primitive.string,
-                    parameters: [],
-                    body: this.csharp.codeblock((writer) => {
-                        writer.writeLine(
-                            `var bearerToken = _tokenProvider.${this.names.methods.getAccessTokenAsync}().Result;`
-                        );
-                        writer.writeLine('const string bearerPrefix = "Bearer ";');
-                        writer.writeLine("return bearerToken.StartsWith(bearerPrefix)");
-                        writer.indent();
-                        writer.writeLine("? bearerToken.Substring(bearerPrefix.Length)");
-                        writer.writeLine(": bearerToken;");
-                        writer.dedent();
-                    })
-                });
-            }
+        if (needsOAuthHelper) {
+            cls.addMethod({
+                name: "GetRawAccessToken",
+                access: ast.Access.Private,
+                return_: this.Primitive.string,
+                parameters: [],
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine(
+                        `var bearerToken = _tokenProvider.${this.names.methods.getAccessTokenAsync}().Result;`
+                    );
+                    writer.writeLine('const string bearerPrefix = "Bearer ";');
+                    writer.writeLine("return bearerToken.StartsWith(bearerPrefix)");
+                    writer.indent();
+                    writer.writeLine("? bearerToken.Substring(bearerPrefix.Length)");
+                    writer.writeLine(": bearerToken;");
+                    writer.dedent();
+                })
+            });
         }
     }
 

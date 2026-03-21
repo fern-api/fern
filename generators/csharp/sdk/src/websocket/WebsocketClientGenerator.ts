@@ -199,6 +199,24 @@ export class WebSocketClientGenerator extends WithGeneration {
         });
     }
 
+    /**
+     * Builds the argument expression for calling Options.WithDefaults(options, field1, field2, ...).
+     * Returns the full C# expression string.
+     */
+    private static buildWithDefaultsArgs(optionsArg: string, authContext: WebSocketAuthContext): string {
+        const args: string[] = [optionsArg];
+        for (const field of authContext.matchedParamFields) {
+            args.push(field.fieldName);
+        }
+        if (authContext.oauthTokenPropertyName != null) {
+            args.push("GetRawAccessToken()");
+        }
+        if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
+            args.push(`_clientOptions.Environment?.${authContext.environmentPropertyName} ?? ""`);
+        }
+        return args.join(", ");
+    }
+
     static createWebSocketApiFactories(
         cls: ast.Class,
         subpackage: Subpackage,
@@ -237,7 +255,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             context
         );
 
-        const hasInjectDefaults =
+        const hasWithDefaults =
             authContext != null &&
             (authContext.matchedParamFields.length > 0 ||
                 authContext.oauthTokenPropertyName != null ||
@@ -252,24 +270,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                 access: ast.Access.Public,
                 return_: websocketInterfaceRef,
                 body: context.csharp.codeblock((writer) => {
-                    if (hasInjectDefaults) {
-                        const optionsArgs: Array<{ name: string; assignment: ast.AstNode }> =
-                            environmentBaseUrlExpression != null
-                                ? [
-                                      {
-                                          name: "BaseUrl",
-                                          assignment: context.csharp.codeblock(environmentBaseUrlExpression)
-                                      }
-                                  ]
-                                : [];
-                        writer.writeLine("var options = ");
-                        writer.writeNodeStatement(
-                            context.csharp.instantiateClass({
-                                classReference: optionsClassReference,
-                                arguments_: optionsArgs
-                            })
+                    if (hasWithDefaults && authContext != null) {
+                        const withDefaultsArgs = WebSocketClientGenerator.buildWithDefaultsArgs("null", authContext);
+                        writer.writeLine(
+                            `var options = ${websocketApiName}.Options.WithDefaults(${withDefaultsArgs});`
                         );
-                        writer.writeLine(`InjectDefaults(options);`);
                         writer.writeLine("return ");
                         writer.writeNodeStatement(
                             context.csharp.instantiateClass({
@@ -314,16 +319,27 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
-                if (hasInjectDefaults) {
-                    writer.writeLine(`InjectDefaults(options);`);
+                if (hasWithDefaults && authContext != null) {
+                    const withDefaultsArgs = WebSocketClientGenerator.buildWithDefaultsArgs("options", authContext);
+                    writer.writeLine(
+                        `var resolvedOptions = ${websocketApiName}.Options.WithDefaults(${withDefaultsArgs});`
+                    );
+                    writer.write("return ");
+                    writer.writeNodeStatement(
+                        context.csharp.instantiateClass({
+                            classReference: websocketApiClassReference,
+                            arguments_: [context.csharp.codeblock("resolvedOptions")]
+                        })
+                    );
+                } else {
+                    writer.write("return ");
+                    writer.writeNodeStatement(
+                        context.csharp.instantiateClass({
+                            classReference: websocketApiClassReference,
+                            arguments_: [context.csharp.codeblock("options")]
+                        })
+                    );
                 }
-                writer.write("return ");
-                writer.writeNodeStatement(
-                    context.csharp.instantiateClass({
-                        classReference: websocketApiClassReference,
-                        arguments_: [context.csharp.codeblock("options")]
-                    })
-                );
             })
         });
     }
@@ -687,7 +703,136 @@ export class WebSocketClientGenerator extends WithGeneration {
             initializer: this.csharp.codeblock("new ReconnectStrategy()")
         });
 
+        // Generate WithDefaults static method when auth context is present
+        if (this.authContext != null) {
+            this.addWithDefaultsMethod(optionsClass);
+        }
+
         return optionsClass;
+    }
+
+    /**
+     * Generates a `WithDefaults` internal static method on the Options class.
+     * This creates a new Options instance with auth-propagated defaults merged in.
+     */
+    private addWithDefaultsMethod(optionsClass: ast.Class): void {
+        if (this.authContext == null) {
+            return;
+        }
+        const authContext = this.authContext;
+
+        // Build the parameter list: Options? options, plus one param per auth-propagated field
+        const parameters: ast.Parameter[] = [
+            this.csharp.parameter({
+                name: "options",
+                type: this.optionsClassReference.asOptional()
+            })
+        ];
+        for (const field of authContext.matchedParamFields) {
+            parameters.push(
+                this.csharp.parameter({
+                    name: this.toCamelCase(field.optionsPropertyName),
+                    type: this.Primitive.string.asOptional()
+                })
+            );
+        }
+        if (authContext.oauthTokenPropertyName != null) {
+            parameters.push(
+                this.csharp.parameter({
+                    name: this.toCamelCase(authContext.oauthTokenPropertyName),
+                    type: this.Primitive.string.asOptional()
+                })
+            );
+        }
+        if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
+            parameters.push(
+                this.csharp.parameter({
+                    name: "environment",
+                    type: this.Primitive.string.asOptional()
+                })
+            );
+        }
+
+        optionsClass.addMethod({
+            name: "WithDefaults",
+            access: ast.Access.Internal,
+            type: ast.MethodType.STATIC,
+            return_: this.optionsClassReference,
+            parameters,
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("return new Options");
+                writer.writeLine("{");
+                writer.indent();
+
+                // BaseUrl: copy from options (no default injection for BaseUrl)
+                writer.writeLine('BaseUrl = options?.BaseUrl ?? "",');
+
+                // EnableCompression
+                writer.writeLine("EnableCompression = options?.EnableCompression ?? false,");
+
+                // HttpInvoker
+                writer.writeLine("HttpInvoker = options?.HttpInvoker,");
+
+                // Query parameters (auth-propagated use ?? defaultParam, others just copy)
+                for (const queryParameter of this.websocketChannel.queryParameters) {
+                    const propName = queryParameter.name.name.pascalCase.safeName;
+                    const isAuthPropagated = this.authPropagatedPropertyNames.has(propName);
+                    if (isAuthPropagated) {
+                        const paramName = this.toCamelCase(propName);
+                        writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
+                    } else {
+                        const type = this.context.csharpTypeMapper.convert({
+                            reference: queryParameter.valueType
+                        });
+                        if (type.isOptional) {
+                            writer.writeLine(`${propName} = options?.${propName},`);
+                        } else {
+                            // Required fields need a non-null assertion via options!
+                            writer.writeLine(`${propName} = options?.${propName},`);
+                        }
+                    }
+                }
+
+                // OAuth token property (if present)
+                if (authContext.oauthTokenPropertyName != null) {
+                    const propName = authContext.oauthTokenPropertyName;
+                    const paramName = this.toCamelCase(propName);
+                    writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
+                }
+
+                // Path parameters
+                for (const pathParameter of this.websocketChannel.pathParameters) {
+                    const propName = pathParameter.name.pascalCase.safeName;
+                    writer.writeLine(`${propName} = options?.${propName},`);
+                }
+
+                // Environment (if applicable)
+                if (this.hasEnvironments) {
+                    if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
+                        writer.writeLine("Environment = options?.Environment ?? environment,");
+                    } else {
+                        writer.writeLine("Environment = options?.Environment,");
+                    }
+                }
+
+                // Reconnection options
+                writer.writeLine("IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,");
+                writer.writeLine("ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),");
+                writer.writeLine("ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),");
+                writer.writeLine("LostReconnectTimeout = options?.LostReconnectTimeout,");
+                writer.writeLine("ReconnectBackoff = options?.ReconnectBackoff ?? new ReconnectStrategy(),");
+
+                writer.dedent();
+                writer.writeTextStatement("}");
+            })
+        });
+    }
+
+    /**
+     * Converts a PascalCase name to camelCase.
+     */
+    private toCamelCase(name: string): string {
+        return name.charAt(0).toLowerCase() + name.slice(1);
     }
 
     /**
