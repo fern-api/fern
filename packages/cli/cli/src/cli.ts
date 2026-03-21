@@ -754,7 +754,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Ignore the .fernignore file and generate all files, uploading an empty .fernignore (remote generation only)"
+                        "Ignore the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -775,11 +775,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
-                );
-            }
-            if (argv["ignore-fern-ignore"] && (argv.local || argv.runner != null)) {
-                return cliContext.failWithoutThrowing(
-                    "The --ignore-fern-ignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
                 );
             }
             if (argv["ignore-fern-ignore"] && argv.fernignore != null) {

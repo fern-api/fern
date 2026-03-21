@@ -142,7 +142,8 @@ export class GeneratorPipeline {
             preview: args.preview,
             outputPath: args.outputPath,
             containerEngine: args.containerEngine,
-            token: args.token
+            token: args.token,
+            ignoreFernignore: args.ignoreFernignore
         });
         if (!result.success) {
             return {

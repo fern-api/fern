@@ -3,10 +3,12 @@
 - version: 4.40.0
   changelogEntry:
     - summary: |
-        Add `--ignore-fern-ignore` flag to `fern generate`. When set, an empty
-        `.fernignore` file is uploaded so that no generated files are ignored,
-        effectively overwriting all files in the output. This is useful when you
-        want to ensure a clean generation without any `.fernignore` exclusions.
+        Add `--ignore-fern-ignore` flag to `fern generate`. When set, the
+        `.fernignore` file is ignored so that no generated files are excluded,
+        effectively overwriting all files in the output. For remote generation,
+        an empty `.fernignore` is uploaded. For local generation, the existing
+        `.fernignore` in the output directory is skipped. This is useful when
+        you want to ensure a clean generation without any `.fernignore` exclusions.
 
         ```bash
         fern generate --group my-sdk --ignore-fern-ignore

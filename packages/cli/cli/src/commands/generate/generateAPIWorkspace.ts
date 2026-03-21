@@ -153,7 +153,8 @@ export async function generateWorkspace({
                     replay,
                     noReplay,
                     validateWorkspace: true,
-                    requireEnvVars
+                    requireEnvVars,
+                    ignoreFernignore
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({

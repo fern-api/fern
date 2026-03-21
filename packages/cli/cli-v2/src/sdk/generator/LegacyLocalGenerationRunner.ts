@@ -72,6 +72,9 @@ export namespace LegacyLocalGenerationRunner {
 
         /** Authentication token (required for self-hosted git generation) */
         token?: FernToken;
+
+        /** Whether to ignore .fernignore and overwrite all files */
+        ignoreFernignore?: boolean;
     }
 
     export interface Result {
@@ -178,7 +181,8 @@ export class LegacyLocalGenerationRunner {
             runner: args.containerEngine,
             absolutePathToPreview: undefined,
             inspect: false,
-            ai: undefined
+            ai: undefined,
+            ignoreFernignore: args.ignoreFernignore
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {
