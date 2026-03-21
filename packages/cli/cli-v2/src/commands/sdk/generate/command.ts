@@ -239,6 +239,10 @@ export class GenerateCommand {
             ? await context.getTokenOrPrompt()
             : undefined;
 
+        if (token != null) {
+            await context.verifyOrgAccess({ organization: workspace.sdks.org, token });
+        }
+
         const runtime = isLocal ? "local" : "remote";
 
         const taskGroup = new SdkTaskGroup({ context });
@@ -583,7 +587,7 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new GenerateCommand();
     command(
         cli,
@@ -664,7 +668,6 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }

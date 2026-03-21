@@ -242,27 +242,29 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         }
 
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-        headerEntries.push({
-            key: php.codeblock(`'${platformHeaders.language}'`),
-            value: php.codeblock("'PHP'")
-        });
-        headerEntries.push({
-            key: php.codeblock(`'${platformHeaders.sdkName}'`),
-            value: php.codeblock(`'${this.context.getRootNamespace()}'`)
-        });
-        if (this.context.version != null) {
+        if (!this.context.customConfig.omitFernHeaders) {
+            const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
             headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                value: php.codeblock(`'${this.context.version}'`)
+                key: php.codeblock(`'${platformHeaders.language}'`),
+                value: php.codeblock("'PHP'")
             });
-        }
-        const userAgent = this.context.getUserAgent();
-        if (userAgent != null) {
             headerEntries.push({
-                key: php.codeblock(`'${userAgent.header}'`),
-                value: php.codeblock(`'${userAgent.value}'`)
+                key: php.codeblock(`'${platformHeaders.sdkName}'`),
+                value: php.codeblock(`'${this.context.getRootNamespace()}'`)
             });
+            if (this.context.version != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
+                    value: php.codeblock(`'${this.context.version}'`)
+                });
+            }
+            const userAgent = this.context.getUserAgent();
+            if (userAgent != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${userAgent.header}'`),
+                    value: php.codeblock(`'${userAgent.value}'`)
+                });
+            }
         }
 
         if (this.context.ir.apiVersion != null) {

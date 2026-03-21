@@ -19,6 +19,7 @@ describe("SeedPropertyAccessClient", () => {
             password: "password",
             profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
         };
+
         server
             .mockEndpoint()
             .post("/users")

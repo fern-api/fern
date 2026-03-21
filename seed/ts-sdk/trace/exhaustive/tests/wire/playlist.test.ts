@@ -20,6 +20,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .post("/v2/playlist/1/create")
@@ -63,6 +64,7 @@ describe("PlaylistClient", () => {
             { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
             { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
         ];
+
         server.mockEndpoint().get("/v2/playlist/1/all").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.playlist.getPlaylists(1, {
@@ -108,6 +110,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .get("/v2/playlist/1/playlistId")
@@ -145,6 +148,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .put("/v2/playlist/1/playlistId")

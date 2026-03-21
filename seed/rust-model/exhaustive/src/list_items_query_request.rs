@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listItems
-///
-/// Request type for the ListItemsQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListItemsQueryRequest {
     /// The cursor for pagination

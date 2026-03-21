@@ -4,5 +4,6 @@ pub use crate::prelude::*;
 pub struct VariantB {
     pub r#type: String,
     #[serde(rename = "valueB")]
+    #[serde(default)]
     pub value_b: i64,
 }

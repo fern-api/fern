@@ -466,8 +466,32 @@ export function convertSchemaObject(
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
-        if ("const" in schema) {
-            schema.enum = [schema.const];
+        const hasConst = "const" in schema;
+        // When coerceConstsTo is "enums", block the coerceEnumsToLiterals path
+        // so const-derived enums stay as enums. "enums-coerceable-to-literals" allows it.
+        const blockConstCoercionToLiteral = hasConst && context.options.coerceConstsTo === "enums";
+        if (hasConst) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- `const` is an OpenAPI 3.1 attribute not in the V3 types
+            const constValue = (schema as Record<string, unknown>).const;
+            if (context.options.coerceConstsTo === "literals") {
+                // Const directly becomes a literal — skip enum path entirely
+                if (typeof constValue === "string" || typeof constValue === "boolean") {
+                    return convertLiteral({
+                        nameOverride,
+                        generatedName,
+                        title,
+                        wrapAsOptional,
+                        wrapAsNullable,
+                        value: constValue,
+                        description,
+                        availability,
+                        namespace,
+                        groupName
+                    });
+                }
+            }
+            // "enums" and "enums-coerceable-to-literals": coerce to enum
+            schema.enum = [constValue];
         }
 
         // enums
@@ -506,6 +530,7 @@ export function convertSchemaObject(
 
             if (
                 context.options.coerceEnumsToLiterals &&
+                !blockConstCoercionToLiteral &&
                 schema.enum.length === 1 &&
                 schema.enum[0] != null &&
                 fernEnum == null
@@ -774,6 +799,25 @@ export function convertSchemaObject(
                     });
                 }
                 return result;
+            }
+
+            if (schema.format === "byte" && context.options.respectByteFormat) {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    // TODO: We should actually expose a bytes primitive type in the IR.
+                    // For now, we're using base64 to represent bytes specifically in gRPC SDKs.
+                    primitive: PrimitiveSchemaValueWithExample.base64({
+                        example: getExamplesString({ schema, logger: context.logger, fallback })
+                    }),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
             }
 
             const maybeConstValue = getProperty<string>(schema, "const");

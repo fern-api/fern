@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
@@ -7,6 +8,7 @@ import tmp from "tmp-promise";
 
 import {
     detectAirGappedModeForProtobuf,
+    ensureBufCommand,
     getProtobufYamlV1,
     PROTOBUF_EXPORT_CONFIG_V1,
     PROTOBUF_EXPORT_CONFIG_V2,
@@ -18,9 +20,61 @@ import {
     PROTOBUF_SHELL_PROXY_FILENAME
 } from "./utils.js";
 
+// Coalesces concurrent `npm install -g fern-api` calls into a single execution.
+// Multiple ProtobufIRGenerator instances may call ensureFernGloballyInstalled()
+// concurrently (e.g. during `fern docs dev` with multiple protobuf-sourced API tabs).
+// Without this, parallel npm global installs race on the same node_modules/fern-api
+// directory rename and produce ENOTEMPTY errors. The first caller creates the promise;
+// subsequent callers await the same one. On failure the promise is cleared to allow retry.
+// Safety: the check-and-assign after `await isFernOnPath()` is synchronous within a
+// single tick, so Node's single-threaded event loop guarantees no two callers can both
+// create the install promise.
+let fernGlobalInstallPromise: Promise<void> | undefined;
+
+async function isFernOnPath(logger: Logger): Promise<boolean> {
+    try {
+        await runExeca(undefined, "fern", ["--version"], {
+            stdout: "ignore",
+            stderr: "ignore"
+        });
+        return true;
+    } catch (error) {
+        const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
+        if (!isNotFound) {
+            logger.debug(
+                `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+        return false;
+    }
+}
+
+async function ensureFernGloballyInstalled(cwd: AbsoluteFilePath, logger: Logger): Promise<void> {
+    if (await isFernOnPath(logger)) {
+        return;
+    }
+    if (fernGlobalInstallPromise) {
+        return fernGlobalInstallPromise;
+    }
+    fernGlobalInstallPromise = (async () => {
+        try {
+            await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
+                cwd,
+                stdout: "ignore",
+                stderr: "pipe"
+            });
+        } catch (err) {
+            fernGlobalInstallPromise = undefined; // allow retry on transient failure
+            throw err;
+        }
+    })();
+    return fernGlobalInstallPromise;
+}
+
 export class ProtobufIRGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
+    private resolvedBufCommand: string | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -56,11 +110,15 @@ export class ProtobufIRGenerator {
         absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
         deps: string[];
     }): Promise<AbsoluteFilePath> {
+        // Resolve buf once at the start: check PATH first, then auto-download
+        await this.ensureBufResolved();
+
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
             this.isAirGapped = await detectAirGappedModeForProtobuf(
                 absoluteFilepathToProtobufRoot,
-                this.context.logger
+                this.context.logger,
+                this.resolvedBufCommand
             );
         }
 
@@ -122,20 +180,7 @@ export class ProtobufIRGenerator {
             return;
         }
 
-        // Use buf export to get all relevant .proto files
-        const which = createLoggingExecutable("which", {
-            cwd: protobufGeneratorConfigPath,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
+        const bufCommand = this.resolvedBufCommand ?? "buf";
 
         // Create a temporary buf config file to prevent conflicts
         // Try buf export with v1 first, then fall back to v2 if it fails
@@ -149,7 +194,7 @@ export class ProtobufIRGenerator {
             try {
                 const result = await runExeca(
                     this.context.logger,
-                    "buf",
+                    bufCommand,
                     [
                         "export",
                         "--path",
@@ -217,11 +262,7 @@ export class ProtobufIRGenerator {
             stderr: "pipe"
         });
 
-        await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
+        await ensureFernGloballyInstalled(protobufGeneratorConfigPath, this.context.logger);
 
         // Write buf config
         await writeFile(
@@ -236,25 +277,12 @@ export class ProtobufIRGenerator {
     }
 
     private async doGenerateLocal({ cwd, deps }: { cwd: AbsoluteFilePath; deps: string[] }): Promise<AbsoluteFilePath> {
-        const which = createLoggingExecutable("which", {
-            cwd,
-            logger: undefined,
-            doNotPipeOutput: true
-        });
-
-        try {
-            await which(["buf"]);
-        } catch (err) {
-            this.context.failAndThrow(
-                "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
-            );
-        }
-
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
 
         const configContent = getProtobufYamlV1(deps);
 
-        const buf = createLoggingExecutable("buf", {
+        const bufCommand = this.resolvedBufCommand ?? "buf";
+        const buf = createLoggingExecutable(bufCommand, {
             cwd,
             logger: undefined,
             stdout: "ignore",
@@ -294,6 +322,18 @@ export class ProtobufIRGenerator {
         }
 
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
+    }
+
+    private async ensureBufResolved(): Promise<void> {
+        if (this.resolvedBufCommand != null) {
+            return;
+        }
+
+        try {
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
+        } catch (error) {
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
+        }
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {

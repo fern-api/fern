@@ -12,8 +12,8 @@ import {
     SchemaId
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-
 import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
+import { SchemaReachability, SchemaVariantPlan } from "./computeSchemaReachability.js";
 import { State } from "./State.js";
 
 export interface OpenApiIrConverterContextOpts {
@@ -73,6 +73,18 @@ export class OpenApiIrConverterContext {
      * Used to resolve schema references correctly when respect-readonly-schemas is enabled.
      */
     private schemaNameMapping: Map<string, string> = new Map();
+
+    /**
+     * The computed variant plan for readonly schema handling.
+     * Set when respectReadonlySchemas is enabled.
+     */
+    private variantPlan: SchemaVariantPlan | undefined;
+
+    /**
+     * The raw reachability sets from graph analysis.
+     * Set when respectReadonlySchemas is enabled.
+     */
+    private reachability: SchemaReachability | undefined;
 
     constructor({
         taskContext,
@@ -304,11 +316,82 @@ export class OpenApiIrConverterContext {
     }
 
     /**
-     * Gets the final name for a schema, or the original name if no mapping exists.
+     * Returns true if the given schema has a read variant name mapping.
      */
-    public getSchemaFinalName(schemaId: string): string {
-        // Fast path: if respect-readonly-schemas is disabled, no schema renaming occurs
+    public hasReadVariant(schemaName: string): boolean {
+        return this.schemaNameMapping.has(schemaName);
+    }
+
+    /**
+     * Sets the variant plan and reachability data, and populates schemaNameMapping
+     * for all schemas that need both Read and Write variants.
+     */
+    public setVariantPlan(plan: SchemaVariantPlan, reachability: SchemaReachability): void {
+        this.variantPlan = plan;
+        this.reachability = reachability;
+
+        // Populate schemaNameMapping for schemas that need both variants
+        const allSchemas: Record<string, Schema>[] = [
+            this.ir.groupedSchemas.rootSchemas,
+            ...Object.values(this.ir.groupedSchemas.namespacedSchemas)
+        ];
+        for (const schemas of allSchemas) {
+            for (const [id, schema] of Object.entries(schemas)) {
+                if (plan.needsBothVariants.has(id) && schema.type === "object") {
+                    const originalName = schema.nameOverride ?? schema.generatedName;
+                    this.schemaNameMapping.set(originalName, `${originalName}Read`);
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns true if the given schema needs both Read and Write variants.
+     */
+    public needsBothVariants(id: SchemaId): boolean {
+        return this.variantPlan?.needsBothVariants.has(id) ?? false;
+    }
+
+    /**
+     * Returns true if the given schema is request-only with readonly properties.
+     */
+    public isRequestOnlyWithReadonly(id: SchemaId): boolean {
+        return this.variantPlan?.requestOnlyWithReadonly.has(id) ?? false;
+    }
+
+    /**
+     * Returns true if the given schema is reachable from response contexts
+     * (i.e., used outside of request bodies).
+     */
+    public isResponseReachable(id: SchemaId): boolean {
+        if (this.reachability == null) {
+            // Fall back to the IR's nonRequestReferencedSchemas if no reachability computed
+            return this.ir.nonRequestReferencedSchemas.has(id);
+        }
+        return this.reachability.responseReachable.has(id);
+    }
+
+    /**
+     * Returns true if the given schema is only reachable from request contexts
+     * (not from responses, errors, parameters, webhooks, or channels).
+     */
+    public isRequestOnly(id: SchemaId): boolean {
+        if (this.reachability == null) {
+            return !this.ir.nonRequestReferencedSchemas.has(id);
+        }
+        return this.reachability.requestReachable.has(id) && !this.reachability.responseReachable.has(id);
+    }
+
+    /**
+     * Gets the final name for a schema based on the variant being built.
+     * variant === "write" → always returns original name
+     * variant === "read" → returns Read variant name if it exists
+     */
+    public getSchemaFinalName(schemaId: string, variant: "read" | "write"): string {
         if (!this.options.respectReadonlySchemas) {
+            return schemaId;
+        }
+        if (variant === "write") {
             return schemaId;
         }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;

@@ -13,6 +13,19 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.submit_form_data(\n        username=\"johndoe\",\n        email=\"john@example.com\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_.get_token"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }

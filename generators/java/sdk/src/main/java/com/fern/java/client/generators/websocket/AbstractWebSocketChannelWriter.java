@@ -16,10 +16,21 @@
 
 package com.fern.java.client.generators.websocket;
 
+import com.fern.ir.model.http.HttpPath;
+import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
-import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.EnumValue;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.websocket.InlinedWebSocketMessageBody;
+import com.fern.ir.model.websocket.InlinedWebSocketMessageBodyProperty;
 import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
@@ -42,6 +53,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
@@ -73,6 +85,26 @@ public abstract class AbstractWebSocketChannelWriter {
     protected final FieldSpec onDisconnectedHandlerField;
     protected final FieldSpec onErrorHandlerField;
 
+    // Generic message handler field (fires for all incoming text messages)
+    protected final FieldSpec onMessageHandlerField;
+
+    // Reconnect options field (configurable before connect())
+    protected final FieldSpec reconnectOptionsField;
+
+    // Cached core class names
+    protected final ClassName reconnectOptionsClassName;
+
+    // Reserved lifecycle method names that take Consumer<T> parameters.
+    // Server message handlers also take Consumer<T>, so if a message type
+    // produces the same method name, Java type-erasure makes the two
+    // overloads ambiguous. We append "Message" to disambiguate.
+    private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
+
+    private static final String DISCRIMINANT_FIELD = "type";
+
+    // Connect options class name (present when channel has query parameters)
+    protected final Optional<ClassName> connectOptionsClassName;
+
     public AbstractWebSocketChannelWriter(
             WebSocketChannel websocketChannel,
             ClientGeneratorContext clientGeneratorContext,
@@ -80,7 +112,8 @@ public abstract class AbstractWebSocketChannelWriter {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedObjectMapper generatedObjectMapper,
             FieldSpec clientOptionsField,
-            Optional<Subpackage> subpackage) {
+            Optional<Subpackage> subpackage,
+            Optional<ClassName> connectOptionsClassName) {
         this.websocketChannel = websocketChannel;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedClientOptions = generatedClientOptions;
@@ -88,6 +121,7 @@ public abstract class AbstractWebSocketChannelWriter {
         this.generatedObjectMapper = generatedObjectMapper;
         this.clientOptionsField = clientOptionsField;
         this.subpackage = subpackage;
+        this.connectOptionsClassName = connectOptionsClassName;
 
         // Generate class name for this WebSocket channel with correct package
         this.className = clientGeneratorContext
@@ -113,31 +147,58 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
 
         ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
         this.readyStateField = FieldSpec.builder(readyStateClassName, "readyState", Modifier.PRIVATE, Modifier.VOLATILE)
                 .initializer("$T.CLOSED", readyStateClassName)
                 .build();
 
         // Initialize lifecycle handler fields
-        this.onConnectedHandlerField = FieldSpec.builder(Runnable.class, "onConnectedHandler", Modifier.PRIVATE)
+        this.onConnectedHandlerField = FieldSpec.builder(
+                        Runnable.class, "onConnectedHandler", Modifier.PRIVATE, Modifier.VOLATILE)
                 .build();
 
+        ClassName disconnectReasonClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("DisconnectReason");
         this.onDisconnectedHandlerField = FieldSpec.builder(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Consumer.class),
-                                ClassName.get(className.packageName(), className.simpleName(), "DisconnectReason")),
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), disconnectReasonClassName),
                         "onDisconnectedHandler",
-                        Modifier.PRIVATE)
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
                 .build();
 
         this.onErrorHandlerField = FieldSpec.builder(
-                        ParameterizedTypeName.get(Consumer.class, Exception.class), "onErrorHandler", Modifier.PRIVATE)
+                        ParameterizedTypeName.get(Consumer.class, Exception.class),
+                        "onErrorHandler",
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
+                .build();
+
+        // Generic message handler (raw JSON string for all incoming text messages)
+        this.onMessageHandlerField = FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get(String.class)),
+                        "onMessageHandler",
+                        Modifier.PRIVATE,
+                        Modifier.VOLATILE)
+                .build();
+
+        // Reconnect options (configurable before connect())
+        this.reconnectOptionsClassName = ClassName.get(
+                clientGeneratorContext
+                        .getPoetClassNameFactory()
+                        .getCoreClassName("ReconnectingWebSocketListener")
+                        .packageName(),
+                "ReconnectingWebSocketListener",
+                "ReconnectOptions");
+        this.reconnectOptionsField = FieldSpec.builder(
+                        reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE, Modifier.VOLATILE)
                 .build();
     }
 
     public GeneratedJavaFile generateFile() {
-        TypeSpec.Builder classBuilder =
-                TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC).addJavadoc(generateClassJavadoc());
+        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(AutoCloseable.class)
+                .addJavadoc(generateClassJavadoc());
 
         // Add fields
         addFields(classBuilder);
@@ -147,8 +208,8 @@ public abstract class AbstractWebSocketChannelWriter {
 
         // Add connection management methods
         classBuilder.addMethod(generateConnectMethod());
+        generateConnectNoArgOverload().ifPresent(classBuilder::addMethod);
         classBuilder.addMethod(generateDisconnectMethod());
-        classBuilder.addMethod(generateIsConnectedMethod());
         classBuilder.addMethod(generateGetReadyStateMethod());
 
         // Add message sending methods (one per client message)
@@ -158,7 +219,7 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
 
-        // Add message handler registration methods (one per server message)
+        // Add message handler registration methods (one per server message, including binary)
         for (WebSocketMessage message : websocketChannel.getMessages()) {
             if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
                 classBuilder.addMethod(generateOnMessageMethod(message));
@@ -167,7 +228,8 @@ public abstract class AbstractWebSocketChannelWriter {
                 FieldSpec handlerField = FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Consumer.class), messageType),
                                 getHandlerFieldName(message),
-                                Modifier.PRIVATE)
+                                Modifier.PRIVATE,
+                                Modifier.VOLATILE)
                         .build();
                 messageHandlerFields.put(message.getType().get(), handlerField);
                 classBuilder.addField(handlerField);
@@ -178,15 +240,14 @@ public abstract class AbstractWebSocketChannelWriter {
         classBuilder.addMethod(generateOnConnectedMethod());
         classBuilder.addMethod(generateOnDisconnectedMethod());
         classBuilder.addMethod(generateOnErrorMethod());
+        classBuilder.addMethod(generateOnMessageMethod());
+        classBuilder.addMethod(generateReconnectOptionsMethod());
+        classBuilder.addMethod(generateCloseMethod());
 
         // Add helper methods
         classBuilder.addMethod(generateAssertSocketIsOpen());
         classBuilder.addMethod(generateSendMessageHelper());
         classBuilder.addMethod(generateHandleIncomingMessageHelper());
-
-        // Add inner classes
-        classBuilder.addType(generateDisconnectReasonClass());
-        classBuilder.addType(generateWebSocketReadyStateEnum());
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -208,20 +269,21 @@ public abstract class AbstractWebSocketChannelWriter {
             classBuilder.addField(generatePathParameterField(pathParam));
         }
 
-        // Add query parameter fields
-        for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-            classBuilder.addField(generateQueryParameterField(queryParam));
-        }
-
         // Add lifecycle handler fields
         classBuilder.addField(onConnectedHandlerField);
         classBuilder.addField(onDisconnectedHandlerField);
         classBuilder.addField(onErrorHandlerField);
+
+        // Add generic message handler and reconnect options fields
+        classBuilder.addField(onMessageHandlerField);
+        classBuilder.addField(reconnectOptionsField);
     }
 
     protected abstract MethodSpec generateConstructor();
 
     protected abstract MethodSpec generateConnectMethod();
+
+    protected abstract Optional<MethodSpec> generateConnectNoArgOverload();
 
     protected abstract MethodSpec generateSendMethod(WebSocketMessage message);
 
@@ -231,36 +293,9 @@ public abstract class AbstractWebSocketChannelWriter {
     // since they have access to reconnectingListenerField
     protected abstract MethodSpec generateDisconnectMethod();
 
-    protected MethodSpec generateIsConnectedMethod() {
-        // This method doesn't need webSocketField anymore
-        // It's checking the ready state, not the socket instance
-        ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
-
-        return MethodSpec.methodBuilder("hasWebSocketInstance")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(TypeName.BOOLEAN)
-                .addJavadoc("Checks if a WebSocket instance exists (not necessarily connected).\n")
-                .addJavadoc("\n")
-                .addJavadoc("This method only verifies that a WebSocket object has been created, not whether\n")
-                .addJavadoc("it's actively connected. For actual connection state, use getReadyState().\n")
-                .addJavadoc("\n")
-                .addJavadoc("@return true if a WebSocket instance exists, false otherwise\n")
-                .addJavadoc("@deprecated Use getReadyState() for accurate connection status\n")
-                .addAnnotation(Deprecated.class)
-                .addComment("Check if WebSocket connection is open based on ready state")
-                .addStatement(
-                        "return $N == $T.OPEN || $N == $T.CONNECTING",
-                        readyStateField,
-                        readyStateClassName,
-                        readyStateField,
-                        readyStateClassName)
-                .build();
-    }
-
     protected MethodSpec generateGetReadyStateMethod() {
         ClassName readyStateClassName =
-                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketReadyState");
         return MethodSpec.methodBuilder("getReadyState")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(readyStateClassName)
@@ -277,9 +312,7 @@ public abstract class AbstractWebSocketChannelWriter {
         TypeName messageBodyType = getMessageBodyType(message);
         String handlerFieldName = getHandlerFieldName(message);
 
-        // Convert message type to valid Java method name
-        String messageTypeStr = message.getType().get();
-        String methodName = "on" + toPascalCase(messageTypeStr);
+        String methodName = getMessageMethodName(message);
         return MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
@@ -287,7 +320,7 @@ public abstract class AbstractWebSocketChannelWriter {
                         .build())
                 .addJavadoc(
                         "Registers a handler for $L messages from the server.\n",
-                        message.getType().get())
+                        message.getDisplayName().orElse(message.getType().get()))
                 .addJavadoc("@param handler the handler to invoke when a message is received\n")
                 .addStatement("this.$L = handler", handlerFieldName)
                 .build();
@@ -304,13 +337,12 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     protected MethodSpec generateOnDisconnectedMethod() {
+        ClassName disconnectReasonClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("DisconnectReason");
         return MethodSpec.methodBuilder("onDisconnected")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
-                                ParameterizedTypeName.get(
-                                        ClassName.get(Consumer.class),
-                                        ClassName.get(
-                                                className.packageName(), className.simpleName(), "DisconnectReason")),
+                                ParameterizedTypeName.get(ClassName.get(Consumer.class), disconnectReasonClassName),
                                 "handler")
                         .build())
                 .addJavadoc("Registers a handler called when the connection is closed.\n")
@@ -331,52 +363,102 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
+    /** Generates the onMessage(Consumer&lt;String&gt;) method for receiving all raw text messages. */
+    protected MethodSpec generateOnMessageMethod() {
+        return MethodSpec.methodBuilder("onMessage")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(ParameterSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get(String.class)),
+                                "handler")
+                        .build())
+                .addJavadoc("Registers a handler called for every incoming text message.\n")
+                .addJavadoc("The handler receives the raw JSON string before type-specific dispatch.\n")
+                .addJavadoc("@param handler the handler to invoke with the raw message JSON\n")
+                .addStatement("this.$N = handler", onMessageHandlerField)
+                .build();
+    }
+
+    /** Generates the reconnectOptions(ReconnectOptions) setter method. */
+    protected MethodSpec generateReconnectOptionsMethod() {
+        return MethodSpec.methodBuilder("reconnectOptions")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(reconnectOptionsClassName, "options")
+                .addJavadoc("Configures reconnection behavior. Must be called before {@link #connect}.\n")
+                .addJavadoc("\n")
+                .addJavadoc("@param options the reconnection options (backoff, retries, queue size)\n")
+                .addStatement("this.$N = options", reconnectOptionsField)
+                .build();
+    }
+
+    /** Generates the close() method for AutoCloseable support. */
+    protected MethodSpec generateCloseMethod() {
+        return MethodSpec.methodBuilder("close")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Closes this WebSocket client, releasing all resources.\n")
+                .addJavadoc("Equivalent to calling {@link #disconnect()}.\n")
+                .addStatement("disconnect()")
+                .build();
+    }
+
     // Note: assertSocketIsOpen must be implemented by subclasses
     // since they have access to reconnectingListenerField
     protected abstract MethodSpec generateAssertSocketIsOpen();
+
+    /**
+     * Returns the handler field names for binary server messages, used by subclasses to wire up the
+     * onWebSocketBinaryMessage override.
+     */
+    protected java.util.List<String> getBinaryServerMessageHandlerFieldNames() {
+        java.util.List<String> result = new java.util.ArrayList<>();
+        for (WebSocketMessage message : websocketChannel.getMessages()) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && isMessageBodyBinary(message)) {
+                result.add(getHandlerFieldName(message));
+            }
+        }
+        return result;
+    }
 
     protected MethodSpec generateHandleIncomingMessageHelper() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("handleIncomingMessage")
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(String.class, "json")
                 .beginControlFlow("try")
-                .addStatement(
-                        "$T envelope = $N.readTree(json)",
-                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
-                        objectMapperField)
-                .beginControlFlow("if (envelope == null || envelope.isNull())")
-                .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Received null or invalid JSON envelope")
+                // Fire generic onMessage handler before type dispatch
+                .beginControlFlow("if ($N != null)", onMessageHandlerField)
+                .addStatement("$N.accept(json)", onMessageHandlerField)
                 .endControlFlow()
                 .addStatement(
-                        "$T typeNode = envelope.get($S)",
+                        "$T node = $N.readTree(json)",
+                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
+                        objectMapperField)
+                .beginControlFlow("if (node == null || node.isNull())")
+                .addStatement(
+                        "throw new $T($S)", IllegalArgumentException.class, "Received null or invalid JSON message")
+                .endControlFlow()
+                .addStatement(
+                        "$T typeNode = node.get($S)",
                         ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
                         "type")
                 .beginControlFlow("if (typeNode == null || typeNode.isNull())")
-                .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Message envelope missing 'type' field")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
                 .endControlFlow()
-                .addStatement("String type = typeNode.asText()")
-                .addStatement(
-                        "$T body = envelope.get($S)",
-                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
-                        "body")
-                .beginControlFlow("if (body == null)")
-                .addStatement(
-                        "throw new $T($S)", IllegalArgumentException.class, "Message envelope missing 'body' field")
-                .endControlFlow()
-                .beginControlFlow("switch (type)");
+                .addStatement("String type = typeNode.asText()");
 
-        // Add cases for each server message
+        // Switch on wire discriminant values extracted from each message body's literal/enum
+        // "type" property, rather than the Fern-internal message ID.
+        builder.beginControlFlow("switch (type)");
+
         for (WebSocketMessage message : websocketChannel.getMessages()) {
-            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
                 TypeName messageType = getMessageBodyType(message);
                 String handlerFieldName = getHandlerFieldName(message);
+                String wireDiscriminantValue = getWireDiscriminantValue(message);
 
-                builder.addCode("case $S:\n", message.getType().get())
+                builder.addCode("case $S:\n", wireDiscriminantValue)
                         .beginControlFlow("if ($L != null)", handlerFieldName)
                         .addStatement(
-                                "$T event = $N.treeToValue(body, $T.class)",
+                                "$T event = $N.treeToValue(node, $T.class)",
                                 messageType,
                                 objectMapperField,
                                 messageType)
@@ -388,17 +470,12 @@ public abstract class AbstractWebSocketChannelWriter {
             }
         }
 
-        builder.addCode("default:\n")
-                .addStatement("// Unknown message type - log or ignore")
-                .addStatement("break");
+        builder.addCode("default:\n");
+        addUnknownTypeErrorHandler(builder);
+        builder.addStatement("break");
 
         builder.endControlFlow() // end switch
                 .endControlFlow() // end try
-                .beginControlFlow("catch ($T e)", IllegalArgumentException.class)
-                .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                .addStatement("$N.accept(e)", onErrorHandlerField)
-                .endControlFlow()
-                .endControlFlow() // end catch
                 .beginControlFlow("catch ($T e)", Exception.class)
                 .beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement("$N.accept(e)", onErrorHandlerField)
@@ -408,59 +485,131 @@ public abstract class AbstractWebSocketChannelWriter {
         return builder.build();
     }
 
-    protected TypeSpec generateDisconnectReasonClass() {
-        return TypeSpec.classBuilder("DisconnectReason")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addJavadoc("Reason for WebSocket disconnection.\n")
-                .addField(FieldSpec.builder(TypeName.INT, "code", Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "reason", Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(TypeName.INT, "code")
-                        .addParameter(String.class, "reason")
-                        .addStatement("this.code = code")
-                        .addStatement("this.reason = reason")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("getCode")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(TypeName.INT)
-                        .addStatement("return code")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("getReason")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(String.class)
-                        .addStatement("return reason")
-                        .build())
-                .build();
+    private void addUnknownTypeErrorHandler(MethodSpec.Builder builder) {
+        builder.beginControlFlow("if ($N != null)", onErrorHandlerField)
+                .addStatement(
+                        "$N.accept(new $T($S + type + $S))",
+                        onErrorHandlerField,
+                        RuntimeException.class,
+                        "Unknown WebSocket message type: '",
+                        "'. Update your SDK version to support new message types.")
+                .endControlFlow();
     }
 
-    protected TypeSpec generateWebSocketReadyStateEnum() {
-        return TypeSpec.enumBuilder("WebSocketReadyState")
-                .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("WebSocket connection ready state, based on the W3C WebSocket API.\n")
-                .addEnumConstant(
-                        "CONNECTING",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is being established.\n")
-                                .build())
-                .addEnumConstant(
-                        "OPEN",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is open and ready to communicate.\n")
-                                .build())
-                .addEnumConstant(
-                        "CLOSING",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is in the process of closing.\n")
-                                .build())
-                .addEnumConstant(
-                        "CLOSED",
-                        TypeSpec.anonymousClassBuilder("")
-                                .addJavadoc("The connection is closed.\n")
-                                .build())
-                .build();
+    /**
+     * Extracts the wire discriminant value for a WebSocket message by examining the body's literal "type" property.
+     * Falls back to the message ID if no literal type is found.
+     *
+     * <p>For inlined bodies, looks for a property with wire name "type" that has a literal value. For reference bodies,
+     * resolves the type declaration and checks its object properties.
+     */
+    protected String getWireDiscriminantValue(WebSocketMessage message) {
+        String messageId = message.getType().get();
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<String>() {
+            @Override
+            public String visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
+                for (InlinedWebSocketMessageBodyProperty property : inlinedBody.getProperties()) {
+                    if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                        Optional<String> value =
+                                extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
+                        if (value.isPresent()) {
+                            return value.get();
+                        }
+                    }
+                }
+                return messageId;
+            }
+
+            @Override
+            public String visitReference(WebSocketMessageBodyReference reference) {
+                Optional<String> value = extractTypeLiteralFromReference(reference.getBodyType(), messageId);
+                if (value.isPresent()) {
+                    return value.get();
+                }
+                return messageId;
+            }
+
+            @Override
+            public String _visitUnknown(Object unknown) {
+                return messageId;
+            }
+        });
+    }
+
+    /**
+     * Extracts the wire discriminant string from a TypeReference for the "type" property. First checks for a literal
+     * container, then for an enum type where one value matches the message ID suffix.
+     */
+    private Optional<String> extractDiscriminantFromTypeProperty(TypeReference typeReference, String messageId) {
+        // Check for literal container (e.g., literal<"Welcome">)
+        Optional<String> literal =
+                typeReference.getContainer().flatMap(ContainerType::getLiteral).flatMap(Literal::getString);
+        if (literal.isPresent()) {
+            return literal;
+        }
+        // Check for enum type where a value matches the message ID suffix
+        return extractMatchingEnumValue(typeReference, messageId);
+    }
+
+    /**
+     * For an enum-typed property, finds the enum value whose wire value matches the message ID. Tries exact match
+     * first, then suffix match (e.g., message ID "SpeakV1Flushed" with enum values ["Flushed", "Cleared"] → returns
+     * "Flushed").
+     */
+    private Optional<String> extractMatchingEnumValue(TypeReference typeReference, String messageId) {
+        if (!typeReference.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    typeReference.getNamed().get().getTypeId());
+            if (!typeDeclaration.getShape().isEnum()) {
+                return Optional.empty();
+            }
+            // Prefer exact match over suffix match to avoid ambiguity
+            Optional<String> suffixMatch = Optional.empty();
+            for (EnumValue enumValue :
+                    typeDeclaration.getShape().getEnum().get().getValues()) {
+                String wireValue = enumValue.getName().getWireValue();
+                if (messageId.equals(wireValue)) {
+                    return Optional.of(wireValue);
+                }
+                if (suffixMatch.isEmpty() && messageId.endsWith(wireValue)) {
+                    suffixMatch = Optional.of(wireValue);
+                }
+            }
+            return suffixMatch;
+        } catch (IllegalArgumentException e) {
+            // Type not found in IR declarations, fall back to message ID
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * For a reference body type, resolves the type declaration and looks for a literal or enum-based "type" property in
+     * the object's properties.
+     */
+    private Optional<String> extractTypeLiteralFromReference(TypeReference bodyType, String messageId) {
+        if (!bodyType.isNamed()) {
+            return Optional.empty();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    bodyType.getNamed().get().getTypeId());
+            Type shape = typeDeclaration.getShape();
+            if (!shape.isObject()) {
+                return Optional.empty();
+            }
+            ObjectTypeDeclaration objectType = shape.getObject().get();
+            for (ObjectProperty property : objectType.getProperties()) {
+                if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                    return extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            // Type not found in declarations, fall back
+        }
+        return Optional.empty();
     }
 
     protected FieldSpec generatePathParameterField(PathParameter pathParam) {
@@ -471,30 +620,38 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    protected FieldSpec generateQueryParameterField(QueryParameter queryParam) {
-        TypeName paramType =
-                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-        if (queryParam.getValueType().getContainer().isPresent()
-                && queryParam.getValueType().getContainer().get().isOptional()) {
-            // Already wrapped in Optional
-            return FieldSpec.builder(
-                            paramType,
-                            queryParam.getName().getName().getCamelCase().getSafeName(),
-                            Modifier.PRIVATE,
-                            Modifier.FINAL)
-                    .build();
+    /**
+     * Appends path-building code to the method builder. For static paths (no path parameters), emits a simple string
+     * literal. For dynamic paths, uses a StringBuilder to concatenate the head, path parameters, and tails.
+     */
+    protected void appendPathBuildingCode(MethodSpec.Builder builder) {
+        HttpPath path = websocketChannel.getPath();
+        if (path.getParts().isEmpty()) {
+            builder.addStatement("String fullPath = $S", path.getHead());
         } else {
-            // Wrap in Optional for optional parameters
-            return FieldSpec.builder(
-                            ParameterizedTypeName.get(ClassName.get(Optional.class), paramType),
-                            queryParam.getName().getName().getCamelCase().getSafeName(),
-                            Modifier.PRIVATE,
-                            Modifier.FINAL)
-                    .build();
+            builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
+            builder.addStatement("pathBuilder.append($S)", path.getHead());
+            for (HttpPathPart part : path.getParts()) {
+                String pathParamId = part.getPathParameter();
+                if (pathParamId != null && !pathParamId.isEmpty()) {
+                    PathParameter matchingParam = websocketChannel.getPathParameters().stream()
+                            .filter(p -> p.getName().getOriginalName().equals(pathParamId))
+                            .findFirst()
+                            .orElseThrow();
+                    String paramFieldName =
+                            matchingParam.getName().getCamelCase().getSafeName();
+                    builder.addStatement("pathBuilder.append($L)", paramFieldName);
+                }
+                builder.addStatement("pathBuilder.append($S)", part.getTail());
+            }
+            builder.addStatement("String fullPath = pathBuilder.toString()");
         }
     }
 
     protected TypeName getMessageBodyType(WebSocketMessage message) {
+        if (isMessageBodyBinary(message)) {
+            return ClassName.get("okio", "ByteString");
+        }
         return message.getBody().visit(new WebSocketMessageBody.Visitor<TypeName>() {
             @Override
             public TypeName visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
@@ -515,26 +672,132 @@ public abstract class AbstractWebSocketChannelWriter {
         });
     }
 
-    protected String getHandlerFieldName(WebSocketMessage message) {
-        // Convert message type to valid Java identifier (handle snake_case)
-        String messageType = message.getType().get();
-        String[] parts = messageType.split("_");
-        StringBuilder fieldName = new StringBuilder();
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (!part.isEmpty()) {
-                if (i == 0) {
-                    fieldName.append(part.toLowerCase());
-                } else {
-                    fieldName.append(Character.toUpperCase(part.charAt(0)));
-                    if (part.length() > 1) {
-                        fieldName.append(part.substring(1).toLowerCase());
+    /**
+     * Returns true if the message body is a primitive string with format "binary", indicating it should be
+     * sent/received as raw bytes rather than JSON text.
+     */
+    protected boolean isMessageBodyBinary(WebSocketMessage message) {
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<Boolean>() {
+            @Override
+            public Boolean visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitReference(WebSocketMessageBodyReference reference) {
+                TypeReference bodyType = reference.getBodyType();
+                if (bodyType.isPrimitive()) {
+                    PrimitiveType primitive = bodyType.getPrimitive().get();
+                    if (primitive.getV2().isPresent()) {
+                        return primitive
+                                .getV2()
+                                .get()
+                                .visit(new com.fern.ir.model.types.PrimitiveTypeV2.Visitor<Boolean>() {
+                                    @Override
+                                    public Boolean visitInteger(com.fern.ir.model.types.IntegerType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitLong(com.fern.ir.model.types.LongType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUint(com.fern.ir.model.types.UintType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUint64(com.fern.ir.model.types.Uint64Type value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitFloat(com.fern.ir.model.types.FloatType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDouble(com.fern.ir.model.types.DoubleType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBoolean(com.fern.ir.model.types.BooleanType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitString(com.fern.ir.model.types.StringType value) {
+                                        return value.getValidation().isPresent()
+                                                && "binary"
+                                                        .equals(value.getValidation()
+                                                                .get()
+                                                                .getFormat()
+                                                                .orElse(null));
+                                    }
+
+                                    @Override
+                                    public Boolean visitDate(com.fern.ir.model.types.DateType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDateTime(com.fern.ir.model.types.DateTimeType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitDateTimeRfc2822(
+                                            com.fern.ir.model.types.DateTimeRfc2822Type value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitUuid(com.fern.ir.model.types.UuidType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBase64(com.fern.ir.model.types.Base64Type value) {
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public Boolean visitBigInteger(com.fern.ir.model.types.BigIntegerType value) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean _visitUnknown(Object unknown) {
+                                        return false;
+                                    }
+                                });
                     }
                 }
+                return false;
             }
+
+            @Override
+            public Boolean _visitUnknown(Object unknown) {
+                return false;
+            }
+        });
+    }
+
+    protected String getHandlerFieldName(WebSocketMessage message) {
+        // Use custom methodName if available, otherwise fall back to wire discriminant value
+        String baseName;
+        if (message.getMethodName().isPresent()) {
+            // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
+            baseName = toCamelCase(message.getMethodName().get());
+        } else {
+            // Use the wire discriminant value (e.g., "Welcome" → "welcome", not "AgentV1Welcome")
+            String wireValue = getWireDiscriminantValue(message);
+            baseName = decapitalize(toCamelCase(wireValue));
         }
-        fieldName.append("Handler");
-        return fieldName.toString();
+        return baseName + "Handler";
     }
 
     protected String capitalize(String str) {
@@ -556,12 +819,106 @@ public abstract class AbstractWebSocketChannelWriter {
         return result.toString();
     }
 
+    protected String decapitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toLowerCase(str.charAt(0)) + str.substring(1);
+    }
+
+    /** Returns "an X" or "a X" depending on whether X starts with a vowel sound. */
+    protected String articleFor(String name) {
+        if (name != null && !name.isEmpty() && "AEIOUaeiou".indexOf(name.charAt(0)) >= 0) {
+            return "an " + name;
+        }
+        return "a " + name;
+    }
+
     protected String toPascalCase(String str) {
         if (str == null || str.isEmpty()) {
             return str;
         }
         // Convert snake_case to PascalCase (same as capitalize for now)
         return capitalize(str);
+    }
+
+    protected String toCamelCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        // Handle snake_case: first part lowercase, rest capitalized
+        String[] parts = str.split("_");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            if (!part.isEmpty()) {
+                if (i == 0) {
+                    // Keep first character's case from source (handles camelCase input)
+                    result.append(part);
+                } else {
+                    result.append(Character.toUpperCase(part.charAt(0)));
+                    if (part.length() > 1) {
+                        result.append(part.substring(1));
+                    }
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    /**
+     * Returns the method name for a send operation. Uses the custom methodName from the IR if available (e.g.,
+     * x-fern-sdk-method-name) as-is, otherwise falls back to "send" + capitalize(messageType).
+     */
+    protected String getSendMethodName(WebSocketMessage message) {
+        if (message.getMethodName().isPresent()) {
+            return toCamelCase(message.getMethodName().get());
+        }
+        return "send" + capitalize(message.getType().get());
+    }
+
+    /**
+     * Returns the method name for a server message handler. Uses the custom methodName from the IR if available as-is,
+     * otherwise falls back to "on" + toPascalCase(messageType). Avoids collisions with lifecycle methods that share the
+     * same erasure ({@code Consumer<?>}).
+     */
+    protected String getMessageMethodName(WebSocketMessage message) {
+        String baseName;
+        if (message.getMethodName().isPresent()) {
+            baseName = toCamelCase(message.getMethodName().get());
+        } else {
+            // Use the wire discriminant value (e.g., "Welcome" instead of "AgentV1Welcome")
+            baseName = "on" + toPascalCase(getWireDiscriminantValue(message));
+        }
+        if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
+            return baseName + "Message";
+        }
+        return baseName;
+    }
+
+    /**
+     * Gets the method name for resolving the environment URL for this WebSocket channel. For single-URL environments,
+     * uses getUrl(). For multi-URL environments, uses the URL getter corresponding to the channel's baseUrl.
+     */
+    protected String getEnvironmentUrlMethodName() {
+        if (generatedEnvironmentsClass.info() instanceof GeneratedEnvironmentsClass.SingleUrlEnvironmentClass) {
+            return ((GeneratedEnvironmentsClass.SingleUrlEnvironmentClass) generatedEnvironmentsClass.info())
+                    .getUrlMethod()
+                    .name;
+        } else if (generatedEnvironmentsClass.info() instanceof GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass) {
+            GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass multiUrl =
+                    (GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass) generatedEnvironmentsClass.info();
+            if (websocketChannel.getBaseUrl().isPresent()) {
+                MethodSpec urlMethod = multiUrl.urlGetterMethods()
+                        .get(websocketChannel.getBaseUrl().get());
+                if (urlMethod != null) {
+                    return urlMethod.name;
+                }
+            }
+            // Fallback: use the first available URL method
+            return multiUrl.urlGetterMethods().values().iterator().next().name;
+        }
+        throw new RuntimeException("Unknown environment class type: " + generatedEnvironmentsClass.info());
     }
 
     protected CodeBlock generateClassJavadoc() {

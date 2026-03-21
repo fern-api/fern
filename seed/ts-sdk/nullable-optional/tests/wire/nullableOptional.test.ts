@@ -25,6 +25,7 @@ describe("NullableOptionalClient", () => {
                 tenantId: "tenantId",
             },
         };
+
         server.mockEndpoint().get("/api/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.getUser("userId");
@@ -81,6 +82,7 @@ describe("NullableOptionalClient", () => {
                 tenantId: "tenantId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/api/users")
@@ -157,6 +159,7 @@ describe("NullableOptionalClient", () => {
                 tenantId: "tenantId",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/api/users/userId")
@@ -239,6 +242,7 @@ describe("NullableOptionalClient", () => {
                 },
             },
         ];
+
         server.mockEndpoint().get("/api/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.listUsers({
@@ -325,6 +329,7 @@ describe("NullableOptionalClient", () => {
                 },
             },
         ];
+
         server.mockEndpoint().get("/api/users/search").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.searchUsers({
@@ -540,6 +545,7 @@ describe("NullableOptionalClient", () => {
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
+
         server
             .mockEndpoint()
             .post("/api/profiles/complex")
@@ -828,6 +834,7 @@ describe("NullableOptionalClient", () => {
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
+
         server
             .mockEndpoint()
             .get("/api/profiles/complex/profileId")
@@ -1049,6 +1056,7 @@ describe("NullableOptionalClient", () => {
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
+
         server
             .mockEndpoint()
             .patch("/api/profiles/complex/profileId")
@@ -1280,6 +1288,7 @@ describe("NullableOptionalClient", () => {
             nullCount: 1,
             presentFieldsCount: 1,
         };
+
         server
             .mockEndpoint()
             .post("/api/test/deserialization")
@@ -1438,6 +1447,7 @@ describe("NullableOptionalClient", () => {
                 },
             },
         ];
+
         server.mockEndpoint().get("/api/users/filter").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.filterByRole({
@@ -1493,6 +1503,7 @@ describe("NullableOptionalClient", () => {
             subject: "subject",
             htmlContent: "htmlContent",
         };
+
         server
             .mockEndpoint()
             .get("/api/users/userId/notifications")
@@ -1519,6 +1530,7 @@ describe("NullableOptionalClient", () => {
             labels: ["labels", "labels"],
         };
         const rawResponseBody = ["string", "string"];
+
         server
             .mockEndpoint()
             .put("/api/users/userId/tags")
@@ -1582,6 +1594,7 @@ describe("NullableOptionalClient", () => {
                 },
             },
         ];
+
         server
             .mockEndpoint()
             .post("/api/search")

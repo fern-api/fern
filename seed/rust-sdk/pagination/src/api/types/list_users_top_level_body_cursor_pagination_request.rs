@@ -1,6 +1,5 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListUsersTopLevelBodyCursorPaginationRequest {
     /// The cursor used for pagination in order to fetch

@@ -17,10 +17,10 @@ var (
 )
 
 type DocumentMetadata struct {
-	Author *string       `json:"author,omitempty" url:"author,omitempty"`
-	Id     *int          `json:"id,omitempty" url:"id,omitempty"`
-	Tags   []interface{} `json:"tags,omitempty" url:"tags,omitempty"`
-	Title  *string       `json:"title,omitempty" url:"title,omitempty"`
+	Author *string `json:"author,omitempty" url:"author,omitempty"`
+	Id     *int    `json:"id,omitempty" url:"id,omitempty"`
+	Tags   []any   `json:"tags,omitempty" url:"tags,omitempty"`
+	Title  *string `json:"title,omitempty" url:"title,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -43,7 +43,7 @@ func (d *DocumentMetadata) GetId() *int {
 	return d.Id
 }
 
-func (d *DocumentMetadata) GetTags() []interface{} {
+func (d *DocumentMetadata) GetTags() []any {
 	if d == nil {
 		return nil
 	}
@@ -87,7 +87,7 @@ func (d *DocumentMetadata) SetId(id *int) {
 
 // SetTags sets the Tags field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DocumentMetadata) SetTags(tags []interface{}) {
+func (d *DocumentMetadata) SetTags(tags []any) {
 	d.Tags = tags
 	d.require(documentMetadataFieldTags)
 }

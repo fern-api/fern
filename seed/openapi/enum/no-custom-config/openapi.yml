@@ -226,6 +226,15 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Color'
         - $ref: '#/components/schemas/Operand'
+    ForwardCompatibleEnum:
+      title: ForwardCompatibleEnum
+      type: string
+      enum:
+        - active
+        - inactive
+      description: |-
+        Tests forward-compatible enums that accept
+        both known values and arbitrary strings.
     EnumWithSpecialCharacters:
       title: EnumWithSpecialCharacters
       type: string

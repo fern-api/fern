@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/source": "workspace:*",

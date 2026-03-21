@@ -44,6 +44,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         snippetPath,
         snippetTemplatePath,
         licenseFilePath,
+        sourceMounts,
         context,
         inspect,
         runner
@@ -65,6 +66,10 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
 
         if (licenseFilePath) {
             binds.push(`${licenseFilePath}:/tmp/LICENSE:ro`);
+        }
+
+        for (const sourceMount of sourceMounts ?? []) {
+            binds.push(`${sourceMount.hostPath}:${sourceMount.containerPath}:ro`);
         }
 
         const envVars: Record<string, string> = {};

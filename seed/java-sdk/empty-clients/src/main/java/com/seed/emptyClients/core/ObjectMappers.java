@@ -18,6 +18,7 @@ public final class ObjectMappers {
             .addModule(new Jdk8Module())
             .addModule(new JavaTimeModule())
             .addModule(DateTimeDeserializer.getModule())
+            .addModule(DoubleSerializer.getModule())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .build();

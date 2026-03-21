@@ -51,4 +51,16 @@ export interface BaseApiSettingsSchema {
      * Defaults to false.
      */
     "resolve-schema-collisions"?: boolean;
+    /** If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false. */
+    "infer-forward-compatible"?: boolean;
+    /** Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL. */
+    "infer-default-environment"?: boolean;
+    /**
+     * Controls how `const` values in OpenAPI specs are represented.
+     * - `literals`: Convert const values directly to literals with defaults.
+     * - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+     * - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+     * Defaults to `enums-coerceable-to-literals`.
+     */
+    "coerce-consts-to"?: GeneratorsYml.CoerceConstsTo;
 }

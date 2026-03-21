@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -72,6 +73,22 @@ public final class TestCaseFunction {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof TestCaseFunction && value.equals(((TestCaseFunction) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -106,6 +123,10 @@ public final class TestCaseFunction {
   @JsonIgnoreProperties("type")
   private static final class WithActualResultValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseWithActualResultImplementation value;
 
     @JsonCreator(
@@ -148,6 +169,10 @@ public final class TestCaseFunction {
   @JsonIgnoreProperties("type")
   private static final class CustomValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private VoidFunctionDefinition value;
 
     @JsonCreator(

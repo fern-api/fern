@@ -46,11 +46,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Fetch Dependabot alerts
         id: fetch-alerts
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PR_BOT_GH_PAT }}
           script: |
@@ -91,7 +91,7 @@ jobs:
       - name: Create PRs and send Slack notifications
         id: create-prs
         if: ${{ steps.fetch-alerts.outputs.alerts_json != '[]' && inputs.scan_only != true }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           # ============================================================
           # DEVIN PROMPT CONFIGURATION
@@ -368,12 +368,12 @@ jobs:
       pull-requests: write
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v5
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
           aws-region: "us-east-1"
@@ -416,7 +416,7 @@ jobs:
           grype docker:java-sdk:grype-scan -o json > grype-report.json
 
       - name: Upload grype scan results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: grype-scan-results-java-sdk
           path: grype-report.json

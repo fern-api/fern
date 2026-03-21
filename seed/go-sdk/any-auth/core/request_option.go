@@ -64,7 +64,7 @@ func (r *RequestOptions) ToHeader() http.Header {
 	if r.ApiKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
 	}
-	if r.Username != "" && r.Password != "" {
+	if r.Username != "" || r.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
 	}
 	return header

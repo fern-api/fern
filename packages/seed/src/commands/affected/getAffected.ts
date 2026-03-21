@@ -27,6 +27,13 @@ export interface AffectedResult {
 }
 
 /**
+ * Files that should never trigger seed tests, even if they live under
+ * a generator source path.  These are metadata / changelog files that
+ * do not affect generated code.
+ */
+const IGNORED_FILENAMES = ["versions.yml"];
+
+/**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
  * These are infrastructure-level changes that feed into IR generation
  * or affect how seed tests execute. Includes:
@@ -194,6 +201,11 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
 
     // === GENERATOR DETECTION (git diff path matching) ===
     for (const file of changedFiles) {
+        // Skip metadata files that live under generator paths but don't affect codegen
+        const basename = file.split("/").pop() ?? "";
+        if (IGNORED_FILENAMES.includes(basename)) {
+            continue;
+        }
         for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
             if (!allGeneratorNames.includes(generatorName)) {
                 continue;

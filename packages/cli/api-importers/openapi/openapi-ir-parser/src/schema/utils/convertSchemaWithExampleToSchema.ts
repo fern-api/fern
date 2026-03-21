@@ -25,6 +25,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName,
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
+                encoding: schema.encoding,
                 source: schema.source,
                 inline: schema.inline,
                 minProperties: schema.minProperties,
@@ -144,7 +145,15 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.value));
         case "unknown":
-            return Schema.unknown({ nameOverride: schema.nameOverride, generatedName: schema.generatedName });
+            return Schema.unknown({
+                nameOverride: schema.nameOverride,
+                generatedName: schema.generatedName,
+                title: schema.title,
+                description: schema.description,
+                availability: schema.availability,
+                namespace: schema.namespace,
+                groupName: schema.groupName
+            });
         default:
             assertNever(schema);
     }

@@ -4,7 +4,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
+import { constructNpmPackage, getNamespaceExport, resolveNaming } from "@fern-api/typescript-browser-compatible-base";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
@@ -16,6 +16,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public filePropertyMapper: FilePropertyMapper;
     public moduleName: string;
     public namespaceExport: string;
+    private resolvedClientName: string;
+    private resolvedEnvironmentName: string;
 
     constructor({
         ir,
@@ -34,8 +36,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
-            namespaceExport: this.customConfig?.namespaceExport
+            namespaceExport: this.customConfig?.namespaceExport,
+            naming: this.customConfig?.naming
         });
+        const resolved = resolveNaming({
+            namespaceExport: this.namespaceExport,
+            naming: this.customConfig?.naming
+        });
+        this.resolvedClientName = resolved.client;
+        this.resolvedEnvironmentName = resolved.environment;
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -53,7 +62,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientName(): string {
-        return `${this.namespaceExport}Client`;
+        return this.resolvedClientName;
     }
 
     public getPropertyName(name: FernIr.Name): string {
@@ -90,7 +99,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private getEnvironmentsTypeReference(name: FernIr.Name): ts.Reference {
         return ts.reference({
-            name: `${this.namespaceExport}Environment`,
+            name: this.resolvedEnvironmentName,
             importFrom: this.getModuleImport(),
             memberName: this.getTypeName(name)
         });

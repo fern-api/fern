@@ -1151,6 +1151,99 @@ await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithDocumentedUnknownTypeAsync</a>(ObjectWithDocumentedUnknownType { ... }) -> WithRawResponseTask&lt;ObjectWithDocumentedUnknownType&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(
+    new ObjectWithDocumentedUnknownType
+    {
+        DocumentedUnknownType = new Dictionary<object, object?>() { { "key", "value" } },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnMapOfDocumentedUnknownTypeAsync</a>(Dictionary&lt;string, object?&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, object?&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+    new Dictionary<string, object>()
+    {
+        {
+            "string",
+            new Dictionary<object, object?>() { { "key", "value" } }
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Dictionary<string, object?>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithDatetimeLikeStringAsync</a>(ObjectWithDatetimeLikeString { ... }) -> WithRawResponseTask&lt;ObjectWithDatetimeLikeString&gt;</code></summary>
 <dl>
 <dd>

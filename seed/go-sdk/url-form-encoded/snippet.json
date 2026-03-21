@@ -10,6 +10,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/url-form-encoded/fern\"\n\tfernclient \"github.com/url-form-encoded/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.SubmitFormData(\n\tcontext.TODO(),\n\t\u0026fern.PostSubmitRequest{\n\t\tUsername: \"johndoe\",\n\t\tEmail:    \"john@example.com\",\n\t},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_.get_token"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/url-form-encoded/fern\"\n\tfernclient \"github.com/url-form-encoded/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetToken(\n\tcontext.TODO(),\n\t\u0026fern.TokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
         }
     ]
 }

@@ -77,6 +77,30 @@ describe("detectAffected", () => {
             expect(result.affectedFixtures).toEqual([]);
         });
 
+        it("skips all seed tests when only versions.yml files change", () => {
+            const result = detectAffected(
+                ["generators/csharp/sdk/versions.yml", "generators/csharp/model/versions.yml"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips seed for versions.yml but still detects other generator changes", () => {
+            const result = detectAffected(
+                ["generators/csharp/sdk/versions.yml", "generators/python/src/generator.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-model");
+        });
+
         it("skips all seed tests when only CLI code changes", () => {
             const result = detectAffected(
                 ["packages/cli/cli/src/commands/check.ts", "packages/cli/cli/src/cli.ts"],
@@ -690,5 +714,24 @@ describe("end-to-end scenario tests", () => {
         expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("java-sdk");
+    });
+
+    it("scenario: versions.yml changes are fully ignored for seed detection", () => {
+        const changedFiles = [
+            "generators/csharp/sdk/versions.yml",
+            "generators/csharp/model/versions.yml",
+            "generators/python/sdk/versions.yml"
+        ];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // No generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        expect(generators).toHaveLength(0);
+
+        // No fixtures should be resolved
+        for (const gen of ALL_GENERATORS) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual([]);
+        }
     });
 });

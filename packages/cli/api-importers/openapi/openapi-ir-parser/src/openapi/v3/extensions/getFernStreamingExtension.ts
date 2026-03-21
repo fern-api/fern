@@ -19,6 +19,7 @@ export interface StreamConditionEndpoint {
     terminator: string | undefined;
     streamDescription: string | undefined;
     streamConditionProperty: string;
+    streamRequestName: string | undefined;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
@@ -30,6 +31,7 @@ declare namespace Raw {
         ["stream-condition"]: string;
         ["format"]: "sse" | "json" | undefined;
         ["stream-description"]: string | undefined;
+        ["stream-request-name"]: string | undefined;
         ["response-stream"]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
         response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
         terminator: string | undefined;
@@ -67,6 +69,7 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
         terminator: streaming.terminator,
         streamDescription: streaming["stream-description"],
         streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
+        streamRequestName: streaming["stream-request-name"],
         responseStream: streaming["response-stream"],
         response: streaming.response
     };

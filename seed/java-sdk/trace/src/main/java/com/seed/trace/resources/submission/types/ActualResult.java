@@ -83,6 +83,22 @@ public final class ActualResult {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof ActualResult && value.equals(((ActualResult) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue_() {
         return this.value;
@@ -150,6 +166,7 @@ public final class ActualResult {
     @JsonIgnoreProperties("type")
     private static final class ExceptionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ExceptionInfo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

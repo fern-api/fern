@@ -44,6 +44,7 @@ describe("NullableClient", () => {
                 strings: { strings: { key: "value" } },
             },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullable.getUsers({
@@ -140,6 +141,7 @@ describe("NullableClient", () => {
             numbers: [1, 1],
             strings: { strings: { key: "value" } },
         };
+
         server
             .mockEndpoint()
             .post("/users")
@@ -198,6 +200,7 @@ describe("NullableClient", () => {
         const client = new SeedNullableClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "xy" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .delete("/users")

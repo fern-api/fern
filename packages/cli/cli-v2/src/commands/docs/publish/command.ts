@@ -1,4 +1,5 @@
 import type { FernToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -9,22 +10,47 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { LegacyProjectAdapter } from "../../../docs/adapter/LegacyProjectAdapter.js";
 import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
 import { LegacyDocsPublisher } from "../../../docs/publisher/LegacyDocsPublisher.js";
+import type { DocsStageOverrides } from "../../../docs/task/DocsTaskGroup.js";
 import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
 import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
 import { command } from "../../_internal/command.js";
-
 export declare namespace PublishCommand {
     export interface Args extends GlobalArgs {
         force: boolean;
         instance?: string;
         strict: boolean;
         preview: boolean;
+        "skip-upload": boolean;
     }
 }
 
 export class PublishCommand {
     public async handle(context: Context, args: PublishCommand.Args): Promise<void> {
+        const labels = args.preview
+            ? {
+                  title: "Generating preview",
+                  success: "Generated preview",
+                  error: "Failed to generate preview",
+                  interrupt: "Docs preview interrupted"
+              }
+            : {
+                  title: "Publishing docs",
+                  success: "Published docs",
+                  error: "Failed to publish docs",
+                  interrupt: "Docs publish interrupted"
+              };
+
+        const stageOverrides: DocsStageOverrides | undefined = args.preview
+            ? {
+                  publish: {
+                      pending: "Generate preview",
+                      running: "Generating preview...",
+                      success: "Generated preview"
+                  }
+              }
+            : undefined;
+
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (workspace.docs == null) {
@@ -64,8 +90,15 @@ export class PublishCommand {
 
         const ossWorkspaces = await filterOssWorkspaces(project);
         const token = await this.getToken(context);
+        await context.verifyOrgAccess({ organization: workspace.org, token });
 
-        const taskGroup = await this.setupTaskGroup({ context, instanceUrl, org: workspace.org });
+        const taskGroup = await this.setupTaskGroup({
+            context,
+            instanceUrl,
+            org: workspace.org,
+            title: labels.title,
+            stageOverrides
+        });
         const docsTask = taskGroup.getTask("publish");
         if (docsTask == null) {
             throw new CliError({ message: "Internal error; task 'publish' not found" });
@@ -83,7 +116,7 @@ export class PublishCommand {
                 throw new ValidationError(checkResult.violations);
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            const message = extractErrorMessage(error);
             docsTask.stage.validation.fail(message);
         }
 
@@ -102,19 +135,21 @@ export class PublishCommand {
             });
             const result = await publisher.publish({
                 instanceUrl,
-                preview: args.preview
+                preview: args.preview,
+                skipUpload: args["skip-upload"] || undefined
             });
             if (!result.success) {
                 docsTask.stage.publish.fail(result.error);
             } else {
                 docsTask.stage.publish.complete();
-                docsTask.complete();
+                const output = result.url != null ? [result.url] : undefined;
+                docsTask.complete(output);
             }
         }
 
         const summary = taskGroup.finish({
-            successMessage: "Published docs",
-            errorMessage: "Failed to publish docs"
+            successMessage: labels.success,
+            errorMessage: labels.error
         });
 
         if (summary.failedCount > 0) {
@@ -183,19 +218,23 @@ export class PublishCommand {
     private async setupTaskGroup({
         context,
         instanceUrl,
-        org
+        org,
+        title,
+        stageOverrides
     }: {
         context: Context;
         instanceUrl: string;
         org: string;
+        title: string;
+        stageOverrides?: DocsStageOverrides;
     }): Promise<DocsTaskGroup> {
         const taskGroup = new DocsTaskGroup({ context });
-        taskGroup.addTask({ id: "publish", name: instanceUrl });
-        await taskGroup.start({ title: "Publishing docs", subtitle: `org: ${org}` });
+        taskGroup.addTask({ id: "publish", name: instanceUrl, stageOverrides });
+        await taskGroup.start({ title, subtitle: `org: ${org}` });
         context.onShutdown(() => {
             taskGroup.finish({
-                successMessage: "Published docs",
-                errorMessage: "Docs publish interrupted"
+                successMessage: title,
+                errorMessage: `${title} interrupted`
             });
         });
         return taskGroup;
@@ -216,7 +255,7 @@ export class PublishCommand {
     }
 }
 
-export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addPublishCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new PublishCommand();
     command(
         cli,
@@ -252,7 +291,6 @@ export function addPublishCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     default: false,
                     description: "Generate a preview link instead of publishing to production",
                     hidden: true
-                }),
-        parentPath
+                })
     );
 }
