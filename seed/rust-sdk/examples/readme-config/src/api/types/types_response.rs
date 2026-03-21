@@ -37,12 +37,8 @@ impl ResponseBuilder {
     /// - [`identifiers`](ResponseBuilder::identifiers)
     pub fn build(self) -> Result<Response, BuildError> {
         Ok(Response {
-            response: self
-                .response
-                .ok_or_else(|| BuildError::missing_field("response"))?,
-            identifiers: self
-                .identifiers
-                .ok_or_else(|| BuildError::missing_field("identifiers"))?,
+            response: self.response.ok_or_else(|| BuildError::missing_field("response"))?,
+            identifiers: self.identifiers.ok_or_else(|| BuildError::missing_field("identifiers"))?,
         })
     }
 }

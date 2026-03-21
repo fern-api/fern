@@ -84,18 +84,12 @@ impl TraceResponseV2Builder {
     /// - [`stack`](TraceResponseV2Builder::stack)
     pub fn build(self) -> Result<TraceResponseV2, BuildError> {
         Ok(TraceResponseV2 {
-            submission_id: self
-                .submission_id
-                .ok_or_else(|| BuildError::missing_field("submission_id"))?,
-            line_number: self
-                .line_number
-                .ok_or_else(|| BuildError::missing_field("line_number"))?,
+            submission_id: self.submission_id.ok_or_else(|| BuildError::missing_field("submission_id"))?,
+            line_number: self.line_number.ok_or_else(|| BuildError::missing_field("line_number"))?,
             file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
             return_value: self.return_value,
             expression_location: self.expression_location,
-            stack: self
-                .stack
-                .ok_or_else(|| BuildError::missing_field("stack"))?,
+            stack: self.stack.ok_or_else(|| BuildError::missing_field("stack"))?,
             stdout: self.stdout,
         })
     }

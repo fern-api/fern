@@ -49,9 +49,7 @@ impl TestCaseMetadataBuilder {
         Ok(TestCaseMetadata {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            hidden: self
-                .hidden
-                .ok_or_else(|| BuildError::missing_field("hidden"))?,
+            hidden: self.hidden.ok_or_else(|| BuildError::missing_field("hidden"))?,
         })
     }
 }

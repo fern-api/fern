@@ -26,7 +26,6 @@
       type: fix
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 0.22.0
   changelogEntry:
     - summary: |
@@ -38,7 +37,6 @@
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-
 - version: 0.21.0
   changelogEntry:
     - summary: |

@@ -55,16 +55,10 @@ impl ExecutionSessionResponseBuilder {
     /// - [`status`](ExecutionSessionResponseBuilder::status)
     pub fn build(self) -> Result<ExecutionSessionResponse, BuildError> {
         Ok(ExecutionSessionResponse {
-            session_id: self
-                .session_id
-                .ok_or_else(|| BuildError::missing_field("session_id"))?,
+            session_id: self.session_id.ok_or_else(|| BuildError::missing_field("session_id"))?,
             execution_session_url: self.execution_session_url,
-            language: self
-                .language
-                .ok_or_else(|| BuildError::missing_field("language"))?,
-            status: self
-                .status
-                .ok_or_else(|| BuildError::missing_field("status"))?,
+            language: self.language.ok_or_else(|| BuildError::missing_field("language"))?,
+            status: self.status.ok_or_else(|| BuildError::missing_field("status"))?,
         })
     }
 }

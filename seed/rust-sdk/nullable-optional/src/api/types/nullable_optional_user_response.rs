@@ -85,14 +85,10 @@ impl UserResponseBuilder {
     pub fn build(self) -> Result<UserResponse, BuildError> {
         Ok(UserResponse {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            username: self
-                .username
-                .ok_or_else(|| BuildError::missing_field("username"))?,
+            username: self.username.ok_or_else(|| BuildError::missing_field("username"))?,
             email: self.email,
             phone: self.phone,
-            created_at: self
-                .created_at
-                .ok_or_else(|| BuildError::missing_field("created_at"))?,
+            created_at: self.created_at.ok_or_else(|| BuildError::missing_field("created_at"))?,
             updated_at: self.updated_at,
             address: self.address,
         })
