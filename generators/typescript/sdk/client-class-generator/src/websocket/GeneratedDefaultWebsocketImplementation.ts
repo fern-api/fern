@@ -1132,10 +1132,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             const normalizedProtocols = ts.factory.createConditionalExpression(
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier("Array"),
-                        "isArray"
-                    ),
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("Array"), "isArray"),
                     undefined,
                     [protocolsId]
                 ),
