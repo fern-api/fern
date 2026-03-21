@@ -1641,3 +1641,167 @@ describe("buildNavigationForDirectory with section position from index file", ()
         expect(result[1]).toMatchObject({ type: "section", title: "Zebra Section" });
     });
 });
+
+describe("buildNavigationForDirectory with underscore prefix exclusion", () => {
+    it("should exclude files starting with _ from navigation", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "getting-started.md",
+                absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "_draft-page.md",
+                absolutePath: "/test/_draft-page.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "_hidden.mdx",
+                absolutePath: "/test/_hidden.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({
+            type: "page",
+            title: "Getting Started",
+            slug: "getting-started"
+        });
+    });
+
+    it("should exclude directories starting with _ from navigation", async () => {
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            if (path === ("/test" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "getting-started.md",
+                        absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "_drafts",
+                        absolutePath: "/test/_drafts" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (path === ("/test/guides" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "intro.md",
+                        absolutePath: "/test/guides/intro.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            }
+            return [];
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ type: "page", title: "Getting Started" });
+        expect(result[1]).toMatchObject({ type: "section", title: "Guides" });
+        // _drafts directory should not appear
+        const titles = result.map((item) =>
+            item.type === "section" ? item.title : item.type === "page" ? item.title : ""
+        );
+        expect(titles).not.toContain("Drafts");
+    });
+
+    it("should exclude both underscore files and directories together", async () => {
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            if (path === ("/test" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "visible.md",
+                        absolutePath: "/test/visible.md" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "_hidden-file.mdx",
+                        absolutePath: "/test/_hidden-file.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "_hidden-folder",
+                        absolutePath: "/test/_hidden-folder" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "visible-folder",
+                        absolutePath: "/test/visible-folder" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (path === ("/test/visible-folder" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/visible-folder/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            }
+            return [];
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ type: "page", title: "Visible" });
+        expect(result[1]).toMatchObject({ type: "section", title: "Visible Folder" });
+    });
+
+    it("should not exclude files where underscore is not the first character", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "my_page.md",
+                absolutePath: "/test/my_page.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "another-page_v2.mdx",
+                absolutePath: "/test/another-page_v2.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(2);
+    });
+});
