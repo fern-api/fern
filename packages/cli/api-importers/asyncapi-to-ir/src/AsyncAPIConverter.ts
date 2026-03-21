@@ -226,6 +226,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         key: schemeId,
                         token: this.context.casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        websocketAuthFallback: undefined,
                         docs: securityScheme.description
                     });
                 }
@@ -238,6 +239,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         passwordEnvVar: undefined,
                         usernameOmit: false,
                         passwordOmit: false,
+                        websocketAuthFallback: undefined,
                         docs: securityScheme.description
                     });
                 }
@@ -254,6 +256,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         valueType: AbstractConverter.OPTIONAL_STRING,
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        websocketAuthFallback: undefined,
                         docs: securityScheme.description
                     });
                 }
@@ -264,6 +267,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     key: schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
+                    websocketAuthFallback: undefined,
                     docs: securityScheme.description
                 });
             }
