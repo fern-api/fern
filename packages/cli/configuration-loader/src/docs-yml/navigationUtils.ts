@@ -20,6 +20,52 @@ export function nameToTitle({ name }: { name: string }): string {
 
 type ReadFileFn = (path: AbsoluteFilePath, encoding: BufferEncoding) => Promise<string>;
 
+export interface FrontmatterMetadata {
+    position: number | undefined;
+    title: string | undefined;
+    hidden: boolean | undefined;
+    noindex: boolean | undefined;
+}
+
+/**
+ * Extracts position, title, hidden, and noindex fields from markdown frontmatter in a single read.
+ * Reads the file once and parses all navigation-relevant frontmatter fields together.
+ */
+export async function getFrontmatterMetadata({
+    absolutePath,
+    readFileFn = (path, encoding) => readFile(path, encoding)
+}: {
+    absolutePath: AbsoluteFilePath;
+    readFileFn?: ReadFileFn;
+}): Promise<FrontmatterMetadata> {
+    try {
+        const content = await readFileFn(absolutePath, "utf-8");
+        const { data } = grayMatter(content);
+
+        // Parse position
+        let position: number | undefined;
+        if (data.position != null) {
+            const parsed = typeof data.position === "string" ? parseFloat(data.position) : data.position;
+            if (typeof parsed === "number" && Number.isFinite(parsed)) {
+                position = parsed;
+            }
+        }
+
+        // Parse title
+        const title = typeof data.title === "string" && data.title.trim().length > 0 ? data.title.trim() : undefined;
+
+        // Parse hidden
+        const hidden = data.hidden === true ? true : undefined;
+
+        // Parse noindex
+        const noindex = data.noindex === true ? true : undefined;
+
+        return { position, title, hidden, noindex };
+    } catch {
+        return { position: undefined, title: undefined, hidden: undefined, noindex: undefined };
+    }
+}
+
 /**
  * Extracts the position field from markdown frontmatter.
  * Returns a finite number if position is valid, undefined otherwise.
@@ -32,24 +78,8 @@ export async function getFrontmatterPosition({
     absolutePath: AbsoluteFilePath;
     readFileFn?: ReadFileFn;
 }): Promise<number | undefined> {
-    try {
-        const content = await readFileFn(absolutePath, "utf-8");
-        const { data } = grayMatter(content);
-
-        if (data.position == null) {
-            return undefined;
-        }
-
-        const position = typeof data.position === "string" ? parseFloat(data.position) : data.position;
-
-        if (typeof position === "number" && Number.isFinite(position)) {
-            return position;
-        }
-
-        return undefined;
-    } catch {
-        return undefined;
-    }
+    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
+    return metadata.position;
 }
 
 /**
@@ -63,18 +93,8 @@ export async function getFrontmatterTitle({
     absolutePath: AbsoluteFilePath;
     readFileFn?: ReadFileFn;
 }): Promise<string | undefined> {
-    try {
-        const content = await readFileFn(absolutePath, "utf-8");
-        const { data } = grayMatter(content);
-
-        if (typeof data.title === "string" && data.title.trim().length > 0) {
-            return data.title.trim();
-        }
-
-        return undefined;
-    } catch {
-        return undefined;
-    }
+    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
+    return metadata.title;
 }
 
 /**
@@ -88,18 +108,8 @@ export async function getFrontmatterHidden({
     absolutePath: AbsoluteFilePath;
     readFileFn?: ReadFileFn;
 }): Promise<boolean | undefined> {
-    try {
-        const content = await readFileFn(absolutePath, "utf-8");
-        const { data } = grayMatter(content);
-
-        if (data.hidden === true) {
-            return true;
-        }
-
-        return undefined;
-    } catch {
-        return undefined;
-    }
+    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
+    return metadata.hidden;
 }
 
 interface NavigationItemWithMeta {
@@ -129,27 +139,20 @@ export async function buildNavigationForDirectory({
     );
     const subdirectories = contents.filter((item) => item.type === "directory");
 
-    const [pagePositions, pageTitles, pageHiddenFlags] = await Promise.all([
-        Promise.all(
-            markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
-        ),
-        useFrontmatterTitles
-            ? Promise.all(
-                  markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
-              )
-            : Promise.resolve(markdownFiles.map(() => undefined)),
-        Promise.all(markdownFiles.map((file) => getFrontmatterHidden({ absolutePath: file.absolutePath, readFileFn })))
-    ]);
+    const pageMetadata = await Promise.all(
+        markdownFiles.map((file) => getFrontmatterMetadata({ absolutePath: file.absolutePath, readFileFn }))
+    );
 
     const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file, index) => {
+        const metadata = pageMetadata[index];
         return {
             type: "page" as const,
-            title: pageTitles[index] ?? nameToTitle({ name: file.name }),
+            title: (useFrontmatterTitles ? metadata?.title : undefined) ?? nameToTitle({ name: file.name }),
             absolutePath: file.absolutePath,
             slug: nameToSlug({ name: file.name }),
             icon: undefined,
-            hidden: pageHiddenFlags[index],
-            noindex: undefined,
+            hidden: metadata?.hidden,
+            noindex: metadata?.noindex,
             viewers: undefined,
             orphaned: undefined,
             featureFlags: undefined,
@@ -181,24 +184,13 @@ export async function buildNavigationForDirectory({
 
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
-            // Only check frontmatter for section title when title-source is "frontmatter"
-            const indexFileFrontmatterTitle = useFrontmatterTitles
-                ? indexPage?.type === "page"
-                    ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath, readFileFn })
-                    : undefined
-                : undefined;
-
-            const sectionTitle = indexFileFrontmatterTitle ?? nameToTitle({ name: dir.name });
-
-            const sectionPosition =
+            const indexMetadata =
                 indexPage?.type === "page"
-                    ? await getFrontmatterPosition({ absolutePath: indexPage.absolutePath, readFileFn })
+                    ? await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath, readFileFn })
                     : undefined;
 
-            const sectionHidden =
-                indexPage?.type === "page"
-                    ? await getFrontmatterHidden({ absolutePath: indexPage.absolutePath, readFileFn })
-                    : undefined;
+            const sectionTitle =
+                (useFrontmatterTitles ? indexMetadata?.title : undefined) ?? nameToTitle({ name: dir.name });
 
             return {
                 section: {
@@ -210,7 +202,7 @@ export async function buildNavigationForDirectory({
                     collapsed: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    hidden: sectionHidden,
+                    hidden: indexMetadata?.hidden,
                     skipUrlSlug: false,
                     overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
                     viewers: undefined,
@@ -218,7 +210,7 @@ export async function buildNavigationForDirectory({
                     featureFlags: undefined,
                     availability: undefined
                 },
-                position: sectionPosition
+                position: indexMetadata?.position
             };
         })
     );
@@ -227,7 +219,7 @@ export async function buildNavigationForDirectory({
         ...pages.map((page, index) => ({
             item: page,
             title: page.type === "page" ? page.title : "",
-            position: pagePositions[index]
+            position: pageMetadata[index]?.position
         })),
         ...sectionsWithPositions.map((s) => ({
             item: s.section,

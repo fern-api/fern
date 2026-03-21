@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
     buildNavigationForDirectory,
     getFrontmatterHidden,
+    getFrontmatterMetadata,
     getFrontmatterPosition,
     getFrontmatterTitle,
     nameToSlug,
@@ -1643,6 +1644,85 @@ describe("buildNavigationForDirectory with section position from index file", ()
     });
 });
 
+describe("getFrontmatterMetadata", () => {
+    it("should extract all metadata fields from frontmatter in a single read", async () => {
+        const mockReadFile = async () =>
+            "---\nposition: 3\ntitle: My Page\nhidden: true\nnoindex: true\n---\n# Content";
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toEqual({
+            position: 3,
+            title: "My Page",
+            hidden: true,
+            noindex: true
+        });
+    });
+
+    it("should return all undefined when no relevant frontmatter fields are present", async () => {
+        const mockReadFile = async () => "---\nauthor: John\n---\n# Content";
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toEqual({
+            position: undefined,
+            title: undefined,
+            hidden: undefined,
+            noindex: undefined
+        });
+    });
+
+    it("should return all undefined when file read fails", async () => {
+        const mockReadFile = async () => {
+            throw new Error("File not found");
+        };
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toEqual({
+            position: undefined,
+            title: undefined,
+            hidden: undefined,
+            noindex: undefined
+        });
+    });
+
+    it("should parse only the fields that are present", async () => {
+        const mockReadFile = async () => "---\nposition: 5\nnoindex: true\n---\n# Content";
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toEqual({
+            position: 5,
+            title: undefined,
+            hidden: undefined,
+            noindex: true
+        });
+    });
+
+    it("should return undefined for noindex when it is not a boolean true", async () => {
+        const mockReadFile = async () => "---\nnoindex: 'yes'\n---\n# Content";
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result.noindex).toBeUndefined();
+    });
+
+    it("should return undefined for noindex when it is false", async () => {
+        const mockReadFile = async () => "---\nnoindex: false\n---\n# Content";
+        const result = await getFrontmatterMetadata({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result.noindex).toBeUndefined();
+    });
+});
+
 describe("getFrontmatterHidden", () => {
     it("should return true when hidden is true in frontmatter", async () => {
         const mockReadFile = async () => "---\nhidden: true\n---\n# Content";
@@ -1692,7 +1772,7 @@ describe("getFrontmatterHidden", () => {
     });
 });
 
-describe("buildNavigationForDirectory with frontmatter hidden", () => {
+describe("buildNavigationForDirectory with frontmatter hidden and noindex", () => {
     it("should set hidden from frontmatter on pages in folder navigation", async () => {
         const mockGetDir = async () => [
             {
@@ -1731,6 +1811,46 @@ describe("buildNavigationForDirectory with frontmatter hidden", () => {
         expect(visiblePage).toBeDefined();
         expect.assert(visiblePage?.type === "page");
         expect(visiblePage.hidden).toBeUndefined();
+    });
+
+    it("should set noindex from frontmatter on pages in folder navigation", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "indexed-page.md",
+                absolutePath: "/test/indexed-page.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "noindex-page.mdx",
+                absolutePath: "/test/noindex-page.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/noindex-page.mdx") {
+                return "---\nnoindex: true\n---\n# No Index Content";
+            }
+            return "---\ntitle: Indexed\n---\n# Indexed Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        const noindexPage = result.find((item) => item.type === "page" && item.slug === "noindex-page");
+        const indexedPage = result.find((item) => item.type === "page" && item.slug === "indexed-page");
+        expect(noindexPage).toBeDefined();
+        expect.assert(noindexPage?.type === "page");
+        expect(noindexPage.noindex).toBe(true);
+        expect(indexedPage).toBeDefined();
+        expect.assert(indexedPage?.type === "page");
+        expect(indexedPage.noindex).toBeUndefined();
     });
 
     it("should set hidden on section when index page has hidden: true", async () => {
@@ -1782,5 +1902,29 @@ describe("buildNavigationForDirectory with frontmatter hidden", () => {
             title: "Hidden Section",
             hidden: true
         });
+    });
+
+    it("should set hidden, noindex, and position from frontmatter in a single pass", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "full-metadata.md",
+                absolutePath: "/test/full-metadata.md" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async () => "---\nposition: 1\nhidden: true\nnoindex: true\n---\n# Content";
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect.assert(result[0]?.type === "page");
+        expect(result[0].hidden).toBe(true);
+        expect(result[0].noindex).toBe(true);
     });
 });
