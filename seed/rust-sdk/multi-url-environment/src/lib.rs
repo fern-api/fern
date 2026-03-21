@@ -48,4 +48,4 @@ pub use client::*;
 pub use config::*;
 pub use core::*;
 pub use environment::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};
