@@ -485,7 +485,13 @@ export class WebSocketClientGenerator extends WithGeneration {
         });
         this.settings.temporaryWebsocketEnvironments;
 
+        const needsDefaultsProp = websocketChannelNeedsDefaults(this.websocketChannel, this.context);
         const baseUrl = `${this.defaultEnvironment ?? this.websocketChannel.baseUrl ?? ""}`;
+        // When credential propagation applies, BaseUrl must default to "" so that
+        // WithDefaults can detect "not explicitly set" via string.IsNullOrEmpty and
+        // substitute defaults.Environment. Without this, baseUrl would be the IR
+        // identifier (e.g. "wss") which is non-empty and would bypass the check.
+        const baseUrlDefault = needsDefaultsProp ? "" : baseUrl;
 
         // Add a private backing field for BaseUrl when using environments
         if (this.hasEnvironments) {
@@ -494,7 +500,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 access: ast.Access.Private,
                 type: this.Primitive.string,
                 initializer: this.csharp.codeblock((writer) => {
-                    writer.write(`"${baseUrl.replace(/"/g, '\\"')}"`);
+                    writer.write(`"${baseUrlDefault.replace(/"/g, '\\"')}"`);
                 })
             });
         }
@@ -508,7 +514,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             set: true,
             initializer: !this.hasEnvironments
                 ? this.csharp.codeblock((writer) => {
-                      writer.write(`"${baseUrl.replace(/"/g, '\\"')}"`);
+                      writer.write(`"${baseUrlDefault.replace(/"/g, '\\"')}"`);
                   })
                 : undefined,
             accessors: this.hasEnvironments

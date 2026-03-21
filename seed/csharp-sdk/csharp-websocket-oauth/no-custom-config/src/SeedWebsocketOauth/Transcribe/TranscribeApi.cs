@@ -195,7 +195,7 @@ public partial class TranscribeApi
         /// <summary>
         /// The Websocket URL for the API connection.
         /// </summary>
-        public string BaseUrl { get; set; } = "wss";
+        public string BaseUrl { get; set; } = "";
 
         /// <summary>
         /// Enable per-message deflate compression (RFC 7692). When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> before connecting. Compression is negotiated during the handshake; if the server does not support it, the connection proceeds uncompressed. Default: <c>false</c>.
