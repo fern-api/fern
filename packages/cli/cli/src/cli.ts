@@ -825,15 +825,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
-                                skipFernignore: argv["skip-fernignore"],
-                                dynamicIrOnly: argv["dynamic-ir-only"],
-                                outputDir: argv.output,
-                                noReplay: !argv.replay,
-                                retryRateLimited: argv["retry-rate-limited"],
-                                requireEnvVars: argv["require-env-vars"]
-                            });
-                        }
-                        if (argv.docs != null) {
+                    skipFernignore: argv["skip-fernignore"],
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output,
+                    noReplay: !argv.replay,
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
+                });
+            }
+            if (argv.docs != null) {
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
@@ -884,15 +884,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
-                    skipFernignore: argv["skip-fernignore"],
-                    dynamicIrOnly: argv["dynamic-ir-only"],
-                    outputDir: argv.output,
-                    noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
-                });
-            }
-        );
+                skipFernignore: argv["skip-fernignore"],
+                dynamicIrOnly: argv["dynamic-ir-only"],
+                outputDir: argv.output,
+                noReplay: !argv.replay,
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
+            });
+        }
+    );
 }
 
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
