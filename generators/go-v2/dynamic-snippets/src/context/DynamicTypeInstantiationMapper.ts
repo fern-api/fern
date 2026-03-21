@@ -196,16 +196,16 @@ export class DynamicTypeInstantiationMapper {
             entries: Object.entries(value)
                 .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
                 .map(([key, value]) => {
-                this.context.errors.scope(key);
-                try {
-                    return {
-                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
-                        value: this.convert({ typeReference: map.value, value })
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
+                    this.context.errors.scope(key);
+                    try {
+                        return {
+                            key: this.convert({ typeReference: map.key, value: key, as: "key" }),
+                            value: this.convert({ typeReference: map.value, value })
+                        };
+                    } finally {
+                        this.context.errors.unscope();
+                    }
+                })
         });
     }
 
