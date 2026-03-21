@@ -26,6 +26,9 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
  * The raw IR JSON uses `_type` as the discriminant (wire format), but the deserialized
  * SDK uses `type`. Since the published SDK doesn't know about this field yet, the
  * value passes through as raw JSON with `_type`. We accept both forms.
+ *
+ * TODO: Once @fern-fern/ir-sdk is published with WebSocketAuthFallback types,
+ * remove this local interface and the `as unknown` casting in getWebSocketAuthFallback().
  */
 interface WebSocketAuthFallback {
     type: "websocketSubprotocol" | "query";
@@ -1032,33 +1035,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         switch (scheme.type) {
             case "bearer":
             case "oauth":
-                // _authRequest.headers["Authorization"]?.split(" ")[1] ?? ""
-                return ts.factory.createBinaryExpression(
-                    ts.factory.createElementAccessChain(
-                        ts.factory.createCallChain(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier("_authRequest"),
-                                        "headers"
-                                    ),
-                                    ts.factory.createStringLiteral("Authorization")
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                "split"
-                            ),
-                            undefined,
-                            undefined,
-                            [ts.factory.createStringLiteral(" ")]
-                        ),
-                        undefined,
-                        ts.factory.createNumericLiteral(1)
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createStringLiteral("")
-                );
             case "basic":
-                // _authRequest.headers["Authorization"]?.split(" ")[1] ?? ""
+                // Extracts the credential portion after the scheme prefix:
+                //   _authRequest.headers["Authorization"]?.split(" ")[1] ?? ""
+                // For bearer/oauth this is the raw token. For basic auth this is the
+                // base64-encoded "user:pass" string — which may not be meaningful for
+                // all fallback transports, but basic auth + websocket fallback is an
+                // uncommon combination.
                 return ts.factory.createBinaryExpression(
                     ts.factory.createElementAccessChain(
                         ts.factory.createCallChain(
@@ -1084,15 +1067,26 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     ts.factory.createStringLiteral("")
                 );
             case "header": {
-                // _authRequest.headers["<headerWireValue>"] ?? ""
+                // _authRequest.headers["<headerWireValue>"]?.toString() ?? ""
+                // Note: header auth may include a prefix (e.g. "Bearer ", "Token ") that
+                // is embedded in the raw value. The full header value is used as-is.
                 const headerName = scheme.name.wireValue;
                 return ts.factory.createBinaryExpression(
-                    ts.factory.createElementAccessExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("_authRequest"),
-                            "headers"
+                    ts.factory.createCallChain(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createElementAccessExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("_authRequest"),
+                                    "headers"
+                                ),
+                                ts.factory.createStringLiteral(headerName)
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            "toString"
                         ),
-                        ts.factory.createStringLiteral(headerName)
+                        undefined,
+                        undefined,
+                        []
                     ),
                     ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                     ts.factory.createStringLiteral("")
@@ -1116,12 +1110,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
      * For query fallback: protocols ?? [] (unchanged)
      */
     private getProtocolsWithFallback(authFallback: AuthFallbackInfo): ts.Expression {
-        const baseProtocols = ts.factory.createBinaryExpression(
-            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
-            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-            ts.factory.createArrayLiteralExpression([])
-        );
-
         if (authFallback.fallback.type === "websocketSubprotocol") {
             // Normalize protocols to an array before spreading, since protocols can be
             // string | string[] | undefined. Spreading a bare string would split it into
@@ -1161,7 +1149,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             ]);
         }
 
-        return baseProtocols;
+        return ts.factory.createBinaryExpression(
+            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([])
+        );
     }
 
     /**
@@ -1171,6 +1163,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
      */
     private getQueryParametersWithFallback(authFallback: AuthFallbackInfo): ts.Expression {
         if (authFallback.fallback.type === "query") {
+            // Fallback query params are spread last so the auth token always takes
+            // precedence over any user-provided param with the same key. This is
+            // intentional: the fallback token is the correct auth credential for the
+            // current runtime and should not be accidentally overridden.
             const additionalQueryParamsRef = ts.factory.createIdentifier(
                 GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME
             );
