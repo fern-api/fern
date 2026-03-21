@@ -3,14 +3,15 @@
 - version: 0.23.0
   changelogEntry:
     - summary: |
-        Improve discriminated union design by inlining variant fields, adding `#[non_exhaustive]`
-        on all variants, changing empty variants from unit to struct syntax (`Text {}` instead of
-        `Text,`), and generating constructor methods for all variants. Types only referenced by a
-        single union variant are inlined directly instead of using a wrapper struct with
-        `#[serde(flatten)]`. Shared types (referenced elsewhere) keep the existing `data: Type`
-        pattern. These changes improve forward compatibility and ergonomics.
+        Generate builders for all struct types. The builder pattern is inspired by
+        other popular Rust SDKs (e.g. AWS), so that users now have the option between the
+        following:
+
+        1. The explicit constructor pattern (i.e. specify `None` values for optional fields).
+        2. The `..Default::default()` spread when a type has many optional fields.
+        3. The builder pattern when a type has many optional fields and cannot support the `..Default::default()` approach.
       type: feat
-  createdAt: "2026-03-20"
+  createdAt: "2026-03-21"
   irVersion: 65
 
 - version: 0.22.1

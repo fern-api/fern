@@ -471,7 +471,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
         const files: RustFile[] = [];
 
-        // Generate model files
+        // Generate model files (includes build_error.rs for builders)
         const modelFiles = this.generateModelFiles(context);
         files.push(...modelFiles);
 
@@ -483,14 +483,16 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
-                new RustFile({
-                    filename: file.filename,
-                    directory: RelativeFilePath.of("src/api/types"),
-                    fileContents: this.getFileContents(file)
-                })
-        );
+        return generateModels({ context: context.toModelGeneratorContext() })
+            .filter((file) => file.filename !== "error.rs")
+            .map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/api/types"),
+                        fileContents: this.getFileContents(file)
+                    })
+            );
     }
 
     private generateTypesModFile(context: SdkGeneratorContext): RustFile {
@@ -576,7 +578,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
