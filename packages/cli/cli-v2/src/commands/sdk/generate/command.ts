@@ -678,11 +678,11 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     description: "Path to .fernignore file",
                     hidden: true
                 })
-                                .option("skip-fernignore", {
-                                    type: "boolean",
-                                    default: false,
-                                    description:
-                                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                .option("skip-fernignore", {
+                    type: "boolean",
+                    default: false,
+                    description:
+                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 })
     );
 }
