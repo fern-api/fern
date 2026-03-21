@@ -1,15 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
-import {
-    buildNavigationForDirectory,
-    getFrontmatterHidden,
-    getFrontmatterMetadata,
-    getFrontmatterPosition,
-    getFrontmatterTitle,
-    nameToSlug,
-    nameToTitle
-} from "../navigationUtils.js";
+import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "../navigationUtils.js";
 
 describe("nameToSlug", () => {
     it("should convert filename with .md extension to slug", () => {
@@ -297,173 +289,142 @@ describe("buildNavigationForDirectory", () => {
     });
 });
 
-describe("getFrontmatterPosition", () => {
+describe("getFrontmatterMetadata position edge cases", () => {
     it("should extract numeric position from frontmatter", async () => {
         const mockReadFile = async () => "---\nposition: 5\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(5);
+        expect(result.position).toBe(5);
     });
 
     it("should extract numeric string position from frontmatter", async () => {
         const mockReadFile = async () => "---\nposition: '10'\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(10);
+        expect(result.position).toBe(10);
     });
 
     it("should return undefined for missing position", async () => {
         const mockReadFile = async () => "---\ntitle: Test\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.position).toBeUndefined();
     });
 
     it("should return undefined for invalid position (non-numeric string)", async () => {
         const mockReadFile = async () => "---\nposition: 'foo'\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.position).toBeUndefined();
     });
 
     it("should accept negative position values", async () => {
         const mockReadFile = async () => "---\nposition: -5\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(-5);
+        expect(result.position).toBe(-5);
     });
 
     it("should accept zero as position", async () => {
         const mockReadFile = async () => "---\nposition: 0\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(0);
+        expect(result.position).toBe(0);
     });
 
     it("should return undefined for NaN", async () => {
         const mockReadFile = async () => "---\nposition: NaN\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.position).toBeUndefined();
     });
 
     it("should return undefined for Infinity", async () => {
         const mockReadFile = async () => "---\nposition: Infinity\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
-    });
-
-    it("should return undefined when file read fails", async () => {
-        const mockReadFile = async () => {
-            throw new Error("File not found");
-        };
-        const result = await getFrontmatterPosition({
-            absolutePath: "/test/file.md" as AbsoluteFilePath,
-            readFileFn: mockReadFile
-        });
-        expect(result).toBeUndefined();
-    });
-
-    it("should return undefined when frontmatter parsing fails", async () => {
-        const mockReadFile = async () => "---\ninvalid: yaml: content\n---";
-        const result = await getFrontmatterPosition({
-            absolutePath: "/test/file.md" as AbsoluteFilePath,
-            readFileFn: mockReadFile
-        });
-        expect(result).toBeUndefined();
+        expect(result.position).toBeUndefined();
     });
 
     it("should accept decimal position values", async () => {
         const mockReadFile = async () => "---\nposition: 1.5\n---\n# Content";
-        const result = await getFrontmatterPosition({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(1.5);
+        expect(result.position).toBe(1.5);
     });
 });
 
-describe("getFrontmatterTitle", () => {
+describe("getFrontmatterMetadata title edge cases", () => {
     it("should extract title from frontmatter", async () => {
         const mockReadFile = async () => "---\ntitle: My Custom Title\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe("My Custom Title");
+        expect(result.title).toBe("My Custom Title");
     });
 
     it("should return undefined for missing title", async () => {
         const mockReadFile = async () => "---\nposition: 1\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.title).toBeUndefined();
     });
 
     it("should return undefined for empty title", async () => {
         const mockReadFile = async () => "---\ntitle: ''\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.title).toBeUndefined();
     });
 
     it("should return undefined for whitespace-only title", async () => {
         const mockReadFile = async () => "---\ntitle: '   '\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.title).toBeUndefined();
     });
 
     it("should trim whitespace from title", async () => {
         const mockReadFile = async () => "---\ntitle: '  My Title  '\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe("My Title");
-    });
-
-    it("should return undefined when file read fails", async () => {
-        const mockReadFile = async () => {
-            throw new Error("File not found");
-        };
-        const result = await getFrontmatterTitle({
-            absolutePath: "/test/file.md" as AbsoluteFilePath,
-            readFileFn: mockReadFile
-        });
-        expect(result).toBeUndefined();
+        expect(result.title).toBe("My Title");
     });
 
     it("should return undefined for non-string title", async () => {
         const mockReadFile = async () => "---\ntitle: 123\n---\n# Content";
-        const result = await getFrontmatterTitle({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.title).toBeUndefined();
     });
 });
 
@@ -1723,52 +1684,41 @@ describe("getFrontmatterMetadata", () => {
     });
 });
 
-describe("getFrontmatterHidden", () => {
+describe("getFrontmatterMetadata hidden edge cases", () => {
     it("should return true when hidden is true in frontmatter", async () => {
         const mockReadFile = async () => "---\nhidden: true\n---\n# Content";
-        const result = await getFrontmatterHidden({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBe(true);
+        expect(result.hidden).toBe(true);
     });
 
     it("should return undefined when hidden is false in frontmatter", async () => {
         const mockReadFile = async () => "---\nhidden: false\n---\n# Content";
-        const result = await getFrontmatterHidden({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.hidden).toBeUndefined();
     });
 
     it("should return undefined when hidden is not present in frontmatter", async () => {
         const mockReadFile = async () => "---\ntitle: Test\n---\n# Content";
-        const result = await getFrontmatterHidden({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
+        expect(result.hidden).toBeUndefined();
     });
 
     it("should return undefined for non-boolean hidden value", async () => {
         const mockReadFile = async () => "---\nhidden: 'yes'\n---\n# Content";
-        const result = await getFrontmatterHidden({
+        const result = await getFrontmatterMetadata({
             absolutePath: "/test/file.md" as AbsoluteFilePath,
             readFileFn: mockReadFile
         });
-        expect(result).toBeUndefined();
-    });
-
-    it("should return undefined when file read fails", async () => {
-        const mockReadFile = async () => {
-            throw new Error("File not found");
-        };
-        const result = await getFrontmatterHidden({
-            absolutePath: "/test/file.md" as AbsoluteFilePath,
-            readFileFn: mockReadFile
-        });
-        expect(result).toBeUndefined();
+        expect(result.hidden).toBeUndefined();
     });
 });
 

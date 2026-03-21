@@ -66,52 +66,6 @@ export async function getFrontmatterMetadata({
     }
 }
 
-/**
- * Extracts the position field from markdown frontmatter.
- * Returns a finite number if position is valid, undefined otherwise.
- * Accepts numeric values and numeric strings, treating invalid values as undefined.
- */
-export async function getFrontmatterPosition({
-    absolutePath,
-    readFileFn = (path, encoding) => readFile(path, encoding)
-}: {
-    absolutePath: AbsoluteFilePath;
-    readFileFn?: ReadFileFn;
-}): Promise<number | undefined> {
-    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
-    return metadata.position;
-}
-
-/**
- * Extracts the title field from markdown frontmatter.
- * Returns the title string if valid, undefined otherwise.
- */
-export async function getFrontmatterTitle({
-    absolutePath,
-    readFileFn = (path, encoding) => readFile(path, encoding)
-}: {
-    absolutePath: AbsoluteFilePath;
-    readFileFn?: ReadFileFn;
-}): Promise<string | undefined> {
-    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
-    return metadata.title;
-}
-
-/**
- * Extracts the hidden field from markdown frontmatter.
- * Returns true if hidden is explicitly set to true, undefined otherwise.
- */
-export async function getFrontmatterHidden({
-    absolutePath,
-    readFileFn = (path, encoding) => readFile(path, encoding)
-}: {
-    absolutePath: AbsoluteFilePath;
-    readFileFn?: ReadFileFn;
-}): Promise<boolean | undefined> {
-    const metadata = await getFrontmatterMetadata({ absolutePath, readFileFn });
-    return metadata.hidden;
-}
-
 interface NavigationItemWithMeta {
     item: docsYml.DocsNavigationItem;
     title: string;
