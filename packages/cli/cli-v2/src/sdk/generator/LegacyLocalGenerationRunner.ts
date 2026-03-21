@@ -74,7 +74,7 @@ export namespace LegacyLocalGenerationRunner {
         token?: FernToken;
 
         /** Whether to ignore .fernignore and overwrite all files */
-        ignoreFernignore?: boolean;
+        skipFernignore?: boolean;
     }
 
     export interface Result {
@@ -182,7 +182,7 @@ export class LegacyLocalGenerationRunner {
             absolutePathToPreview: undefined,
             inspect: false,
             ai: undefined,
-            ignoreFernignore: args.ignoreFernignore
+            skipFernignore: args.skipFernignore
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {
@@ -236,7 +236,7 @@ export class LegacyLocalGenerationRunner {
             shouldGenerateDynamicSnippetTests: false,
             skipUnstableDynamicSnippetTests: true,
             inspect: false,
-            ignoreFernignore: args.ignoreFernignore
+            skipFernignore: args.skipFernignore
         });
 
         if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {

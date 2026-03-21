@@ -36,7 +36,7 @@ export declare namespace LocalTaskHandler {
         autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
         absolutePathToSpecRepo: AbsoluteFilePath | undefined;
-        ignoreFernignore?: boolean;
+        skipFernignore?: boolean;
     }
 }
 
@@ -54,7 +54,7 @@ export class LocalTaskHandler {
     private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
     private absolutePathToSpecRepo: AbsoluteFilePath | undefined;
-    private ignoreFernignore: boolean;
+    private skipFernignore: boolean;
 
     constructor({
         context,
@@ -70,7 +70,7 @@ export class LocalTaskHandler {
         autoVersioningCache,
         generatorLanguage,
         absolutePathToSpecRepo,
-        ignoreFernignore
+        skipFernignore
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -85,7 +85,7 @@ export class LocalTaskHandler {
         this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
         this.absolutePathToSpecRepo = absolutePathToSpecRepo;
-        this.ignoreFernignore = ignoreFernignore ?? false;
+        this.skipFernignore = skipFernignore ?? false;
     }
 
     public async copyGeneratedFiles(): Promise<{
@@ -95,7 +95,7 @@ export class LocalTaskHandler {
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
     }> {
-        const isFernIgnorePresent = this.ignoreFernignore ? false : await this.isFernIgnorePresent();
+        const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
         // Read prior changelog BEFORE copy operations overwrite the output directory

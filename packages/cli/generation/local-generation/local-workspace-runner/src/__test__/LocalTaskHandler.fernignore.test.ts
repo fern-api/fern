@@ -34,7 +34,7 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         });
     });
 
-    async function createLocalTaskHandler({ ignoreFernignore }: { ignoreFernignore?: boolean } = {}) {
+    async function createLocalTaskHandler({ skipFernignore }: { skipFernignore?: boolean } = {}) {
         // Dynamic import to avoid hoisting issues with mocks from other test files
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
         const { AbsoluteFilePath } = await import("@fern-api/fs-utils");
@@ -63,7 +63,7 @@ describe("LocalTaskHandler - .fernignore handling", () => {
             isWhitelabel: false,
             generatorLanguage: undefined,
             absolutePathToSpecRepo: undefined,
-            ignoreFernignore
+            skipFernignore
         });
     }
 
@@ -226,8 +226,8 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         expect(files).not.toContain("custom_test.py");
     });
 
-    it("with ignoreFernignore, .fernignore is skipped and all files are overwritten", async () => {
-        // Set up: .fernignore protects custom_test.py, but ignoreFernignore should bypass it
+    it("with skipFernignore, .fernignore is skipped and all files are overwritten", async () => {
+        // Set up: .fernignore protects custom_test.py, but skipFernignore should bypass it
         await writeFile(join(localOutputDir, ".fernignore"), "custom_test.py\ncustom_config.json\n");
         await writeFile(join(localOutputDir, "custom_test.py"), "# ORIGINAL custom content\n");
         await writeFile(join(localOutputDir, "custom_config.json"), '{"custom": true}\n');
@@ -237,10 +237,10 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         await writeFile(join(tmpOutputDir, "custom_test.py"), "# GENERATED custom_test.py\n");
         await writeFile(join(tmpOutputDir, "new_file.py"), "# new\n");
 
-        const handler = await createLocalTaskHandler({ ignoreFernignore: true });
+        const handler = await createLocalTaskHandler({ skipFernignore: true });
         await handler.copyGeneratedFiles();
 
-        // custom_test.py should be OVERWRITTEN (not preserved) because ignoreFernignore is true
+        // custom_test.py should be OVERWRITTEN (not preserved) because skipFernignore is true
         const customTestContent = await readFile(join(localOutputDir, "custom_test.py"), "utf-8");
         expect(customTestContent).toBe("# GENERATED custom_test.py\n");
 
@@ -254,8 +254,8 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         expect(files).not.toContain("custom_config.json");
     });
 
-    it("with ignoreFernignore=false, .fernignore is still respected", async () => {
-        // Set up: .fernignore protects custom_test.py, ignoreFernignore=false (default behavior)
+    it("with skipFernignore=false, .fernignore is still respected", async () => {
+        // Set up: .fernignore protects custom_test.py, skipFernignore=false (default behavior)
         await writeFile(join(localOutputDir, ".fernignore"), "custom_test.py\n");
         await writeFile(join(localOutputDir, "custom_test.py"), "# ORIGINAL custom content\n");
 
@@ -264,7 +264,7 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         await writeFile(join(tmpOutputDir, "client.py"), "# new client\n");
         await writeFile(join(tmpOutputDir, "README.md"), "# README\n");
 
-        const handler = await createLocalTaskHandler({ ignoreFernignore: false });
+        const handler = await createLocalTaskHandler({ skipFernignore: false });
         await handler.copyGeneratedFiles();
 
         // custom_test.py should be PRESERVED (not overwritten)

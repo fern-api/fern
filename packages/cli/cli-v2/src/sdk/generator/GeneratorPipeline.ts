@@ -79,7 +79,7 @@ export namespace GeneratorPipeline {
         fernignorePath?: string;
 
         /** Ignore the .fernignore file and upload an empty one */
-        ignoreFernignore?: boolean;
+        skipFernignore?: boolean;
     }
 
     export interface Result {
@@ -143,7 +143,7 @@ export class GeneratorPipeline {
             outputPath: args.outputPath,
             containerEngine: args.containerEngine,
             token: args.token,
-            ignoreFernignore: args.ignoreFernignore
+            skipFernignore: args.skipFernignore
         });
         if (!result.success) {
             return {
@@ -180,7 +180,7 @@ export class GeneratorPipeline {
             preview: args.preview,
             outputPath: args.outputPath,
             fernignorePath: args.fernignorePath,
-            ignoreFernignore: args.ignoreFernignore
+            skipFernignore: args.skipFernignore
         });
         if (!result.success) {
             return {

@@ -35,7 +35,7 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
-    ignoreFernignore,
+    skipFernignore,
     dynamicIrOnly,
     noReplay,
     retryRateLimited,
@@ -58,7 +58,7 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
-    ignoreFernignore: boolean;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     retryRateLimited: boolean;
@@ -154,7 +154,7 @@ export async function generateWorkspace({
                     noReplay,
                     validateWorkspace: true,
                     requireEnvVars,
-                    ignoreFernignore
+                    skipFernignore
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -170,7 +170,7 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
-                    ignoreFernignore,
+                    skipFernignore,
                     dynamicIrOnly,
                     validateWorkspace: true,
                     retryRateLimited,

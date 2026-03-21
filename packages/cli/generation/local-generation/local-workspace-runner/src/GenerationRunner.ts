@@ -25,7 +25,7 @@ export declare namespace GenerationRunner {
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
-        ignoreFernignore?: boolean;
+        skipFernignore?: boolean;
     }
 }
 
@@ -46,7 +46,7 @@ export class GenerationRunner {
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
         inspect,
-        ignoreFernignore
+        skipFernignore
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -71,7 +71,7 @@ export class GenerationRunner {
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
                                 inspect,
-                                ignoreFernignore
+                                skipFernignore
                             });
 
                             interactiveTaskContext.logger.info(
@@ -123,7 +123,7 @@ export class GenerationRunner {
         outputVersionOverride,
         absolutePathToFernConfig,
         inspect,
-        ignoreFernignore
+        skipFernignore
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -134,7 +134,7 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
-        ignoreFernignore?: boolean;
+        skipFernignore?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -207,7 +207,7 @@ export class GenerationRunner {
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
             absolutePathToSpecRepo: undefined,
-            ignoreFernignore
+            skipFernignore
         });
     }
 }

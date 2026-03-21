@@ -32,7 +32,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
-    ignoreFernignore,
+    skipFernignore,
     dynamicIrOnly,
     validateWorkspace,
     retryRateLimited,
@@ -50,7 +50,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
-    ignoreFernignore?: boolean;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
     retryRateLimited: boolean;
@@ -84,11 +84,11 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
-                // When --ignore-fern-ignore is set, skip auto-discovery and use no fernignore path.
-                // The ignoreFernignore flag is passed downstream to upload an empty .fernignore.
+                // When --skip-fernignore is set, skip auto-discovery and use no fernignore path.
+                // The skipFernignore flag is passed downstream to upload an empty .fernignore.
                 // Otherwise, auto-discover .fernignore from the generator's local output directory
                 // if not explicitly provided via --fernignore.
-                const effectiveFernignorePath = ignoreFernignore
+                const effectiveFernignorePath = skipFernignore
                     ? undefined
                     : (fernignorePath ??
                       (await resolveAutoDiscoveredFernignorePath({
@@ -133,7 +133,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     fernignorePath: effectiveFernignorePath,
-                    ignoreFernignore,
+                    skipFernignore,
                     dynamicIrOnly,
                     retryRateLimited,
                     requireEnvVars

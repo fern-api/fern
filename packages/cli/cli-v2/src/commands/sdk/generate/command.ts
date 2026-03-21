@@ -73,7 +73,7 @@ export declare namespace GenerateCommand {
         fernignore?: string;
 
         /** Ignore the .fernignore file and generate all files */
-        "ignore-fern-ignore": boolean;
+        "skip-fernignore": boolean;
     }
 }
 
@@ -331,7 +331,7 @@ export class GenerateCommand {
                     token,
                     version: args["output-version"],
                     fernignorePath: args.fernignore,
-                    ignoreFernignore: args["ignore-fern-ignore"]
+                    skipFernignore: args["skip-fernignore"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -371,9 +371,9 @@ export class GenerateCommand {
         if (targets.length > 1 && args.output != null) {
             throw new CliError({ message: "The --output flag can only be used when generating a single target" });
         }
-        if (args["ignore-fern-ignore"] && args.fernignore != null) {
+        if (args["skip-fernignore"] && args.fernignore != null) {
             throw new CliError({
-                message: "The --ignore-fern-ignore and --fernignore flags cannot be used together."
+                message: "The --skip-fernignore and --fernignore flags cannot be used together."
             });
         }
         const issues: ValidationIssue[] = [];
@@ -678,11 +678,11 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     description: "Path to .fernignore file",
                     hidden: true
                 })
-                .option("ignore-fern-ignore", {
-                    type: "boolean",
-                    default: false,
-                    description:
-                        "Ignore the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                                .option("skip-fernignore", {
+                                    type: "boolean",
+                                    default: false,
+                                    description:
+                                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 })
     );
 }

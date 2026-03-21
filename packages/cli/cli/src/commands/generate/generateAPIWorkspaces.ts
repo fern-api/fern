@@ -32,7 +32,7 @@ export async function generateAPIWorkspaces({
     inspect,
     lfsOverride,
     fernignorePath,
-    ignoreFernignore,
+    skipFernignore,
     dynamicIrOnly,
     outputDir,
     noReplay,
@@ -54,7 +54,7 @@ export async function generateAPIWorkspaces({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
-    ignoreFernignore: boolean;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     outputDir: string | undefined;
     noReplay: boolean;
@@ -155,7 +155,7 @@ export async function generateAPIWorkspaces({
                     inspect,
                     lfsOverride,
                     fernignorePath,
-                    ignoreFernignore,
+                    skipFernignore,
                     dynamicIrOnly,
                     noReplay,
                     retryRateLimited,

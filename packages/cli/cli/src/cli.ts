@@ -750,12 +750,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 })
-                .option("ignore-fern-ignore", {
-                    boolean: true,
-                    default: false,
-                    description:
-                        "Ignore the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
-                }),
+                                .option("skip-fernignore", {
+                                    boolean: true,
+                                    default: false,
+                                    description:
+                                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                                }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
@@ -777,10 +777,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
                 );
             }
-            if (argv["ignore-fern-ignore"] && argv.fernignore != null) {
-                return cliContext.failWithoutThrowing(
-                    "The --ignore-fern-ignore and --fernignore flags cannot be used together."
-                );
+                        if (argv["skip-fernignore"] && argv.fernignore != null) {
+                            return cliContext.failWithoutThrowing(
+                                "The --skip-fernignore and --fernignore flags cannot be used together."
+                            );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
@@ -825,15 +825,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
-                    ignoreFernignore: argv["ignore-fern-ignore"],
-                    dynamicIrOnly: argv["dynamic-ir-only"],
-                    outputDir: argv.output,
-                    noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
-                });
-            }
-            if (argv.docs != null) {
+                                skipFernignore: argv["skip-fernignore"],
+                                dynamicIrOnly: argv["dynamic-ir-only"],
+                                outputDir: argv.output,
+                                noReplay: !argv.replay,
+                                retryRateLimited: argv["retry-rate-limited"],
+                                requireEnvVars: argv["require-env-vars"]
+                            });
+                        }
+                        if (argv.docs != null) {
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
@@ -884,15 +884,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
-                ignoreFernignore: argv["ignore-fern-ignore"],
-                dynamicIrOnly: argv["dynamic-ir-only"],
-                outputDir: argv.output,
-                noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
-            });
-        }
-    );
+                    skipFernignore: argv["skip-fernignore"],
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output,
+                    noReplay: !argv.replay,
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
+                });
+            }
+        );
 }
 
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

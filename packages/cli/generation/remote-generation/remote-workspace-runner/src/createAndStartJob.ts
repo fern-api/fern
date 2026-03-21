@@ -35,7 +35,7 @@ export async function createAndStartJob({
     irVersionOverride,
     absolutePathToPreview,
     fernignorePath,
-    ignoreFernignore,
+    skipFernignore,
     retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -51,15 +51,15 @@ export async function createAndStartJob({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     fernignorePath: string | undefined;
-    ignoreFernignore?: boolean;
+    skipFernignore?: boolean;
     retryRateLimited: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
-    // - If --ignore-fern-ignore is set, upload an empty .fernignore so nothing is ignored
+    // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
     // - If a fernignore path is provided, read it
     // - Otherwise, no fernignore contents
     let fernignoreContents: string | undefined;
-    if (ignoreFernignore) {
+    if (skipFernignore) {
         fernignoreContents = "";
     } else if (fernignorePath != null) {
         try {
