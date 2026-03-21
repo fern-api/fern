@@ -28,3 +28,78 @@ pub struct ListUsersQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fields: Option<String>,
 }
+
+impl ListUsersQueryRequest {
+    pub fn builder() -> ListUsersQueryRequestBuilder {
+        ListUsersQueryRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct ListUsersQueryRequestBuilder {
+    page: Option<i64>,
+    per_page: Option<i64>,
+    include_totals: Option<bool>,
+    sort: Option<String>,
+    connection: Option<String>,
+    q: Option<String>,
+    search_engine: Option<String>,
+    fields: Option<String>,
+}
+
+impl ListUsersQueryRequestBuilder {
+    pub fn page(mut self, value: i64) -> Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn per_page(mut self, value: i64) -> Self {
+        self.per_page = Some(value);
+        self
+    }
+
+    pub fn include_totals(mut self, value: bool) -> Self {
+        self.include_totals = Some(value);
+        self
+    }
+
+    pub fn sort(mut self, value: impl Into<String>) -> Self {
+        self.sort = Some(value.into());
+        self
+    }
+
+    pub fn connection(mut self, value: impl Into<String>) -> Self {
+        self.connection = Some(value.into());
+        self
+    }
+
+    pub fn q(mut self, value: impl Into<String>) -> Self {
+        self.q = Some(value.into());
+        self
+    }
+
+    pub fn search_engine(mut self, value: impl Into<String>) -> Self {
+        self.search_engine = Some(value.into());
+        self
+    }
+
+    pub fn fields(mut self, value: impl Into<String>) -> Self {
+        self.fields = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`ListUsersQueryRequest`].
+    pub fn build(self) -> Result<ListUsersQueryRequest, BuildError> {
+        Ok(ListUsersQueryRequest {
+            page: self.page,
+            per_page: self.per_page,
+            include_totals: self.include_totals,
+            sort: self.sort,
+            connection: self.connection,
+            q: self.q,
+            search_engine: self.search_engine,
+            fields: self.fields,
+        })
+    }
+}
