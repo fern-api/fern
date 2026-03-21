@@ -95,6 +95,10 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         writer.writeLine("//! Generated models by Fern");
         writer.newLine();
 
+        // Add error module (BuildError for builders)
+        writer.writeLine("pub mod error;");
+        writer.newLine();
+
         // Add types module declaration
         if (context.ir.types && Object.keys(context.ir.types).length > 0) {
             writer.writeLine("pub mod types;");

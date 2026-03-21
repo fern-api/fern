@@ -62,6 +62,9 @@ export namespace LegacyRemoteGenerationRunner {
         /** Path to .fernignore file */
         fernignorePath?: string;
 
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
+
         /** Version override for the generated SDK */
         version?: string;
     }
@@ -123,6 +126,7 @@ export class LegacyRemoteGenerationRunner {
                 token: args.token,
                 mode: this.mapMode(args.target),
                 fernignorePath: args.fernignorePath,
+                skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,
                 dynamicIrOnly: false,
