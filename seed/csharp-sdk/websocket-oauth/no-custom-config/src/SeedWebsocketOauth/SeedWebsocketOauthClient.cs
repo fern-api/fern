@@ -69,17 +69,23 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
 
     public ITranscribeApi CreateTranscribeApi()
     {
-        var options = TranscribeApi.Options.WithDefaults(null, _tenantName, GetRawAccessToken());
+        var defaults = new TranscribeApi.Options
+        {
+            TenantName = _tenantName,
+            Token = GetRawAccessToken(),
+        };
+        var options = TranscribeApi.Options.WithDefaults(null, defaults);
         return new TranscribeApi(options);
     }
 
     public ITranscribeApi CreateTranscribeApi(TranscribeApi.Options options)
     {
-        var resolvedOptions = TranscribeApi.Options.WithDefaults(
-            options,
-            _tenantName,
-            GetRawAccessToken()
-        );
+        var defaults = new TranscribeApi.Options
+        {
+            TenantName = _tenantName,
+            Token = GetRawAccessToken(),
+        };
+        var resolvedOptions = TranscribeApi.Options.WithDefaults(options, defaults);
         return new TranscribeApi(resolvedOptions);
     }
 }

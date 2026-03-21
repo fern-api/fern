@@ -198,21 +198,26 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Builds the argument expression for calling Options.WithDefaults(options, field1, field2, ...).
-     * Returns the full C# expression string.
+     * Writes a `var defaults = new <ApiName>.Options { ... }` block that sets all
+     * auth-propagated fields from root client fields.
+     * Returns the lines as an array of strings.
      */
-    private static buildWithDefaultsArgs(optionsArg: string, authContext: WebSocketAuthContext): string {
-        const args: string[] = [optionsArg];
+    private static buildDefaultsOptionsLines(websocketApiName: string, authContext: WebSocketAuthContext): string[] {
+        const lines: string[] = [];
+        lines.push(`var defaults = new ${websocketApiName}.Options`);
+        lines.push("{");
         for (const field of authContext.matchedParamFields) {
-            args.push(field.fieldName);
+            lines.push(`    ${field.optionsPropertyName} = ${field.fieldName},`);
         }
         if (authContext.oauthTokenPropertyName != null) {
-            args.push("GetRawAccessToken()");
+            lines.push(`    ${authContext.oauthTokenPropertyName} = GetRawAccessToken(),`);
         }
         if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
-            args.push(`_clientOptions.Environment?.${authContext.environmentPropertyName} ?? ""`);
+            const envProp = authContext.environmentPropertyName;
+            lines.push(`    Environment = _clientOptions.Environment?.${envProp} ?? "",`);
         }
-        return args.join(", ");
+        lines.push("};");
+        return lines;
     }
 
     static createWebSocketApiFactories(
@@ -269,10 +274,15 @@ export class WebSocketClientGenerator extends WithGeneration {
                 return_: websocketInterfaceRef,
                 body: context.csharp.codeblock((writer) => {
                     if (hasWithDefaults && authContext != null) {
-                        const withDefaultsArgs = WebSocketClientGenerator.buildWithDefaultsArgs("null", authContext);
-                        writer.writeLine(
-                            `var options = ${websocketApiName}.Options.WithDefaults(${withDefaultsArgs});`
+                        const defaultsLines = WebSocketClientGenerator.buildDefaultsOptionsLines(
+                            websocketApiName,
+                            authContext
                         );
+                        for (const line of defaultsLines) {
+                            writer.writeLine(line);
+                        }
+                        const withDefaultsCall = `${websocketApiName}.Options.WithDefaults`;
+                        writer.writeLine(`var options = ${withDefaultsCall}(null, defaults);`);
                         writer.writeLine("return ");
                         writer.writeNodeStatement(
                             context.csharp.instantiateClass({
@@ -318,9 +328,15 @@ export class WebSocketClientGenerator extends WithGeneration {
             return_: websocketInterfaceRef,
             body: context.csharp.codeblock((writer) => {
                 if (hasWithDefaults && authContext != null) {
-                    const withDefaultsArgs = WebSocketClientGenerator.buildWithDefaultsArgs("options", authContext);
+                    const defaultsLines = WebSocketClientGenerator.buildDefaultsOptionsLines(
+                        websocketApiName,
+                        authContext
+                    );
+                    for (const line of defaultsLines) {
+                        writer.writeLine(line);
+                    }
                     writer.writeLine(
-                        `var resolvedOptions = ${websocketApiName}.Options.WithDefaults(${withDefaultsArgs});`
+                        `var resolvedOptions = ${websocketApiName}.Options.WithDefaults(options, defaults);`
                     );
                     writer.write("return ");
                     writer.writeNodeStatement(
@@ -732,7 +748,10 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Generates a `WithDefaults` internal static method on the Options class.
-     * This creates a new Options instance with auth-propagated defaults merged in.
+     * Accepts two Options objects: user-provided options and defaults from the root client.
+     * User options take precedence over defaults, which take precedence over hardcoded defaults.
+     *
+     * Generated signature: `internal static Options WithDefaults(Options? options, Options? defaults)`
      */
     private addWithDefaultsMethod(optionsClass: ast.Class): void {
         if (this.authContext == null) {
@@ -740,50 +759,17 @@ export class WebSocketClientGenerator extends WithGeneration {
         }
         const authContext = this.authContext;
 
-        // Build a map from PascalCase query param name → actual converted type
-        // so WithDefaults parameters use the real type instead of hardcoded string
-        const queryParamTypeMap = new Map<string, ast.Type>();
-        for (const qp of this.websocketChannel.queryParameters) {
-            const pascalName = qp.name.name.pascalCase.safeName;
-            queryParamTypeMap.set(pascalName, this.context.csharpTypeMapper.convert({ reference: qp.valueType }));
-        }
-
-        // Build the parameter list: Options? options, plus one param per auth-propagated field
+        // Two parameters: user options and defaults (both optional)
         const parameters: ast.Parameter[] = [
             this.csharp.parameter({
                 name: "options",
                 type: this.optionsClassReference.asOptional()
+            }),
+            this.csharp.parameter({
+                name: "defaults",
+                type: this.optionsClassReference.asOptional()
             })
         ];
-        const addedParamNames = new Set<string>();
-        for (const field of authContext.matchedParamFields) {
-            const paramName = this.toCamelCase(field.optionsPropertyName);
-            const actualType = queryParamTypeMap.get(field.optionsPropertyName) ?? this.Primitive.string;
-            parameters.push(
-                this.csharp.parameter({
-                    name: paramName,
-                    type: actualType.asOptional()
-                })
-            );
-            addedParamNames.add(field.optionsPropertyName);
-        }
-        if (authContext.oauthTokenPropertyName != null && !addedParamNames.has(authContext.oauthTokenPropertyName)) {
-            const oauthType = queryParamTypeMap.get(authContext.oauthTokenPropertyName) ?? this.Primitive.string;
-            parameters.push(
-                this.csharp.parameter({
-                    name: this.toCamelCase(authContext.oauthTokenPropertyName),
-                    type: oauthType.asOptional()
-                })
-            );
-        }
-        if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
-            parameters.push(
-                this.csharp.parameter({
-                    name: "environment",
-                    type: this.Primitive.string.asOptional()
-                })
-            );
-        }
 
         optionsClass.addMethod({
             name: "WithDefaults",
@@ -796,26 +782,22 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeLine("{");
                 writer.indent();
 
-                // Framework properties (BaseUrl, compression, reconnection, etc.)
+                // Framework properties: options ?? defaults ?? hardcoded default
                 for (const prop of WebSocketClientGenerator.FRAMEWORK_OPTION_PROPERTIES) {
                     if (prop.defaultExpression != null) {
-                        writer.writeLine(`${prop.name} = options?.${prop.name} ?? ${prop.defaultExpression},`);
+                        writer.writeLine(
+                            `${prop.name} = options?.${prop.name} ?? defaults?.${prop.name} ?? ${prop.defaultExpression},`
+                        );
                     } else {
-                        writer.writeLine(`${prop.name} = options?.${prop.name},`);
+                        writer.writeLine(`${prop.name} = options?.${prop.name} ?? defaults?.${prop.name},`);
                     }
                 }
 
-                // Query parameters (auth-propagated use ?? defaultParam, others just copy)
+                // Query parameters: options ?? defaults (auth-propagated or not, same pattern)
                 const emittedPropertyNames = new Set<string>();
                 for (const queryParameter of this.websocketChannel.queryParameters) {
                     const propName = queryParameter.name.name.pascalCase.safeName;
-                    const isAuthPropagated = this.authPropagatedPropertyNames.has(propName);
-                    if (isAuthPropagated) {
-                        const paramName = this.toCamelCase(propName);
-                        writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
-                    } else {
-                        writer.writeLine(`${propName} = options?.${propName},`);
-                    }
+                    writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
                     emittedPropertyNames.add(propName);
                 }
 
@@ -825,43 +807,24 @@ export class WebSocketClientGenerator extends WithGeneration {
                     !emittedPropertyNames.has(authContext.oauthTokenPropertyName)
                 ) {
                     const propName = authContext.oauthTokenPropertyName;
-                    const paramName = this.toCamelCase(propName);
-                    writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
+                    writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
                 }
 
                 // Path parameters
                 for (const pathParameter of this.websocketChannel.pathParameters) {
                     const propName = pathParameter.name.pascalCase.safeName;
-                    writer.writeLine(`${propName} = options?.${propName},`);
+                    writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
                 }
 
                 // Environment (if applicable)
                 if (this.hasEnvironments) {
-                    if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
-                        writer.writeLine("Environment = options?.Environment ?? environment,");
-                    } else {
-                        writer.writeLine("Environment = options?.Environment,");
-                    }
+                    writer.writeLine("Environment = options?.Environment ?? defaults?.Environment,");
                 }
 
                 writer.dedent();
                 writer.writeTextStatement("}");
             })
         });
-    }
-
-    /**
-     * Converts a PascalCase name to camelCase by lowercasing the first character.
-     *
-     * Note: This is intentionally simple (first-char flip only) because the IR always
-     * provides properly-cased `safeName` values. It would produce incorrect results for
-     * raw acronyms like "HTTPClient" → "hTTPClient", but IR safeName handles those.
-     */
-    private toCamelCase(name: string): string {
-        if (name.length === 0) {
-            return name;
-        }
-        return name.charAt(0).toLowerCase() + name.slice(1);
     }
 
     /**

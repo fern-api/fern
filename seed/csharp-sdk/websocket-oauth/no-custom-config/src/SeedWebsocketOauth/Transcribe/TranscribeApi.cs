@@ -253,23 +253,34 @@ public partial class TranscribeApi
 
         internal static TranscribeApi.Options WithDefaults(
             TranscribeApi.Options? options,
-            string? tenantName,
-            string? token
+            TranscribeApi.Options? defaults
         )
         {
             return new Options
             {
-                BaseUrl = options?.BaseUrl ?? "",
-                EnableCompression = options?.EnableCompression ?? false,
-                HttpInvoker = options?.HttpInvoker,
-                IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,
-                ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),
-                ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),
-                LostReconnectTimeout = options?.LostReconnectTimeout,
-                ReconnectBackoff = options?.ReconnectBackoff ?? new ReconnectStrategy(),
-                TenantName = options?.TenantName ?? tenantName,
-                Token = options?.Token ?? token,
-                Model = options?.Model,
+                BaseUrl = options?.BaseUrl ?? defaults?.BaseUrl ?? "",
+                EnableCompression =
+                    options?.EnableCompression ?? defaults?.EnableCompression ?? false,
+                HttpInvoker = options?.HttpInvoker ?? defaults?.HttpInvoker,
+                IsReconnectionEnabled =
+                    options?.IsReconnectionEnabled ?? defaults?.IsReconnectionEnabled ?? false,
+                ReconnectTimeout =
+                    options?.ReconnectTimeout
+                    ?? defaults?.ReconnectTimeout
+                    ?? TimeSpan.FromMinutes(1),
+                ErrorReconnectTimeout =
+                    options?.ErrorReconnectTimeout
+                    ?? defaults?.ErrorReconnectTimeout
+                    ?? TimeSpan.FromMinutes(1),
+                LostReconnectTimeout =
+                    options?.LostReconnectTimeout ?? defaults?.LostReconnectTimeout,
+                ReconnectBackoff =
+                    options?.ReconnectBackoff
+                    ?? defaults?.ReconnectBackoff
+                    ?? new ReconnectStrategy(),
+                TenantName = options?.TenantName ?? defaults?.TenantName,
+                Token = options?.Token ?? defaults?.Token,
+                Model = options?.Model ?? defaults?.Model,
             };
         }
     }
