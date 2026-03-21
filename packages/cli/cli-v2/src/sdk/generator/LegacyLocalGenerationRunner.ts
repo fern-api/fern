@@ -235,7 +235,8 @@ export class LegacyLocalGenerationRunner {
             irVersionOverride: undefined,
             shouldGenerateDynamicSnippetTests: false,
             skipUnstableDynamicSnippetTests: true,
-            inspect: false
+            inspect: false,
+            ignoreFernignore: args.ignoreFernignore
         });
 
         if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {
