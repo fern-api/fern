@@ -22,7 +22,7 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocketOauth" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Fernwebsocket-oauth/0.0.1" },
+                { "User-Agent", "Ferncsharp-websocket-oauth/0.0.1" },
             }
         );
         foreach (var header in platformHeaders)

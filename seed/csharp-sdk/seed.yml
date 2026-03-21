@@ -302,7 +302,7 @@ fixtures:
         generate-literals: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
-  websocket-oauth:
+  csharp-websocket-oauth:
     - customConfig:
         experimental-enable-websockets: true
       outputFolder: no-custom-config
