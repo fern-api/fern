@@ -13,7 +13,8 @@ export function stripMdxComments(content: string): string {
     let inInlineCode = false;
 
     while (i < len) {
-        // Track code fences at start of line
+        // Track code fences at start of line — skip past the three backticks
+        // so they aren't misinterpreted as inline code toggles
         if (
             (i === 0 || content[i - 1] === "\n") &&
             content[i] === "`" &&
@@ -21,6 +22,9 @@ export function stripMdxComments(content: string): string {
             content[i + 2] === "`"
         ) {
             inCodeFence = !inCodeFence;
+            result += "```";
+            i += 3;
+            continue;
         }
 
         if (!inCodeFence) {

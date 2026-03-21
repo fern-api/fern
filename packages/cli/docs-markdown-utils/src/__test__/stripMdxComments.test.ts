@@ -91,6 +91,136 @@ describe("stripMdxComments", () => {
         expect(stripMdxComments(input)).toBe(input);
     });
 
+    it("strips a multi-line comment spanning many lines", () => {
+        const input = [
+            "Before",
+            "{/*",
+            "  This is a long",
+            "  multi-line comment",
+            "  that spans several lines",
+            "*/}",
+            "After"
+        ].join("\n");
+        const expected = "Before\nAfter";
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("strips a multi-line comment with code-like content inside", () => {
+        const input = ["Hello", "{/*", "  const x = 1;", "  console.log(x);", "*/}", "World"].join("\n");
+        const expected = "Hello\nWorld";
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("strips multiple multi-line comments in the same document", () => {
+        const input = [
+            "{/*",
+            "  First multi-line",
+            "  comment",
+            "*/}",
+            "Content between",
+            "{/*",
+            "  Second multi-line",
+            "  comment",
+            "*/}",
+            "End"
+        ].join("\n");
+        const expected = "Content between\nEnd";
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("preserves comments inside triple-backtick code blocks", () => {
+        const input = ["Before", "```", "{/* this should stay */}", "const x = 1;", "```", "After"].join("\n");
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
+    it("preserves comments inside code blocks with language specifier", () => {
+        const input = [
+            "```tsx",
+            "function App() {",
+            "  return (",
+            "    <div>",
+            "      {/* This JSX comment should stay */}",
+            "      <p>Hello</p>",
+            "    </div>",
+            "  );",
+            "}",
+            "```"
+        ].join("\n");
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
+    it("preserves multi-line comments inside code blocks", () => {
+        const input = [
+            "```jsx",
+            "{/*",
+            "  This multi-line comment",
+            "  inside a code block should stay",
+            "*/}",
+            "const x = 1;",
+            "```"
+        ].join("\n");
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
+    it("strips comments outside code blocks but preserves them inside", () => {
+        const input = [
+            "{/* strip this */}",
+            "```jsx",
+            "{/* keep this */}",
+            "```",
+            "{/* strip this too */}",
+            "End"
+        ].join("\n");
+        const expected = ["```jsx", "{/* keep this */}", "```", "End"].join("\n");
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("preserves CodeBlock JSX component as content", () => {
+        const input = [
+            "Here is a code example:",
+            "",
+            "<CodeBlock",
+            '  language="python"',
+            "  code=\"print('hello')\"",
+            "/>",
+            "",
+            "And more text."
+        ].join("\n");
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
+    it("strips comments around CodeBlock components", () => {
+        const input = [
+            "{/* This comment should be removed */}",
+            "<CodeBlock",
+            '  language="python"',
+            "  code=\"print('hello')\"",
+            "/>",
+            "{/* This comment too */}",
+            "Done."
+        ].join("\n");
+        const expected = ["<CodeBlock", '  language="python"', "  code=\"print('hello')\"", "/>", "Done."].join("\n");
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("preserves CodeBlock inside code fences", () => {
+        const input = [
+            "```mdx",
+            "<CodeBlock",
+            '  language="js"',
+            '  code="const x = 1;"',
+            "/>",
+            "{/* comment inside fence */}",
+            "```"
+        ].join("\n");
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
+    it("preserves comments inside inline code with CodeBlock", () => {
+        const input = "Use `<CodeBlock {/* comment */} />` in your MDX";
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
     it("handles real-world MDX content with mixed comments", () => {
         const input = [
             "---",
