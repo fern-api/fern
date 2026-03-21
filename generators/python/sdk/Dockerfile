@@ -12,7 +12,7 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
-RUN npm install -g npm@latest
+RUN npm install -g npm@11.12.0
 
 # Install ruff.
 RUN pip install ruff
