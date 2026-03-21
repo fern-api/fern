@@ -223,16 +223,16 @@ var (
 )
 
 type PatchComplexRequest struct {
-	Name            *string                `json:"name,omitempty" url:"-"`
-	Age             *int                   `json:"age,omitempty" url:"-"`
-	Active          *bool                  `json:"active,omitempty" url:"-"`
-	Metadata        map[string]interface{} `json:"metadata,omitempty" url:"-"`
-	Tags            []string               `json:"tags,omitempty" url:"-"`
-	Email           *string                `json:"email,omitempty" url:"-"`
-	Nickname        *string                `json:"nickname,omitempty" url:"-"`
-	Bio             *string                `json:"bio,omitempty" url:"-"`
-	ProfileImageUrl *string                `json:"profileImageUrl,omitempty" url:"-"`
-	Settings        map[string]interface{} `json:"settings,omitempty" url:"-"`
+	Name            *string        `json:"name,omitempty" url:"-"`
+	Age             *int           `json:"age,omitempty" url:"-"`
+	Active          *bool          `json:"active,omitempty" url:"-"`
+	Metadata        map[string]any `json:"metadata,omitempty" url:"-"`
+	Tags            []string       `json:"tags,omitempty" url:"-"`
+	Email           *string        `json:"email,omitempty" url:"-"`
+	Nickname        *string        `json:"nickname,omitempty" url:"-"`
+	Bio             *string        `json:"bio,omitempty" url:"-"`
+	ProfileImageUrl *string        `json:"profileImageUrl,omitempty" url:"-"`
+	Settings        map[string]any `json:"settings,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -268,7 +268,7 @@ func (p *PatchComplexRequest) SetActive(active *bool) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PatchComplexRequest) SetMetadata(metadata map[string]interface{}) {
+func (p *PatchComplexRequest) SetMetadata(metadata map[string]any) {
 	p.Metadata = metadata
 	p.require(patchComplexRequestFieldMetadata)
 }
@@ -310,7 +310,7 @@ func (p *PatchComplexRequest) SetProfileImageUrl(profileImageUrl *string) {
 
 // SetSettings sets the Settings field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PatchComplexRequest) SetSettings(settings map[string]interface{}) {
+func (p *PatchComplexRequest) SetSettings(settings map[string]any) {
 	p.Settings = settings
 	p.require(patchComplexRequestFieldSettings)
 }

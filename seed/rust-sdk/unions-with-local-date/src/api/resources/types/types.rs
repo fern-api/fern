@@ -15,7 +15,7 @@ impl TypesClient {
 
     pub async fn get(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<UnionWithTime, ApiError> {
         self.http_client
@@ -32,7 +32,7 @@ impl TypesClient {
             .execute_request(
                 Method::PATCH,
                 "/time",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

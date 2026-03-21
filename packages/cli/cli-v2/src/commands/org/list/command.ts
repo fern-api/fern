@@ -174,7 +174,7 @@ export class ListCommand {
     }
 }
 
-export function addListCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addListCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new ListCommand();
-    command(cli, "list", "List your organizations", (context) => cmd.handle(context), undefined, parentPath);
+    command(cli, "list", "List your organizations", (context) => cmd.handle(context));
 }

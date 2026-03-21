@@ -11,6 +11,13 @@ export class ModelGeneratorContext extends AbstractRustGeneratorContext<ModelCus
      */
     public websocketServerMessageTypeIds: Set<string> = new Set();
 
+    /**
+     * Set of type IDs that are referenced as members of undiscriminated unions.
+     * Single-property structs in this set need #[serde(transparent)] so they
+     * serialize/deserialize as the inner value for untagged enum matching.
+     */
+    public undiscriminatedUnionMemberTypeIds: Set<string> = new Set();
+
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         // Model generator doesn't need the client templates, return empty array
         return [];

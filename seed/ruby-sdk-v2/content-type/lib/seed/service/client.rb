@@ -64,7 +64,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "complex/#{params[:id]}",
+          path: "complex/#{URI.encode_uri_component(params[:id].to_s)}",
           body: body,
           request_options: request_options
         )
@@ -102,7 +102,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "named-mixed/#{params[:id]}",
+          path: "named-mixed/#{URI.encode_uri_component(params[:id].to_s)}",
           body: body,
           request_options: request_options
         )
@@ -174,7 +174,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "regular/#{params[:id]}",
+          path: "regular/#{URI.encode_uri_component(params[:id].to_s)}",
           body: body,
           request_options: request_options
         )

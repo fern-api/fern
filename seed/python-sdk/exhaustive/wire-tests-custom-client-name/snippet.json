@@ -314,6 +314,19 @@
             }
         },
         {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-map-of-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_map_of_documented_unknown_type(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_map_of_documented_unknown_type(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",

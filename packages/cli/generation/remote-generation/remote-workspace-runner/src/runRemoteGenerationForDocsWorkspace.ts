@@ -11,6 +11,16 @@ const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
     5 * 60 * 1000 // 5 minutes
 ];
 
+export interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
+}
+
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
@@ -20,9 +30,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     token,
     instanceUrl,
     preview,
+    previewId,
     disableTemplates,
     skipUpload,
-    cliVersion
+    cliVersion,
+    ciSource
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -32,9 +44,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     token: FernToken;
     instanceUrl: string | undefined;
     preview: boolean;
+    previewId: string | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     cliVersion?: string;
+    ciSource?: CISource;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -105,6 +119,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 apiWorkspaces,
                 ossWorkspaces,
                 preview,
+                previewId,
                 editThisPage: maybeInstance.editThisPage,
                 isPrivate: maybeInstance.private,
                 disableTemplates,
@@ -118,7 +133,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                         : [maybeInstance.audiences]
                     : undefined,
                 docsUrl: maybeInstance.url,
-                cliVersion
+                cliVersion,
+                ciSource
             });
 
         for (let attempt = 0; ; attempt++) {

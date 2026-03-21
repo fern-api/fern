@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
+using SeedMixedCase.Test.Utils;
 
 namespace SeedMixedCase.Test;
 
@@ -25,14 +25,11 @@ public class OrganizationTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "orgName"
             }
             """;
-        var actualObj = new Organization { Name = "orgName" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Organization>(inputJson);
     }
 }

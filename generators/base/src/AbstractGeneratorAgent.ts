@@ -1,10 +1,10 @@
 import { AbstractGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-
 import { GeneratorAgentClient } from "./GeneratorAgentClient.js";
 import { ReferenceConfigBuilder } from "./reference/index.js";
 import { RawGithubConfig, resolveGitHubConfig } from "./utils/index.js";
@@ -84,7 +84,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 `AbstractGeneratorAgent.generateReadme: Remote config: ${remote ? JSON.stringify(remote) : "(none)"}`
             );
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to get remote config: ${errorMessage}`);
             throw error;
         }
@@ -98,7 +98,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 `AbstractGeneratorAgent.generateReadme: Feature config loaded with ${featureConfig.features?.length ?? 0} features`
             );
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to load feature config: ${errorMessage}`);
             throw error;
         }
@@ -122,7 +122,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                     `apiReferenceLink: ${readmeConfig.apiReferenceLink ?? "(none)"}`
             );
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             const errorStack = error instanceof Error ? error.stack : undefined;
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`);
             if (errorStack) {
@@ -138,7 +138,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${errorMessage}`);
             throw error;
         }
@@ -170,7 +170,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             language = this.getLanguage();
             this.logger.debug(`AbstractGeneratorAgent.generateReference: Language: ${language}`);
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReference: FAILED to get language: ${errorMessage}`);
             throw error;
         }
@@ -192,7 +192,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                     `language: ${referenceConfig.language ?? "(none)"}`
             );
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             const errorStack = error instanceof Error ? error.stack : undefined;
             this.logger.debug(
                 `AbstractGeneratorAgent.generateReference: FAILED to build reference config: ${errorMessage}`
@@ -210,7 +210,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI FAILED with error: ${errorMessage}`);
             throw error;
         }
@@ -246,7 +246,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             );
             return loaded;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             this.logger.debug(
                 `AbstractGeneratorAgent.readFeatureConfig: Failed to read feature config: ${errorMessage}`
             );
@@ -309,7 +309,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 }
                 this.logger.debug(`AbstractGeneratorAgent.getFeaturesConfig: File at ${each} is empty, skipping`);
             } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 this.logger.debug(
                     `AbstractGeneratorAgent.getFeaturesConfig: Path ${each} not accessible: ${errorMessage}`
                 );

@@ -735,6 +735,10 @@ export class NameRegistry {
         this.typeNames.set("System", new Set(["System"]));
         this.typeNames.set("NUnit", new Set(["NUnit"]));
         this.typeNames.set("OneOf", new Set(["OneOf"]));
+        // Also track NUnit and OneOf as known built-in identifiers so they
+        // are excluded from type-namespace conflict detection (just like System)
+        this.knownBuiltInIdentifiers.add("NUnit");
+        this.knownBuiltInIdentifiers.add("OneOf");
     }
 
     /**
@@ -853,6 +857,34 @@ export class NameRegistry {
      */
     public isAmbiguousNamespaceName(name?: string): boolean {
         return name ? (this.namespaceNames.get(name)?.size ?? 0) > 1 : false;
+    }
+
+    /**
+     * Checks if a name is both a registered type name and a root-level namespace segment.
+     * This detects cases where a class name shadows a namespace root, causing CS0426 errors.
+     *
+     * For example, if there's a class `Candid` in namespace `Candid.Net`, then any reference
+     * to `Candid.Net.Something` from within the `Candid.Net` namespace tree will fail because
+     * the C# compiler resolves `Candid` to the class instead of the namespace.
+     *
+     * @param name - The name to check (optional)
+     * @returns `true` if the name is both a type name and a root namespace segment, `false` otherwise
+     */
+    public hasTypeNamespaceConflict(name?: string): boolean {
+        if (!name) {
+            return false;
+        }
+        // Exclude known built-in identifiers (System, NUnit, OneOf, etc.) since these
+        // are framework names that don't create shadowing conflicts in user code.
+        // The conflict we're detecting is when a USER-DEFINED type name (like a client
+        // class "Candid") matches a root namespace segment (like "Candid" in "Candid.Net").
+        if (this.knownBuiltInIdentifiers.has(name)) {
+            return false;
+        }
+        // Check if this name is a tracked type name AND a root-level namespace segment
+        // (i.e., it appears as the first segment of some namespace, indicated by having
+        // an empty string "" as a parent in the namespaceNames registry)
+        return this.typeNames.has(name) && (this.namespaceNames.get(name)?.has("") ?? false);
     }
 
     /**

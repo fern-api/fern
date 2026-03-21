@@ -444,7 +444,7 @@ func TestSettersPatchComplexRequest(t *testing.T) {
 
 	t.Run("SetMetadata", func(t *testing.T) {
 		obj := &PatchComplexRequest{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 		obj.SetMetadata(fernTestValueMetadata)
 		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
 		assert.NotNil(t, obj.explicitFields)
@@ -492,7 +492,7 @@ func TestSettersPatchComplexRequest(t *testing.T) {
 
 	t.Run("SetSettings", func(t *testing.T) {
 		obj := &PatchComplexRequest{}
-		var fernTestValueSettings map[string]interface{}
+		var fernTestValueSettings map[string]any
 		obj.SetSettings(fernTestValueSettings)
 		assert.Equal(t, fernTestValueSettings, obj.Settings)
 		assert.NotNil(t, obj.explicitFields)
@@ -598,7 +598,7 @@ func TestSettersMarkExplicitPatchComplexRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PatchComplexRequest{}
-		var fernTestValueMetadata map[string]interface{}
+		var fernTestValueMetadata map[string]any
 
 		// Act
 		obj.SetMetadata(fernTestValueMetadata)
@@ -784,7 +784,7 @@ func TestSettersMarkExplicitPatchComplexRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PatchComplexRequest{}
-		var fernTestValueSettings map[string]interface{}
+		var fernTestValueSettings map[string]any
 
 		// Act
 		obj.SetSettings(fernTestValueSettings)

@@ -56,7 +56,7 @@ export declare namespace ComplexProfile {
         optionalArray?: string[] | null;
         optionalNullableArray?: (string[] | null | undefined) | null;
         nullableListOfNullables?: (string | null | undefined)[] | null;
-        nullableMapOfNullables?: Record<string, serializers.Address.Raw | null | undefined> | null;
+        nullableMapOfNullables?: Record<string, serializers.Address.Raw | null> | null;
         nullableListOfUnions?: serializers.NotificationMethod.Raw[] | null;
         optionalMapOfEnums?: Record<string, serializers.UserRole.Raw> | null;
     }

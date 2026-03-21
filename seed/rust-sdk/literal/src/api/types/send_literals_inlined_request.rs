@@ -1,11 +1,11 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SendLiteralsInlinedRequest {
     pub prompt: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub context: Option<String>,
+    #[serde(default)]
     pub query: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub temperature: Option<f64>,

@@ -121,7 +121,7 @@ function buildLargeJavaDiff(
     };
 } {
     const sections: string[] = [];
-    const magicVersion = "505.503.4455";
+    const magicVersion = "0.0.0-fern-placeholder";
 
     // Distribution: realistic mix of change types
     // ~2% deletions, ~8% signature changes, ~15% mixed, ~70% additions, ~5% context
@@ -243,7 +243,7 @@ function createService(): AutoVersioningService {
 // ---------------------------------------------------------------------------
 
 describe("E2E: Large Diff Chunking Pipeline", () => {
-    const magicVersion = "505.503.4455";
+    const magicVersion = "0.0.0-fern-placeholder";
     let service: AutoVersioningService;
 
     beforeEach(() => {
@@ -574,7 +574,7 @@ describe("E2E: maxVersionBump merging logic", () => {
 
 describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
     it("processes a 1+ MB diff end-to-end with mocked AI responses per chunk", () => {
-        const magicVersion = "505.503.4455";
+        const magicVersion = "0.0.0-fern-placeholder";
         const service = createService();
 
         // Build and clean a realistic large diff
@@ -673,7 +673,7 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
     });
 
     it("produces MINOR when no MAJOR bump is present", () => {
-        const magicVersion = "505.503.4455";
+        const magicVersion = "0.0.0-fern-placeholder";
         const service = createService();
 
         // Build a diff without deletions (no MAJOR signal)

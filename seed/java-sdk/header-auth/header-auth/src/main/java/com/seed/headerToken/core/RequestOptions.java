@@ -52,7 +52,7 @@ public final class RequestOptions {
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
         if (this.headerTokenAuth != null) {
-            headers.put("x-api-key", "test_prefix" + this.headerTokenAuth);
+            headers.put("x-api-key", "test_prefix " + this.headerTokenAuth);
         }
         headers.putAll(this.headers);
         this.headerSuppliers.forEach((key, supplier) -> {

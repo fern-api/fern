@@ -196,9 +196,9 @@ function getRequestBody({
         properties: {
             ...resolvedRequestBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
+                ...(streamingProperty ?? {}),
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming,
-                ...(streamingProperty ?? {})
+                "x-fern-boolean-literal": isStreaming
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any
         },

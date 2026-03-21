@@ -60,4 +60,29 @@ internal class OperandSerializer : global::System.Text.Json.Serialization.JsonCo
             _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
+
+    public override Operand ReadAsPropertyName(
+        ref global::System.Text.Json.Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception(
+                "The JSON property name could not be read as a string."
+            );
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void WriteAsPropertyName(
+        global::System.Text.Json.Utf8JsonWriter writer,
+        Operand value,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        writer.WritePropertyName(
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
+        );
+    }
 }

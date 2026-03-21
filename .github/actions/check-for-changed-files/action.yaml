@@ -39,7 +39,7 @@ runs:
   steps:
     - name: Check for changes
       id: check-for-changes
-      uses: tj-actions/changed-files@v46
+      uses: tj-actions/changed-files@v47
       with:
         fetch_depth: ${{ inputs.fetch_depth }}
         base_sha: ${{ inputs.base_sha }}

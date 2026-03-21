@@ -1548,7 +1548,7 @@ func TestSettersMarkExplicitObjectWithRequiredField(t *testing.T) {
 func TestSettersObjectWithUnknownField(t *testing.T) {
 	t.Run("SetUnknown", func(t *testing.T) {
 		obj := &ObjectWithUnknownField{}
-		var fernTestValueUnknown interface{}
+		var fernTestValueUnknown any
 		obj.SetUnknown(fernTestValueUnknown)
 		assert.Equal(t, fernTestValueUnknown, obj.Unknown)
 		assert.NotNil(t, obj.explicitFields)
@@ -1561,7 +1561,7 @@ func TestGettersObjectWithUnknownField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithUnknownField{}
-		var expected interface{}
+		var expected any
 		obj.Unknown = expected
 
 		// Act & Assert
@@ -1587,7 +1587,7 @@ func TestSettersMarkExplicitObjectWithUnknownField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithUnknownField{}
-		var fernTestValueUnknown interface{}
+		var fernTestValueUnknown any
 
 		// Act
 		obj.SetUnknown(fernTestValueUnknown)

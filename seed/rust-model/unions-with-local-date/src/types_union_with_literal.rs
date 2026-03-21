@@ -11,7 +11,7 @@ pub enum UnionWithLiteral {
 }
 
 impl UnionWithLiteral {
-    pub fn get_base(&self) -> &String {
+    pub fn get_base(&self) -> &str {
         match self {
                     Self::Fern { base, .. } => base,
                 }

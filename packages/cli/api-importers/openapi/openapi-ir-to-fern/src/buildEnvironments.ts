@@ -457,7 +457,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 }
 
                 if (firstEnvironment) {
-                    context.builder.setDefaultEnvironment(group.environmentName);
+                    if (context.options.inferDefaultEnvironment !== false) {
+                        context.builder.setDefaultEnvironment(group.environmentName);
+                    }
                     if (Object.keys(urls).length > 1) {
                         context.builder.setDefaultUrl(DEFAULT_URL_NAME);
                     }
@@ -480,7 +482,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 schema
             });
         }
-        context.builder.setDefaultEnvironment(Object.keys(websocketServersWithName)[0] as string);
+        if (context.options.inferDefaultEnvironment !== false) {
+            context.builder.setDefaultEnvironment(Object.keys(websocketServersWithName)[0] as string);
+        }
         context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         return;
     }
@@ -553,7 +557,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 schema
             });
             if (firstEnvironment) {
-                context.builder.setDefaultEnvironment(name);
+                if (context.options.inferDefaultEnvironment !== false) {
+                    context.builder.setDefaultEnvironment(name);
+                }
                 if (isRawMultipleBaseUrlsEnvironment(schema)) {
                     const firstApiName = Object.keys(schema.urls)[0];
                     if (firstApiName) {
@@ -596,7 +602,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         schema
                     });
                 }
-                context.builder.setDefaultEnvironment(name);
+                if (context.options.inferDefaultEnvironment !== false) {
+                    context.builder.setDefaultEnvironment(name);
+                }
                 firstEnvironment = false;
             } else {
                 if (hasWebsocketServersWithName) {
@@ -690,7 +698,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 name: environmentName,
                 schema: multiUrlSchema
             });
-            context.builder.setDefaultEnvironment(environmentName);
+            if (context.options.inferDefaultEnvironment !== false) {
+                context.builder.setDefaultEnvironment(environmentName);
+            }
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         } else {
             const apiToUrls = new Map<string, Map<string, string>>();
@@ -760,7 +770,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     }
 
                     if (firstEnvironment) {
-                        context.builder.setDefaultEnvironment(envName);
+                        if (context.options.inferDefaultEnvironment !== false) {
+                            context.builder.setDefaultEnvironment(envName);
+                        }
                         firstEnvironment = false;
                     }
                 }
@@ -799,7 +811,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         });
                     }
                     if (firstEnvironment) {
-                        context.builder.setDefaultEnvironment(name);
+                        if (context.options.inferDefaultEnvironment !== false) {
+                            context.builder.setDefaultEnvironment(name);
+                        }
                         firstEnvironment = false;
                     }
                 }

@@ -41,6 +41,32 @@ public class StringEnumSerializerTests
         Assert.That(enumString, Is.Not.Null);
         Assert.That(enumString, Is.EqualTo(KnownEnumValue2String));
     }
+
+    [Test]
+    public void ShouldDeserializeDictionaryWithEnumKey()
+    {
+        var json = """
+            {
+                "known_value2": "value_a"
+            }
+            """;
+        var dict = JsonSerializer.Deserialize<Dictionary<DummyEnum, string>>(json, JsonOptions);
+        Assert.That(dict, Is.Not.Null);
+        Assert.That(dict!.Count, Is.EqualTo(1));
+        Assert.That(dict[KnownEnumValue2], Is.EqualTo("value_a"));
+    }
+
+    [Test]
+    public void ShouldSerializeDictionaryWithEnumKey()
+    {
+        var dict = new Dictionary<DummyEnum, string>
+        {
+            { KnownEnumValue2, "value_a" },
+        };
+        var json = JsonSerializer.SerializeToElement(dict, JsonOptions);
+        TestContext.Out.WriteLine("Serialized JSON: \n" + json);
+        Assert.That(json.GetProperty("known_value2").GetString(), Is.EqualTo("value_a"));
+    }
 }
 
 public class DummyObject
@@ -82,5 +108,16 @@ internal class DummyEnumSerializer : JsonConverter<DummyEnum>
     public override void Write(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
     {
         writer.WriteStringValue(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : null);
+    }
+
+    public override DummyEnum ReadAsPropertyName(ref System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+    {
+        var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON property name could not be read as a string.");
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void WriteAsPropertyName(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
+    {
+        writer.WritePropertyName(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString());
     }
 }
