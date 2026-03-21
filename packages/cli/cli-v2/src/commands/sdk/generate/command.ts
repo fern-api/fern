@@ -371,6 +371,17 @@ export class GenerateCommand {
         if (targets.length > 1 && args.output != null) {
             throw new CliError({ message: "The --output flag can only be used when generating a single target" });
         }
+        if (args["ignore-fern-ignore"] && args.local) {
+            throw new CliError({
+                message:
+                    "The --ignore-fern-ignore flag is not supported with local generation (--local). It can only be used with remote generation."
+            });
+        }
+        if (args["ignore-fern-ignore"] && args.fernignore != null) {
+            throw new CliError({
+                message: "The --ignore-fern-ignore and --fernignore flags cannot be used together."
+            });
+        }
         const issues: ValidationIssue[] = [];
         if (args.local) {
             for (const target of targets) {
