@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:22.12-slim
 RUN apt-get update && apt-get install -y curl
 RUN curl -LsSf https://astral.sh/ruff/install.sh | sh
 ENV PATH="/root/.cargo/bin:${PATH}"
