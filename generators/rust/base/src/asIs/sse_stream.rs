@@ -5,6 +5,7 @@ use reqwest::{header::CONTENT_TYPE, Response};
 use reqwest_sse::{error::EventError, Event, EventSource};
 use serde::de::DeserializeOwned;
 use std::{
+    future::Future,
     marker::PhantomData,
     pin::Pin,
     task::{Context, Poll},
@@ -104,7 +105,7 @@ pub struct SseStream<T> {
     terminator: Option<String>,
     timeout: Duration,
     #[pin]
-    deadline: Pin<Box<tokio::time::Sleep>>,
+    deadline: tokio::time::Sleep,
     _phantom: PhantomData<T>,
 }
 
@@ -160,7 +161,7 @@ where
             inner: Box::pin(events),
             terminator,
             timeout,
-            deadline: Box::pin(tokio::time::sleep(timeout)),
+            deadline: tokio::time::sleep(timeout),
             _phantom: PhantomData,
         })
     }
@@ -209,7 +210,7 @@ where
     type Item = Result<T, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        let this = self.project();
+        let mut this = self.project();
         match this.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
                 // Reset the deadline for the next event
@@ -237,7 +238,7 @@ where
             Poll::Ready(None) => Poll::Ready(None),
             Poll::Pending => {
                 // Check if the per-event timeout has elapsed
-                match this.deadline.poll(cx) {
+                match this.deadline.as_mut().poll(cx) {
                     Poll::Ready(()) => {
                         // Timeout expired — reset deadline and yield a timeout error
                         this.deadline.as_mut().reset(tokio::time::Instant::now() + *this.timeout);
@@ -270,7 +271,7 @@ where
         let this = self.project();
 
         // Access the inner stream's fields through pin projection
-        let inner_pin = this.inner.project();
+        let mut inner_pin = this.inner.project();
 
         match inner_pin.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
@@ -310,7 +311,7 @@ where
             Poll::Ready(None) => Poll::Ready(None),
             Poll::Pending => {
                 // Check if the per-event timeout has elapsed
-                match inner_pin.deadline.poll(cx) {
+                match inner_pin.deadline.as_mut().poll(cx) {
                     Poll::Ready(()) => {
                         // Timeout expired — reset deadline and yield a timeout error
                         inner_pin.deadline.as_mut().reset(tokio::time::Instant::now() + *inner_pin.timeout);
