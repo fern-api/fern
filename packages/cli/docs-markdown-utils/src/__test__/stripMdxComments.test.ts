@@ -221,6 +221,65 @@ describe("stripMdxComments", () => {
         expect(stripMdxComments(input)).toBe(input);
     });
 
+    it("strips multi-line comment containing double backticks", () => {
+        const input = [
+            "hello world",
+            "",
+            "{/* please remove",
+            "",
+            "this comment.",
+            "",
+            "``and the code here``",
+            "",
+            "*/}"
+        ].join("\n");
+        expect(stripMdxComments(input)).not.toContain("{/*");
+        expect(stripMdxComments(input)).not.toContain("*/}");
+        expect(stripMdxComments(input)).not.toContain("please remove");
+        expect(stripMdxComments(input)).toContain("hello world");
+    });
+
+    it("strips multi-line comment containing single backticks", () => {
+        const input = ["hello world", "", "{/* remove this", "", "`some code`", "", "*/}"].join("\n");
+        expect(stripMdxComments(input)).not.toContain("{/*");
+        expect(stripMdxComments(input)).not.toContain("*/}");
+        expect(stripMdxComments(input)).not.toContain("remove this");
+        expect(stripMdxComments(input)).toContain("hello world");
+    });
+
+    it("strips comment in real-world MDX with JSX components and tables", () => {
+        const input = [
+            "---",
+            "title: Baby Fern",
+            "---",
+            "",
+            "hellooooooo",
+            "",
+            '<RunnableEndpoint endpoint="POST /api/v1/surveys/{survey_id}/responses/" />',
+            "",
+            "<Code",
+            '  src="https://example.com/script.ts"',
+            "/>",
+            "",
+            "<table>",
+            "  <tr><td>John</td></tr>",
+            "</table>",
+            "",
+            "",
+            "{/* please remove",
+            "",
+            "this comment.",
+            "",
+            "``and the code here``",
+            "",
+            "*/}"
+        ].join("\n");
+        expect(stripMdxComments(input)).not.toContain("{/*");
+        expect(stripMdxComments(input)).not.toContain("*/}");
+        expect(stripMdxComments(input)).toContain("hellooooooo");
+        expect(stripMdxComments(input)).toContain("<table>");
+    });
+
     it("handles real-world MDX content with mixed comments", () => {
         const input = [
             "---",
