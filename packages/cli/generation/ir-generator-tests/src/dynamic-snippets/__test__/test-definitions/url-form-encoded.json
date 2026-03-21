@@ -131,6 +131,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "client_id",
                         "name": {
                             "originalName": "client_id",
                             "camelCase": {
@@ -149,8 +150,7 @@
                                 "unsafeName": "ClientID",
                                 "safeName": "ClientID"
                             }
-                        },
-                        "wireValue": "client_id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -161,6 +161,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "client_secret",
                         "name": {
                             "originalName": "client_secret",
                             "camelCase": {
@@ -179,8 +180,7 @@
                                 "unsafeName": "ClientSecret",
                                 "safeName": "ClientSecret"
                             }
-                        },
-                        "wireValue": "client_secret"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -224,6 +224,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "access_token",
                         "name": {
                             "originalName": "access_token",
                             "camelCase": {
@@ -242,8 +243,7 @@
                                 "unsafeName": "AccessToken",
                                 "safeName": "AccessToken"
                             }
-                        },
-                        "wireValue": "access_token"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -257,6 +257,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "expires_in",
                         "name": {
                             "originalName": "expires_in",
                             "camelCase": {
@@ -275,8 +276,7 @@
                                 "unsafeName": "ExpiresIn",
                                 "safeName": "ExpiresIn"
                             }
-                        },
-                        "wireValue": "expires_in"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",

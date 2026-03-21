@@ -438,6 +438,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "owner",
                         "name": {
                             "originalName": "owner",
                             "camelCase": {
@@ -456,8 +457,7 @@
                                 "unsafeName": "Owner",
                                 "safeName": "Owner"
                             }
-                        },
-                        "wireValue": "owner"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
