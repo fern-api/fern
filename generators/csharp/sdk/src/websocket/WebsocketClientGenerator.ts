@@ -22,8 +22,6 @@ export interface WebSocketAuthContext {
         /** The PascalCase property name on the Options class (e.g., "TenantName") */
         optionsPropertyName: string;
     }>;
-    /** Whether the root client uses OAuth (to inject raw access token for "token" query params) */
-    hasOAuth: boolean;
     /** The PascalCase property name for the token query param, if it exists and OAuth is present */
     oauthTokenPropertyName?: string;
     /** Whether to inject the environment from ClientOptions */
@@ -721,6 +719,14 @@ export class WebSocketClientGenerator extends WithGeneration {
         }
         const authContext = this.authContext;
 
+        // Build a map from PascalCase query param name → actual converted type
+        // so WithDefaults parameters use the real type instead of hardcoded string
+        const queryParamTypeMap = new Map<string, ast.Type>();
+        for (const qp of this.websocketChannel.queryParameters) {
+            const pascalName = qp.name.name.pascalCase.safeName;
+            queryParamTypeMap.set(pascalName, this.context.csharpTypeMapper.convert({ reference: qp.valueType }));
+        }
+
         // Build the parameter list: Options? options, plus one param per auth-propagated field
         const parameters: ast.Parameter[] = [
             this.csharp.parameter({
@@ -731,19 +737,21 @@ export class WebSocketClientGenerator extends WithGeneration {
         const addedParamNames = new Set<string>();
         for (const field of authContext.matchedParamFields) {
             const paramName = this.toCamelCase(field.optionsPropertyName);
+            const actualType = queryParamTypeMap.get(field.optionsPropertyName) ?? this.Primitive.string;
             parameters.push(
                 this.csharp.parameter({
                     name: paramName,
-                    type: this.Primitive.string.asOptional()
+                    type: actualType.asOptional()
                 })
             );
             addedParamNames.add(field.optionsPropertyName);
         }
         if (authContext.oauthTokenPropertyName != null && !addedParamNames.has(authContext.oauthTokenPropertyName)) {
+            const oauthType = queryParamTypeMap.get(authContext.oauthTokenPropertyName) ?? this.Primitive.string;
             parameters.push(
                 this.csharp.parameter({
                     name: this.toCamelCase(authContext.oauthTokenPropertyName),
-                    type: this.Primitive.string.asOptional()
+                    type: oauthType.asOptional()
                 })
             );
         }

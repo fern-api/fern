@@ -220,7 +220,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         return {
             matchedParamFields,
-            hasOAuth,
             oauthTokenPropertyName,
             hasEnvironments,
             environmentPropertyName
@@ -1313,7 +1312,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
         for (const header of context.ir.headers) {
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                addName(header.name.name.pascalCase.safeName);
+                // Skip literal headers - they are not actual constructor parameters
+                // (getConstructorParameters places them in literalParameters, not required/optional)
+                continue;
             } else {
                 addName(header.name.name.camelCase.safeName);
             }
