@@ -731,7 +731,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         for (const param of [...requiredParameters, ...optionalParameters]) {
                             const fieldName = `_${param.name}`;
                             if (wsAuthFields.has(fieldName)) {
-                                innerWriter.writeLine(`${fieldName} = ${param.name};`);
+                                innerWriter.writeLine(`${fieldName} = ${paramAccess(param)};`);
                             }
                         }
                         // Store clientOptions for environment propagation

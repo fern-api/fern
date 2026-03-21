@@ -253,11 +253,20 @@ export class WebSocketClientGenerator extends WithGeneration {
                 return_: websocketInterfaceRef,
                 body: context.csharp.codeblock((writer) => {
                     if (hasInjectDefaults) {
+                        const optionsArgs: Array<{ name: string; assignment: ast.AstNode }> =
+                            environmentBaseUrlExpression != null
+                                ? [
+                                      {
+                                          name: "BaseUrl",
+                                          assignment: context.csharp.codeblock(environmentBaseUrlExpression)
+                                      }
+                                  ]
+                                : [];
                         writer.writeLine("var options = ");
                         writer.writeNodeStatement(
                             context.csharp.instantiateClass({
                                 classReference: optionsClassReference,
-                                arguments_: []
+                                arguments_: optionsArgs
                             })
                         );
                         writer.writeLine(`InjectDefaults(options);`);
