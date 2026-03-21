@@ -10,6 +10,7 @@ types:
 service:
   auth: false
   base-path: /
+  url: default
   endpoints:
     getTokenWithClientCredentials:
       path: /token
