@@ -9,7 +9,7 @@
         WebSocket headers (e.g. browsers, React Native). Supported fallback
         transports are `websocket-subprotocol` and `query`.
       type: feat
-  createdAt: "2026-03-16"
+  createdAt: "2026-03-21"
   irVersion: 65
 
 - version: 4.39.0
