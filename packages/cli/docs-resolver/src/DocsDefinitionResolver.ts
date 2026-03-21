@@ -517,7 +517,7 @@ export class DocsDefinitionResolver {
             );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
-                markdown,
+                markdown: stripMdxComments(markdown),
                 editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
                 editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
                 rawMarkdown: rawMarkdown

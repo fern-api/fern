@@ -239,7 +239,7 @@ export async function getPreviewDocsDefinition({
             );
 
             previousDocsDefinition.pages[pageId] = {
-                markdown: finalMarkdown,
+                markdown: stripMdxComments(finalMarkdown),
                 editThisPageUrl: previousValue.editThisPageUrl,
                 editThisPageLaunch: previousValue.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
