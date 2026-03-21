@@ -202,7 +202,12 @@ export class WebSocketClientGenerator extends WithGeneration {
      * auth-propagated fields from root client fields.
      * Returns the lines as an array of strings.
      */
-    private static buildDefaultsOptionsLines(websocketApiName: string, authContext: WebSocketAuthContext): string[] {
+    private static buildDefaultsOptionsLines(
+        websocketApiName: string,
+        authContext: WebSocketAuthContext,
+        websocketChannel: WebSocketChannel,
+        context: SdkGeneratorContext
+    ): string[] {
         const lines: string[] = [];
         lines.push(`var defaults = new ${websocketApiName}.Options`);
         lines.push("{");
@@ -215,6 +220,15 @@ export class WebSocketClientGenerator extends WithGeneration {
         if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
             const envProp = authContext.environmentPropertyName;
             lines.push(`    Environment = _clientOptions.Environment?.${envProp} ?? "",`);
+        }
+        // Include required path parameters with default values to satisfy the `required` constraint.
+        // These are placeholder defaults that will be overridden by the caller's options via WithDefaults.
+        for (const pathParam of websocketChannel.pathParameters) {
+            const type = context.csharpTypeMapper.convert({ reference: pathParam.valueType });
+            if (!type.isOptional) {
+                const propName = pathParam.name.pascalCase.safeName;
+                lines.push(`    ${propName} = "",`);
+            }
         }
         lines.push("};");
         return lines;
@@ -276,7 +290,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                     if (hasWithDefaults && authContext != null) {
                         const defaultsLines = WebSocketClientGenerator.buildDefaultsOptionsLines(
                             websocketApiName,
-                            authContext
+                            authContext,
+                            websocketChannel,
+                            context
                         );
                         for (const line of defaultsLines) {
                             writer.writeLine(line);
@@ -330,7 +346,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                 if (hasWithDefaults && authContext != null) {
                     const defaultsLines = WebSocketClientGenerator.buildDefaultsOptionsLines(
                         websocketApiName,
-                        authContext
+                        authContext,
+                        websocketChannel,
+                        context
                     );
                     for (const line of defaultsLines) {
                         writer.writeLine(line);
@@ -810,10 +828,15 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
                 }
 
-                // Path parameters
+                // Path parameters (required ones need a non-null fallback to satisfy the `required` constraint)
                 for (const pathParameter of this.websocketChannel.pathParameters) {
                     const propName = pathParameter.name.pascalCase.safeName;
-                    writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
+                    const type = this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType });
+                    if (!type.isOptional) {
+                        writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName} ?? "",`);
+                    } else {
+                        writer.writeLine(`${propName} = options?.${propName} ?? defaults?.${propName},`);
+                    }
                 }
 
                 // Environment (if applicable)
