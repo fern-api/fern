@@ -37,11 +37,6 @@ public partial class TranscribeApi
     public readonly Event<JsonElement> UnknownMessage = new();
 
     /// <summary>
-    /// Default constructor
-    /// </summary>
-    public TranscribeApi() { }
-
-    /// <summary>
     /// Constructor with options
     /// </summary>
     public TranscribeApi(TranscribeApi.Options options)

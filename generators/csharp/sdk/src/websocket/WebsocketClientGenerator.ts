@@ -1650,7 +1650,11 @@ export class WebSocketClientGenerator extends WithGeneration {
             type: this.Types.WebSocketClient
         });
 
-        if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context)) {
+        const needsDefaultsForThisChannel = websocketChannelNeedsDefaults(this.websocketChannel, this.context);
+        if (
+            !WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context) &&
+            !needsDefaultsForThisChannel
+        ) {
             cls.addConstructor(this.createDefaultConstructor());
         }
 
