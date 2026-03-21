@@ -265,7 +265,6 @@ public partial class TranscribeApi
                 TenantName = options?.TenantName ?? tenantName,
                 Token = options?.Token ?? token,
                 Model = options?.Model,
-                Token = options?.Token ?? token,
                 IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,
                 ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),
                 ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),

@@ -728,15 +728,18 @@ export class WebSocketClientGenerator extends WithGeneration {
                 type: this.optionsClassReference.asOptional()
             })
         ];
+        const addedParamNames = new Set<string>();
         for (const field of authContext.matchedParamFields) {
+            const paramName = this.toCamelCase(field.optionsPropertyName);
             parameters.push(
                 this.csharp.parameter({
-                    name: this.toCamelCase(field.optionsPropertyName),
+                    name: paramName,
                     type: this.Primitive.string.asOptional()
                 })
             );
+            addedParamNames.add(field.optionsPropertyName);
         }
-        if (authContext.oauthTokenPropertyName != null) {
+        if (authContext.oauthTokenPropertyName != null && !addedParamNames.has(authContext.oauthTokenPropertyName)) {
             parameters.push(
                 this.csharp.parameter({
                     name: this.toCamelCase(authContext.oauthTokenPropertyName),
@@ -774,6 +777,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeLine("HttpInvoker = options?.HttpInvoker,");
 
                 // Query parameters (auth-propagated use ?? defaultParam, others just copy)
+                const emittedPropertyNames = new Set<string>();
                 for (const queryParameter of this.websocketChannel.queryParameters) {
                     const propName = queryParameter.name.name.pascalCase.safeName;
                     const isAuthPropagated = this.authPropagatedPropertyNames.has(propName);
@@ -781,20 +785,16 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const paramName = this.toCamelCase(propName);
                         writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
                     } else {
-                        const type = this.context.csharpTypeMapper.convert({
-                            reference: queryParameter.valueType
-                        });
-                        if (type.isOptional) {
-                            writer.writeLine(`${propName} = options?.${propName},`);
-                        } else {
-                            // Required fields need a non-null assertion via options!
-                            writer.writeLine(`${propName} = options?.${propName},`);
-                        }
+                        writer.writeLine(`${propName} = options?.${propName},`);
                     }
+                    emittedPropertyNames.add(propName);
                 }
 
-                // OAuth token property (if present)
-                if (authContext.oauthTokenPropertyName != null) {
+                // OAuth token property (if present and not already emitted as a query param)
+                if (
+                    authContext.oauthTokenPropertyName != null &&
+                    !emittedPropertyNames.has(authContext.oauthTokenPropertyName)
+                ) {
                     const propName = authContext.oauthTokenPropertyName;
                     const paramName = this.toCamelCase(propName);
                     writer.writeLine(`${propName} = options?.${propName} ?? ${paramName},`);
