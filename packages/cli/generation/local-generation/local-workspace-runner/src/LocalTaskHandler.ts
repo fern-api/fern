@@ -268,7 +268,8 @@ export class LocalTaskHandler {
                     });
                     return {
                         version: newVersion,
-                        commitMessage: overrideMessage
+                        commitMessage: overrideMessage,
+                        versionBumpReason: `No actual changes but version bump overridden to ${bumpOverride}`
                     };
                 }
                 this.context.logger.info(
@@ -500,7 +501,8 @@ export class LocalTaskHandler {
                     });
                     return {
                         version: newVersion,
-                        commitMessage: overrideMessage
+                        commitMessage: overrideMessage,
+                        versionBumpReason: `AI detected no changes but version bump overridden to ${bumpOverride}`
                     };
                 }
                 this.context.logger.info("AI detected no semantic changes");
