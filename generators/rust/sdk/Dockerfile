@@ -1,12 +1,19 @@
 FROM node:22.12-alpine3.20
 
 # Install system dependencies and Rust toolchain
-RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
-RUN curl --proto '=https' --tlsv1.2 -sSf --retry 5 --retry-delay 3 https://sh.rustup.rs -o /tmp/rustup-init.sh && \
-    sh /tmp/rustup-init.sh -y --default-toolchain 1.82.0 --profile minimal --component rustfmt && \
-    rm /tmp/rustup-init.sh
-ENV PATH="/root/.cargo/bin:${PATH}"
-RUN rustfmt --version  # Verify rustfmt is available
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+
+RUN set -eux; \
+    apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig wget; \
+    url="https://static.rust-lang.org/rustup/archive/1.29.0/x86_64-unknown-linux-musl/rustup-init"; \
+    wget "$url"; \
+    echo "9cd3fda5fd293890e36ab271af6a786ee22084b5f6c2b83fd8323cec6f0992c1 *rustup-init" | sha256sum -c -; \
+    chmod +x rustup-init; \
+    ./rustup-init -y --no-modify-path --profile minimal --default-toolchain 1.82.0 --component rustfmt; \
+    rm rustup-init; \
+    rustfmt --version
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
