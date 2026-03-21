@@ -1,4 +1,5 @@
 import { File } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
@@ -11,7 +12,6 @@ import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
-
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
  */
@@ -239,7 +239,7 @@ export class SdkWireTestGenerator {
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                         returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
+                        const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
                             `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate snippet - ${errorMessage}`
                         );
@@ -287,7 +287,7 @@ export class SdkWireTestGenerator {
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                         returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
+                        const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
                             `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate default snippet - ${errorMessage}`
                         );
@@ -464,7 +464,7 @@ export class SdkWireTestGenerator {
                 this.context.logger.debug(`Service correction succeeded for endpoint ${endpoint.id}`);
                 return snippet;
             } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : String(error);
+                const errorMessage = extractErrorMessage(error);
                 throw new Error(
                     `Service mismatch (expected: '${expectedServiceName}', got: '${dynamicServiceName}'). ` +
                         `Correction attempt failed: ${errorMessage}. ` +

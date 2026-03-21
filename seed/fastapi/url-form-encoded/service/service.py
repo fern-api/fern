@@ -11,6 +11,8 @@ from ..core.abstract_fern_service import AbstractFernService
 from ..core.exceptions.fern_http_exception import FernHTTPException
 from ..core.route_args import get_route_args
 from ..types.post_submit_response import PostSubmitResponse
+from ..types.token_request import TokenRequest
+from ..types.token_response import TokenResponse
 from .post_submit_request import PostSubmitRequest
 
 
@@ -26,6 +28,9 @@ class AbstractRootService(AbstractFernService):
     @abc.abstractmethod
     def submit_form_data(self, *, body: PostSubmitRequest) -> PostSubmitResponse: ...
 
+    @abc.abstractmethod
+    def get_token(self, *, body: TokenRequest) -> TokenResponse: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -34,6 +39,7 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_submit_form_data(router=router)
+        cls.__init_get_token(router=router)
 
     @classmethod
     def __init_submit_form_data(cls, router: fastapi.APIRouter) -> None:
@@ -72,4 +78,43 @@ class AbstractRootService(AbstractFernService):
             response_model=None,
             description=AbstractRootService.submit_form_data.__doc__,
             **get_route_args(cls.submit_form_data, default_tag=""),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_token(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_token)
+        type_hints = typing.get_type_hints(cls.get_token)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_token, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_token)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> TokenResponse:
+            try:
+                return cls.get_token(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_token' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/token",
+            response_model=None,
+            description=AbstractRootService.get_token.__doc__,
+            **get_route_args(cls.get_token, default_tag=""),
         )(wrapper)

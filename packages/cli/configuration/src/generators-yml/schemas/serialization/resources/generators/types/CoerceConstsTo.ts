@@ -4,11 +4,9 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const CoerceConstsTo: core.serialization.Schema<
-    serializers.CoerceConstsTo.Raw,
-    GeneratorsYml.CoerceConstsTo
-> = core.serialization.enum_(["literals", "enums"]);
+export const CoerceConstsTo: core.serialization.Schema<serializers.CoerceConstsTo.Raw, GeneratorsYml.CoerceConstsTo> =
+    core.serialization.enum_(["literals", "enums", "enums-coerceable-to-literals"]);
 
 export declare namespace CoerceConstsTo {
-    export type Raw = "literals" | "enums";
+    export type Raw = "literals" | "enums" | "enums-coerceable-to-literals";
 }

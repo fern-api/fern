@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listConnections
-///
-/// Request type for the ListConnectionsQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListConnectionsQueryRequest {
     /// Filter by strategy type (e.g., auth0, google-oauth2, samlp)

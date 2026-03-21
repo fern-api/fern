@@ -117,9 +117,9 @@ SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .build();
 
-// Connect to the WebSocket
-var ws = client.realtime();
-ws.connect().join();
+// Create the WebSocket client and connect
+var ws = client.realtime().realtimeWebSocket();
+ws.connect(RealtimeConnectOptions.builder()...build()).join();
 
 // Register message handlers to receive server messages
 ws.onReceive(message -> {
@@ -233,7 +233,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-GetTokenWithClientCredentialsHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
+SeedWebsocketAuthHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

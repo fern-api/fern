@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.types.object.types.DocumentedUnknownType;
 import java.util.HashMap;
 
 public class Example25 {
@@ -13,9 +14,9 @@ public class Example25 {
 
         client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
             new HashMap<String, Object>() {{
-                put("string", new 
+                put("string", DocumentedUnknownType.of(new 
                 HashMap<String, Object>() {{put("key", "value");
-                }});
+                }}));
             }}
         );
     }

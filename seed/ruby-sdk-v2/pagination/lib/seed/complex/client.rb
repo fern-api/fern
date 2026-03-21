@@ -25,13 +25,13 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,
-          initial_cursor: query_params[:starting_after]
+          initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
-          query_params[:starting_after] = next_cursor
+          query_params["starting_after"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "#{params[:index]}/conversations/search",
+            path: "#{URI.encode_uri_component(params[:index].to_s)}/conversations/search",
             body: Seed::Complex::Types::SearchRequest.new(params).to_h,
             request_options: request_options
           )

@@ -141,6 +141,10 @@ public final class InvalidRequestCause {
   @JsonIgnoreProperties("type")
   private static final class SubmissionIdNotFoundValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SubmissionIdNotFound value;
 
     @JsonCreator(
@@ -183,6 +187,10 @@ public final class InvalidRequestCause {
   @JsonIgnoreProperties("type")
   private static final class CustomTestCasesUnsupportedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private CustomTestCasesUnsupported value;
 
     @JsonCreator(
@@ -225,6 +233,10 @@ public final class InvalidRequestCause {
   @JsonIgnoreProperties("type")
   private static final class UnexpectedLanguageValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private UnexpectedLanguageError value;
 
     @JsonCreator(

@@ -70,7 +70,7 @@ export class DeleteCommand {
     }
 }
 
-export function addDeleteCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addDeleteCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new DeleteCommand();
     command(
         cli,
@@ -85,7 +85,6 @@ export function addDeleteCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                 description:
                     "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
                 demandOption: true
-            }),
-        parentPath
+            })
     );
 }

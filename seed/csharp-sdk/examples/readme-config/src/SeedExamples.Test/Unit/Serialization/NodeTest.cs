@@ -1,7 +1,7 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
+using SeedExamples.Test_.Utils;
 
 namespace SeedExamples.Test_;
 
@@ -64,7 +64,7 @@ public class NodeTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "root",
               "nodes": [
@@ -89,29 +89,7 @@ public class NodeTest
               ]
             }
             """;
-        var actualObj = new Node
-        {
-            Name = "root",
-            Nodes = new List<Node>()
-            {
-                new Node { Name = "left" },
-                new Node { Name = "right" },
-            },
-            Trees = new List<Tree>()
-            {
-                new Tree
-                {
-                    Nodes = new List<Node>()
-                    {
-                        new Node { Name = "left" },
-                        new Node { Name = "right" },
-                    },
-                },
-            },
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Node>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -130,15 +108,12 @@ public class NodeTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "left"
             }
             """;
-        var actualObj = new Node { Name = "left" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Node>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -157,14 +132,11 @@ public class NodeTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "right"
             }
             """;
-        var actualObj = new Node { Name = "right" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Node>(inputJson);
     }
 }

@@ -1830,6 +1830,14 @@
         }
       ]
     },
+    "generators.CoerceConstsTo": {
+      "type": "string",
+      "enum": [
+        "literals",
+        "enums",
+        "enums-coerceable-to-literals"
+      ]
+    },
     "generators.FormParameterEncoding": {
       "type": "string",
       "enum": [
@@ -2043,6 +2051,36 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
             },
             {
               "type": "null"
@@ -2391,6 +2429,36 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
             },
             {
               "type": "null"
@@ -2869,6 +2937,36 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
             },
             {
               "type": "null"

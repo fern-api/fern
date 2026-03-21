@@ -22,7 +22,7 @@ impl SimpleClient {
             .execute_request(
                 Method::POST,
                 "foo1",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -38,7 +38,7 @@ impl SimpleClient {
             .execute_request(
                 Method::POST,
                 "foo2",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -54,7 +54,7 @@ impl SimpleClient {
             .execute_request(
                 Method::POST,
                 "foo3",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

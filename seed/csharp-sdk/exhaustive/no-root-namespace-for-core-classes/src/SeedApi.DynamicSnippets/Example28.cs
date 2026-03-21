@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,8 +14,11 @@ public class Example28
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Pagination.ListItemsAsync(
+            new ListItemsRequest {
+                Cursor = "cursor",
+                Limit = 1
+            }
         );
     }
 

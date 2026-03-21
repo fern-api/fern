@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Advanced](#advanced)
@@ -45,6 +46,19 @@ import { SeedBytesUploadClient } from "@fern/bytes-upload";
 
 const client = new SeedBytesUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.upload(createReadStream("path/to/file"));
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedBytesUpload } from "@fern/bytes-upload";
+
+const request: SeedBytesUpload.UploadWithQueryParamsRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -308,19 +322,6 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedBytesUploadClient } from "@fern/bytes-upload";
-
-const client = new SeedBytesUploadClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 

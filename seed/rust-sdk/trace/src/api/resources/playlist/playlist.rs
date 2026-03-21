@@ -32,7 +32,7 @@ impl PlaylistClient {
             .execute_request(
                 Method::POST,
                 &format!("/v2/playlist/{}/create", service_param),
-                Some(serde_json::to_value(&request.body).unwrap_or_default()),
+                Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
                     .datetime("datetime", request.datetime.clone())
                     .datetime("optionalDatetime", request.optional_datetime.clone())
@@ -126,7 +126,7 @@ impl PlaylistClient {
             .execute_request(
                 Method::PUT,
                 &format!("/v2/playlist/{}/{}", service_param, playlist_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

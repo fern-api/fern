@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listWithDoubleOffsetPagination
-///
-/// Request type for the UsersListWithDoubleOffsetPaginationQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct UsersListWithDoubleOffsetPaginationQueryRequest {
     /// Defaults to first page

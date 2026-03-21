@@ -77,6 +77,61 @@ export class SeedApiClient {
     }
 
     /**
+     * @param {SeedApi.TokenRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.getToken({
+     *         client_id: "client_id",
+     *         client_secret: "client_secret"
+     *     })
+     */
+    public getToken(
+        request: SeedApi.TokenRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+    }
+
+    private async __getToken(
+        request: SeedApi.TokenRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.TokenResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "token",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/x-www-form-urlencoded",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "form",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.TokenResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
+    }
+
+    /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
      * This is useful for making requests to endpoints not yet supported in the SDK.
      * The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.

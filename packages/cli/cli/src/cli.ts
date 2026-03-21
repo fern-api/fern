@@ -12,7 +12,13 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    extractErrorMessage,
+    haveSameNullishness,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
@@ -54,6 +60,7 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
@@ -238,6 +245,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGeneratorCommands(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
+    addInstallDependenciesCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -627,6 +635,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Whether to generate a preview link for the docs"
                 })
+                .option("id", {
+                    type: "string",
+                    description:
+                        "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate"
@@ -730,10 +743,22 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("require-env-vars", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            }
+            if (argv.id != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.");
+            }
+            if (argv.id != null && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.");
             }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
@@ -792,7 +817,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
                 });
             }
             if (argv.docs != null) {
@@ -817,6 +843,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     instance: argv.instance,
                     preview: argv.preview,
+                    previewId: argv.id,
+                    force: argv.force,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
@@ -847,7 +875,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
             });
         }
     );
@@ -2131,6 +2160,18 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     });
 }
 
+function addInstallDependenciesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "install-dependencies",
+        false, // hidden from --help
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+        (yargs) => {},
+        async () => {
+            await installDependencies({ cliContext });
+        }
+    );
+}
+
 function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command({
         command: "replay",
@@ -2237,9 +2278,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     cliContext.logger.info("\nDry run complete. No changes made.");
                 }
             } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2311,7 +2350,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
             }
         }
     );

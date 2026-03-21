@@ -1830,7 +1830,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return {
             code: this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
                 writer.writeLine(".Add(_client.Options.Headers)");

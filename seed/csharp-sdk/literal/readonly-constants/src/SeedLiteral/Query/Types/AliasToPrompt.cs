@@ -12,7 +12,7 @@ public readonly struct AliasToPrompt
 
     public override string ToString() => Value;
 
-    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
+    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
 
     public override bool Equals(object? obj) => obj is AliasToPrompt;
 
@@ -47,5 +47,31 @@ public readonly struct AliasToPrompt
             AliasToPrompt value,
             JsonSerializerOptions options
         ) => writer.WriteStringValue(AliasToPrompt.Value);
+
+        public override AliasToPrompt ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetString();
+            if (value != AliasToPrompt.Value)
+            {
+                throw new JsonException(
+                    "Expected \""
+                        + AliasToPrompt.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
+                );
+            }
+            return new AliasToPrompt();
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            AliasToPrompt value,
+            JsonSerializerOptions options
+        ) => writer.WritePropertyName(AliasToPrompt.Value);
     }
 }

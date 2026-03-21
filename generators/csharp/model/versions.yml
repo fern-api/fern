@@ -1,4 +1,93 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.7.0
+  changelogEntry:
+    - summary: |
+        Conditionally emit System.Text.Json as a PackageReference only when
+        targeting pre-net8.0 TFMs (netstandard2.0, net462). The package is
+        wrapped in an ItemGroup with an MSBuild IsTargetFrameworkCompatible
+        condition so it is skipped for net8.0+ where it ships in-box.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.6.1
+  changelogEntry:
+    - summary: |
+        Remove dead `#elif NET7_0_OR_GREATER` and `#else` branches inside
+        `QueryStringBuilder` that could only execute on .NET 6 or .NET 7,
+        which are no longer targeted.
+      type: chore
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.6.0
+  changelogEntry:
+    - summary: |
+        Add `net9.0` target framework to all generated C# model projects. The library
+        now targets `net462;net8.0;net9.0;netstandard2.0`. Test projects now target
+        `net9.0` instead of `net8.0`.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.5.1
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to all remaining
+        custom `JsonConverter` types: `EnumSerializer<TEnum>` (native C# enums),
+        `DateTimeSerializer`, `DateAsDateTimeConverter`, discriminated union converters,
+        and literal type converters. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` when any of these types is used as a `Dictionary<TKey, TValue>`
+        key. This complements the `IStringEnum` fix in 0.3.2.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.5.0
+  changelogEntry:
+    - summary: |
+        Replace separate deserialization and serialization tests with a single round-trip
+        serialization test using `JsonAssert.Roundtrips<T>(inputJson)`. The helper deserializes
+        JSON to `T`, re-serializes, and compares to the original JSON via `JsonElement` deep
+        equality, producing diff-reportable failures.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.4.0
+  changelogEntry:
+    - summary: |
+        Add `UsingObjectDictionaryComparer` to test comparers for handling
+        `Dictionary<string, object?>` fields. System.Text.Json deserializes
+        `object?` values as `JsonElement`, so structural equality comparisons
+        need to serialize both sides before comparing. The `UsingDefaults()`
+        chain now includes this comparer automatically.
+      type: feat
+  createdAt: "2026-03-19"
+  irVersion: 65
+
+- version: 0.3.2
+  changelogEntry:
+    - summary: |
+        Add `ReadAsPropertyName` and `WriteAsPropertyName` overrides to the generated
+        `IStringEnum` JsonConverter. Without these overrides, `System.Text.Json` throws
+        `NotSupportedException` at runtime when serializing or deserializing a
+        `Dictionary<TStringEnum, TValue>`. This is applied to all generated `IStringEnum`
+        types so dictionary-key usage works without requiring regeneration.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+- version: 0.3.1
+  changelogEntry:
+    - summary: |
+        Fix CS1501 build error for literal struct `GetHashCode` on `netstandard2.0` and
+        `net462` targets. `string.GetHashCode(StringComparison)` is only available in
+        .NET Core 2.1+ / .NET Standard 2.1+. The generated code now uses
+        `StringComparer.Ordinal.GetHashCode(Value)` which is available on all frameworks.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
 - version: 0.3.0
   changelogEntry:
     - summary: |

@@ -1,8 +1,6 @@
 pub use crate::prelude::*;
 
 /// Query parameters for listEvents
-///
-/// Request type for the ListEventsQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListEventsQueryRequest {
     /// The maximum number of results to return.

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.58.0
+- version: 3.60.0
   changelogEntry:
     - summary: |
         Add support for `x-fern-websocket-auth-fallback` extension on security schemes.
@@ -9,6 +9,77 @@
         `Authorization` header, while browser-like runtimes (browser, React Native,
         Cloudflare Workers, edge runtimes) use the configured fallback — either a
         WebSocket subprotocol string or a query parameter.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.59.3
+  changelogEntry:
+    - summary: |
+        Fix npm publish authentication failing when the registry URL includes a port number.
+        The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
+        instead of `URL.host` (which preserves it). For example, a registry at
+        `http://host.docker.internal:4873` would write the token under
+        `//host.docker.internal/:_authToken` instead of the correct
+        `//host.docker.internal:4873/:_authToken`.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.59.2
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method failing when no environment is explicitly set on
+        multi-URL environment SDKs. When the user relies on the default environment,
+        `Supplier.get(undefined)` returned `undefined` and the IIFE produced no base URL.
+        The generated code now derives the correct base URL property from the IR (using the
+        same base URL that HTTP endpoints resolve to) and falls back to the IR-defined
+        default environment, matching how regular endpoint methods resolve their base URL.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix generated README.md including the "Customizing Fetch Client" section
+        under "Runtime Compatibility" even when `allowCustomFetcher` is `false`.
+        The section and its code snippet are now conditionally omitted when the
+        custom fetcher option is disabled.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Make `readyState` on generated WebSocket socket classes return a `ReadyState`
+        enum (`CONNECTING`, `OPEN`, `CLOSING`, `CLOSED`) instead of a raw `number`,
+        improving developer experience with IDE autocompletion and self-documenting code.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.1
+  changelogEntry:
+    - summary: |
+        Export the generated Socket class from subpackage `exports.ts` when
+        WebSocket clients are enabled. Previously only the Client class was
+        exported, making the Socket class inaccessible through the public
+        exports path.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add explicit type annotation to `mockServerPool` export in generated test
+        mock-server code to satisfy `--isolatedDeclarations`.
+      type: fix
+    - summary: |
+        Enable vitest typechecking in generated vitest config so that type errors
+        in test and source files are caught when running `vitest`.
       type: feat
   createdAt: "2026-03-17"
   irVersion: 65
@@ -92,11 +163,42 @@
 - version: 3.56.0
   changelogEntry:
     - summary: |
-        Add a `naming` configuration object that allows users to independently control the
-        namespace export and PascalCase class/type names (client, error, timeout error,
-        environment, environment URLs, version). When individual overrides are not provided,
-        they are derived from the namespace value using the existing `${PascalCase(namespace)}Suffix`
-        pattern. The existing `namespaceExport` config continues to work for backwards compatibility.
+        Add a `naming` configuration object that gives you fine-grained control over the
+        exported namespace and generated class names (client, error, timeout error,
+        environment, environment URLs, version).
+
+        You can use it as a simple string shorthand to set the namespace:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming: acme
+        ```
+
+        Or as a full object to override individual names:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming:
+                    namespace: acme
+                    client: AcmeApiClient
+                    error: AcmeApiError
+                    environment: AcmeRegion
+        ```
+
+        When individual overrides are not provided, they are derived from the namespace
+        using the `PascalCase(namespace) + Suffix` pattern (e.g. `namespace: acme` produces
+        `AcmeClient`, `AcmeError`, `AcmeTimeoutError`, `AcmeEnvironment`, `AcmeEnvironmentUrls`,
+        and `AcmeVersion` by default).
+
+        The existing `namespaceExport` config continues to work for backwards compatibility.
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65

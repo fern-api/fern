@@ -3,6 +3,7 @@ syntax = "proto3";
 package data.v1;
 
 import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
@@ -262,7 +263,13 @@ message DescribeResponse {
   uint32 total_count = 4;
 }
 
+message CheckResponse {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+}
+
 service DataService {
+  rpc Check(google.protobuf.Empty) returns (CheckResponse);
   rpc Upload(UploadRequest) returns (UploadResponse);
   rpc Delete(DeleteRequest) returns (DeleteResponse);
   rpc Query(QueryRequest) returns (QueryResponse);

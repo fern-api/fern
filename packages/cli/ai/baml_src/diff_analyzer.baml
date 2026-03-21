@@ -577,7 +577,7 @@ function AnalyzeSdkDiff(
     - For NO_CHANGE: use type "chore" and state that no functional changes were made
     - Be specific and action-oriented
     - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
-    - NEVER include the literal version "505.503.4455" in the commit message - if you see this placeholder
+    - NEVER include the literal version "0.0.0-fern-placeholder" in the commit message - if you see this placeholder
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
     - The previous version is provided for context only. Do not include it
     literally in the commit message summary line.
@@ -614,6 +614,9 @@ function AnalyzeSdkDiff(
     - PATCH: leave empty string — patch changes don't warrant changelog entries
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person ("The SDK now supports..." not "Add support for...")
+    - IMPORTANT: Wrap any type references containing angle brackets in backticks
+      to prevent MDX parsing issues. For example, write `Optional<String>` not
+      Optional<String>, and `Map<String, Object>` not Map<String, Object>.
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided

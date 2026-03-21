@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 /**
  * Resolves the package name from the raw generator configuration.
  *
@@ -143,7 +143,7 @@ export async function checkVersionDoesNotAlreadyExist({
         // Best-effort check — if we can't reach the registry, don't block generation.
         // The error will surface later during the actual publish step.
         context.logger.debug(
-            `Could not verify version availability on ${getRegistryName(language)}: ${error instanceof Error ? error.message : String(error)}`
+            `Could not verify version availability on ${getRegistryName(language)}: ${extractErrorMessage(error)}`
         );
         return;
     }

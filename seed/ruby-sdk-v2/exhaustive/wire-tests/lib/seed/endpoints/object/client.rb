@@ -154,7 +154,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-nested-with-required-field/#{params[:string]}",
+            path: "/object/get-and-return-nested-with-required-field/#{URI.encode_uri_component(params[:string].to_s)}",
             body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params).to_h,
             request_options: request_options
           )
@@ -262,6 +262,38 @@ module Seed
           code = response.code.to_i
           if code.between?(200, 299)
             Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::MapOfDocumentedUnknownType]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @return [Hash[String, Object]]
+        def get_and_return_map_of_documented_unknown_type(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/object/get-and-return-map-of-documented-unknown-type",
+            body: params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::Object_::Types::MapOfDocumentedUnknownType.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

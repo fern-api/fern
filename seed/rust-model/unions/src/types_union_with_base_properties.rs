@@ -24,7 +24,7 @@ pub enum UnionWithBaseProperties {
 }
 
 impl UnionWithBaseProperties {
-    pub fn get_id(&self) -> &String {
+    pub fn get_id(&self) -> &str {
         match self {
                     Self::Integer { id, .. } => id,
                     Self::String { id, .. } => id,

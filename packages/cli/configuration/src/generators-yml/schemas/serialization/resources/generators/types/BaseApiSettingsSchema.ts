@@ -23,6 +23,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "path-parameter-order": PathParameterOrder.optional(),
     "resolve-schema-collisions": core.serialization.boolean().optional(),
     "infer-forward-compatible": core.serialization.boolean().optional(),
+    "infer-default-environment": core.serialization.boolean().optional(),
     "coerce-consts-to": CoerceConstsTo.optional(),
 });
 
@@ -40,6 +41,7 @@ export declare namespace BaseApiSettingsSchema {
         "path-parameter-order"?: PathParameterOrder.Raw | null;
         "resolve-schema-collisions"?: boolean | null;
         "infer-forward-compatible"?: boolean | null;
+        "infer-default-environment"?: boolean | null;
         "coerce-consts-to"?: CoerceConstsTo.Raw | null;
     }
 }
