@@ -4,6 +4,7 @@ using SeedExtends;
 namespace SeedExtends.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ExtendedInlineRequestBodyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

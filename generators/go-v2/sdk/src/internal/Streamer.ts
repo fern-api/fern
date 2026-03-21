@@ -117,6 +117,15 @@ export class Streamer {
                         selector: go.codeblock("HTTPClient")
                     })
                 )
+            },
+            {
+                name: "MaxBufSize",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.codeblock("MaxBufSize")
+                    })
+                )
             }
         ];
         const prefix = this.getStreamPrefix(args.streamingResponse);

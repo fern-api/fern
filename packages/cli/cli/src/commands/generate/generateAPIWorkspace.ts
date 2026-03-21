@@ -12,6 +12,7 @@ import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-r
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
@@ -35,7 +36,9 @@ export async function generateWorkspace({
     lfsOverride,
     fernignorePath,
     dynamicIrOnly,
-    noReplay
+    noReplay,
+    retryRateLimited,
+    requireEnvVars
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -56,6 +59,8 @@ export async function generateWorkspace({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     noReplay: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -69,9 +74,18 @@ export async function generateWorkspace({
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
     if (groupNameOrDefault == null) {
-        return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
-        );
+        const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
+        const longestGroupName = Math.max(...groupNames.map((name) => name.length));
+        const currentArgs = process.argv.slice(2).join(" ");
+        const message =
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n` +
+            groupNames
+                .map((name) => {
+                    const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
+                    return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
+                })
+                .join("\n");
+        return context.failAndThrow(message);
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -136,7 +150,8 @@ export async function generateWorkspace({
                     ai,
                     replay,
                     noReplay,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    requireEnvVars
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -153,7 +168,9 @@ export async function generateWorkspace({
                     mode,
                     fernignorePath,
                     dynamicIrOnly,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    retryRateLimited,
+                    requireEnvVars
                 });
             }
         })

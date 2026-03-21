@@ -1,9 +1,9 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -12,7 +12,6 @@ import { GeneratorMigrator } from "../../../sdk/updater/GeneratorMigrator.js";
 import { SdkUpdater } from "../../../sdk/updater/SdkUpdater.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
-
 export declare namespace UpdateCommand {
     export interface Args extends GlobalArgs {
         /** The SDK target to update (e.g. typescript, python, go). */
@@ -31,8 +30,6 @@ export declare namespace UpdateCommand {
 
 export class UpdateCommand {
     public async handle(context: Context, args: UpdateCommand.Args): Promise<void> {
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
         const workspace = await context.loadWorkspaceOrThrow();
 
         const fernYmlPath = workspace.absoluteFilePath;
@@ -43,7 +40,7 @@ export class UpdateCommand {
         }
 
         const sdkChecker = new SdkChecker({ context });
-        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
             throw CliError.exit();
         }
@@ -92,7 +89,7 @@ export class UpdateCommand {
         });
         const migrationInfo = new Map<string, GeneratorMigrator.MigrationInfo>();
         for (const update of selectedUpdates) {
-            editor.setTargetVersion(update.name, update.latestVersion);
+            await editor.setTargetVersion(update.name, update.latestVersion);
 
             // Run generator config migrations for this version upgrade.
             const target = targets.find((t) => t.name === update.name);
@@ -108,7 +105,7 @@ export class UpdateCommand {
                         migrationInfo.set(update.name, result);
                     }
                 } catch (error) {
-                    const message = error instanceof Error ? error.message : String(error);
+                    const message = extractErrorMessage(error);
                     context.stderr.warn(chalk.yellow(`  Warning: migrations failed for ${target.name}: ${message}`));
                 }
             }
@@ -222,7 +219,7 @@ export class UpdateCommand {
     }
 }
 
-export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addUpdateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new UpdateCommand();
     command(
         cli,
@@ -247,10 +244,8 @@ export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

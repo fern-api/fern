@@ -12,11 +12,11 @@ async fn main() {
         .test_method_name(
             &"path_param".to_string(),
             &TestMethodNameRequest {
-                query_param_object: Some(Some(PlainObject {
+                query_param_object: Some(PlainObject {
                     id: Some("id".to_string()),
                     name: Some("name".to_string()),
-                })),
-                query_param_integer: Some(Some(1)),
+                }),
+                query_param_integer: Some(1),
                 body: Some(PlainObject {
                     id: Some("id".to_string()),
                     name: Some("name".to_string()),

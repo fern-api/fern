@@ -218,6 +218,27 @@ public record StreamEvent
             json["event"] = value.Event;
             json.WriteTo(writer, options);
         }
+
+        public override StreamEvent ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new StreamEvent(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            StreamEvent value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Event);
+        }
     }
 
     /// <summary>

@@ -3,7 +3,14 @@
 package sse
 
 import (
+	core "github.com/fern-api/sse-examples-go/core"
 	internal "github.com/fern-api/sse-examples-go/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	400: func(apiError *core.APIError) error {
+		return &BadRequestError{
+			APIError: apiError,
+		}
+	},
+}

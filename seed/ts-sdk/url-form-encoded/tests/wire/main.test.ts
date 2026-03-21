@@ -9,6 +9,7 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "johndoe", email: "john@example.com" };
         const rawResponseBody = { status: "success", message: "Data received successfully." };
+
         server
             .mockEndpoint()
             .post("/submit")
@@ -25,6 +26,31 @@ describe("SeedApiClient", () => {
         expect(response).toEqual({
             status: "success",
             message: "Data received successfully.",
+        });
+    });
+
+    test("get_token", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { client_id: "client_id", client_secret: "client_secret" };
+        const rawResponseBody = { access_token: "access_token", expires_in: 1 };
+
+        server
+            .mockEndpoint()
+            .post("/token")
+            .formUrlEncodedBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.getToken({
+            client_id: "client_id",
+            client_secret: "client_secret",
+        });
+        expect(response).toEqual({
+            access_token: "access_token",
+            expires_in: 1,
         });
     });
 });

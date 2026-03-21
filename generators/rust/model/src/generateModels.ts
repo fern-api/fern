@@ -12,6 +12,19 @@ import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union/index.js"
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
 
+    // Pre-compute which type IDs are members of undiscriminated unions.
+    // Single-property structs in undiscriminated unions need #[serde(transparent)]
+    // so they serialize as the inner value for untagged enum matching.
+    for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        if (typeDeclaration.shape.type === "undiscriminatedUnion") {
+            for (const member of typeDeclaration.shape.members) {
+                if (member.type.type === "named") {
+                    context.undiscriminatedUnionMemberTypeIds.add(member.type.typeId);
+                }
+            }
+        }
+    }
+
     for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<RustFile | undefined>({
             alias: (aliasTypeDeclaration) => {

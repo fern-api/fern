@@ -127,4 +127,17 @@ describe("generateModels type-specific tests", () => {
         const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
         expect(hasTaggedUnion).toBeTruthy();
     });
+
+    it("should not apply serde(transparent) to single-property structs with enum fields", async () => {
+        const context = await createSampleGeneratorContext("undiscriminated-union-types");
+        const files = generateModels({ context });
+
+        // EventPayload has a single enum-typed field and is a member of an undiscriminated union.
+        // It must NOT get #[serde(transparent)] because that would serialize as
+        // just the enum variant string instead of {"type":"text.done"}.
+        const eventPayloadFile = files.find((f) => f.filename.toLowerCase().includes("event_payload"));
+        expect(eventPayloadFile).toBeDefined();
+        expect(eventPayloadFile?.fileContents).not.toContain("#[serde(transparent)]");
+        expect(eventPayloadFile?.fileContents).toContain("struct EventPayload");
+    });
 });

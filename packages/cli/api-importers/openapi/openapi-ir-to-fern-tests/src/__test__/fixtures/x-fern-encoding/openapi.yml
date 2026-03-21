@@ -25,3 +25,13 @@ components:
       x-fern-encoding:
         proto:
           type: google.protobuf.Value
+    Any:
+      type: object
+      properties:
+        "@type":
+          type: string
+          description: The type of the serialized message.
+      additionalProperties: true
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Any

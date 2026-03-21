@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetShapeRequestTest
 {
     [NUnit.Framework.Test]
@@ -24,14 +25,11 @@ public class GetShapeRequestTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "id": "example"
             }
             """;
-        var actualObj = new GetShapeRequest { Id = "example" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<GetShapeRequest>(inputJson);
     }
 }

@@ -9,6 +9,7 @@ describe("PaginationClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { items: [{ string: "string" }, { string: "string" }], next: "next" };
+
         server
             .mockEndpoint({ once: false })
             .get("/pagination")

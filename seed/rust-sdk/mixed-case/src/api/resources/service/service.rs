@@ -15,7 +15,7 @@ impl ServiceClient {
 
     pub async fn get_resource(
         &self,
-        resource_id: &String,
+        resource_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<Resource, ApiError> {
         self.http_client

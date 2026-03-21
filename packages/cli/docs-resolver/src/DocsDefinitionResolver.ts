@@ -1,7 +1,13 @@
 import { GraphQLSpec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import {
+    assertNever,
+    extractErrorMessage,
+    isNonNullish,
+    replaceEnvVariables,
+    visitDiscriminatedUnion
+} from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -29,8 +35,7 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
-    collapsible?: boolean;
-    collapsedByDefault?: boolean;
+    collapsed?: boolean | "open-by-default";
 };
 
 /**
@@ -412,9 +417,7 @@ export class DocsDefinitionResolver {
                     filesToUploadSet.add(filepath);
                 }
             } catch (error) {
-                this.taskContext.logger.error(
-                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
-                );
+                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
                 throw error;
             }
         }
@@ -1189,11 +1192,7 @@ export class DocsDefinitionResolver {
                 return;
             }
 
-            // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
-            const isCollapsible =
-                child.type === "section" &&
-                ((child as SectionNodeWithNewCollapsibleConfig).collapsible === true ||
-                    ((child as SectionNodeWithNewCollapsibleConfig).collapsible == null && child.collapsed === true));
+            const isCollapsible = child.type === "section" && child.collapsed != null;
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
@@ -1446,8 +1445,17 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Extract GraphQL operations and types from the workspace
-        const graphqlData = await this.extractGraphQLData();
+        // Resolve the workspace for GraphQL extraction: prefer the already-resolved
+        // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
+        let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
+        if (graphqlWorkspace == null) {
+            try {
+                graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+            } catch {
+                // expected for Fern Definition APIs (no OSS workspace)
+            }
+        }
+        const graphqlData = await this.extractGraphQLData(graphqlWorkspace);
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
@@ -1568,9 +1576,9 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extract GraphQL operations from a workspace
+     * Extract GraphQL operations from the provided workspace.
      */
-    private async extractGraphQLData(): Promise<{
+    private async extractGraphQLData(workspace?: OSSWorkspace): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
@@ -1579,35 +1587,33 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Process GraphQL specs directly (not relying on workspace pre-processing)
-        for (const ossWorkspace of this.ossWorkspaces) {
-            const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        if (workspace == null) {
+            return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+        }
 
-            for (const spec of graphqlSpecs) {
-                try {
-                    const converter = new GraphQLConverter({
-                        context: this.taskContext,
-                        filePath: spec.absoluteFilepath,
-                        namespace: spec.namespace
-                    });
-                    const graphqlResult = await converter.convert();
+        const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        for (const spec of graphqlSpecs) {
+            try {
+                const converter = new GraphQLConverter({
+                    context: this.taskContext,
+                    filePath: spec.absoluteFilepath,
+                    namespace: spec.namespace
+                });
+                const graphqlResult = await converter.convert();
 
-                    // GraphQL converter handles namespacing internally - just merge the results
-                    Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
-                    Object.assign(graphqlTypes, graphqlResult.types);
+                Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
+                Object.assign(graphqlTypes, graphqlResult.types);
 
-                    // Track namespaces for operations if namespace exists
-                    if (spec.namespace) {
-                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
-                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
-                        }
+                if (spec.namespace) {
+                    for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
                     }
-                } catch (error) {
-                    this.taskContext.logger.error(
-                        `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                        String(error)
-                    );
                 }
+            } catch (error) {
+                this.taskContext.logger.error(
+                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    String(error)
+                );
             }
         }
 
@@ -1700,7 +1706,7 @@ export class DocsDefinitionResolver {
             return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
         } catch (e) {
             this.taskContext.logger.warn(
-                `Failed to parse _navigation.yml for library '${libraryName}': ${e instanceof Error ? e.message : String(e)}`
+                `Failed to parse _navigation.yml for library '${libraryName}': ${extractErrorMessage(e)}`
             );
             return null;
         }
@@ -1909,8 +1915,8 @@ export class DocsDefinitionResolver {
                     : item.title,
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
-            collapsible: item.collapsible ?? (item.collapsed === true ? true : undefined),
-            collapsedByDefault: item.collapsedByDefault ?? (item.collapsed === true ? true : undefined),
+            collapsible: item.collapsible,
+            collapsedByDefault: item.collapsedByDefault,
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,

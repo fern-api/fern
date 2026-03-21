@@ -10,6 +10,7 @@ describe("TestGroupClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/optional-request-body/path_param")
@@ -33,6 +34,7 @@ describe("TestGroupClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { id: "id", name: "name" };
         const rawResponseBody = { id: "id", name: "name" };
+
         server
             .mockEndpoint()
             .post("/optional-request-body/path_param")

@@ -5,7 +5,7 @@ import { loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 
 export interface ResolvedGithubConfig {
     githubRepo: string;
-    token: string;
+    token: string | undefined;
     mode: "push" | "pull-request";
     branch: string | undefined;
 }
@@ -36,28 +36,48 @@ export async function resolveGroupGithubConfig(
         return cliContext.failAndThrow(`Group "${groupName}" not found. Available groups: ${available}`);
     }
 
-    const generatorWithGithub = group.generators.find((g) => g.raw?.github != null && isGithubSelfhosted(g.raw.github));
-
-    if (generatorWithGithub?.raw?.github == null || !isGithubSelfhosted(generatorWithGithub.raw.github)) {
-        return cliContext.failAndThrow(
-            `No generator in group "${groupName}" has a self-hosted github configuration (uri + token).`
-        );
-    }
-
     const resolveEnv = <T>(value: T): T =>
         replaceEnvVariables(value, {
             onError: (message) => cliContext.failAndThrow(message)
         });
-    const githubConfig = resolveEnv(generatorWithGithub.raw.github);
 
-    cliContext.logger.info(
-        `Using github config from group "${groupName}" generator "${generatorWithGithub.name}" (mode: ${githubConfig.mode ?? "pull-request"})`
+    // 1. Prefer self-hosted config (has uri + token)
+    const generatorWithSelfhosted = group.generators.find(
+        (g) => g.raw?.github != null && isGithubSelfhosted(g.raw.github)
     );
 
-    return {
-        githubRepo: githubConfig.uri,
-        token: githubConfig.token,
-        mode: githubConfig.mode === "push" ? "push" : "pull-request",
-        branch: githubConfig.branch
-    };
+    if (generatorWithSelfhosted?.raw?.github != null && isGithubSelfhosted(generatorWithSelfhosted.raw.github)) {
+        const githubConfig = resolveEnv(generatorWithSelfhosted.raw.github);
+        cliContext.logger.info(
+            `Using github config from group "${groupName}" generator "${generatorWithSelfhosted.name}" (mode: ${githubConfig.mode ?? "pull-request"})`
+        );
+        return {
+            githubRepo: githubConfig.uri,
+            token: githubConfig.token,
+            mode: githubConfig.mode === "push" ? "push" : "pull-request",
+            branch: githubConfig.branch
+        };
+    }
+
+    // 2. Fallback to repository-based config (pull-request, push, commit-and-release)
+    const generatorWithRepo = group.generators.find((g) => g.raw?.github != null && "repository" in g.raw.github);
+
+    if (generatorWithRepo?.raw?.github != null && "repository" in generatorWithRepo.raw.github) {
+        const githubConfig = resolveEnv(generatorWithRepo.raw.github);
+        const token = process.env.GITHUB_TOKEN;
+
+        cliContext.logger.info(
+            `Using repository config from group "${groupName}" generator "${generatorWithRepo.name}"` +
+                (token != null ? ". Using GITHUB_TOKEN from environment." : ".")
+        );
+
+        return {
+            githubRepo: githubConfig.repository,
+            token,
+            mode: githubConfig.mode === "push" ? "push" : "pull-request",
+            branch: "branch" in githubConfig ? githubConfig.branch : undefined
+        };
+    }
+
+    return cliContext.failAndThrow(`No generator in group "${groupName}" has a github configuration.`);
 }

@@ -3,6 +3,7 @@
         "type_:Operand": "\">\"\n",
         "type_:Color": "\"red\"\n",
         "type_:ColorOrOperand": "\"red\"\n",
+        "type_:ForwardCompatibleEnum": "\"active\"\n",
         "type_:EnumWithCustom": "\"safe\"\n"
     },
     "endpoints": [

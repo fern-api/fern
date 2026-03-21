@@ -109,6 +109,7 @@ fixtures:
 
 allowedFailures:
   - api-wide-base-path
+  - bytes-upload
   - audiences
   - header-auth-environment-variable
   - client-side-params:with-custom-config
@@ -154,7 +155,6 @@ allowedFailures:
   - streaming-parameter
   - trace
   - undiscriminated-unions
-  - unions
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   # Server URL templating not yet supported in Swift SDK

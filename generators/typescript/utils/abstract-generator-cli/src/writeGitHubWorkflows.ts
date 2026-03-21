@@ -53,6 +53,10 @@ function constructWorkflowYaml({
 
 on: [push]
 
+concurrency:
+  group: \${{ github.workflow }}-\${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest

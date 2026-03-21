@@ -13,7 +13,7 @@ export declare namespace SdkClientClassGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
@@ -50,7 +50,7 @@ export class SdkClientClassGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
     private readonly allowCustomFetcher: boolean;
-    private readonly shouldGenerateWebsocketClients: boolean;
+    private readonly generateWebSocketClients: boolean;
     private readonly requireDefaultEnvironment: boolean;
     private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
     private readonly npmPackage: NpmPackage | undefined;
@@ -76,7 +76,7 @@ export class SdkClientClassGenerator {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
-        shouldGenerateWebsocketClients,
+        generateWebSocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
@@ -101,7 +101,7 @@ export class SdkClientClassGenerator {
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
-        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = generateWebSocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
@@ -139,7 +139,7 @@ export class SdkClientClassGenerator {
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
-            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
+            generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,

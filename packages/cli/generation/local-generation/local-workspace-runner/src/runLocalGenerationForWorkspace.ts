@@ -1,6 +1,7 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
+    getOriginGitCommit,
     getPackageNameFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -8,8 +9,8 @@ import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -27,6 +28,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -44,7 +46,8 @@ export async function runLocalGenerationForWorkspace({
     ai,
     replay,
     noReplay,
-    validateWorkspace
+    validateWorkspace,
+    requireEnvVars
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -60,6 +63,7 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    requireEnvVars?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -83,11 +87,23 @@ export async function runLocalGenerationForWorkspace({
         }
     }
 
+    const autoVersioningCache = new AutoVersioningCache();
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const isPreview = absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        {
+                            onError: (e) => {
+                                if (!isPreview && (requireEnvVars ?? true)) {
+                                    interactiveTaskContext.failAndThrow(e);
+                                }
+                            }
+                        },
+                        { substituteAsEmpty: isPreview }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
@@ -135,7 +151,8 @@ export async function runLocalGenerationForWorkspace({
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
+                        generatorConfig: generatorInvocation.config,
+                        originGitCommit: getOriginGitCommit()
                     }
                 });
 
@@ -273,7 +290,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
-                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`
                         );
                     }
                 }
@@ -293,9 +310,16 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
+                const {
+                    shouldCommit,
+                    autoVersioningCommitMessage,
+                    autoVersioningChangelogEntry,
+                    autoVersioningPrDescription,
+                    autoVersioningVersionBumpReason
+                } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
-                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    absolutePathToFernConfig:
+                        workspace.generatorsConfiguration?.absolutePathToConfiguration ?? projectConfig._absolutePath,
                     workspace: fernWorkspace,
                     generatorInvocation,
                     absolutePathToLocalOutput,
@@ -317,7 +341,9 @@ export async function runLocalGenerationForWorkspace({
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
-                    ai
+                    ai,
+                    autoVersioningCache,
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -342,6 +368,9 @@ export async function runLocalGenerationForWorkspace({
                                 mode: selfhostedGithubConfig.mode ?? "push",
                                 branch: selfhostedGithubConfig.branch,
                                 commitMessage: autoVersioningCommitMessage,
+                                changelogEntry: autoVersioningChangelogEntry,
+                                prDescription: autoVersioningPrDescription,
+                                versionBumpReason: autoVersioningVersionBumpReason,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name
                             },

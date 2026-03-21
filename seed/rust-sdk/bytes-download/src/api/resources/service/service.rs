@@ -20,7 +20,7 @@ impl ServiceClient {
 
     pub async fn download(
         &self,
-        id: &String,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<ByteStream, ApiError> {
         self.http_client

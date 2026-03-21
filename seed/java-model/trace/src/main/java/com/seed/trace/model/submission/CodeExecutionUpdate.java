@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -207,6 +208,22 @@ public final class CodeExecutionUpdate {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CodeExecutionUpdate && value.equals(((CodeExecutionUpdate) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -268,6 +285,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class BuildingExecutorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private BuildingExecutorResponse value;
 
     @JsonCreator(
@@ -310,6 +331,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RunningValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RunningResponse value;
 
     @JsonCreator(
@@ -352,6 +377,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class ErroredValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private ErroredResponse value;
 
     @JsonCreator(
@@ -394,6 +423,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class StoppedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private StoppedResponse value;
 
     @JsonCreator(
@@ -436,6 +469,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class GradedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GradedResponse value;
 
     @JsonCreator(
@@ -478,6 +515,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class GradedV2Value implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private GradedResponseV2 value;
 
     @JsonCreator(
@@ -520,6 +561,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class WorkspaceRanValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private WorkspaceRanResponse value;
 
     @JsonCreator(
@@ -562,6 +607,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RecordingValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RecordingResponseNotification value;
 
     @JsonCreator(
@@ -604,6 +653,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class RecordedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RecordedResponseNotification value;
 
     @JsonCreator(
@@ -646,6 +699,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class InvalidRequestValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private InvalidRequestResponse value;
 
     @JsonCreator(
@@ -688,6 +745,10 @@ public final class CodeExecutionUpdate {
   @JsonIgnoreProperties("type")
   private static final class FinishedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private FinishedResponse value;
 
     @JsonCreator(

@@ -13,7 +13,18 @@ type WellKnownProtobufType = FernIr.WellKnownProtobufType;
 const WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 export class ModelGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -37,7 +48,6 @@ export class ModelGeneratorContext extends GeneratorContext {
                 getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
     }
 
     override getAsyncCoreAsIsFiles(): string[] {
@@ -85,11 +95,8 @@ export class ModelGeneratorContext extends GeneratorContext {
         );
 
         if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
 
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
@@ -107,11 +114,6 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
-        }
 
         return files;
     }

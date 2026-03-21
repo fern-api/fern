@@ -1,0 +1,24 @@
+using NUnit.Framework;
+using SeedOauthClientCredentials.Test.Unit.MockServer;
+
+namespace SeedOauthClientCredentials.Test.Unit.MockServer.NestedNoAuth.Api;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class GetSomethingTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public void MockServerTest()
+    {
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/nested-no-auth/get-something")
+                    .UsingGet()
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+
+        Assert.DoesNotThrowAsync(async () => await Client.NestedNoAuth.Api.GetSomethingAsync());
+    }
+}

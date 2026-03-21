@@ -6,6 +6,7 @@ from .color import Color
 from .color_or_operand import ColorOrOperand
 from .enum_with_custom import EnumWithCustom
 from .enum_with_special_characters import EnumWithSpecialCharacters
+from .forward_compatible_enum import ForwardCompatibleEnum
 from .operand import Operand
 from .resources import Status, unknown
 from .special_enum import SpecialEnum
@@ -15,6 +16,7 @@ __all__ = [
     "ColorOrOperand",
     "EnumWithCustom",
     "EnumWithSpecialCharacters",
+    "ForwardCompatibleEnum",
     "Operand",
     "SpecialEnum",
     "Status",

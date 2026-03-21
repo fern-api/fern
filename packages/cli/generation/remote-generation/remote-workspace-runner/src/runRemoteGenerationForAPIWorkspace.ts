@@ -12,6 +12,7 @@ import {
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -32,7 +33,9 @@ export async function runRemoteGenerationForAPIWorkspace({
     mode,
     fernignorePath,
     dynamicIrOnly,
-    validateWorkspace
+    validateWorkspace,
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -48,6 +51,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -76,6 +81,15 @@ export async function runRemoteGenerationForAPIWorkspace({
                         ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
                     });
                 }
+
+                // Auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore
+                const effectiveFernignorePath =
+                    fernignorePath ??
+                    (await resolveAutoDiscoveredFernignorePath({
+                        generatorInvocation,
+                        context: interactiveTaskContext
+                    }));
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -113,8 +127,10 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
-                    fernignorePath,
-                    dynamicIrOnly
+                    fernignorePath: effectiveFernignorePath,
+                    dynamicIrOnly,
+                    retryRateLimited,
+                    requireEnvVars
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

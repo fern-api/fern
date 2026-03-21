@@ -9,6 +9,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/primitive/string")
@@ -27,6 +28,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1;
         const rawResponseBody = 1;
+
         server
             .mockEndpoint()
             .post("/primitive/integer")
@@ -45,6 +47,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1000000;
         const rawResponseBody = 1000000;
+
         server
             .mockEndpoint()
             .post("/primitive/long")
@@ -63,6 +66,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1.1;
         const rawResponseBody = 1.1;
+
         server
             .mockEndpoint()
             .post("/primitive/double")
@@ -81,6 +85,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = true;
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/primitive/boolean")
@@ -99,6 +104,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "2024-01-15T09:30:00Z";
         const rawResponseBody = "2024-01-15T09:30:00Z";
+
         server
             .mockEndpoint()
             .post("/primitive/datetime")
@@ -117,6 +123,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "2023-01-15";
         const rawResponseBody = "2023-01-15";
+
         server
             .mockEndpoint()
             .post("/primitive/date")
@@ -135,6 +142,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
         const rawResponseBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
+
         server
             .mockEndpoint()
             .post("/primitive/uuid")
@@ -153,6 +161,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "SGVsbG8gd29ybGQh";
         const rawResponseBody = "SGVsbG8gd29ybGQh";
+
         server
             .mockEndpoint()
             .post("/primitive/base64")

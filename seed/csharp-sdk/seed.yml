@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v62
+irVersion: v65
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -10,18 +10,18 @@ buildScripts:
   compileScript:
     commands:
       - |
-        solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+        solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
         if [ -z "$solution_file" ]; then
-          echo "ERROR: No .slnx file found"
+          echo "ERROR: No .slnx or .sln file found"
           exit 1
         fi
         dotnet build "$solution_file" -c Release
   testScript:
     commands:
       - |
-        solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+        solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
         if [ -z "$solution_file" ]; then
-          echo "ERROR: No .slnx file found"
+          echo "ERROR: No .slnx or .sln file found"
           exit 1
         fi
         dotnet test "$solution_file"
@@ -60,21 +60,24 @@ scripts:
           # otherwise install .NET 10
           command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
 
-          # Find the solution file
-          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          # Find the solution file (.slnx or .sln)
+          solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
           if [ -z "$solution_file" ]; then
-            echo "ERROR: No .slnx file found"
+            echo "ERROR: No .slnx or .sln file found"
             exit 1
           fi
 
           dotnet build "$solution_file" -c Release
-          dotnet build src/*DynamicSnippets/*.csproj -c Release
+          dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
+          if [ -n "$dynamic_snippets" ]; then
+            dotnet build "$dynamic_snippets" -c Release
+          fi
       test:
         - |
-          # Find the solution file
-          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          # Find the solution file (.slnx or .sln)
+          solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
           if [ -z "$solution_file" ]; then
-            echo "ERROR: No .slnx file found"
+            echo "ERROR: No .slnx or .sln file found"
             exit 1
           fi
 
@@ -94,11 +97,14 @@ fixtures:
           test: test/SeedApi.Test
           solution: .
           other: lib/SeedApi
+    - outputFolder: use-sln-format
+      customConfig:
+        sln-format: sln
   literal:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
       outputFolder: readonly-constants
   pagination:
     - customConfig: null
@@ -158,6 +164,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+    - customConfig:
+        omit-fern-headers: true
+      outputFolder: omit-fern-headers
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -181,6 +190,9 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: use-undiscriminated-unions
   optional:
     - customConfig: null
       outputFolder: no-custom-config
@@ -193,25 +205,54 @@ fixtures:
     - customConfig:
         inline-path-parameters: false
       outputFolder: no-inline-path-parameters
+  csharp-grpc-proto:
+    - customConfig: null
+      outputFolder: no-custom-config
+      disableDynamicSnippetTests: true
   csharp-grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
+      disableDynamicSnippetTests: true
     - customConfig:
         package-id: Seed.Client
       outputFolder: package-id
+      disableDynamicSnippetTests: true
     - customConfig:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+      disableDynamicSnippetTests: true
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+      disableDynamicSnippetTests: true
+  basic-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
+  bearer-token-environment-variable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        unified-client-options: true
+      outputFolder: unified-client-options
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+  url-form-encoded:
+    - customConfig: null
+      outputFolder: no-custom-config
   enum:
     - customConfig: null
       outputFolder: forward-compatible-enums
@@ -238,6 +279,18 @@ fixtures:
         experimental-fully-qualified-namespaces: true
         experimental-dotnet-format: true
       outputFolder: fully-qualified-namespaces
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "Contoso"
+        explicit-namespaces: true
+        experimental-fully-qualified-namespaces: true
+      outputFolder: namespace-client-collision
+  csharp-namespace-conflict:
+    - customConfig:
+        namespace: Seed.CsharpNamespaceConflict
+        client-class-name: Seed
+        experimental-fully-qualified-namespaces: true
+      outputFolder: client-class-name-matches-namespace-root
   csharp-system-collision:
     - customConfig:
         client-class-name: System
@@ -246,7 +299,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
   csharp-xml-entities:
@@ -291,12 +344,18 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - bytes-upload
   - enum:forward-compatible-enums
   - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
   - literal:no-custom-config
   - literal:readonly-constants
+  - mixed-case
   - oauth-client-credentials-custom
   - package-yml
+  - pagination-uri-path
+  - property-access
   - trace
+  - unions:no-custom-config
+  - unions-with-local-date

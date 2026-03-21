@@ -85,7 +85,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/resources/#{params[:resource_id]}",
+          path: "/api/resources/#{URI.encode_uri_component(params[:resource_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -229,7 +229,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -298,7 +298,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/users/#{params[:user_id]}",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           body: Seed::Types::Types::UpdateUserRequest.new(params).to_h,
           request_options: request_options
         )
@@ -333,7 +333,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/api/users/#{params[:user_id]}",
+          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -413,7 +413,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/connections/#{params[:connection_id]}",
+          path: "/api/connections/#{URI.encode_uri_component(params[:connection_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -510,7 +510,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/clients/#{params[:client_id]}",
+          path: "/api/clients/#{URI.encode_uri_component(params[:client_id].to_s)}",
           query: query_params,
           request_options: request_options
         )

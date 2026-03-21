@@ -5,6 +5,7 @@ import {
     getOrganizationNameValidationError,
     verifyAndDecodeJwt
 } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
@@ -244,13 +245,12 @@ export class Wizard {
 
                 case "not-found": {
                     const taskContext = new TaskContextAdapter({ context: this.context });
-                    const created = await withSpinner("Creating organization...", () =>
-                        createOrganizationIfDoesNotExist({
-                            organization,
-                            token,
-                            context: taskContext
-                        })
-                    );
+                    const created = await withSpinner({
+                        message: `Creating organization "${organization}"`,
+                        operation: () =>
+                            createOrganizationIfDoesNotExist({ organization, token, context: taskContext }),
+                        indent: 2
+                    });
                     if (created) {
                         this.context.stderr.info(`  ${Icons.success} Created organization "${organization}"\n`);
                     }
@@ -701,7 +701,7 @@ export class Wizard {
             try {
                 return await this.fetchApiFromUrl(url, specFormat);
             } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
+                const message = extractErrorMessage(error);
                 this.context.stderr.info(`  ${Icons.error} Could not fetch ${url}: ${message}\n`);
                 // Loop back to re-prompt.
             }

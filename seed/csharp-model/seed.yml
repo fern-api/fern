@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v65
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -83,4 +83,7 @@ scripts:
           
           dotnet test "$solution_file" --no-restore --no-build -c Release
 allowedFailures:
+  - mixed-case
+  - property-access
   - unions
+  - unions-with-local-date

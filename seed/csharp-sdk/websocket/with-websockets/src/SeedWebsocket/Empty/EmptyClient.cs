@@ -11,12 +11,12 @@ public partial class EmptyClient : IEmptyClient
         _client = client;
     }
 
-    public EmptyRealtimeApi CreateEmptyRealtimeApi()
+    public IEmptyRealtimeApi CreateEmptyRealtimeApi()
     {
         return new EmptyRealtimeApi(new EmptyRealtimeApi.Options());
     }
 
-    public EmptyRealtimeApi CreateEmptyRealtimeApi(EmptyRealtimeApi.Options options)
+    public IEmptyRealtimeApi CreateEmptyRealtimeApi(EmptyRealtimeApi.Options options)
     {
         return new EmptyRealtimeApi(options);
     }

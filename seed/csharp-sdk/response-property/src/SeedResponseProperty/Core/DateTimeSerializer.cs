@@ -19,4 +19,22 @@ internal class DateTimeSerializer : JsonConverter<DateTime>
     {
         writer.WriteStringValue(value.ToString(Constants.DateTimeFormat));
     }
+
+    public override DateTime ReadAsPropertyName(
+        ref Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return DateTime.Parse(reader.GetString()!, null, DateTimeStyles.RoundtripKind);
+    }
+
+    public override void WriteAsPropertyName(
+        Utf8JsonWriter writer,
+        DateTime value,
+        JsonSerializerOptions options
+    )
+    {
+        writer.WritePropertyName(value.ToString(Constants.DateTimeFormat));
+    }
 }
