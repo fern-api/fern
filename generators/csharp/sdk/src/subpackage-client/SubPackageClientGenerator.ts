@@ -9,7 +9,7 @@ type ServiceId = FernIr.ServiceId;
 
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { WebSocketClientGenerator, websocketChannelNeedsDefaults } from "../websocket/WebsocketClientGenerator.js";
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -59,6 +59,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
+                        // Skip channels that need defaults propagation — those factory methods
+                        // are only generated on the root client where _wsDefaults is available.
+                        if (websocketChannelNeedsDefaults(websocketChannel, this.context)) {
+                            continue;
+                        }
                         WebSocketClientGenerator.createWebSocketApiFactories(
                             cls,
                             subpackage,
