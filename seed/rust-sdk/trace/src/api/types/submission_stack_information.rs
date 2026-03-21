@@ -39,9 +39,7 @@ impl StackInformationBuilder {
     /// - [`num_stack_frames`](StackInformationBuilder::num_stack_frames)
     pub fn build(self) -> Result<StackInformation, BuildError> {
         Ok(StackInformation {
-            num_stack_frames: self
-                .num_stack_frames
-                .ok_or_else(|| BuildError::missing_field("num_stack_frames"))?,
+            num_stack_frames: self.num_stack_frames.ok_or_else(|| BuildError::missing_field("num_stack_frames"))?,
             top_stack_frame: self.top_stack_frame,
         })
     }

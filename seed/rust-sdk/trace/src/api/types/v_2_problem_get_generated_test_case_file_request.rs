@@ -38,9 +38,7 @@ impl GetGeneratedTestCaseFileRequestBuilder {
     pub fn build(self) -> Result<GetGeneratedTestCaseFileRequest, BuildError> {
         Ok(GetGeneratedTestCaseFileRequest {
             template: self.template,
-            test_case: self
-                .test_case
-                .ok_or_else(|| BuildError::missing_field("test_case"))?,
+            test_case: self.test_case.ok_or_else(|| BuildError::missing_field("test_case"))?,
         })
     }
 }

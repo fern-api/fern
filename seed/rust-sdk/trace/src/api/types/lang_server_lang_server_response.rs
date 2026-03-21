@@ -28,9 +28,7 @@ impl LangServerResponseBuilder {
     /// - [`response`](LangServerResponseBuilder::response)
     pub fn build(self) -> Result<LangServerResponse, BuildError> {
         Ok(LangServerResponse {
-            response: self
-                .response
-                .ok_or_else(|| BuildError::missing_field("response"))?,
+            response: self.response.ok_or_else(|| BuildError::missing_field("response"))?,
         })
     }
 }

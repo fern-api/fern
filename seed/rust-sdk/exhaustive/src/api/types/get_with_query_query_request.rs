@@ -39,12 +39,9 @@ impl GetWithQueryQueryRequestBuilder {
     /// - [`number`](GetWithQueryQueryRequestBuilder::number)
     pub fn build(self) -> Result<GetWithQueryQueryRequest, BuildError> {
         Ok(GetWithQueryQueryRequest {
-            query: self
-                .query
-                .ok_or_else(|| BuildError::missing_field("query"))?,
-            number: self
-                .number
-                .ok_or_else(|| BuildError::missing_field("number"))?,
+            query: self.query.ok_or_else(|| BuildError::missing_field("query"))?,
+            number: self.number.ok_or_else(|| BuildError::missing_field("number"))?,
         })
     }
 }
+

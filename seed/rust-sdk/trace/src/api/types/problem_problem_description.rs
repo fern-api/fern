@@ -29,9 +29,7 @@ impl ProblemDescriptionBuilder {
     /// - [`boards`](ProblemDescriptionBuilder::boards)
     pub fn build(self) -> Result<ProblemDescription, BuildError> {
         Ok(ProblemDescription {
-            boards: self
-                .boards
-                .ok_or_else(|| BuildError::missing_field("boards"))?,
+            boards: self.boards.ok_or_else(|| BuildError::missing_field("boards"))?,
         })
     }
 }

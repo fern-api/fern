@@ -29,9 +29,8 @@ impl StreamCompletionRequestBuilder {
     /// - [`query`](StreamCompletionRequestBuilder::query)
     pub fn build(self) -> Result<StreamCompletionRequest, BuildError> {
         Ok(StreamCompletionRequest {
-            query: self
-                .query
-                .ok_or_else(|| BuildError::missing_field("query"))?,
+            query: self.query.ok_or_else(|| BuildError::missing_field("query"))?,
         })
     }
 }
+

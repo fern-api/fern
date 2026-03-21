@@ -62,15 +62,9 @@ impl DeserializationTestResponseBuilder {
     pub fn build(self) -> Result<DeserializationTestResponse, BuildError> {
         Ok(DeserializationTestResponse {
             echo: self.echo.ok_or_else(|| BuildError::missing_field("echo"))?,
-            processed_at: self
-                .processed_at
-                .ok_or_else(|| BuildError::missing_field("processed_at"))?,
-            null_count: self
-                .null_count
-                .ok_or_else(|| BuildError::missing_field("null_count"))?,
-            present_fields_count: self
-                .present_fields_count
-                .ok_or_else(|| BuildError::missing_field("present_fields_count"))?,
+            processed_at: self.processed_at.ok_or_else(|| BuildError::missing_field("processed_at"))?,
+            null_count: self.null_count.ok_or_else(|| BuildError::missing_field("null_count"))?,
+            present_fields_count: self.present_fields_count.ok_or_else(|| BuildError::missing_field("present_fields_count"))?,
         })
     }
 }

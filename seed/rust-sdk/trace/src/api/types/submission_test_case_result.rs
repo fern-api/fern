@@ -47,15 +47,9 @@ impl TestCaseResultBuilder {
     /// - [`passed`](TestCaseResultBuilder::passed)
     pub fn build(self) -> Result<TestCaseResult, BuildError> {
         Ok(TestCaseResult {
-            expected_result: self
-                .expected_result
-                .ok_or_else(|| BuildError::missing_field("expected_result"))?,
-            actual_result: self
-                .actual_result
-                .ok_or_else(|| BuildError::missing_field("actual_result"))?,
-            passed: self
-                .passed
-                .ok_or_else(|| BuildError::missing_field("passed"))?,
+            expected_result: self.expected_result.ok_or_else(|| BuildError::missing_field("expected_result"))?,
+            actual_result: self.actual_result.ok_or_else(|| BuildError::missing_field("actual_result"))?,
+            passed: self.passed.ok_or_else(|| BuildError::missing_field("passed"))?,
         })
     }
 }

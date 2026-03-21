@@ -47,15 +47,9 @@ impl SubmissionFileInfoBuilder {
     /// - [`contents`](SubmissionFileInfoBuilder::contents)
     pub fn build(self) -> Result<SubmissionFileInfo, BuildError> {
         Ok(SubmissionFileInfo {
-            directory: self
-                .directory
-                .ok_or_else(|| BuildError::missing_field("directory"))?,
-            filename: self
-                .filename
-                .ok_or_else(|| BuildError::missing_field("filename"))?,
-            contents: self
-                .contents
-                .ok_or_else(|| BuildError::missing_field("contents"))?,
+            directory: self.directory.ok_or_else(|| BuildError::missing_field("directory"))?,
+            filename: self.filename.ok_or_else(|| BuildError::missing_field("filename"))?,
+            contents: self.contents.ok_or_else(|| BuildError::missing_field("contents"))?,
         })
     }
 }
