@@ -1,5 +1,5 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient};
+use crate::{ClientConfig, ApiError, HttpClient};
+use crate::api::{*};
 
 pub mod problem;
 pub use problem::ProblemClient3;
@@ -11,8 +11,10 @@ pub struct V3Client {
 impl V3Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-            problem: ProblemClient3::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?,
+    problem: ProblemClient3::new(config.clone())?
+})
     }
+
 }
+

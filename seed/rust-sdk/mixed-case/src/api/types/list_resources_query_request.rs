@@ -40,12 +40,9 @@ impl ListResourcesQueryRequestBuilder {
     /// - [`before_date`](ListResourcesQueryRequestBuilder::before_date)
     pub fn build(self) -> Result<ListResourcesQueryRequest, BuildError> {
         Ok(ListResourcesQueryRequest {
-            page_limit: self
-                .page_limit
-                .ok_or_else(|| BuildError::missing_field("page_limit"))?,
-            before_date: self
-                .before_date
-                .ok_or_else(|| BuildError::missing_field("before_date"))?,
+            page_limit: self.page_limit.ok_or_else(|| BuildError::missing_field("page_limit"))?,
+            before_date: self.before_date.ok_or_else(|| BuildError::missing_field("before_date"))?,
         })
     }
 }
+

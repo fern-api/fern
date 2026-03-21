@@ -38,12 +38,8 @@ impl GetBasicSolutionFileRequestBuilder {
     /// - [`signature`](GetBasicSolutionFileRequestBuilder::signature)
     pub fn build(self) -> Result<GetBasicSolutionFileRequest, BuildError> {
         Ok(GetBasicSolutionFileRequest {
-            method_name: self
-                .method_name
-                .ok_or_else(|| BuildError::missing_field("method_name"))?,
-            signature: self
-                .signature
-                .ok_or_else(|| BuildError::missing_field("signature"))?,
+            method_name: self.method_name.ok_or_else(|| BuildError::missing_field("method_name"))?,
+            signature: self.signature.ok_or_else(|| BuildError::missing_field("signature"))?,
         })
     }
 }

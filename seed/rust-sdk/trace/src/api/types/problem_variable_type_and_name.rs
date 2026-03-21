@@ -38,9 +38,7 @@ impl VariableTypeAndNameBuilder {
     /// - [`name`](VariableTypeAndNameBuilder::name)
     pub fn build(self) -> Result<VariableTypeAndName, BuildError> {
         Ok(VariableTypeAndName {
-            variable_type: self
-                .variable_type
-                .ok_or_else(|| BuildError::missing_field("variable_type"))?,
+            variable_type: self.variable_type.ok_or_else(|| BuildError::missing_field("variable_type"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
         })
     }

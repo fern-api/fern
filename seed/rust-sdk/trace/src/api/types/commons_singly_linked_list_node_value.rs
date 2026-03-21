@@ -47,9 +47,7 @@ impl SinglyLinkedListNodeValueBuilder {
     /// - [`val`](SinglyLinkedListNodeValueBuilder::val)
     pub fn build(self) -> Result<SinglyLinkedListNodeValue, BuildError> {
         Ok(SinglyLinkedListNodeValue {
-            node_id: self
-                .node_id
-                .ok_or_else(|| BuildError::missing_field("node_id"))?,
+            node_id: self.node_id.ok_or_else(|| BuildError::missing_field("node_id"))?,
             val: self.val.ok_or_else(|| BuildError::missing_field("val"))?,
             next: self.next,
         })

@@ -29,9 +29,7 @@ impl ScopeBuilder {
     /// - [`variables`](ScopeBuilder::variables)
     pub fn build(self) -> Result<Scope, BuildError> {
         Ok(Scope {
-            variables: self
-                .variables
-                .ok_or_else(|| BuildError::missing_field("variables"))?,
+            variables: self.variables.ok_or_else(|| BuildError::missing_field("variables"))?,
         })
     }
 }

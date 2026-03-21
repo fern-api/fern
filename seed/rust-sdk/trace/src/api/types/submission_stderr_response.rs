@@ -39,12 +39,8 @@ impl StderrResponseBuilder {
     /// - [`stderr`](StderrResponseBuilder::stderr)
     pub fn build(self) -> Result<StderrResponse, BuildError> {
         Ok(StderrResponse {
-            submission_id: self
-                .submission_id
-                .ok_or_else(|| BuildError::missing_field("submission_id"))?,
-            stderr: self
-                .stderr
-                .ok_or_else(|| BuildError::missing_field("stderr"))?,
+            submission_id: self.submission_id.ok_or_else(|| BuildError::missing_field("submission_id"))?,
+            stderr: self.stderr.ok_or_else(|| BuildError::missing_field("stderr"))?,
         })
     }
 }

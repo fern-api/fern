@@ -30,9 +30,7 @@ impl UpdateProblemResponseBuilder {
     /// - [`problem_version`](UpdateProblemResponseBuilder::problem_version)
     pub fn build(self) -> Result<UpdateProblemResponse, BuildError> {
         Ok(UpdateProblemResponse {
-            problem_version: self
-                .problem_version
-                .ok_or_else(|| BuildError::missing_field("problem_version"))?,
+            problem_version: self.problem_version.ok_or_else(|| BuildError::missing_field("problem_version"))?,
         })
     }
 }

@@ -4,14 +4,30 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum UnionWithDuplicativeDiscriminants {
         #[serde(rename = "firstItemType")]
+        #[non_exhaustive]
         FirstItemType {
-            #[serde(flatten)]
-            data: FirstItemType,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            r#type: Option<String>,
+            #[serde(default)]
+            name: String,
         },
 
         #[serde(rename = "secondItemType")]
+        #[non_exhaustive]
         SecondItemType {
-            #[serde(flatten)]
-            data: SecondItemType,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            r#type: Option<String>,
+            #[serde(default)]
+            title: String,
         },
+}
+
+impl UnionWithDuplicativeDiscriminants {
+    pub fn first_item_type(name: String) -> Self {
+        Self::FirstItemType { r#type: None, name }
+    }
+
+    pub fn second_item_type(title: String) -> Self {
+        Self::SecondItemType { r#type: None, title }
+    }
 }

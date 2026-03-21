@@ -4,7 +4,7 @@
 //!
 //! - **Completions**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod completions;
 pub struct ServerSentEventsClient {
@@ -16,9 +16,10 @@ impl ServerSentEventsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            completions: CompletionsClient::new(config.clone())?,
+            completions: CompletionsClient::new(config.clone())?
         })
     }
+
 }
 
 pub use completions::CompletionsClient;

@@ -30,9 +30,7 @@ impl GetFunctionSignatureResponseBuilder {
     /// - [`function_by_language`](GetFunctionSignatureResponseBuilder::function_by_language)
     pub fn build(self) -> Result<GetFunctionSignatureResponse, BuildError> {
         Ok(GetFunctionSignatureResponse {
-            function_by_language: self
-                .function_by_language
-                .ok_or_else(|| BuildError::missing_field("function_by_language"))?,
+            function_by_language: self.function_by_language.ok_or_else(|| BuildError::missing_field("function_by_language"))?,
         })
     }
 }

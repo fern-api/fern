@@ -39,9 +39,7 @@ impl FileBuilder {
     pub fn build(self) -> Result<File, BuildError> {
         Ok(File {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            contents: self
-                .contents
-                .ok_or_else(|| BuildError::missing_field("contents"))?,
+            contents: self.contents.ok_or_else(|| BuildError::missing_field("contents"))?,
         })
     }
 }
