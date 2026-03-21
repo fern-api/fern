@@ -3,7 +3,7 @@
 - version: 4.41.1
   changelogEntry:
     - summary: |
-        Strip MDX comments (`{/* ... */}`) from raw markdown served to LLMs and agents.
+        Strip MDX comments (`{/* ... */}`) from markdown.
       type: fix
   createdAt: "2026-03-21"
   irVersion: 65
