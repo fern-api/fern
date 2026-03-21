@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 4.40.1
+- version: 4.41.0
   changelogEntry:
     - summary: |
         Support `hidden` and `noindex` frontmatter in folder-based navigation.
