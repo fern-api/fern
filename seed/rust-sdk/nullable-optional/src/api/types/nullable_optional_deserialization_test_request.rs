@@ -130,9 +130,7 @@ impl DeserializationTestRequestBuilder {
     /// - [`required_string`](DeserializationTestRequestBuilder::required_string)
     pub fn build(self) -> Result<DeserializationTestRequest, BuildError> {
         Ok(DeserializationTestRequest {
-            required_string: self
-                .required_string
-                .ok_or_else(|| BuildError::missing_field("required_string"))?,
+            required_string: self.required_string.ok_or_else(|| BuildError::missing_field("required_string"))?,
             nullable_string: self.nullable_string,
             optional_string: self.optional_string,
             optional_nullable_string: self.optional_nullable_string,

@@ -37,9 +37,7 @@ impl StreamedCompletionBuilder {
     /// - [`delta`](StreamedCompletionBuilder::delta)
     pub fn build(self) -> Result<StreamedCompletion, BuildError> {
         Ok(StreamedCompletion {
-            delta: self
-                .delta
-                .ok_or_else(|| BuildError::missing_field("delta"))?,
+            delta: self.delta.ok_or_else(|| BuildError::missing_field("delta"))?,
             tokens: self.tokens,
         })
     }
