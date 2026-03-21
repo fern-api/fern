@@ -63,7 +63,7 @@ export class RealtimeClient {
                     (await core.Supplier.get(this._options.environment)),
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
-            protocols: [...(protocols ?? []), ..._fallbackProtocols],
+            protocols: [...(Array.isArray(protocols) ? protocols : protocols != null ? [protocols] : []), ..._fallbackProtocols],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: {

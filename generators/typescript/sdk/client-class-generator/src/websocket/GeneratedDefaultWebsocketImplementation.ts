@@ -1111,7 +1111,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
     /**
      * Returns the protocols expression when auth fallback is present.
-     * For websocketSubprotocol fallback: [...(protocols ?? []), ..._fallbackProtocols]
+     * For websocketSubprotocol fallback:
+     *   [...(Array.isArray(protocols) ? protocols : protocols != null ? [protocols] : []), ..._fallbackProtocols]
      * For query fallback: protocols ?? [] (unchanged)
      */
     private getProtocolsWithFallback(authFallback: AuthFallbackInfo): ts.Expression {
@@ -1122,9 +1123,41 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         );
 
         if (authFallback.fallback.type === "websocketSubprotocol") {
-            // [...(protocols ?? []), ..._fallbackProtocols]
+            // Normalize protocols to an array before spreading, since protocols can be
+            // string | string[] | undefined. Spreading a bare string would split it into
+            // individual characters.
+            // Generated: Array.isArray(protocols) ? protocols : protocols != null ? [protocols] : []
+            const protocolsId = ts.factory.createIdentifier(
+                GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME
+            );
+            const normalizedProtocols = ts.factory.createConditionalExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("Array"),
+                        "isArray"
+                    ),
+                    undefined,
+                    [protocolsId]
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                protocolsId,
+                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        protocolsId,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    ts.factory.createArrayLiteralExpression([protocolsId]),
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createArrayLiteralExpression([])
+                )
+            );
+
+            // [...(normalizedProtocols), ..._fallbackProtocols]
             return ts.factory.createArrayLiteralExpression([
-                ts.factory.createSpreadElement(ts.factory.createParenthesizedExpression(baseProtocols)),
+                ts.factory.createSpreadElement(ts.factory.createParenthesizedExpression(normalizedProtocols)),
                 ts.factory.createSpreadElement(
                     ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.FALLBACK_PROTOCOLS_NAME)
                 )
