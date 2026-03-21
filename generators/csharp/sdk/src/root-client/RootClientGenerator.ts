@@ -235,7 +235,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private generateWebSocketAuthFields(cls: ast.Class, constructorParams: ConstructorParameter[]) {
         // Collect all unique field names needed across all WebSocket channels
-        const neededFields = new Set<string>();
+        // Map from field name to the actual ast.Type from the matching constructor parameter
+        const neededFields = new Map<string, ast.Type>();
         let needsOAuthToken = false;
         let needsClientOptions = false;
 
@@ -246,7 +247,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
                     if (authContext != null) {
                         for (const field of authContext.matchedParamFields) {
-                            neededFields.add(field.fieldName);
+                            if (!neededFields.has(field.fieldName)) {
+                                // Look up the actual type from the matching constructor parameter
+                                const paramName = field.fieldName.substring(1); // strip leading "_"
+                                const matchingParam = constructorParams.find((cp) => cp.name === paramName);
+                                const fieldType = matchingParam?.type ?? this.Primitive.string;
+                                neededFields.set(field.fieldName, fieldType);
+                            }
                         }
                         if (authContext.oauthTokenPropertyName != null) {
                             needsOAuthToken = true;
@@ -259,12 +266,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         }
 
-        // Add private fields for matched constructor params
-        for (const fieldName of neededFields) {
+        // Add private fields for matched constructor params using their actual types
+        for (const [fieldName, fieldType] of neededFields) {
             cls.addField({
                 access: ast.Access.Private,
                 origin: cls.explicit(fieldName),
-                type: this.Primitive.string,
+                type: fieldType,
                 readonly: true
             });
         }
