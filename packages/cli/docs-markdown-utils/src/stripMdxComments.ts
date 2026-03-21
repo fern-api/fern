@@ -26,8 +26,18 @@ export function stripMdxComments(content: string): string {
         if (!inCodeFence) {
             // Track inline code
             if (content[i] === "`" && (i === 0 || content[i - 1] !== "\\")) {
-                // Don't toggle for triple backticks (code fences handled above)
-                if (content[i + 1] !== "`") {
+                // Check if it's a double backtick (used to display backticks: `` `backtick` ``)
+                const isDouble = content[i + 1] === "`" && content[i + 2] !== "`";
+                if (isDouble) {
+                    // Handle double backticks as a pair - skip to end of double backtick pair
+                    const nextDouble = content.indexOf("``", i + 2);
+                    if (nextDouble !== -1 && !inInlineCode) {
+                        result += content.slice(i, nextDouble + 2);
+                        i = nextDouble + 2;
+                        continue;
+                    }
+                } else if (content[i + 1] !== "`") {
+                    // Single backtick - toggle inline code
                     inInlineCode = !inInlineCode;
                 }
             }

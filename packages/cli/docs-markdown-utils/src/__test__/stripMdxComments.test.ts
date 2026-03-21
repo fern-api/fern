@@ -80,6 +80,17 @@ describe("stripMdxComments", () => {
         expect(stripMdxComments(input)).toBe(expected);
     });
 
+    it("handles double-backtick inline code followed by a comment", () => {
+        const input = "Use `` `backtick` `` syntax {/* comment */} for code";
+        const expected = "Use `` `backtick` `` syntax  for code";
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
+    it("preserves comments inside double-backtick inline code", () => {
+        const input = "Use `` {/* not a comment */} `` in your code";
+        expect(stripMdxComments(input)).toBe(input);
+    });
+
     it("handles real-world MDX content with mixed comments", () => {
         const input = [
             "---",
