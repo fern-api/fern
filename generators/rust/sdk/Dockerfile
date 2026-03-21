@@ -1,6 +1,8 @@
 FROM node:22.12-alpine3.20
 
-# Install system dependencies and Rust toolchain
+# Install system dependencies and Rust toolchain.
+# Rust installation follows the pattern from the official Rust Docker images:
+# https://github.com/rust-lang/docker-rust/blob/master/stable/alpine3.21/Dockerfile
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
