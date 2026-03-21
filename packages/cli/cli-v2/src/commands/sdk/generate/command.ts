@@ -71,6 +71,9 @@ export declare namespace GenerateCommand {
 
         /** Path to .fernignore file */
         fernignore?: string;
+
+        /** Ignore the .fernignore file and generate all files */
+        "ignore-fern-ignore": boolean;
     }
 }
 
@@ -327,7 +330,8 @@ export class GenerateCommand {
                     outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
                     version: args["output-version"],
-                    fernignorePath: args.fernignore
+                    fernignorePath: args.fernignore,
+                    ignoreFernignore: args["ignore-fern-ignore"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -668,6 +672,12 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
+                })
+                .option("ignore-fern-ignore", {
+                    type: "boolean",
+                    default: false,
+                    description:
+                        "Ignore the .fernignore file and generate all files, uploading an empty .fernignore (remote generation only)"
                 })
     );
 }

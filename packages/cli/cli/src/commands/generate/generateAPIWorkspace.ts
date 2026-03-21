@@ -35,6 +35,7 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
+    ignoreFernignore,
     dynamicIrOnly,
     noReplay,
     retryRateLimited,
@@ -57,6 +58,7 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    ignoreFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     retryRateLimited: boolean;
@@ -167,6 +169,7 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
+                    ignoreFernignore,
                     dynamicIrOnly,
                     validateWorkspace: true,
                     retryRateLimited,

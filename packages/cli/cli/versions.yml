@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Add `--ignore-fern-ignore` flag to `fern generate`. When set, an empty
+        `.fernignore` file is uploaded so that no generated files are ignored,
+        effectively overwriting all files in the output. This is useful when you
+        want to ensure a clean generation without any `.fernignore` exclusions.
+
+        ```bash
+        fern generate --group my-sdk --ignore-fern-ignore
+        ```
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
 - version: 4.39.0
   changelogEntry:
     - summary: |

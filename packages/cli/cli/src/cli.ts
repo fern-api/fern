@@ -749,6 +749,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: true,
                     description:
                         "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
+                .option("ignore-fern-ignore", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Ignore the .fernignore file and generate all files, uploading an empty .fernignore (remote generation only)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -769,6 +775,16 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["ignore-fern-ignore"] && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --ignore-fern-ignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["ignore-fern-ignore"] && argv.fernignore != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --ignore-fern-ignore and --fernignore flags cannot be used together."
                 );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
@@ -814,6 +830,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
+                    ignoreFernignore: argv["ignore-fern-ignore"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
@@ -872,6 +889,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
+                ignoreFernignore: argv["ignore-fern-ignore"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
