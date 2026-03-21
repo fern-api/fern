@@ -409,6 +409,32 @@ types:
           If false, throw hard errors when schema collisions are detected.
           Defaults to false.
         default: false
+      infer-forward-compatible:
+        type: optional<boolean>
+        docs: |
+          If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false.
+        default: false
+      infer-default-environment:
+        type: optional<boolean>
+        docs: Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL.
+        default: true
+      coerce-consts-to:
+        type: optional<CoerceConstsTo>
+        docs: |
+          Controls how `const` values in OpenAPI specs are represented.
+          - `literals`: Convert const values directly to literals with defaults.
+          - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+          - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+          Defaults to `enums-coerceable-to-literals`.
+        default: enums-coerceable-to-literals
+
+  CoerceConstsTo:
+    docs: Controls how const values in OpenAPI specs are represented.
+    enum:
+      - literals
+      - enums
+      - name: enumsCoerceableToLiterals
+        value: enums-coerceable-to-literals
 
   OpenAPISettingsSchema:
     extends:
