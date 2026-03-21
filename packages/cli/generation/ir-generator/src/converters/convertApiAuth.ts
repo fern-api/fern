@@ -5,9 +5,9 @@ import {
     AuthSchemesRequirement,
     FernIr,
     InferredAuthSchemeTokenEndpoint,
-    OAuthConfiguration,
-    WebSocketAuthFallback
+    OAuthConfiguration
 } from "@fern-api/ir-sdk";
+import { convertWebSocketAuthFallback } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
@@ -177,32 +177,6 @@ function convertSchemeReference({
             });
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
-    }
-}
-
-function convertWebSocketAuthFallback(
-    rawFallback: RawSchemas.WebSocketAuthFallbackSchema | undefined
-): WebSocketAuthFallback | undefined {
-    if (rawFallback == null) {
-        return undefined;
-    }
-    switch (rawFallback.in) {
-        case "websocket-subprotocol":
-            if (rawFallback.format == null) {
-                return undefined;
-            }
-            return WebSocketAuthFallback.websocketSubprotocol({
-                format: rawFallback.format
-            });
-        case "query":
-            if (rawFallback.name == null) {
-                return undefined;
-            }
-            return WebSocketAuthFallback.query({
-                name: rawFallback.name
-            });
-        default:
-            return undefined;
     }
 }
 

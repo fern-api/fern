@@ -39,7 +39,7 @@ function convertSecuritySchemeHelper(
     taskContext: TaskContext
 ): SecurityScheme | undefined {
     try {
-        const websocketAuthFallback = parseWebSocketAuthFallback(securityScheme);
+        const websocketAuthFallback = parseWebSocketAuthFallback(securityScheme, taskContext);
         if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
             const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
             const headerNames = getExtension<HeaderSecuritySchemeNames>(
@@ -108,7 +108,10 @@ interface WebSocketAuthFallbackExtension {
     format?: string;
 }
 
-function parseWebSocketAuthFallback(securityScheme: OpenAPIV3.SecuritySchemeObject): WebSocketAuthFallback | undefined {
+function parseWebSocketAuthFallback(
+    securityScheme: OpenAPIV3.SecuritySchemeObject,
+    taskContext: TaskContext
+): WebSocketAuthFallback | undefined {
     const extension = getExtension<WebSocketAuthFallbackExtension>(
         securityScheme,
         FernOpenAPIExtension.WEBSOCKET_AUTH_FALLBACK
@@ -119,6 +122,9 @@ function parseWebSocketAuthFallback(securityScheme: OpenAPIV3.SecuritySchemeObje
     switch (extension.in) {
         case "websocket-subprotocol":
             if (extension.format == null) {
+                taskContext.logger.warn(
+                    "x-fern-websocket-auth-fallback with in: websocket-subprotocol is missing required 'format' field. Ignoring fallback."
+                );
                 return undefined;
             }
             return WebSocketAuthFallback.websocketSubprotocol({
@@ -126,12 +132,18 @@ function parseWebSocketAuthFallback(securityScheme: OpenAPIV3.SecuritySchemeObje
             });
         case "query":
             if (extension.name == null) {
+                taskContext.logger.warn(
+                    "x-fern-websocket-auth-fallback with in: query is missing required 'name' field. Ignoring fallback."
+                );
                 return undefined;
             }
             return WebSocketAuthFallback.query({
                 name: extension.name
             });
         default:
+            taskContext.logger.warn(
+                `x-fern-websocket-auth-fallback has unrecognized 'in' value: '${extension.in}'. Expected 'websocket-subprotocol' or 'query'. Ignoring fallback.`
+            );
             return undefined;
     }
 }

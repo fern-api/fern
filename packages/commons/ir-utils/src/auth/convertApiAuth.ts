@@ -147,7 +147,7 @@ function convertSchemeReference({
     }
 }
 
-function convertWebSocketAuthFallback(
+export function convertWebSocketAuthFallback(
     rawFallback: RawSchemas.WebSocketAuthFallbackSchema | undefined
 ): WebSocketAuthFallback | undefined {
     if (rawFallback == null) {
