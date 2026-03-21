@@ -78,7 +78,7 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@latest && npm install -g glob@11.1.0
+RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
 
 # Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \

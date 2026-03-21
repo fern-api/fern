@@ -13,3 +13,80 @@ pub struct RefreshTokenRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub scope: Option<String>,
 }
+
+impl RefreshTokenRequest {
+    pub fn builder() -> RefreshTokenRequestBuilder {
+        RefreshTokenRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct RefreshTokenRequestBuilder {
+    client_id: Option<String>,
+    client_secret: Option<String>,
+    refresh_token: Option<String>,
+    audience: Option<String>,
+    grant_type: Option<String>,
+    scope: Option<String>,
+}
+
+impl RefreshTokenRequestBuilder {
+    pub fn client_id(mut self, value: impl Into<String>) -> Self {
+        self.client_id = Some(value.into());
+        self
+    }
+
+    pub fn client_secret(mut self, value: impl Into<String>) -> Self {
+        self.client_secret = Some(value.into());
+        self
+    }
+
+    pub fn refresh_token(mut self, value: impl Into<String>) -> Self {
+        self.refresh_token = Some(value.into());
+        self
+    }
+
+    pub fn audience(mut self, value: impl Into<String>) -> Self {
+        self.audience = Some(value.into());
+        self
+    }
+
+    pub fn grant_type(mut self, value: impl Into<String>) -> Self {
+        self.grant_type = Some(value.into());
+        self
+    }
+
+    pub fn scope(mut self, value: impl Into<String>) -> Self {
+        self.scope = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`RefreshTokenRequest`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`client_id`](RefreshTokenRequestBuilder::client_id)
+    /// - [`client_secret`](RefreshTokenRequestBuilder::client_secret)
+    /// - [`refresh_token`](RefreshTokenRequestBuilder::refresh_token)
+    /// - [`audience`](RefreshTokenRequestBuilder::audience)
+    /// - [`grant_type`](RefreshTokenRequestBuilder::grant_type)
+    pub fn build(self) -> Result<RefreshTokenRequest, BuildError> {
+        Ok(RefreshTokenRequest {
+            client_id: self
+                .client_id
+                .ok_or_else(|| BuildError::missing_field("client_id"))?,
+            client_secret: self
+                .client_secret
+                .ok_or_else(|| BuildError::missing_field("client_secret"))?,
+            refresh_token: self
+                .refresh_token
+                .ok_or_else(|| BuildError::missing_field("refresh_token"))?,
+            audience: self
+                .audience
+                .ok_or_else(|| BuildError::missing_field("audience"))?,
+            grant_type: self
+                .grant_type
+                .ok_or_else(|| BuildError::missing_field("grant_type"))?,
+            scope: self.scope,
+        })
+    }
+}

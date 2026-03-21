@@ -32,6 +32,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     validateWorkspace,
     retryRateLimited,
@@ -49,6 +50,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
     retryRateLimited: boolean;
@@ -82,14 +84,17 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
-                // Auto-discover .fernignore from the generator's local output directory
-                // if not explicitly provided via --fernignore
-                const effectiveFernignorePath =
-                    fernignorePath ??
-                    (await resolveAutoDiscoveredFernignorePath({
-                        generatorInvocation,
-                        context: interactiveTaskContext
-                    }));
+                // When --skip-fernignore is set, skip auto-discovery and use no fernignore path.
+                // The skipFernignore flag is passed downstream to upload an empty .fernignore.
+                // Otherwise, auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore.
+                const effectiveFernignorePath = skipFernignore
+                    ? undefined
+                    : (fernignorePath ??
+                      (await resolveAutoDiscoveredFernignorePath({
+                          generatorInvocation,
+                          context: interactiveTaskContext
+                      })));
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -128,6 +133,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     fernignorePath: effectiveFernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
                     retryRateLimited,
                     requireEnvVars
