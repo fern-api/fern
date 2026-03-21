@@ -1,5 +1,8 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { existsSync } from "fs";
+import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { extname, join } from "path";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -29,14 +32,17 @@ export interface AutoVersionResult {
      * Undefined for PATCH changes, present for MINOR/MAJOR.
      */
     changelogEntry?: string;
+    /**
+     * PR description with breaking changes (Before/After code fences) and What's New sections.
+     * Undefined for PATCH changes or when consolidation is not performed.
+     */
+    prDescription?: string;
+    /**
+     * One sentence explaining WHY the version bump was chosen.
+     * E.g., "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`."
+     */
+    versionBumpReason?: string;
 }
-
-/**
- * Maximum diff size in characters that the FAI /sdks/analyze-commit-diff endpoint accepts.
- * Roughly 100KB ≈ 25k–30k tokens for Claude. Diffs exceeding this are rejected with HTTP 413.
- * This constant is the single source of truth — LocalTaskHandler and sdkDiffCommand both reference it.
- */
-export const DIFF_SIZE_LIMIT = 100_000;
 
 /**
  * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
@@ -170,10 +176,10 @@ export class AutoVersioningService {
 
     /**
      * Extracts the previous version from a git diff by finding lines with the magic version.
-     * The diff should contain lines like: -version = '1.2.3'  +version = '505.503.4455'
+     * The diff should contain lines like: -version = '1.2.3'  +version = '0.0.0-fern-placeholder'
      *
      * @param diffContent The git diff content
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @return The previous version if found, or undefined if all magic version occurrences are in new files
      * @throws AutoVersioningException if the magic version is not found at all in the diff
      */
@@ -289,7 +295,7 @@ export class AutoVersioningService {
      * 3. Remove entire file sections that have no remaining content changes (no + or - lines)
      *
      * @param diffContent The git diff content
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @return Cleaned diff content
      */
     public cleanDiffForAI(diffContent: string, mappedMagicVersion: string): string {
@@ -323,6 +329,173 @@ export class AutoVersioningService {
             `Cleaned diff: removed ${diffContent.length - result.join("\n").length} chars containing version changes`
         );
         return result.join("\n");
+    }
+
+    /**
+     * Known patterns for API-surface signatures (function/method/class declarations).
+     * Used by truncateDiff to prioritise sections with signature-like changes.
+     *
+     * Covers all languages Fern generates SDKs for:
+     * - TypeScript/JavaScript: export function, export class, export interface, export type
+     * - Java/C#: public class, public interface, public void, protected, internal
+     * - Python: def method_name, class ClassName
+     * - Go: func ExportedName (uppercase = exported)
+     * - Ruby: def method_name, class ClassName, module ModuleName
+     * - Swift: public func, public class, open class
+     * - Rust: pub fn, pub struct, pub enum, pub trait
+     * - PHP: public function, class ClassName
+     */
+    private static readonly SIGNATURE_PATTERNS: RegExp[] = [
+        // TypeScript / JavaScript
+        /^[+-]\s*export\s+/,
+        // Java / C# / Swift / PHP — access modifiers
+        /^[+-]\s*public\s+/,
+        /^[+-]\s*protected\s+/,
+        /^[+-]\s*internal\s+/,
+        /^[+-]\s*open\s+(class|func)\s+/,
+        // Python / Ruby
+        /^[+-]\s*def\s+/,
+        /^[+-]\s*class\s+[A-Z]/,
+        /^[+-]\s*module\s+[A-Z]/,
+        // Go — exported identifiers start with uppercase
+        /^[+-]\s*func\s+[A-Z]/,
+        /^[+-]\s*func\s+\([^)]+\)\s+[A-Z]/,
+        /^[+-]\s*type\s+[A-Z]/,
+        // Rust
+        /^[+-]\s*pub\s+(fn|struct|enum|trait|type|mod)\s+/,
+        // PHP
+        /^[+-]\s*function\s+/
+    ];
+
+    /**
+     * Splits a cleaned diff into chunks that each fit within a byte budget.
+     * File sections are ranked by semantic priority (same 5-tier system as
+     * classifySection) so the first chunk always contains the highest-signal
+     * sections. Each chunk contains only complete file sections — no partial
+     * files.
+     *
+     * If a single file section exceeds `maxBytesPerChunk`, it is placed alone
+     * in its own chunk so no information is lost.
+     *
+     * @param diff The cleaned diff string (output of cleanDiffForAI)
+     * @param maxBytesPerChunk Maximum byte size for each chunk
+     * @return Array of diff chunk strings (at least one element for non-empty diffs)
+     */
+    public chunkDiff(diff: string, maxBytesPerChunk: number): string[] {
+        const lines = diff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        if (fileSections.length === 0) {
+            return [diff];
+        }
+
+        // Classify and rank each file section (highest priority first)
+        const ranked = fileSections
+            .map((section) => ({
+                text: section.lines.join("\n"),
+                priority: this.classifySection(section)
+            }))
+            .sort((a, b) => a.priority - b.priority);
+
+        const chunks: string[] = [];
+        let currentChunkTexts: string[] = [];
+        let currentChunkBytes = 0;
+
+        for (const entry of ranked) {
+            const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            const newlineBytes = currentChunkTexts.length > 0 ? 1 : 0; // Account for \n separator
+
+            // If this section alone exceeds the budget, give it its own chunk
+            if (sectionBytes > maxBytesPerChunk) {
+                // Flush any accumulated sections first
+                if (currentChunkTexts.length > 0) {
+                    chunks.push(currentChunkTexts.join("\n"));
+                    currentChunkTexts = [];
+                }
+                currentChunkBytes = 0;
+                chunks.push(entry.text);
+                continue;
+            }
+
+            // If adding this section would exceed the budget, start a new chunk
+            if (currentChunkBytes + sectionBytes + newlineBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
+                chunks.push(currentChunkTexts.join("\n"));
+                currentChunkTexts = [];
+                currentChunkBytes = 0;
+            }
+
+            currentChunkTexts.push(entry.text);
+            currentChunkBytes += sectionBytes + (currentChunkTexts.length > 1 ? 1 : 0);
+        }
+
+        // Flush remaining sections
+        if (currentChunkTexts.length > 0) {
+            chunks.push(currentChunkTexts.join("\n"));
+        }
+
+        return chunks;
+    }
+
+    /**
+     * Classifies a file section into a priority bucket for truncation ranking.
+     * Lower number = higher priority (included first).
+     *
+     * 1 = deletion-only, 2 = mixed with signatures, 3 = mixed,
+     * 4 = addition-only, 5 = context-only
+     */
+    private static isDiffHeader(line: string): boolean {
+        return (
+            line.startsWith("--- a/") ||
+            line.startsWith("--- /dev/null") ||
+            line.startsWith("+++ b/") ||
+            line.startsWith("+++ /dev/null")
+        );
+    }
+
+    private classifySection(section: FileSection): number {
+        let hasAdditions = false;
+        let hasDeletions = false;
+        let hasSignature = false;
+
+        for (const line of section.lines) {
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
+
+            if (isAddition) {
+                hasAdditions = true;
+            }
+            if (isDeletion) {
+                hasDeletions = true;
+            }
+
+            if (isAddition || isDeletion) {
+                for (const pattern of AutoVersioningService.SIGNATURE_PATTERNS) {
+                    if (pattern.test(line)) {
+                        hasSignature = true;
+                        break;
+                    }
+                }
+            }
+
+            // Early exit: once we know all three flags, the classification is determined
+            if (hasAdditions && hasDeletions && hasSignature) {
+                break;
+            }
+        }
+
+        if (hasDeletions && !hasAdditions) {
+            return 1; // deletion-only
+        }
+        if (hasDeletions && hasAdditions && hasSignature) {
+            return 2; // mixed with signatures
+        }
+        if (hasDeletions && hasAdditions) {
+            return 3; // mixed
+        }
+        if (hasAdditions) {
+            return 4; // addition-only
+        }
+        return 5; // context-only
     }
 
     /**
@@ -376,8 +549,8 @@ export class AutoVersioningService {
 
         let hasChanges = false;
         for (const line of processedContent) {
-            const isAddition = line.startsWith("+") && !line.startsWith("+++");
-            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
             if (isAddition || isDeletion) {
                 hasChanges = true;
                 break;
@@ -444,7 +617,7 @@ export class AutoVersioningService {
     }
 
     private isDeletionLine(line: string): boolean {
-        return line.startsWith("-") && !line.startsWith("---");
+        return line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
@@ -473,7 +646,7 @@ export class AutoVersioningService {
     }
 
     private isAdditionLine(line: string): boolean {
-        return line.startsWith("+") && !line.startsWith("+++");
+        return line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private shouldStopSearching(line: string): boolean {
@@ -481,15 +654,20 @@ export class AutoVersioningService {
             line.startsWith("@@") ||
             line.startsWith("diff --git") ||
             line.startsWith("index ") ||
-            line.startsWith("---") ||
-            line.startsWith("+++")
+            AutoVersioningService.isDiffHeader(line)
         );
     }
 
     /**
-     * Checks if two lines form a version change pair where the only difference is the magic version.
+     * Checks if two lines form a version change pair where the only difference is the magic version,
+     * or where the only difference is a Go module path /vN suffix.
      */
     private isVersionChangePair(minusLine: string, plusLine: string, mappedMagicVersion: string): boolean {
+        // Check for Go module path suffix changes (e.g., /v2 added or removed)
+        if (this.isGoModulePathSuffixChange(minusLine, plusLine)) {
+            return true;
+        }
+
         if (!plusLine.includes(mappedMagicVersion)) {
             return false;
         }
@@ -527,10 +705,50 @@ export class AutoVersioningService {
     }
 
     /**
+     * Detects when two diff lines differ only by a Go module path /vN suffix.
+     * For example:
+     *   -  core "github.com/org/repo/core"
+     *   +  core "github.com/org/repo/v2/core"
+     * These are artifacts of the major version bump and should be filtered from AI analysis.
+     *
+     * Only matches lines that contain a quoted Go-style module path (e.g., "github.com/..."),
+     * so non-Go diffs like API URL version changes are not affected.
+     */
+    private isGoModulePathSuffixChange(minusLine: string, plusLine: string): boolean {
+        const minusContent = minusLine.substring(1);
+        const plusContent = plusLine.substring(1);
+
+        // Only apply to lines containing quoted Go module paths or go.mod module directives
+        const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
+        const goModuleDirectivePattern = /^\s*module\s+(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/\S+/;
+        const hasGoModulePath =
+            goModulePathPattern.test(minusContent) ||
+            goModulePathPattern.test(plusContent) ||
+            goModuleDirectivePattern.test(minusContent.trim()) ||
+            goModuleDirectivePattern.test(plusContent.trim());
+        if (!hasGoModulePath) {
+            return false;
+        }
+
+        // Only strip /vN when it appears as a Go module version suffix
+        // (followed by / or end of quoted string or end of line)
+        const suffixPattern = /\/v\d+(?=\/|"\s*$|$)/g;
+        const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
+        const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
+
+        if (minusWithoutSuffix !== plusWithoutSuffix) {
+            return false;
+        }
+
+        // At least one line must actually contain a /vN suffix for this to be a suffix change
+        return /\/v\d+(?=\/|"\s*$|$)/.test(minusContent) || /\/v\d+(?=\/|"\s*$|$)/.test(plusContent);
+    }
+
+    /**
      * Replaces all occurrences of the magic version with the final version in generated files.
      *
      * @param workingDirectory The directory containing generated files
-     * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
+     * @param mappedMagicVersion The magic version after language transformations (e.g., "v0.0.0-fern-placeholder" for Go)
      * @param finalVersion The final version to use
      * @throws Error if file operations fail or find/sed command fails
      */
@@ -574,6 +792,195 @@ export class AutoVersioningService {
     }
 
     /**
+     * Adds /vN suffix to Go module paths and import statements when the computed
+     * version is v2+. Go requires a /vN suffix on module paths for major versions >= 2.
+     *
+     * When using the safe magic version (major 0), the generated code has no /vN suffix.
+     * After auto-versioning determines the real version, this method adds the correct suffix.
+     *
+     * @param workingDirectory The directory containing generated Go files
+     * @param finalVersion The final computed version (e.g., "v2.0.0", "v3.1.0")
+     */
+    public async addGoMajorVersionSuffix(workingDirectory: string, finalVersion: string): Promise<void> {
+        const major = this.extractMajorVersion(finalVersion);
+        if (major == null || major < 2) {
+            this.logger.debug(
+                `Version ${finalVersion} has major ${major ?? "unknown"}, no Go module path suffix needed`
+            );
+            return;
+        }
+
+        const goModPath = join(workingDirectory, "go.mod");
+        if (!existsSync(goModPath)) {
+            this.logger.debug(`No go.mod found in ${workingDirectory}, skipping Go module path update`);
+            return;
+        }
+
+        const modulePath = await this.readGoModulePath(goModPath);
+        if (modulePath == null) {
+            this.logger.warn(`Could not read module path from go.mod in ${workingDirectory}`);
+            return;
+        }
+
+        const suffix = `/v${major}`;
+
+        // Don't add suffix if it's already present
+        if (/\/v\d+$/.test(modulePath)) {
+            this.logger.debug(`Module path ${modulePath} already has a version suffix, skipping`);
+            return;
+        }
+
+        // Update go.mod module line
+        await this.addSuffixToGoMod(goModPath, modulePath, suffix);
+
+        // Update all .go files: add suffix to import paths
+        await this.addSuffixToGoFiles(workingDirectory, modulePath, suffix);
+
+        this.logger.info(`Added ${suffix} to Go module path ${modulePath} and all import paths`);
+    }
+
+    /**
+     * Extracts the major version number from a version string.
+     * Handles versions with or without 'v' prefix.
+     */
+    private extractMajorVersion(version: string): number | undefined {
+        const match = version.match(/^v?(\d+)\./);
+        if (match?.[1] != null) {
+            return parseInt(match[1], 10);
+        }
+        return undefined;
+    }
+
+    /**
+     * Reads the module path from a go.mod file.
+     */
+    private async readGoModulePath(goModPath: string): Promise<string | undefined> {
+        const content = await readFile(goModPath, "utf-8");
+        for (const line of content.split("\n")) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("module ")) {
+                return trimmed.substring("module ".length).trim();
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Adds a version suffix to the module line in go.mod.
+     */
+    private async addSuffixToGoMod(goModPath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(goModPath, "utf-8");
+        const lines = content.split("\n");
+        let changed = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line != null && line.trim().startsWith("module ") && line.includes(modulePath)) {
+                lines[i] = line.replace(modulePath, modulePath + suffix);
+                changed = true;
+                break;
+            }
+        }
+
+        if (changed) {
+            await writeFile(goModPath, lines.join("\n"), "utf-8");
+            this.logger.debug(`Updated go.mod: added ${suffix} to module path`);
+        }
+    }
+
+    /**
+     * Recursively walks a directory and returns all file paths matching a filter.
+     */
+    private async walkDirectory(dir: string, filter: (filePath: string) => boolean): Promise<string[]> {
+        const results: string[] = [];
+        const entries = await readdir(dir);
+
+        for (const entry of entries) {
+            const fullPath = join(dir, entry);
+            const entryStat = await stat(fullPath);
+
+            if (entryStat.isDirectory()) {
+                // Skip .git and vendor directories
+                if (entry === ".git" || entry === "vendor") {
+                    continue;
+                }
+                const subResults = await this.walkDirectory(fullPath, filter);
+                results.push(...subResults);
+            } else if (filter(fullPath)) {
+                results.push(fullPath);
+            }
+        }
+
+        return results;
+    }
+
+    /**
+     * Adds a version suffix to import paths in all .go files in the repository.
+     */
+    private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
+        const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
+
+        for (const filePath of goFiles) {
+            await this.addSuffixToGoFile(filePath, modulePath, suffix);
+        }
+    }
+
+    /**
+     * Adds a version suffix to import paths in a single .go file.
+     * Replaces occurrences of the module path with modulePath + suffix in import statements.
+     */
+    private async addSuffixToGoFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(filePath, "utf-8");
+        const lines = content.split("\n");
+        let changed = false;
+        let inImportBlock = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line == null) {
+                continue;
+            }
+            const trimmed = line.trim();
+
+            // Track import block state
+            if (trimmed.startsWith("import (")) {
+                inImportBlock = true;
+            } else if (inImportBlock && trimmed === ")") {
+                inImportBlock = false;
+            }
+
+            // Only process import lines
+            const isImportLine =
+                inImportBlock ||
+                trimmed.startsWith('import "') ||
+                trimmed.startsWith('import\t"') ||
+                /^import\s+\w+\s+"/.test(trimmed);
+            if (!isImportLine) {
+                continue;
+            }
+
+            if (!line.includes(modulePath)) {
+                continue;
+            }
+
+            // Use precise replacement to avoid corrupting paths that share a prefix
+            // e.g., "github.com/org/repo" should not match "github.com/org/repo-utils"
+            const newLine = line
+                .replace(`"${modulePath}/`, `"${modulePath}${suffix}/`)
+                .replace(`"${modulePath}"`, `"${modulePath}${suffix}"`);
+            if (newLine !== line) {
+                lines[i] = newLine;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            await writeFile(filePath, lines.join("\n"), "utf-8");
+            this.logger.debug(`Updated Go imports in ${filePath}`);
+        }
+    }
+
+    /**
      * Escapes special characters for use in sed command.
      */
     private escapeForSed(str: string): string {
@@ -608,7 +1015,7 @@ export class AutoVersioningService {
 
     /**
      * Extracts the previous version from a line containing the magic version.
-     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
+     * Assumes the line format is like: "version = '0.0.0-fern-placeholder'" or "version: 0.0.0-fern-placeholder"
      *
      * @param lineWithMagicVersion A line from git diff containing the magic version
      * @return The inferred previous version if found, or undefined if the version cannot be parsed

@@ -4,7 +4,7 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "noSerdeLayer": true,
-        "shouldGenerateWebsocketClients": true
+        "generateWebSocketClients": true
     },
     "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"

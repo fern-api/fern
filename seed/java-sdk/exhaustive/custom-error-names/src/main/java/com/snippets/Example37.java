@@ -9,6 +9,6 @@ public class Example37 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().primitive().getAndReturnString("string");
+        client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
     }
 }

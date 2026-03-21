@@ -9,6 +9,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("")
@@ -27,6 +28,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "exampleName", value: "exampleValue", default: "exampleDefault" };
+
         server.mockEndpoint().get("/metadata").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.getMetadata();
@@ -42,6 +44,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .put("/metadata")
@@ -64,6 +67,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { union: { string: { key: "value" } } };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/call")
@@ -88,6 +92,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/duplicate")
@@ -106,6 +111,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/nested")
@@ -124,6 +130,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { paymentMethod: { method: "card", cardNumber: "1234567890123456" } };
         const rawResponseBody = "success";
+
         server
             .mockEndpoint()
             .post("/camel-case")

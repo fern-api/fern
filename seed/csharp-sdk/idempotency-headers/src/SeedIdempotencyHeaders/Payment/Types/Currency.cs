@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-[JsonConverter(typeof(StringEnumSerializer<Currency>))]
+[JsonConverter(typeof(Currency.CurrencySerializer))]
 [Serializable]
 public readonly record struct Currency : IStringEnum
 {
@@ -49,6 +50,55 @@ public readonly record struct Currency : IStringEnum
     public static explicit operator string(Currency value) => value.Value;
 
     public static explicit operator Currency(string value) => new(value);
+
+    internal class CurrencySerializer : JsonConverter<Currency>
+    {
+        public override Currency Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new Currency(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Currency value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+
+        public override Currency ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new Currency(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Currency value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

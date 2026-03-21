@@ -28,6 +28,7 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
+    "test:e2e": "vitest --config vitest.e2e.config.ts --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },

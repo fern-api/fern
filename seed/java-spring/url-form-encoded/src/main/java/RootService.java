@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import requests.PostSubmitRequest;
 import types.PostSubmitResponse;
+import types.TokenRequest;
+import types.TokenResponse;
 
 @RequestMapping(
     path = "/"
@@ -18,4 +20,11 @@ public interface RootService {
       consumes = "application/json"
   )
   PostSubmitResponse submitFormData(@RequestBody PostSubmitRequest body);
+
+  @PostMapping(
+      value = "/token",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  TokenResponse getToken(@RequestBody TokenRequest body);
 }

@@ -1273,6 +1273,51 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_map_of_documented_unknown_type</a>(request: MapOfDocumentedUnknownType) -> Result&lt;MapOfDocumentedUnknownType, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_map_of_documented_unknown_type(
+            &MapOfDocumentedUnknownType(HashMap::from([(
+                "string".to_string(),
+                DocumentedUnknownType(serde_json::json!({"key":"value"})),
+            )])),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
 <dl>
 <dd>

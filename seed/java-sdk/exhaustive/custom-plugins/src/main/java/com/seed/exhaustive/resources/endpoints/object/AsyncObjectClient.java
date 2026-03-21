@@ -14,6 +14,7 @@ import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncObjectClient {
@@ -141,6 +142,17 @@ public class AsyncObjectClient {
             ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithDocumentedUnknownType(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+        return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
+            Map<String, Object> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfDocumentedUnknownType(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 

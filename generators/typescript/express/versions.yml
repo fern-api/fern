@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix npm publish authentication failing when the registry URL includes a port number.
+        The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
+        instead of `URL.host` (which preserves it).
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-18"
+  version: 0.19.10
+
+- changelogEntry:
+    - summary: |
         Fix README generation in Docker by adding `ca-certificates` to the Debian slim
         base image. Since the switch from Alpine to Debian slim, the container was missing
         CA certificates, causing `git clone` over HTTPS to fail with "server certificate

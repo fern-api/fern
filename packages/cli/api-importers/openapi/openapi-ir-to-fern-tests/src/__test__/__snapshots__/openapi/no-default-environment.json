@@ -1,0 +1,99 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "list": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/pets",
+              "response": {
+                "docs": "A response",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /pets
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: A response
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test API",
+      "environments": {
+        "Production": {
+          "audiences": undefined,
+          "default-url": undefined,
+          "url": "https://%7BTENANT%7D.auth0.com",
+          "url-template": "https://{tenant}.auth0.com",
+          "variables": [
+            {
+              "default": "{TENANT}",
+              "id": "tenant",
+              "values": undefined,
+            },
+          ],
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test API
+environments:
+  Production:
+    url: https://%7BTENANT%7D.auth0.com
+    url-template: https://{tenant}.auth0.com
+    variables:
+      - id: tenant
+        default: '{TENANT}'
+",
+  },
+}

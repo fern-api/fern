@@ -1,5 +1,123 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
+        Fix `construct_type` to resolve `ForwardRef` annotations in nested model fields
+        and use strict Literal discriminant matching for undiscriminated unions.
+
+        Under Pydantic v2 with `from __future__ import annotations`, field annotations
+        like `List["Block"]` remain as `list[ForwardRef('Block')]` even after
+        `model_rebuild`. `construct_type` now resolves these ForwardRefs via the host
+        model's module, ensuring nested data is recursively constructed into proper model
+        instances instead of staying as raw dicts.
+
+        Additionally, undiscriminated union resolution now requires Literal-typed
+        discriminant fields to be present AND matching before accepting a candidate type.
+        This prevents models with all-optional fields (e.g. `FigureDetails`) from greedily
+        matching inputs that belong to a different variant or to a plain-dict fallback.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 5.0.5
+  changelogEntry:
+    - summary: |
+        Add enum handling to `construct_type()` to prevent Pydantic serialization warnings
+        when enum values pass through untyped model construction paths.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 5.0.4
+  changelogEntry:
+    - summary: |
+        Fix optional complex-type parameters in multipart file upload requests being
+        sent as `"null"` instead of being omitted. When an optional body property
+        (e.g., `Optional[List[str]]`, `Optional[Any]`) defaults to `OMIT`,
+        `json.dumps(jsonable_encoder(OMIT))` was evaluating to the string `"null"`,
+        destroying the OMIT sentinel before `remove_omit_from_dict` could strip it.
+        Optional non-primitive body properties now emit a ternary guard
+        (`json.dumps(...) if prop is not OMIT else OMIT`) so that the OMIT sentinel
+        is preserved and correctly removed from the request data.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 5.0.3
+  changelogEntry:
+    - summary: |
+        Skip Docker container management in generated `tests/conftest.py` when the
+        `WIREMOCK_URL` environment variable is already set. This allows wire tests to
+        run in CI/CD pipelines that provide an external WireMock sidecar container
+        without requiring Docker-in-Docker support.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 5.0.2
+  changelogEntry:
+    - summary: |
+        Add docstring emission for unknown/any type alias definitions. When a type alias
+        resolves to `typing.Any` and has a description in the API definition, the generated
+        Python code now includes the docstring below the type alias declaration.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 5.0.1
+  changelogEntry:
+    - summary: |
+        Upgrade `pytest-asyncio` dev dependency from `^0.23.5` to `^1.0.0` in generated
+        `pyproject.toml`. This eliminates deprecation warnings about `asyncio.iscoroutinefunction`,
+        `asyncio.get_event_loop_policy`, and `asyncio.set_event_loop_policy` when running tests
+        on Python 3.14+.
+      type: chore
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 5.0.0
+  changelogEntry:
+    - summary: |
+        Raise the default minimum Python version from `^3.8` to `^3.10` in generated
+        `pyproject.toml`. This allows the dependency resolver to pick Pydantic 2.11+ and
+        pydantic-core 2.33+, which ship pre-built wheels for Python 3.14, fixing
+        installation failures on Python 3.14.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.64.1
+  changelogEntry:
+    - summary: |
+        Wrap `python-version` in quotes in generated GitHub CI workflow so versions like
+        `^3.10` are not misinterpreted as `3.1` by the YAML parser.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.64.0
+  changelogEntry:
+    - summary: |
+        Add `omit_fern_headers` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, X-Fern-Runtime,
+        X-Fern-Platform, User-Agent) are omitted from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required fields missing from examples.
+        When an OpenAPI example omits required fields on a nested object type, the generated
+        test code now synthesizes reasonable default values (e.g., `""` for strings, `1` for
+        integers, `[]` for lists) instead of emitting empty constructors like `ClassName()`
+        that cause Pydantic `ValidationError` at runtime.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.63.5
   changelogEntry:
     - summary: |

@@ -22,7 +22,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -43,7 +43,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn patch_complex(
         &self,
-        id: &String,
+        id: &str,
         request: &PatchComplexRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -51,7 +51,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("complex/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -70,7 +70,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn named_patch_with_mixed(
         &self,
-        id: &String,
+        id: &str,
         request: &NamedMixedPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -78,7 +78,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("named-mixed/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -106,7 +106,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 "optional-merge-patch-test",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -124,7 +124,7 @@ impl ServiceClient {
     /// Empty response
     pub async fn regular_patch(
         &self,
-        id: &String,
+        id: &str,
         request: &RegularPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -132,7 +132,7 @@ impl ServiceClient {
             .execute_request(
                 Method::PATCH,
                 &format!("regular/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

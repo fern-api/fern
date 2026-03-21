@@ -19,6 +19,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -78,6 +79,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -126,6 +128,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -187,6 +190,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -248,6 +252,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -309,6 +314,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -370,6 +376,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -430,6 +437,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -489,6 +497,7 @@ describe("InlineUsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -537,6 +546,7 @@ describe("InlineUsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -576,6 +586,7 @@ describe("InlineUsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -605,6 +616,7 @@ describe("InlineUsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")

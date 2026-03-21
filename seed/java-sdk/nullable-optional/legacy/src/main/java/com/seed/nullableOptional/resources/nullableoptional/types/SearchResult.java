@@ -128,6 +128,7 @@ public final class SearchResult {
     @JsonIgnoreProperties("type")
     private static final class UserValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private UserResponse value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -167,6 +168,7 @@ public final class SearchResult {
     @JsonIgnoreProperties("type")
     private static final class OrganizationValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Organization value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -206,6 +208,7 @@ public final class SearchResult {
     @JsonIgnoreProperties("type")
     private static final class DocumentValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Document value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

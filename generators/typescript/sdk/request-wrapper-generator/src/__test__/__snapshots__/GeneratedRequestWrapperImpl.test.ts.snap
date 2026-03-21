@@ -276,6 +276,13 @@ exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > generat
 "
 `;
 
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes with fileUpload body > generates namespace module for file upload body with inline named properties 1`] = `
+"export interface TestRequest {
+    metadata: unknown;
+}
+"
+`;
+
 exports[`GeneratedRequestWrapperImpl > writeToFile - flattenRequestParameters with named reference body > flattens named body properties into wrapper interface 1`] = `
 "export interface TestRequest {
     email: string;

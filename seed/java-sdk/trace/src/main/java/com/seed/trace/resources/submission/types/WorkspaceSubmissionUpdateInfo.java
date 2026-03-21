@@ -217,6 +217,7 @@ public final class WorkspaceSubmissionUpdateInfo {
     @JsonIgnoreProperties("type")
     private static final class RanValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private WorkspaceRunDetails value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -302,6 +303,7 @@ public final class WorkspaceSubmissionUpdateInfo {
     @JsonIgnoreProperties("type")
     private static final class TracedV2Value implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private WorkspaceTracedUpdate value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

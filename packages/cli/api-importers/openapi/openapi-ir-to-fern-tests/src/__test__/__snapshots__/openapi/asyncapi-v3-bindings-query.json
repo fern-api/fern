@@ -1,0 +1,223 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "AudioPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "data": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "binary",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "Encoding": {
+            "docs": "Encoding of the audio",
+            "enum": [
+              "linear16",
+              "flac",
+              "opus",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "Model": {
+            "docs": "The AI model to use for transcription",
+            "enum": [
+              {
+                "name": "Nova2",
+                "value": "nova-2",
+              },
+              {
+                "name": "Nova3",
+                "value": "nova-3",
+              },
+              "whisper",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "confidence": "optional<double>",
+              "transcript": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Model:
+    enum:
+      - value: nova-2
+        name: Nova2
+      - value: nova-3
+        name: Nova3
+      - whisper
+    docs: The AI model to use for transcription
+    source:
+      openapi: ../asyncapi.yml
+  Encoding:
+    enum:
+      - linear16
+      - flac
+      - opus
+    docs: Encoding of the audio
+    source:
+      openapi: ../asyncapi.yml
+  AudioPayload:
+    properties:
+      data:
+        type: optional<string>
+        validation:
+          format: binary
+    source:
+      openapi: ../asyncapi.yml
+  TranscriptPayload:
+    properties:
+      transcript: optional<string>
+      confidence: optional<double>
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "listen.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "docs": "Channel with query parameters defined via bindings.ws.query",
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {},
+                  "type": "AudioData",
+                },
+                {
+                  "body": {},
+                  "type": "Transcript",
+                },
+              ],
+            },
+          ],
+          "headers": {
+            "Authorization": {
+              "docs": "Bearer token for authentication",
+              "name": "authorization",
+              "type": "optional<string>",
+            },
+          },
+          "messages": {
+            "AudioData": {
+              "body": "root.AudioPayload",
+              "origin": "client",
+            },
+            "Transcript": {
+              "body": "root.TranscriptPayload",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/listen",
+          "query-parameters": {
+            "encoding": {
+              "docs": "Encoding of the audio",
+              "type": "optional<root.Encoding>",
+            },
+            "model": {
+              "docs": "The AI model to use for transcription",
+              "type": "root.Model",
+            },
+            "sample_rate": {
+              "docs": "Sample rate of the audio in Hz",
+              "type": "optional<integer>",
+            },
+          },
+          "url": undefined,
+        },
+        "imports": {
+          "root": "__package__.yml",
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+channel:
+  path: /v1/listen
+  auth: false
+  docs: Channel with query parameters defined via bindings.ws.query
+  query-parameters:
+    model:
+      type: root.Model
+      docs: The AI model to use for transcription
+    encoding:
+      type: optional<root.Encoding>
+      docs: Encoding of the audio
+    sample_rate:
+      type: optional<integer>
+      docs: Sample rate of the audio in Hz
+  headers:
+    Authorization:
+      type: optional<string>
+      name: authorization
+      docs: Bearer token for authentication
+  messages:
+    Transcript:
+      origin: server
+      body: root.TranscriptPayload
+    AudioData:
+      origin: client
+      body: root.AudioPayload
+  examples:
+    - messages:
+        - type: AudioData
+          body: {}
+        - type: Transcript
+          body: {}
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}

@@ -13,9 +13,9 @@ public class Example9 {
 
         client.nullableOptional()
                 .filterByRole(FilterByRoleRequest.builder()
-                        .role(OptionalNullable.of(UserRole.ADMIN))
-                        .status(OptionalNullable.of(UserStatus.ACTIVE))
                         .secondaryRole(OptionalNullable.of(UserRole.ADMIN))
+                        .role(UserRole.ADMIN)
+                        .status(UserStatus.ACTIVE)
                         .build());
     }
 }

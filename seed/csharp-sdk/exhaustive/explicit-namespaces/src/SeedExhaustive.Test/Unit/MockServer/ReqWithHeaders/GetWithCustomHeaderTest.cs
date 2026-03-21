@@ -4,6 +4,7 @@ using SeedExhaustive.Test.Unit.MockServer;
 namespace SeedExhaustive.Test.Unit.MockServer.ReqWithHeaders;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithCustomHeaderTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

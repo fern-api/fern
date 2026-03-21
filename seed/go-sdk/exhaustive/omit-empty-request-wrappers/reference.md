@@ -1549,6 +1549,55 @@ client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(request) -> types.MapOfDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]types.DocumentedUnknownType{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
+client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `types.MapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

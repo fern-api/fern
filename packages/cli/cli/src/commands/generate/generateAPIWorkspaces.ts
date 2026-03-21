@@ -35,7 +35,8 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly,
     outputDir,
     noReplay,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     project: Project;
     cliContext: CliContext;
@@ -56,6 +57,7 @@ export async function generateAPIWorkspaces({
     outputDir: string | undefined;
     noReplay: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -153,7 +155,8 @@ export async function generateAPIWorkspaces({
                     fernignorePath,
                     dynamicIrOnly,
                     noReplay,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars
                 });
             });
         })

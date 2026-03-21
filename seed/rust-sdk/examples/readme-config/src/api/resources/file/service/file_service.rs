@@ -25,7 +25,7 @@ impl ServiceClient2 {
     /// JSON response from the API
     pub async fn get_file(
         &self,
-        filename: &String,
+        filename: &str,
         options: Option<RequestOptions>,
     ) -> Result<File, ApiError> {
         self.http_client

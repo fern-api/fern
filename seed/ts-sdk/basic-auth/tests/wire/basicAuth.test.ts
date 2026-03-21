@@ -15,6 +15,7 @@ describe("BasicAuthClient", () => {
         });
 
         const rawResponseBody = true;
+
         server.mockEndpoint().get("/basic-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.basicAuth.getWithBasicAuth();
@@ -31,6 +32,7 @@ describe("BasicAuthClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server.mockEndpoint().get("/basic-auth").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -48,6 +50,7 @@ describe("BasicAuthClient", () => {
         });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/basic-auth")
@@ -73,6 +76,7 @@ describe("BasicAuthClient", () => {
         });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/basic-auth")

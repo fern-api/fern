@@ -116,6 +116,21 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     inferForwardCompatible: boolean;
+
+    /**
+     * Controls how `const` values in OpenAPI specs are represented.
+     * - `literals`: Convert const values directly to literals with defaults.
+     * - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+     * - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+     * Defaults to `enums-coerceable-to-literals`.
+     */
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals";
+
+    /**
+     * If true, treat OpenAPI `type: string, format: byte` as a base64/bytes primitive
+     * instead of a plain string. Defaults to false.
+     */
+    respectByteFormat: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -152,7 +167,9 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
-    inferForwardCompatible: false
+    inferForwardCompatible: false,
+    coerceConstsTo: "enums-coerceable-to-literals",
+    respectByteFormat: false
 };
 
 function mergeOptions<T extends object>(params: {

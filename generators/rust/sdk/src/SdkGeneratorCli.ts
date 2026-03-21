@@ -132,7 +132,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 context.logger.warn(stderr);
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
             throw new Error(`Failed to publish crate: ${errorMessage}`);
         }
@@ -317,6 +317,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateCoreModFile(context: SdkGeneratorContext): RustFile {
         const hasStreaming = context.hasStreamingEndpoints();
         const hasWebSocket = context.hasWebSocketChannels();
+        const hasDateTime = context.usesDateTime();
+        const hasBase64 = context.usesBase64();
+        const hasBigInteger = context.usesBigInteger();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -334,9 +337,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
-        lines.push("pub mod flexible_datetime;");
-        lines.push("pub mod base64_bytes;");
-        lines.push("pub mod bigint_string;");
+        if (hasDateTime) {
+            lines.push("pub mod flexible_datetime;");
+        }
+        if (hasBase64) {
+            lines.push("pub mod base64_bytes;");
+        }
+        if (hasBigInteger) {
+            lines.push("pub mod bigint_string;");
+        }
         lines.push("");
         lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
@@ -462,7 +471,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
         const files: RustFile[] = [];
 
-        // Generate model files
+        // Generate model files (includes build_error.rs for builders)
         const modelFiles = this.generateModelFiles(context);
         files.push(...modelFiles);
 
@@ -474,14 +483,16 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
-                new RustFile({
-                    filename: file.filename,
-                    directory: RelativeFilePath.of("src/api/types"),
-                    fileContents: this.getFileContents(file)
-                })
-        );
+        return generateModels({ context: context.toModelGeneratorContext() })
+            .filter((file) => file.filename !== "error.rs")
+            .map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/api/types"),
+                        fileContents: this.getFileContents(file)
+                    })
+            );
     }
 
     private generateTypesModFile(context: SdkGeneratorContext): RustFile {
@@ -567,7 +578,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));

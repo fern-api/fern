@@ -117,7 +117,7 @@
             },
           },
           "path": "/v1/ws/chat",
-          "url": "production",
+          "url": undefined,
         },
         "imports": {
           "root": "__package__.yml",
@@ -125,7 +125,6 @@
       },
       "rawContents": "channel:
   path: /v1/ws/chat
-  url: production
   auth: false
   connect-method-name: createChatConnection
   docs: Chat channel for testing custom method names

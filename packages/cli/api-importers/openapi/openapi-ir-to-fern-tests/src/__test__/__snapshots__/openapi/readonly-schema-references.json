@@ -144,7 +144,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ConfigMetadataRead": {
+          "ConfigMetadata": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -170,17 +170,17 @@
                 "docs": "Configuration ID",
                 "type": "optional<string>",
               },
-              "metadata": "optional<ConfigMetadataRead>",
+              "metadata": "optional<ConfigMetadata>",
               "provisioning": {
                 "docs": "Provisioning configuration",
-                "type": "optional<IdpProvisioningConfigRead>",
+                "type": "optional<IdpProvisioningConfig>",
               },
             },
             "source": {
               "openapi": "../openapi.yml",
             },
           },
-          "IdpProvisioningConfigRead": {
+          "IdpProvisioningConfig": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -307,7 +307,7 @@ types:
     inline: true
     source:
       openapi: ../openapi.yml
-  IdpProvisioningConfigRead:
+  IdpProvisioningConfig:
     properties:
       enabled:
         type: optional<boolean>
@@ -333,9 +333,9 @@ types:
         type: optional<string>
         docs: Configuration ID
       provisioning:
-        type: optional<IdpProvisioningConfigRead>
+        type: optional<IdpProvisioningConfig>
         docs: Provisioning configuration
-      metadata: optional<ConfigMetadataRead>
+      metadata: optional<ConfigMetadata>
     source:
       openapi: ../openapi.yml
   AttributeMapping:
@@ -351,7 +351,7 @@ types:
         default: false
     source:
       openapi: ../openapi.yml
-  ConfigMetadataRead:
+  ConfigMetadata:
     properties:
       version:
         type: optional<integer>

@@ -23,6 +23,7 @@ describe("NoReqBodyClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server.mockEndpoint().get("/no-req-body").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.noReqBody.getWithNoRequestBody();
@@ -55,6 +56,7 @@ describe("NoReqBodyClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().post("/no-req-body").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.noReqBody.postWithNoRequestBody();

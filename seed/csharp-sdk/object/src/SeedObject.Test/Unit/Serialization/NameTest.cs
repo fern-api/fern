@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedObject;
 using SeedObject.Core;
+using SeedObject.Test.Utils;
 
 namespace SeedObject.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class NameTest
 {
     [NUnit.Framework.Test]
@@ -25,15 +26,12 @@ public class NameTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "id": "name-sdfg8ajk",
               "value": "name"
             }
             """;
-        var actualObj = new Name { Id = "name-sdfg8ajk", Value = "name" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Name>(inputJson);
     }
 }

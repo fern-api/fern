@@ -50,4 +50,27 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
     {
         writer.WriteStringValue(_enumToString[value]);
     }
+
+    public override TEnum ReadAsPropertyName(
+        ref Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception(
+                "The JSON property name could not be read as a string."
+            );
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void WriteAsPropertyName(
+        Utf8JsonWriter writer,
+        TEnum value,
+        JsonSerializerOptions options
+    )
+    {
+        writer.WritePropertyName(_enumToString[value]);
+    }
 }

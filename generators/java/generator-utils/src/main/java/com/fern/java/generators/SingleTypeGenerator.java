@@ -48,7 +48,9 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
 
     @Override
     public Optional<AbstractTypeGenerator> visitAlias(AliasTypeDeclaration value) {
-        if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
+        if (generatorContext.getCustomConfig().wrappedAliases()
+                || fromErrorDeclaration
+                || value.getAliasOf().isUnknown()) {
             AliasGenerator aliasGenerator =
                     new AliasGenerator(className, generatorContext, value, reservedTypeNamesInScope, isTopLevelClass);
             return Optional.of(aliasGenerator);

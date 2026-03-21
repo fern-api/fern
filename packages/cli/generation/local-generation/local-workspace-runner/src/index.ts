@@ -26,5 +26,7 @@ export {
     incrementVersion,
     isAutoVersion,
     MAGIC_VERSION,
+    MAGIC_VERSION_PYTHON,
+    mapMagicVersionForLanguage,
     VersionBump
 } from "./VersionUtils.js";

@@ -237,6 +237,7 @@ export class UnionGenerator {
 
         // Generate variant attributes
         const variantAttributes = this.generateVariantAttributes(unionType, variantName);
+
         variantAttributes.forEach((attr) => {
             writer.write("    ");
             attr.write(writer);
@@ -412,7 +413,10 @@ export class UnionGenerator {
                 const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
                 const methodName = `get_${fieldName}`;
 
-                writer.writeBlock(`pub fn ${methodName}(&self) -> &${fieldType.toString()}`, () => {
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                const returnType = fieldType.toString() === "String" ? "&str" : `&${fieldType.toString()}`;
+
+                writer.writeBlock(`pub fn ${methodName}(&self) -> ${returnType}`, () => {
                     writer.writeLine("match self {");
 
                     this.unionTypeDeclaration.types.forEach((unionType) => {

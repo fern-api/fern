@@ -3,7 +3,7 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
     "generatorConfig": {
-        "shouldGenerateWebsocketClients": true
+        "generateWebSocketClients": true
     },
     "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"

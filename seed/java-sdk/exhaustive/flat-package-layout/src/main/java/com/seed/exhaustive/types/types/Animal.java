@@ -107,6 +107,7 @@ public final class Animal {
     @JsonIgnoreProperties("animal")
     private static final class DogValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "animal", allowSetters = true)
         private Dog value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -146,6 +147,7 @@ public final class Animal {
     @JsonIgnoreProperties("animal")
     private static final class CatValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "animal", allowSetters = true)
         private Cat value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
