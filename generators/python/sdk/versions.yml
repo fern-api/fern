@@ -1,5 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
+        Fix `construct_type` to resolve `ForwardRef` annotations in nested model fields
+        and use strict Literal discriminant matching for undiscriminated unions.
+
+        Under Pydantic v2 with `from __future__ import annotations`, field annotations
+        like `List["Block"]` remain as `list[ForwardRef('Block')]` even after
+        `model_rebuild`. `construct_type` now resolves these ForwardRefs via the host
+        model's module, ensuring nested data is recursively constructed into proper model
+        instances instead of staying as raw dicts.
+
+        Additionally, undiscriminated union resolution now requires Literal-typed
+        discriminant fields to be present AND matching before accepting a candidate type.
+        This prevents models with all-optional fields (e.g. `FigureDetails`) from greedily
+        matching inputs that belong to a different variant or to a plain-dict fallback.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 5.0.5
   changelogEntry:
     - summary: |
