@@ -24,7 +24,8 @@ export function websocketChannelNeedsDefaults(
 ): boolean {
     const hasOAuth = context.getOauth() != null;
     const hasTenantNameHeader = context.ir.headers.some((h) => h.name.wireValue === "Tenant-Name");
-    if (!hasOAuth || !hasTenantNameHeader) {
+    const hasMultipleBaseUrls = context.ir.environments?.environments.type === "multipleBaseUrls";
+    if (!hasOAuth || !hasTenantNameHeader || !hasMultipleBaseUrls) {
         return false;
     }
     const hasTenantNameParam = websocketChannel.queryParameters.some((qp) => qp.name.wireValue === "tenant-name");
