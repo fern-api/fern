@@ -205,4 +205,6 @@ allowedFailures:
   - variables
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  # WebSocket OAuth fixture is C#-specific; PHP SDK doesn't support WebSocket auth propagation
+  - websocket-oauth
 
