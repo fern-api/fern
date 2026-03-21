@@ -61,6 +61,9 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
         switch (extension.in) {
             case "websocket-subprotocol":
                 if (extension.format == null) {
+                    this.context.logger.warn(
+                        "x-fern-websocket-auth-fallback with in: websocket-subprotocol is missing required 'format' field. Ignoring fallback."
+                    );
                     return undefined;
                 }
                 return WebSocketAuthFallback.websocketSubprotocol({
@@ -68,12 +71,18 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 });
             case "query":
                 if (extension.name == null) {
+                    this.context.logger.warn(
+                        "x-fern-websocket-auth-fallback with in: query is missing required 'name' field. Ignoring fallback."
+                    );
                     return undefined;
                 }
                 return WebSocketAuthFallback.query({
                     name: extension.name
                 });
             default:
+                this.context.logger.warn(
+                    `x-fern-websocket-auth-fallback has unrecognized 'in' value: '${extension.in}'. Expected 'websocket-subprotocol' or 'query'. Ignoring fallback.`
+                );
                 return undefined;
         }
     }

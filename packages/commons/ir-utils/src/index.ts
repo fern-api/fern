@@ -1,5 +1,5 @@
 // Force cache invalidation for CI - server URL templating feature
-export { convertApiAuth } from "./auth/convertApiAuth.js";
+export { convertApiAuth, convertWebSocketAuthFallback } from "./auth/convertApiAuth.js";
 export { constructHttpPath } from "./constructHttpPath.js";
 export { convertEnvironments } from "./environments/convertEnvironments.js";
 export {

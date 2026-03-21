@@ -56,6 +56,9 @@ export const V65_TO_V63_MIGRATION: IrMigration<
                     ? {
                           ...v65.auth,
                           schemes: v65.auth.schemes.map((scheme) => {
+                              // Strip websocketAuthFallback from all known scheme types.
+                              // This covers every discriminant in AuthScheme. If a new scheme
+                              // type is added to v65, add it here to avoid leaking the field.
                               if (
                                   scheme.type === "bearer" ||
                                   scheme.type === "basic" ||
