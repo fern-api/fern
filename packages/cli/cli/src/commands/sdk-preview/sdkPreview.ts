@@ -11,6 +11,25 @@ import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVer
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
 
+/**
+ * Transforms a package name into a preview-scoped package name.
+ * Uses the Fern org name to create a dedicated preview scope,
+ * stripping any existing scope from the original package name.
+ *
+ * Examples (org = "fern"):
+ *   @fern-fern/docs-parsers → @fern-preview/docs-parsers
+ *   @acme/python-sdk → @fern-preview/python-sdk
+ *   my-package → @fern-preview/my-package
+ */
+function toPreviewPackageName(packageName: string, org: string): string {
+    const scopeMatch = packageName.match(/^@[^/]+\/(.+)$/);
+    if (scopeMatch != null) {
+        const [, name] = scopeMatch;
+        return `@${org}-preview/${name}`;
+    }
+    return `@${org}-preview/${packageName}`;
+}
+
 interface SdkPreviewSuccess {
     status: "success";
     org: string;
@@ -125,15 +144,16 @@ export async function sdkPreview({
             }
 
             for (const generator of npmGenerators) {
-                const packageName = getPackageNameFromGeneratorConfig(generator);
-                if (packageName == null) {
+                const originalPackageName = getPackageNameFromGeneratorConfig(generator);
+                if (originalPackageName == null) {
                     return cliContext.failAndThrow(
                         `Could not determine package name for generator '${generator.name}'. ` +
                             `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
                     );
                 }
 
-                const previewVersion = await computePreviewVersion({ packageName, previewId });
+                const previewPackageName = toPreviewPackageName(originalPackageName, project.config.organization);
+                const previewVersion = await computePreviewVersion({ packageName: previewPackageName, previewId });
                 cliContext.logger.info(`Preview version: ${previewVersion}`);
 
                 // Override group output to publish to preview registry.
@@ -141,7 +161,7 @@ export async function sdkPreview({
                 // must accept this token for publish authentication.
                 const modifiedGroup = overrideGroupOutputForPreview({
                     group: { ...group, generators: [generator] },
-                    packageName,
+                    packageName: previewPackageName,
                     token: token.value
                 });
 
@@ -170,14 +190,14 @@ export async function sdkPreview({
                     });
                 });
 
-                const installCommand = `npm install ${packageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
+                const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
                 cliContext.logger.info(`→ ${installCommand}`);
 
                 previews.push({
                     preview_id: previewId,
                     install: installCommand,
                     version: previewVersion,
-                    package_name: packageName,
+                    package_name: previewPackageName,
                     registry_url: PREVIEW_REGISTRY_URL
                 });
             }

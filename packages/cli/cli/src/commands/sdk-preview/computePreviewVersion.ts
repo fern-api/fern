@@ -11,10 +11,10 @@ const DEFAULT_BASE_VERSION = "0.0.1";
  * 1. Fetch the latest published version from the **public** npm registry (no auth).
  *    Private or unpublished packages will fall back to 0.0.1.
  * 2. Increment patch to get the next version
- * 3. Append `-preview.{previewId}.{timestamp}` suffix for uniqueness
+ * 3. Append `-{previewId}.{timestamp}` prerelease suffix for uniqueness
  *
  * Example: if latest published is 1.3.0, preview version is
- * 1.3.1-preview.feat-add-auth.1710434700
+ * 1.3.1-feat-add-auth.1710434700
  *
  * Note: Uses the public npm registry only (no auth token). If the customer's
  * package is private or hasn't been published yet, the base version defaults
@@ -38,7 +38,7 @@ export async function computePreviewVersion({
     }
 
     const timestamp = Math.floor(Date.now() / 1000);
-    return `${baseVersion}-preview.${previewId}.${timestamp}`;
+    return `${baseVersion}-${previewId}.${timestamp}`;
 }
 
 export { PREVIEW_REGISTRY_URL };
