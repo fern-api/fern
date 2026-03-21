@@ -262,14 +262,14 @@ public partial class TranscribeApi
                 BaseUrl = options?.BaseUrl ?? "",
                 EnableCompression = options?.EnableCompression ?? false,
                 HttpInvoker = options?.HttpInvoker,
-                TenantName = options?.TenantName ?? tenantName,
-                Token = options?.Token ?? token,
-                Model = options?.Model,
                 IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,
                 ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),
                 ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),
                 LostReconnectTimeout = options?.LostReconnectTimeout,
                 ReconnectBackoff = options?.ReconnectBackoff ?? new ReconnectStrategy(),
+                TenantName = options?.TenantName ?? tenantName,
+                Token = options?.Token ?? token,
+                Model = options?.Model,
             };
         }
     }

@@ -710,6 +710,27 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
+     * Framework properties on the Options class that are not derived from query/path parameters.
+     * Used by both createOptionsClass and addWithDefaultsMethod to stay in sync.
+     *
+     * Each entry defines the property name and its default expression for WithDefaults.
+     * A null defaultExpression means the property has no default (copies as-is from options).
+     */
+    private static readonly FRAMEWORK_OPTION_PROPERTIES: ReadonlyArray<{
+        name: string;
+        defaultExpression: string | null;
+    }> = [
+        { name: "BaseUrl", defaultExpression: '""' },
+        { name: "EnableCompression", defaultExpression: "false" },
+        { name: "HttpInvoker", defaultExpression: null },
+        { name: "IsReconnectionEnabled", defaultExpression: "false" },
+        { name: "ReconnectTimeout", defaultExpression: "TimeSpan.FromMinutes(1)" },
+        { name: "ErrorReconnectTimeout", defaultExpression: "TimeSpan.FromMinutes(1)" },
+        { name: "LostReconnectTimeout", defaultExpression: null },
+        { name: "ReconnectBackoff", defaultExpression: "new ReconnectStrategy()" }
+    ];
+
+    /**
      * Generates a `WithDefaults` internal static method on the Options class.
      * This creates a new Options instance with auth-propagated defaults merged in.
      */
@@ -775,14 +796,14 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeLine("{");
                 writer.indent();
 
-                // BaseUrl: copy from options (no default injection for BaseUrl)
-                writer.writeLine('BaseUrl = options?.BaseUrl ?? "",');
-
-                // EnableCompression
-                writer.writeLine("EnableCompression = options?.EnableCompression ?? false,");
-
-                // HttpInvoker
-                writer.writeLine("HttpInvoker = options?.HttpInvoker,");
+                // Framework properties (BaseUrl, compression, reconnection, etc.)
+                for (const prop of WebSocketClientGenerator.FRAMEWORK_OPTION_PROPERTIES) {
+                    if (prop.defaultExpression != null) {
+                        writer.writeLine(`${prop.name} = options?.${prop.name} ?? ${prop.defaultExpression},`);
+                    } else {
+                        writer.writeLine(`${prop.name} = options?.${prop.name},`);
+                    }
+                }
 
                 // Query parameters (auth-propagated use ?? defaultParam, others just copy)
                 const emittedPropertyNames = new Set<string>();
@@ -823,13 +844,6 @@ export class WebSocketClientGenerator extends WithGeneration {
                     }
                 }
 
-                // Reconnection options
-                writer.writeLine("IsReconnectionEnabled = options?.IsReconnectionEnabled ?? false,");
-                writer.writeLine("ReconnectTimeout = options?.ReconnectTimeout ?? TimeSpan.FromMinutes(1),");
-                writer.writeLine("ErrorReconnectTimeout = options?.ErrorReconnectTimeout ?? TimeSpan.FromMinutes(1),");
-                writer.writeLine("LostReconnectTimeout = options?.LostReconnectTimeout,");
-                writer.writeLine("ReconnectBackoff = options?.ReconnectBackoff ?? new ReconnectStrategy(),");
-
                 writer.dedent();
                 writer.writeTextStatement("}");
             })
@@ -837,9 +851,16 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Converts a PascalCase name to camelCase.
+     * Converts a PascalCase name to camelCase by lowercasing the first character.
+     *
+     * Note: This is intentionally simple (first-char flip only) because the IR always
+     * provides properly-cased `safeName` values. It would produce incorrect results for
+     * raw acronyms like "HTTPClient" → "hTTPClient", but IR safeName handles those.
      */
     private toCamelCase(name: string): string {
+        if (name.length === 0) {
+            return name;
+        }
         return name.charAt(0).toLowerCase() + name.slice(1);
     }
 

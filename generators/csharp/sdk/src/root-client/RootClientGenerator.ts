@@ -60,6 +60,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private grpcClientInfo: GrpcClientInfo | undefined;
     private oauth: OAuthScheme | undefined;
     private inferred: InferredAuthScheme | undefined;
+    /** Cached map from WebSocket channel ID → auth context (computed once, reused everywhere) */
+    private _wsAuthContextCache?: Map<string, WebSocketAuthContext | undefined>;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
@@ -84,6 +86,36 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
+     * Computes and caches auth contexts for all WebSocket channels.
+     * This is called once and the results are reused by all methods that need auth context.
+     */
+    private getWebSocketAuthContexts(): Map<string, WebSocketAuthContext | undefined> {
+        if (this._wsAuthContextCache != null) {
+            return this._wsAuthContextCache;
+        }
+        const cache = new Map<string, WebSocketAuthContext | undefined>();
+        if (!this.settings.enableWebsockets) {
+            this._wsAuthContextCache = cache;
+            return cache;
+        }
+        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const allParams = [...requiredParameters, ...optionalParameters];
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null) {
+                    cache.set(
+                        websocketChannel.name.originalName,
+                        this.buildWebSocketAuthContext(websocketChannel, allParams)
+                    );
+                }
+            }
+        }
+        this._wsAuthContextCache = cache;
+        return cache;
+    }
+
+    /**
      * Generates the c# factory methods to create the websocket api client.
      *
      * @remarks
@@ -95,15 +127,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private generateWebsocketFactories(cls: ast.Class) {
         if (this.settings.enableWebsockets) {
-            const { requiredParameters, optionalParameters } = this.getConstructorParameters();
-            const allConstructorParams = [...requiredParameters, ...optionalParameters];
+            const authContexts = this.getWebSocketAuthContexts();
             let hasAnyAuthContext = false;
 
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
-                        const authContext = this.buildWebSocketAuthContext(websocketChannel, allConstructorParams);
+                        const authContext = authContexts.get(websocketChannel.name.originalName);
                         if (authContext != null) {
                             hasAnyAuthContext = true;
                         }
@@ -120,8 +151,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
 
             if (hasAnyAuthContext) {
+                const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+                const allConstructorParams = [...requiredParameters, ...optionalParameters];
                 this.generateWebSocketAuthFields(cls, allConstructorParams);
-                this.generateGetRawAccessTokenMethod(cls, allConstructorParams);
+                this.generateGetRawAccessTokenMethod(cls);
             }
         }
     }
@@ -242,28 +275,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         let needsOAuthToken = false;
         let needsClientOptions = false;
 
-        for (const subpackage of this.getSubpackages()) {
-            if (subpackage.websocket != null) {
-                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
-                if (websocketChannel != null) {
-                    const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
-                    if (authContext != null) {
-                        for (const field of authContext.matchedParamFields) {
-                            if (!neededFields.has(field.fieldName)) {
-                                // Look up the actual type from the matching constructor parameter
-                                const paramName = field.fieldName.substring(1); // strip leading "_"
-                                const matchingParam = constructorParams.find((cp) => cp.name === paramName);
-                                const fieldType = matchingParam?.type ?? this.Primitive.string;
-                                neededFields.set(field.fieldName, fieldType);
-                            }
-                        }
-                        if (authContext.oauthTokenPropertyName != null) {
-                            needsOAuthToken = true;
-                        }
-                        if (authContext.hasEnvironments) {
-                            needsClientOptions = true;
-                        }
+        for (const authContext of this.getWebSocketAuthContexts().values()) {
+            if (authContext != null) {
+                for (const field of authContext.matchedParamFields) {
+                    if (!neededFields.has(field.fieldName)) {
+                        // Look up the actual type from the matching constructor parameter
+                        const paramName = field.fieldName.substring(1); // strip leading "_"
+                        const matchingParam = constructorParams.find((cp) => cp.name === paramName);
+                        const fieldType = matchingParam?.type ?? this.Primitive.string;
+                        neededFields.set(field.fieldName, fieldType);
                     }
+                }
+                if (authContext.oauthTokenPropertyName != null) {
+                    needsOAuthToken = true;
+                }
+                if (authContext.hasEnvironments) {
+                    needsClientOptions = true;
                 }
             }
         }
@@ -303,22 +330,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * Generates the GetRawAccessToken helper method on the root client if any
      * WebSocket channel needs an OAuth token injected via Options.WithDefaults.
      */
-    private generateGetRawAccessTokenMethod(cls: ast.Class, constructorParams: ConstructorParameter[]) {
+    private generateGetRawAccessTokenMethod(cls: ast.Class) {
         if (this.oauth == null) {
             return;
         }
 
         let needsOAuthHelper = false;
-        for (const subpackage of this.getSubpackages()) {
-            if (subpackage.websocket != null) {
-                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
-                if (websocketChannel != null) {
-                    const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
-                    if (authContext?.oauthTokenPropertyName != null) {
-                        needsOAuthHelper = true;
-                        break;
-                    }
-                }
+        for (const authContext of this.getWebSocketAuthContexts().values()) {
+            if (authContext?.oauthTokenPropertyName != null) {
+                needsOAuthHelper = true;
+                break;
             }
         }
 
@@ -1188,17 +1209,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         if (this.oauth == null || !this.settings.enableWebsockets) {
             return false;
         }
-        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
-        const allParams = [...requiredParameters, ...optionalParameters];
-        for (const subpackage of this.getSubpackages()) {
-            if (subpackage.websocket != null) {
-                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
-                if (websocketChannel != null) {
-                    const authContext = this.buildWebSocketAuthContext(websocketChannel, allParams);
-                    if (authContext?.oauthTokenPropertyName != null) {
-                        return true;
-                    }
-                }
+        for (const authContext of this.getWebSocketAuthContexts().values()) {
+            if (authContext?.oauthTokenPropertyName != null) {
+                return true;
             }
         }
         return false;
@@ -1208,27 +1221,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * Returns the set of field names (e.g., "_tenantName") needed for WebSocket auth propagation.
      */
     private getWebSocketAuthFieldNames(): Set<string> {
-        if (!this.settings.enableWebsockets) {
-            return new Set();
-        }
-        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
-        const allParams = [...requiredParameters, ...optionalParameters];
         const fields = new Set<string>();
         let needsClientOptions = false;
 
-        for (const subpackage of this.getSubpackages()) {
-            if (subpackage.websocket != null) {
-                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
-                if (websocketChannel != null) {
-                    const authContext = this.buildWebSocketAuthContext(websocketChannel, allParams);
-                    if (authContext != null) {
-                        for (const field of authContext.matchedParamFields) {
-                            fields.add(field.fieldName);
-                        }
-                        if (authContext.hasEnvironments) {
-                            needsClientOptions = true;
-                        }
-                    }
+        for (const authContext of this.getWebSocketAuthContexts().values()) {
+            if (authContext != null) {
+                for (const field of authContext.matchedParamFields) {
+                    fields.add(field.fieldName);
+                }
+                if (authContext.hasEnvironments) {
+                    needsClientOptions = true;
                 }
             }
         }
@@ -1245,6 +1247,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     /**
      * Extracts the camelCase constructor parameter names from the IR auth schemes and headers.
      * This is a static utility so SdkGeneratorCli can compute auth context without a full RootClientGenerator instance.
+     *
+     * IMPORTANT: This method must stay in sync with the instance method `getConstructorParameters()`,
+     * which delegates to `getParameterFromAuthScheme()` and `getParameterForHeader()`.
+     * If the parameter extraction logic changes there, it must be updated here too.
+     * Key alignment points:
+     * - Auth scheme handling mirrors `getParameterFromAuthScheme` (header, bearer, basic, oauth, inferred)
+     * - Header handling mirrors `getParameterForHeader` (literal headers are skipped via `isLiteralTypeReference`)
+     * - Optional/required classification mirrors `getConstructorParameters` (literals excluded, env var params excluded)
      */
     static getConstructorParamNamesFromIr(context: SdkGeneratorContext): string[] {
         const names: string[] = [];
@@ -1395,7 +1405,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return credentials.map((credential) => credential.camelName);
     }
 
+    /**
+     * Converts a camelCase name to PascalCase by uppercasing the first character.
+     *
+     * Note: This is intentionally simple (first-char flip only) because the IR always
+     * provides properly-cased `safeName` values. It would produce incorrect results for
+     * raw acronyms like "httpClient" → "HttpClient" vs "HTTPClient", but IR safeName handles those.
+     */
     private toPascalCase(name: string): string {
+        if (name.length === 0) {
+            return name;
+        }
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
 }
