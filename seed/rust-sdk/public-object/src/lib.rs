@@ -23,4 +23,4 @@ pub mod prelude;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

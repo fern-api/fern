@@ -1,4 +1,5 @@
-import { RustFile } from "@fern-api/rust-base";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { BUILD_ERROR_RS, RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias/index.js";
 import { EnumGenerator } from "./enum/index.js";
 import { FileUploadRequestBodyGenerator } from "./file-upload-request-body/index.js";
@@ -11,6 +12,18 @@ import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union/index.js"
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
+
+    // Generate error.rs with BuildError (used by generated builders).
+    // In the model generator this becomes src/error.rs directly.
+    // In the SDK generator this file is filtered out since the SDK's ErrorGenerator
+    // produces its own error.rs that includes both ApiError and BuildError.
+    files.push(
+        new RustFile({
+            filename: "error.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: BUILD_ERROR_RS
+        })
+    );
 
     // Pre-compute which type IDs are members of undiscriminated unions.
     // Single-property structs in undiscriminated unions need #[serde(transparent)]

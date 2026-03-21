@@ -14,3 +14,43 @@ pub struct UsersListWithOffsetStepPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub order: Option<Order2>,
 }
+
+impl UsersListWithOffsetStepPaginationQueryRequest {
+    pub fn builder() -> UsersListWithOffsetStepPaginationQueryRequestBuilder {
+        UsersListWithOffsetStepPaginationQueryRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct UsersListWithOffsetStepPaginationQueryRequestBuilder {
+    page: Option<i64>,
+    limit: Option<i64>,
+    order: Option<Order2>,
+}
+
+impl UsersListWithOffsetStepPaginationQueryRequestBuilder {
+    pub fn page(mut self, value: i64) -> Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn order(mut self, value: Order2) -> Self {
+        self.order = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`UsersListWithOffsetStepPaginationQueryRequest`].
+    pub fn build(self) -> Result<UsersListWithOffsetStepPaginationQueryRequest, BuildError> {
+        Ok(UsersListWithOffsetStepPaginationQueryRequest {
+            page: self.page,
+            limit: self.limit,
+            order: self.order,
+        })
+    }
+}
