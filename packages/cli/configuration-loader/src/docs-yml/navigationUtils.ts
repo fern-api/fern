@@ -100,9 +100,10 @@ export async function buildNavigationForDirectory({
     const markdownFiles = contents.filter(
         (item) =>
             item.type === "file" &&
+            !item.name.startsWith("_") &&
             (item.name.toLowerCase().endsWith(".md") || item.name.toLowerCase().endsWith(".mdx"))
     );
-    const subdirectories = contents.filter((item) => item.type === "directory");
+    const subdirectories = contents.filter((item) => item.type === "directory" && !item.name.startsWith("_"));
 
     const [pagePositions, pageTitles] = await Promise.all([
         Promise.all(
