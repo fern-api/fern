@@ -3,6 +3,7 @@
 channel:
   path: /stream
   auth: false
+  url: wss
   query-parameters:
     tenant-name: string
     token: string
