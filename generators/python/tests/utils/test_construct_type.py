@@ -1006,7 +1006,7 @@ def test_forward_ref_list_field_resolved_in_construct() -> None:
     annotations` the annotation stays as a ForwardRef under Pydantic v2.
     construct_type must resolve the ForwardRef so nested dicts become Block
     instances."""
-    from tests.utils.example_models.types.resources.types.block import Chunk, Block
+    from .example_models.types.resources.types import Chunk, Block
 
     raw = {
         "title": "Page 1",
@@ -1029,7 +1029,7 @@ def test_literal_discriminant_strict_matching_figure_details() -> None:
     """When the undiscriminated union has Literal-typed discriminant fields,
     the correct variant must be selected based on the 'type' value.
     FigureDetails (type='figure') should not greedily match text blocks."""
-    from tests.utils.example_models.types.resources.types.block import (
+    from .example_models.types.resources.types import (
         Chunk,
         Block,
         TextDetails,
@@ -1072,8 +1072,8 @@ def test_model_dump_by_alias_uses_camel_case_after_construct() -> None:
     snake_case keys because details was a raw dict, not a model instance.
     After the fix, FigureDetails should be properly constructed so
     by_alias=True emits camelCase keys."""
-    from tests.utils.example_models.types.resources.types.block import Chunk, FigureDetails
-    from tests.utils.example_models.types.core.pydantic_utilities import IS_PYDANTIC_V2
+    from .example_models.types.resources.types import Chunk, FigureDetails
+    from .example_models.types.core.pydantic_utilities import IS_PYDANTIC_V2
 
     raw = {
         "title": "Doc",
@@ -1117,7 +1117,7 @@ def test_empty_details_does_not_greedily_match_figure() -> None:
     """An empty details dict {} should not be matched as FigureDetails just
     because all its fields are optional. With strict Literal matching, the
     missing 'type' field should prevent FigureDetails from matching."""
-    from tests.utils.example_models.types.resources.types.block import (
+    from .example_models.types.resources.types import (
         Block,
         FigureDetails,
     )
