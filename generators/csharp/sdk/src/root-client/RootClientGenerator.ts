@@ -201,10 +201,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         }
 
-        // Check if the WebSocket channel has environments configured
+        // Check if the WebSocket channel has environments configured.
+        // Also require environmentPropertyName (only set when IR has multipleBaseUrls)
+        // to ensure ClientOptions actually has an Environment property we can read from.
         const channelPath = websocketChannel.path.head;
         const envs = temporaryWebsocketEnvironments;
         const hasEnvironments =
+            environmentPropertyName != null &&
             envs != null &&
             envs[channelPath] != null &&
             envs[channelPath].environments != null &&
@@ -358,14 +361,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 }
 
                                 // Inject environment from ClientOptions
-                                if (authContext.hasEnvironments) {
+                                if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
                                     writer.controlFlow(
                                         "if",
                                         this.csharp.codeblock("string.IsNullOrEmpty(options.Environment)")
                                     );
-                                    const envProp = authContext.environmentPropertyName ?? "Wss";
                                     writer.writeLine(
-                                        `options.Environment = _clientOptions.Environment?.${envProp} ?? "";`
+                                        `options.Environment = _clientOptions.Environment?.${authContext.environmentPropertyName} ?? "";`
                                     );
                                     writer.endControlFlow();
                                 }
