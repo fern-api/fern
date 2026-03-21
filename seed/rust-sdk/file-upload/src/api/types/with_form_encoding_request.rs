@@ -33,3 +33,47 @@ impl WithFormEncodingRequest {
         form
     }
 }
+
+impl WithFormEncodingRequest {
+    pub fn builder() -> WithFormEncodingRequestBuilder {
+        WithFormEncodingRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct WithFormEncodingRequestBuilder {
+    file: Option<Vec<u8>>,
+    foo: Option<String>,
+    bar: Option<MyObject>,
+}
+
+impl WithFormEncodingRequestBuilder {
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+
+    pub fn foo(mut self, value: impl Into<String>) -> Self {
+        self.foo = Some(value.into());
+        self
+    }
+
+    pub fn bar(mut self, value: MyObject) -> Self {
+        self.bar = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`WithFormEncodingRequest`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`file`](WithFormEncodingRequestBuilder::file)
+    /// - [`foo`](WithFormEncodingRequestBuilder::foo)
+    /// - [`bar`](WithFormEncodingRequestBuilder::bar)
+    pub fn build(self) -> Result<WithFormEncodingRequest, BuildError> {
+        Ok(WithFormEncodingRequest {
+            file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
+            foo: self.foo.ok_or_else(|| BuildError::missing_field("foo"))?,
+            bar: self.bar.ok_or_else(|| BuildError::missing_field("bar"))?,
+        })
+    }
+}
