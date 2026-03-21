@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { existsSync, readFileSync } from "fs";
+import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import { Project, SyntaxKind } from "ts-morph";
 
 // Define the possible import modifications
 const ImportModification = {
@@ -24,100 +25,97 @@ type ImportModificationType = (typeof ImportModification)[keyof typeof ImportMod
  * - Replacing folder imports with explicit `index.js` imports.
  * - Ensuring compatibility with the generated ESM output.
  *
+ * Uses string-based regex replacement instead of ts-morph AST mutations for performance.
+ * On a 10K-file project (Stripe), this completes in ~7s vs ~372s with ts-morph.
+ *
  * @param pathToProject - The absolute path to the root of the TypeScript project.
  */
 export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
-    const project = new Project({
-        tsConfigFilePath: join(pathToProject, RelativeFilePath.of("tsconfig.json"))
+    // Phase 1: Resolve tsconfig include/exclude paths and discover files within scope.
+    // The old ts-morph implementation used project.getSourceFiles() which respects tsconfig
+    // include/exclude. We replicate this by reading the tsconfig chain.
+    const { includeDirs, excludeDirs } = resolveIncludeExcludeDirectories(pathToProject);
+    const fileExistenceCache = new Set<string>();
+    for (const dir of includeDirs) {
+        await collectFiles(dir, fileExistenceCache, excludeDirs);
+    }
+
+    // Phase 2: Process each .ts file via string replacement
+    const importModificationCache = new Map<string, ImportModificationType>();
+
+    const tsFiles = [...fileExistenceCache].filter((f) => f.endsWith(".ts"));
+
+    // Process in parallel batches for I/O throughput
+    const BATCH_SIZE = 100;
+    for (let i = 0; i < tsFiles.length; i += BATCH_SIZE) {
+        const batch = tsFiles.slice(i, i + BATCH_SIZE);
+        await Promise.all(
+            batch.map(async (filePath) => {
+                const content = await readFile(filePath, "utf-8");
+                const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
+                if (newContent !== content) {
+                    await writeFile(filePath, newContent);
+                }
+            })
+        );
+    }
+}
+
+// Regex for static imports/exports: from "./path" or from '../path'
+// Matches import/export declarations like: import { x } from "./foo" or export * from "../bar"
+const STATIC_IMPORT_REGEX = /(from\s+["'])(\.\.?\/[^"']*?)(["'])/g;
+
+// Regex for dynamic imports: import("./path") or import('./path')
+const DYNAMIC_IMPORT_REGEX = /(import\(\s*["'])(\.\.?\/[^"']*?)(["']\s*\))/g;
+
+function fixImportsInSource(
+    content: string,
+    filePath: string,
+    fileExistenceCache: Set<string>,
+    importModificationCache: Map<string, ImportModificationType>
+): string {
+    let result = content;
+
+    // Fix static imports/exports
+    result = result.replace(STATIC_IMPORT_REGEX, (match, prefix: string, specifier: string, suffix: string) => {
+        if (specifier.endsWith(".js")) {
+            return match;
+        }
+        const modification = getCachedModification(specifier, filePath, fileExistenceCache, importModificationCache);
+        if (modification !== ImportModification.NONE) {
+            return prefix + getModifiedSpecifier(specifier, modification) + suffix;
+        }
+        return match;
     });
 
-    // Create caches for performance
-    const importModificationCache = new Map<string, ImportModificationType>();
-    const fileExistenceCache = new Set<string>();
+    // Fix dynamic imports
+    result = result.replace(DYNAMIC_IMPORT_REGEX, (match, prefix: string, specifier: string, suffix: string) => {
+        if (specifier.endsWith(".js")) {
+            return match;
+        }
+        const modification = getCachedModification(specifier, filePath, fileExistenceCache, importModificationCache);
+        if (modification !== ImportModification.NONE) {
+            return prefix + getModifiedSpecifier(specifier, modification) + suffix;
+        }
+        return match;
+    });
 
-    // Build file existence map for faster lookups
-    for (const file of project.getSourceFiles()) {
-        fileExistenceCache.add(file.getFilePath());
+    return result;
+}
+
+function getCachedModification(
+    moduleSpecifier: string,
+    currentFilePath: string,
+    fileExistenceCache: Set<string>,
+    importModificationCache: Map<string, ImportModificationType>
+): ImportModificationType {
+    const normalizedPath = getNormalizedPath(moduleSpecifier, currentFilePath);
+    let modification = importModificationCache.get(normalizedPath);
+    if (modification === undefined) {
+        modification = determineModification(moduleSpecifier, currentFilePath, fileExistenceCache);
+        importModificationCache.set(normalizedPath, modification);
     }
-
-    for (const sourceFile of project.getSourceFiles()) {
-        // Handle static imports and exports
-        const allDeclarations = [...sourceFile.getImportDeclarations(), ...sourceFile.getExportDeclarations()];
-
-        for (const importDecl of allDeclarations) {
-            const moduleSpecifier = importDecl.getModuleSpecifierValue();
-
-            // Skip if not a relative import or already has .js extension
-            if (!moduleSpecifier || !moduleSpecifier.startsWith(".") || moduleSpecifier.endsWith(".js")) {
-                continue;
-            }
-
-            // Check cache or determine modification type
-            const normalizedPath = getNormalizedPath(moduleSpecifier, sourceFile.getFilePath());
-            let modification = importModificationCache.get(normalizedPath);
-
-            if (!modification) {
-                modification = determineModification(moduleSpecifier, sourceFile.getFilePath(), fileExistenceCache);
-                importModificationCache.set(normalizedPath, modification);
-            }
-
-            // Apply modification if needed
-            if (modification !== ImportModification.NONE) {
-                const newSpecifier = getModifiedSpecifier(moduleSpecifier, modification);
-                importDecl.setModuleSpecifier(newSpecifier);
-            }
-        }
-
-        // Handle dynamic imports - highly optimized for large projects
-        // First check if file even contains 'import(' to skip files without dynamic imports
-        const sourceText = sourceFile.getFullText();
-        if (!sourceText.includes("import(")) {
-            continue;
-        }
-
-        // Only get call expressions, then filter for import calls
-        const importCalls = sourceFile
-            .getDescendantsOfKind(SyntaxKind.CallExpression)
-            .filter((callExpression) => callExpression.getExpression().getKind() === SyntaxKind.ImportKeyword);
-
-        for (const callExpression of importCalls) {
-            const args = callExpression.getArguments();
-            if (args.length === 0) {
-                continue;
-            }
-            const firstArg = args[0];
-            if (!firstArg) {
-                continue;
-            }
-            if (firstArg.getKind() !== SyntaxKind.StringLiteral) {
-                continue;
-            }
-            const stringLiteral = firstArg.asKindOrThrow(SyntaxKind.StringLiteral);
-            const moduleSpecifier = stringLiteral.getLiteralValue();
-
-            // Skip if not a relative import or already has .js extension
-            if (!moduleSpecifier || !moduleSpecifier.startsWith(".") || moduleSpecifier.endsWith(".js")) {
-                continue;
-            }
-
-            // Check cache or determine modification type
-            const normalizedPath = getNormalizedPath(moduleSpecifier, sourceFile.getFilePath());
-            let modification = importModificationCache.get(normalizedPath);
-
-            if (!modification) {
-                modification = determineModification(moduleSpecifier, sourceFile.getFilePath(), fileExistenceCache);
-                importModificationCache.set(normalizedPath, modification);
-            }
-
-            // Apply modification if needed
-            if (modification !== ImportModification.NONE) {
-                const newSpecifier = getModifiedSpecifier(moduleSpecifier, modification);
-                stringLiteral.replaceWithText(`"${newSpecifier}"`);
-            }
-        }
-    }
-
-    await project.save();
+    return modification;
 }
 
 // Get the modified import specifier based on modification type
@@ -171,4 +169,69 @@ function determineModification(
     }
 
     return ImportModification.NONE;
+}
+
+// Recursively collect all .ts and .js file paths, respecting exclude directories
+async function collectFiles(dir: string, files: Set<string>, excludeDirs: string[]): Promise<void> {
+    const resolvedDir = path.resolve(dir);
+    if (excludeDirs.some((excl) => resolvedDir === excl || resolvedDir.startsWith(excl + path.sep))) {
+        return;
+    }
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+            if (entry.name === "node_modules" || entry.name === ".git") {
+                continue;
+            }
+            await collectFiles(fullPath, files, excludeDirs);
+        } else if (entry.name.endsWith(".ts") || entry.name.endsWith(".js")) {
+            files.add(path.resolve(fullPath));
+        }
+    }
+}
+
+interface IncludeExclude {
+    includeDirs: string[];
+    excludeDirs: string[];
+}
+
+// Resolve the tsconfig.json "include" and "exclude" directories, following the "extends" chain.
+// Returns absolute directory paths. Falls back to the project root if no include is found.
+function resolveIncludeExcludeDirectories(projectPath: string): IncludeExclude {
+    const tsconfigPath = path.join(projectPath, "tsconfig.json");
+    const result = resolveFromTsconfig(tsconfigPath);
+
+    return {
+        includeDirs:
+            result.include.length > 0 ? result.include.map((inc) => path.resolve(projectPath, inc)) : [projectPath],
+        excludeDirs: result.exclude.map((excl) => path.resolve(projectPath, excl))
+    };
+}
+
+// Walk the tsconfig extends chain to collect include/exclude arrays.
+// TypeScript merges: child "include" overrides parent "include", same for "exclude".
+function resolveFromTsconfig(tsconfigPath: string): { include: string[]; exclude: string[] } {
+    if (!existsSync(tsconfigPath)) {
+        return { include: [], exclude: [] };
+    }
+
+    try {
+        const raw = JSON.parse(readFileSync(tsconfigPath, "utf-8"));
+
+        // Start with parent values if extending
+        let parentResult = { include: [] as string[], exclude: [] as string[] };
+        if (typeof raw.extends === "string") {
+            const extendsPath = path.resolve(path.dirname(tsconfigPath), raw.extends);
+            parentResult = resolveFromTsconfig(extendsPath);
+        }
+
+        // Child arrays override parent arrays (TypeScript behavior)
+        const include = Array.isArray(raw.include) ? (raw.include as string[]) : parentResult.include;
+        const exclude = Array.isArray(raw.exclude) ? (raw.exclude as string[]) : parentResult.exclude;
+
+        return { include, exclude };
+    } catch {
+        return { include: [], exclude: [] };
+    }
 }
