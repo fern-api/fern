@@ -129,6 +129,39 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return false;
     }
 
+    /**
+     * Resolves the PascalCase property name for the WebSocket environment URL
+     * from the IR's multi-URL environment configuration.
+     *
+     * Finds the first WebSocket channel that needs defaults and looks up its
+     * baseUrl in the IR environment base URLs to get the correct property name.
+     *
+     * @returns The PascalCase property name (e.g. "Wss"), or undefined if not resolvable
+     */
+    private getWsEnvironmentPropertyName(): string | undefined {
+        if (!this.settings.enableWebsockets || this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (
+                    websocketChannel != null &&
+                    websocketChannelNeedsDefaults(websocketChannel, this.context) &&
+                    websocketChannel.baseUrl != null
+                ) {
+                    const baseUrl = this.context.ir.environments.environments.baseUrls.find(
+                        (b) => b.id === websocketChannel.baseUrl
+                    );
+                    if (baseUrl != null) {
+                        return baseUrl.name.pascalCase.safeName;
+                    }
+                }
+            }
+        }
+        return undefined;
+    }
+
     public doGenerate(): CSharpFile {
         const interfaceReference = this.csharp.classReference({
             name: `I${this.names.classes.rootClient}`,
@@ -564,7 +597,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     if (needsWsDefaults) {
                         const tenantNameAccess = unified ? "clientOptions.TenantName" : "tenantName";
-                        const environmentAccess = 'clientOptions?.Environment?.Wss ?? ""';
+                        const wsEnvPropName = this.getWsEnvironmentPropertyName() ?? "Wss";
+                        const environmentAccess = `clientOptions?.Environment?.${wsEnvPropName} ?? ""`;
                         innerWriter.writeLine("_wsDefaults = new WebSocketDefaults");
                         innerWriter.writeLine("{");
                         innerWriter.indent();
