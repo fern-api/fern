@@ -169,11 +169,24 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     // Compute auth context so WebSocket Options class can make auth params optional
                     const constructorParamNames = RootClientGenerator.getConstructorParamNamesFromIr(context);
                     const hasOAuth = context.getOauth() != null;
+                    let environmentPropertyName: string | undefined;
+                    if (
+                        websocketChannel.baseUrl != null &&
+                        context.ir.environments?.environments.type === "multipleBaseUrls"
+                    ) {
+                        const baseUrl = context.ir.environments.environments.baseUrls.find(
+                            (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
+                        );
+                        if (baseUrl != null) {
+                            environmentPropertyName = baseUrl.name.pascalCase.safeName;
+                        }
+                    }
                     const authContext = RootClientGenerator.buildWebSocketAuthContextStatic(
                         websocketChannel,
                         constructorParamNames,
                         hasOAuth,
-                        context.settings.temporaryWebsocketEnvironments
+                        context.settings.temporaryWebsocketEnvironments,
+                        environmentPropertyName
                     );
                     const websocketApi = new WebSocketClientGenerator({
                         context,

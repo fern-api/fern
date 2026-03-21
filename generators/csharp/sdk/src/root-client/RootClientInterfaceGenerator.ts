@@ -84,11 +84,24 @@ export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkG
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
                         // Compute auth context so the interface knows which params are auto-propagated
+                        let environmentPropertyName: string | undefined;
+                        if (
+                            websocketChannel.baseUrl != null &&
+                            this.context.ir.environments?.environments.type === "multipleBaseUrls"
+                        ) {
+                            const baseUrl = this.context.ir.environments.environments.baseUrls.find(
+                                (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
+                            );
+                            if (baseUrl != null) {
+                                environmentPropertyName = baseUrl.name.pascalCase.safeName;
+                            }
+                        }
                         const authContext = RootClientGenerator.buildWebSocketAuthContextStatic(
                             websocketChannel,
                             constructorParamNames,
                             hasOAuth,
-                            this.settings.temporaryWebsocketEnvironments
+                            this.settings.temporaryWebsocketEnvironments,
+                            environmentPropertyName
                         );
                         WebSocketClientGenerator.createWebSocketApiInterfaceFactories(
                             interface_,
