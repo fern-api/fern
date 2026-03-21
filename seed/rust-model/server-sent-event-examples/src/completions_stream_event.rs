@@ -4,14 +4,28 @@ pub use crate::prelude::*;
 #[serde(tag = "event")]
 pub enum StreamEvent {
         #[serde(rename = "completion")]
+        #[non_exhaustive]
         Completion {
-            #[serde(flatten)]
-            data: CompletionEvent,
+            #[serde(default)]
+            content: String,
         },
 
         #[serde(rename = "error")]
+        #[non_exhaustive]
         Error {
-            #[serde(flatten)]
-            data: ErrorEvent,
+            #[serde(default)]
+            error: String,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            code: Option<i64>,
         },
+}
+
+impl StreamEvent {
+    pub fn completion(content: String) -> Self {
+        Self::Completion { content }
+    }
+
+    pub fn error(error: String) -> Self {
+        Self::Error { error, code: None }
+    }
 }

@@ -10,3 +10,50 @@ pub struct RefundProcessedPayload {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
 }
+
+impl RefundProcessedPayload {
+    pub fn builder() -> RefundProcessedPayloadBuilder {
+        RefundProcessedPayloadBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct RefundProcessedPayloadBuilder {
+    refund_id: Option<String>,
+    amount: Option<f64>,
+    reason: Option<String>,
+}
+
+impl RefundProcessedPayloadBuilder {
+    pub fn refund_id(mut self, value: impl Into<String>) -> Self {
+        self.refund_id = Some(value.into());
+        self
+    }
+
+    pub fn amount(mut self, value: f64) -> Self {
+        self.amount = Some(value);
+        self
+    }
+
+    pub fn reason(mut self, value: impl Into<String>) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`RefundProcessedPayload`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`refund_id`](RefundProcessedPayloadBuilder::refund_id)
+    /// - [`amount`](RefundProcessedPayloadBuilder::amount)
+    pub fn build(self) -> Result<RefundProcessedPayload, BuildError> {
+        Ok(RefundProcessedPayload {
+            refund_id: self
+                .refund_id
+                .ok_or_else(|| BuildError::missing_field("refund_id"))?,
+            amount: self
+                .amount
+                .ok_or_else(|| BuildError::missing_field("amount"))?,
+            reason: self.reason,
+        })
+    }
+}

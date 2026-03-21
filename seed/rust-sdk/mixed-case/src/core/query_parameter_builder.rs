@@ -45,6 +45,7 @@ impl QueryBuilder {
         self
     }
 
+
     /// Add multiple integer parameters with the same key (for allow-multiple query params)
     /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
     pub fn int_array<I, T>(mut self, key: &str, values: I) -> Self
@@ -107,19 +108,12 @@ impl QueryBuilder {
     }
 
     /// Add a datetime parameter (any DateTime timezone)
-    pub fn datetime<Tz: TimeZone>(
-        mut self,
-        key: &str,
-        value: impl Into<Option<DateTime<Tz>>>,
-    ) -> Self
+    pub fn datetime<Tz: TimeZone>(mut self, key: &str, value: impl Into<Option<DateTime<Tz>>>) -> Self
     where
         Tz::Offset: std::fmt::Display,
     {
         if let Some(v) = value.into() {
-            self.params.push((
-                key.to_string(),
-                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
+            self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
         }
         self
     }
@@ -129,13 +123,11 @@ impl QueryBuilder {
         if let Some(v) = value.into() {
             // Convert NaiveDate to DateTime<Utc> at start of day
             let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((
-                key.to_string(),
-                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
+            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
         }
         self
     }
+
 
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
@@ -313,15 +305,14 @@ mod tests {
         let result = QueryBuilder::new()
             .string("name", Some("alice".to_string()))
             .build();
-        assert_eq!(
-            result,
-            Some(vec![("name".to_string(), "alice".to_string())])
-        );
+        assert_eq!(result, Some(vec![("name".to_string(), "alice".to_string())]));
     }
 
     #[test]
     fn test_string_param_none_skipped() {
-        let result = QueryBuilder::new().string("name", None::<String>).build();
+        let result = QueryBuilder::new()
+            .string("name", None::<String>)
+            .build();
         assert!(result.is_none());
     }
 
@@ -374,17 +365,19 @@ mod tests {
         let result = QueryBuilder::new().date("on", Some(date)).build();
         assert_eq!(
             result,
-            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
+            Some(vec![(
+                "on".to_string(),
+                "2024-01-15T00:00:00Z".to_string()
+            )])
         );
     }
+
+
 
     #[test]
     fn test_string_array_multiple_entries() {
         let result = QueryBuilder::new()
-            .string_array(
-                "tag",
-                vec!["a".to_string(), "b".to_string(), "c".to_string()],
-            )
+            .string_array("tag", vec!["a".to_string(), "b".to_string(), "c".to_string()])
             .build();
         assert_eq!(
             result,
@@ -460,14 +453,21 @@ mod tests {
 
     #[test]
     fn test_serialize_numeric_no_quotes() {
-        let result = QueryBuilder::new().serialize("count", Some(42)).build();
-        assert_eq!(result, Some(vec![("count".to_string(), "42".to_string())]));
+        let result = QueryBuilder::new()
+            .serialize("count", Some(42))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("count".to_string(), "42".to_string())])
+        );
     }
 
     #[test]
     fn test_serialize_array_skips_null() {
         let values: Vec<Option<&str>> = vec![Some("a"), None, Some("b")];
-        let result = QueryBuilder::new().serialize_array("items", values).build();
+        let result = QueryBuilder::new()
+            .serialize_array("items", values)
+            .build();
         assert_eq!(
             result,
             Some(vec![
@@ -493,6 +493,7 @@ mod tests {
             ])
         );
     }
+
 
     // ===========================
     // parse_structured_query tests
