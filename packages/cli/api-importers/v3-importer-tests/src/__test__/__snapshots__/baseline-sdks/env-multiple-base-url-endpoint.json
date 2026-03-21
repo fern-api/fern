@@ -116,6 +116,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -134,8 +135,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "environments": {
@@ -457,6 +457,9 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

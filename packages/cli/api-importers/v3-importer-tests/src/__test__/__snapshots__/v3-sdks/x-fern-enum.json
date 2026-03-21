@@ -36,6 +36,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "nano",
               "name": {
                 "originalName": "Nano",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Nano",
                   "safeName": "Nano"
                 }
-              },
-              "wireValue": "nano"
+              }
             },
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost."
           }
@@ -135,6 +135,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -153,8 +154,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

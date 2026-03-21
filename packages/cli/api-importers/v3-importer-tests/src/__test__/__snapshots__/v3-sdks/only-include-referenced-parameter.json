@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              },
-              "wireValue": "query"
+              }
             },
             "valueType": {
               "container": {
@@ -82,6 +82,7 @@
           },
           {
             "name": {
+              "wireValue": "limit",
               "name": {
                 "originalName": "limit",
                 "camelCase": {
@@ -100,8 +101,7 @@
                   "unsafeName": "Limit",
                   "safeName": "Limit"
                 }
-              },
-              "wireValue": "limit"
+              }
             },
             "valueType": {
               "container": {
@@ -175,6 +175,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "unused",
               "name": {
                 "originalName": "unused",
                 "camelCase": {
@@ -193,8 +194,7 @@
                   "unsafeName": "Unused",
                   "safeName": "Unused"
                 }
-              },
-              "wireValue": "unused"
+              }
             },
             "valueType": {
               "container": {
@@ -264,6 +264,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -282,8 +283,7 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                },
-                "wireValue": "filter"
+                }
               },
               "valueType": {
                 "fernFilepath": {
@@ -337,6 +337,7 @@
                 "queryParameters": [
                   {
                     "name": {
+                      "wireValue": "filter",
                       "name": {
                         "originalName": "filter",
                         "camelCase": {
@@ -355,8 +356,7 @@
                           "unsafeName": "Filter",
                           "safeName": "Filter"
                         }
-                      },
-                      "wireValue": "filter"
+                      }
                     },
                     "shape": {
                       "type": "single"
@@ -368,6 +368,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "query",
                                 "name": {
                                   "originalName": "query",
                                   "camelCase": {
@@ -386,8 +387,7 @@
                                     "unsafeName": "Query",
                                     "safeName": "Query"
                                   }
-                                },
-                                "wireValue": "query"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "SearchFilter",
@@ -436,6 +436,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "limit",
                                 "name": {
                                   "originalName": "limit",
                                   "camelCase": {
@@ -454,8 +455,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                   }
-                                },
-                                "wireValue": "limit"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "SearchFilter",
@@ -794,6 +794,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -812,8 +813,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

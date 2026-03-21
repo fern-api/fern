@@ -60,6 +60,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "latitude",
               "name": {
                 "originalName": "latitude",
                 "camelCase": {
@@ -78,8 +79,7 @@
                   "unsafeName": "Latitude",
                   "safeName": "Latitude"
                 }
-              },
-              "wireValue": "latitude"
+              }
             },
             "valueType": {
               "container": {
@@ -103,6 +103,7 @@
           },
           {
             "name": {
+              "wireValue": "longitude",
               "name": {
                 "originalName": "longitude",
                 "camelCase": {
@@ -121,8 +122,7 @@
                   "unsafeName": "Longitude",
                   "safeName": "Longitude"
                 }
-              },
-              "wireValue": "longitude"
+              }
             },
             "valueType": {
               "container": {
@@ -188,6 +188,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "species",
               "name": {
                 "originalName": "species",
                 "camelCase": {
@@ -206,8 +207,7 @@
                   "unsafeName": "Species",
                   "safeName": "Species"
                 }
-              },
-              "wireValue": "species"
+              }
             },
             "valueType": {
               "container": {
@@ -231,6 +231,7 @@
           },
           {
             "name": {
+              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -249,8 +250,7 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              },
-              "wireValue": "height"
+              }
             },
             "valueType": {
               "container": {
@@ -396,6 +396,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "age",
                   "name": {
                     "originalName": "age",
                     "camelCase": {
@@ -414,8 +415,7 @@
                       "unsafeName": "Age",
                       "safeName": "Age"
                     }
-                  },
-                  "wireValue": "age"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -433,6 +433,7 @@
               },
               {
                 "name": {
+                  "wireValue": "location",
                   "name": {
                     "originalName": "location",
                     "camelCase": {
@@ -451,8 +452,7 @@
                       "unsafeName": "Location",
                       "safeName": "Location"
                     }
-                  },
-                  "wireValue": "location"
+                  }
                 },
                 "valueType": {
                   "name": {
@@ -491,6 +491,7 @@
             "extendedProperties": [
               {
                 "name": {
+                  "wireValue": "species",
                   "name": {
                     "originalName": "species",
                     "camelCase": {
@@ -509,8 +510,7 @@
                       "unsafeName": "Species",
                       "safeName": "Species"
                     }
-                  },
-                  "wireValue": "species"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -534,6 +534,7 @@
               },
               {
                 "name": {
+                  "wireValue": "height",
                   "name": {
                     "originalName": "height",
                     "camelCase": {
@@ -552,8 +553,7 @@
                       "unsafeName": "Height",
                       "safeName": "Height"
                     }
-                  },
-                  "wireValue": "height"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -672,6 +672,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -690,8 +691,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -742,6 +742,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "latitude",
               "name": {
                 "originalName": "latitude",
                 "camelCase": {
@@ -760,8 +761,7 @@
                   "unsafeName": "Latitude",
                   "safeName": "Latitude"
                 }
-              },
-              "wireValue": "latitude"
+              }
             },
             "typeReference": {
               "value": {
@@ -773,6 +773,7 @@
           },
           {
             "name": {
+              "wireValue": "longitude",
               "name": {
                 "originalName": "longitude",
                 "camelCase": {
@@ -791,8 +792,7 @@
                   "unsafeName": "Longitude",
                   "safeName": "Longitude"
                 }
-              },
-              "wireValue": "longitude"
+              }
             },
             "typeReference": {
               "value": {
@@ -835,6 +835,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "species",
               "name": {
                 "originalName": "species",
                 "camelCase": {
@@ -853,8 +854,7 @@
                   "unsafeName": "Species",
                   "safeName": "Species"
                 }
-              },
-              "wireValue": "species"
+              }
             },
             "typeReference": {
               "value": {
@@ -866,6 +866,7 @@
           },
           {
             "name": {
+              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -884,8 +885,7 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              },
-              "wireValue": "height"
+              }
             },
             "typeReference": {
               "value": {
@@ -965,6 +965,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "species",
                   "name": {
                     "originalName": "species",
                     "camelCase": {
@@ -983,8 +984,7 @@
                       "unsafeName": "Species",
                       "safeName": "Species"
                     }
-                  },
-                  "wireValue": "species"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -996,6 +996,7 @@
               },
               {
                 "name": {
+                  "wireValue": "height",
                   "name": {
                     "originalName": "height",
                     "camelCase": {
@@ -1014,8 +1015,7 @@
                       "unsafeName": "Height",
                       "safeName": "Height"
                     }
-                  },
-                  "wireValue": "height"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1027,6 +1027,7 @@
               },
               {
                 "name": {
+                  "wireValue": "age",
                   "name": {
                     "originalName": "age",
                     "camelCase": {
@@ -1045,8 +1046,7 @@
                       "unsafeName": "Age",
                       "safeName": "Age"
                     }
-                  },
-                  "wireValue": "age"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -1055,6 +1055,7 @@
               },
               {
                 "name": {
+                  "wireValue": "location",
                   "name": {
                     "originalName": "location",
                     "camelCase": {
@@ -1073,8 +1074,7 @@
                       "unsafeName": "Location",
                       "safeName": "Location"
                     }
-                  },
-                  "wireValue": "location"
+                  }
                 },
                 "typeReference": {
                   "value": "type_:TreeCreateLocation",
@@ -1099,6 +1099,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

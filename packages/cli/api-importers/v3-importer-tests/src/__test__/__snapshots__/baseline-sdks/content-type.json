@@ -186,6 +186,7 @@
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -204,8 +205,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -239,6 +239,7 @@
               },
               {
                 "name": {
+                  "wireValue": "chunking_strategy",
                   "name": {
                     "originalName": "chunking_strategy",
                     "camelCase": {
@@ -257,8 +258,7 @@
                       "unsafeName": "ChunkingStrategy",
                       "safeName": "ChunkingStrategy"
                     }
-                  },
-                  "wireValue": "chunking_strategy"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -278,6 +278,7 @@
               {
                 "docs": "Optional multipart section to override the filename.",
                 "name": {
+                  "wireValue": "filename",
                   "name": {
                     "originalName": "filename",
                     "camelCase": {
@@ -296,8 +297,7 @@
                       "unsafeName": "Filename",
                       "safeName": "Filename"
                     }
-                  },
-                  "wireValue": "filename"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -323,6 +323,7 @@
               {
                 "value": {
                   "key": {
+                    "wireValue": "file",
                     "name": {
                       "originalName": "file",
                       "camelCase": {
@@ -341,8 +342,7 @@
                         "unsafeName": "File",
                         "safeName": "File"
                       }
-                    },
-                    "wireValue": "file"
+                    }
                   },
                   "isOptional": false,
                   "contentType": "application/octet-stream",
@@ -581,6 +581,7 @@
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -599,8 +600,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -730,6 +730,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -748,8 +749,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -860,6 +860,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -878,8 +879,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -898,6 +898,7 @@
               },
               {
                 "name": {
+                  "wireValue": "chunking_strategy",
                   "name": {
                     "originalName": "chunking_strategy",
                     "camelCase": {
@@ -916,8 +917,7 @@
                       "unsafeName": "ChunkingStrategy",
                       "safeName": "ChunkingStrategy"
                     }
-                  },
-                  "wireValue": "chunking_strategy"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -929,6 +929,7 @@
               },
               {
                 "name": {
+                  "wireValue": "filename",
                   "name": {
                     "originalName": "filename",
                     "camelCase": {
@@ -947,8 +948,7 @@
                       "unsafeName": "Filename",
                       "safeName": "Filename"
                     }
-                  },
-                  "wireValue": "filename"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -960,6 +960,7 @@
                 "type": "bodyProperty"
               },
               {
+                "wireValue": "file",
                 "name": {
                   "originalName": "file",
                   "camelCase": {
@@ -979,7 +980,6 @@
                     "safeName": "File"
                   }
                 },
-                "wireValue": "file",
                 "type": "file"
               }
             ],
@@ -1088,6 +1088,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -1106,8 +1107,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1141,6 +1141,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

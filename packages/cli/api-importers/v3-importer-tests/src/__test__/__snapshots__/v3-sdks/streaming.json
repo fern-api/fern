@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -130,6 +130,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -148,8 +149,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -224,6 +224,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -242,8 +243,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -272,6 +272,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -290,8 +291,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -318,6 +318,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -336,8 +337,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -409,6 +409,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -427,8 +428,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -457,6 +457,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -475,8 +476,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -503,6 +503,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -521,8 +522,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -594,6 +594,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -612,8 +613,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -642,6 +642,7 @@
           },
           {
             "name": {
+              "wireValue": "inline",
               "name": {
                 "originalName": "inline",
                 "camelCase": {
@@ -660,8 +661,7 @@
                   "unsafeName": "Inline",
                   "safeName": "Inline"
                 }
-              },
-              "wireValue": "inline"
+              }
             },
             "valueType": {
               "container": {
@@ -687,6 +687,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -705,8 +706,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -778,6 +778,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -796,8 +797,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -826,6 +826,7 @@
           },
           {
             "name": {
+              "wireValue": "inline",
               "name": {
                 "originalName": "inline",
                 "camelCase": {
@@ -844,8 +845,7 @@
                   "unsafeName": "Inline",
                   "safeName": "Inline"
                 }
-              },
-              "wireValue": "inline"
+              }
             },
             "valueType": {
               "container": {
@@ -917,6 +917,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -935,8 +936,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -965,6 +965,7 @@
           },
           {
             "name": {
+              "wireValue": "inline",
               "name": {
                 "originalName": "inline",
                 "camelCase": {
@@ -983,8 +984,7 @@
                   "unsafeName": "Inline",
                   "safeName": "Inline"
                 }
-              },
-              "wireValue": "inline"
+              }
             },
             "valueType": {
               "container": {
@@ -1010,6 +1010,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -1028,8 +1029,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -1101,6 +1101,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -1119,8 +1120,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -1149,6 +1149,7 @@
           },
           {
             "name": {
+              "wireValue": "inline",
               "name": {
                 "originalName": "inline",
                 "camelCase": {
@@ -1167,8 +1168,7 @@
                   "unsafeName": "Inline",
                   "safeName": "Inline"
                 }
-              },
-              "wireValue": "inline"
+              }
             },
             "valueType": {
               "container": {
@@ -1261,6 +1261,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "id",
                                   "name": {
                                     "originalName": "id",
                                     "camelCase": {
@@ -1279,8 +1280,7 @@
                                       "unsafeName": "Id",
                                       "safeName": "Id"
                                     }
-                                  },
-                                  "wireValue": "id"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser",
@@ -1548,6 +1548,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -1566,8 +1567,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1840,6 +1840,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "id",
                                   "name": {
                                     "originalName": "id",
                                     "camelCase": {
@@ -1858,8 +1859,7 @@
                                       "unsafeName": "Id",
                                       "safeName": "Id"
                                     }
-                                  },
-                                  "wireValue": "id"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser-2",
@@ -1923,6 +1923,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "name",
                                   "name": {
                                     "originalName": "name",
                                     "camelCase": {
@@ -1941,8 +1942,7 @@
                                       "unsafeName": "Name",
                                       "safeName": "Name"
                                     }
-                                  },
-                                  "wireValue": "name"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser-2",
@@ -2004,6 +2004,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "streamed",
                                   "name": {
                                     "originalName": "streamed",
                                     "camelCase": {
@@ -2022,8 +2023,7 @@
                                       "unsafeName": "Streamed",
                                       "safeName": "Streamed"
                                     }
-                                  },
-                                  "wireValue": "streamed"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser-2",
@@ -2288,6 +2288,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -2306,8 +2307,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User-2",
@@ -2371,6 +2371,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "name",
                                 "name": {
                                   "originalName": "name",
                                   "camelCase": {
@@ -2389,8 +2390,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                   }
-                                },
-                                "wireValue": "name"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User-2",
@@ -2452,6 +2452,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "streamed",
                                 "name": {
                                   "originalName": "streamed",
                                   "camelCase": {
@@ -2470,8 +2471,7 @@
                                     "unsafeName": "Streamed",
                                     "safeName": "Streamed"
                                   }
-                                },
-                                "wireValue": "streamed"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User-2",
@@ -2739,6 +2739,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "id",
                                   "name": {
                                     "originalName": "id",
                                     "camelCase": {
@@ -2757,8 +2758,7 @@
                                       "unsafeName": "Id",
                                       "safeName": "Id"
                                     }
-                                  },
-                                  "wireValue": "id"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "user_v3_Response_stream_streaming",
@@ -2822,6 +2822,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "inline",
                                   "name": {
                                     "originalName": "inline",
                                     "camelCase": {
@@ -2840,8 +2841,7 @@
                                       "unsafeName": "Inline",
                                       "safeName": "Inline"
                                     }
-                                  },
-                                  "wireValue": "inline"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "user_v3_Response_stream_streaming",
@@ -2900,6 +2900,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "streamed",
                                   "name": {
                                     "originalName": "streamed",
                                     "camelCase": {
@@ -2918,8 +2919,7 @@
                                       "unsafeName": "Streamed",
                                       "safeName": "Streamed"
                                     }
-                                  },
-                                  "wireValue": "streamed"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "user_v3_Response_stream_streaming",
@@ -3201,6 +3201,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -3219,8 +3220,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "user_v3_Response_stream",
@@ -3284,6 +3284,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "inline",
                                 "name": {
                                   "originalName": "inline",
                                   "camelCase": {
@@ -3302,8 +3303,7 @@
                                     "unsafeName": "Inline",
                                     "safeName": "Inline"
                                   }
-                                },
-                                "wireValue": "inline"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "user_v3_Response_stream",
@@ -3615,6 +3615,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -3633,8 +3634,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

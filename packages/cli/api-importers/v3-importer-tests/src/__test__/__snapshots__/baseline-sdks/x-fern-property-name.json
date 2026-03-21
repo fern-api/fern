@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "renamed_id",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "RenamedID",
                   "safeName": "RenamedID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -120,6 +120,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -138,8 +139,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -187,6 +187,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "renamed_id",
                 "camelCase": {
@@ -205,8 +206,7 @@
                   "unsafeName": "RenamedID",
                   "safeName": "RenamedID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -226,6 +226,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

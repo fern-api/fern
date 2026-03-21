@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "boolField1",
               "name": {
                 "originalName": "boolField1",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "BoolField1",
                   "safeName": "BoolField1"
                 }
-              },
-              "wireValue": "boolField1"
+              }
             },
             "valueType": {
               "container": {
@@ -103,6 +103,7 @@
           },
           {
             "name": {
+              "wireValue": "boolField2",
               "name": {
                 "originalName": "boolField2",
                 "camelCase": {
@@ -121,8 +122,7 @@
                   "unsafeName": "BoolField2",
                   "safeName": "BoolField2"
                 }
-              },
-              "wireValue": "boolField2"
+              }
             },
             "valueType": {
               "container": {
@@ -147,6 +147,7 @@
           },
           {
             "name": {
+              "wireValue": "stringField",
               "name": {
                 "originalName": "stringField",
                 "camelCase": {
@@ -165,8 +166,7 @@
                   "unsafeName": "StringField",
                   "safeName": "StringField"
                 }
-              },
-              "wireValue": "stringField"
+              }
             },
             "valueType": {
               "container": {
@@ -191,6 +191,7 @@
           },
           {
             "name": {
+              "wireValue": "numberField",
               "name": {
                 "originalName": "numberField",
                 "camelCase": {
@@ -209,8 +210,7 @@
                   "unsafeName": "NumberField",
                   "safeName": "NumberField"
                 }
-              },
-              "wireValue": "numberField"
+              }
             },
             "valueType": {
               "container": {
@@ -305,6 +305,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "boolParam1",
                 "name": {
                   "originalName": "boolParam1",
                   "camelCase": {
@@ -323,8 +324,7 @@
                     "unsafeName": "BoolParam1",
                     "safeName": "BoolParam1"
                   }
-                },
-                "wireValue": "boolParam1"
+                }
               },
               "valueType": {
                 "container": {
@@ -350,6 +350,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam2",
                 "name": {
                   "originalName": "boolParam2",
                   "camelCase": {
@@ -368,8 +369,7 @@
                     "unsafeName": "BoolParam2",
                     "safeName": "BoolParam2"
                   }
-                },
-                "wireValue": "boolParam2"
+                }
               },
               "valueType": {
                 "container": {
@@ -395,6 +395,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam3",
                 "name": {
                   "originalName": "boolParam3",
                   "camelCase": {
@@ -413,8 +414,7 @@
                     "unsafeName": "BoolParam3",
                     "safeName": "BoolParam3"
                   }
-                },
-                "wireValue": "boolParam3"
+                }
               },
               "valueType": {
                 "container": {
@@ -440,6 +440,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam4",
                 "name": {
                   "originalName": "boolParam4",
                   "camelCase": {
@@ -458,8 +459,7 @@
                     "unsafeName": "BoolParam4",
                     "safeName": "BoolParam4"
                   }
-                },
-                "wireValue": "boolParam4"
+                }
               },
               "valueType": {
                 "container": {
@@ -485,6 +485,7 @@
             },
             {
               "name": {
+                "wireValue": "stringParam",
                 "name": {
                   "originalName": "stringParam",
                   "camelCase": {
@@ -503,8 +504,7 @@
                     "unsafeName": "StringParam",
                     "safeName": "StringParam"
                   }
-                },
-                "wireValue": "stringParam"
+                }
               },
               "valueType": {
                 "container": {
@@ -530,6 +530,7 @@
             },
             {
               "name": {
+                "wireValue": "numberParam",
                 "name": {
                   "originalName": "numberParam",
                   "camelCase": {
@@ -548,8 +549,7 @@
                     "unsafeName": "NumberParam",
                     "safeName": "NumberParam"
                   }
-                },
-                "wireValue": "numberParam"
+                }
               },
               "valueType": {
                 "container": {
@@ -575,6 +575,7 @@
             },
             {
               "name": {
+                "wireValue": "integerParam",
                 "name": {
                   "originalName": "integerParam",
                   "camelCase": {
@@ -593,8 +594,7 @@
                     "unsafeName": "IntegerParam",
                     "safeName": "IntegerParam"
                   }
-                },
-                "wireValue": "integerParam"
+                }
               },
               "valueType": {
                 "container": {
@@ -732,6 +732,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -750,8 +751,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -801,6 +801,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "boolField1",
               "name": {
                 "originalName": "boolField1",
                 "camelCase": {
@@ -819,8 +820,7 @@
                   "unsafeName": "BoolField1",
                   "safeName": "BoolField1"
                 }
-              },
-              "wireValue": "boolField1"
+              }
             },
             "typeReference": {
               "value": {
@@ -832,6 +832,7 @@
           },
           {
             "name": {
+              "wireValue": "boolField2",
               "name": {
                 "originalName": "boolField2",
                 "camelCase": {
@@ -850,8 +851,7 @@
                   "unsafeName": "BoolField2",
                   "safeName": "BoolField2"
                 }
-              },
-              "wireValue": "boolField2"
+              }
             },
             "typeReference": {
               "value": {
@@ -863,6 +863,7 @@
           },
           {
             "name": {
+              "wireValue": "stringField",
               "name": {
                 "originalName": "stringField",
                 "camelCase": {
@@ -881,8 +882,7 @@
                   "unsafeName": "StringField",
                   "safeName": "StringField"
                 }
-              },
-              "wireValue": "stringField"
+              }
             },
             "typeReference": {
               "value": {
@@ -894,6 +894,7 @@
           },
           {
             "name": {
+              "wireValue": "numberField",
               "name": {
                 "originalName": "numberField",
                 "camelCase": {
@@ -912,8 +913,7 @@
                   "unsafeName": "NumberField",
                   "safeName": "NumberField"
                 }
-              },
-              "wireValue": "numberField"
+              }
             },
             "typeReference": {
               "value": {
@@ -990,6 +990,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "boolParam1",
                 "name": {
                   "originalName": "boolParam1",
                   "camelCase": {
@@ -1008,8 +1009,7 @@
                     "unsafeName": "BoolParam1",
                     "safeName": "BoolParam1"
                   }
-                },
-                "wireValue": "boolParam1"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1021,6 +1021,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam2",
                 "name": {
                   "originalName": "boolParam2",
                   "camelCase": {
@@ -1039,8 +1040,7 @@
                     "unsafeName": "BoolParam2",
                     "safeName": "BoolParam2"
                   }
-                },
-                "wireValue": "boolParam2"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1052,6 +1052,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam3",
                 "name": {
                   "originalName": "boolParam3",
                   "camelCase": {
@@ -1070,8 +1071,7 @@
                     "unsafeName": "BoolParam3",
                     "safeName": "BoolParam3"
                   }
-                },
-                "wireValue": "boolParam3"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1083,6 +1083,7 @@
             },
             {
               "name": {
+                "wireValue": "boolParam4",
                 "name": {
                   "originalName": "boolParam4",
                   "camelCase": {
@@ -1101,8 +1102,7 @@
                     "unsafeName": "BoolParam4",
                     "safeName": "BoolParam4"
                   }
-                },
-                "wireValue": "boolParam4"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1114,6 +1114,7 @@
             },
             {
               "name": {
+                "wireValue": "stringParam",
                 "name": {
                   "originalName": "stringParam",
                   "camelCase": {
@@ -1132,8 +1133,7 @@
                     "unsafeName": "StringParam",
                     "safeName": "StringParam"
                   }
-                },
-                "wireValue": "stringParam"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1145,6 +1145,7 @@
             },
             {
               "name": {
+                "wireValue": "numberParam",
                 "name": {
                   "originalName": "numberParam",
                   "camelCase": {
@@ -1163,8 +1164,7 @@
                     "unsafeName": "NumberParam",
                     "safeName": "NumberParam"
                   }
-                },
-                "wireValue": "numberParam"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1176,6 +1176,7 @@
             },
             {
               "name": {
+                "wireValue": "integerParam",
                 "name": {
                   "originalName": "integerParam",
                   "camelCase": {
@@ -1194,8 +1195,7 @@
                     "unsafeName": "IntegerParam",
                     "safeName": "IntegerParam"
                   }
-                },
-                "wireValue": "integerParam"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1222,6 +1222,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

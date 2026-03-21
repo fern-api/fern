@@ -188,6 +188,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "ACTIVE",
               "name": {
                 "originalName": "ACTIVE",
                 "camelCase": {
@@ -206,12 +207,12 @@
                   "unsafeName": "Active",
                   "safeName": "Active"
                 }
-              },
-              "wireValue": "ACTIVE"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "INACTIVE",
               "name": {
                 "originalName": "INACTIVE",
                 "camelCase": {
@@ -230,12 +231,12 @@
                   "unsafeName": "Inactive",
                   "safeName": "Inactive"
                 }
-              },
-              "wireValue": "INACTIVE"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "PENDING",
               "name": {
                 "originalName": "PENDING",
                 "camelCase": {
@@ -254,8 +255,7 @@
                   "unsafeName": "Pending",
                   "safeName": "Pending"
                 }
-              },
-              "wireValue": "PENDING"
+              }
             }
           }
         ],
@@ -356,6 +356,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "NOT_FOUND",
               "name": {
                 "originalName": "NOT_FOUND",
                 "camelCase": {
@@ -374,12 +375,12 @@
                   "unsafeName": "NotFound",
                   "safeName": "NotFound"
                 }
-              },
-              "wireValue": "NOT_FOUND"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "UNAUTHORIZED",
               "name": {
                 "originalName": "UNAUTHORIZED",
                 "camelCase": {
@@ -398,12 +399,12 @@
                   "unsafeName": "Unauthorized",
                   "safeName": "Unauthorized"
                 }
-              },
-              "wireValue": "UNAUTHORIZED"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "BAD_REQUEST",
               "name": {
                 "originalName": "BAD_REQUEST",
                 "camelCase": {
@@ -422,8 +423,7 @@
                   "unsafeName": "BadRequest",
                   "safeName": "BadRequest"
                 }
-              },
-              "wireValue": "BAD_REQUEST"
+              }
             }
           }
         ],
@@ -468,6 +468,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -486,8 +487,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "valueType": {
               "container": {
@@ -529,6 +529,7 @@
           },
           {
             "name": {
+              "wireValue": "category",
               "name": {
                 "originalName": "category",
                 "camelCase": {
@@ -547,8 +548,7 @@
                   "unsafeName": "Category",
                   "safeName": "Category"
                 }
-              },
-              "wireValue": "category"
+              }
             },
             "valueType": {
               "container": {
@@ -632,6 +632,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "ACTIVE",
               "name": {
                 "originalName": "ACTIVE",
                 "camelCase": {
@@ -650,12 +651,12 @@
                   "unsafeName": "Active",
                   "safeName": "Active"
                 }
-              },
-              "wireValue": "ACTIVE"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "INACTIVE",
               "name": {
                 "originalName": "INACTIVE",
                 "camelCase": {
@@ -674,8 +675,7 @@
                   "unsafeName": "Inactive",
                   "safeName": "Inactive"
                 }
-              },
-              "wireValue": "INACTIVE"
+              }
             }
           }
         ],
@@ -881,6 +881,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "BUG",
               "name": {
                 "originalName": "BUG",
                 "camelCase": {
@@ -899,12 +900,12 @@
                   "unsafeName": "Bug",
                   "safeName": "Bug"
                 }
-              },
-              "wireValue": "BUG"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "FEATURE",
               "name": {
                 "originalName": "FEATURE",
                 "camelCase": {
@@ -923,12 +924,12 @@
                   "unsafeName": "Feature",
                   "safeName": "Feature"
                 }
-              },
-              "wireValue": "FEATURE"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "IMPROVEMENT",
               "name": {
                 "originalName": "IMPROVEMENT",
                 "camelCase": {
@@ -947,8 +948,7 @@
                   "unsafeName": "Improvement",
                   "safeName": "Improvement"
                 }
-              },
-              "wireValue": "IMPROVEMENT"
+              }
             }
           }
         ],
@@ -1149,6 +1149,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1167,8 +1168,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -1267,6 +1267,7 @@
         },
         "values": [
           {
+            "wireValue": "ACTIVE",
             "name": {
               "originalName": "ACTIVE",
               "camelCase": {
@@ -1285,10 +1286,10 @@
                 "unsafeName": "Active",
                 "safeName": "Active"
               }
-            },
-            "wireValue": "ACTIVE"
+            }
           },
           {
+            "wireValue": "INACTIVE",
             "name": {
               "originalName": "INACTIVE",
               "camelCase": {
@@ -1307,10 +1308,10 @@
                 "unsafeName": "Inactive",
                 "safeName": "Inactive"
               }
-            },
-            "wireValue": "INACTIVE"
+            }
           },
           {
+            "wireValue": "PENDING",
             "name": {
               "originalName": "PENDING",
               "camelCase": {
@@ -1329,8 +1330,7 @@
                 "unsafeName": "Pending",
                 "safeName": "Pending"
               }
-            },
-            "wireValue": "PENDING"
+            }
           }
         ],
         "type": "enum"
@@ -1395,6 +1395,7 @@
         },
         "values": [
           {
+            "wireValue": "NOT_FOUND",
             "name": {
               "originalName": "NOT_FOUND",
               "camelCase": {
@@ -1413,10 +1414,10 @@
                 "unsafeName": "NotFound",
                 "safeName": "NotFound"
               }
-            },
-            "wireValue": "NOT_FOUND"
+            }
           },
           {
+            "wireValue": "UNAUTHORIZED",
             "name": {
               "originalName": "UNAUTHORIZED",
               "camelCase": {
@@ -1435,10 +1436,10 @@
                 "unsafeName": "Unauthorized",
                 "safeName": "Unauthorized"
               }
-            },
-            "wireValue": "UNAUTHORIZED"
+            }
           },
           {
+            "wireValue": "BAD_REQUEST",
             "name": {
               "originalName": "BAD_REQUEST",
               "camelCase": {
@@ -1457,8 +1458,7 @@
                 "unsafeName": "BadRequest",
                 "safeName": "BadRequest"
               }
-            },
-            "wireValue": "BAD_REQUEST"
+            }
           }
         ],
         "type": "enum"
@@ -1492,6 +1492,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -1510,8 +1511,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -1523,6 +1523,7 @@
           },
           {
             "name": {
+              "wireValue": "category",
               "name": {
                 "originalName": "category",
                 "camelCase": {
@@ -1541,8 +1542,7 @@
                   "unsafeName": "Category",
                   "safeName": "Category"
                 }
-              },
-              "wireValue": "category"
+              }
             },
             "typeReference": {
               "value": {
@@ -1584,6 +1584,7 @@
         },
         "values": [
           {
+            "wireValue": "ACTIVE",
             "name": {
               "originalName": "ACTIVE",
               "camelCase": {
@@ -1602,10 +1603,10 @@
                 "unsafeName": "Active",
                 "safeName": "Active"
               }
-            },
-            "wireValue": "ACTIVE"
+            }
           },
           {
+            "wireValue": "INACTIVE",
             "name": {
               "originalName": "INACTIVE",
               "camelCase": {
@@ -1624,8 +1625,7 @@
                 "unsafeName": "Inactive",
                 "safeName": "Inactive"
               }
-            },
-            "wireValue": "INACTIVE"
+            }
           }
         ],
         "type": "enum"
@@ -1734,6 +1734,7 @@
         },
         "values": [
           {
+            "wireValue": "BUG",
             "name": {
               "originalName": "BUG",
               "camelCase": {
@@ -1752,10 +1753,10 @@
                 "unsafeName": "Bug",
                 "safeName": "Bug"
               }
-            },
-            "wireValue": "BUG"
+            }
           },
           {
+            "wireValue": "FEATURE",
             "name": {
               "originalName": "FEATURE",
               "camelCase": {
@@ -1774,10 +1775,10 @@
                 "unsafeName": "Feature",
                 "safeName": "Feature"
               }
-            },
-            "wireValue": "FEATURE"
+            }
           },
           {
+            "wireValue": "IMPROVEMENT",
             "name": {
               "originalName": "IMPROVEMENT",
               "camelCase": {
@@ -1796,8 +1797,7 @@
                 "unsafeName": "Improvement",
                 "safeName": "Improvement"
               }
-            },
-            "wireValue": "IMPROVEMENT"
+            }
           }
         ],
         "type": "enum"
@@ -1887,6 +1887,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

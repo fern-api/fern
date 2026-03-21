@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "valueType": {
               "container": {
@@ -129,6 +129,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -147,8 +148,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -175,6 +175,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -193,8 +194,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -267,6 +267,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -285,8 +286,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "valueType": {
               "container": {
@@ -412,6 +412,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -430,8 +431,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "valueType": {
               "container": {
@@ -557,6 +557,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "prod",
               "name": {
                 "originalName": "prod",
                 "camelCase": {
@@ -575,12 +576,12 @@
                   "unsafeName": "Prod",
                   "safeName": "Prod"
                 }
-              },
-              "wireValue": "prod"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "staging",
               "name": {
                 "originalName": "staging",
                 "camelCase": {
@@ -599,12 +600,12 @@
                   "unsafeName": "Staging",
                   "safeName": "Staging"
                 }
-              },
-              "wireValue": "staging"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "dev",
               "name": {
                 "originalName": "dev",
                 "camelCase": {
@@ -623,8 +624,7 @@
                   "unsafeName": "Dev",
                   "safeName": "Dev"
                 }
-              },
-              "wireValue": "dev"
+              }
             }
           }
         ],
@@ -744,6 +744,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -762,8 +763,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -790,6 +790,7 @@
           },
           {
             "name": {
+              "wireValue": "executionContext",
               "name": {
                 "originalName": "executionContext",
                 "camelCase": {
@@ -808,8 +809,7 @@
                   "unsafeName": "ExecutionContext",
                   "safeName": "ExecutionContext"
                 }
-              },
-              "wireValue": "executionContext"
+              }
             },
             "valueType": {
               "container": {
@@ -935,6 +935,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -953,8 +954,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

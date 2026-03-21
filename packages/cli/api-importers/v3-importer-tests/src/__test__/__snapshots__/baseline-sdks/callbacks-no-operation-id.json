@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "subscriptionId",
               "name": {
                 "originalName": "subscriptionId",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "SubscriptionID",
                   "safeName": "SubscriptionID"
                 }
-              },
-              "wireValue": "subscriptionId"
+              }
             },
             "valueType": {
               "container": {
@@ -199,6 +199,7 @@
               {
                 "docs": "URL to receive webhook notifications",
                 "name": {
+                  "wireValue": "callbackUrl",
                   "name": {
                     "originalName": "callbackUrl",
                     "camelCase": {
@@ -217,8 +218,7 @@
                       "unsafeName": "CallbackURL",
                       "safeName": "CallbackURL"
                     }
-                  },
-                  "wireValue": "callbackUrl"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -354,6 +354,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -372,8 +373,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -423,6 +423,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "subscriptionId",
               "name": {
                 "originalName": "subscriptionId",
                 "camelCase": {
@@ -441,8 +442,7 @@
                   "unsafeName": "SubscriptionID",
                   "safeName": "SubscriptionID"
                 }
-              },
-              "wireValue": "subscriptionId"
+              }
             },
             "typeReference": {
               "value": {
@@ -522,6 +522,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "callbackUrl",
                   "name": {
                     "originalName": "callbackUrl",
                     "camelCase": {
@@ -540,8 +541,7 @@
                       "unsafeName": "CallbackURL",
                       "safeName": "CallbackURL"
                     }
-                  },
-                  "wireValue": "callbackUrl"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -566,6 +566,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

@@ -60,6 +60,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -78,8 +79,7 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              },
-              "wireValue": "foo"
+              }
             },
             "valueType": {
               "container": {
@@ -146,6 +146,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -164,8 +165,7 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              },
-              "wireValue": "bar"
+              }
             },
             "valueType": {
               "container": {
@@ -228,6 +228,7 @@
       },
       "shape": {
         "discriminant": {
+          "wireValue": "variant",
           "name": {
             "originalName": "variant",
             "camelCase": {
@@ -246,14 +247,14 @@
               "unsafeName": "Variant",
               "safeName": "Variant"
             }
-          },
-          "wireValue": "variant"
+          }
         },
         "extends": [],
         "baseProperties": [],
         "types": [
           {
             "discriminantValue": {
+              "wireValue": "request",
               "name": {
                 "originalName": "request",
                 "camelCase": {
@@ -272,8 +273,7 @@
                   "unsafeName": "Request",
                   "safeName": "Request"
                 }
-              },
-              "wireValue": "request"
+              }
             },
             "shape": {
               "name": {
@@ -306,6 +306,7 @@
           },
           {
             "discriminantValue": {
+              "wireValue": "response",
               "name": {
                 "originalName": "response",
                 "camelCase": {
@@ -324,8 +325,7 @@
                   "unsafeName": "Response",
                   "safeName": "Response"
                 }
-              },
-              "wireValue": "response"
+              }
             },
             "shape": {
               "name": {
@@ -602,6 +602,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -620,8 +621,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -673,6 +673,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -691,8 +692,7 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              },
-              "wireValue": "foo"
+              }
             },
             "typeReference": {
               "value": {
@@ -735,6 +735,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -753,8 +754,7 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              },
-              "wireValue": "bar"
+              }
             },
             "typeReference": {
               "value": {
@@ -795,6 +795,7 @@
           }
         },
         "discriminant": {
+          "wireValue": "variant",
           "name": {
             "originalName": "variant",
             "camelCase": {
@@ -813,13 +814,13 @@
               "unsafeName": "Variant",
               "safeName": "Variant"
             }
-          },
-          "wireValue": "variant"
+          }
         },
         "types": {
           "request": {
             "typeId": "type_:RequestOne",
             "discriminantValue": {
+              "wireValue": "request",
               "name": {
                 "originalName": "request",
                 "camelCase": {
@@ -838,8 +839,7 @@
                   "unsafeName": "Request",
                   "safeName": "Request"
                 }
-              },
-              "wireValue": "request"
+              }
             },
             "properties": [],
             "type": "samePropertiesAsObject"
@@ -847,6 +847,7 @@
           "response": {
             "typeId": "type_:RequestTwo",
             "discriminantValue": {
+              "wireValue": "response",
               "name": {
                 "originalName": "response",
                 "camelCase": {
@@ -865,8 +866,7 @@
                   "unsafeName": "Response",
                   "safeName": "Response"
                 }
-              },
-              "wireValue": "response"
+              }
             },
             "properties": [],
             "type": "samePropertiesAsObject"
@@ -966,6 +966,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

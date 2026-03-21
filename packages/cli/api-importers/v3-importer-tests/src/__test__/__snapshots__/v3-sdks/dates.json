@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "date_only",
               "name": {
                 "originalName": "date_only",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "DateOnly",
                   "safeName": "DateOnly"
                 }
-              },
-              "wireValue": "date_only"
+              }
             },
             "valueType": {
               "container": {
@@ -81,6 +81,7 @@
           },
           {
             "name": {
+              "wireValue": "date_time",
               "name": {
                 "originalName": "date_time",
                 "camelCase": {
@@ -99,8 +100,7 @@
                   "unsafeName": "DateTime",
                   "safeName": "DateTime"
                 }
-              },
-              "wireValue": "date_time"
+              }
             },
             "valueType": {
               "container": {
@@ -172,6 +172,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "date_only",
               "name": {
                 "originalName": "date_only",
                 "camelCase": {
@@ -190,8 +191,7 @@
                   "unsafeName": "DateOnly",
                   "safeName": "DateOnly"
                 }
-              },
-              "wireValue": "date_only"
+              }
             },
             "valueType": {
               "container": {
@@ -217,6 +217,7 @@
           },
           {
             "name": {
+              "wireValue": "date_time",
               "name": {
                 "originalName": "date_time",
                 "camelCase": {
@@ -235,8 +236,7 @@
                   "unsafeName": "DateTime",
                   "safeName": "DateTime"
                 }
-              },
-              "wireValue": "date_time"
+              }
             },
             "valueType": {
               "container": {
@@ -303,6 +303,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "date_query",
                 "name": {
                   "originalName": "date_query",
                   "camelCase": {
@@ -321,8 +322,7 @@
                     "unsafeName": "DateQuery",
                     "safeName": "DateQuery"
                   }
-                },
-                "wireValue": "date_query"
+                }
               },
               "valueType": {
                 "container": {
@@ -349,6 +349,7 @@
             },
             {
               "name": {
+                "wireValue": "date_time_query",
                 "name": {
                   "originalName": "date_time_query",
                   "camelCase": {
@@ -367,8 +368,7 @@
                     "unsafeName": "DateTimeQuery",
                     "safeName": "DateTimeQuery"
                   }
-                },
-                "wireValue": "date_time_query"
+                }
               },
               "valueType": {
                 "container": {
@@ -397,6 +397,7 @@
           "headers": [
             {
               "name": {
+                "wireValue": "date_header",
                 "name": {
                   "originalName": "date_header",
                   "camelCase": {
@@ -415,8 +416,7 @@
                     "unsafeName": "DateHeader",
                     "safeName": "DateHeader"
                   }
-                },
-                "wireValue": "date_header"
+                }
               },
               "valueType": {
                 "container": {
@@ -442,6 +442,7 @@
             },
             {
               "name": {
+                "wireValue": "date_time_header",
                 "name": {
                   "originalName": "date_time_header",
                   "camelCase": {
@@ -460,8 +461,7 @@
                     "unsafeName": "DateTimeHeader",
                     "safeName": "DateTimeHeader"
                   }
-                },
-                "wireValue": "date_time_header"
+                }
               },
               "valueType": {
                 "container": {
@@ -508,6 +508,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "date_only",
                             "name": {
                               "originalName": "date_only",
                               "camelCase": {
@@ -526,8 +527,7 @@
                                 "unsafeName": "DateOnly",
                                 "safeName": "DateOnly"
                               }
-                            },
-                            "wireValue": "date_only"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "Request",
@@ -575,6 +575,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "date_time",
                             "name": {
                               "originalName": "date_time",
                               "camelCase": {
@@ -593,8 +594,7 @@
                                 "unsafeName": "DateTime",
                                 "safeName": "DateTime"
                               }
-                            },
-                            "wireValue": "date_time"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "Request",
@@ -685,6 +685,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "date_only",
                                 "name": {
                                   "originalName": "date_only",
                                   "camelCase": {
@@ -703,8 +704,7 @@
                                     "unsafeName": "DateOnly",
                                     "safeName": "DateOnly"
                                   }
-                                },
-                                "wireValue": "date_only"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Response",
@@ -763,6 +763,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "date_time",
                                 "name": {
                                   "originalName": "date_time",
                                   "camelCase": {
@@ -781,8 +782,7 @@
                                     "unsafeName": "DateTime",
                                     "safeName": "DateTime"
                                   }
-                                },
-                                "wireValue": "date_time"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Response",
@@ -1184,6 +1184,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1202,8 +1203,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

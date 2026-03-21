@@ -170,6 +170,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -188,8 +189,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -227,6 +227,7 @@
               },
               {
                 "name": {
+                  "wireValue": "chunking_strategy",
                   "name": {
                     "originalName": "chunking_strategy",
                     "camelCase": {
@@ -245,8 +246,7 @@
                       "unsafeName": "ChunkingStrategy",
                       "safeName": "ChunkingStrategy"
                     }
-                  },
-                  "wireValue": "chunking_strategy"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -268,6 +268,7 @@
               },
               {
                 "name": {
+                  "wireValue": "filename",
                   "name": {
                     "originalName": "filename",
                     "camelCase": {
@@ -286,8 +287,7 @@
                       "unsafeName": "Filename",
                       "safeName": "Filename"
                     }
-                  },
-                  "wireValue": "filename"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -318,6 +318,7 @@
               {
                 "value": {
                   "key": {
+                    "wireValue": "file",
                     "name": {
                       "originalName": "file",
                       "camelCase": {
@@ -336,8 +337,7 @@
                         "unsafeName": "File",
                         "safeName": "File_"
                       }
-                    },
-                    "wireValue": "file"
+                    }
                   },
                   "isOptional": false,
                   "contentType": "multipart/form-data",
@@ -384,6 +384,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "metadata",
                       "name": {
                         "originalName": "metadata",
                         "camelCase": {
@@ -402,8 +403,7 @@
                           "unsafeName": "Metadata",
                           "safeName": "Metadata"
                         }
-                      },
-                      "wireValue": "metadata"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -441,6 +441,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "chunking_strategy",
                       "name": {
                         "originalName": "chunking_strategy",
                         "camelCase": {
@@ -459,8 +460,7 @@
                           "unsafeName": "ChunkingStrategy",
                           "safeName": "ChunkingStrategy"
                         }
-                      },
-                      "wireValue": "chunking_strategy"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -482,6 +482,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "filename",
                       "name": {
                         "originalName": "filename",
                         "camelCase": {
@@ -500,8 +501,7 @@
                           "unsafeName": "Filename",
                           "safeName": "Filename"
                         }
-                      },
-                      "wireValue": "filename"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -532,6 +532,7 @@
                   {
                     "value": {
                       "key": {
+                        "wireValue": "file",
                         "name": {
                           "originalName": "file",
                           "camelCase": {
@@ -550,8 +551,7 @@
                             "unsafeName": "File",
                             "safeName": "File_"
                           }
-                        },
-                        "wireValue": "file"
+                        }
                       },
                       "isOptional": false,
                       "contentType": "multipart/form-data",
@@ -766,6 +766,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "metadata",
                         "name": {
                           "originalName": "metadata",
                           "camelCase": {
@@ -784,8 +785,7 @@
                             "unsafeName": "Metadata",
                             "safeName": "Metadata"
                           }
-                        },
-                        "wireValue": "metadata"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -935,6 +935,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "metadata",
                   "name": {
                     "originalName": "metadata",
                     "camelCase": {
@@ -953,8 +954,7 @@
                       "unsafeName": "Metadata",
                       "safeName": "Metadata"
                     }
-                  },
-                  "wireValue": "metadata"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1027,6 +1027,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "metadata",
                       "name": {
                         "originalName": "metadata",
                         "camelCase": {
@@ -1045,8 +1046,7 @@
                           "unsafeName": "Metadata",
                           "safeName": "Metadata"
                         }
-                      },
-                      "wireValue": "metadata"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -1117,6 +1117,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "metadata",
                       "name": {
                         "originalName": "metadata",
                         "camelCase": {
@@ -1135,8 +1136,7 @@
                           "unsafeName": "Metadata",
                           "safeName": "Metadata"
                         }
-                      },
-                      "wireValue": "metadata"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -1330,6 +1330,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1348,8 +1349,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

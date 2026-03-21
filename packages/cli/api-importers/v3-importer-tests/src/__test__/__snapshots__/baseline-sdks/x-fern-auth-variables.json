@@ -143,6 +143,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -161,8 +162,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -270,6 +270,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -288,8 +289,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -635,6 +635,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -653,8 +654,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -744,6 +744,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -762,8 +763,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -845,6 +845,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -863,8 +864,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -883,7 +883,6 @@
     "endpoints": {
       "endpoint_user.get": {
         "auth": {
-          "key": "BasicAuth",
           "username": {
             "originalName": "username",
             "camelCase": {
@@ -903,7 +902,6 @@
               "safeName": "Username"
             }
           },
-          "usernameEnvVar": "MY_USERNAME",
           "password": {
             "originalName": "password",
             "camelCase": {
@@ -923,7 +921,6 @@
               "safeName": "Password"
             }
           },
-          "passwordEnvVar": "MY_PaSSwoOD",
           "type": "basic"
         },
         "declaration": {
@@ -1005,7 +1002,6 @@
       },
       "endpoint_user.get_all": {
         "auth": {
-          "key": "BasicAuth",
           "username": {
             "originalName": "username",
             "camelCase": {
@@ -1025,7 +1021,6 @@
               "safeName": "Username"
             }
           },
-          "usernameEnvVar": "MY_USERNAME",
           "password": {
             "originalName": "password",
             "camelCase": {
@@ -1045,7 +1040,6 @@
               "safeName": "Password"
             }
           },
-          "passwordEnvVar": "MY_PaSSwoOD",
           "type": "basic"
         },
         "declaration": {
@@ -1129,6 +1123,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_user": {
       "fernFilepath": {

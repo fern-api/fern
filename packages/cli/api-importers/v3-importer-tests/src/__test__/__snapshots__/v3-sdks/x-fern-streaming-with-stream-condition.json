@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              },
-              "wireValue": "query"
+              }
             },
             "valueType": {
               "primitive": {
@@ -77,6 +77,7 @@
           },
           {
             "name": {
+              "wireValue": "stream_response",
               "name": {
                 "originalName": "stream_response",
                 "camelCase": {
@@ -95,8 +96,7 @@
                   "unsafeName": "StreamResponse",
                   "safeName": "StreamResponse"
                 }
-              },
-              "wireValue": "stream_response"
+              }
             },
             "valueType": {
               "container": {
@@ -178,6 +178,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "chat_id",
               "name": {
                 "originalName": "chat_id",
                 "camelCase": {
@@ -196,8 +197,7 @@
                   "unsafeName": "ChatId",
                   "safeName": "ChatId"
                 }
-              },
-              "wireValue": "chat_id"
+              }
             },
             "valueType": {
               "container": {
@@ -225,6 +225,7 @@
           },
           {
             "name": {
+              "wireValue": "turn_id",
               "name": {
                 "originalName": "turn_id",
                 "camelCase": {
@@ -243,8 +244,7 @@
                   "unsafeName": "TurnId",
                   "safeName": "TurnId"
                 }
-              },
-              "wireValue": "turn_id"
+              }
             },
             "valueType": {
               "container": {
@@ -272,6 +272,7 @@
           },
           {
             "name": {
+              "wireValue": "answer",
               "name": {
                 "originalName": "answer",
                 "camelCase": {
@@ -290,8 +291,7 @@
                   "unsafeName": "Answer",
                   "safeName": "Answer"
                 }
-              },
-              "wireValue": "answer"
+              }
             },
             "valueType": {
               "container": {
@@ -366,6 +366,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "chunk",
               "name": {
                 "originalName": "chunk",
                 "camelCase": {
@@ -384,8 +385,7 @@
                   "unsafeName": "Chunk",
                   "safeName": "Chunk"
                 }
-              },
-              "wireValue": "chunk"
+              }
             },
             "valueType": {
               "container": {
@@ -458,6 +458,7 @@
           "headers": [
             {
               "name": {
+                "wireValue": "Request-Timeout",
                 "name": {
                   "originalName": "Request-Timeout",
                   "camelCase": {
@@ -476,8 +477,7 @@
                     "unsafeName": "RequestTimeout",
                     "safeName": "RequestTimeout"
                   }
-                },
-                "wireValue": "Request-Timeout"
+                }
               },
               "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
               "valueType": {
@@ -507,6 +507,7 @@
             },
             {
               "name": {
+                "wireValue": "Request-Timeout-Millis",
                 "name": {
                   "originalName": "Request-Timeout-Millis",
                   "camelCase": {
@@ -525,8 +526,7 @@
                     "unsafeName": "RequestTimeoutMillis",
                     "safeName": "RequestTimeoutMillis"
                   }
-                },
-                "wireValue": "Request-Timeout-Millis"
+                }
               },
               "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
               "valueType": {
@@ -578,6 +578,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "query",
                         "name": {
                           "originalName": "query",
                           "camelCase": {
@@ -596,8 +597,7 @@
                             "unsafeName": "Query",
                             "safeName": "Query"
                           }
-                        },
-                        "wireValue": "query"
+                        }
                       },
                       "value": {
                         "jsonExample": "query",
@@ -614,6 +614,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "stream_response",
                         "name": {
                           "originalName": "stream_response",
                           "camelCase": {
@@ -632,8 +633,7 @@
                             "unsafeName": "StreamResponse",
                             "safeName": "StreamResponse"
                           }
-                        },
-                        "wireValue": "stream_response"
+                        }
                       },
                       "value": {
                         "jsonExample": true,
@@ -664,6 +664,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "chunk",
                                   "name": {
                                     "originalName": "chunk",
                                     "camelCase": {
@@ -682,8 +683,7 @@
                                       "unsafeName": "Chunk",
                                       "safeName": "Chunk"
                                     }
-                                  },
-                                  "wireValue": "chunk"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "ChatStreamedResponse",
@@ -839,6 +839,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -857,8 +858,7 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  },
-                  "wireValue": "query"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -880,6 +880,7 @@
               },
               {
                 "name": {
+                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -898,8 +899,7 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  },
-                  "wireValue": "stream_response"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1052,6 +1052,7 @@
           "headers": [
             {
               "name": {
+                "wireValue": "Request-Timeout",
                 "name": {
                   "originalName": "Request-Timeout",
                   "camelCase": {
@@ -1070,8 +1071,7 @@
                     "unsafeName": "RequestTimeout",
                     "safeName": "RequestTimeout"
                   }
-                },
-                "wireValue": "Request-Timeout"
+                }
               },
               "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
               "valueType": {
@@ -1101,6 +1101,7 @@
             },
             {
               "name": {
+                "wireValue": "Request-Timeout-Millis",
                 "name": {
                   "originalName": "Request-Timeout-Millis",
                   "camelCase": {
@@ -1119,8 +1120,7 @@
                     "unsafeName": "RequestTimeoutMillis",
                     "safeName": "RequestTimeoutMillis"
                   }
-                },
-                "wireValue": "Request-Timeout-Millis"
+                }
               },
               "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
               "valueType": {
@@ -1172,6 +1172,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "query",
                         "name": {
                           "originalName": "query",
                           "camelCase": {
@@ -1190,8 +1191,7 @@
                             "unsafeName": "Query",
                             "safeName": "Query"
                           }
-                        },
-                        "wireValue": "query"
+                        }
                       },
                       "value": {
                         "jsonExample": "query",
@@ -1208,6 +1208,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "stream_response",
                         "name": {
                           "originalName": "stream_response",
                           "camelCase": {
@@ -1226,8 +1227,7 @@
                             "unsafeName": "StreamResponse",
                             "safeName": "StreamResponse"
                           }
-                        },
-                        "wireValue": "stream_response"
+                        }
                       },
                       "value": {
                         "jsonExample": false,
@@ -1259,6 +1259,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "chat_id",
                                 "name": {
                                   "originalName": "chat_id",
                                   "camelCase": {
@@ -1277,8 +1278,7 @@
                                     "unsafeName": "ChatId",
                                     "safeName": "ChatId"
                                   }
-                                },
-                                "wireValue": "chat_id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "ChatFullResponse",
@@ -1340,6 +1340,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "turn_id",
                                 "name": {
                                   "originalName": "turn_id",
                                   "camelCase": {
@@ -1358,8 +1359,7 @@
                                     "unsafeName": "TurnId",
                                     "safeName": "TurnId"
                                   }
-                                },
-                                "wireValue": "turn_id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "ChatFullResponse",
@@ -1421,6 +1421,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "answer",
                                 "name": {
                                   "originalName": "answer",
                                   "camelCase": {
@@ -1439,8 +1440,7 @@
                                     "unsafeName": "Answer",
                                     "safeName": "Answer"
                                   }
-                                },
-                                "wireValue": "answer"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "ChatFullResponse",
@@ -1595,6 +1595,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -1613,8 +1614,7 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  },
-                  "wireValue": "query"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -1636,6 +1636,7 @@
               },
               {
                 "name": {
+                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -1654,8 +1655,7 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  },
-                  "wireValue": "stream_response"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1716,6 +1716,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "query",
                       "name": {
                         "originalName": "query",
                         "camelCase": {
@@ -1734,8 +1735,7 @@
                           "unsafeName": "Query",
                           "safeName": "Query"
                         }
-                      },
-                      "wireValue": "query"
+                      }
                     },
                     "valueType": {
                       "primitive": {
@@ -1757,6 +1757,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "stream_response",
                       "name": {
                         "originalName": "stream_response",
                         "camelCase": {
@@ -1775,8 +1776,7 @@
                           "unsafeName": "StreamResponse",
                           "safeName": "StreamResponse"
                         }
-                      },
-                      "wireValue": "stream_response"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2014,6 +2014,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2032,8 +2033,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

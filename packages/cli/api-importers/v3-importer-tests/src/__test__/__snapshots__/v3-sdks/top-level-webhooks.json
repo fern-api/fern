@@ -124,6 +124,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -142,8 +143,7 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              },
-              "wireValue": "stream"
+              }
             },
             "valueType": {
               "container": {
@@ -169,6 +169,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -187,8 +188,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "valueType": {
               "primitive": {
@@ -345,6 +345,7 @@
           "properties": [
             {
               "name": {
+                "wireValue": "stream-inlined",
                 "name": {
                   "originalName": "stream-inlined",
                   "camelCase": {
@@ -363,8 +364,7 @@
                     "unsafeName": "StreamInlined",
                     "safeName": "StreamInlined"
                   }
-                },
-                "wireValue": "stream-inlined"
+                }
               },
               "valueType": {
                 "container": {
@@ -390,6 +390,7 @@
             },
             {
               "name": {
+                "wireValue": "message-inlined",
                 "name": {
                   "originalName": "message-inlined",
                   "camelCase": {
@@ -408,8 +409,7 @@
                     "unsafeName": "MessageInlined",
                     "safeName": "MessageInlined"
                   }
-                },
-                "wireValue": "message-inlined"
+                }
               },
               "valueType": {
                 "container": {
@@ -579,6 +579,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -597,8 +598,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

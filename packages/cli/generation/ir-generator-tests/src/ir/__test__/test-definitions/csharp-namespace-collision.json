@@ -687,6 +687,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "owner",
                             "name": {
                                 "originalName": "owner",
                                 "camelCase": {
@@ -705,8 +706,7 @@
                                     "unsafeName": "Owner",
                                     "safeName": "Owner"
                                 }
-                            },
-                            "wireValue": "owner"
+                            }
                         },
                         "valueType": {
                             "_type": "named",
@@ -5973,6 +5973,7 @@
                                                 },
                                                 {
                                                     "name": {
+                                                        "wireValue": "owner",
                                                         "name": {
                                                             "originalName": "owner",
                                                             "camelCase": {
@@ -5991,8 +5992,7 @@
                                                                 "unsafeName": "Owner",
                                                                 "safeName": "Owner"
                                                             }
-                                                        },
-                                                        "wireValue": "owner"
+                                                        }
                                                     },
                                                     "originalTypeDeclaration": {
                                                         "name": {
@@ -6070,6 +6070,7 @@
                                                                 "properties": [
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "line1",
                                                                             "name": {
                                                                                 "originalName": "line1",
                                                                                 "camelCase": {
@@ -6088,8 +6089,7 @@
                                                                                     "unsafeName": "Line1",
                                                                                     "safeName": "Line1"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "line1"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -6175,6 +6175,7 @@
                                                                     },
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "line2",
                                                                             "name": {
                                                                                 "originalName": "line2",
                                                                                 "camelCase": {
@@ -6193,8 +6194,7 @@
                                                                                     "unsafeName": "Line2",
                                                                                     "safeName": "Line2"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "line2"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -6288,6 +6288,7 @@
                                                                     },
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "city",
                                                                             "name": {
                                                                                 "originalName": "city",
                                                                                 "camelCase": {
@@ -6306,8 +6307,7 @@
                                                                                     "unsafeName": "City",
                                                                                     "safeName": "City"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "city"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -6393,6 +6393,7 @@
                                                                     },
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "state",
                                                                             "name": {
                                                                                 "originalName": "state",
                                                                                 "camelCase": {
@@ -6411,8 +6412,7 @@
                                                                                     "unsafeName": "State",
                                                                                     "safeName": "State"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "state"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -6498,6 +6498,7 @@
                                                                     },
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "zip",
                                                                             "name": {
                                                                                 "originalName": "zip",
                                                                                 "camelCase": {
@@ -6516,8 +6517,7 @@
                                                                                     "unsafeName": "Zip",
                                                                                     "safeName": "Zip"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "zip"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -6603,6 +6603,7 @@
                                                                     },
                                                                     {
                                                                         "name": {
+                                                                            "wireValue": "country",
                                                                             "name": {
                                                                                 "originalName": "country",
                                                                                 "camelCase": {
@@ -6621,8 +6622,7 @@
                                                                                     "unsafeName": "Country",
                                                                                     "safeName": "Country"
                                                                                 }
-                                                                            },
-                                                                            "wireValue": "country"
+                                                                            }
                                                                         },
                                                                         "originalTypeDeclaration": {
                                                                             "name": {
@@ -7831,6 +7831,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "owner",
                                                                 "name": {
                                                                     "originalName": "owner",
                                                                     "camelCase": {
@@ -7849,8 +7850,7 @@
                                                                         "unsafeName": "Owner",
                                                                         "safeName": "Owner"
                                                                     }
-                                                                },
-                                                                "wireValue": "owner"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -7928,6 +7928,7 @@
                                                                         "properties": [
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "line1",
                                                                                     "name": {
                                                                                         "originalName": "line1",
                                                                                         "camelCase": {
@@ -7946,8 +7947,7 @@
                                                                                             "unsafeName": "Line1",
                                                                                             "safeName": "Line1"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "line1"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -8033,6 +8033,7 @@
                                                                             },
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "line2",
                                                                                     "name": {
                                                                                         "originalName": "line2",
                                                                                         "camelCase": {
@@ -8051,8 +8052,7 @@
                                                                                             "unsafeName": "Line2",
                                                                                             "safeName": "Line2"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "line2"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -8158,6 +8158,7 @@
                                                                             },
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "city",
                                                                                     "name": {
                                                                                         "originalName": "city",
                                                                                         "camelCase": {
@@ -8176,8 +8177,7 @@
                                                                                             "unsafeName": "City",
                                                                                             "safeName": "City"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "city"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -8263,6 +8263,7 @@
                                                                             },
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "state",
                                                                                     "name": {
                                                                                         "originalName": "state",
                                                                                         "camelCase": {
@@ -8281,8 +8282,7 @@
                                                                                             "unsafeName": "State",
                                                                                             "safeName": "State"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "state"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -8368,6 +8368,7 @@
                                                                             },
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "zip",
                                                                                     "name": {
                                                                                         "originalName": "zip",
                                                                                         "camelCase": {
@@ -8386,8 +8387,7 @@
                                                                                             "unsafeName": "Zip",
                                                                                             "safeName": "Zip"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "zip"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -8473,6 +8473,7 @@
                                                                             },
                                                                             {
                                                                                 "name": {
+                                                                                    "wireValue": "country",
                                                                                     "name": {
                                                                                         "originalName": "country",
                                                                                         "camelCase": {
@@ -8491,8 +8492,7 @@
                                                                                             "unsafeName": "Country",
                                                                                             "safeName": "Country"
                                                                                         }
-                                                                                    },
-                                                                                    "wireValue": "country"
+                                                                                    }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": {
@@ -9053,6 +9053,7 @@
                                                     "properties": [
                                                         {
                                                             "name": {
+                                                                "wireValue": "line1",
                                                                 "name": {
                                                                     "originalName": "line1",
                                                                     "camelCase": {
@@ -9071,8 +9072,7 @@
                                                                         "unsafeName": "Line1",
                                                                         "safeName": "Line1"
                                                                     }
-                                                                },
-                                                                "wireValue": "line1"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -9158,6 +9158,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "line2",
                                                                 "name": {
                                                                     "originalName": "line2",
                                                                     "camelCase": {
@@ -9176,8 +9177,7 @@
                                                                         "unsafeName": "Line2",
                                                                         "safeName": "Line2"
                                                                     }
-                                                                },
-                                                                "wireValue": "line2"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -9283,6 +9283,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "city",
                                                                 "name": {
                                                                     "originalName": "city",
                                                                     "camelCase": {
@@ -9301,8 +9302,7 @@
                                                                         "unsafeName": "City",
                                                                         "safeName": "City"
                                                                     }
-                                                                },
-                                                                "wireValue": "city"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -9388,6 +9388,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "state",
                                                                 "name": {
                                                                     "originalName": "state",
                                                                     "camelCase": {
@@ -9406,8 +9407,7 @@
                                                                         "unsafeName": "State",
                                                                         "safeName": "State"
                                                                     }
-                                                                },
-                                                                "wireValue": "state"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -9493,6 +9493,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "zip",
                                                                 "name": {
                                                                     "originalName": "zip",
                                                                     "camelCase": {
@@ -9511,8 +9512,7 @@
                                                                         "unsafeName": "Zip",
                                                                         "safeName": "Zip"
                                                                     }
-                                                                },
-                                                                "wireValue": "zip"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -9598,6 +9598,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "country",
                                                                 "name": {
                                                                     "originalName": "country",
                                                                     "camelCase": {
@@ -9616,8 +9617,7 @@
                                                                         "unsafeName": "Country",
                                                                         "safeName": "Country"
                                                                     }
-                                                                },
-                                                                "wireValue": "country"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -10295,6 +10295,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "owner",
                             "name": {
                                 "originalName": "owner",
                                 "camelCase": {
@@ -10313,8 +10314,7 @@
                                     "unsafeName": "Owner",
                                     "safeName": "Owner"
                                 }
-                            },
-                            "wireValue": "owner"
+                            }
                         },
                         "typeReference": {
                             "type": "named",

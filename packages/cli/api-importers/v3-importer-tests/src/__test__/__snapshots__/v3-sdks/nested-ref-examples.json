@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "valueType": {
               "container": {
@@ -154,6 +154,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "asset_kind",
               "name": {
                 "originalName": "asset_kind",
                 "camelCase": {
@@ -172,8 +173,7 @@
                   "unsafeName": "AssetKind",
                   "safeName": "AssetKind"
                 }
-              },
-              "wireValue": "asset_kind"
+              }
             },
             "valueType": {
               "container": {
@@ -200,6 +200,7 @@
           },
           {
             "name": {
+              "wireValue": "base_currency",
               "name": {
                 "originalName": "base_currency",
                 "camelCase": {
@@ -218,8 +219,7 @@
                   "unsafeName": "BaseCurrency",
                   "safeName": "BaseCurrency"
                 }
-              },
-              "wireValue": "base_currency"
+              }
             },
             "valueType": {
               "container": {
@@ -246,6 +246,7 @@
           },
           {
             "name": {
+              "wireValue": "option_cross_margin_params",
               "name": {
                 "originalName": "option_cross_margin_params",
                 "camelCase": {
@@ -264,8 +265,7 @@
                   "unsafeName": "OptionCrossMarginParams",
                   "safeName": "OptionCrossMarginParams"
                 }
-              },
-              "wireValue": "option_cross_margin_params"
+              }
             },
             "valueType": {
               "container": {
@@ -367,6 +367,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "imf",
               "name": {
                 "originalName": "imf",
                 "camelCase": {
@@ -385,8 +386,7 @@
                   "unsafeName": "Imf",
                   "safeName": "Imf"
                 }
-              },
-              "wireValue": "imf"
+              }
             },
             "valueType": {
               "container": {
@@ -435,6 +435,7 @@
           },
           {
             "name": {
+              "wireValue": "mmf",
               "name": {
                 "originalName": "mmf",
                 "camelCase": {
@@ -453,8 +454,7 @@
                   "unsafeName": "Mmf",
                   "safeName": "Mmf"
                 }
-              },
-              "wireValue": "mmf"
+              }
             },
             "valueType": {
               "container": {
@@ -549,6 +549,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "long_itm",
               "name": {
                 "originalName": "long_itm",
                 "camelCase": {
@@ -567,8 +568,7 @@
                   "unsafeName": "LongItm",
                   "safeName": "LongItm"
                 }
-              },
-              "wireValue": "long_itm"
+              }
             },
             "valueType": {
               "container": {
@@ -595,6 +595,7 @@
           },
           {
             "name": {
+              "wireValue": "premium_multiplier",
               "name": {
                 "originalName": "premium_multiplier",
                 "camelCase": {
@@ -613,8 +614,7 @@
                   "unsafeName": "PremiumMultiplier",
                   "safeName": "PremiumMultiplier"
                 }
-              },
-              "wireValue": "premium_multiplier"
+              }
             },
             "valueType": {
               "container": {
@@ -641,6 +641,7 @@
           },
           {
             "name": {
+              "wireValue": "short_itm",
               "name": {
                 "originalName": "short_itm",
                 "camelCase": {
@@ -659,8 +660,7 @@
                   "unsafeName": "ShortItm",
                   "safeName": "ShortItm"
                 }
-              },
-              "wireValue": "short_itm"
+              }
             },
             "valueType": {
               "container": {
@@ -788,6 +788,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "results",
                                 "name": {
                                   "originalName": "results",
                                   "camelCase": {
@@ -806,8 +807,7 @@
                                     "unsafeName": "Results",
                                     "safeName": "Results"
                                   }
-                                },
-                                "wireValue": "results"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "responses.GetMarkets",
@@ -932,6 +932,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
+                                                        "wireValue": "asset_kind",
                                                         "name": {
                                                           "originalName": "asset_kind",
                                                           "camelCase": {
@@ -950,8 +951,7 @@
                                                             "unsafeName": "AssetKind",
                                                             "safeName": "AssetKind"
                                                           }
-                                                        },
-                                                        "wireValue": "asset_kind"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -1013,6 +1013,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "base_currency",
                                                         "name": {
                                                           "originalName": "base_currency",
                                                           "camelCase": {
@@ -1031,8 +1032,7 @@
                                                             "unsafeName": "BaseCurrency",
                                                             "safeName": "BaseCurrency"
                                                           }
-                                                        },
-                                                        "wireValue": "base_currency"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -1094,6 +1094,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "option_cross_margin_params",
                                                         "name": {
                                                           "originalName": "option_cross_margin_params",
                                                           "camelCase": {
@@ -1112,8 +1113,7 @@
                                                             "unsafeName": "OptionCrossMarginParams",
                                                             "safeName": "OptionCrossMarginParams"
                                                           }
-                                                        },
-                                                        "wireValue": "option_cross_margin_params"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -1174,6 +1174,7 @@
                                                                   "properties": [
                                                                     {
                                                                       "name": {
+                                                                        "wireValue": "imf",
                                                                         "name": {
                                                                           "originalName": "imf",
                                                                           "camelCase": {
@@ -1192,8 +1193,7 @@
                                                                             "unsafeName": "Imf",
                                                                             "safeName": "Imf"
                                                                           }
-                                                                        },
-                                                                        "wireValue": "imf"
+                                                                        }
                                                                       },
                                                                       "originalTypeDeclaration": {
                                                                         "typeId": "responses.PerpetualOptionCrossMarginParams",
@@ -1240,6 +1240,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "long_itm",
                                                                                         "name": {
                                                                                           "originalName": "long_itm",
                                                                                           "camelCase": {
@@ -1258,8 +1259,7 @@
                                                                                             "unsafeName": "LongItm",
                                                                                             "safeName": "LongItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "long_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -1321,6 +1321,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "premium_multiplier",
                                                                                         "name": {
                                                                                           "originalName": "premium_multiplier",
                                                                                           "camelCase": {
@@ -1339,8 +1340,7 @@
                                                                                             "unsafeName": "PremiumMultiplier",
                                                                                             "safeName": "PremiumMultiplier"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "premium_multiplier"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -1402,6 +1402,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "short_itm",
                                                                                         "name": {
                                                                                           "originalName": "short_itm",
                                                                                           "camelCase": {
@@ -1420,8 +1421,7 @@
                                                                                             "unsafeName": "ShortItm",
                                                                                             "safeName": "ShortItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "short_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -1549,6 +1549,7 @@
                                                                     },
                                                                     {
                                                                       "name": {
+                                                                        "wireValue": "mmf",
                                                                         "name": {
                                                                           "originalName": "mmf",
                                                                           "camelCase": {
@@ -1567,8 +1568,7 @@
                                                                             "unsafeName": "Mmf",
                                                                             "safeName": "Mmf"
                                                                           }
-                                                                        },
-                                                                        "wireValue": "mmf"
+                                                                        }
                                                                       },
                                                                       "originalTypeDeclaration": {
                                                                         "typeId": "responses.PerpetualOptionCrossMarginParams",
@@ -1615,6 +1615,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "long_itm",
                                                                                         "name": {
                                                                                           "originalName": "long_itm",
                                                                                           "camelCase": {
@@ -1633,8 +1634,7 @@
                                                                                             "unsafeName": "LongItm",
                                                                                             "safeName": "LongItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "long_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -1696,6 +1696,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "premium_multiplier",
                                                                                         "name": {
                                                                                           "originalName": "premium_multiplier",
                                                                                           "camelCase": {
@@ -1714,8 +1715,7 @@
                                                                                             "unsafeName": "PremiumMultiplier",
                                                                                             "safeName": "PremiumMultiplier"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "premium_multiplier"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -1777,6 +1777,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "short_itm",
                                                                                         "name": {
                                                                                           "originalName": "short_itm",
                                                                                           "camelCase": {
@@ -1795,8 +1796,7 @@
                                                                                             "unsafeName": "ShortItm",
                                                                                             "safeName": "ShortItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "short_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2042,6 +2042,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
+                                                        "wireValue": "asset_kind",
                                                         "name": {
                                                           "originalName": "asset_kind",
                                                           "camelCase": {
@@ -2060,8 +2061,7 @@
                                                             "unsafeName": "AssetKind",
                                                             "safeName": "AssetKind"
                                                           }
-                                                        },
-                                                        "wireValue": "asset_kind"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -2123,6 +2123,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "base_currency",
                                                         "name": {
                                                           "originalName": "base_currency",
                                                           "camelCase": {
@@ -2141,8 +2142,7 @@
                                                             "unsafeName": "BaseCurrency",
                                                             "safeName": "BaseCurrency"
                                                           }
-                                                        },
-                                                        "wireValue": "base_currency"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -2204,6 +2204,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "option_cross_margin_params",
                                                         "name": {
                                                           "originalName": "option_cross_margin_params",
                                                           "camelCase": {
@@ -2222,8 +2223,7 @@
                                                             "unsafeName": "OptionCrossMarginParams",
                                                             "safeName": "OptionCrossMarginParams"
                                                           }
-                                                        },
-                                                        "wireValue": "option_cross_margin_params"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "responses.MarketResp",
@@ -2284,6 +2284,7 @@
                                                                   "properties": [
                                                                     {
                                                                       "name": {
+                                                                        "wireValue": "imf",
                                                                         "name": {
                                                                           "originalName": "imf",
                                                                           "camelCase": {
@@ -2302,8 +2303,7 @@
                                                                             "unsafeName": "Imf",
                                                                             "safeName": "Imf"
                                                                           }
-                                                                        },
-                                                                        "wireValue": "imf"
+                                                                        }
                                                                       },
                                                                       "originalTypeDeclaration": {
                                                                         "typeId": "responses.PerpetualOptionCrossMarginParams",
@@ -2350,6 +2350,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "long_itm",
                                                                                         "name": {
                                                                                           "originalName": "long_itm",
                                                                                           "camelCase": {
@@ -2368,8 +2369,7 @@
                                                                                             "unsafeName": "LongItm",
                                                                                             "safeName": "LongItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "long_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2431,6 +2431,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "premium_multiplier",
                                                                                         "name": {
                                                                                           "originalName": "premium_multiplier",
                                                                                           "camelCase": {
@@ -2449,8 +2450,7 @@
                                                                                             "unsafeName": "PremiumMultiplier",
                                                                                             "safeName": "PremiumMultiplier"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "premium_multiplier"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2512,6 +2512,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "short_itm",
                                                                                         "name": {
                                                                                           "originalName": "short_itm",
                                                                                           "camelCase": {
@@ -2530,8 +2531,7 @@
                                                                                             "unsafeName": "ShortItm",
                                                                                             "safeName": "ShortItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "short_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2659,6 +2659,7 @@
                                                                     },
                                                                     {
                                                                       "name": {
+                                                                        "wireValue": "mmf",
                                                                         "name": {
                                                                           "originalName": "mmf",
                                                                           "camelCase": {
@@ -2677,8 +2678,7 @@
                                                                             "unsafeName": "Mmf",
                                                                             "safeName": "Mmf"
                                                                           }
-                                                                        },
-                                                                        "wireValue": "mmf"
+                                                                        }
                                                                       },
                                                                       "originalTypeDeclaration": {
                                                                         "typeId": "responses.PerpetualOptionCrossMarginParams",
@@ -2725,6 +2725,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "long_itm",
                                                                                         "name": {
                                                                                           "originalName": "long_itm",
                                                                                           "camelCase": {
@@ -2743,8 +2744,7 @@
                                                                                             "unsafeName": "LongItm",
                                                                                             "safeName": "LongItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "long_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2806,6 +2806,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "premium_multiplier",
                                                                                         "name": {
                                                                                           "originalName": "premium_multiplier",
                                                                                           "camelCase": {
@@ -2824,8 +2825,7 @@
                                                                                             "unsafeName": "PremiumMultiplier",
                                                                                             "safeName": "PremiumMultiplier"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "premium_multiplier"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -2887,6 +2887,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
+                                                                                        "wireValue": "short_itm",
                                                                                         "name": {
                                                                                           "originalName": "short_itm",
                                                                                           "camelCase": {
@@ -2905,8 +2906,7 @@
                                                                                             "unsafeName": "ShortItm",
                                                                                             "safeName": "ShortItm"
                                                                                           }
-                                                                                        },
-                                                                                        "wireValue": "short_itm"
+                                                                                        }
                                                                                       },
                                                                                       "originalTypeDeclaration": {
                                                                                         "typeId": "responses.PerpetualOptionMarginParams",
@@ -3548,6 +3548,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -3566,8 +3567,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

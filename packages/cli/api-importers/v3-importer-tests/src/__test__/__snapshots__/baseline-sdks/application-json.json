@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              },
-              "wireValue": "foo"
+              }
             },
             "valueType": {
               "container": {
@@ -102,6 +102,7 @@
           },
           {
             "name": {
+              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -120,8 +121,7 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              },
-              "wireValue": "bar"
+              }
             },
             "valueType": {
               "container": {
@@ -341,6 +341,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -359,8 +360,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -410,6 +410,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -428,8 +429,7 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              },
-              "wireValue": "foo"
+              }
             },
             "typeReference": {
               "value": {
@@ -441,6 +441,7 @@
           },
           {
             "name": {
+              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -459,8 +460,7 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              },
-              "wireValue": "bar"
+              }
             },
             "typeReference": {
               "value": {
@@ -559,6 +559,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

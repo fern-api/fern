@@ -3,6 +3,7 @@
   "apiVersion": {
     "header": {
       "name": {
+        "wireValue": "X-API-Version",
         "name": {
           "originalName": "X-API-Version",
           "camelCase": {
@@ -21,8 +22,7 @@
             "unsafeName": "XAPIVersion",
             "safeName": "XAPIVersion"
           }
-        },
-        "wireValue": "X-API-Version"
+        }
       },
       "valueType": {
         "primitive": {
@@ -41,6 +41,7 @@
     "value": {
       "default": {
         "name": {
+          "wireValue": "2.0.0",
           "name": {
             "originalName": "2.0.0",
             "camelCase": {
@@ -59,13 +60,13 @@
               "unsafeName": "200",
               "safeName": "200"
             }
-          },
-          "wireValue": "2.0.0"
+          }
         }
       },
       "values": [
         {
           "name": {
+            "wireValue": "1.0.0",
             "name": {
               "originalName": "1.0.0",
               "camelCase": {
@@ -84,12 +85,12 @@
                 "unsafeName": "100",
                 "safeName": "100"
               }
-            },
-            "wireValue": "1.0.0"
+            }
           }
         },
         {
           "name": {
+            "wireValue": "2.0.0",
             "name": {
               "originalName": "2.0.0",
               "camelCase": {
@@ -108,12 +109,12 @@
                 "unsafeName": "200",
                 "safeName": "200"
               }
-            },
-            "wireValue": "2.0.0"
+            }
           }
         },
         {
           "name": {
+            "wireValue": "Latest",
             "name": {
               "originalName": "Latest",
               "camelCase": {
@@ -132,8 +133,7 @@
                 "unsafeName": "Latest",
                 "safeName": "Latest"
               }
-            },
-            "wireValue": "Latest"
+            }
           }
         }
       ]
@@ -191,6 +191,7 @@
   "headers": [
     {
       "name": {
+        "wireValue": "X-API-Key",
         "name": {
           "originalName": "apiKey",
           "camelCase": {
@@ -209,8 +210,7 @@
             "unsafeName": "APIKey",
             "safeName": "APIKey"
           }
-        },
-        "wireValue": "X-API-Key"
+        }
       },
       "valueType": {
         "primitive": {
@@ -300,6 +300,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream-inlined",
               "name": {
                 "originalName": "stream-inlined",
                 "camelCase": {
@@ -318,8 +319,7 @@
                   "unsafeName": "StreamInlined",
                   "safeName": "StreamInlined"
                 }
-              },
-              "wireValue": "stream-inlined"
+              }
             },
             "valueType": {
               "container": {
@@ -343,6 +343,7 @@
           },
           {
             "name": {
+              "wireValue": "message-inlined",
               "name": {
                 "originalName": "message-inlined",
                 "camelCase": {
@@ -361,8 +362,7 @@
                   "unsafeName": "MessageInlined",
                   "safeName": "MessageInlined"
                 }
-              },
-              "wireValue": "message-inlined"
+              }
             },
             "valueType": {
               "container": {
@@ -428,6 +428,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -446,8 +447,7 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              },
-              "wireValue": "stream"
+              }
             },
             "valueType": {
               "container": {
@@ -471,6 +471,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -489,8 +490,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "valueType": {
               "primitive": {
@@ -523,6 +523,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -541,8 +542,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -646,6 +646,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "message",
                         "name": {
                           "originalName": "message",
                           "camelCase": {
@@ -664,8 +665,7 @@
                             "unsafeName": "Message",
                             "safeName": "Message"
                           }
-                        },
-                        "wireValue": "message"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -964,6 +964,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream-inlined",
               "name": {
                 "originalName": "stream-inlined",
                 "camelCase": {
@@ -982,8 +983,7 @@
                   "unsafeName": "StreamInlined",
                   "safeName": "StreamInlined"
                 }
-              },
-              "wireValue": "stream-inlined"
+              }
             },
             "typeReference": {
               "value": {
@@ -995,6 +995,7 @@
           },
           {
             "name": {
+              "wireValue": "message-inlined",
               "name": {
                 "originalName": "message-inlined",
                 "camelCase": {
@@ -1013,8 +1014,7 @@
                   "unsafeName": "MessageInlined",
                   "safeName": "MessageInlined"
                 }
-              },
-              "wireValue": "message-inlined"
+              }
             },
             "typeReference": {
               "value": {
@@ -1057,6 +1057,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -1075,8 +1076,7 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              },
-              "wireValue": "stream"
+              }
             },
             "typeReference": {
               "value": {
@@ -1088,6 +1088,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -1106,8 +1107,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -1122,6 +1122,7 @@
     "headers": [
       {
         "name": {
+          "wireValue": "X-API-Key",
           "name": {
             "originalName": "apiKey",
             "camelCase": {
@@ -1140,8 +1141,7 @@
               "unsafeName": "APIKey",
               "safeName": "APIKey"
             }
-          },
-          "wireValue": "X-API-Key"
+          }
         },
         "typeReference": {
           "value": "STRING",
@@ -1153,6 +1153,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_status": {
       "fernFilepath": {

@@ -98,6 +98,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "infer_from_context",
               "name": {
                 "originalName": "infer_from_context",
                 "camelCase": {
@@ -116,8 +117,7 @@
                   "unsafeName": "InferFromContext",
                   "safeName": "InferFromContext"
                 }
-              },
-              "wireValue": "infer_from_context"
+              }
             }
           }
         ],
@@ -359,6 +359,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "success",
               "name": {
                 "originalName": "success",
                 "camelCase": {
@@ -377,8 +378,7 @@
                   "unsafeName": "Success",
                   "safeName": "Success"
                 }
-              },
-              "wireValue": "success"
+              }
             },
             "valueType": {
               "container": {
@@ -512,6 +512,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "team_id",
                 "name": {
                   "originalName": "team_id",
                   "camelCase": {
@@ -530,8 +531,7 @@
                     "unsafeName": "TeamID",
                     "safeName": "TeamID"
                   }
-                },
-                "wireValue": "team_id"
+                }
               },
               "valueType": {
                 "name": {
@@ -632,6 +632,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "ids",
                   "name": {
                     "originalName": "ids",
                     "camelCase": {
@@ -650,8 +651,7 @@
                       "unsafeName": "IDs",
                       "safeName": "IDs"
                     }
-                  },
-                  "wireValue": "ids"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -835,6 +835,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -853,8 +854,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -944,6 +944,7 @@
         },
         "values": [
           {
+            "wireValue": "infer_from_context",
             "name": {
               "originalName": "infer_from_context",
               "camelCase": {
@@ -962,8 +963,7 @@
                 "unsafeName": "InferFromContext",
                 "safeName": "InferFromContext"
               }
-            },
-            "wireValue": "infer_from_context"
+            }
           }
         ],
         "type": "enum"
@@ -1113,6 +1113,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "success",
               "name": {
                 "originalName": "success",
                 "camelCase": {
@@ -1131,8 +1132,7 @@
                   "unsafeName": "Success",
                   "safeName": "Success"
                 }
-              },
-              "wireValue": "success"
+              }
             },
             "typeReference": {
               "value": {
@@ -1287,6 +1287,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "team_id",
                 "name": {
                   "originalName": "team_id",
                   "camelCase": {
@@ -1305,8 +1306,7 @@
                     "unsafeName": "TeamID",
                     "safeName": "TeamID"
                   }
-                },
-                "wireValue": "team_id"
+                }
               },
               "typeReference": {
                 "value": "type_link:BulkTriggerHistoricalPullRequestTeamId",
@@ -1319,6 +1319,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "ids",
                   "name": {
                     "originalName": "ids",
                     "camelCase": {
@@ -1337,8 +1338,7 @@
                       "unsafeName": "IDs",
                       "safeName": "IDs"
                     }
-                  },
-                  "wireValue": "ids"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1369,6 +1369,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_link": {
       "fernFilepath": {

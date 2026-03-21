@@ -159,6 +159,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "iban",
               "name": {
                 "originalName": "iban",
                 "camelCase": {
@@ -177,8 +178,7 @@
                   "unsafeName": "Iban",
                   "safeName": "Iban"
                 }
-              },
-              "wireValue": "iban"
+              }
             },
             "valueType": {
               "container": {
@@ -250,6 +250,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "other",
               "name": {
                 "originalName": "other",
                 "camelCase": {
@@ -268,8 +269,7 @@
                   "unsafeName": "Other",
                   "safeName": "Other"
                 }
-              },
-              "wireValue": "other"
+              }
             },
             "valueType": {
               "container": {
@@ -353,6 +353,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "identification",
               "name": {
                 "originalName": "identification",
                 "camelCase": {
@@ -371,8 +372,7 @@
                   "unsafeName": "Identification",
                   "safeName": "Identification"
                 }
-              },
-              "wireValue": "identification"
+              }
             },
             "valueType": {
               "container": {
@@ -396,6 +396,7 @@
           },
           {
             "name": {
+              "wireValue": "schemeNameCone",
               "name": {
                 "originalName": "schemeNameCone",
                 "camelCase": {
@@ -414,8 +415,7 @@
                   "unsafeName": "SchemeNameCone",
                   "safeName": "SchemeNameCone"
                 }
-              },
-              "wireValue": "schemeNameCone"
+              }
             },
             "valueType": {
               "container": {
@@ -481,6 +481,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "currency",
               "name": {
                 "originalName": "currency",
                 "camelCase": {
@@ -499,8 +500,7 @@
                   "unsafeName": "Currency",
                   "safeName": "Currency"
                 }
-              },
-              "wireValue": "currency"
+              }
             },
             "valueType": {
               "container": {
@@ -524,6 +524,7 @@
           },
           {
             "name": {
+              "wireValue": "iban",
               "name": {
                 "originalName": "iban",
                 "camelCase": {
@@ -542,8 +543,7 @@
                   "unsafeName": "Iban",
                   "safeName": "Iban"
                 }
-              },
-              "wireValue": "iban"
+              }
             },
             "valueType": {
               "container": {
@@ -573,6 +573,7 @@
           },
           {
             "name": {
+              "wireValue": "other",
               "name": {
                 "originalName": "other",
                 "camelCase": {
@@ -591,8 +592,7 @@
                   "unsafeName": "Other",
                   "safeName": "Other"
                 }
-              },
-              "wireValue": "other"
+              }
             },
             "valueType": {
               "container": {
@@ -649,6 +649,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -667,8 +668,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -758,6 +758,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "iban",
               "name": {
                 "originalName": "iban",
                 "camelCase": {
@@ -776,8 +777,7 @@
                   "unsafeName": "Iban",
                   "safeName": "Iban"
                 }
-              },
-              "wireValue": "iban"
+              }
             },
             "typeReference": {
               "value": {
@@ -823,6 +823,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "other",
               "name": {
                 "originalName": "other",
                 "camelCase": {
@@ -841,8 +842,7 @@
                   "unsafeName": "Other",
                   "safeName": "Other"
                 }
-              },
-              "wireValue": "other"
+              }
             },
             "typeReference": {
               "value": {
@@ -885,6 +885,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "identification",
               "name": {
                 "originalName": "identification",
                 "camelCase": {
@@ -903,8 +904,7 @@
                   "unsafeName": "Identification",
                   "safeName": "Identification"
                 }
-              },
-              "wireValue": "identification"
+              }
             },
             "typeReference": {
               "value": {
@@ -916,6 +916,7 @@
           },
           {
             "name": {
+              "wireValue": "schemeNameCone",
               "name": {
                 "originalName": "schemeNameCone",
                 "camelCase": {
@@ -934,8 +935,7 @@
                   "unsafeName": "SchemeNameCone",
                   "safeName": "SchemeNameCone"
                 }
-              },
-              "wireValue": "schemeNameCone"
+              }
             },
             "typeReference": {
               "value": {
@@ -978,6 +978,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "currency",
               "name": {
                 "originalName": "currency",
                 "camelCase": {
@@ -996,8 +997,7 @@
                   "unsafeName": "Currency",
                   "safeName": "Currency"
                 }
-              },
-              "wireValue": "currency"
+              }
             },
             "typeReference": {
               "value": {
@@ -1009,6 +1009,7 @@
           },
           {
             "name": {
+              "wireValue": "iban",
               "name": {
                 "originalName": "iban",
                 "camelCase": {
@@ -1027,8 +1028,7 @@
                   "unsafeName": "Iban",
                   "safeName": "Iban"
                 }
-              },
-              "wireValue": "iban"
+              }
             },
             "typeReference": {
               "value": {
@@ -1043,6 +1043,7 @@
           },
           {
             "name": {
+              "wireValue": "other",
               "name": {
                 "originalName": "other",
                 "camelCase": {
@@ -1061,8 +1062,7 @@
                   "unsafeName": "Other",
                   "safeName": "Other"
                 }
-              },
-              "wireValue": "other"
+              }
             },
             "typeReference": {
               "value": {
@@ -1082,6 +1082,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

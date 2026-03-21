@@ -60,6 +60,7 @@
           {
             "docs": "The value stored in this node",
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -78,8 +79,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "valueType": {
               "container": {
@@ -104,6 +104,7 @@
           {
             "docs": "Child nodes of this tree node",
             "name": {
+              "wireValue": "left",
               "name": {
                 "originalName": "left",
                 "camelCase": {
@@ -122,8 +123,7 @@
                   "unsafeName": "Left",
                   "safeName": "Left"
                 }
-              },
-              "wireValue": "left"
+              }
             },
             "valueType": {
               "container": {
@@ -166,6 +166,7 @@
           {
             "docs": "Child nodes of this tree node",
             "name": {
+              "wireValue": "right",
               "name": {
                 "originalName": "right",
                 "camelCase": {
@@ -184,8 +185,7 @@
                   "unsafeName": "Right",
                   "safeName": "Right"
                 }
-              },
-              "wireValue": "right"
+              }
             },
             "valueType": {
               "container": {
@@ -345,6 +345,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -363,8 +364,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -414,6 +414,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -432,8 +433,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "typeReference": {
               "value": {
@@ -445,6 +445,7 @@
           },
           {
             "name": {
+              "wireValue": "left",
               "name": {
                 "originalName": "left",
                 "camelCase": {
@@ -463,8 +464,7 @@
                   "unsafeName": "Left",
                   "safeName": "Left"
                 }
-              },
-              "wireValue": "left"
+              }
             },
             "typeReference": {
               "value": {
@@ -476,6 +476,7 @@
           },
           {
             "name": {
+              "wireValue": "right",
               "name": {
                 "originalName": "right",
                 "camelCase": {
@@ -494,8 +495,7 @@
                   "unsafeName": "Right",
                   "safeName": "Right"
                 }
-              },
-              "wireValue": "right"
+              }
             },
             "typeReference": {
               "value": {
@@ -555,6 +555,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

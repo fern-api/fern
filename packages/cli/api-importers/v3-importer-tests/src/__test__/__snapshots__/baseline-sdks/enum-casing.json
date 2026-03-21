@@ -59,6 +59,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "success",
               "name": {
                 "originalName": "success",
                 "camelCase": {
@@ -77,12 +78,12 @@
                   "unsafeName": "Success",
                   "safeName": "Success"
                 }
-              },
-              "wireValue": "success"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "failure",
               "name": {
                 "originalName": "failure",
                 "camelCase": {
@@ -101,8 +102,7 @@
                   "unsafeName": "Failure",
                   "safeName": "Failure"
                 }
-              },
-              "wireValue": "failure"
+              }
             }
           }
         ],
@@ -147,6 +147,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -165,8 +166,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "valueType": {
               "container": {
@@ -208,6 +208,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -226,8 +227,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "valueType": {
               "container": {
@@ -251,6 +251,7 @@
           },
           {
             "name": {
+              "wireValue": "custom_fields",
               "name": {
                 "originalName": "custom_fields",
                 "camelCase": {
@@ -269,8 +270,7 @@
                   "unsafeName": "CustomFields",
                   "safeName": "CustomFields"
                 }
-              },
-              "wireValue": "custom_fields"
+              }
             },
             "valueType": {
               "container": {
@@ -350,6 +350,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "urn:devrev:params:oauth:grant-type:token-issue",
               "name": {
                 "originalName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
                 "camelCase": {
@@ -368,12 +369,12 @@
                   "unsafeName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
                   "safeName": "UrnDevrevParamsOauthGrantTypeTokenIssue"
                 }
-              },
-              "wireValue": "urn:devrev:params:oauth:grant-type:token-issue"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange",
               "name": {
                 "originalName": "UrnIetfParamsOauthGrantTypeTokenExchange",
                 "camelCase": {
@@ -392,8 +393,7 @@
                   "unsafeName": "UrnIetfParamsOauthGrantTypeTokenExchange",
                   "safeName": "UrnIetfParamsOauthGrantTypeTokenExchange"
                 }
-              },
-              "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange"
+              }
             }
           }
         ],
@@ -514,6 +514,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -532,8 +533,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -585,6 +585,7 @@
         },
         "values": [
           {
+            "wireValue": "success",
             "name": {
               "originalName": "success",
               "camelCase": {
@@ -603,10 +604,10 @@
                 "unsafeName": "Success",
                 "safeName": "Success"
               }
-            },
-            "wireValue": "success"
+            }
           },
           {
+            "wireValue": "failure",
             "name": {
               "originalName": "failure",
               "camelCase": {
@@ -625,8 +626,7 @@
                 "unsafeName": "Failure",
                 "safeName": "Failure"
               }
-            },
-            "wireValue": "failure"
+            }
           }
         ],
         "type": "enum"
@@ -660,6 +660,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -678,8 +679,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -691,6 +691,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -709,8 +710,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": {
@@ -722,6 +722,7 @@
           },
           {
             "name": {
+              "wireValue": "custom_fields",
               "name": {
                 "originalName": "custom_fields",
                 "camelCase": {
@@ -740,8 +741,7 @@
                   "unsafeName": "CustomFields",
                   "safeName": "CustomFields"
                 }
-              },
-              "wireValue": "custom_fields"
+              }
             },
             "typeReference": {
               "value": {
@@ -790,6 +790,7 @@
         },
         "values": [
           {
+            "wireValue": "urn:devrev:params:oauth:grant-type:token-issue",
             "name": {
               "originalName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
               "camelCase": {
@@ -808,10 +809,10 @@
                 "unsafeName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
                 "safeName": "UrnDevrevParamsOauthGrantTypeTokenIssue"
               }
-            },
-            "wireValue": "urn:devrev:params:oauth:grant-type:token-issue"
+            }
           },
           {
+            "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange",
             "name": {
               "originalName": "UrnIetfParamsOauthGrantTypeTokenExchange",
               "camelCase": {
@@ -830,8 +831,7 @@
                 "unsafeName": "UrnIetfParamsOauthGrantTypeTokenExchange",
                 "safeName": "UrnIetfParamsOauthGrantTypeTokenExchange"
               }
-            },
-            "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange"
+            }
           }
         ],
         "type": "enum"
@@ -882,6 +882,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

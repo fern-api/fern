@@ -352,6 +352,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -370,8 +371,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "primitive": {
@@ -440,6 +440,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -458,8 +459,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "valueType": {
               "primitive": {
@@ -635,6 +635,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -653,8 +654,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "fernFilepath": {
@@ -744,6 +744,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -762,8 +763,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "valueType": {
               "fernFilepath": {
@@ -960,6 +960,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "no-summary-or-title",
               "name": {
                 "originalName": "no-summary-or-title",
                 "camelCase": {
@@ -978,8 +979,7 @@
                   "unsafeName": "NoSummaryOrTitle",
                   "safeName": "NoSummaryOrTitle"
                 }
-              },
-              "wireValue": "no-summary-or-title"
+              }
             },
             "valueType": {
               "container": {
@@ -1025,6 +1025,7 @@
           },
           {
             "name": {
+              "wireValue": "no-summary-and-title",
               "name": {
                 "originalName": "no-summary-and-title",
                 "camelCase": {
@@ -1043,8 +1044,7 @@
                   "unsafeName": "NoSummaryAndTitle",
                   "safeName": "NoSummaryAndTitle"
                 }
-              },
-              "wireValue": "no-summary-and-title"
+              }
             },
             "valueType": {
               "container": {
@@ -1090,6 +1090,7 @@
           },
           {
             "name": {
+              "wireValue": "summary-and-title",
               "name": {
                 "originalName": "summary-and-title",
                 "camelCase": {
@@ -1108,8 +1109,7 @@
                   "unsafeName": "SummaryAndTitle",
                   "safeName": "SummaryAndTitle"
                 }
-              },
-              "wireValue": "summary-and-title"
+              }
             },
             "valueType": {
               "container": {
@@ -1155,6 +1155,7 @@
           },
           {
             "name": {
+              "wireValue": "useless-property",
               "name": {
                 "originalName": "useless-property",
                 "camelCase": {
@@ -1173,8 +1174,7 @@
                   "unsafeName": "UselessProperty",
                   "safeName": "UselessProperty"
                 }
-              },
-              "wireValue": "useless-property"
+              }
             },
             "valueType": {
               "container": {
@@ -1195,6 +1195,7 @@
           },
           {
             "name": {
+              "wireValue": "inlined-one-of-no-names",
               "name": {
                 "originalName": "inlined-one-of-no-names",
                 "camelCase": {
@@ -1213,8 +1214,7 @@
                   "unsafeName": "InlinedOneOfNoNames",
                   "safeName": "InlinedOneOfNoNames"
                 }
-              },
-              "wireValue": "inlined-one-of-no-names"
+              }
             },
             "valueType": {
               "container": {
@@ -1268,6 +1268,7 @@
           },
           {
             "name": {
+              "wireValue": "inlined-one-of-with-names",
               "name": {
                 "originalName": "inlined-one-of-with-names",
                 "camelCase": {
@@ -1286,8 +1287,7 @@
                   "unsafeName": "InlinedOneOfWithNames",
                   "safeName": "InlinedOneOfWithNames"
                 }
-              },
-              "wireValue": "inlined-one-of-with-names"
+              }
             },
             "valueType": {
               "container": {
@@ -1387,6 +1387,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -1405,8 +1406,7 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              },
-              "wireValue": "sideLength"
+              }
             },
             "valueType": {
               "container": {
@@ -1479,6 +1479,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "width",
               "name": {
                 "originalName": "width",
                 "camelCase": {
@@ -1497,8 +1498,7 @@
                   "unsafeName": "Width",
                   "safeName": "Width"
                 }
-              },
-              "wireValue": "width"
+              }
             },
             "valueType": {
               "container": {
@@ -1525,6 +1525,7 @@
           },
           {
             "name": {
+              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -1543,8 +1544,7 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              },
-              "wireValue": "height"
+              }
             },
             "valueType": {
               "container": {
@@ -1617,6 +1617,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "app",
               "name": {
                 "originalName": "app",
                 "camelCase": {
@@ -1635,8 +1636,7 @@
                   "unsafeName": "App",
                   "safeName": "App"
                 }
-              },
-              "wireValue": "app"
+              }
             },
             "valueType": {
               "container": {
@@ -1709,6 +1709,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -1727,8 +1728,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "container": {
@@ -1801,6 +1801,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -1819,8 +1820,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "container": {
@@ -1893,6 +1893,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -1911,8 +1912,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "valueType": {
               "container": {
@@ -2030,6 +2030,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "anonymous",
               "name": {
                 "originalName": "anonymous",
                 "camelCase": {
@@ -2048,8 +2049,7 @@
                   "unsafeName": "Anonymous",
                   "safeName": "Anonymous"
                 }
-              },
-              "wireValue": "anonymous"
+              }
             },
             "valueType": {
               "fernFilepath": {
@@ -2308,6 +2308,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "no-summary-or-title",
                             "name": {
                               "originalName": "no-summary-or-title",
                               "camelCase": {
@@ -2326,8 +2327,7 @@
                                 "unsafeName": "NoSummaryOrTitle",
                                 "safeName": "NoSummaryOrTitle"
                               }
-                            },
-                            "wireValue": "no-summary-or-title"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -2394,6 +2394,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "no-summary-and-title",
                             "name": {
                               "originalName": "no-summary-and-title",
                               "camelCase": {
@@ -2412,8 +2413,7 @@
                                 "unsafeName": "NoSummaryAndTitle",
                                 "safeName": "NoSummaryAndTitle"
                               }
-                            },
-                            "wireValue": "no-summary-and-title"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -2480,6 +2480,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "summary-and-title",
                             "name": {
                               "originalName": "summary-and-title",
                               "camelCase": {
@@ -2498,8 +2499,7 @@
                                 "unsafeName": "SummaryAndTitle",
                                 "safeName": "SummaryAndTitle"
                               }
-                            },
-                            "wireValue": "summary-and-title"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -2566,6 +2566,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "useless-property",
                             "name": {
                               "originalName": "useless-property",
                               "camelCase": {
@@ -2584,8 +2585,7 @@
                                 "unsafeName": "UselessProperty",
                                 "safeName": "UselessProperty"
                               }
-                            },
-                            "wireValue": "useless-property"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -2627,6 +2627,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "inlined-one-of-no-names",
                             "name": {
                               "originalName": "inlined-one-of-no-names",
                               "camelCase": {
@@ -2645,8 +2646,7 @@
                                 "unsafeName": "InlinedOneOfNoNames",
                                 "safeName": "InlinedOneOfNoNames"
                               }
-                            },
-                            "wireValue": "inlined-one-of-no-names"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -2719,6 +2719,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "inlined-one-of-with-names",
                             "name": {
                               "originalName": "inlined-one-of-with-names",
                               "camelCase": {
@@ -2737,8 +2738,7 @@
                                 "unsafeName": "InlinedOneOfWithNames",
                                 "safeName": "InlinedOneOfWithNames"
                               }
-                            },
-                            "wireValue": "inlined-one-of-with-names"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "UserRequest",
@@ -3187,6 +3187,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -3205,8 +3206,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

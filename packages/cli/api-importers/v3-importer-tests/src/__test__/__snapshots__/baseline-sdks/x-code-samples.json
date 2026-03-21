@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -102,6 +102,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -120,8 +121,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -145,6 +145,7 @@
           },
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -163,8 +164,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "container": {
@@ -452,6 +452,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -470,8 +471,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -521,6 +521,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -539,8 +540,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -552,6 +552,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -570,8 +571,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -583,6 +583,7 @@
           },
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -601,8 +602,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": {
@@ -722,6 +722,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

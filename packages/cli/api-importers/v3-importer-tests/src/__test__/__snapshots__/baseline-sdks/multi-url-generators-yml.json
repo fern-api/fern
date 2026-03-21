@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -102,6 +102,7 @@
           },
           {
             "name": {
+              "wireValue": "username",
               "name": {
                 "originalName": "username",
                 "camelCase": {
@@ -120,8 +121,7 @@
                   "unsafeName": "Username",
                   "safeName": "Username"
                 }
-              },
-              "wireValue": "username"
+              }
             },
             "valueType": {
               "container": {
@@ -145,6 +145,7 @@
           },
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -163,8 +164,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "valueType": {
               "container": {
@@ -188,6 +188,7 @@
           },
           {
             "name": {
+              "wireValue": "createdAt",
               "name": {
                 "originalName": "createdAt",
                 "camelCase": {
@@ -206,8 +207,7 @@
                   "unsafeName": "CreatedAt",
                   "safeName": "CreatedAt"
                 }
-              },
-              "wireValue": "createdAt"
+              }
             },
             "valueType": {
               "container": {
@@ -270,6 +270,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "accessToken",
               "name": {
                 "originalName": "accessToken",
                 "camelCase": {
@@ -288,8 +289,7 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              },
-              "wireValue": "accessToken"
+              }
             },
             "valueType": {
               "container": {
@@ -313,6 +313,7 @@
           },
           {
             "name": {
+              "wireValue": "tokenType",
               "name": {
                 "originalName": "tokenType",
                 "camelCase": {
@@ -331,8 +332,7 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              },
-              "wireValue": "tokenType"
+              }
             },
             "valueType": {
               "container": {
@@ -356,6 +356,7 @@
           },
           {
             "name": {
+              "wireValue": "expiresIn",
               "name": {
                 "originalName": "expiresIn",
                 "camelCase": {
@@ -374,8 +375,7 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              },
-              "wireValue": "expiresIn"
+              }
             },
             "valueType": {
               "container": {
@@ -439,6 +439,7 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
+        "wireValue": "UnauthorizedError",
         "name": {
           "originalName": "UnauthorizedError",
           "camelCase": {
@@ -457,8 +458,7 @@
             "unsafeName": "UnauthorizedError",
             "safeName": "UnauthorizedError"
           }
-        },
-        "wireValue": "UnauthorizedError"
+        }
       },
       "docs": "Unauthorized",
       "statusCode": 401,
@@ -496,6 +496,7 @@
         "errorId": "error_:NotFoundError"
       },
       "discriminantValue": {
+        "wireValue": "NotFoundError",
         "name": {
           "originalName": "NotFoundError",
           "camelCase": {
@@ -514,8 +515,7 @@
             "unsafeName": "NotFoundError",
             "safeName": "NotFoundError"
           }
-        },
-        "wireValue": "NotFoundError"
+        }
       },
       "docs": "User not found",
       "statusCode": 404,
@@ -1084,6 +1084,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1102,8 +1103,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "environments": {
@@ -1185,6 +1185,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -1203,8 +1204,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -1216,6 +1216,7 @@
           },
           {
             "name": {
+              "wireValue": "username",
               "name": {
                 "originalName": "username",
                 "camelCase": {
@@ -1234,8 +1235,7 @@
                   "unsafeName": "Username",
                   "safeName": "Username"
                 }
-              },
-              "wireValue": "username"
+              }
             },
             "typeReference": {
               "value": {
@@ -1247,6 +1247,7 @@
           },
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -1265,8 +1266,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": {
@@ -1278,6 +1278,7 @@
           },
           {
             "name": {
+              "wireValue": "createdAt",
               "name": {
                 "originalName": "createdAt",
                 "camelCase": {
@@ -1296,8 +1297,7 @@
                   "unsafeName": "CreatedAt",
                   "safeName": "CreatedAt"
                 }
-              },
-              "wireValue": "createdAt"
+              }
             },
             "typeReference": {
               "value": {
@@ -1340,6 +1340,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "accessToken",
               "name": {
                 "originalName": "accessToken",
                 "camelCase": {
@@ -1358,8 +1359,7 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              },
-              "wireValue": "accessToken"
+              }
             },
             "typeReference": {
               "value": {
@@ -1371,6 +1371,7 @@
           },
           {
             "name": {
+              "wireValue": "tokenType",
               "name": {
                 "originalName": "tokenType",
                 "camelCase": {
@@ -1389,8 +1390,7 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              },
-              "wireValue": "tokenType"
+              }
             },
             "typeReference": {
               "value": {
@@ -1402,6 +1402,7 @@
           },
           {
             "name": {
+              "wireValue": "expiresIn",
               "name": {
                 "originalName": "expiresIn",
                 "camelCase": {
@@ -1420,8 +1421,7 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              },
-              "wireValue": "expiresIn"
+              }
             },
             "typeReference": {
               "value": {
@@ -1650,6 +1650,9 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

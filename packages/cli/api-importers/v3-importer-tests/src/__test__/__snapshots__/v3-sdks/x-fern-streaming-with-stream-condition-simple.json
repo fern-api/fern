@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              },
-              "wireValue": "query"
+              }
             },
             "valueType": {
               "container": {
@@ -82,6 +82,7 @@
           },
           {
             "name": {
+              "wireValue": "stream_response",
               "name": {
                 "originalName": "stream_response",
                 "camelCase": {
@@ -100,8 +101,7 @@
                   "unsafeName": "StreamResponse",
                   "safeName": "StreamResponse"
                 }
-              },
-              "wireValue": "stream_response"
+              }
             },
             "valueType": {
               "container": {
@@ -174,6 +174,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "answer",
               "name": {
                 "originalName": "answer",
                 "camelCase": {
@@ -192,8 +193,7 @@
                   "unsafeName": "Answer",
                   "safeName": "Answer"
                 }
-              },
-              "wireValue": "answer"
+              }
             },
             "valueType": {
               "container": {
@@ -266,6 +266,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "chunk",
               "name": {
                 "originalName": "chunk",
                 "camelCase": {
@@ -284,8 +285,7 @@
                   "unsafeName": "Chunk",
                   "safeName": "Chunk"
                 }
-              },
-              "wireValue": "chunk"
+              }
             },
             "valueType": {
               "container": {
@@ -376,6 +376,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "query",
                         "name": {
                           "originalName": "query",
                           "camelCase": {
@@ -394,8 +395,7 @@
                             "unsafeName": "Query",
                             "safeName": "Query"
                           }
-                        },
-                        "wireValue": "query"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -418,6 +418,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "stream_response",
                         "name": {
                           "originalName": "stream_response",
                           "camelCase": {
@@ -436,8 +437,7 @@
                             "unsafeName": "StreamResponse",
                             "safeName": "StreamResponse"
                           }
-                        },
-                        "wireValue": "stream_response"
+                        }
                       },
                       "value": {
                         "jsonExample": true,
@@ -468,6 +468,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "chunk",
                                   "name": {
                                     "originalName": "chunk",
                                     "camelCase": {
@@ -486,8 +487,7 @@
                                       "unsafeName": "Chunk",
                                       "safeName": "Chunk"
                                     }
-                                  },
-                                  "wireValue": "chunk"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamedResponse",
@@ -643,6 +643,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -661,8 +662,7 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  },
-                  "wireValue": "query"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -689,6 +689,7 @@
               },
               {
                 "name": {
+                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -707,8 +708,7 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  },
-                  "wireValue": "stream_response"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -877,6 +877,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "query",
                         "name": {
                           "originalName": "query",
                           "camelCase": {
@@ -895,8 +896,7 @@
                             "unsafeName": "Query",
                             "safeName": "Query"
                           }
-                        },
-                        "wireValue": "query"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -919,6 +919,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "stream_response",
                         "name": {
                           "originalName": "stream_response",
                           "camelCase": {
@@ -937,8 +938,7 @@
                             "unsafeName": "StreamResponse",
                             "safeName": "StreamResponse"
                           }
-                        },
-                        "wireValue": "stream_response"
+                        }
                       },
                       "value": {
                         "jsonExample": false,
@@ -968,6 +968,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "answer",
                                 "name": {
                                   "originalName": "answer",
                                   "camelCase": {
@@ -986,8 +987,7 @@
                                     "unsafeName": "Answer",
                                     "safeName": "Answer"
                                   }
-                                },
-                                "wireValue": "answer"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "FullResponse",
@@ -1142,6 +1142,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "query",
                   "name": {
                     "originalName": "query",
                     "camelCase": {
@@ -1160,8 +1161,7 @@
                       "unsafeName": "Query",
                       "safeName": "Query"
                     }
-                  },
-                  "wireValue": "query"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1188,6 +1188,7 @@
               },
               {
                 "name": {
+                  "wireValue": "stream_response",
                   "name": {
                     "originalName": "stream_response",
                     "camelCase": {
@@ -1206,8 +1207,7 @@
                       "unsafeName": "StreamResponse",
                       "safeName": "StreamResponse"
                     }
-                  },
-                  "wireValue": "stream_response"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1266,6 +1266,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "query",
                       "name": {
                         "originalName": "query",
                         "camelCase": {
@@ -1284,8 +1285,7 @@
                           "unsafeName": "Query",
                           "safeName": "Query"
                         }
-                      },
-                      "wireValue": "query"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -1312,6 +1312,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "stream_response",
                       "name": {
                         "originalName": "stream_response",
                         "camelCase": {
@@ -1330,8 +1331,7 @@
                           "unsafeName": "StreamResponse",
                           "safeName": "StreamResponse"
                         }
-                      },
-                      "wireValue": "stream_response"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -1565,6 +1565,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1583,8 +1584,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -84,6 +84,7 @@
           },
           {
             "name": {
+              "wireValue": "metadata",
               "name": {
                 "originalName": "metadata",
                 "camelCase": {
@@ -102,8 +103,7 @@
                   "unsafeName": "Metadata",
                   "safeName": "Metadata"
                 }
-              },
-              "wireValue": "metadata"
+              }
             },
             "valueType": {
               "container": {
@@ -208,6 +208,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -226,8 +227,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

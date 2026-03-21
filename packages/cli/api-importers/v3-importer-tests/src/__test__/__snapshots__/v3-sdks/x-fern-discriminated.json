@@ -36,6 +36,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "circle",
               "name": {
                 "originalName": "circle",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Circle",
                   "safeName": "Circle"
                 }
-              },
-              "wireValue": "circle"
+              }
             }
           }
         ],
@@ -103,6 +103,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -121,8 +122,7 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              },
-              "wireValue": "type"
+              }
             },
             "valueType": {
               "fernFilepath": {
@@ -161,6 +161,7 @@
           },
           {
             "name": {
+              "wireValue": "radius",
               "name": {
                 "originalName": "radius",
                 "camelCase": {
@@ -179,8 +180,7 @@
                   "unsafeName": "Radius",
                   "safeName": "Radius"
                 }
-              },
-              "wireValue": "radius"
+              }
             },
             "valueType": {
               "primitive": {
@@ -250,6 +250,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "square",
               "name": {
                 "originalName": "square",
                 "camelCase": {
@@ -268,8 +269,7 @@
                   "unsafeName": "Square",
                   "safeName": "Square"
                 }
-              },
-              "wireValue": "square"
+              }
             }
           }
         ],
@@ -317,6 +317,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "type",
               "name": {
                 "originalName": "type",
                 "camelCase": {
@@ -335,8 +336,7 @@
                   "unsafeName": "Type",
                   "safeName": "Type"
                 }
-              },
-              "wireValue": "type"
+              }
             },
             "valueType": {
               "fernFilepath": {
@@ -375,6 +375,7 @@
           },
           {
             "name": {
+              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -393,8 +394,7 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              },
-              "wireValue": "sideLength"
+              }
             },
             "valueType": {
               "primitive": {
@@ -704,6 +704,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "type",
                                   "name": {
                                     "originalName": "type",
                                     "camelCase": {
@@ -722,8 +723,7 @@
                                       "unsafeName": "Type",
                                       "safeName": "Type"
                                     }
-                                  },
-                                  "wireValue": "type"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "Circle",
@@ -756,6 +756,7 @@
                                   "shape": {
                                     "shape": {
                                       "value": {
+                                        "wireValue": "circle",
                                         "name": {
                                           "originalName": "circle",
                                           "camelCase": {
@@ -774,8 +775,7 @@
                                             "unsafeName": "Circle",
                                             "safeName": "Circle"
                                           }
-                                        },
-                                        "wireValue": "circle"
+                                        }
                                       },
                                       "type": "enum"
                                     },
@@ -811,6 +811,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "radius",
                                   "name": {
                                     "originalName": "radius",
                                     "camelCase": {
@@ -829,8 +830,7 @@
                                       "unsafeName": "Radius",
                                       "safeName": "Radius"
                                     }
-                                  },
-                                  "wireValue": "radius"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "Circle",
@@ -953,6 +953,7 @@
                                 "properties": [
                                   {
                                     "name": {
+                                      "wireValue": "type",
                                       "name": {
                                         "originalName": "type",
                                         "camelCase": {
@@ -971,8 +972,7 @@
                                           "unsafeName": "Type",
                                           "safeName": "Type"
                                         }
-                                      },
-                                      "wireValue": "type"
+                                      }
                                     },
                                     "originalTypeDeclaration": {
                                       "typeId": "Circle",
@@ -1005,6 +1005,7 @@
                                       "shape": {
                                         "shape": {
                                           "value": {
+                                            "wireValue": "circle",
                                             "name": {
                                               "originalName": "circle",
                                               "camelCase": {
@@ -1023,8 +1024,7 @@
                                                 "unsafeName": "Circle",
                                                 "safeName": "Circle"
                                               }
-                                            },
-                                            "wireValue": "circle"
+                                            }
                                           },
                                           "type": "enum"
                                         },
@@ -1060,6 +1060,7 @@
                                   },
                                   {
                                     "name": {
+                                      "wireValue": "radius",
                                       "name": {
                                         "originalName": "radius",
                                         "camelCase": {
@@ -1078,8 +1079,7 @@
                                           "unsafeName": "Radius",
                                           "safeName": "Radius"
                                         }
-                                      },
-                                      "wireValue": "radius"
+                                      }
                                     },
                                     "originalTypeDeclaration": {
                                       "typeId": "Circle",
@@ -1500,6 +1500,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1518,8 +1519,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "users",
               "name": {
                 "originalName": "users",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "Users",
                   "safeName": "Users"
                 }
-              },
-              "wireValue": "users"
+              }
             },
             "valueType": {
               "container": {
@@ -168,6 +168,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -186,8 +187,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -211,6 +211,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -229,8 +230,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -325,6 +325,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "limit",
                 "name": {
                   "originalName": "limit",
                   "camelCase": {
@@ -343,8 +344,7 @@
                     "unsafeName": "Limit",
                     "safeName": "Limit"
                   }
-                },
-                "wireValue": "limit"
+                }
               },
               "valueType": {
                 "container": {
@@ -524,6 +524,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -542,8 +543,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -594,6 +594,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "users",
               "name": {
                 "originalName": "users",
                 "camelCase": {
@@ -612,8 +613,7 @@
                   "unsafeName": "Users",
                   "safeName": "Users"
                 }
-              },
-              "wireValue": "users"
+              }
             },
             "typeReference": {
               "value": {
@@ -659,6 +659,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -677,8 +678,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -690,6 +690,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -708,8 +709,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -786,6 +786,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "limit",
                 "name": {
                   "originalName": "limit",
                   "camelCase": {
@@ -804,8 +805,7 @@
                     "unsafeName": "Limit",
                     "safeName": "Limit"
                   }
-                },
-                "wireValue": "limit"
+                }
               },
               "typeReference": {
                 "value": {
@@ -871,6 +871,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

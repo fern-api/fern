@@ -60,6 +60,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -78,8 +79,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "valueType": {
               "container": {
@@ -305,6 +305,7 @@
           {
             "docs": "The unique ID of the type.",
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -323,8 +324,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -357,6 +357,7 @@
           {
             "docs": "The age of the type.",
             "name": {
+              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -375,8 +376,7 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              },
-              "wireValue": "age"
+              }
             },
             "valueType": {
               "container": {
@@ -407,6 +407,7 @@
           {
             "docs": "The unique name of the type.",
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -425,8 +426,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -457,6 +457,7 @@
           {
             "docs": "The value of the type.",
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -475,8 +476,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "valueType": {
               "container": {
@@ -624,6 +624,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -642,8 +643,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -697,6 +697,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -715,8 +716,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": {
@@ -829,6 +829,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -847,8 +848,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -860,6 +860,7 @@
           },
           {
             "name": {
+              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -878,8 +879,7 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              },
-              "wireValue": "age"
+              }
             },
             "typeReference": {
               "value": {
@@ -891,6 +891,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -909,8 +910,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -922,6 +922,7 @@
           },
           {
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -940,8 +941,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "typeReference": {
               "value": {
@@ -1001,6 +1001,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

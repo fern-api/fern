@@ -28,6 +28,7 @@
   "idempotencyHeaders": [
     {
       "name": {
+        "wireValue": "Idempotency-Key",
         "name": {
           "originalName": "idempotencyKey",
           "camelCase": {
@@ -46,8 +47,7 @@
             "unsafeName": "IdempotencyKey",
             "safeName": "IdempotencyKey"
           }
-        },
-        "wireValue": "Idempotency-Key"
+        }
       },
       "valueType": {
         "container": {
@@ -154,6 +154,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "send",
                   "name": {
                     "originalName": "send",
                     "camelCase": {
@@ -172,8 +173,7 @@
                       "unsafeName": "Send",
                       "safeName": "Send"
                     }
-                  },
-                  "wireValue": "send"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -294,6 +294,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -312,8 +313,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -395,6 +395,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "send",
                   "name": {
                     "originalName": "send",
                     "camelCase": {
@@ -413,8 +414,7 @@
                       "unsafeName": "Send",
                       "safeName": "Send"
                     }
-                  },
-                  "wireValue": "send"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -442,6 +442,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

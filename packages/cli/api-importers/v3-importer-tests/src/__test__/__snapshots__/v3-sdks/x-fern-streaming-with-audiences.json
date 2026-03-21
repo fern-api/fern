@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -84,6 +84,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -102,8 +103,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -176,6 +176,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -194,8 +195,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -224,6 +224,7 @@
           },
           {
             "name": {
+              "wireValue": "streamed",
               "name": {
                 "originalName": "streamed",
                 "camelCase": {
@@ -242,8 +243,7 @@
                   "unsafeName": "Streamed",
                   "safeName": "Streamed"
                 }
-              },
-              "wireValue": "streamed"
+              }
             },
             "valueType": {
               "container": {
@@ -449,6 +449,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "stream",
                         "name": {
                           "originalName": "stream",
                           "camelCase": {
@@ -467,8 +468,7 @@
                             "unsafeName": "Stream",
                             "safeName": "Stream"
                           }
-                        },
-                        "wireValue": "stream"
+                        }
                       },
                       "value": {
                         "jsonExample": true,
@@ -500,6 +500,7 @@
                             "properties": [
                               {
                                 "name": {
+                                  "wireValue": "id",
                                   "name": {
                                     "originalName": "id",
                                     "camelCase": {
@@ -518,8 +519,7 @@
                                       "unsafeName": "Id",
                                       "safeName": "Id"
                                     }
-                                  },
-                                  "wireValue": "id"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser",
@@ -583,6 +583,7 @@
                               },
                               {
                                 "name": {
+                                  "wireValue": "streamed",
                                   "name": {
                                     "originalName": "streamed",
                                     "camelCase": {
@@ -601,8 +602,7 @@
                                       "unsafeName": "Streamed",
                                       "safeName": "Streamed"
                                     }
-                                  },
-                                  "wireValue": "streamed"
+                                  }
                                 },
                                 "originalTypeDeclaration": {
                                   "typeId": "StreamUser",
@@ -803,6 +803,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "stream",
                   "name": {
                     "originalName": "stream",
                     "camelCase": {
@@ -821,8 +822,7 @@
                       "unsafeName": "Stream",
                       "safeName": "Stream"
                     }
-                  },
-                  "wireValue": "stream"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1068,6 +1068,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "stream",
                         "name": {
                           "originalName": "stream",
                           "camelCase": {
@@ -1086,8 +1087,7 @@
                             "unsafeName": "Stream",
                             "safeName": "Stream"
                           }
-                        },
-                        "wireValue": "stream"
+                        }
                       },
                       "value": {
                         "jsonExample": false,
@@ -1118,6 +1118,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -1136,8 +1137,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1201,6 +1201,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "streamed",
                                 "name": {
                                   "originalName": "streamed",
                                   "camelCase": {
@@ -1219,8 +1220,7 @@
                                     "unsafeName": "Streamed",
                                     "safeName": "Streamed"
                                   }
-                                },
-                                "wireValue": "streamed"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "User",
@@ -1420,6 +1420,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "stream",
                   "name": {
                     "originalName": "stream",
                     "camelCase": {
@@ -1438,8 +1439,7 @@
                       "unsafeName": "Stream",
                       "safeName": "Stream"
                     }
-                  },
-                  "wireValue": "stream"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -1498,6 +1498,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "stream",
                       "name": {
                         "originalName": "stream",
                         "camelCase": {
@@ -1516,8 +1517,7 @@
                           "unsafeName": "Stream",
                           "safeName": "Stream"
                         }
-                      },
-                      "wireValue": "stream"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -1791,6 +1791,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1809,8 +1810,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "subscriptionId",
               "name": {
                 "originalName": "subscriptionId",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "SubscriptionId",
                   "safeName": "SubscriptionId"
                 }
-              },
-              "wireValue": "subscriptionId"
+              }
             },
             "valueType": {
               "container": {
@@ -145,6 +145,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "callbackUrl",
                         "name": {
                           "originalName": "callbackUrl",
                           "camelCase": {
@@ -163,8 +164,7 @@
                             "unsafeName": "CallbackUrl",
                             "safeName": "CallbackUrl"
                           }
-                        },
-                        "wireValue": "callbackUrl"
+                        }
                       },
                       "value": {
                         "jsonExample": "callbackUrl",
@@ -193,6 +193,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "subscriptionId",
                                 "name": {
                                   "originalName": "subscriptionId",
                                   "camelCase": {
@@ -211,8 +212,7 @@
                                     "unsafeName": "SubscriptionId",
                                     "safeName": "SubscriptionId"
                                   }
-                                },
-                                "wireValue": "subscriptionId"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "subscribe_Response_200",
@@ -367,6 +367,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "callbackUrl",
                   "name": {
                     "originalName": "callbackUrl",
                     "camelCase": {
@@ -385,8 +386,7 @@
                       "unsafeName": "CallbackUrl",
                       "safeName": "CallbackUrl"
                     }
-                  },
-                  "wireValue": "callbackUrl"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -448,6 +448,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "callbackUrl",
                       "name": {
                         "originalName": "callbackUrl",
                         "camelCase": {
@@ -466,8 +467,7 @@
                           "unsafeName": "CallbackUrl",
                           "safeName": "CallbackUrl"
                         }
-                      },
-                      "wireValue": "callbackUrl"
+                      }
                     },
                     "valueType": {
                       "primitive": {
@@ -693,6 +693,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -711,8 +712,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

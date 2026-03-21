@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -82,6 +82,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -100,8 +101,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -174,6 +174,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -192,12 +193,12 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "createdAt",
               "name": {
                 "originalName": "createdAt",
                 "camelCase": {
@@ -216,12 +217,12 @@
                   "unsafeName": "CreatedAt",
                   "safeName": "CreatedAt"
                 }
-              },
-              "wireValue": "createdAt"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "updatedAt",
               "name": {
                 "originalName": "updatedAt",
                 "camelCase": {
@@ -240,8 +241,7 @@
                   "unsafeName": "UpdatedAt",
                   "safeName": "UpdatedAt"
                 }
-              },
-              "wireValue": "updatedAt"
+              }
             }
           }
         ],
@@ -289,6 +289,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "asc",
               "name": {
                 "originalName": "asc",
                 "camelCase": {
@@ -307,12 +308,12 @@
                   "unsafeName": "Asc",
                   "safeName": "Asc"
                 }
-              },
-              "wireValue": "asc"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "desc",
               "name": {
                 "originalName": "desc",
                 "camelCase": {
@@ -331,8 +332,7 @@
                   "unsafeName": "Desc",
                   "safeName": "Desc"
                 }
-              },
-              "wireValue": "desc"
+              }
             }
           }
         ],
@@ -380,6 +380,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "items",
               "name": {
                 "originalName": "items",
                 "camelCase": {
@@ -398,8 +399,7 @@
                   "unsafeName": "Items",
                   "safeName": "Items"
                 }
-              },
-              "wireValue": "items"
+              }
             },
             "valueType": {
               "container": {
@@ -494,6 +494,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "sortBy",
                 "name": {
                   "originalName": "sortBy",
                   "camelCase": {
@@ -512,8 +513,7 @@
                     "unsafeName": "SortBy",
                     "safeName": "SortBy"
                   }
-                },
-                "wireValue": "sortBy"
+                }
               },
               "docs": "Sort results by the provided value",
               "valueType": {
@@ -560,6 +560,7 @@
             },
             {
               "name": {
+                "wireValue": "sortOrder",
                 "name": {
                   "originalName": "sortOrder",
                   "camelCase": {
@@ -578,8 +579,7 @@
                     "unsafeName": "SortOrder",
                     "safeName": "SortOrder"
                   }
-                },
-                "wireValue": "sortOrder"
+                }
               },
               "docs": "Sort order (asc or desc)",
               "valueType": {
@@ -626,6 +626,7 @@
             },
             {
               "name": {
+                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -644,8 +645,7 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                },
-                "wireValue": "filter"
+                }
               },
               "docs": "Filter string",
               "valueType": {
@@ -709,6 +709,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "items",
                                 "name": {
                                   "originalName": "items",
                                   "camelCase": {
@@ -727,8 +728,7 @@
                                     "unsafeName": "Items",
                                     "safeName": "Items"
                                   }
-                                },
-                                "wireValue": "items"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "listItems_Response_200",
@@ -793,6 +793,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
+                                                        "wireValue": "id",
                                                         "name": {
                                                           "originalName": "id",
                                                           "camelCase": {
@@ -811,8 +812,7 @@
                                                             "unsafeName": "Id",
                                                             "safeName": "Id"
                                                           }
-                                                        },
-                                                        "wireValue": "id"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Item",
@@ -874,6 +874,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "name",
                                                         "name": {
                                                           "originalName": "name",
                                                           "camelCase": {
@@ -892,8 +893,7 @@
                                                             "unsafeName": "Name",
                                                             "safeName": "Name"
                                                           }
-                                                        },
-                                                        "wireValue": "name"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Item",
@@ -995,6 +995,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
+                                                        "wireValue": "id",
                                                         "name": {
                                                           "originalName": "id",
                                                           "camelCase": {
@@ -1013,8 +1014,7 @@
                                                             "unsafeName": "Id",
                                                             "safeName": "Id"
                                                           }
-                                                        },
-                                                        "wireValue": "id"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Item",
@@ -1076,6 +1076,7 @@
                                                     },
                                                     {
                                                       "name": {
+                                                        "wireValue": "name",
                                                         "name": {
                                                           "originalName": "name",
                                                           "camelCase": {
@@ -1094,8 +1095,7 @@
                                                             "unsafeName": "Name",
                                                             "safeName": "Name"
                                                           }
-                                                        },
-                                                        "wireValue": "name"
+                                                        }
                                                       },
                                                       "originalTypeDeclaration": {
                                                         "typeId": "Item",
@@ -1534,6 +1534,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1552,8 +1553,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

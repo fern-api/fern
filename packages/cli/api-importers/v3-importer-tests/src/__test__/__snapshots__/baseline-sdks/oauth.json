@@ -123,6 +123,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "password",
               "name": {
                 "originalName": "password",
                 "camelCase": {
@@ -141,12 +142,12 @@
                   "unsafeName": "Password",
                   "safeName": "Password"
                 }
-              },
-              "wireValue": "password"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "refresh_token",
               "name": {
                 "originalName": "refresh_token",
                 "camelCase": {
@@ -165,12 +166,12 @@
                   "unsafeName": "RefreshToken",
                   "safeName": "RefreshToken"
                 }
-              },
-              "wireValue": "refresh_token"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "client_credentials",
               "name": {
                 "originalName": "client_credentials",
                 "camelCase": {
@@ -189,8 +190,7 @@
                   "unsafeName": "ClientCredentials",
                   "safeName": "ClientCredentials"
                 }
-              },
-              "wireValue": "client_credentials"
+              }
             }
           }
         ],
@@ -274,6 +274,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "access_token",
               "name": {
                 "originalName": "access_token",
                 "camelCase": {
@@ -292,8 +293,7 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              },
-              "wireValue": "access_token"
+              }
             },
             "valueType": {
               "container": {
@@ -317,6 +317,7 @@
           },
           {
             "name": {
+              "wireValue": "token_type",
               "name": {
                 "originalName": "token_type",
                 "camelCase": {
@@ -335,8 +336,7 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              },
-              "wireValue": "token_type"
+              }
             },
             "valueType": {
               "container": {
@@ -361,6 +361,7 @@
           {
             "docs": "Token expiration time in seconds",
             "name": {
+              "wireValue": "expires_in",
               "name": {
                 "originalName": "expires_in",
                 "camelCase": {
@@ -379,8 +380,7 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              },
-              "wireValue": "expires_in"
+              }
             },
             "valueType": {
               "container": {
@@ -404,6 +404,7 @@
           },
           {
             "name": {
+              "wireValue": "refresh_token",
               "name": {
                 "originalName": "refresh_token",
                 "camelCase": {
@@ -422,8 +423,7 @@
                   "unsafeName": "RefreshToken",
                   "safeName": "RefreshToken"
                 }
-              },
-              "wireValue": "refresh_token"
+              }
             },
             "valueType": {
               "container": {
@@ -487,6 +487,7 @@
         "errorId": "error_:BadRequestError"
       },
       "discriminantValue": {
+        "wireValue": "BadRequestError",
         "name": {
           "originalName": "BadRequestError",
           "camelCase": {
@@ -505,8 +506,7 @@
             "unsafeName": "BadRequestError",
             "safeName": "BadRequestError"
           }
-        },
-        "wireValue": "BadRequestError"
+        }
       },
       "docs": "Bad request",
       "statusCode": 400,
@@ -544,6 +544,7 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
+        "wireValue": "UnauthorizedError",
         "name": {
           "originalName": "UnauthorizedError",
           "camelCase": {
@@ -562,8 +563,7 @@
             "unsafeName": "UnauthorizedError",
             "safeName": "UnauthorizedError"
           }
-        },
-        "wireValue": "UnauthorizedError"
+        }
       },
       "docs": "Unauthorized",
       "statusCode": 401,
@@ -698,6 +698,7 @@
               {
                 "docs": "The type of grant to request",
                 "name": {
+                  "wireValue": "grant_type",
                   "name": {
                     "originalName": "grant_type",
                     "camelCase": {
@@ -716,8 +717,7 @@
                       "unsafeName": "GrantType",
                       "safeName": "GrantType"
                     }
-                  },
-                  "wireValue": "grant_type"
+                  }
                 },
                 "valueType": {
                   "name": {
@@ -793,6 +793,7 @@
               {
                 "docs": "Required for password grant type",
                 "name": {
+                  "wireValue": "username",
                   "name": {
                     "originalName": "username",
                     "camelCase": {
@@ -811,8 +812,7 @@
                       "unsafeName": "Username",
                       "safeName": "Username"
                     }
-                  },
-                  "wireValue": "username"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -837,6 +837,7 @@
               {
                 "docs": "Required for password grant type",
                 "name": {
+                  "wireValue": "password",
                   "name": {
                     "originalName": "password",
                     "camelCase": {
@@ -855,8 +856,7 @@
                       "unsafeName": "Password",
                       "safeName": "Password"
                     }
-                  },
-                  "wireValue": "password"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -881,6 +881,7 @@
               {
                 "docs": "Required for refresh_token grant type",
                 "name": {
+                  "wireValue": "refresh_token",
                   "name": {
                     "originalName": "refresh_token",
                     "camelCase": {
@@ -899,8 +900,7 @@
                       "unsafeName": "RefreshToken",
                       "safeName": "RefreshToken"
                     }
-                  },
-                  "wireValue": "refresh_token"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -925,6 +925,7 @@
               {
                 "docs": "The client identifier",
                 "name": {
+                  "wireValue": "client_id",
                   "name": {
                     "originalName": "client_id",
                     "camelCase": {
@@ -943,8 +944,7 @@
                       "unsafeName": "ClientID",
                       "safeName": "ClientID"
                     }
-                  },
-                  "wireValue": "client_id"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -963,6 +963,7 @@
               {
                 "docs": "The client secret",
                 "name": {
+                  "wireValue": "client_secret",
                   "name": {
                     "originalName": "client_secret",
                     "camelCase": {
@@ -981,8 +982,7 @@
                       "unsafeName": "ClientSecret",
                       "safeName": "ClientSecret"
                     }
-                  },
-                  "wireValue": "client_secret"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -1211,6 +1211,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1229,8 +1230,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "environments": {
@@ -1350,6 +1350,7 @@
         },
         "values": [
           {
+            "wireValue": "password",
             "name": {
               "originalName": "password",
               "camelCase": {
@@ -1368,10 +1369,10 @@
                 "unsafeName": "Password",
                 "safeName": "Password"
               }
-            },
-            "wireValue": "password"
+            }
           },
           {
+            "wireValue": "refresh_token",
             "name": {
               "originalName": "refresh_token",
               "camelCase": {
@@ -1390,10 +1391,10 @@
                 "unsafeName": "RefreshToken",
                 "safeName": "RefreshToken"
               }
-            },
-            "wireValue": "refresh_token"
+            }
           },
           {
+            "wireValue": "client_credentials",
             "name": {
               "originalName": "client_credentials",
               "camelCase": {
@@ -1412,8 +1413,7 @@
                 "unsafeName": "ClientCredentials",
                 "safeName": "ClientCredentials"
               }
-            },
-            "wireValue": "client_credentials"
+            }
           }
         ],
         "type": "enum"
@@ -1486,6 +1486,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "access_token",
               "name": {
                 "originalName": "access_token",
                 "camelCase": {
@@ -1504,8 +1505,7 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              },
-              "wireValue": "access_token"
+              }
             },
             "typeReference": {
               "value": {
@@ -1517,6 +1517,7 @@
           },
           {
             "name": {
+              "wireValue": "token_type",
               "name": {
                 "originalName": "token_type",
                 "camelCase": {
@@ -1535,8 +1536,7 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              },
-              "wireValue": "token_type"
+              }
             },
             "typeReference": {
               "value": {
@@ -1548,6 +1548,7 @@
           },
           {
             "name": {
+              "wireValue": "expires_in",
               "name": {
                 "originalName": "expires_in",
                 "camelCase": {
@@ -1566,8 +1567,7 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              },
-              "wireValue": "expires_in"
+              }
             },
             "typeReference": {
               "value": {
@@ -1579,6 +1579,7 @@
           },
           {
             "name": {
+              "wireValue": "refresh_token",
               "name": {
                 "originalName": "refresh_token",
                 "camelCase": {
@@ -1597,8 +1598,7 @@
                   "unsafeName": "RefreshToken",
                   "safeName": "RefreshToken"
                 }
-              },
-              "wireValue": "refresh_token"
+              }
             },
             "typeReference": {
               "value": {
@@ -1617,7 +1617,6 @@
     "endpoints": {
       "endpoint_auth.get-token": {
         "auth": {
-          "key": "oauth2",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -1779,6 +1778,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "grant_type",
                   "name": {
                     "originalName": "grant_type",
                     "camelCase": {
@@ -1797,8 +1797,7 @@
                       "unsafeName": "GrantType",
                       "safeName": "GrantType"
                     }
-                  },
-                  "wireValue": "grant_type"
+                  }
                 },
                 "typeReference": {
                   "value": "type_auth:GetTokenAuthRequestGrantType",
@@ -1807,6 +1806,7 @@
               },
               {
                 "name": {
+                  "wireValue": "username",
                   "name": {
                     "originalName": "username",
                     "camelCase": {
@@ -1825,8 +1825,7 @@
                       "unsafeName": "Username",
                       "safeName": "Username"
                     }
-                  },
-                  "wireValue": "username"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1838,6 +1837,7 @@
               },
               {
                 "name": {
+                  "wireValue": "password",
                   "name": {
                     "originalName": "password",
                     "camelCase": {
@@ -1856,8 +1856,7 @@
                       "unsafeName": "Password",
                       "safeName": "Password"
                     }
-                  },
-                  "wireValue": "password"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1869,6 +1868,7 @@
               },
               {
                 "name": {
+                  "wireValue": "refresh_token",
                   "name": {
                     "originalName": "refresh_token",
                     "camelCase": {
@@ -1887,8 +1887,7 @@
                       "unsafeName": "RefreshToken",
                       "safeName": "RefreshToken"
                     }
-                  },
-                  "wireValue": "refresh_token"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1900,6 +1899,7 @@
               },
               {
                 "name": {
+                  "wireValue": "client_id",
                   "name": {
                     "originalName": "client_id",
                     "camelCase": {
@@ -1918,8 +1918,7 @@
                       "unsafeName": "ClientID",
                       "safeName": "ClientID"
                     }
-                  },
-                  "wireValue": "client_id"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -1928,6 +1927,7 @@
               },
               {
                 "name": {
+                  "wireValue": "client_secret",
                   "name": {
                     "originalName": "client_secret",
                     "camelCase": {
@@ -1946,8 +1946,7 @@
                       "unsafeName": "ClientSecret",
                       "safeName": "ClientSecret"
                     }
-                  },
-                  "wireValue": "client_secret"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -2003,6 +2002,9 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_auth": {
       "fernFilepath": {

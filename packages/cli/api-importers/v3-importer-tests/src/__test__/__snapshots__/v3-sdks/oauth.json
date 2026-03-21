@@ -60,6 +60,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "password",
               "name": {
                 "originalName": "password",
                 "camelCase": {
@@ -78,12 +79,12 @@
                   "unsafeName": "Password",
                   "safeName": "Password"
                 }
-              },
-              "wireValue": "password"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "refresh_token",
               "name": {
                 "originalName": "refresh_token",
                 "camelCase": {
@@ -102,12 +103,12 @@
                   "unsafeName": "RefreshToken",
                   "safeName": "RefreshToken"
                 }
-              },
-              "wireValue": "refresh_token"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "client_credentials",
               "name": {
                 "originalName": "client_credentials",
                 "camelCase": {
@@ -126,8 +127,7 @@
                   "unsafeName": "ClientCredentials",
                   "safeName": "ClientCredentials"
                 }
-              },
-              "wireValue": "client_credentials"
+              }
             }
           }
         ],
@@ -176,6 +176,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "access_token",
               "name": {
                 "originalName": "access_token",
                 "camelCase": {
@@ -194,8 +195,7 @@
                   "unsafeName": "AccessToken",
                   "safeName": "AccessToken"
                 }
-              },
-              "wireValue": "access_token"
+              }
             },
             "valueType": {
               "container": {
@@ -222,6 +222,7 @@
           },
           {
             "name": {
+              "wireValue": "token_type",
               "name": {
                 "originalName": "token_type",
                 "camelCase": {
@@ -240,8 +241,7 @@
                   "unsafeName": "TokenType",
                   "safeName": "TokenType"
                 }
-              },
-              "wireValue": "token_type"
+              }
             },
             "valueType": {
               "container": {
@@ -268,6 +268,7 @@
           },
           {
             "name": {
+              "wireValue": "expires_in",
               "name": {
                 "originalName": "expires_in",
                 "camelCase": {
@@ -286,8 +287,7 @@
                   "unsafeName": "ExpiresIn",
                   "safeName": "ExpiresIn"
                 }
-              },
-              "wireValue": "expires_in"
+              }
             },
             "valueType": {
               "container": {
@@ -315,6 +315,7 @@
           },
           {
             "name": {
+              "wireValue": "refresh_token",
               "name": {
                 "originalName": "refresh_token",
                 "camelCase": {
@@ -333,8 +334,7 @@
                   "unsafeName": "RefreshToken",
                   "safeName": "RefreshToken"
                 }
-              },
-              "wireValue": "refresh_token"
+              }
             },
             "valueType": {
               "container": {
@@ -525,6 +525,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "grant_type",
                         "name": {
                           "originalName": "grant_type",
                           "camelCase": {
@@ -543,14 +544,14 @@
                             "unsafeName": "GrantType",
                             "safeName": "GrantType"
                           }
-                        },
-                        "wireValue": "grant_type"
+                        }
                       },
                       "value": {
                         "jsonExample": "password",
                         "shape": {
                           "shape": {
                             "value": {
+                              "wireValue": "password",
                               "name": {
                                 "originalName": "password",
                                 "camelCase": {
@@ -569,8 +570,7 @@
                                   "unsafeName": "Password",
                                   "safeName": "Password"
                                 }
-                              },
-                              "wireValue": "password"
+                              }
                             },
                             "type": "enum"
                           },
@@ -606,6 +606,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "username",
                         "name": {
                           "originalName": "username",
                           "camelCase": {
@@ -624,8 +625,7 @@
                             "unsafeName": "Username",
                             "safeName": "Username"
                           }
-                        },
-                        "wireValue": "username"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -648,6 +648,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "password",
                         "name": {
                           "originalName": "password",
                           "camelCase": {
@@ -666,8 +667,7 @@
                             "unsafeName": "Password",
                             "safeName": "Password"
                           }
-                        },
-                        "wireValue": "password"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -690,6 +690,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                           "originalName": "refresh_token",
                           "camelCase": {
@@ -708,8 +709,7 @@
                             "unsafeName": "RefreshToken",
                             "safeName": "RefreshToken"
                           }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -732,6 +732,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_id",
                         "name": {
                           "originalName": "client_id",
                           "camelCase": {
@@ -750,8 +751,7 @@
                             "unsafeName": "ClientId",
                             "safeName": "ClientId"
                           }
-                        },
-                        "wireValue": "client_id"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_id",
@@ -768,6 +768,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_secret",
                         "name": {
                           "originalName": "client_secret",
                           "camelCase": {
@@ -786,8 +787,7 @@
                             "unsafeName": "ClientSecret",
                             "safeName": "ClientSecret"
                           }
-                        },
-                        "wireValue": "client_secret"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_secret",
@@ -819,6 +819,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "access_token",
                                 "name": {
                                   "originalName": "access_token",
                                   "camelCase": {
@@ -837,8 +838,7 @@
                                     "unsafeName": "AccessToken",
                                     "safeName": "AccessToken"
                                   }
-                                },
-                                "wireValue": "access_token"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "auth_get-token_Response_200",
@@ -900,6 +900,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "token_type",
                                 "name": {
                                   "originalName": "token_type",
                                   "camelCase": {
@@ -918,8 +919,7 @@
                                     "unsafeName": "TokenType",
                                     "safeName": "TokenType"
                                   }
-                                },
-                                "wireValue": "token_type"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "auth_get-token_Response_200",
@@ -981,6 +981,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "expires_in",
                                 "name": {
                                   "originalName": "expires_in",
                                   "camelCase": {
@@ -999,8 +1000,7 @@
                                     "unsafeName": "ExpiresIn",
                                     "safeName": "ExpiresIn"
                                   }
-                                },
-                                "wireValue": "expires_in"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "auth_get-token_Response_200",
@@ -1060,6 +1060,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "refresh_token",
                                 "name": {
                                   "originalName": "refresh_token",
                                   "camelCase": {
@@ -1078,8 +1079,7 @@
                                     "unsafeName": "RefreshToken",
                                     "safeName": "RefreshToken"
                                   }
-                                },
-                                "wireValue": "refresh_token"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "auth_get-token_Response_200",
@@ -1196,6 +1196,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "grant_type",
                         "name": {
                           "originalName": "grant_type",
                           "camelCase": {
@@ -1214,14 +1215,14 @@
                             "unsafeName": "GrantType",
                             "safeName": "GrantType"
                           }
-                        },
-                        "wireValue": "grant_type"
+                        }
                       },
                       "value": {
                         "jsonExample": "password",
                         "shape": {
                           "shape": {
                             "value": {
+                              "wireValue": "password",
                               "name": {
                                 "originalName": "password",
                                 "camelCase": {
@@ -1240,8 +1241,7 @@
                                   "unsafeName": "Password",
                                   "safeName": "Password"
                                 }
-                              },
-                              "wireValue": "password"
+                              }
                             },
                             "type": "enum"
                           },
@@ -1277,6 +1277,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "username",
                         "name": {
                           "originalName": "username",
                           "camelCase": {
@@ -1295,8 +1296,7 @@
                             "unsafeName": "Username",
                             "safeName": "Username"
                           }
-                        },
-                        "wireValue": "username"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1319,6 +1319,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "password",
                         "name": {
                           "originalName": "password",
                           "camelCase": {
@@ -1337,8 +1338,7 @@
                             "unsafeName": "Password",
                             "safeName": "Password"
                           }
-                        },
-                        "wireValue": "password"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1361,6 +1361,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                           "originalName": "refresh_token",
                           "camelCase": {
@@ -1379,8 +1380,7 @@
                             "unsafeName": "RefreshToken",
                             "safeName": "RefreshToken"
                           }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1403,6 +1403,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_id",
                         "name": {
                           "originalName": "client_id",
                           "camelCase": {
@@ -1421,8 +1422,7 @@
                             "unsafeName": "ClientId",
                             "safeName": "ClientId"
                           }
-                        },
-                        "wireValue": "client_id"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_id",
@@ -1439,6 +1439,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_secret",
                         "name": {
                           "originalName": "client_secret",
                           "camelCase": {
@@ -1457,8 +1458,7 @@
                             "unsafeName": "ClientSecret",
                             "safeName": "ClientSecret"
                           }
-                        },
-                        "wireValue": "client_secret"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_secret",
@@ -1537,6 +1537,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "grant_type",
                         "name": {
                           "originalName": "grant_type",
                           "camelCase": {
@@ -1555,14 +1556,14 @@
                             "unsafeName": "GrantType",
                             "safeName": "GrantType"
                           }
-                        },
-                        "wireValue": "grant_type"
+                        }
                       },
                       "value": {
                         "jsonExample": "password",
                         "shape": {
                           "shape": {
                             "value": {
+                              "wireValue": "password",
                               "name": {
                                 "originalName": "password",
                                 "camelCase": {
@@ -1581,8 +1582,7 @@
                                   "unsafeName": "Password",
                                   "safeName": "Password"
                                 }
-                              },
-                              "wireValue": "password"
+                              }
                             },
                             "type": "enum"
                           },
@@ -1618,6 +1618,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "username",
                         "name": {
                           "originalName": "username",
                           "camelCase": {
@@ -1636,8 +1637,7 @@
                             "unsafeName": "Username",
                             "safeName": "Username"
                           }
-                        },
-                        "wireValue": "username"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1660,6 +1660,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "password",
                         "name": {
                           "originalName": "password",
                           "camelCase": {
@@ -1678,8 +1679,7 @@
                             "unsafeName": "Password",
                             "safeName": "Password"
                           }
-                        },
-                        "wireValue": "password"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1702,6 +1702,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                           "originalName": "refresh_token",
                           "camelCase": {
@@ -1720,8 +1721,7 @@
                             "unsafeName": "RefreshToken",
                             "safeName": "RefreshToken"
                           }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -1744,6 +1744,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_id",
                         "name": {
                           "originalName": "client_id",
                           "camelCase": {
@@ -1762,8 +1763,7 @@
                             "unsafeName": "ClientId",
                             "safeName": "ClientId"
                           }
-                        },
-                        "wireValue": "client_id"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_id",
@@ -1780,6 +1780,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "client_secret",
                         "name": {
                           "originalName": "client_secret",
                           "camelCase": {
@@ -1798,8 +1799,7 @@
                             "unsafeName": "ClientSecret",
                             "safeName": "ClientSecret"
                           }
-                        },
-                        "wireValue": "client_secret"
+                        }
                       },
                       "value": {
                         "jsonExample": "client_secret",
@@ -1916,6 +1916,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "grant_type",
                   "name": {
                     "originalName": "grant_type",
                     "camelCase": {
@@ -1934,8 +1935,7 @@
                       "unsafeName": "GrantType",
                       "safeName": "GrantType"
                     }
-                  },
-                  "wireValue": "grant_type"
+                  }
                 },
                 "valueType": {
                   "fernFilepath": {
@@ -1975,6 +1975,7 @@
               },
               {
                 "name": {
+                  "wireValue": "username",
                   "name": {
                     "originalName": "username",
                     "camelCase": {
@@ -1993,8 +1994,7 @@
                       "unsafeName": "Username",
                       "safeName": "Username"
                     }
-                  },
-                  "wireValue": "username"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -2022,6 +2022,7 @@
               },
               {
                 "name": {
+                  "wireValue": "password",
                   "name": {
                     "originalName": "password",
                     "camelCase": {
@@ -2040,8 +2041,7 @@
                       "unsafeName": "Password",
                       "safeName": "Password"
                     }
-                  },
-                  "wireValue": "password"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -2069,6 +2069,7 @@
               },
               {
                 "name": {
+                  "wireValue": "refresh_token",
                   "name": {
                     "originalName": "refresh_token",
                     "camelCase": {
@@ -2087,8 +2088,7 @@
                       "unsafeName": "RefreshToken",
                       "safeName": "RefreshToken"
                     }
-                  },
-                  "wireValue": "refresh_token"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -2116,6 +2116,7 @@
               },
               {
                 "name": {
+                  "wireValue": "client_id",
                   "name": {
                     "originalName": "client_id",
                     "camelCase": {
@@ -2134,8 +2135,7 @@
                       "unsafeName": "ClientId",
                       "safeName": "ClientId"
                     }
-                  },
-                  "wireValue": "client_id"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -2157,6 +2157,7 @@
               },
               {
                 "name": {
+                  "wireValue": "client_secret",
                   "name": {
                     "originalName": "client_secret",
                     "camelCase": {
@@ -2175,8 +2176,7 @@
                       "unsafeName": "ClientSecret",
                       "safeName": "ClientSecret"
                     }
-                  },
-                  "wireValue": "client_secret"
+                  }
                 },
                 "valueType": {
                   "primitive": {
@@ -2238,6 +2238,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "grant_type",
                       "name": {
                         "originalName": "grant_type",
                         "camelCase": {
@@ -2256,8 +2257,7 @@
                           "unsafeName": "GrantType",
                           "safeName": "GrantType"
                         }
-                      },
-                      "wireValue": "grant_type"
+                      }
                     },
                     "valueType": {
                       "fernFilepath": {
@@ -2297,6 +2297,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "username",
                       "name": {
                         "originalName": "username",
                         "camelCase": {
@@ -2315,8 +2316,7 @@
                           "unsafeName": "Username",
                           "safeName": "Username"
                         }
-                      },
-                      "wireValue": "username"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2344,6 +2344,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "password",
                       "name": {
                         "originalName": "password",
                         "camelCase": {
@@ -2362,8 +2363,7 @@
                           "unsafeName": "Password",
                           "safeName": "Password"
                         }
-                      },
-                      "wireValue": "password"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2391,6 +2391,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "refresh_token",
                       "name": {
                         "originalName": "refresh_token",
                         "camelCase": {
@@ -2409,8 +2410,7 @@
                           "unsafeName": "RefreshToken",
                           "safeName": "RefreshToken"
                         }
-                      },
-                      "wireValue": "refresh_token"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2438,6 +2438,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "client_id",
                       "name": {
                         "originalName": "client_id",
                         "camelCase": {
@@ -2456,8 +2457,7 @@
                           "unsafeName": "ClientId",
                           "safeName": "ClientId"
                         }
-                      },
-                      "wireValue": "client_id"
+                      }
                     },
                     "valueType": {
                       "primitive": {
@@ -2479,6 +2479,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "client_secret",
                       "name": {
                         "originalName": "client_secret",
                         "camelCase": {
@@ -2497,8 +2498,7 @@
                           "unsafeName": "ClientSecret",
                           "safeName": "ClientSecret"
                         }
-                      },
-                      "wireValue": "client_secret"
+                      }
                     },
                     "valueType": {
                       "primitive": {
@@ -2963,6 +2963,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2981,8 +2982,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

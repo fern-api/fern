@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "valueType": {
               "container": {
@@ -83,6 +83,7 @@
           },
           {
             "name": {
+              "wireValue": "left",
               "name": {
                 "originalName": "left",
                 "camelCase": {
@@ -101,8 +102,7 @@
                   "unsafeName": "Left",
                   "safeName": "Left"
                 }
-              },
-              "wireValue": "left"
+              }
             },
             "valueType": {
               "container": {
@@ -150,6 +150,7 @@
           },
           {
             "name": {
+              "wireValue": "right",
               "name": {
                 "originalName": "right",
                 "camelCase": {
@@ -168,8 +169,7 @@
                   "unsafeName": "Right",
                   "safeName": "Right"
                 }
-              },
-              "wireValue": "right"
+              }
             },
             "valueType": {
               "container": {
@@ -294,6 +294,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "value",
                                 "name": {
                                   "originalName": "value",
                                   "camelCase": {
@@ -312,8 +313,7 @@
                                     "unsafeName": "Value",
                                     "safeName": "Value"
                                   }
-                                },
-                                "wireValue": "value"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
@@ -375,6 +375,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "left",
                                 "name": {
                                   "originalName": "left",
                                   "camelCase": {
@@ -393,8 +394,7 @@
                                     "unsafeName": "Left",
                                     "safeName": "Left"
                                   }
-                                },
-                                "wireValue": "left"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
@@ -441,6 +441,7 @@
                                           "properties": [
                                             {
                                               "name": {
+                                                "wireValue": "value",
                                                 "name": {
                                                   "originalName": "value",
                                                   "camelCase": {
@@ -459,8 +460,7 @@
                                                     "unsafeName": "Value",
                                                     "safeName": "Value"
                                                   }
-                                                },
-                                                "wireValue": "value"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -522,6 +522,7 @@
                                             },
                                             {
                                               "name": {
+                                                "wireValue": "left",
                                                 "name": {
                                                   "originalName": "left",
                                                   "camelCase": {
@@ -540,8 +541,7 @@
                                                     "unsafeName": "Left",
                                                     "safeName": "Left"
                                                   }
-                                                },
-                                                "wireValue": "left"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -580,6 +580,7 @@
                                                           "properties": [
                                                             {
                                                               "name": {
+                                                                "wireValue": "value",
                                                                 "name": {
                                                                   "originalName": "value",
                                                                   "camelCase": {
@@ -598,8 +599,7 @@
                                                                     "unsafeName": "Value",
                                                                     "safeName": "Value"
                                                                   }
-                                                                },
-                                                                "wireValue": "value"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -648,6 +648,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "left",
                                                                 "name": {
                                                                   "originalName": "left",
                                                                   "camelCase": {
@@ -666,8 +667,7 @@
                                                                     "unsafeName": "Left",
                                                                     "safeName": "Left"
                                                                   }
-                                                                },
-                                                                "wireValue": "left"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -734,6 +734,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "right",
                                                                 "name": {
                                                                   "originalName": "right",
                                                                   "camelCase": {
@@ -752,8 +753,7 @@
                                                                     "unsafeName": "Right",
                                                                     "safeName": "Right"
                                                                   }
-                                                                },
-                                                                "wireValue": "right"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -886,6 +886,7 @@
                                             },
                                             {
                                               "name": {
+                                                "wireValue": "right",
                                                 "name": {
                                                   "originalName": "right",
                                                   "camelCase": {
@@ -904,8 +905,7 @@
                                                     "unsafeName": "Right",
                                                     "safeName": "Right"
                                                   }
-                                                },
-                                                "wireValue": "right"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -944,6 +944,7 @@
                                                           "properties": [
                                                             {
                                                               "name": {
+                                                                "wireValue": "value",
                                                                 "name": {
                                                                   "originalName": "value",
                                                                   "camelCase": {
@@ -962,8 +963,7 @@
                                                                     "unsafeName": "Value",
                                                                     "safeName": "Value"
                                                                   }
-                                                                },
-                                                                "wireValue": "value"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1012,6 +1012,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "left",
                                                                 "name": {
                                                                   "originalName": "left",
                                                                   "camelCase": {
@@ -1030,8 +1031,7 @@
                                                                     "unsafeName": "Left",
                                                                     "safeName": "Left"
                                                                   }
-                                                                },
-                                                                "wireValue": "left"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1098,6 +1098,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "right",
                                                                 "name": {
                                                                   "originalName": "right",
                                                                   "camelCase": {
@@ -1116,8 +1117,7 @@
                                                                     "unsafeName": "Right",
                                                                     "safeName": "Right"
                                                                   }
-                                                                },
-                                                                "wireValue": "right"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1316,6 +1316,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "right",
                                 "name": {
                                   "originalName": "right",
                                   "camelCase": {
@@ -1334,8 +1335,7 @@
                                     "unsafeName": "Right",
                                     "safeName": "Right"
                                   }
-                                },
-                                "wireValue": "right"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
@@ -1382,6 +1382,7 @@
                                           "properties": [
                                             {
                                               "name": {
+                                                "wireValue": "value",
                                                 "name": {
                                                   "originalName": "value",
                                                   "camelCase": {
@@ -1400,8 +1401,7 @@
                                                     "unsafeName": "Value",
                                                     "safeName": "Value"
                                                   }
-                                                },
-                                                "wireValue": "value"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -1463,6 +1463,7 @@
                                             },
                                             {
                                               "name": {
+                                                "wireValue": "left",
                                                 "name": {
                                                   "originalName": "left",
                                                   "camelCase": {
@@ -1481,8 +1482,7 @@
                                                     "unsafeName": "Left",
                                                     "safeName": "Left"
                                                   }
-                                                },
-                                                "wireValue": "left"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -1521,6 +1521,7 @@
                                                           "properties": [
                                                             {
                                                               "name": {
+                                                                "wireValue": "value",
                                                                 "name": {
                                                                   "originalName": "value",
                                                                   "camelCase": {
@@ -1539,8 +1540,7 @@
                                                                     "unsafeName": "Value",
                                                                     "safeName": "Value"
                                                                   }
-                                                                },
-                                                                "wireValue": "value"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1589,6 +1589,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "left",
                                                                 "name": {
                                                                   "originalName": "left",
                                                                   "camelCase": {
@@ -1607,8 +1608,7 @@
                                                                     "unsafeName": "Left",
                                                                     "safeName": "Left"
                                                                   }
-                                                                },
-                                                                "wireValue": "left"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1675,6 +1675,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "right",
                                                                 "name": {
                                                                   "originalName": "right",
                                                                   "camelCase": {
@@ -1693,8 +1694,7 @@
                                                                     "unsafeName": "Right",
                                                                     "safeName": "Right"
                                                                   }
-                                                                },
-                                                                "wireValue": "right"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1827,6 +1827,7 @@
                                             },
                                             {
                                               "name": {
+                                                "wireValue": "right",
                                                 "name": {
                                                   "originalName": "right",
                                                   "camelCase": {
@@ -1845,8 +1846,7 @@
                                                     "unsafeName": "Right",
                                                     "safeName": "Right"
                                                   }
-                                                },
-                                                "wireValue": "right"
+                                                }
                                               },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
@@ -1885,6 +1885,7 @@
                                                           "properties": [
                                                             {
                                                               "name": {
+                                                                "wireValue": "value",
                                                                 "name": {
                                                                   "originalName": "value",
                                                                   "camelCase": {
@@ -1903,8 +1904,7 @@
                                                                     "unsafeName": "Value",
                                                                     "safeName": "Value"
                                                                   }
-                                                                },
-                                                                "wireValue": "value"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -1953,6 +1953,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "left",
                                                                 "name": {
                                                                   "originalName": "left",
                                                                   "camelCase": {
@@ -1971,8 +1972,7 @@
                                                                     "unsafeName": "Left",
                                                                     "safeName": "Left"
                                                                   }
-                                                                },
-                                                                "wireValue": "left"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -2039,6 +2039,7 @@
                                                             },
                                                             {
                                                               "name": {
+                                                                "wireValue": "right",
                                                                 "name": {
                                                                   "originalName": "right",
                                                                   "camelCase": {
@@ -2057,8 +2058,7 @@
                                                                     "unsafeName": "Right",
                                                                     "safeName": "Right"
                                                                   }
-                                                                },
-                                                                "wireValue": "right"
+                                                                }
                                                               },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
@@ -2531,6 +2531,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -2549,8 +2550,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

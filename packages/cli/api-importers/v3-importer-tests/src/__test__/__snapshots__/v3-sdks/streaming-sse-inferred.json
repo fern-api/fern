@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "prompt",
               "name": {
                 "originalName": "prompt",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Prompt",
                   "safeName": "Prompt"
                 }
-              },
-              "wireValue": "prompt"
+              }
             },
             "valueType": {
               "primitive": {
@@ -124,6 +124,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -142,8 +143,7 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              },
-              "wireValue": "text"
+              }
             },
             "valueType": {
               "container": {
@@ -216,6 +216,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "delta",
               "name": {
                 "originalName": "delta",
                 "camelCase": {
@@ -234,8 +235,7 @@
                   "unsafeName": "Delta",
                   "safeName": "Delta"
                 }
-              },
-              "wireValue": "delta"
+              }
             },
             "valueType": {
               "container": {
@@ -365,6 +365,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "prompt",
                             "name": {
                               "originalName": "prompt",
                               "camelCase": {
@@ -383,8 +384,7 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                               }
-                            },
-                            "wireValue": "prompt"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "CompletionRequest",
@@ -471,6 +471,7 @@
                               "properties": [
                                 {
                                   "name": {
+                                    "wireValue": "delta",
                                     "name": {
                                       "originalName": "delta",
                                       "camelCase": {
@@ -489,8 +490,7 @@
                                         "unsafeName": "Delta",
                                         "safeName": "Delta"
                                       }
-                                    },
-                                    "wireValue": "delta"
+                                    }
                                   },
                                   "originalTypeDeclaration": {
                                     "typeId": "CompletionChunk",
@@ -861,6 +861,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "prompt",
                             "name": {
                               "originalName": "prompt",
                               "camelCase": {
@@ -879,8 +880,7 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                               }
-                            },
-                            "wireValue": "prompt"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "CompletionRequest",
@@ -965,6 +965,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "text",
                                 "name": {
                                   "originalName": "text",
                                   "camelCase": {
@@ -983,8 +984,7 @@
                                     "unsafeName": "Text",
                                     "safeName": "Text"
                                   }
-                                },
-                                "wireValue": "text"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Completion",
@@ -1358,6 +1358,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "prompt",
                             "name": {
                               "originalName": "prompt",
                               "camelCase": {
@@ -1376,8 +1377,7 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                               }
-                            },
-                            "wireValue": "prompt"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "CompletionRequest",
@@ -1462,6 +1462,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "text",
                                 "name": {
                                   "originalName": "text",
                                   "camelCase": {
@@ -1480,8 +1481,7 @@
                                     "unsafeName": "Text",
                                     "safeName": "Text"
                                   }
-                                },
-                                "wireValue": "text"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "Completion",
@@ -1958,6 +1958,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1976,8 +1977,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

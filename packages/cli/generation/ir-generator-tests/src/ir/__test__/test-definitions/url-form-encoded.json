@@ -213,6 +213,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -231,8 +232,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "valueType": {
                             "_type": "primitive",
@@ -255,6 +255,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -273,8 +274,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "valueType": {
                             "_type": "primitive",
@@ -347,6 +347,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "access_token",
                             "name": {
                                 "originalName": "access_token",
                                 "camelCase": {
@@ -365,8 +366,7 @@
                                     "unsafeName": "AccessToken",
                                     "safeName": "AccessToken"
                                 }
-                            },
-                            "wireValue": "access_token"
+                            }
                         },
                         "valueType": {
                             "_type": "container",
@@ -395,6 +395,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "expires_in",
                             "name": {
                                 "originalName": "expires_in",
                                 "camelCase": {
@@ -413,8 +414,7 @@
                                     "unsafeName": "ExpiresIn",
                                     "safeName": "ExpiresIn"
                                 }
-                            },
-                            "wireValue": "expires_in"
+                            }
                         },
                         "valueType": {
                             "_type": "container",
@@ -1642,6 +1642,7 @@
                                             "properties": [
                                                 {
                                                     "name": {
+                                                        "wireValue": "client_id",
                                                         "name": {
                                                             "originalName": "client_id",
                                                             "camelCase": {
@@ -1660,8 +1661,7 @@
                                                                 "unsafeName": "ClientID",
                                                                 "safeName": "ClientID"
                                                             }
-                                                        },
-                                                        "wireValue": "client_id"
+                                                        }
                                                     },
                                                     "value": {
                                                         "shape": {
@@ -1707,6 +1707,7 @@
                                                 },
                                                 {
                                                     "name": {
+                                                        "wireValue": "client_secret",
                                                         "name": {
                                                             "originalName": "client_secret",
                                                             "camelCase": {
@@ -1725,8 +1726,7 @@
                                                                 "unsafeName": "ClientSecret",
                                                                 "safeName": "ClientSecret"
                                                             }
-                                                        },
-                                                        "wireValue": "client_secret"
+                                                        }
                                                     },
                                                     "value": {
                                                         "shape": {
@@ -1819,6 +1819,7 @@
                                                     "properties": [
                                                         {
                                                             "name": {
+                                                                "wireValue": "access_token",
                                                                 "name": {
                                                                     "originalName": "access_token",
                                                                     "camelCase": {
@@ -1837,8 +1838,7 @@
                                                                         "unsafeName": "AccessToken",
                                                                         "safeName": "AccessToken"
                                                                     }
-                                                                },
-                                                                "wireValue": "access_token"
+                                                                }
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1904,6 +1904,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "expires_in",
                                                                 "name": {
                                                                     "originalName": "expires_in",
                                                                     "camelCase": {
@@ -1922,8 +1923,7 @@
                                                                         "unsafeName": "ExpiresIn",
                                                                         "safeName": "ExpiresIn"
                                                                     }
-                                                                },
-                                                                "wireValue": "expires_in"
+                                                                }
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2022,6 +2022,7 @@
                                             "properties": [
                                                 {
                                                     "name": {
+                                                        "wireValue": "client_id",
                                                         "name": {
                                                             "originalName": "client_id",
                                                             "camelCase": {
@@ -2040,8 +2041,7 @@
                                                                 "unsafeName": "ClientID",
                                                                 "safeName": "ClientID"
                                                             }
-                                                        },
-                                                        "wireValue": "client_id"
+                                                        }
                                                     },
                                                     "originalTypeDeclaration": {
                                                         "name": {
@@ -2087,6 +2087,7 @@
                                                 },
                                                 {
                                                     "name": {
+                                                        "wireValue": "client_secret",
                                                         "name": {
                                                             "originalName": "client_secret",
                                                             "camelCase": {
@@ -2105,8 +2106,7 @@
                                                                 "unsafeName": "ClientSecret",
                                                                 "safeName": "ClientSecret"
                                                             }
-                                                        },
-                                                        "wireValue": "client_secret"
+                                                        }
                                                     },
                                                     "originalTypeDeclaration": {
                                                         "name": {
@@ -2199,6 +2199,7 @@
                                                     "properties": [
                                                         {
                                                             "name": {
+                                                                "wireValue": "access_token",
                                                                 "name": {
                                                                     "originalName": "access_token",
                                                                     "camelCase": {
@@ -2217,8 +2218,7 @@
                                                                         "unsafeName": "AccessToken",
                                                                         "safeName": "AccessToken"
                                                                     }
-                                                                },
-                                                                "wireValue": "access_token"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -2284,6 +2284,7 @@
                                                         },
                                                         {
                                                             "name": {
+                                                                "wireValue": "expires_in",
                                                                 "name": {
                                                                     "originalName": "expires_in",
                                                                     "camelCase": {
@@ -2302,8 +2303,7 @@
                                                                         "unsafeName": "ExpiresIn",
                                                                         "safeName": "ExpiresIn"
                                                                     }
-                                                                },
-                                                                "wireValue": "expires_in"
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -2602,6 +2602,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -2620,8 +2621,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2632,6 +2632,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -2650,8 +2651,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2695,6 +2695,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "access_token",
                             "name": {
                                 "originalName": "access_token",
                                 "camelCase": {
@@ -2713,8 +2714,7 @@
                                     "unsafeName": "AccessToken",
                                     "safeName": "AccessToken"
                                 }
-                            },
-                            "wireValue": "access_token"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -2728,6 +2728,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "expires_in",
                             "name": {
                                 "originalName": "expires_in",
                                 "camelCase": {
@@ -2746,8 +2747,7 @@
                                     "unsafeName": "ExpiresIn",
                                     "safeName": "ExpiresIn"
                                 }
-                            },
-                            "wireValue": "expires_in"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

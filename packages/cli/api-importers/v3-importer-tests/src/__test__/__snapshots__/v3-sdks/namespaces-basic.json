@@ -97,6 +97,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -115,8 +116,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "primitive": {
@@ -137,6 +137,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -155,8 +156,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "primitive": {
@@ -266,6 +266,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -284,8 +285,7 @@
                   "unsafeName": "Id",
                   "safeName": "Id"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "primitive": {
@@ -306,6 +306,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -324,8 +325,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "primitive": {
@@ -367,6 +367,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -385,8 +386,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errors": {},
@@ -495,6 +495,7 @@
                                   "properties": [
                                     {
                                       "name": {
+                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -513,8 +514,7 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        },
-                                        "wireValue": "id"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
@@ -595,6 +595,7 @@
                                     },
                                     {
                                       "name": {
+                                        "wireValue": "name",
                                         "name": {
                                           "originalName": "name",
                                           "camelCase": {
@@ -613,8 +614,7 @@
                                             "unsafeName": "Name",
                                             "safeName": "Name"
                                           }
-                                        },
-                                        "wireValue": "name"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
@@ -777,6 +777,7 @@
                                   "properties": [
                                     {
                                       "name": {
+                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -795,8 +796,7 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        },
-                                        "wireValue": "id"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
@@ -877,6 +877,7 @@
                                     },
                                     {
                                       "name": {
+                                        "wireValue": "name",
                                         "name": {
                                           "originalName": "name",
                                           "camelCase": {
@@ -895,8 +896,7 @@
                                             "unsafeName": "Name",
                                             "safeName": "Name"
                                           }
-                                        },
-                                        "wireValue": "name"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
@@ -1302,6 +1302,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "id",
                             "name": {
                               "originalName": "id",
                               "camelCase": {
@@ -1320,8 +1321,7 @@
                                 "unsafeName": "Id",
                                 "safeName": "Id"
                               }
-                            },
-                            "wireValue": "id"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "petsV1:Pet",
@@ -1402,6 +1402,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "name",
                             "name": {
                               "originalName": "name",
                               "camelCase": {
@@ -1420,8 +1421,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                               }
-                            },
-                            "wireValue": "name"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "petsV1:Pet",
@@ -1587,6 +1587,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -1605,8 +1606,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV1:Pet",
@@ -1687,6 +1687,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "name",
                                 "name": {
                                   "originalName": "name",
                                   "camelCase": {
@@ -1705,8 +1706,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                   }
-                                },
-                                "wireValue": "name"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV1:Pet",
@@ -2220,6 +2220,7 @@
                                   "properties": [
                                     {
                                       "name": {
+                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -2238,8 +2239,7 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        },
-                                        "wireValue": "id"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
@@ -2320,6 +2320,7 @@
                                     },
                                     {
                                       "name": {
+                                        "wireValue": "name",
                                         "name": {
                                           "originalName": "name",
                                           "camelCase": {
@@ -2338,8 +2339,7 @@
                                             "unsafeName": "Name",
                                             "safeName": "Name"
                                           }
-                                        },
-                                        "wireValue": "name"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
@@ -2502,6 +2502,7 @@
                                   "properties": [
                                     {
                                       "name": {
+                                        "wireValue": "id",
                                         "name": {
                                           "originalName": "id",
                                           "camelCase": {
@@ -2520,8 +2521,7 @@
                                             "unsafeName": "Id",
                                             "safeName": "Id"
                                           }
-                                        },
-                                        "wireValue": "id"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
@@ -2602,6 +2602,7 @@
                                     },
                                     {
                                       "name": {
+                                        "wireValue": "name",
                                         "name": {
                                           "originalName": "name",
                                           "camelCase": {
@@ -2620,8 +2621,7 @@
                                             "unsafeName": "Name",
                                             "safeName": "Name"
                                           }
-                                        },
-                                        "wireValue": "name"
+                                        }
                                       },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
@@ -3027,6 +3027,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "id",
                             "name": {
                               "originalName": "id",
                               "camelCase": {
@@ -3045,8 +3046,7 @@
                                 "unsafeName": "Id",
                                 "safeName": "Id"
                               }
-                            },
-                            "wireValue": "id"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "petsV2:Pet",
@@ -3127,6 +3127,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "name",
                             "name": {
                               "originalName": "name",
                               "camelCase": {
@@ -3145,8 +3146,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                               }
-                            },
-                            "wireValue": "name"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "petsV2:Pet",
@@ -3312,6 +3312,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "id",
                                 "name": {
                                   "originalName": "id",
                                   "camelCase": {
@@ -3330,8 +3331,7 @@
                                     "unsafeName": "Id",
                                     "safeName": "Id"
                                   }
-                                },
-                                "wireValue": "id"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV2:Pet",
@@ -3412,6 +3412,7 @@
                             },
                             {
                               "name": {
+                                "wireValue": "name",
                                 "name": {
                                   "originalName": "name",
                                   "camelCase": {
@@ -3430,8 +3431,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                   }
-                                },
-                                "wireValue": "name"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV2:Pet",

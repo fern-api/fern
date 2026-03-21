@@ -56,6 +56,7 @@
       },
       "shape": {
         "discriminant": {
+          "wireValue": "type",
           "name": {
             "originalName": "type",
             "camelCase": {
@@ -74,14 +75,14 @@
               "unsafeName": "Type",
               "safeName": "Type"
             }
-          },
-          "wireValue": "type"
+          }
         },
         "extends": [],
         "baseProperties": [],
         "types": [
           {
             "discriminantValue": {
+              "wireValue": "EMBEDDING_GENERATION",
               "name": {
                 "originalName": "EMBEDDING_GENERATION",
                 "camelCase": {
@@ -100,11 +101,11 @@
                   "unsafeName": "EmbeddingGeneration",
                   "safeName": "EmbeddingGeneration"
                 }
-              },
-              "wireValue": "EMBEDDING_GENERATION"
+              }
             },
             "shape": {
               "name": {
+                "wireValue": "value",
                 "name": {
                   "originalName": "value",
                   "camelCase": {
@@ -123,8 +124,7 @@
                     "unsafeName": "Value",
                     "safeName": "Value"
                   }
-                },
-                "wireValue": "value"
+                }
               },
               "type": {
                 "type": "unknown"
@@ -134,6 +134,7 @@
           },
           {
             "discriminantValue": {
+              "wireValue": "INFERENCE",
               "name": {
                 "originalName": "INFERENCE",
                 "camelCase": {
@@ -152,11 +153,11 @@
                   "unsafeName": "Inference",
                   "safeName": "Inference"
                 }
-              },
-              "wireValue": "INFERENCE"
+              }
             },
             "shape": {
               "name": {
+                "wireValue": "value",
                 "name": {
                   "originalName": "value",
                   "camelCase": {
@@ -175,8 +176,7 @@
                     "unsafeName": "Value",
                     "safeName": "Value"
                   }
-                },
-                "wireValue": "value"
+                }
               },
               "type": {
                 "type": "unknown"
@@ -186,6 +186,7 @@
           },
           {
             "discriminantValue": {
+              "wireValue": "TL_INFERENCE",
               "name": {
                 "originalName": "TL_INFERENCE",
                 "camelCase": {
@@ -204,11 +205,11 @@
                   "unsafeName": "TlInference",
                   "safeName": "TlInference"
                 }
-              },
-              "wireValue": "TL_INFERENCE"
+              }
             },
             "shape": {
               "name": {
+                "wireValue": "value",
                 "name": {
                   "originalName": "value",
                   "camelCase": {
@@ -227,8 +228,7 @@
                     "unsafeName": "Value",
                     "safeName": "Value"
                   }
-                },
-                "wireValue": "value"
+                }
               },
               "type": {
                 "type": "unknown"
@@ -238,6 +238,7 @@
           },
           {
             "discriminantValue": {
+              "wireValue": "TRAINING",
               "name": {
                 "originalName": "TRAINING",
                 "camelCase": {
@@ -256,11 +257,11 @@
                   "unsafeName": "Training",
                   "safeName": "Training"
                 }
-              },
-              "wireValue": "TRAINING"
+              }
             },
             "shape": {
               "name": {
+                "wireValue": "value",
                 "name": {
                   "originalName": "value",
                   "camelCase": {
@@ -279,8 +280,7 @@
                     "unsafeName": "Value",
                     "safeName": "Value"
                   }
-                },
-                "wireValue": "value"
+                }
               },
               "type": {
                 "type": "unknown"
@@ -304,6 +304,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -322,8 +323,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -369,6 +369,7 @@
           }
         },
         "discriminant": {
+          "wireValue": "type",
           "name": {
             "originalName": "type",
             "camelCase": {
@@ -387,8 +388,7 @@
               "unsafeName": "Type",
               "safeName": "Type"
             }
-          },
-          "wireValue": "type"
+          }
         },
         "types": {
           "EMBEDDING_GENERATION": {
@@ -396,6 +396,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
+              "wireValue": "EMBEDDING_GENERATION",
               "name": {
                 "originalName": "EMBEDDING_GENERATION",
                 "camelCase": {
@@ -414,8 +415,7 @@
                   "unsafeName": "EmbeddingGeneration",
                   "safeName": "EmbeddingGeneration"
                 }
-              },
-              "wireValue": "EMBEDDING_GENERATION"
+              }
             },
             "type": "singleProperty"
           },
@@ -424,6 +424,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
+              "wireValue": "INFERENCE",
               "name": {
                 "originalName": "INFERENCE",
                 "camelCase": {
@@ -442,8 +443,7 @@
                   "unsafeName": "Inference",
                   "safeName": "Inference"
                 }
-              },
-              "wireValue": "INFERENCE"
+              }
             },
             "type": "singleProperty"
           },
@@ -452,6 +452,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
+              "wireValue": "TL_INFERENCE",
               "name": {
                 "originalName": "TL_INFERENCE",
                 "camelCase": {
@@ -470,8 +471,7 @@
                   "unsafeName": "TlInference",
                   "safeName": "TlInference"
                 }
-              },
-              "wireValue": "TL_INFERENCE"
+              }
             },
             "type": "singleProperty"
           },
@@ -480,6 +480,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
+              "wireValue": "TRAINING",
               "name": {
                 "originalName": "TRAINING",
                 "camelCase": {
@@ -498,8 +499,7 @@
                   "unsafeName": "Training",
                   "safeName": "Training"
                 }
-              },
-              "wireValue": "TRAINING"
+              }
             },
             "type": "singleProperty"
           }
@@ -512,6 +512,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

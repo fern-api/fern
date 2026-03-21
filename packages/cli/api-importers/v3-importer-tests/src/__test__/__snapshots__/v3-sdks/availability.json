@@ -100,6 +100,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "deprecated_setting",
               "name": {
                 "originalName": "deprecated_setting",
                 "camelCase": {
@@ -118,8 +119,7 @@
                   "unsafeName": "DeprecatedSetting",
                   "safeName": "DeprecatedSetting"
                 }
-              },
-              "wireValue": "deprecated_setting"
+              }
             },
             "valueType": {
               "container": {
@@ -148,6 +148,7 @@
           },
           {
             "name": {
+              "wireValue": "new_setting",
               "name": {
                 "originalName": "new_setting",
                 "camelCase": {
@@ -166,8 +167,7 @@
                   "unsafeName": "NewSetting",
                   "safeName": "NewSetting"
                 }
-              },
-              "wireValue": "new_setting"
+              }
             },
             "valueType": {
               "container": {
@@ -239,6 +239,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "fine_setting",
               "name": {
                 "originalName": "fine_setting",
                 "camelCase": {
@@ -257,8 +258,7 @@
                   "unsafeName": "FineSetting",
                   "safeName": "FineSetting"
                 }
-              },
-              "wireValue": "fine_setting"
+              }
             },
             "valueType": {
               "container": {
@@ -333,6 +333,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "not_deprecated_setting",
               "name": {
                 "originalName": "not_deprecated_setting",
                 "camelCase": {
@@ -351,8 +352,7 @@
                   "unsafeName": "NotDeprecatedSetting",
                   "safeName": "NotDeprecatedSetting"
                 }
-              },
-              "wireValue": "not_deprecated_setting"
+              }
             },
             "valueType": {
               "container": {
@@ -610,6 +610,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "deprecated_lang",
                 "name": {
                   "originalName": "deprecated_lang",
                   "camelCase": {
@@ -628,8 +629,7 @@
                     "unsafeName": "DeprecatedLang",
                     "safeName": "DeprecatedLang"
                   }
-                },
-                "wireValue": "deprecated_lang"
+                }
               },
               "docs": "language code",
               "valueType": {
@@ -661,6 +661,7 @@
             },
             {
               "name": {
+                "wireValue": "active_lang",
                 "name": {
                   "originalName": "active_lang",
                   "camelCase": {
@@ -679,8 +680,7 @@
                     "unsafeName": "ActiveLang",
                     "safeName": "ActiveLang"
                   }
-                },
-                "wireValue": "active_lang"
+                }
               },
               "docs": "language code",
               "valueType": {
@@ -709,6 +709,7 @@
             },
             {
               "name": {
+                "wireValue": "deprecated_ref_lang",
                 "name": {
                   "originalName": "deprecated_ref_lang",
                   "camelCase": {
@@ -727,8 +728,7 @@
                     "unsafeName": "DeprecatedRefLang",
                     "safeName": "DeprecatedRefLang"
                   }
-                },
-                "wireValue": "deprecated_ref_lang"
+                }
               },
               "valueType": {
                 "container": {
@@ -774,6 +774,7 @@
             },
             {
               "name": {
+                "wireValue": "x-fern-availability_query_param",
                 "name": {
                   "originalName": "x-fern-availability_query_param",
                   "camelCase": {
@@ -792,8 +793,7 @@
                     "unsafeName": "XFernAvailabilityQueryParam",
                     "safeName": "XFernAvailabilityQueryParam"
                   }
-                },
-                "wireValue": "x-fern-availability_query_param"
+                }
               },
               "docs": "active beta query param",
               "valueType": {
@@ -827,6 +827,7 @@
           "headers": [
             {
               "name": {
+                "wireValue": "X-Deprecated-Header",
                 "name": {
                   "originalName": "X-Deprecated-Header",
                   "camelCase": {
@@ -845,8 +846,7 @@
                     "unsafeName": "XDeprecatedHeader",
                     "safeName": "XDeprecatedHeader"
                   }
-                },
-                "wireValue": "X-Deprecated-Header"
+                }
               },
               "docs": "deprecated header",
               "valueType": {
@@ -877,6 +877,7 @@
             },
             {
               "name": {
+                "wireValue": "X-Active-Header",
                 "name": {
                   "originalName": "X-Active-Header",
                   "camelCase": {
@@ -895,8 +896,7 @@
                     "unsafeName": "XActiveHeader",
                     "safeName": "XActiveHeader"
                   }
-                },
-                "wireValue": "X-Active-Header"
+                }
               },
               "docs": "active header",
               "valueType": {
@@ -924,6 +924,7 @@
             },
             {
               "name": {
+                "wireValue": "X-Deprecated-Ref-Header",
                 "name": {
                   "originalName": "X-Deprecated-Ref-Header",
                   "camelCase": {
@@ -942,8 +943,7 @@
                     "unsafeName": "XDeprecatedRefHeader",
                     "safeName": "XDeprecatedRefHeader"
                   }
-                },
-                "wireValue": "X-Deprecated-Ref-Header"
+                }
               },
               "valueType": {
                 "container": {
@@ -988,6 +988,7 @@
             },
             {
               "name": {
+                "wireValue": "x-fern-availability_header",
                 "name": {
                   "originalName": "x-fern-availability_header",
                   "camelCase": {
@@ -1006,8 +1007,7 @@
                     "unsafeName": "XFernAvailabilityHeader",
                     "safeName": "XFernAvailabilityHeader"
                   }
-                },
-                "wireValue": "x-fern-availability_header"
+                }
               },
               "docs": "active beta header",
               "valueType": {
@@ -1231,6 +1231,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "fine_setting",
                                 "name": {
                                   "originalName": "fine_setting",
                                   "camelCase": {
@@ -1249,8 +1250,7 @@
                                     "unsafeName": "FineSetting",
                                     "safeName": "FineSetting"
                                   }
-                                },
-                                "wireValue": "fine_setting"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "WholeDeprecatedSettings",
@@ -1729,6 +1729,7 @@
                       "properties": [
                         {
                           "name": {
+                            "wireValue": "deprecated_setting",
                             "name": {
                               "originalName": "deprecated_setting",
                               "camelCase": {
@@ -1747,8 +1748,7 @@
                                 "unsafeName": "DeprecatedSetting",
                                 "safeName": "DeprecatedSetting"
                               }
-                            },
-                            "wireValue": "deprecated_setting"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "Settings",
@@ -1796,6 +1796,7 @@
                         },
                         {
                           "name": {
+                            "wireValue": "new_setting",
                             "name": {
                               "originalName": "new_setting",
                               "camelCase": {
@@ -1814,8 +1815,7 @@
                                 "unsafeName": "NewSetting",
                                 "safeName": "NewSetting"
                               }
-                            },
-                            "wireValue": "new_setting"
+                            }
                           },
                           "originalTypeDeclaration": {
                             "typeId": "Settings",
@@ -1905,6 +1905,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "not_deprecated_setting",
                                 "name": {
                                   "originalName": "not_deprecated_setting",
                                   "camelCase": {
@@ -1923,8 +1924,7 @@
                                     "unsafeName": "NotDeprecatedSetting",
                                     "safeName": "NotDeprecatedSetting"
                                   }
-                                },
-                                "wireValue": "not_deprecated_setting"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "NotDeprecatedSettings",
@@ -2285,6 +2285,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "deprecated_setting",
                         "name": {
                           "originalName": "deprecated_setting",
                           "camelCase": {
@@ -2303,8 +2304,7 @@
                             "unsafeName": "DeprecatedSetting",
                             "safeName": "DeprecatedSetting"
                           }
-                        },
-                        "wireValue": "deprecated_setting"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -2326,6 +2326,7 @@
                     },
                     {
                       "name": {
+                        "wireValue": "new_setting",
                         "name": {
                           "originalName": "new_setting",
                           "camelCase": {
@@ -2344,8 +2345,7 @@
                             "unsafeName": "NewSetting",
                             "safeName": "NewSetting"
                           }
-                        },
-                        "wireValue": "new_setting"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -2379,6 +2379,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "not_deprecated_setting",
                                 "name": {
                                   "originalName": "not_deprecated_setting",
                                   "camelCase": {
@@ -2397,8 +2398,7 @@
                                     "unsafeName": "NotDeprecatedSetting",
                                     "safeName": "NotDeprecatedSetting"
                                   }
-                                },
-                                "wireValue": "not_deprecated_setting"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "NotDeprecatedSettings",
@@ -2550,6 +2550,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "deprecated_setting",
                   "name": {
                     "originalName": "deprecated_setting",
                     "camelCase": {
@@ -2568,8 +2569,7 @@
                       "unsafeName": "DeprecatedSetting",
                       "safeName": "DeprecatedSetting"
                     }
-                  },
-                  "wireValue": "deprecated_setting"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -2598,6 +2598,7 @@
               },
               {
                 "name": {
+                  "wireValue": "new_setting",
                   "name": {
                     "originalName": "new_setting",
                     "camelCase": {
@@ -2616,8 +2617,7 @@
                       "unsafeName": "NewSetting",
                       "safeName": "NewSetting"
                     }
-                  },
-                  "wireValue": "new_setting"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -2679,6 +2679,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "deprecated_setting",
                       "name": {
                         "originalName": "deprecated_setting",
                         "camelCase": {
@@ -2697,8 +2698,7 @@
                           "unsafeName": "DeprecatedSetting",
                           "safeName": "DeprecatedSetting"
                         }
-                      },
-                      "wireValue": "deprecated_setting"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2727,6 +2727,7 @@
                   },
                   {
                     "name": {
+                      "wireValue": "new_setting",
                       "name": {
                         "originalName": "new_setting",
                         "camelCase": {
@@ -2745,8 +2746,7 @@
                           "unsafeName": "NewSetting",
                           "safeName": "NewSetting"
                         }
-                      },
-                      "wireValue": "new_setting"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -2940,6 +2940,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "fine_setting",
                         "name": {
                           "originalName": "fine_setting",
                           "camelCase": {
@@ -2958,8 +2959,7 @@
                             "unsafeName": "FineSetting",
                             "safeName": "FineSetting"
                           }
-                        },
-                        "wireValue": "fine_setting"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -2993,6 +2993,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "not_deprecated_setting",
                                 "name": {
                                   "originalName": "not_deprecated_setting",
                                   "camelCase": {
@@ -3011,8 +3012,7 @@
                                     "unsafeName": "NotDeprecatedSetting",
                                     "safeName": "NotDeprecatedSetting"
                                   }
-                                },
-                                "wireValue": "not_deprecated_setting"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "NotDeprecatedSettings",
@@ -3164,6 +3164,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "fine_setting",
                   "name": {
                     "originalName": "fine_setting",
                     "camelCase": {
@@ -3182,8 +3183,7 @@
                       "unsafeName": "FineSetting",
                       "safeName": "FineSetting"
                     }
-                  },
-                  "wireValue": "fine_setting"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -3245,6 +3245,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "fine_setting",
                       "name": {
                         "originalName": "fine_setting",
                         "camelCase": {
@@ -3263,8 +3264,7 @@
                           "unsafeName": "FineSetting",
                           "safeName": "FineSetting"
                         }
-                      },
-                      "wireValue": "fine_setting"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -3458,6 +3458,7 @@
                   "properties": [
                     {
                       "name": {
+                        "wireValue": "fine_setting",
                         "name": {
                           "originalName": "fine_setting",
                           "camelCase": {
@@ -3476,8 +3477,7 @@
                             "unsafeName": "FineSetting",
                             "safeName": "FineSetting"
                           }
-                        },
-                        "wireValue": "fine_setting"
+                        }
                       },
                       "value": {
                         "shape": {
@@ -3511,6 +3511,7 @@
                           "properties": [
                             {
                               "name": {
+                                "wireValue": "not_deprecated_setting",
                                 "name": {
                                   "originalName": "not_deprecated_setting",
                                   "camelCase": {
@@ -3529,8 +3530,7 @@
                                     "unsafeName": "NotDeprecatedSetting",
                                     "safeName": "NotDeprecatedSetting"
                                   }
-                                },
-                                "wireValue": "not_deprecated_setting"
+                                }
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "NotDeprecatedSettings",
@@ -3682,6 +3682,7 @@
             "properties": [
               {
                 "name": {
+                  "wireValue": "fine_setting",
                   "name": {
                     "originalName": "fine_setting",
                     "camelCase": {
@@ -3700,8 +3701,7 @@
                       "unsafeName": "FineSetting",
                       "safeName": "FineSetting"
                     }
-                  },
-                  "wireValue": "fine_setting"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -3763,6 +3763,7 @@
                 "properties": [
                   {
                     "name": {
+                      "wireValue": "fine_setting",
                       "name": {
                         "originalName": "fine_setting",
                         "camelCase": {
@@ -3781,8 +3782,7 @@
                           "unsafeName": "FineSetting",
                           "safeName": "FineSetting"
                         }
-                      },
-                      "wireValue": "fine_setting"
+                      }
                     },
                     "valueType": {
                       "container": {
@@ -4010,6 +4010,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -4028,8 +4029,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

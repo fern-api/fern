@@ -59,6 +59,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "prompt",
               "name": {
                 "originalName": "prompt",
                 "camelCase": {
@@ -77,8 +78,7 @@
                   "unsafeName": "Prompt",
                   "safeName": "Prompt"
                 }
-              },
-              "wireValue": "prompt"
+              }
             },
             "valueType": {
               "primitive": {
@@ -138,6 +138,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -156,8 +157,7 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              },
-              "wireValue": "text"
+              }
             },
             "valueType": {
               "container": {
@@ -223,6 +223,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "delta",
               "name": {
                 "originalName": "delta",
                 "camelCase": {
@@ -241,8 +242,7 @@
                   "unsafeName": "Delta",
                   "safeName": "Delta"
                 }
-              },
-              "wireValue": "delta"
+              }
             },
             "valueType": {
               "container": {
@@ -833,6 +833,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -851,8 +852,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -904,6 +904,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "prompt",
               "name": {
                 "originalName": "prompt",
                 "camelCase": {
@@ -922,8 +923,7 @@
                   "unsafeName": "Prompt",
                   "safeName": "Prompt"
                 }
-              },
-              "wireValue": "prompt"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -963,6 +963,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "text",
               "name": {
                 "originalName": "text",
                 "camelCase": {
@@ -981,8 +982,7 @@
                   "unsafeName": "Text",
                   "safeName": "Text"
                 }
-              },
-              "wireValue": "text"
+              }
             },
             "typeReference": {
               "value": {
@@ -1025,6 +1025,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "delta",
               "name": {
                 "originalName": "delta",
                 "camelCase": {
@@ -1043,8 +1044,7 @@
                   "unsafeName": "Delta",
                   "safeName": "Delta"
                 }
-              },
-              "wireValue": "delta"
+              }
             },
             "typeReference": {
               "value": {
@@ -1320,6 +1320,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_completions": {
       "fernFilepath": {

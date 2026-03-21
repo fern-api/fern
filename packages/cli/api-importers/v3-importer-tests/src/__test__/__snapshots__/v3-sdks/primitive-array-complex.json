@@ -36,6 +36,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "foo",
               "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -54,8 +55,7 @@
                   "unsafeName": "Foo",
                   "safeName": "Foo"
                 }
-              },
-              "wireValue": "foo"
+              }
             },
             "valueType": {
               "container": {
@@ -82,6 +82,7 @@
           },
           {
             "name": {
+              "wireValue": "bar",
               "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -100,8 +101,7 @@
                   "unsafeName": "Bar",
                   "safeName": "Bar"
                 }
-              },
-              "wireValue": "bar"
+              }
             },
             "valueType": {
               "container": {
@@ -766,6 +766,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -784,8 +785,7 @@
           "unsafeName": "ErrorInstanceId",
           "safeName": "ErrorInstanceId"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   }
 }

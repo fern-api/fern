@@ -185,6 +185,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -203,8 +204,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "valueType": {
               "container": {
@@ -229,6 +229,7 @@
           {
             "docs": "The payment amount echoed back",
             "name": {
+              "wireValue": "amount",
               "name": {
                 "originalName": "amount",
                 "camelCase": {
@@ -247,8 +248,7 @@
                   "unsafeName": "Amount",
                   "safeName": "Amount"
                 }
-              },
-              "wireValue": "amount"
+              }
             },
             "valueType": {
               "container": {
@@ -290,6 +290,7 @@
           },
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -308,8 +309,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "valueType": {
               "container": {
@@ -428,6 +428,7 @@
               {
                 "docs": "The payment amount. Can be a number or string.\nWhen examples are provided as strings, the string variant should be preferred.",
                 "name": {
+                  "wireValue": "amount",
                   "name": {
                     "originalName": "amount",
                     "camelCase": {
@@ -446,8 +447,7 @@
                       "unsafeName": "Amount",
                       "safeName": "Amount"
                     }
-                  },
-                  "wireValue": "amount"
+                  }
                 },
                 "valueType": {
                   "name": {
@@ -483,6 +483,7 @@
               },
               {
                 "name": {
+                  "wireValue": "currency",
                   "name": {
                     "originalName": "currency",
                     "camelCase": {
@@ -501,8 +502,7 @@
                       "unsafeName": "Currency",
                       "safeName": "Currency"
                     }
-                  },
-                  "wireValue": "currency"
+                  }
                 },
                 "valueType": {
                   "container": {
@@ -641,6 +641,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -659,8 +660,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -788,6 +788,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -806,8 +807,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -819,6 +819,7 @@
           },
           {
             "name": {
+              "wireValue": "amount",
               "name": {
                 "originalName": "amount",
                 "camelCase": {
@@ -837,8 +838,7 @@
                   "unsafeName": "Amount",
                   "safeName": "Amount"
                 }
-              },
-              "wireValue": "amount"
+              }
             },
             "typeReference": {
               "value": {
@@ -850,6 +850,7 @@
           },
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -868,8 +869,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -949,6 +949,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "amount",
                   "name": {
                     "originalName": "amount",
                     "camelCase": {
@@ -967,8 +968,7 @@
                       "unsafeName": "Amount",
                       "safeName": "Amount"
                     }
-                  },
-                  "wireValue": "amount"
+                  }
                 },
                 "typeReference": {
                   "value": "type_:PaymentRequestAmount",
@@ -977,6 +977,7 @@
               },
               {
                 "name": {
+                  "wireValue": "currency",
                   "name": {
                     "originalName": "currency",
                     "camelCase": {
@@ -995,8 +996,7 @@
                       "unsafeName": "Currency",
                       "safeName": "Currency"
                     }
-                  },
-                  "wireValue": "currency"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1024,6 +1024,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

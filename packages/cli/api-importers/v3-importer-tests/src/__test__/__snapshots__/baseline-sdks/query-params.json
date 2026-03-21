@@ -60,6 +60,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "latitude",
               "name": {
                 "originalName": "latitude",
                 "camelCase": {
@@ -78,8 +79,7 @@
                   "unsafeName": "Latitude",
                   "safeName": "Latitude"
                 }
-              },
-              "wireValue": "latitude"
+              }
             },
             "valueType": {
               "container": {
@@ -103,6 +103,7 @@
           },
           {
             "name": {
+              "wireValue": "longitude",
               "name": {
                 "originalName": "longitude",
                 "camelCase": {
@@ -121,8 +122,7 @@
                   "unsafeName": "Longitude",
                   "safeName": "Longitude"
                 }
-              },
-              "wireValue": "longitude"
+              }
             },
             "valueType": {
               "container": {
@@ -189,6 +189,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "city",
               "name": {
                 "originalName": "city",
                 "camelCase": {
@@ -207,8 +208,7 @@
                   "unsafeName": "City",
                   "safeName": "City"
                 }
-              },
-              "wireValue": "city"
+              }
             },
             "valueType": {
               "container": {
@@ -232,6 +232,7 @@
           },
           {
             "name": {
+              "wireValue": "country",
               "name": {
                 "originalName": "country",
                 "camelCase": {
@@ -250,8 +251,7 @@
                   "unsafeName": "Country",
                   "safeName": "Country"
                 }
-              },
-              "wireValue": "country"
+              }
             },
             "valueType": {
               "container": {
@@ -275,6 +275,7 @@
           },
           {
             "name": {
+              "wireValue": "coordinates",
               "name": {
                 "originalName": "coordinates",
                 "camelCase": {
@@ -293,8 +294,7 @@
                   "unsafeName": "Coordinates",
                   "safeName": "Coordinates"
                 }
-              },
-              "wireValue": "coordinates"
+              }
             },
             "valueType": {
               "container": {
@@ -378,6 +378,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -396,8 +397,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "valueType": {
               "container": {
@@ -421,6 +421,7 @@
           },
           {
             "name": {
+              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -439,8 +440,7 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              },
-              "wireValue": "age"
+              }
             },
             "valueType": {
               "container": {
@@ -464,6 +464,7 @@
           },
           {
             "name": {
+              "wireValue": "location",
               "name": {
                 "originalName": "location",
                 "camelCase": {
@@ -482,8 +483,7 @@
                   "unsafeName": "Location",
                   "safeName": "Location"
                 }
-              },
-              "wireValue": "location"
+              }
             },
             "valueType": {
               "container": {
@@ -566,6 +566,7 @@
         "values": [
           {
             "name": {
+              "wireValue": "asc",
               "name": {
                 "originalName": "asc",
                 "camelCase": {
@@ -584,12 +585,12 @@
                   "unsafeName": "Asc",
                   "safeName": "Asc"
                 }
-              },
-              "wireValue": "asc"
+              }
             }
           },
           {
             "name": {
+              "wireValue": "desc",
               "name": {
                 "originalName": "desc",
                 "camelCase": {
@@ -608,8 +609,7 @@
                   "unsafeName": "Desc",
                   "safeName": "Desc"
                 }
-              },
-              "wireValue": "desc"
+              }
             }
           }
         ],
@@ -654,6 +654,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -672,8 +673,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "valueType": {
               "container": {
@@ -773,6 +773,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -791,8 +792,7 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                },
-                "wireValue": "filter"
+                }
               },
               "valueType": {
                 "container": {
@@ -835,6 +835,7 @@
             },
             {
               "name": {
+                "wireValue": "sort",
                 "name": {
                   "originalName": "sort",
                   "camelCase": {
@@ -853,8 +854,7 @@
                     "unsafeName": "Sort",
                     "safeName": "Sort"
                   }
-                },
-                "wireValue": "sort"
+                }
               },
               "valueType": {
                 "container": {
@@ -897,6 +897,7 @@
             },
             {
               "name": {
+                "wireValue": "limit",
                 "name": {
                   "originalName": "limit",
                   "camelCase": {
@@ -915,8 +916,7 @@
                     "unsafeName": "Limit",
                     "safeName": "Limit"
                   }
-                },
-                "wireValue": "limit"
+                }
               },
               "valueType": {
                 "container": {
@@ -945,6 +945,7 @@
             },
             {
               "name": {
+                "wireValue": "tags",
                 "name": {
                   "originalName": "tags",
                   "camelCase": {
@@ -963,8 +964,7 @@
                     "unsafeName": "Tags",
                     "safeName": "Tags"
                   }
-                },
-                "wireValue": "tags"
+                }
               },
               "valueType": {
                 "container": {
@@ -1101,6 +1101,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
       "name": {
         "originalName": "errorInstanceId",
         "camelCase": {
@@ -1119,8 +1120,7 @@
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
         }
-      },
-      "wireValue": "errorInstanceId"
+      }
     }
   },
   "errorDiscriminationStrategy": {
@@ -1174,6 +1174,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "latitude",
               "name": {
                 "originalName": "latitude",
                 "camelCase": {
@@ -1192,8 +1193,7 @@
                   "unsafeName": "Latitude",
                   "safeName": "Latitude"
                 }
-              },
-              "wireValue": "latitude"
+              }
             },
             "typeReference": {
               "value": {
@@ -1205,6 +1205,7 @@
           },
           {
             "name": {
+              "wireValue": "longitude",
               "name": {
                 "originalName": "longitude",
                 "camelCase": {
@@ -1223,8 +1224,7 @@
                   "unsafeName": "Longitude",
                   "safeName": "Longitude"
                 }
-              },
-              "wireValue": "longitude"
+              }
             },
             "typeReference": {
               "value": {
@@ -1267,6 +1267,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "city",
               "name": {
                 "originalName": "city",
                 "camelCase": {
@@ -1285,8 +1286,7 @@
                   "unsafeName": "City",
                   "safeName": "City"
                 }
-              },
-              "wireValue": "city"
+              }
             },
             "typeReference": {
               "value": {
@@ -1298,6 +1298,7 @@
           },
           {
             "name": {
+              "wireValue": "country",
               "name": {
                 "originalName": "country",
                 "camelCase": {
@@ -1316,8 +1317,7 @@
                   "unsafeName": "Country",
                   "safeName": "Country"
                 }
-              },
-              "wireValue": "country"
+              }
             },
             "typeReference": {
               "value": {
@@ -1329,6 +1329,7 @@
           },
           {
             "name": {
+              "wireValue": "coordinates",
               "name": {
                 "originalName": "coordinates",
                 "camelCase": {
@@ -1347,8 +1348,7 @@
                   "unsafeName": "Coordinates",
                   "safeName": "Coordinates"
                 }
-              },
-              "wireValue": "coordinates"
+              }
             },
             "typeReference": {
               "value": {
@@ -1391,6 +1391,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -1409,8 +1410,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -1422,6 +1422,7 @@
           },
           {
             "name": {
+              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -1440,8 +1441,7 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              },
-              "wireValue": "age"
+              }
             },
             "typeReference": {
               "value": {
@@ -1453,6 +1453,7 @@
           },
           {
             "name": {
+              "wireValue": "location",
               "name": {
                 "originalName": "location",
                 "camelCase": {
@@ -1471,8 +1472,7 @@
                   "unsafeName": "Location",
                   "safeName": "Location"
                 }
-              },
-              "wireValue": "location"
+              }
             },
             "typeReference": {
               "value": {
@@ -1514,6 +1514,7 @@
         },
         "values": [
           {
+            "wireValue": "asc",
             "name": {
               "originalName": "asc",
               "camelCase": {
@@ -1532,10 +1533,10 @@
                 "unsafeName": "Asc",
                 "safeName": "Asc"
               }
-            },
-            "wireValue": "asc"
+            }
           },
           {
+            "wireValue": "desc",
             "name": {
               "originalName": "desc",
               "camelCase": {
@@ -1554,8 +1555,7 @@
                 "unsafeName": "Desc",
                 "safeName": "Desc"
               }
-            },
-            "wireValue": "desc"
+            }
           }
         ],
         "type": "enum"
@@ -1589,6 +1589,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "results",
               "name": {
                 "originalName": "results",
                 "camelCase": {
@@ -1607,8 +1608,7 @@
                   "unsafeName": "Results",
                   "safeName": "Results"
                 }
-              },
-              "wireValue": "results"
+              }
             },
             "typeReference": {
               "value": {
@@ -1688,6 +1688,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -1706,8 +1707,7 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                },
-                "wireValue": "filter"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1719,6 +1719,7 @@
             },
             {
               "name": {
+                "wireValue": "sort",
                 "name": {
                   "originalName": "sort",
                   "camelCase": {
@@ -1737,8 +1738,7 @@
                     "unsafeName": "Sort",
                     "safeName": "Sort"
                   }
-                },
-                "wireValue": "sort"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1750,6 +1750,7 @@
             },
             {
               "name": {
+                "wireValue": "limit",
                 "name": {
                   "originalName": "limit",
                   "camelCase": {
@@ -1768,8 +1769,7 @@
                     "unsafeName": "Limit",
                     "safeName": "Limit"
                   }
-                },
-                "wireValue": "limit"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1781,6 +1781,7 @@
             },
             {
               "name": {
+                "wireValue": "tags",
                 "name": {
                   "originalName": "tags",
                   "camelCase": {
@@ -1799,8 +1800,7 @@
                     "unsafeName": "Tags",
                     "safeName": "Tags"
                   }
-                },
-                "wireValue": "tags"
+                }
               },
               "typeReference": {
                 "value": {
@@ -1830,6 +1830,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {
