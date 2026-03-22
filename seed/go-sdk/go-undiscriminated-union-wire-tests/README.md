@@ -30,10 +30,10 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+    fern "github.com/go-undiscriminated-union-wire-tests/fern"
     client "github.com/go-undiscriminated-union-wire-tests/fern/client"
     option "github.com/go-undiscriminated-union-wire-tests/fern/option"
-    fern "github.com/go-undiscriminated-union-wire-tests/fern"
-    context "context"
 )
 
 func do() {

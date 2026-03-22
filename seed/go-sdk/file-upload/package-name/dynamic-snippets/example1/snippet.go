@@ -1,11 +1,11 @@
 package example
 
 import (
+    context "context"
+    upload "github.com/fern-api/file-upload-go"
     client "github.com/fern-api/file-upload-go/client"
     option "github.com/fern-api/file-upload-go/option"
-    upload "github.com/fern-api/file-upload-go"
     strings "strings"
-    context "context"
 )
 
 func do() {

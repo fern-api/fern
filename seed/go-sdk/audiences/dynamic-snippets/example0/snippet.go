@@ -1,10 +1,10 @@
 package example
 
 import (
-    client "github.com/audiences/fern/client"
-    option "github.com/audiences/fern/option"
-    foldera "github.com/audiences/fern/foldera"
     context "context"
+    client "github.com/audiences/fern/client"
+    foldera "github.com/audiences/fern/foldera"
+    option "github.com/audiences/fern/option"
 )
 
 func do() {
