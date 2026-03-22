@@ -12,7 +12,7 @@ FROM golang:1.23.8-alpine3.20
 
 WORKDIR /workspace
 
-RUN apk add --no-cache ca-certificates git nodejs
+RUN apk add --no-cache ca-certificates git libstdc++
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
