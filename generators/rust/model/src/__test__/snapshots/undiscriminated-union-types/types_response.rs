@@ -32,4 +32,8 @@ impl Response {
     pub fn error(error: String, code: i64) -> Self {
         Self::Error { error, code, details: None }
     }
+
+    pub fn error_with_details(error: String, code: i64, details: Vec<String>) -> Self {
+        Self::Error { error, code, details: Some(details) }
+    }
 }
