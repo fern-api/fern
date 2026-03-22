@@ -838,9 +838,12 @@ export class WebSocketClientGenerator extends WithGeneration {
                     }
                 }
 
-                // Environment (if applicable)
+                // Environment (if applicable) — use string.IsNullOrEmpty because
+                // the Environment getter returns "" (not null) from base.BaseUrl
                 if (this.hasEnvironments) {
-                    writer.writeLine("Environment = options?.Environment ?? defaults?.Environment,");
+                    writer.writeLine(
+                        "Environment = string.IsNullOrEmpty(options?.Environment) ? (defaults?.Environment ?? \"\") : options.Environment,"
+                    );
                 }
 
                 writer.dedent();
