@@ -15,6 +15,7 @@ namespace SeedWebsocket.Test.Core.WebSockets;
 public class E2eWebSocketTests
 {
     private const int TimeoutMs = 3000;
+
     // ───────────────────────────────────────────────────────────────
     // Echo conversation: send text, receive echo, verify round-trip
     // ───────────────────────────────────────────────────────────────
@@ -392,8 +393,11 @@ public class E2eWebSocketTests
         await server.CloseAllClientsAsync();
 
         var reconnectResult = await Task.WhenAny(reconnected.Task, Task.Delay(TimeoutMs));
-        Assert.That(reconnectResult, Is.EqualTo(reconnected.Task),
-            "Timed out waiting for reconnection");
+        Assert.That(
+            reconnectResult,
+            Is.EqualTo(reconnected.Task),
+            "Timed out waiting for reconnection"
+        );
 
         // Wait for Connected status after reconnection
         var connectedTcs = new TaskCompletionSource<bool>();
@@ -402,19 +406,28 @@ public class E2eWebSocketTests
         else
             client.PropertyChanged += (_, args) =>
             {
-                if (args.PropertyName == nameof(client.Status) && client.Status == ConnectionStatus.Connected)
+                if (
+                    args.PropertyName == nameof(client.Status)
+                    && client.Status == ConnectionStatus.Connected
+                )
                     connectedTcs.TrySetResult(true);
             };
         await Task.WhenAny(connectedTcs.Task, Task.Delay(TimeoutMs));
-        Assert.That(client.Status, Is.EqualTo(ConnectionStatus.Connected),
-            "Client should be connected after reconnection");
+        Assert.That(
+            client.Status,
+            Is.EqualTo(ConnectionStatus.Connected),
+            "Client should be connected after reconnection"
+        );
 
         // Verify we can still send/receive after reconnection
         await client.SendInstant("after-reconnect");
 
         var echoResult = await Task.WhenAny(postReconnectEcho.Task, Task.Delay(TimeoutMs));
-        Assert.That(echoResult, Is.EqualTo(postReconnectEcho.Task),
-            "Timed out waiting for post-reconnect echo");
+        Assert.That(
+            echoResult,
+            Is.EqualTo(postReconnectEcho.Task),
+            "Timed out waiting for post-reconnect echo"
+        );
         Assert.That(postReconnectEcho.Task.Result, Is.EqualTo("echo:after-reconnect"));
     }
 
@@ -469,14 +482,22 @@ public class E2eWebSocketTests
             {
                 // Server abort may not always trigger reconnect callback reliably,
                 // but the client should detect the disconnect
-                Assert.That(client.Status,
+                Assert.That(
+                    client.Status,
                     Is.AnyOf(ConnectionStatus.Connected, ConnectionStatus.Disconnected),
-                    "Client should have detected server abort");
+                    "Client should have detected server abort"
+                );
             }
         }
         finally
         {
-            try { await client.DisposeAsync(); } catch { /* socket may already be closed */ }
+            try
+            {
+                await client.DisposeAsync();
+            }
+            catch
+            { /* socket may already be closed */
+            }
         }
     }
 
@@ -573,11 +594,13 @@ public class E2eWebSocketTests
             await client.ConnectAsync();
             Assert.Fail("Expected connection to fail");
         }
-        catch (Exception ex) when (
-            ex is System.Net.WebSockets.WebSocketException
-            or TaskCanceledException
-            or OperationCanceledException
-            or InvalidOperationException)
+        catch (Exception ex)
+            when (ex
+                    is System.Net.WebSockets.WebSocketException
+                        or TaskCanceledException
+                        or OperationCanceledException
+                        or InvalidOperationException
+            )
         {
             // Expected
         }
@@ -643,31 +666,36 @@ public class E2eWebSocketTests
         for (int i = 0; i < clientCount; i++)
         {
             var idx = i;
-            tasks.Add(Task.Run(async () =>
-            {
-                var received = new TaskCompletionSource<string>();
-                await using var client = new WebSocketClient(
-                    server.Uri,
-                    async stream =>
-                    {
-                        using var reader = new StreamReader(stream, Encoding.UTF8);
-                        received.TrySetResult(await reader.ReadToEndAsync());
-                    }
-                )
+            tasks.Add(
+                Task.Run(async () =>
                 {
-                    ConnectTimeout = TimeSpan.FromSeconds(2),
-                };
+                    var received = new TaskCompletionSource<string>();
+                    await using var client = new WebSocketClient(
+                        server.Uri,
+                        async stream =>
+                        {
+                            using var reader = new StreamReader(stream, Encoding.UTF8);
+                            received.TrySetResult(await reader.ReadToEndAsync());
+                        }
+                    )
+                    {
+                        ConnectTimeout = TimeSpan.FromSeconds(2),
+                    };
 
-                await client.ConnectAsync();
-                await client.SendInstant($"client-{idx}");
+                    await client.ConnectAsync();
+                    await client.SendInstant($"client-{idx}");
 
-                var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
-                Assert.That(result, Is.EqualTo(received.Task),
-                    $"Client {idx} timed out waiting for echo");
-                Assert.That(received.Task.Result, Is.EqualTo($"echo:client-{idx}"));
+                    var result = await Task.WhenAny(received.Task, Task.Delay(TimeoutMs));
+                    Assert.That(
+                        result,
+                        Is.EqualTo(received.Task),
+                        $"Client {idx} timed out waiting for echo"
+                    );
+                    Assert.That(received.Task.Result, Is.EqualTo($"echo:client-{idx}"));
 
-                await client.CloseAsync();
-            }));
+                    await client.CloseAsync();
+                })
+            );
         }
 
         await Task.WhenAll(tasks);
@@ -705,7 +733,13 @@ public class E2eWebSocketTests
         }
         finally
         {
-            try { await client.DisposeAsync(); } catch { /* socket may already be closed */ }
+            try
+            {
+                await client.DisposeAsync();
+            }
+            catch
+            { /* socket may already be closed */
+            }
         }
     }
 

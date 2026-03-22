@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/inferred-auth-implicit-no-expiry/fern/client"
-    fern "github.com/inferred-auth-implicit-no-expiry/fern"
     context "context"
+    fern "github.com/inferred-auth-implicit-no-expiry/fern"
+    client "github.com/inferred-auth-implicit-no-expiry/fern/client"
 )
 
 func do() {

@@ -15,11 +15,11 @@ impl NestedUnionRoot {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_stringlist(&self) -> bool {
+    pub fn is_string_list(&self) -> bool {
         matches!(self, Self::StringList(_))
     }
 
-    pub fn is_nestedunionl1(&self) -> bool {
+    pub fn is_nested_union_l_1(&self) -> bool {
         matches!(self, Self::NestedUnionL1(_))
     }
 
@@ -37,28 +37,28 @@ impl NestedUnionRoot {
         }
     }
 
-    pub fn as_stringlist(&self) -> Option<&Vec<String>> {
+    pub fn as_string_list(&self) -> Option<&Vec<String>> {
         match self {
             Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_stringlist(self) -> Option<Vec<String>> {
+    pub fn into_string_list(self) -> Option<Vec<String>> {
         match self {
             Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_nestedunionl1(&self) -> Option<&NestedUnionL1> {
+    pub fn as_nested_union_l_1(&self) -> Option<&NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nestedunionl1(self) -> Option<NestedUnionL1> {
+    pub fn into_nested_union_l_1(self) -> Option<NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,

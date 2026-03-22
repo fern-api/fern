@@ -1,5 +1,118 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.0
+  changelogEntry:
+    - summary: |
+        Generate convenience constructors for discriminated union variants with optional fields.
+        For each optional field in an inlined variant, a `{variant}_with_{field}` constructor is
+        generated that accepts the field as a required parameter (unwrapped from `Option<T>`) while
+        defaulting all other optional fields to `None`. For example, an `Assistant` variant with
+        optional `tool_calls` now gets an `assistant_with_tool_calls(tool_calls: Vec<ToolCall>)`
+        constructor.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.25.1
+  changelogEntry:
+    - summary: |
+        Stop generating empty HTTP client stubs for WebSocket-only subpackages. When an AsyncAPI
+        channel creates a subpackage with no HTTP endpoints (e.g., `realtime`, `tts`), the generator
+        no longer emits redundant empty client structs in `resources/`. The actual WebSocket
+        functionality remains in `src/api/websocket/` via the `WebSocketChannelGenerator`. This
+        removes confusing name collisions between the empty HTTP-based `RealtimeClient` in resources
+        and the functional WebSocket-based `RealtimeClient` in the websocket module.
+      type: fix
+    - summary: |
+        WebSocket connector now always auto-injects the Authorization header from the stored
+        client token, matching the TypeScript SDK experience where `client.realtime.connect()`
+        works without manually passing auth. Previously, channels with an explicit Authorization
+        header in the AsyncAPI spec required users to pass the token themselves.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.25.0
+  changelogEntry:
+    - summary: |
+        Improve undiscriminated union design with `snake_case` method names, better variant naming,
+        deduplicating type references, and more.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+- version: 0.24.1
+  changelogEntry:
+    - summary: |
+        Fix `mod.rs` module declarations not being removed for types inlined into discriminated
+        union variants. The generator was deleting the struct files for inlined types but still
+        emitting `pub mod` and `pub use` declarations for them, causing `error[E0583]: file not
+        found for module` compilation errors in generated SDKs.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.24.0
+  changelogEntry:
+    - summary: |
+        Improve discriminated union design with inlined variants and constructors. When an inner
+        type is only referenced by a single union variant, its fields are now inlined directly into
+        the enum variant instead of using a wrapper struct with `#[serde(flatten)]`. All enum
+        variants now include `#[non_exhaustive]` for forward compatibility, and constructor methods
+        are generated for every variant (required since `#[non_exhaustive]` prevents direct
+        construction outside the crate). Empty variants use struct syntax (`Variant {}`) instead
+        of unit syntax.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Generate builders for all struct types. The builder pattern is inspired by
+        other popular Rust SDKs (e.g. AWS), so that users now have the option between the
+        following:
+
+        1. The explicit constructor pattern (i.e. specify `None` values for optional fields).
+        2. The `..Default::default()` spread when a type has many optional fields.
+        3. The builder pattern when a type has many optional fields and cannot support the `..Default::default()` approach.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
+- version: 0.22.1
+  changelogEntry:
+    - summary: |
+        Fix double-pin compilation error in `SseStream` timeout implementation. The `deadline`
+        field was declared as `Pin<Box<tokio::time::Sleep>>` with a `#[pin]` attribute, causing
+        `pin_project` to produce `Pin<&mut Pin<Box<Sleep>>>` which lacks `reset()` and `poll()`
+        methods. Changed the field type to `tokio::time::Sleep` (unpinned, letting `pin_project`
+        handle pinning) so the projected type is `Pin<&mut Sleep>` which correctly exposes
+        the required methods.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Add per-event timeout to SSE stream methods. The `SseStream` now accepts a timeout
+        duration and yields `ApiError::StreamTimeout` if no event is received within that
+        period. The timeout is derived from `RequestOptions.timeout_seconds` (per-request)
+        or `ClientConfig.timeout` (client-level), preventing indefinite blocking when the
+        server stops sending events.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add forward-compatible enum support. When `forward-compatible: true` is set on an enum
+        type, the generated Rust enum includes a `#[non_exhaustive]` attribute, a hidden
+        `__Unknown(String)` variant for unrecognized values, and custom Serialize/Deserialize
+        implementations that gracefully handle unknown enum values from the server.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.20.4
   changelogEntry:
     - summary: |

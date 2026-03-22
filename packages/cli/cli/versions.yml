@@ -10,6 +10,58 @@
   createdAt: "2026-03-20"
   irVersion: 65
 
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-fernignore` flag to `fern generate`. When set, the
+        `.fernignore` file is ignored so that no generated files are excluded,
+        effectively overwriting all files in the output. For remote generation,
+        an empty `.fernignore` is uploaded. For local generation, the existing
+        `.fernignore` in the output directory is skipped. This is useful when
+        you want to ensure a clean generation without any `.fernignore` exclusions.
+
+        ```bash
+        fern generate --group my-sdk --skip-fernignore
+        ```
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
+- version: 4.41.0
+  changelogEntry:
+    - summary: |
+        Support `hidden` and `noindex` frontmatter in folder-based navigation.
+        Pages with `hidden: true` or `noindex: true` in their frontmatter are now
+        respected when using `folder:` entries in `docs.yml`. Sections whose
+        `index.mdx` has `hidden: true` are also hidden.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Exclude files and folders whose names start with `_` from folder-based
+        navigation. This follows the convention used by other documentation
+        platforms (e.g. Docusaurus) where prefixing a file or directory with `_`
+        hides it from the generated navigation tree.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+- version: 4.39.0
+  changelogEntry:
+    - summary: |
+        Add `--require-env-vars` flag to `fern generate`. Use `--no-require-env-vars`
+        to substitute empty strings for undefined environment variables instead of
+        causing an error. Defined environment variables are still resolved normally.
+        This is useful for local development when registry credentials are not needed.
+
+        ```bash
+        fern generate --group csharp-sdk --no-require-env-vars
+        ```
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 4.38.0
   changelogEntry:
     - summary: |

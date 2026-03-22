@@ -7,3 +7,27 @@ pub struct ListQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
 }
+
+impl ListQueryRequest {
+    pub fn builder() -> ListQueryRequestBuilder {
+        ListQueryRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct ListQueryRequestBuilder {
+    limit: Option<i64>,
+}
+
+impl ListQueryRequestBuilder {
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`ListQueryRequest`].
+    pub fn build(self) -> Result<ListQueryRequest, BuildError> {
+        Ok(ListQueryRequest { limit: self.limit })
+    }
+}

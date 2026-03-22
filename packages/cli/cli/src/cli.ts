@@ -744,6 +744,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("require-env-vars", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
+                .option("skip-fernignore", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -764,6 +776,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["skip-fernignore"] && argv.fernignore != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --skip-fernignore and --fernignore flags cannot be used together."
                 );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
@@ -809,10 +826,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
+                    skipFernignore: argv["skip-fernignore"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
                 });
             }
             if (argv.docs != null) {
@@ -866,10 +885,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
+                skipFernignore: argv["skip-fernignore"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
             });
         }
     );

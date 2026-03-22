@@ -57,7 +57,10 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
 
-        for (const [serviceName, endpoints] of endpointsByService.entries()) {
+        const sortedServices = Array.from(endpointsByService.entries()).sort(([a], [b]) =>
+            a < b ? -1 : a > b ? 1 : 0
+        );
+        for (const [serviceName, endpoints] of sortedServices) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
@@ -170,7 +173,8 @@ export class WireTestGenerator {
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
         const serviceTestFileContent = go.codeblock((writer) => {
-            for (const [_, importPath] of imports.entries()) {
+            const sortedImports = Array.from(imports.entries()).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+            for (const [_, importPath] of sortedImports) {
                 // Manually add any imports that were used in the snippet (client/request types)
                 // but that may not be used in the rest of the generated test file and therefore would be missed
                 writer.addImport(importPath);

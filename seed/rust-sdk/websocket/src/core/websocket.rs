@@ -4,7 +4,11 @@ use futures::{
     SinkExt, StreamExt,
 };
 use serde::{de::DeserializeOwned, Serialize};
-use std::{collections::HashMap, sync::Arc, time::Duration};
+use std::{
+    collections::HashMap,
+    sync::Arc,
+    time::Duration,
+};
 use tokio::sync::{mpsc, Mutex, Notify};
 use tokio_tungstenite::{
     connect_async,
@@ -66,16 +70,7 @@ pub struct WebSocketClient {
 }
 
 impl WebSocketClient {
-    pub async fn connect(
-        url: &str,
-        options: WebSocketOptions,
-    ) -> Result<
-        (
-            Self,
-            mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
-        ),
-        ApiError,
-    > {
+    pub async fn connect(url: &str, options: WebSocketOptions) -> Result<(Self, mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>), ApiError> {
         let (incoming_tx, incoming_rx) = mpsc::unbounded_channel();
 
         let client = Self {
@@ -103,19 +98,18 @@ impl WebSocketClient {
                 incoming_tx,
                 url_clone,
                 options_clone,
-            )
-            .await;
+            ).await;
         });
 
         Ok((client, incoming_rx))
     }
 
     async fn establish_connection(&self) -> Result<WsSource, ApiError> {
-        let uri: Uri = self.build_url().parse().map_err(
-            |e: tokio_tungstenite::tungstenite::http::uri::InvalidUri| {
+        let uri: Uri = self.build_url()
+            .parse()
+            .map_err(|e: tokio_tungstenite::tungstenite::http::uri::InvalidUri| {
                 ApiError::WebSocketError(format!("Invalid URL: {}", e))
-            },
-        )?;
+            })?;
 
         let mut request = uri
             .into_client_request()
@@ -123,17 +117,23 @@ impl WebSocketClient {
 
         let headers = request.headers_mut();
         for (key, value) in &self.options.headers {
-            let header_name: HeaderName = key.parse().map_err(|_| ApiError::InvalidHeader)?;
-            let header_value: HeaderValue = value.parse().map_err(|_| ApiError::InvalidHeader)?;
+            let header_name: HeaderName = key
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?;
+            let header_value: HeaderValue = value
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?;
             headers.insert(header_name, header_value);
         }
 
         let connect_future = connect_async(request);
-        let (ws_stream, _response) =
-            tokio::time::timeout(self.options.connection_timeout, connect_future)
-                .await
-                .map_err(|_| ApiError::WebSocketError("Connection timed out".to_string()))?
-                .map_err(|e| ApiError::WebSocketError(format!("Connection failed: {}", e)))?;
+        let (ws_stream, _response) = tokio::time::timeout(
+            self.options.connection_timeout,
+            connect_future,
+        )
+        .await
+        .map_err(|_| ApiError::WebSocketError("Connection timed out".to_string()))?
+        .map_err(|e| ApiError::WebSocketError(format!("Connection failed: {}", e)))?;
 
         let (write, read) = ws_stream.split();
 
@@ -185,10 +185,11 @@ impl WebSocketClient {
     pub async fn send_raw(&self, message: String) -> Result<(), ApiError> {
         let mut sink_guard = self.sink.lock().await;
         match sink_guard.as_mut() {
-            Some(sink) => sink
-                .send(Message::Text(message))
-                .await
-                .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e))),
+            Some(sink) => {
+                sink.send(Message::Text(message))
+                    .await
+                    .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e)))
+            }
             None => Err(ApiError::WebSocketError(
                 "WebSocket is not connected".to_string(),
             )),
@@ -198,10 +199,11 @@ impl WebSocketClient {
     pub async fn send_binary(&self, data: &[u8]) -> Result<(), ApiError> {
         let mut sink_guard = self.sink.lock().await;
         match sink_guard.as_mut() {
-            Some(sink) => sink
-                .send(Message::Binary(data.to_vec()))
-                .await
-                .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e))),
+            Some(sink) => {
+                sink.send(Message::Binary(data.to_vec()))
+                    .await
+                    .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e)))
+            }
             None => Err(ApiError::WebSocketError(
                 "WebSocket is not connected".to_string(),
             )),
@@ -355,11 +357,11 @@ impl WebSocketClient {
             format!("{}?{}", base, query)
         };
 
-        let uri: Uri = full_url.parse().map_err(
-            |e: tokio_tungstenite::tungstenite::http::uri::InvalidUri| {
+        let uri: Uri = full_url
+            .parse()
+            .map_err(|e: tokio_tungstenite::tungstenite::http::uri::InvalidUri| {
                 ApiError::WebSocketError(format!("Invalid URL: {}", e))
-            },
-        )?;
+            })?;
 
         let mut request = uri
             .into_client_request()
@@ -367,16 +369,22 @@ impl WebSocketClient {
 
         let headers = request.headers_mut();
         for (key, value) in &options.headers {
-            let header_name: HeaderName = key.parse().map_err(|_| ApiError::InvalidHeader)?;
-            let header_value: HeaderValue = value.parse().map_err(|_| ApiError::InvalidHeader)?;
+            let header_name: HeaderName = key
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?;
+            let header_value: HeaderValue = value
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?;
             headers.insert(header_name, header_value);
         }
 
-        let (ws_stream, _response) =
-            tokio::time::timeout(options.connection_timeout, connect_async(request))
-                .await
-                .map_err(|_| ApiError::WebSocketError("Reconnection timed out".to_string()))?
-                .map_err(|e| ApiError::WebSocketError(format!("Reconnection failed: {}", e)))?;
+        let (ws_stream, _response) = tokio::time::timeout(
+            options.connection_timeout,
+            connect_async(request),
+        )
+        .await
+        .map_err(|_| ApiError::WebSocketError("Reconnection timed out".to_string()))?
+        .map_err(|e| ApiError::WebSocketError(format!("Reconnection failed: {}", e)))?;
 
         let (write, read) = ws_stream.split();
 

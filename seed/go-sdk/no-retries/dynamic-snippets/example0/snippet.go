@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/no-retries/fern/client"
     option "github.com/no-retries/fern/option"
-    context "context"
 )
 
 func do() {
