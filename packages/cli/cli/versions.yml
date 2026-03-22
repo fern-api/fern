@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs md check` command to validate MDX syntax in documentation files.
+        The command parses all MDX files referenced in docs.yml and reports syntax
+        errors with accurate file paths and line:column numbers, accounting for
+        frontmatter offsets.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
 
 - version: 4.42.0
   changelogEntry:
