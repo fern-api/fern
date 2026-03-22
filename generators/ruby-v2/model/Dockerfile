@@ -11,7 +11,8 @@ RUN apk --no-cache add \
     
 RUN gem install rubocop rubocop-minitest
 
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
 COPY generators/ruby-v2/sdk/features.yml /assets/features.yml
 COPY generators/ruby-v2/sdk/dist /dist
