@@ -618,6 +618,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
         }
         for (const header of channel.headers) {
+            // Skip authorization header — the connector auto-injects it from the stored token
+            if (header.name.name.snakeCase.safeName === "authorization") {
+                continue;
+            }
             connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
         }
         for (const qp of channel.queryParameters) {
