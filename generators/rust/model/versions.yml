@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.3.1
+  changelogEntry:
+    - summary: |
+        Fix convenience constructors for union variants whose optional fields have nested
+        optional/nullable IR wrappers (e.g. `optional<nullable<string>>` from OpenAPI).
+        Previously only one layer was unwrapped, leaving the parameter as `Option<T>` instead
+        of `T`, which caused `E0308 mismatched types` compilation errors. Now all
+        optional/nullable layers are stripped to produce the correct bare type.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.3.0
   changelogEntry:
     - summary: |
