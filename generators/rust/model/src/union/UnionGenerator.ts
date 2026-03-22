@@ -632,13 +632,14 @@ export class UnionGenerator {
     /**
      * For inlined union variants with optional fields, generates convenience constructors
      * like `{variant}_with_{field}` that accept the optional field as a required parameter
-     * (unwrapped from Option<T> to T), alongside any required fields. All other optional
-     * fields default to None.
+     * (unwrapped from Option<T> to T), alongside any required fields AND all other optional
+     * fields as Option<T> parameters. This gives callers maximum flexibility while making
+     * the promoted field required.
      *
      * For example, for an Assistant variant with optional fields `content`, `name`,
      * `reasoning_content`, and `tool_calls`, this generates:
-     *   - `assistant_with_content(content: Content) -> Self`
-     *   - `assistant_with_tool_calls(tool_calls: Vec<ToolCall>) -> Self`
+     *   - `assistant_with_content(content: Content, name: Option<String>, ...) -> Self`
+     *   - `assistant_with_tool_calls(content: Option<Content>, ..., tool_calls: Vec<ToolCall>) -> Self`
      *   - etc.
      */
     private getConvenienceConstructorsForVariant(
@@ -680,7 +681,8 @@ export class UnionGenerator {
                     const methodName = `${constructorBaseName}_with_${optFieldNameRaw}`;
 
                     constructors.push((writer: rust.Writer) => {
-                        // Build required params + the one optional field (unwrapped)
+                        // Build params: required fields + promoted optional field (unwrapped) +
+                        // other optional fields as Option<T>
                         const params: string[] = [];
                         const fieldAssignments: string[] = [];
 
@@ -706,8 +708,10 @@ export class UnionGenerator {
                                 params.push(`${fieldName}: ${innerType.toString()}`);
                                 fieldAssignments.push(`${fieldName}: Some(${fieldName})`);
                             } else if (isOptional) {
-                                // Other optional fields default to None
-                                fieldAssignments.push(`${fieldName}: None`);
+                                // Other optional fields are passed as Option<T> parameters
+                                const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
+                                params.push(`${fieldName}: ${fieldType.toString()}`);
+                                fieldAssignments.push(fieldName);
                             } else {
                                 // Required fields are passed as parameters
                                 const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);

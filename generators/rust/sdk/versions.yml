@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.2
+  changelogEntry:
+    - summary: |
+        Include all optional fields as `Option<T>` parameters in convenience constructors.
+        Previously, `{variant}_with_{field}` constructors only accepted the promoted field and
+        defaulted all other optional fields to `None`. Now they accept all other optional fields
+        as `Option<T>` parameters, giving callers full control over all fields. For example,
+        `assistant_with_tool_calls` now accepts `(content: Option<Content>, ..., tool_calls: Vec<ToolCall>)`
+        instead of just `(tool_calls: Vec<ToolCall>)`.
+      type: chore
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.26.1
   changelogEntry:
     - summary: |

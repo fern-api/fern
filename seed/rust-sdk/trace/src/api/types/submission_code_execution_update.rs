@@ -210,25 +210,27 @@ impl CodeExecutionUpdate {
         test_case_id: String,
         line_number: i64,
         lightweight_stack_info: LightweightStackframeInformation,
+        traced_file: Option<TracedFile>,
     ) -> Self {
         Self::Recording {
             submission_id,
             test_case_id: Some(test_case_id),
             line_number,
             lightweight_stack_info,
-            traced_file: None,
+            traced_file,
         }
     }
 
     pub fn recording_with_traced_file(
         submission_id: SubmissionId,
+        test_case_id: Option<String>,
         line_number: i64,
         lightweight_stack_info: LightweightStackframeInformation,
         traced_file: TracedFile,
     ) -> Self {
         Self::Recording {
             submission_id,
-            test_case_id: None,
+            test_case_id,
             line_number,
             lightweight_stack_info,
             traced_file: Some(traced_file),
