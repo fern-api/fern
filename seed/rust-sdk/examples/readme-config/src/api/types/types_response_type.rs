@@ -28,7 +28,9 @@ impl ResponseTypeBuilder {
     /// - [`r#type`](ResponseTypeBuilder::r#type)
     pub fn build(self) -> Result<ResponseType, BuildError> {
         Ok(ResponseType {
-            r#type: self.r#type.ok_or_else(|| BuildError::missing_field("r#type"))?,
+            r#type: self
+                .r#type
+                .ok_or_else(|| BuildError::missing_field("r#type"))?,
         })
     }
 }

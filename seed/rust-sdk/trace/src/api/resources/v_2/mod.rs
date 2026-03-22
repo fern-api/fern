@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::api::{*};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub mod problem;
 pub use problem::ProblemClient2;
@@ -15,21 +15,15 @@ pub struct V2Client {
 impl V2Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config.clone())?,
-    problem: ProblemClient2::new(config.clone())?,
-    v_3: V3Client::new(config.clone())?
-})
+            http_client: HttpClient::new(config.clone())?,
+            problem: ProblemClient2::new(config.clone())?,
+            v_3: V3Client::new(config.clone())?,
+        })
     }
 
     pub async fn test(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            "",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::GET, "", None, None, options)
+            .await
     }
-
 }
-

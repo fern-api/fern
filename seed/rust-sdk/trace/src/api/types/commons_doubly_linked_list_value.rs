@@ -38,7 +38,9 @@ impl DoublyLinkedListValueBuilder {
     pub fn build(self) -> Result<DoublyLinkedListValue, BuildError> {
         Ok(DoublyLinkedListValue {
             head: self.head,
-            nodes: self.nodes.ok_or_else(|| BuildError::missing_field("nodes"))?,
+            nodes: self
+                .nodes
+                .ok_or_else(|| BuildError::missing_field("nodes"))?,
         })
     }
 }

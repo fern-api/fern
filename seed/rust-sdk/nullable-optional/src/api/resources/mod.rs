@@ -4,7 +4,7 @@
 //!
 //! - **NullableOptional**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod nullable_optional;
 pub struct NullableOptionalClient {
@@ -16,10 +16,9 @@ impl NullableOptionalClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            nullable_optional: NullableOptionalClient2::new(config.clone())?
+            nullable_optional: NullableOptionalClient2::new(config.clone())?,
         })
     }
-
 }
 
 pub use nullable_optional::NullableOptionalClient2;

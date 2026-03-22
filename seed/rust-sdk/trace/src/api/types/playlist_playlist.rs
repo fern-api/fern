@@ -48,9 +48,15 @@ impl PlaylistBuilder {
     /// - [`owner_id`](PlaylistBuilder::owner_id)
     pub fn build(self) -> Result<Playlist, BuildError> {
         Ok(Playlist {
-            playlist_create_request_fields: self.playlist_create_request_fields.ok_or_else(|| BuildError::missing_field("playlist_create_request_fields"))?,
-            playlist_id: self.playlist_id.ok_or_else(|| BuildError::missing_field("playlist_id"))?,
-            owner_id: self.owner_id.ok_or_else(|| BuildError::missing_field("owner_id"))?,
+            playlist_create_request_fields: self
+                .playlist_create_request_fields
+                .ok_or_else(|| BuildError::missing_field("playlist_create_request_fields"))?,
+            playlist_id: self
+                .playlist_id
+                .ok_or_else(|| BuildError::missing_field("playlist_id"))?,
+            owner_id: self
+                .owner_id
+                .ok_or_else(|| BuildError::missing_field("owner_id"))?,
         })
     }
 }

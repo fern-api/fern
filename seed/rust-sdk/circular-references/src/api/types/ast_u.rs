@@ -29,7 +29,9 @@ impl UBuilder {
     /// - [`child`](UBuilder::child)
     pub fn build(self) -> Result<U, BuildError> {
         Ok(U {
-            child: self.child.ok_or_else(|| BuildError::missing_field("child"))?,
+            child: self
+                .child
+                .ok_or_else(|| BuildError::missing_field("child"))?,
         })
     }
 }

@@ -41,7 +41,9 @@ impl TraceResponsesPageV2Builder {
     pub fn build(self) -> Result<TraceResponsesPageV2, BuildError> {
         Ok(TraceResponsesPageV2 {
             offset: self.offset,
-            trace_responses: self.trace_responses.ok_or_else(|| BuildError::missing_field("trace_responses"))?,
+            trace_responses: self
+                .trace_responses
+                .ok_or_else(|| BuildError::missing_field("trace_responses"))?,
         })
     }
 }

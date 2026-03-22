@@ -76,11 +76,19 @@ impl ExecutionSessionStateBuilder {
     pub fn build(self) -> Result<ExecutionSessionState, BuildError> {
         Ok(ExecutionSessionState {
             last_time_contacted: self.last_time_contacted,
-            session_id: self.session_id.ok_or_else(|| BuildError::missing_field("session_id"))?,
-            is_warm_instance: self.is_warm_instance.ok_or_else(|| BuildError::missing_field("is_warm_instance"))?,
+            session_id: self
+                .session_id
+                .ok_or_else(|| BuildError::missing_field("session_id"))?,
+            is_warm_instance: self
+                .is_warm_instance
+                .ok_or_else(|| BuildError::missing_field("is_warm_instance"))?,
             aws_task_id: self.aws_task_id,
-            language: self.language.ok_or_else(|| BuildError::missing_field("language"))?,
-            status: self.status.ok_or_else(|| BuildError::missing_field("status"))?,
+            language: self
+                .language
+                .ok_or_else(|| BuildError::missing_field("language"))?,
+            status: self
+                .status
+                .ok_or_else(|| BuildError::missing_field("status"))?,
         })
     }
 }

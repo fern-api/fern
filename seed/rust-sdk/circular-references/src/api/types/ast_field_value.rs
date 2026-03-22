@@ -3,21 +3,17 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FieldValue {
-        #[serde(rename = "primitive_value")]
-        #[non_exhaustive]
-        PrimitiveValue {
-            value: PrimitiveValue,
-        },
+    #[serde(rename = "primitive_value")]
+    #[non_exhaustive]
+    PrimitiveValue { value: PrimitiveValue },
 
-        #[serde(rename = "object_value")]
-        #[non_exhaustive]
-        ObjectValue {},
+    #[serde(rename = "object_value")]
+    #[non_exhaustive]
+    ObjectValue {},
 
-        #[serde(rename = "container_value")]
-        #[non_exhaustive]
-        ContainerValue {
-            value: Box<ContainerValue>,
-        },
+    #[serde(rename = "container_value")]
+    #[non_exhaustive]
+    ContainerValue { value: Box<ContainerValue> },
 }
 
 impl FieldValue {

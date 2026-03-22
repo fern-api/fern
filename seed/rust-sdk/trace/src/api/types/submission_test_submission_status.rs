@@ -3,27 +3,23 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestSubmissionStatus {
-        #[serde(rename = "stopped")]
-        #[non_exhaustive]
-        Stopped {},
+    #[serde(rename = "stopped")]
+    #[non_exhaustive]
+    Stopped {},
 
-        #[serde(rename = "errored")]
-        #[non_exhaustive]
-        Errored {
-            value: ErrorInfo,
-        },
+    #[serde(rename = "errored")]
+    #[non_exhaustive]
+    Errored { value: ErrorInfo },
 
-        #[serde(rename = "running")]
-        #[non_exhaustive]
-        Running {
-            value: RunningSubmissionState,
-        },
+    #[serde(rename = "running")]
+    #[non_exhaustive]
+    Running { value: RunningSubmissionState },
 
-        #[serde(rename = "testCaseIdToState")]
-        #[non_exhaustive]
-        TestCaseIdToState {
-            value: HashMap<String, SubmissionStatusForTestCase>,
-        },
+    #[serde(rename = "testCaseIdToState")]
+    #[non_exhaustive]
+    TestCaseIdToState {
+        value: HashMap<String, SubmissionStatusForTestCase>,
+    },
 }
 
 impl TestSubmissionStatus {

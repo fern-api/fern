@@ -29,7 +29,9 @@ impl GetDefaultStarterFilesResponseBuilder {
     /// - [`files`](GetDefaultStarterFilesResponseBuilder::files)
     pub fn build(self) -> Result<GetDefaultStarterFilesResponse, BuildError> {
         Ok(GetDefaultStarterFilesResponse {
-            files: self.files.ok_or_else(|| BuildError::missing_field("files"))?,
+            files: self
+                .files
+                .ok_or_else(|| BuildError::missing_field("files"))?,
         })
     }
 }
