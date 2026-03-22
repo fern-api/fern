@@ -47,15 +47,9 @@ impl ReceiveEvent2Builder {
     /// - [`epsilon`](ReceiveEvent2Builder::epsilon)
     pub fn build(self) -> Result<ReceiveEvent2, BuildError> {
         Ok(ReceiveEvent2 {
-            gamma: self
-                .gamma
-                .ok_or_else(|| BuildError::missing_field("gamma"))?,
-            delta: self
-                .delta
-                .ok_or_else(|| BuildError::missing_field("delta"))?,
-            epsilon: self
-                .epsilon
-                .ok_or_else(|| BuildError::missing_field("epsilon"))?,
+            gamma: self.gamma.ok_or_else(|| BuildError::missing_field("gamma"))?,
+            delta: self.delta.ok_or_else(|| BuildError::missing_field("delta"))?,
+            epsilon: self.epsilon.ok_or_else(|| BuildError::missing_field("epsilon"))?,
         })
     }
 }

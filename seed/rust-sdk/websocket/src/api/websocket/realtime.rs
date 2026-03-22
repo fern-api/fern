@@ -1,7 +1,7 @@
-use crate::prelude::*;
 use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions};
+use tokio::sync::{mpsc};
+use crate::prelude::{*};
 use serde::{Deserialize, Serialize};
-use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -19,33 +19,18 @@ pub struct RealtimeClient {
     incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
 }
 impl RealtimeClient {
-    pub async fn connect(
-        url: &str,
-        session_id: &str,
-        authorization: &str,
-        model: Option<&str>,
-        temperature: Option<&str>,
-        language_code: Option<&str>,
-    ) -> Result<Self, ApiError> {
+    pub async fn connect(url: &str, session_id: &str, authorization: &str, model: Option<&str>, temperature: Option<&str>, language_code: Option<&str>) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime/{session_id}", url);
         let mut options = WebSocketOptions::default();
-        options
-            .headers
-            .insert("Authorization".to_string(), authorization.to_string());
+        options.headers.insert("Authorization".to_string(), authorization.to_string());
         if let Some(v) = model {
-            options
-                .query_params
-                .push(("model".to_string(), v.to_string()));
+            options.query_params.push(("model".to_string(), v.to_string()));
         }
         if let Some(v) = temperature {
-            options
-                .query_params
-                .push(("temperature".to_string(), v.to_string()));
+            options.query_params.push(("temperature".to_string(), v.to_string()));
         }
         if let Some(v) = language_code {
-            options
-                .query_params
-                .push(("language-code".to_string(), v.to_string()));
+            options.query_params.push(("language-code".to_string(), v.to_string()));
         }
         let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
         Ok(Self { ws, incoming_rx })
@@ -67,10 +52,7 @@ impl RealtimeClient {
         loop {
             match self.incoming_rx.recv().await {
                 Some(Ok(WebSocketMessage::Text(raw))) => {
-                    return Some(
-                        serde_json::from_str::<RealtimeServerMessage>(&raw)
-                            .map_err(ApiError::Serialization),
-                    );
+                    return Some(serde_json::from_str::<RealtimeServerMessage>(&raw).map_err(ApiError::Serialization));
                 }
                 Some(Ok(WebSocketMessage::Binary(_))) => {
                     continue;
@@ -97,26 +79,10 @@ impl RealtimeConnector {
         Self { base_url, token }
     }
 
-    pub async fn connect(
-        &self,
-        session_id: &str,
-        model: Option<&str>,
-        temperature: Option<&str>,
-        language_code: Option<&str>,
-    ) -> Result<RealtimeClient, ApiError> {
-        let auth_header = self
-            .token
-            .as_ref()
+    pub async fn connect(&self, session_id: &str, model: Option<&str>, temperature: Option<&str>, language_code: Option<&str>) -> Result<RealtimeClient, ApiError> {
+        let auth_header = self.token.as_ref()
             .map(|t| format!("Bearer {}", t))
             .unwrap_or_default();
-        RealtimeClient::connect(
-            &self.base_url,
-            session_id,
-            &auth_header,
-            model,
-            temperature,
-            language_code,
-        )
-        .await
+        RealtimeClient::connect(&self.base_url, session_id, &auth_header, model, temperature, language_code).await
     }
 }

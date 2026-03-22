@@ -38,12 +38,8 @@ impl ReceiveSnakeCaseBuilder {
     /// - [`receive_int`](ReceiveSnakeCaseBuilder::receive_int)
     pub fn build(self) -> Result<ReceiveSnakeCase, BuildError> {
         Ok(ReceiveSnakeCase {
-            receive_text: self
-                .receive_text
-                .ok_or_else(|| BuildError::missing_field("receive_text"))?,
-            receive_int: self
-                .receive_int
-                .ok_or_else(|| BuildError::missing_field("receive_int"))?,
+            receive_text: self.receive_text.ok_or_else(|| BuildError::missing_field("receive_text"))?,
+            receive_int: self.receive_int.ok_or_else(|| BuildError::missing_field("receive_int"))?,
         })
     }
 }

@@ -431,9 +431,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // WebSocket channel clients are accessible via the `websocket` submodule
         // (e.g. `crate::websocket::RealtimeClient`). We intentionally do NOT
-        // glob re-export them here to avoid name collisions with HTTP resource
-        // clients that share the same subpackage name (e.g. both resources and
-        // websocket may define a `RealtimeClient`).
+        // glob re-export them here to keep the WebSocket API separate from
+        // the HTTP resource clients.
 
         const apiModule = new Module({
             moduleDoc,
@@ -1006,6 +1005,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         topLevelSubpackageIds.forEach((subpackageId) => {
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
+                // Skip WebSocket-only subpackages — they don't generate HTTP client stubs
+                // in resources/, so there's nothing to re-export.
+                if (context.isWebSocketOnlySubpackage(subpackage)) {
+                    return;
+                }
                 // Use registered client name from context
                 // Deduplicate - multiple subpackages can resolve to the same client name
                 // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)
