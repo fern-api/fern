@@ -13,8 +13,9 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer \
-    && chmod +x /usr/local/bin/php-cs-fixer
+RUN curl -fsSL https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/v3.94.2/php-cs-fixer.phar -o /usr/local/bin/php-cs-fixer \
+    && chmod +x /usr/local/bin/php-cs-fixer \
+    && php-cs-fixer --version
 
 # Copy generator files (these change frequently, so keep them last)
 COPY generators/php/sdk/features.yml /assets/features.yml
