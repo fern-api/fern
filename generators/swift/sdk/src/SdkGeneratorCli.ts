@@ -87,7 +87,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         });
 
         await Promise.all([
-            this.generateReadme(context, sharedSnippetsGenerator),
+            this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
             this.generateReference(context, sharedSnippetsGenerator)
         ]);
     }
@@ -102,10 +102,11 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateReadme(
         context: SdkGeneratorContext,
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         snippetsGenerator: DynamicSnippetsGenerator
     ): Promise<void> {
         try {
-            const endpointSnippets = this.generateSnippets(context, snippetsGenerator);
+            const endpointSnippets = this.generateSnippets(dynamicIr, snippetsGenerator);
             if (endpointSnippets.length === 0) {
                 context.logger.debug("No snippets were produced; skipping README.md generation.");
                 return;
@@ -134,14 +135,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSnippets(
-        context: SdkGeneratorContext,
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         snippetsGenerator: DynamicSnippetsGenerator
     ): FernGeneratorExec.Endpoint[] {
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
-        if (!dynamicIr) {
-            return endpointSnippets;
-        }
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
