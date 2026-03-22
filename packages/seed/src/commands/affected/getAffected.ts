@@ -66,6 +66,20 @@ const GLOBAL_AFFECT_PATHS = [
 const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-openapi/fern/apis/"];
 
 /**
+ * Maps docker/seed/ Dockerfiles to the generator workspaces they affect.
+ * When a seed Dockerfile changes, the corresponding generators need to re-run
+ * all their fixtures to verify the updated Docker image works correctly.
+ */
+const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
+    "docker/seed/Dockerfile.java": ["java-sdk", "java-model", "java-spring"],
+    "docker/seed/Dockerfile.ts": ["ts-sdk", "ts-express"],
+    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2", "fastapi"],
+    "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
+    "docker/seed/Dockerfile.csharp": ["csharp-sdk", "csharp-model"],
+    "docker/seed/Dockerfile.php": ["php-sdk", "php-model"]
+};
+
+/**
  * Maps generator workspace names to their source code paths.
  * Used to detect which generators are affected by file changes.
  */
@@ -218,6 +232,40 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
                 }
             }
         }
+    }
+
+    // === DOCKER SEED DOCKERFILE DETECTION ===
+    // When a docker/seed/ Dockerfile changes, the generators that use that Docker
+    // image need to re-run all their fixtures to verify the updated image works.
+    for (const file of changedFiles) {
+        if (file.startsWith("docker/seed/")) {
+            if (file === "docker/seed/Dockerfile.dockerignore") {
+                // The shared .dockerignore affects all seed Docker builds
+                allGeneratorsAffected = true;
+                allFixturesAffected = true;
+                summary.push(`Seed Docker ignore changed: ${file} — affects all seed builds`);
+                break;
+            }
+            const generators = DOCKER_SEED_GENERATOR_PATHS[file];
+            if (generators != null) {
+                for (const gen of generators) {
+                    affectedGeneratorSet.add(gen);
+                }
+                summary.push(`Seed Dockerfile changed: ${file} — affects ${generators.join(", ")}`);
+            }
+        }
+    }
+
+    // If global changes detected from dockerignore, return early
+    if (allGeneratorsAffected && allFixturesAffected) {
+        return {
+            allGeneratorsAffected: true,
+            allFixturesAffected: true,
+            affectedGenerators: [],
+            generatorsWithAllFixtures: [],
+            affectedFixtures: [],
+            summary
+        };
     }
 
     // === SEED.YML DETECTION (always via git diff) ===
