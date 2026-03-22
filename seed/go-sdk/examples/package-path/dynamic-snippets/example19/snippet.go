@@ -1,12 +1,12 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    commons "github.com/examples/fern/pleaseinhere/commons"
-    uuid "github.com/google/uuid"
     context "context"
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
+    client "github.com/examples/fern/pleaseinhere/client"
+    commons "github.com/examples/fern/pleaseinhere/commons"
+    option "github.com/examples/fern/pleaseinhere/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {

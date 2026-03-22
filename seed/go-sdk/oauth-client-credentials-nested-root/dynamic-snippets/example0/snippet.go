@@ -1,11 +1,11 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/oauth-client-credentials-nested-root/fern"
+    auth "github.com/oauth-client-credentials-nested-root/fern/auth"
     client "github.com/oauth-client-credentials-nested-root/fern/client"
     option "github.com/oauth-client-credentials-nested-root/fern/option"
-    auth "github.com/oauth-client-credentials-nested-root/fern/auth"
-    fern "github.com/oauth-client-credentials-nested-root/fern"
-    context "context"
 )
 
 func do() {

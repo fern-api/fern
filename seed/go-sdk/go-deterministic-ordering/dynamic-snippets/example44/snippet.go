@@ -1,10 +1,10 @@
 package example
 
 import (
-    client "github.com/go-deterministic-ordering/fern/client"
-    option "github.com/go-deterministic-ordering/fern/option"
     bytes "bytes"
     context "context"
+    client "github.com/go-deterministic-ordering/fern/client"
+    option "github.com/go-deterministic-ordering/fern/option"
 )
 
 func do() {

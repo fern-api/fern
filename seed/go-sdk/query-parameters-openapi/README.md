@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/query-parameters-openapi/fern/client"
-    fern "github.com/query-parameters-openapi/fern"
     context "context"
+    fern "github.com/query-parameters-openapi/fern"
+    client "github.com/query-parameters-openapi/fern/client"
 )
 
 func do() {
