@@ -38,9 +38,7 @@ impl ReceiveEventBuilder {
     /// - [`beta`](ReceiveEventBuilder::beta)
     pub fn build(self) -> Result<ReceiveEvent, BuildError> {
         Ok(ReceiveEvent {
-            alpha: self
-                .alpha
-                .ok_or_else(|| BuildError::missing_field("alpha"))?,
+            alpha: self.alpha.ok_or_else(|| BuildError::missing_field("alpha"))?,
             beta: self.beta.ok_or_else(|| BuildError::missing_field("beta"))?,
         })
     }
