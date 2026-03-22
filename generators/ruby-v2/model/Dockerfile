@@ -9,7 +9,7 @@ RUN apk --no-cache add \
     nodejs \
     npm
     
-RUN gem install rubocop rubocop-minitest
+RUN gem install 'rubocop:~> 1.21' rubocop-minitest
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
