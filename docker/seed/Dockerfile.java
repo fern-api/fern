@@ -1,5 +1,5 @@
-# Small ubuntu base image
-FROM redhat/ubi9:latest
+# Small RHEL base image
+FROM redhat/ubi9:9.7
 
 # Install dependencies
 RUN yum update -y && \
@@ -56,3 +56,5 @@ RUN source ~/.bash_profile && jenv add /opt/java/openjdk11
 RUN source ~/.bash_profile && jenv global 11
 RUN source ~/.bash_profile && jenv enable-plugin export
 RUN source ~/.bash_profile && jenv enable-plugin gradle
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
