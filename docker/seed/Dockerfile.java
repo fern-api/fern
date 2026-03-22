@@ -1,13 +1,14 @@
 # Small ubuntu base image
 FROM redhat/ubi9:latest
 
-# Install sdkman
-RUN yum update -y
-RUN yum -y install git zip unzip
+# Install dependencies
+RUN yum update -y && \
+    yum -y install git zip unzip && \
+    yum clean all && \
+    rm -rf /var/cache/yum
 RUN git clone https://github.com/jenv/jenv.git ~/.jenv
 RUN echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(jenv init -)"' >> ~/.bash_profile
-RUN source ~/.bash_profile
 
 RUN set -eux; \
     ARCH="$(uname -m)"; \
