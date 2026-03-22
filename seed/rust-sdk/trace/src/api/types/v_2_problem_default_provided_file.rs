@@ -40,7 +40,9 @@ impl DefaultProvidedFileBuilder {
     pub fn build(self) -> Result<DefaultProvidedFile, BuildError> {
         Ok(DefaultProvidedFile {
             file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
-            related_types: self.related_types.ok_or_else(|| BuildError::missing_field("related_types"))?,
+            related_types: self
+                .related_types
+                .ok_or_else(|| BuildError::missing_field("related_types"))?,
         })
     }
 }

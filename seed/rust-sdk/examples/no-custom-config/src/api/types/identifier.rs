@@ -46,9 +46,15 @@ impl IdentifierBuilder {
     /// - [`label`](IdentifierBuilder::label)
     pub fn build(self) -> Result<Identifier, BuildError> {
         Ok(Identifier {
-            r#type: self.r#type.ok_or_else(|| BuildError::missing_field("r#type"))?,
-            value: self.value.ok_or_else(|| BuildError::missing_field("value"))?,
-            label: self.label.ok_or_else(|| BuildError::missing_field("label"))?,
+            r#type: self
+                .r#type
+                .ok_or_else(|| BuildError::missing_field("r#type"))?,
+            value: self
+                .value
+                .ok_or_else(|| BuildError::missing_field("value"))?,
+            label: self
+                .label
+                .ok_or_else(|| BuildError::missing_field("label"))?,
         })
     }
 }

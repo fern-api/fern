@@ -307,16 +307,11 @@ export class RootClientGenerator {
             allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
         }
 
-        // WebSocket connector initializations (only those not colliding with HTTP sub-clients)
-        for (const { fieldName, connectorName, channel } of this.getUniqueWsConnectors(httpFieldNames)) {
-            const hasExplicitAuth = channel.headers.some(
-                (h) => h.name.wireValue.toLowerCase() === "authorization"
-            );
-            if (!hasExplicitAuth) {
-                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
-            } else {
-                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone())`);
-            }
+        // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
+        // Always pass the token so the connector can auto-inject the Authorization header,
+        // matching the TypeScript SDK experience where auth "just works".
+        for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
+            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
         }
 
         const initStr = allInits.join(",\n            ");

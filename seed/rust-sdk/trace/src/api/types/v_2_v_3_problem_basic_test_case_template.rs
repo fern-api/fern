@@ -58,10 +58,16 @@ impl BasicTestCaseTemplate2Builder {
     /// - [`expected_value_parameter_id`](BasicTestCaseTemplate2Builder::expected_value_parameter_id)
     pub fn build(self) -> Result<BasicTestCaseTemplate2, BuildError> {
         Ok(BasicTestCaseTemplate2 {
-            template_id: self.template_id.ok_or_else(|| BuildError::missing_field("template_id"))?,
+            template_id: self
+                .template_id
+                .ok_or_else(|| BuildError::missing_field("template_id"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            description: self.description.ok_or_else(|| BuildError::missing_field("description"))?,
-            expected_value_parameter_id: self.expected_value_parameter_id.ok_or_else(|| BuildError::missing_field("expected_value_parameter_id"))?,
+            description: self
+                .description
+                .ok_or_else(|| BuildError::missing_field("description"))?,
+            expected_value_parameter_id: self
+                .expected_value_parameter_id
+                .ok_or_else(|| BuildError::missing_field("expected_value_parameter_id"))?,
         })
     }
 }

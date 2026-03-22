@@ -55,7 +55,9 @@ impl BinaryTreeNodeValueBuilder {
     /// - [`val`](BinaryTreeNodeValueBuilder::val)
     pub fn build(self) -> Result<BinaryTreeNodeValue, BuildError> {
         Ok(BinaryTreeNodeValue {
-            node_id: self.node_id.ok_or_else(|| BuildError::missing_field("node_id"))?,
+            node_id: self
+                .node_id
+                .ok_or_else(|| BuildError::missing_field("node_id"))?,
             val: self.val.ok_or_else(|| BuildError::missing_field("val"))?,
             right: self.right,
             left: self.left,

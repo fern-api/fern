@@ -29,7 +29,9 @@ impl CatBuilder {
     /// - [`fruit`](CatBuilder::fruit)
     pub fn build(self) -> Result<Cat, BuildError> {
         Ok(Cat {
-            fruit: self.fruit.ok_or_else(|| BuildError::missing_field("fruit"))?,
+            fruit: self
+                .fruit
+                .ok_or_else(|| BuildError::missing_field("fruit"))?,
         })
     }
 }

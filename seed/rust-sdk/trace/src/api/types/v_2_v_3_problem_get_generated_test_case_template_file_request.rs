@@ -28,7 +28,9 @@ impl GetGeneratedTestCaseTemplateFileRequest2Builder {
     /// - [`template`](GetGeneratedTestCaseTemplateFileRequest2Builder::template)
     pub fn build(self) -> Result<GetGeneratedTestCaseTemplateFileRequest2, BuildError> {
         Ok(GetGeneratedTestCaseTemplateFileRequest2 {
-            template: self.template.ok_or_else(|| BuildError::missing_field("template"))?,
+            template: self
+                .template
+                .ok_or_else(|| BuildError::missing_field("template"))?,
         })
     }
 }

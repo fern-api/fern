@@ -30,7 +30,9 @@ impl ObjectWithUnknownFieldBuilder {
     /// - [`unknown`](ObjectWithUnknownFieldBuilder::unknown)
     pub fn build(self) -> Result<ObjectWithUnknownField, BuildError> {
         Ok(ObjectWithUnknownField {
-            unknown: self.unknown.ok_or_else(|| BuildError::missing_field("unknown"))?,
+            unknown: self
+                .unknown
+                .ok_or_else(|| BuildError::missing_field("unknown"))?,
         })
     }
 }

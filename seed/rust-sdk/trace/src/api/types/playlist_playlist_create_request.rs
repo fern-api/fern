@@ -39,7 +39,9 @@ impl PlaylistCreateRequestBuilder {
     pub fn build(self) -> Result<PlaylistCreateRequest, BuildError> {
         Ok(PlaylistCreateRequest {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            problems: self.problems.ok_or_else(|| BuildError::missing_field("problems"))?,
+            problems: self
+                .problems
+                .ok_or_else(|| BuildError::missing_field("problems"))?,
         })
     }
 }

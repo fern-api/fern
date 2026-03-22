@@ -5,45 +5,44 @@ pub use crate::prelude::*;
 pub enum Key {
         KeyType(KeyType),
 
-        Literal1(String),
+        String(String),
 }
 
 impl Key {
-    pub fn is_keytype(&self) -> bool {
+    pub fn is_key_type(&self) -> bool {
         matches!(self, Self::KeyType(_))
     }
 
-    pub fn is_literal1(&self) -> bool {
-        matches!(self, Self::Literal1(_))
+    pub fn is_string(&self) -> bool {
+        matches!(self, Self::String(_))
     }
 
 
-    pub fn as_keytype(&self) -> Option<&KeyType> {
+    pub fn as_key_type(&self) -> Option<&KeyType> {
         match self {
                     Self::KeyType(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_keytype(self) -> Option<KeyType> {
+    pub fn into_key_type(self) -> Option<KeyType> {
         match self {
                     Self::KeyType(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_literal1(&self) -> Option<&str> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
-                    Self::Literal1(value) => Some(value),
+                    Self::String(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_literal1(self) -> Option<String> {
+    pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::Literal1(value) => Some(value),
+                    Self::String(value) => Some(value),
                     _ => None,
                 }
     }
-
 }

@@ -8,9 +8,9 @@
 //! - **Service**
 //! - **Types**
 
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::api::{*};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub mod commons;
 pub mod file;
@@ -32,30 +32,41 @@ impl ExamplesClient {
             http_client: HttpClient::new(config.clone())?,
             file: FileClient::new(config.clone())?,
             health: HealthClient::new(config.clone())?,
-            service: ServiceClient4::new(config.clone())?
+            service: ServiceClient4::new(config.clone())?,
         })
     }
 
-    pub async fn echo(&self, request: &str, options: Option<RequestOptions>) -> Result<String, ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "",
-            Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-            None,
-            options,
-        ).await
+    pub async fn echo(
+        &self,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
     }
 
-    pub async fn create_type(&self, request: &Type, options: Option<RequestOptions>) -> Result<Identifier, ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "",
-            Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-            None,
-            options,
-        ).await
+    pub async fn create_type(
+        &self,
+        request: &Type,
+        options: Option<RequestOptions>,
+    ) -> Result<Identifier, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
     }
-
 }
 
 pub use commons::CommonsClient;

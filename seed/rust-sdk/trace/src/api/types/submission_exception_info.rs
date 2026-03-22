@@ -50,9 +50,15 @@ impl ExceptionInfoBuilder {
     /// - [`exception_stacktrace`](ExceptionInfoBuilder::exception_stacktrace)
     pub fn build(self) -> Result<ExceptionInfo, BuildError> {
         Ok(ExceptionInfo {
-            exception_type: self.exception_type.ok_or_else(|| BuildError::missing_field("exception_type"))?,
-            exception_message: self.exception_message.ok_or_else(|| BuildError::missing_field("exception_message"))?,
-            exception_stacktrace: self.exception_stacktrace.ok_or_else(|| BuildError::missing_field("exception_stacktrace"))?,
+            exception_type: self
+                .exception_type
+                .ok_or_else(|| BuildError::missing_field("exception_type"))?,
+            exception_message: self
+                .exception_message
+                .ok_or_else(|| BuildError::missing_field("exception_message"))?,
+            exception_stacktrace: self
+                .exception_stacktrace
+                .ok_or_else(|| BuildError::missing_field("exception_stacktrace"))?,
         })
     }
 }

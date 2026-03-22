@@ -38,7 +38,9 @@ impl MigrationBuilder {
     pub fn build(self) -> Result<Migration, BuildError> {
         Ok(Migration {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            status: self.status.ok_or_else(|| BuildError::missing_field("status"))?,
+            status: self
+                .status
+                .ok_or_else(|| BuildError::missing_field("status"))?,
         })
     }
 }

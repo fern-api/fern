@@ -30,7 +30,9 @@ impl ObjectWithDocumentedUnknownTypeBuilder {
     /// - [`documented_unknown_type`](ObjectWithDocumentedUnknownTypeBuilder::documented_unknown_type)
     pub fn build(self) -> Result<ObjectWithDocumentedUnknownType, BuildError> {
         Ok(ObjectWithDocumentedUnknownType {
-            documented_unknown_type: self.documented_unknown_type.ok_or_else(|| BuildError::missing_field("documented_unknown_type"))?,
+            documented_unknown_type: self
+                .documented_unknown_type
+                .ok_or_else(|| BuildError::missing_field("documented_unknown_type"))?,
         })
     }
 }
