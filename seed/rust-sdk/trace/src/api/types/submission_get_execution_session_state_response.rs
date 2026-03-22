@@ -48,9 +48,13 @@ impl GetExecutionSessionStateResponseBuilder {
     /// - [`warming_session_ids`](GetExecutionSessionStateResponseBuilder::warming_session_ids)
     pub fn build(self) -> Result<GetExecutionSessionStateResponse, BuildError> {
         Ok(GetExecutionSessionStateResponse {
-            states: self.states.ok_or_else(|| BuildError::missing_field("states"))?,
+            states: self
+                .states
+                .ok_or_else(|| BuildError::missing_field("states"))?,
             num_warming_instances: self.num_warming_instances,
-            warming_session_ids: self.warming_session_ids.ok_or_else(|| BuildError::missing_field("warming_session_ids"))?,
+            warming_session_ids: self
+                .warming_session_ids
+                .ok_or_else(|| BuildError::missing_field("warming_session_ids"))?,
         })
     }
 }

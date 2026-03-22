@@ -46,10 +46,11 @@ impl SearchRequestBuilder {
     /// - [`query`](SearchRequestBuilder::query)
     pub fn build(self) -> Result<SearchRequest, BuildError> {
         Ok(SearchRequest {
-            query: self.query.ok_or_else(|| BuildError::missing_field("query"))?,
+            query: self
+                .query
+                .ok_or_else(|| BuildError::missing_field("query"))?,
             filters: self.filters,
             include_types: self.include_types,
         })
     }
 }
-

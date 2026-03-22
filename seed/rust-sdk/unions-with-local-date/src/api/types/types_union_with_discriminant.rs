@@ -3,17 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "_type")]
 pub enum UnionWithDiscriminant {
-        #[serde(rename = "foo")]
-        #[non_exhaustive]
-        Foo {
-            foo: Foo,
-        },
+    #[serde(rename = "foo")]
+    #[non_exhaustive]
+    Foo { foo: Foo },
 
-        #[serde(rename = "bar")]
-        #[non_exhaustive]
-        Bar {
-            bar: Bar,
-        },
+    #[serde(rename = "bar")]
+    #[non_exhaustive]
+    Bar { bar: Bar },
 }
 
 impl UnionWithDiscriminant {

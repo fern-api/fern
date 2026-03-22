@@ -28,7 +28,9 @@ impl BerryBuilder {
     /// - [`animal`](BerryBuilder::animal)
     pub fn build(self) -> Result<Berry, BuildError> {
         Ok(Berry {
-            animal: self.animal.ok_or_else(|| BuildError::missing_field("animal"))?,
+            animal: self
+                .animal
+                .ok_or_else(|| BuildError::missing_field("animal"))?,
         })
     }
 }

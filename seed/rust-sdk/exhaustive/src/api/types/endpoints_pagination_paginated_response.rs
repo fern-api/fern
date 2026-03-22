@@ -37,7 +37,9 @@ impl PaginatedResponseBuilder {
     /// - [`items`](PaginatedResponseBuilder::items)
     pub fn build(self) -> Result<PaginatedResponse, BuildError> {
         Ok(PaginatedResponse {
-            items: self.items.ok_or_else(|| BuildError::missing_field("items"))?,
+            items: self
+                .items
+                .ok_or_else(|| BuildError::missing_field("items"))?,
             next: self.next,
         })
     }

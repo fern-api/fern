@@ -29,7 +29,9 @@ impl FilesBuilder {
     /// - [`files`](FilesBuilder::files)
     pub fn build(self) -> Result<Files, BuildError> {
         Ok(Files {
-            files: self.files.ok_or_else(|| BuildError::missing_field("files"))?,
+            files: self
+                .files
+                .ok_or_else(|| BuildError::missing_field("files"))?,
         })
     }
 }

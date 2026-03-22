@@ -54,9 +54,15 @@ impl TestCaseV22Builder {
     /// - [`arguments`](TestCaseV22Builder::arguments)
     pub fn build(self) -> Result<TestCaseV22, BuildError> {
         Ok(TestCaseV22 {
-            metadata: self.metadata.ok_or_else(|| BuildError::missing_field("metadata"))?,
-            implementation: self.implementation.ok_or_else(|| BuildError::missing_field("implementation"))?,
-            arguments: self.arguments.ok_or_else(|| BuildError::missing_field("arguments"))?,
+            metadata: self
+                .metadata
+                .ok_or_else(|| BuildError::missing_field("metadata"))?,
+            implementation: self
+                .implementation
+                .ok_or_else(|| BuildError::missing_field("implementation"))?,
+            arguments: self
+                .arguments
+                .ok_or_else(|| BuildError::missing_field("arguments"))?,
             expects: self.expects,
         })
     }

@@ -39,8 +39,12 @@ impl NestedObjectWithRequiredFieldBuilder {
     /// - [`nested_object`](NestedObjectWithRequiredFieldBuilder::nested_object)
     pub fn build(self) -> Result<NestedObjectWithRequiredField, BuildError> {
         Ok(NestedObjectWithRequiredField {
-            string: self.string.ok_or_else(|| BuildError::missing_field("string"))?,
-            nested_object: self.nested_object.ok_or_else(|| BuildError::missing_field("nested_object"))?,
+            string: self
+                .string
+                .ok_or_else(|| BuildError::missing_field("string"))?,
+            nested_object: self
+                .nested_object
+                .ok_or_else(|| BuildError::missing_field("nested_object"))?,
         })
     }
 }

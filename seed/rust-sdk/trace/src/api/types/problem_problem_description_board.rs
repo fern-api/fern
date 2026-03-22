@@ -3,23 +3,17 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum ProblemDescriptionBoard {
-        #[serde(rename = "html")]
-        #[non_exhaustive]
-        Html {
-            value: String,
-        },
+    #[serde(rename = "html")]
+    #[non_exhaustive]
+    Html { value: String },
 
-        #[serde(rename = "variable")]
-        #[non_exhaustive]
-        Variable {
-            value: VariableValue,
-        },
+    #[serde(rename = "variable")]
+    #[non_exhaustive]
+    Variable { value: VariableValue },
 
-        #[serde(rename = "testCaseId")]
-        #[non_exhaustive]
-        TestCaseId {
-            value: String,
-        },
+    #[serde(rename = "testCaseId")]
+    #[non_exhaustive]
+    TestCaseId { value: String },
 }
 
 impl ProblemDescriptionBoard {

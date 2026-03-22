@@ -38,8 +38,12 @@ impl ExpressionLocationBuilder {
     /// - [`offset`](ExpressionLocationBuilder::offset)
     pub fn build(self) -> Result<ExpressionLocation, BuildError> {
         Ok(ExpressionLocation {
-            start: self.start.ok_or_else(|| BuildError::missing_field("start"))?,
-            offset: self.offset.ok_or_else(|| BuildError::missing_field("offset"))?,
+            start: self
+                .start
+                .ok_or_else(|| BuildError::missing_field("start"))?,
+            offset: self
+                .offset
+                .ok_or_else(|| BuildError::missing_field("offset"))?,
         })
     }
 }

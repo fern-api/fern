@@ -29,7 +29,9 @@ impl TBuilder {
     /// - [`child`](TBuilder::child)
     pub fn build(self) -> Result<T, BuildError> {
         Ok(T {
-            child: self.child.ok_or_else(|| BuildError::missing_field("child"))?,
+            child: self
+                .child
+                .ok_or_else(|| BuildError::missing_field("child"))?,
         })
     }
 }

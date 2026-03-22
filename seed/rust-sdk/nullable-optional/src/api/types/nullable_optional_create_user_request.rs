@@ -53,7 +53,9 @@ impl CreateUserRequestBuilder {
     /// - [`username`](CreateUserRequestBuilder::username)
     pub fn build(self) -> Result<CreateUserRequest, BuildError> {
         Ok(CreateUserRequest {
-            username: self.username.ok_or_else(|| BuildError::missing_field("username"))?,
+            username: self
+                .username
+                .ok_or_else(|| BuildError::missing_field("username"))?,
             email: self.email,
             phone: self.phone,
             address: self.address,
