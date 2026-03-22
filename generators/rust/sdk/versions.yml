@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.25.0
+  changelogEntry:
+    - summary: |
+        Improve undiscriminated union design with `snake_case` method names, better variant naming,
+        deduplicating type references, and more.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.24.1
   changelogEntry:
     - summary: |

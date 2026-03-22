@@ -25,7 +25,6 @@ impl UnionWithIdenticalStrings {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for UnionWithIdenticalStrings {
