@@ -124,6 +124,7 @@ impl SubmissionRequest {
         submission_files: Vec<SubmissionFileInfo>,
         problem_id: ProblemId,
         problem_version: i64,
+        user_id: Option<String>,
     ) -> Self {
         Self::SubmitV2 {
             submission_id,
@@ -131,7 +132,7 @@ impl SubmissionRequest {
             submission_files,
             problem_id,
             problem_version: Some(problem_version),
-            user_id: None,
+            user_id,
         }
     }
 
@@ -140,6 +141,7 @@ impl SubmissionRequest {
         language: Language,
         submission_files: Vec<SubmissionFileInfo>,
         problem_id: ProblemId,
+        problem_version: Option<i64>,
         user_id: String,
     ) -> Self {
         Self::SubmitV2 {
@@ -147,7 +149,7 @@ impl SubmissionRequest {
             language,
             submission_files,
             problem_id,
-            problem_version: None,
+            problem_version,
             user_id: Some(user_id),
         }
     }
