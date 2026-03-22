@@ -8,7 +8,7 @@
         as `Option<T>` parameters, giving callers full control over all fields. For example,
         `assistant_with_tool_calls` now accepts `(content: Option<Content>, ..., tool_calls: Vec<ToolCall>)`
         instead of just `(tool_calls: Vec<ToolCall>)`.
-      type: feat
+      type: chore
   createdAt: "2026-03-22"
   irVersion: 65
 
