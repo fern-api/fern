@@ -1683,7 +1683,7 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     // This command is in beta and not yet ready for general use
     cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
-        addDocsLintCommand(yargs, cliContext);
+        addDocsMdCheckCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1919,7 +1919,7 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
-function addDocsLintCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
         "Validate MDX syntax in your docs",

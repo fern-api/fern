@@ -6,6 +6,7 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readFileSync } from "fs";
 import grayMatter from "gray-matter";
+import path from "path";
 
 class MdxValidationError {
     constructor(
@@ -16,7 +17,8 @@ class MdxValidationError {
     ) {}
 
     toString(): string {
-        let formatted = chalk.red(`\n  ${this.filepath}`);
+        const relativePath = path.relative(process.cwd(), this.filepath);
+        let formatted = chalk.red(`\n  ${relativePath}`);
 
         if (this.line != null) {
             formatted += chalk.yellow(`:${this.line}`);
