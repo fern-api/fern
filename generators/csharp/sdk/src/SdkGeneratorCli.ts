@@ -35,6 +35,7 @@ import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceG
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
 import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
+import { WebSocketDefaultsGenerator } from "./websocket/WebSocketDefaultsGenerator.js";
 import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -245,6 +246,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
+
+        // Generate Core/WebSocketDefaults.cs if any WebSocket channel has auth propagation
+        const wsDefaultsProperties = rootClient.getWebSocketDefaultsProperties();
+        if (wsDefaultsProperties != null) {
+            const wsDefaultsGenerator = new WebSocketDefaultsGenerator({
+                context,
+                properties: wsDefaultsProperties
+            });
+            context.project.addSourceFiles(wsDefaultsGenerator.doGenerate());
+        }
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {

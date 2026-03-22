@@ -199,7 +199,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Writes a `var defaults = new <ApiName>.Options { ... }` block that sets all
-     * auth-propagated fields from root client fields.
+     * auth-propagated fields from the `_wsDefaults` record on the root client.
      * Returns the lines as an array of strings.
      */
     private static buildDefaultsOptionsLines(
@@ -212,14 +212,13 @@ export class WebSocketClientGenerator extends WithGeneration {
         lines.push(`var defaults = new ${websocketApiName}.Options`);
         lines.push("{");
         for (const field of authContext.matchedParamFields) {
-            lines.push(`    ${field.optionsPropertyName} = ${field.fieldName},`);
+            lines.push(`    ${field.optionsPropertyName} = _wsDefaults.${field.optionsPropertyName},`);
         }
         if (authContext.oauthTokenPropertyName != null) {
-            lines.push(`    ${authContext.oauthTokenPropertyName} = GetRawAccessToken(),`);
+            lines.push(`    ${authContext.oauthTokenPropertyName} = _wsDefaults.GetToken?.Invoke(),`);
         }
         if (authContext.hasEnvironments && authContext.environmentPropertyName != null) {
-            const envProp = authContext.environmentPropertyName;
-            lines.push(`    Environment = _clientOptions.Environment?.${envProp} ?? "",`);
+            lines.push(`    Environment = _wsDefaults.Environment ?? "",`);
         }
         // Include required path parameters with default values to satisfy the `required` constraint.
         // These are placeholder defaults that will be overridden by the caller's options via WithDefaults.

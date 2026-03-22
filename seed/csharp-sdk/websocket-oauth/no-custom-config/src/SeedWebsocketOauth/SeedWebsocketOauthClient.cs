@@ -6,9 +6,7 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
 {
     private readonly RawClient _client;
 
-    private readonly string _tenantName;
-
-    private readonly OAuthTokenProvider _tokenProvider;
+    private readonly WebSocketDefaults _wsDefaults;
 
     public SeedWebsocketOauthClient(
         string clientId,
@@ -34,7 +32,6 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _tenantName = tenantName;
         var clientOptionsWithAuth = clientOptions.Clone();
         var authHeaders = new Headers(
             new Dictionary<string, string>() { { "Tenant-Name", tenantName } }
@@ -43,36 +40,39 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
         {
             clientOptionsWithAuth.Headers[header.Key] = header.Value;
         }
-        _tokenProvider = new OAuthTokenProvider(
+        var tokenProvider = new OAuthTokenProvider(
             clientId,
             clientSecret,
             new AuthClient(new RawClient(clientOptions))
         );
         clientOptionsWithAuth.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                await _tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
             );
+        _wsDefaults = new WebSocketDefaults
+        {
+            TenantName = tenantName,
+            GetToken = () =>
+            {
+                var bearerToken = tokenProvider.GetAccessTokenAsync().Result;
+                const string bearerPrefix = "Bearer ";
+                return bearerToken.StartsWith(bearerPrefix)
+                    ? bearerToken.Substring(bearerPrefix.Length)
+                    : bearerToken;
+            },
+        };
         _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
     }
 
     public IAuthClient Auth { get; }
 
-    private string GetRawAccessToken()
-    {
-        var bearerToken = _tokenProvider.GetAccessTokenAsync().Result;
-        const string bearerPrefix = "Bearer ";
-        return bearerToken.StartsWith(bearerPrefix)
-            ? bearerToken.Substring(bearerPrefix.Length)
-            : bearerToken;
-    }
-
     public ITranscribeApi CreateTranscribeApi()
     {
         var defaults = new TranscribeApi.Options
         {
-            TenantName = _tenantName,
-            Token = GetRawAccessToken(),
+            TenantName = _wsDefaults.TenantName,
+            Token = _wsDefaults.GetToken?.Invoke(),
         };
         var options = TranscribeApi.Options.WithDefaults(null, defaults);
         return new TranscribeApi(options);
@@ -82,8 +82,8 @@ public partial class SeedWebsocketOauthClient : ISeedWebsocketOauthClient
     {
         var defaults = new TranscribeApi.Options
         {
-            TenantName = _tenantName,
-            Token = GetRawAccessToken(),
+            TenantName = _wsDefaults.TenantName,
+            Token = _wsDefaults.GetToken?.Invoke(),
         };
         var resolvedOptions = TranscribeApi.Options.WithDefaults(options, defaults);
         return new TranscribeApi(resolvedOptions);
