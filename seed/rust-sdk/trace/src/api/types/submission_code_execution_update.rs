@@ -204,4 +204,46 @@ impl CodeExecutionUpdate {
     pub fn finished(submission_id: SubmissionId) -> Self {
         Self::Finished { submission_id }
     }
+
+    pub fn recording_with_test_case_id(
+        submission_id: SubmissionId,
+        test_case_id: String,
+        line_number: i64,
+        lightweight_stack_info: LightweightStackframeInformation,
+    ) -> Self {
+        Self::Recording {
+            submission_id,
+            test_case_id: Some(test_case_id),
+            line_number,
+            lightweight_stack_info,
+            traced_file: None,
+        }
+    }
+
+    pub fn recording_with_traced_file(
+        submission_id: SubmissionId,
+        line_number: i64,
+        lightweight_stack_info: LightweightStackframeInformation,
+        traced_file: TracedFile,
+    ) -> Self {
+        Self::Recording {
+            submission_id,
+            test_case_id: None,
+            line_number,
+            lightweight_stack_info,
+            traced_file: Some(traced_file),
+        }
+    }
+
+    pub fn recorded_with_test_case_id(
+        submission_id: SubmissionId,
+        trace_responses_size: i64,
+        test_case_id: String,
+    ) -> Self {
+        Self::Recorded {
+            submission_id,
+            trace_responses_size,
+            test_case_id: Some(test_case_id),
+        }
+    }
 }
