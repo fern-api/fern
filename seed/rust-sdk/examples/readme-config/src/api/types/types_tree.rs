@@ -26,8 +26,6 @@ impl TreeBuilder {
 
     /// Consumes the builder and constructs a [`Tree`].
     pub fn build(self) -> Result<Tree, BuildError> {
-        Ok(Tree {
-            nodes: self.nodes,
-        })
+        Ok(Tree { nodes: self.nodes })
     }
 }

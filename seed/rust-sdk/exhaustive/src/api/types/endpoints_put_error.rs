@@ -52,7 +52,9 @@ impl ErrorBuilder {
     /// - [`code`](ErrorBuilder::code)
     pub fn build(self) -> Result<Error, BuildError> {
         Ok(Error {
-            category: self.category.ok_or_else(|| BuildError::missing_field("category"))?,
+            category: self
+                .category
+                .ok_or_else(|| BuildError::missing_field("category"))?,
             code: self.code.ok_or_else(|| BuildError::missing_field("code"))?,
             detail: self.detail,
             field: self.field,

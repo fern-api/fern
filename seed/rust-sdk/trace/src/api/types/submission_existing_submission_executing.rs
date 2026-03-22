@@ -30,7 +30,9 @@ impl ExistingSubmissionExecutingBuilder {
     /// - [`submission_id`](ExistingSubmissionExecutingBuilder::submission_id)
     pub fn build(self) -> Result<ExistingSubmissionExecuting, BuildError> {
         Ok(ExistingSubmissionExecuting {
-            submission_id: self.submission_id.ok_or_else(|| BuildError::missing_field("submission_id"))?,
+            submission_id: self
+                .submission_id
+                .ok_or_else(|| BuildError::missing_field("submission_id"))?,
         })
     }
 }

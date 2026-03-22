@@ -49,9 +49,15 @@ impl GeneratedFilesBuilder {
     /// - [`other`](GeneratedFilesBuilder::other)
     pub fn build(self) -> Result<GeneratedFiles, BuildError> {
         Ok(GeneratedFiles {
-            generated_test_case_files: self.generated_test_case_files.ok_or_else(|| BuildError::missing_field("generated_test_case_files"))?,
-            generated_template_files: self.generated_template_files.ok_or_else(|| BuildError::missing_field("generated_template_files"))?,
-            other: self.other.ok_or_else(|| BuildError::missing_field("other"))?,
+            generated_test_case_files: self
+                .generated_test_case_files
+                .ok_or_else(|| BuildError::missing_field("generated_test_case_files"))?,
+            generated_template_files: self
+                .generated_template_files
+                .ok_or_else(|| BuildError::missing_field("generated_template_files"))?,
+            other: self
+                .other
+                .ok_or_else(|| BuildError::missing_field("other"))?,
         })
     }
 }

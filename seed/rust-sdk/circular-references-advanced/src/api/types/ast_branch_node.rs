@@ -29,7 +29,9 @@ impl BranchNodeBuilder {
     /// - [`children`](BranchNodeBuilder::children)
     pub fn build(self) -> Result<BranchNode, BuildError> {
         Ok(BranchNode {
-            children: self.children.ok_or_else(|| BuildError::missing_field("children"))?,
+            children: self
+                .children
+                .ok_or_else(|| BuildError::missing_field("children"))?,
         })
     }
 }
