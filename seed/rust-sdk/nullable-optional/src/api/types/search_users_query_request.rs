@@ -55,11 +55,12 @@ impl SearchUsersQueryRequestBuilder {
     /// - [`query`](SearchUsersQueryRequestBuilder::query)
     pub fn build(self) -> Result<SearchUsersQueryRequest, BuildError> {
         Ok(SearchUsersQueryRequest {
-            query: self.query.ok_or_else(|| BuildError::missing_field("query"))?,
+            query: self
+                .query
+                .ok_or_else(|| BuildError::missing_field("query"))?,
             department: self.department,
             role: self.role,
             is_active: self.is_active,
         })
     }
 }
-

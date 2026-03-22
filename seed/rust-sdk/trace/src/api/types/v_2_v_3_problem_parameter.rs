@@ -48,9 +48,13 @@ impl Parameter2Builder {
     /// - [`variable_type`](Parameter2Builder::variable_type)
     pub fn build(self) -> Result<Parameter2, BuildError> {
         Ok(Parameter2 {
-            parameter_id: self.parameter_id.ok_or_else(|| BuildError::missing_field("parameter_id"))?,
+            parameter_id: self
+                .parameter_id
+                .ok_or_else(|| BuildError::missing_field("parameter_id"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            variable_type: self.variable_type.ok_or_else(|| BuildError::missing_field("variable_type"))?,
+            variable_type: self
+                .variable_type
+                .ok_or_else(|| BuildError::missing_field("variable_type"))?,
         })
     }
 }

@@ -40,9 +40,12 @@ impl StoreTracedWorkspaceRequestBuilder {
     /// - [`trace_responses`](StoreTracedWorkspaceRequestBuilder::trace_responses)
     pub fn build(self) -> Result<StoreTracedWorkspaceRequest, BuildError> {
         Ok(StoreTracedWorkspaceRequest {
-            workspace_run_details: self.workspace_run_details.ok_or_else(|| BuildError::missing_field("workspace_run_details"))?,
-            trace_responses: self.trace_responses.ok_or_else(|| BuildError::missing_field("trace_responses"))?,
+            workspace_run_details: self
+                .workspace_run_details
+                .ok_or_else(|| BuildError::missing_field("workspace_run_details"))?,
+            trace_responses: self
+                .trace_responses
+                .ok_or_else(|| BuildError::missing_field("trace_responses"))?,
         })
     }
 }
-

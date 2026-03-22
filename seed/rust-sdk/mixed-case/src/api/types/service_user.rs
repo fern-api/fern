@@ -49,9 +49,15 @@ impl UserBuilder {
     /// - [`extra_properties`](UserBuilder::extra_properties)
     pub fn build(self) -> Result<User, BuildError> {
         Ok(User {
-            user_name: self.user_name.ok_or_else(|| BuildError::missing_field("user_name"))?,
-            metadata_tags: self.metadata_tags.ok_or_else(|| BuildError::missing_field("metadata_tags"))?,
-            extra_properties: self.extra_properties.ok_or_else(|| BuildError::missing_field("extra_properties"))?,
+            user_name: self
+                .user_name
+                .ok_or_else(|| BuildError::missing_field("user_name"))?,
+            metadata_tags: self
+                .metadata_tags
+                .ok_or_else(|| BuildError::missing_field("metadata_tags"))?,
+            extra_properties: self
+                .extra_properties
+                .ok_or_else(|| BuildError::missing_field("extra_properties"))?,
         })
     }
 }

@@ -55,10 +55,15 @@ impl GetDefaultStarterFilesRequestBuilder {
     /// - [`method_name`](GetDefaultStarterFilesRequestBuilder::method_name)
     pub fn build(self) -> Result<GetDefaultStarterFilesRequest, BuildError> {
         Ok(GetDefaultStarterFilesRequest {
-            input_params: self.input_params.ok_or_else(|| BuildError::missing_field("input_params"))?,
-            output_type: self.output_type.ok_or_else(|| BuildError::missing_field("output_type"))?,
-            method_name: self.method_name.ok_or_else(|| BuildError::missing_field("method_name"))?,
+            input_params: self
+                .input_params
+                .ok_or_else(|| BuildError::missing_field("input_params"))?,
+            output_type: self
+                .output_type
+                .ok_or_else(|| BuildError::missing_field("output_type"))?,
+            method_name: self
+                .method_name
+                .ok_or_else(|| BuildError::missing_field("method_name"))?,
         })
     }
 }
-

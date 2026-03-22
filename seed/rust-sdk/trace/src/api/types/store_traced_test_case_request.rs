@@ -38,9 +38,12 @@ impl StoreTracedTestCaseRequestBuilder {
     /// - [`trace_responses`](StoreTracedTestCaseRequestBuilder::trace_responses)
     pub fn build(self) -> Result<StoreTracedTestCaseRequest, BuildError> {
         Ok(StoreTracedTestCaseRequest {
-            result: self.result.ok_or_else(|| BuildError::missing_field("result"))?,
-            trace_responses: self.trace_responses.ok_or_else(|| BuildError::missing_field("trace_responses"))?,
+            result: self
+                .result
+                .ok_or_else(|| BuildError::missing_field("result"))?,
+            trace_responses: self
+                .trace_responses
+                .ok_or_else(|| BuildError::missing_field("trace_responses"))?,
         })
     }
 }
-

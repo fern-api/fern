@@ -39,8 +39,12 @@ impl TestCaseWithExpectedResultBuilder {
     /// - [`expected_result`](TestCaseWithExpectedResultBuilder::expected_result)
     pub fn build(self) -> Result<TestCaseWithExpectedResult, BuildError> {
         Ok(TestCaseWithExpectedResult {
-            test_case: self.test_case.ok_or_else(|| BuildError::missing_field("test_case"))?,
-            expected_result: self.expected_result.ok_or_else(|| BuildError::missing_field("expected_result"))?,
+            test_case: self
+                .test_case
+                .ok_or_else(|| BuildError::missing_field("test_case"))?,
+            expected_result: self
+                .expected_result
+                .ok_or_else(|| BuildError::missing_field("expected_result"))?,
         })
     }
 }

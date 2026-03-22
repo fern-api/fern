@@ -38,8 +38,12 @@ impl NonVoidFunctionSignature2Builder {
     /// - [`return_type`](NonVoidFunctionSignature2Builder::return_type)
     pub fn build(self) -> Result<NonVoidFunctionSignature2, BuildError> {
         Ok(NonVoidFunctionSignature2 {
-            parameters: self.parameters.ok_or_else(|| BuildError::missing_field("parameters"))?,
-            return_type: self.return_type.ok_or_else(|| BuildError::missing_field("return_type"))?,
+            parameters: self
+                .parameters
+                .ok_or_else(|| BuildError::missing_field("parameters"))?,
+            return_type: self
+                .return_type
+                .ok_or_else(|| BuildError::missing_field("return_type"))?,
         })
     }
 }

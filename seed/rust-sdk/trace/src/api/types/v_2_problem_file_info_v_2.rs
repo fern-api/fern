@@ -56,10 +56,18 @@ impl FileInfoV2Builder {
     /// - [`editable`](FileInfoV2Builder::editable)
     pub fn build(self) -> Result<FileInfoV2, BuildError> {
         Ok(FileInfoV2 {
-            filename: self.filename.ok_or_else(|| BuildError::missing_field("filename"))?,
-            directory: self.directory.ok_or_else(|| BuildError::missing_field("directory"))?,
-            contents: self.contents.ok_or_else(|| BuildError::missing_field("contents"))?,
-            editable: self.editable.ok_or_else(|| BuildError::missing_field("editable"))?,
+            filename: self
+                .filename
+                .ok_or_else(|| BuildError::missing_field("filename"))?,
+            directory: self
+                .directory
+                .ok_or_else(|| BuildError::missing_field("directory"))?,
+            contents: self
+                .contents
+                .ok_or_else(|| BuildError::missing_field("contents"))?,
+            editable: self
+                .editable
+                .ok_or_else(|| BuildError::missing_field("editable"))?,
         })
     }
 }
