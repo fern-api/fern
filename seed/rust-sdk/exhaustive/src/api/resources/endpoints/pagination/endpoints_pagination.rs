@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions, QueryBuilder};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct PaginationClient {
     pub http_client: HttpClient,
@@ -9,8 +9,8 @@ pub struct PaginationClient {
 impl PaginationClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
     /// List items with cursor pagination
@@ -24,22 +24,16 @@ impl PaginationClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn list_items(
-        &self,
-        request: &ListItemsQueryRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<PaginatedResponse, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::GET,
-                "/pagination",
-                None,
-                QueryBuilder::new()
-                    .string("cursor", request.cursor.clone())
-                    .int("limit", request.limit.clone())
-                    .build(),
-                options,
-            )
-            .await
+    pub async fn list_items(&self, request: &ListItemsQueryRequest, options: Option<RequestOptions>) -> Result<PaginatedResponse, ApiError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/pagination",
+            None,
+            QueryBuilder::new().string("cursor", request.cursor.clone()).int("limit", request.limit.clone())
+            .build(),
+            options,
+        ).await
     }
+
 }
+

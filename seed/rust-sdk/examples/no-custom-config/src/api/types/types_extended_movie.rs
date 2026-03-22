@@ -38,9 +38,7 @@ impl ExtendedMovieBuilder {
     /// - [`cast`](ExtendedMovieBuilder::cast)
     pub fn build(self) -> Result<ExtendedMovie, BuildError> {
         Ok(ExtendedMovie {
-            movie_fields: self
-                .movie_fields
-                .ok_or_else(|| BuildError::missing_field("movie_fields"))?,
+            movie_fields: self.movie_fields.ok_or_else(|| BuildError::missing_field("movie_fields"))?,
             cast: self.cast.ok_or_else(|| BuildError::missing_field("cast"))?,
         })
     }

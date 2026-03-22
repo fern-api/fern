@@ -29,9 +29,7 @@ impl ObjectWithRequiredFieldBuilder {
     /// - [`string`](ObjectWithRequiredFieldBuilder::string)
     pub fn build(self) -> Result<ObjectWithRequiredField, BuildError> {
         Ok(ObjectWithRequiredField {
-            string: self
-                .string
-                .ok_or_else(|| BuildError::missing_field("string"))?,
+            string: self.string.ok_or_else(|| BuildError::missing_field("string"))?,
         })
     }
 }

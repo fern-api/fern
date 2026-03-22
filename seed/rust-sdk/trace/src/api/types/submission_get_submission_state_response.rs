@@ -58,15 +58,9 @@ impl GetSubmissionStateResponseBuilder {
     pub fn build(self) -> Result<GetSubmissionStateResponse, BuildError> {
         Ok(GetSubmissionStateResponse {
             time_submitted: self.time_submitted,
-            submission: self
-                .submission
-                .ok_or_else(|| BuildError::missing_field("submission"))?,
-            language: self
-                .language
-                .ok_or_else(|| BuildError::missing_field("language"))?,
-            submission_type_state: self
-                .submission_type_state
-                .ok_or_else(|| BuildError::missing_field("submission_type_state"))?,
+            submission: self.submission.ok_or_else(|| BuildError::missing_field("submission"))?,
+            language: self.language.ok_or_else(|| BuildError::missing_field("language"))?,
+            submission_type_state: self.submission_type_state.ok_or_else(|| BuildError::missing_field("submission_type_state"))?,
         })
     }
 }

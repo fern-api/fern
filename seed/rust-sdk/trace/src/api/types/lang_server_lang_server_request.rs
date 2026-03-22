@@ -28,9 +28,7 @@ impl LangServerRequestBuilder {
     /// - [`request`](LangServerRequestBuilder::request)
     pub fn build(self) -> Result<LangServerRequest, BuildError> {
         Ok(LangServerRequest {
-            request: self
-                .request
-                .ok_or_else(|| BuildError::missing_field("request"))?,
+            request: self.request.ok_or_else(|| BuildError::missing_field("request"))?,
         })
     }
 }

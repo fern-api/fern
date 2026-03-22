@@ -4,9 +4,11 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum Status {
         #[serde(rename = "active")]
-        Active,
+        #[non_exhaustive]
+        Active {},
 
         #[serde(rename = "archived")]
+        #[non_exhaustive]
         Archived {
             #[serde(default)]
             #[serde(with = "crate::core::flexible_datetime::offset::option")]
@@ -14,9 +16,24 @@ pub enum Status {
         },
 
         #[serde(rename = "soft-deleted")]
+        #[non_exhaustive]
         SoftDeleted {
             #[serde(default)]
             #[serde(with = "crate::core::flexible_datetime::offset::option")]
             value: Option<DateTime<FixedOffset>>,
         },
+}
+
+impl Status {
+    pub fn active() -> Self {
+        Self::Active {}
+    }
+
+    pub fn archived(value: Option<DateTime<FixedOffset>>) -> Self {
+        Self::Archived { value }
+    }
+
+    pub fn soft_deleted(value: Option<DateTime<FixedOffset>>) -> Self {
+        Self::SoftDeleted { value }
+    }
 }

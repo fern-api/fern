@@ -46,12 +46,8 @@ impl ObjectWithDatetimeLikeStringBuilder {
     /// - [`actual_datetime`](ObjectWithDatetimeLikeStringBuilder::actual_datetime)
     pub fn build(self) -> Result<ObjectWithDatetimeLikeString, BuildError> {
         Ok(ObjectWithDatetimeLikeString {
-            datetime_like_string: self
-                .datetime_like_string
-                .ok_or_else(|| BuildError::missing_field("datetime_like_string"))?,
-            actual_datetime: self
-                .actual_datetime
-                .ok_or_else(|| BuildError::missing_field("actual_datetime"))?,
+            datetime_like_string: self.datetime_like_string.ok_or_else(|| BuildError::missing_field("datetime_like_string"))?,
+            actual_datetime: self.actual_datetime.ok_or_else(|| BuildError::missing_field("actual_datetime"))?,
         })
     }
 }

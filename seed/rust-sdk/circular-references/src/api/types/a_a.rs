@@ -29,9 +29,7 @@ impl ABuilder {
     /// - [`root_type_fields`](ABuilder::root_type_fields)
     pub fn build(self) -> Result<A, BuildError> {
         Ok(A {
-            root_type_fields: self
-                .root_type_fields
-                .ok_or_else(|| BuildError::missing_field("root_type_fields"))?,
+            root_type_fields: self.root_type_fields.ok_or_else(|| BuildError::missing_field("root_type_fields"))?,
         })
     }
 }

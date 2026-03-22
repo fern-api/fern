@@ -39,12 +39,8 @@ impl StdoutResponseBuilder {
     /// - [`stdout`](StdoutResponseBuilder::stdout)
     pub fn build(self) -> Result<StdoutResponse, BuildError> {
         Ok(StdoutResponse {
-            submission_id: self
-                .submission_id
-                .ok_or_else(|| BuildError::missing_field("submission_id"))?,
-            stdout: self
-                .stdout
-                .ok_or_else(|| BuildError::missing_field("stdout"))?,
+            submission_id: self.submission_id.ok_or_else(|| BuildError::missing_field("submission_id"))?,
+            stdout: self.stdout.ok_or_else(|| BuildError::missing_field("stdout"))?,
         })
     }
 }

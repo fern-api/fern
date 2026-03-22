@@ -87,27 +87,13 @@ impl CreateProblemRequestBuilder {
     /// - [`method_name`](CreateProblemRequestBuilder::method_name)
     pub fn build(self) -> Result<CreateProblemRequest, BuildError> {
         Ok(CreateProblemRequest {
-            problem_name: self
-                .problem_name
-                .ok_or_else(|| BuildError::missing_field("problem_name"))?,
-            problem_description: self
-                .problem_description
-                .ok_or_else(|| BuildError::missing_field("problem_description"))?,
-            files: self
-                .files
-                .ok_or_else(|| BuildError::missing_field("files"))?,
-            input_params: self
-                .input_params
-                .ok_or_else(|| BuildError::missing_field("input_params"))?,
-            output_type: self
-                .output_type
-                .ok_or_else(|| BuildError::missing_field("output_type"))?,
-            testcases: self
-                .testcases
-                .ok_or_else(|| BuildError::missing_field("testcases"))?,
-            method_name: self
-                .method_name
-                .ok_or_else(|| BuildError::missing_field("method_name"))?,
+            problem_name: self.problem_name.ok_or_else(|| BuildError::missing_field("problem_name"))?,
+            problem_description: self.problem_description.ok_or_else(|| BuildError::missing_field("problem_description"))?,
+            files: self.files.ok_or_else(|| BuildError::missing_field("files"))?,
+            input_params: self.input_params.ok_or_else(|| BuildError::missing_field("input_params"))?,
+            output_type: self.output_type.ok_or_else(|| BuildError::missing_field("output_type"))?,
+            testcases: self.testcases.ok_or_else(|| BuildError::missing_field("testcases"))?,
+            method_name: self.method_name.ok_or_else(|| BuildError::missing_field("method_name"))?,
         })
     }
 }
