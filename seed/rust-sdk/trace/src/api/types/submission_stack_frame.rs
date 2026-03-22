@@ -49,9 +49,15 @@ impl StackFrameBuilder {
     /// - [`scopes`](StackFrameBuilder::scopes)
     pub fn build(self) -> Result<StackFrame, BuildError> {
         Ok(StackFrame {
-            method_name: self.method_name.ok_or_else(|| BuildError::missing_field("method_name"))?,
-            line_number: self.line_number.ok_or_else(|| BuildError::missing_field("line_number"))?,
-            scopes: self.scopes.ok_or_else(|| BuildError::missing_field("scopes"))?,
+            method_name: self
+                .method_name
+                .ok_or_else(|| BuildError::missing_field("method_name"))?,
+            line_number: self
+                .line_number
+                .ok_or_else(|| BuildError::missing_field("line_number"))?,
+            scopes: self
+                .scopes
+                .ok_or_else(|| BuildError::missing_field("scopes"))?,
         })
     }
 }

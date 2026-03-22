@@ -1,15 +1,10 @@
 //! Service clients and API endpoints
 //!
-//! This module contains client implementations for:
-//!
-//! - **RealtimeNoAuth**
-//! - **Realtime**
+//! This module provides the client implementations for all available services.
 
 use crate::api::websocket::{RealtimeConnector, RealtimeNoAuthConnector};
 use crate::{ApiError, ClientConfig};
 
-pub mod realtime;
-pub mod realtime_no_auth;
 pub struct WebsocketBearerAuthClient {
     pub config: ClientConfig,
     pub realtime_no_auth: RealtimeNoAuthConnector,
@@ -28,6 +23,3 @@ impl WebsocketBearerAuthClient {
         })
     }
 }
-
-pub use realtime::RealtimeClient;
-pub use realtime_no_auth::RealtimeNoAuthClient;

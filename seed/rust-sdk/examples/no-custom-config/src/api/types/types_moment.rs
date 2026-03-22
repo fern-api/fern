@@ -50,7 +50,9 @@ impl MomentBuilder {
         Ok(Moment {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
             date: self.date.ok_or_else(|| BuildError::missing_field("date"))?,
-            datetime: self.datetime.ok_or_else(|| BuildError::missing_field("datetime"))?,
+            datetime: self
+                .datetime
+                .ok_or_else(|| BuildError::missing_field("datetime"))?,
         })
     }
 }

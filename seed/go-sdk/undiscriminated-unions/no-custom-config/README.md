@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/undiscriminated-go/client"
-    undiscriminated "github.com/fern-api/undiscriminated-go"
     context "context"
+    undiscriminated "github.com/fern-api/undiscriminated-go"
+    client "github.com/fern-api/undiscriminated-go/client"
 )
 
 func do() {

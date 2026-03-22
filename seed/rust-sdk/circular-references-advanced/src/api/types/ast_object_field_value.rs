@@ -39,7 +39,9 @@ impl ObjectFieldValueBuilder {
     pub fn build(self) -> Result<ObjectFieldValue, BuildError> {
         Ok(ObjectFieldValue {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            value: self.value.ok_or_else(|| BuildError::missing_field("value"))?,
+            value: self
+                .value
+                .ok_or_else(|| BuildError::missing_field("value"))?,
         })
     }
 }

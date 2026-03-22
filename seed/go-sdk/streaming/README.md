@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/stream-go/v2/client"
-    stream "github.com/fern-api/stream-go/v2"
     context "context"
+    stream "github.com/fern-api/stream-go/v2"
+    client "github.com/fern-api/stream-go/v2/client"
 )
 
 func do() {

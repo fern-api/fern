@@ -29,7 +29,9 @@ impl TestCaseImplementationDescription2Builder {
     /// - [`boards`](TestCaseImplementationDescription2Builder::boards)
     pub fn build(self) -> Result<TestCaseImplementationDescription2, BuildError> {
         Ok(TestCaseImplementationDescription2 {
-            boards: self.boards.ok_or_else(|| BuildError::missing_field("boards"))?,
+            boards: self
+                .boards
+                .ok_or_else(|| BuildError::missing_field("boards"))?,
         })
     }
 }

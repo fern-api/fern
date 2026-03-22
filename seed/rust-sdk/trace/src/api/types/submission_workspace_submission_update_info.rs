@@ -3,44 +3,40 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum WorkspaceSubmissionUpdateInfo {
-        #[serde(rename = "running")]
-        #[non_exhaustive]
-        Running {
-            value: RunningSubmissionState,
-        },
+    #[serde(rename = "running")]
+    #[non_exhaustive]
+    Running { value: RunningSubmissionState },
 
-        #[serde(rename = "ran")]
-        #[non_exhaustive]
-        Ran {
-            #[serde(flatten)]
-            data: WorkspaceRunDetails,
-        },
+    #[serde(rename = "ran")]
+    #[non_exhaustive]
+    Ran {
+        #[serde(flatten)]
+        data: WorkspaceRunDetails,
+    },
 
-        #[serde(rename = "stopped")]
-        #[non_exhaustive]
-        Stopped {},
+    #[serde(rename = "stopped")]
+    #[non_exhaustive]
+    Stopped {},
 
-        #[serde(rename = "traced")]
-        #[non_exhaustive]
-        Traced {},
+    #[serde(rename = "traced")]
+    #[non_exhaustive]
+    Traced {},
 
-        #[serde(rename = "tracedV2")]
-        #[non_exhaustive]
-        TracedV2 {
-            #[serde(rename = "traceResponsesSize")]
-            #[serde(default)]
-            trace_responses_size: i64,
-        },
+    #[serde(rename = "tracedV2")]
+    #[non_exhaustive]
+    TracedV2 {
+        #[serde(rename = "traceResponsesSize")]
+        #[serde(default)]
+        trace_responses_size: i64,
+    },
 
-        #[serde(rename = "errored")]
-        #[non_exhaustive]
-        Errored {
-            value: ErrorInfo,
-        },
+    #[serde(rename = "errored")]
+    #[non_exhaustive]
+    Errored { value: ErrorInfo },
 
-        #[serde(rename = "finished")]
-        #[non_exhaustive]
-        Finished {},
+    #[serde(rename = "finished")]
+    #[non_exhaustive]
+    Finished {},
 }
 
 impl WorkspaceSubmissionUpdateInfo {
@@ -61,7 +57,9 @@ impl WorkspaceSubmissionUpdateInfo {
     }
 
     pub fn traced_v_2(trace_responses_size: i64) -> Self {
-        Self::TracedV2 { trace_responses_size }
+        Self::TracedV2 {
+            trace_responses_size,
+        }
     }
 
     pub fn errored(value: ErrorInfo) -> Self {

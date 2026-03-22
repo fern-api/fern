@@ -9,43 +9,42 @@ pub enum UploadDocumentResponse {
 }
 
 impl UploadDocumentResponse {
-    pub fn is_documentmetadata(&self) -> bool {
+    pub fn is_document_metadata(&self) -> bool {
         matches!(self, Self::DocumentMetadata(_))
     }
 
-    pub fn is_documentuploadresult(&self) -> bool {
+    pub fn is_document_upload_result(&self) -> bool {
         matches!(self, Self::DocumentUploadResult(_))
     }
 
 
-    pub fn as_documentmetadata(&self) -> Option<&DocumentMetadata> {
+    pub fn as_document_metadata(&self) -> Option<&DocumentMetadata> {
         match self {
                     Self::DocumentMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_documentmetadata(self) -> Option<DocumentMetadata> {
+    pub fn into_document_metadata(self) -> Option<DocumentMetadata> {
         match self {
                     Self::DocumentMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_documentuploadresult(&self) -> Option<&DocumentUploadResult> {
+    pub fn as_document_upload_result(&self) -> Option<&DocumentUploadResult> {
         match self {
                     Self::DocumentUploadResult(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_documentuploadresult(self) -> Option<DocumentUploadResult> {
+    pub fn into_document_upload_result(self) -> Option<DocumentUploadResult> {
         match self {
                     Self::DocumentUploadResult(value) => Some(value),
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for UploadDocumentResponse {

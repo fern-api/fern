@@ -7,10 +7,29 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 
+/**
+ * Represents a deduplicated variant in an undiscriminated union enum.
+ * Each variant is uniquely determined by its type.
+ */
+interface ResolvedVariant {
+    /** PascalCase name for the enum variant */
+    variantName: string;
+    /** snake_case name for method names (is_, as_, into_) */
+    methodSuffix: string;
+    /** The type reference used for the enum variant definition (preserves Option wrapping for serde) */
+    typeRef: FernIr.TypeReference;
+    /** The innermost type reference (with optional/nullable stripped) for conversion method return types */
+    innerTypeRef: FernIr.TypeReference;
+}
+
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly undiscriminatedUnionTypeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
+
+    private get typeId(): string {
+        return this.typeDeclaration.name.typeId;
+    }
 
     public constructor(
         typeDeclaration: FernIr.TypeDeclaration,
@@ -41,8 +60,40 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
+    /**
+     * Resolves all union members into deduplicated variants.
+     * Members with the same type are collapsed into a single variant.
+     */
+    private resolveVariants(): ResolvedVariant[] {
+        const seen = new Set<string>();
+        const variants: ResolvedVariant[] = [];
+
+        for (const member of this.undiscriminatedUnionTypeDeclaration.members) {
+            const names = this.getNamesForTypeReference(member.type);
+            if (names == null) {
+                continue;
+            }
+            if (seen.has(names.variantName)) {
+                continue;
+            }
+            seen.add(names.variantName);
+            // For the enum variant, use the original member type (preserves Option wrapping for serde).
+            // For conversion method return types, use the fully unwrapped type to avoid double-Option.
+            const innerTypeRef = unwrapOptional(member.type);
+            variants.push({
+                variantName: names.variantName,
+                methodSuffix: names.methodSuffix,
+                typeRef: member.type,
+                innerTypeRef
+            });
+        }
+
+        return variants;
+    }
+
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
         const typeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
+        const variants = this.resolveVariants();
 
         // Generate union attributes
         const attributes = this.generateUnionAttributes();
@@ -53,22 +104,21 @@ export class UndiscriminatedUnionGenerator {
 
         // Start enum definition
         writer.writeBlock(`pub enum ${typeName}`, () => {
-            // Generate variants for each member
-            this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
+            variants.forEach((variant, index) => {
                 if (index > 0) {
                     writer.newLine();
                 }
-                this.generateUnionMember(writer, member, index);
+                this.generateUnionMember(writer, variant);
             });
         });
 
         // Generate helper methods
-        this.generateImplementationBlock(writer, typeName);
+        this.generateImplementationBlock(writer, typeName, variants);
 
         // Generate Display implementation if all variants support Display
-        if (this.canImplementDisplay()) {
+        if (this.allVariantsSupportDisplay(variants)) {
             writer.newLine();
-            this.generateDisplayImplementation(writer, typeName);
+            this.generateDisplayImplementation(writer, typeName, variants);
         }
     }
 
@@ -76,7 +126,7 @@ export class UndiscriminatedUnionGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Basic derives - start with essential ones
-        let derives = ["Debug", "Clone", "Serialize", "Deserialize"];
+        const derives = ["Debug", "Clone", "Serialize", "Deserialize"];
 
         // PartialEq - for equality comparisons
         if (this.canDerivePartialEq()) {
@@ -96,252 +146,261 @@ export class UndiscriminatedUnionGenerator {
         return attributes;
     }
 
-    private generateUnionMember(writer: rust.Writer, member: FernIr.UndiscriminatedUnionMember, index: number): void {
-        // Find the typeId for this union to detect recursive fields
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-
-        // Check if this member creates a recursive reference
-        // Only apply Box wrapping for named types, not containers (Vec, HashMap are already heap-allocated)
+    private generateUnionMember(writer: rust.Writer, variant: ResolvedVariant): void {
         const isRecursive =
-            member.type.type === "named" && typeId ? isFieldRecursive(typeId, member.type, this.context.ir) : false;
+            variant.typeRef.type === "named"
+                ? isFieldRecursive(this.typeId, variant.typeRef, this.context.ir)
+                : false;
 
-        const memberType = generateRustTypeForTypeReference(member.type, this.context, isRecursive);
+        const memberType = generateRustTypeForTypeReference(variant.typeRef, this.context, isRecursive);
 
-        // Generate variant name based on the type or index
-        const variantName = this.getVariantNameForMember(member, index);
-
-        // Check if this is a datetime type that needs flexible parsing
-        // Both "offset" (default) and "utc" use flexible parsing
-        if (isDateTimeOnlyType(member.type)) {
+        if (isDateTimeOnlyType(variant.typeRef)) {
             const dateTimeType = this.context.getDateTimeType();
-            const modulePath = dateTimeType === "utc" 
-                ? "crate::core::flexible_datetime::utc" 
-                : "crate::core::flexible_datetime::offset";
-            // Generate multi-line tuple variant with serde attribute on inner field
-            writer.writeLine(`    ${variantName}(`);
+            const modulePath =
+                dateTimeType === "utc"
+                    ? "crate::core::flexible_datetime::utc"
+                    : "crate::core::flexible_datetime::offset";
+            writer.writeLine(`    ${variant.variantName}(`);
             writer.writeLine(`        #[serde(with = "${modulePath}")]`);
             writer.writeLine(`        ${memberType.toString()}`);
             writer.writeLine(`    ),`);
         } else {
-            // Generate the variant as a simple tuple variant
-            writer.writeLine(`    ${variantName}(${memberType.toString()}),`);
-        }
-    }
-
-    private getVariantNameForMember(member: FernIr.UndiscriminatedUnionMember, index: number): string {
-        // Try to extract a meaningful name from the type reference
-        const memberType = member.type;
-
-        if (memberType.type === "named") {
-            return memberType.name.pascalCase.unsafeName;
-        } else if (memberType.type === "primitive") {
-            return this.getPrimitiveVariantName(memberType.primitive.v1) ?? `Variant${index}`;
-        } else if (memberType.type === "container") {
-            return this.getContainerVariantName(memberType.container, index);
-        } else if (memberType.type === "unknown") {
-            return "Unknown";
-        } else {
-            // Fallback to indexed variant name
-            return `Variant${index}`;
+            writer.writeLine(`    ${variant.variantName}(${memberType.toString()}),`);
         }
     }
 
     /**
-     * Maps a primitive type to a meaningful variant name.
+     * Derives variant and method names from a type reference.
+     * Every type maps to a unique name — no index-based fallbacks.
      */
-    private getPrimitiveVariantName(primitiveType: string): string | undefined {
-        switch (primitiveType) {
-            case "STRING":
-                return "String";
-            case "BOOLEAN":
-                return "Boolean";
-            case "INTEGER":
-                return "Integer";
-            case "LONG":
-                return "Long";
-            case "DOUBLE":
-                return "Double";
-            case "FLOAT":
-                return "Float";
-            case "DATE_TIME":
-                return "DateTime";
-            case "DATE":
-                return "Date";
-            case "UUID":
-                return "Uuid";
-            case "BASE_64":
-                return "Base64";
-            case "BIG_INTEGER":
-                return "BigInteger";
-            case "UINT":
-                return "Uint";
-            case "UINT_64":
-                return "Uint64";
+    private getNamesForTypeReference(
+        typeRef: FernIr.TypeReference
+    ): { variantName: string; methodSuffix: string } | undefined {
+        switch (typeRef.type) {
+            case "named":
+                return {
+                    variantName: typeRef.name.pascalCase.unsafeName,
+                    methodSuffix: typeRef.name.snakeCase.unsafeName
+                };
+            case "primitive":
+                return this.getPrimitiveNames(typeRef.primitive.v1);
+            case "container":
+                return this.getContainerNames(typeRef.container);
+            case "unknown":
+                return { variantName: "Value", methodSuffix: "value" };
             default:
                 return undefined;
         }
     }
 
-    /**
-     * Derives a meaningful variant name from any type reference.
-     * Returns undefined if no meaningful name can be determined.
-     */
-    private getInnerTypeName(typeRef: FernIr.TypeReference): string | undefined {
-        if (typeRef.type === "named") {
-            return typeRef.name.pascalCase.unsafeName;
-        } else if (typeRef.type === "primitive") {
-            return this.getPrimitiveVariantName(typeRef.primitive.v1);
+    private getPrimitiveNames(
+        primitiveType: string
+    ): { variantName: string; methodSuffix: string } | undefined {
+        switch (primitiveType) {
+            case "STRING":
+                return { variantName: "String", methodSuffix: "string" };
+            case "BOOLEAN":
+                return { variantName: "Boolean", methodSuffix: "boolean" };
+            case "INTEGER":
+                return { variantName: "Integer", methodSuffix: "integer" };
+            case "LONG":
+                return { variantName: "Long", methodSuffix: "long" };
+            case "DOUBLE":
+                return { variantName: "Double", methodSuffix: "double" };
+            case "FLOAT":
+                return { variantName: "Float", methodSuffix: "float" };
+            case "DATE_TIME":
+                return { variantName: "DateTime", methodSuffix: "date_time" };
+            case "DATE":
+                return { variantName: "Date", methodSuffix: "date" };
+            case "UUID":
+                return { variantName: "Uuid", methodSuffix: "uuid" };
+            case "BASE_64":
+                return { variantName: "Base64", methodSuffix: "base_64" };
+            case "BIG_INTEGER":
+                return { variantName: "BigInteger", methodSuffix: "big_integer" };
+            case "UINT":
+                return { variantName: "Uint", methodSuffix: "uint" };
+            case "UINT_64":
+                return { variantName: "Uint64", methodSuffix: "uint_64" };
+            default:
+                return undefined;
         }
-        return undefined;
     }
 
-    /**
-     * Generates a variant name for container types, using inner type information
-     * to produce meaningful names (e.g. "DoubleList" instead of "List1").
-     */
-    private getContainerVariantName(container: FernIr.ContainerType, index: number): string {
+    private getContainerNames(
+        container: FernIr.ContainerType
+    ): { variantName: string; methodSuffix: string } | undefined {
         switch (container.type) {
             case "list": {
-                const innerName = this.getInnerTypeName(container.list);
-                return innerName ? `${innerName}List` : `List${index}`;
+                const inner = this.getNamesForTypeReference(container.list);
+                return inner != null
+                    ? { variantName: `${inner.variantName}List`, methodSuffix: `${inner.methodSuffix}_list` }
+                    : undefined;
             }
             case "set": {
-                const innerName = this.getInnerTypeName(container.set);
-                return innerName ? `${innerName}Set` : `Set${index}`;
+                const inner = this.getNamesForTypeReference(container.set);
+                return inner != null
+                    ? { variantName: `${inner.variantName}Set`, methodSuffix: `${inner.methodSuffix}_set` }
+                    : undefined;
             }
             case "map": {
-                const keyName = this.getInnerTypeName(container.keyType);
-                const valueName = this.getInnerTypeName(container.valueType);
-                if (keyName && valueName) {
-                    return `${keyName}To${valueName}Map`;
-                }
-                return `Map${index}`;
+                const key = this.getNamesForTypeReference(container.keyType);
+                const value = this.getNamesForTypeReference(container.valueType);
+                return key != null && value != null
+                    ? {
+                          variantName: `${key.variantName}To${value.variantName}Map`,
+                          methodSuffix: `${key.methodSuffix}_to_${value.methodSuffix}_map`
+                      }
+                    : undefined;
             }
             case "optional": {
-                const innerName = this.getInnerTypeName(container.optional);
-                return innerName ? `Optional${innerName}` : `Optional${index}`;
+                const unwrapped = unwrapOptional(container.optional);
+                const inner = this.getNamesForTypeReference(unwrapped);
+                return inner != null
+                    ? { variantName: `Optional${inner.variantName}`, methodSuffix: `optional_${inner.methodSuffix}` }
+                    : undefined;
             }
             case "nullable": {
-                const innerName = this.getInnerTypeName(container.nullable);
-                return innerName ? `Nullable${innerName}` : `Nullable${index}`;
+                const unwrapped = unwrapOptional(container.nullable);
+                const inner = this.getNamesForTypeReference(unwrapped);
+                return inner != null
+                    ? { variantName: `Optional${inner.variantName}`, methodSuffix: `optional_${inner.methodSuffix}` }
+                    : undefined;
             }
-            case "literal":
-                return `Literal${index}`;
+            case "literal": {
+                if (container.literal.type === "string") {
+                    return { variantName: "String", methodSuffix: "string" };
+                }
+                return { variantName: "Boolean", methodSuffix: "boolean" };
+            }
             default:
-                return `Container${index}`;
+                return undefined;
         }
     }
 
-    private generateImplementationBlock(writer: rust.Writer, typeName: string): void {
+    private generateImplementationBlock(
+        writer: rust.Writer,
+        typeName: string,
+        variants: ResolvedVariant[]
+    ): void {
         writer.newLine();
         writer.writeBlock(`impl ${typeName}`, () => {
             // Generate helper methods to check variant types
-            this.generateVariantCheckers(writer);
+            this.generateVariantCheckers(writer, variants);
             writer.newLine();
 
             // Generate conversion methods
-            this.generateConversionMethods(writer);
+            this.generateConversionMethods(writer, variants);
         });
     }
 
-    private generateVariantCheckers(writer: rust.Writer): void {
-        const generatedMethods = new Set<string>();
-
-        this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
-            const variantName = this.getVariantNameForMember(member, index);
-            const methodName = `is_${variantName.toLowerCase()}`;
-
-            // Only generate if we haven't already generated this method name
-            if (!generatedMethods.has(methodName)) {
-                generatedMethods.add(methodName);
-
-                writer.writeBlock(`pub fn ${methodName}(&self) -> bool`, () => {
-                    writer.writeLine(`matches!(self, Self::${variantName}(_))`);
-                });
+    private generateVariantCheckers(writer: rust.Writer, variants: ResolvedVariant[]): void {
+        variants.forEach((variant, index) => {
+            if (index > 0) {
                 writer.newLine();
             }
+            writer.writeBlock(`pub fn is_${variant.methodSuffix}(&self) -> bool`, () => {
+                writer.writeLine(`matches!(self, Self::${variant.variantName}(_))`);
+            });
         });
     }
 
-    private generateConversionMethods(writer: rust.Writer): void {
-        const generatedMethods = new Set<string>();
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-
-        this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
-            const variantName = this.getVariantNameForMember(member, index);
-            // Only apply Box wrapping for named types, not containers
+    private generateConversionMethods(writer: rust.Writer, variants: ResolvedVariant[]): void {
+        variants.forEach((variant) => {
+            // Use innerTypeRef (optional/nullable stripped) for return types to avoid double-Option
             const isRecursive =
-                member.type.type === "named" && typeId ? isFieldRecursive(typeId, member.type, this.context.ir) : false;
-            const memberType = generateRustTypeForTypeReference(member.type, this.context, isRecursive);
+                variant.innerTypeRef.type === "named"
+                    ? isFieldRecursive(this.typeId, variant.innerTypeRef, this.context.ir)
+                    : false;
+            const returnType = generateRustTypeForTypeReference(variant.innerTypeRef, this.context, isRecursive);
+            const unboxedReturnType = generateRustTypeForTypeReference(variant.innerTypeRef, this.context, false);
 
-            // For the return type of into_*, use the unboxed type
-            const unboxedMemberType = generateRustTypeForTypeReference(member.type, this.context, false);
+            // When the variant wraps an Option (e.g. OptionalString(Option<String>)),
+            // the match arm extracts an Option<T>, so we need different accessor logic
+            // than for non-optional variants where we extract T directly.
+            const isOptionalVariant = variant.typeRef !== variant.innerTypeRef;
 
-            const methodName = `as_${variantName.toLowerCase()}`;
-            const ownedMethodName = `into_${variantName.toLowerCase()}`;
+            // Use &str instead of &String for idiomatic Rust
+            const borrowedType = returnType.toString() === "String" ? "&str" : `&${returnType.toString()}`;
 
-            // Only generate if we haven't already generated these method names
-            if (!generatedMethods.has(methodName)) {
-                generatedMethods.add(methodName);
-                generatedMethods.add(ownedMethodName);
+            writer.newLine();
+            if (isOptionalVariant) {
+                // value is Option<T>, need to convert to Option<&T> via as_ref() / as_deref()
+                const asRefExpr = returnType.toString() === "String" ? "value.as_deref()" : "value.as_ref()";
+                writer.writeBlock(
+                    `pub fn as_${variant.methodSuffix}(&self) -> Option<${borrowedType}>`,
+                    () => {
+                        writer.writeLine("match self {");
+                        writer.writeLine(`            Self::${variant.variantName}(value) => ${asRefExpr},`);
+                        writer.writeLine("            _ => None,");
+                        writer.writeLine("        }");
+                    }
+                );
+            } else {
+                writer.writeBlock(
+                    `pub fn as_${variant.methodSuffix}(&self) -> Option<${borrowedType}>`,
+                    () => {
+                        writer.writeLine("match self {");
+                        writer.writeLine(`            Self::${variant.variantName}(value) => Some(value),`);
+                        writer.writeLine("            _ => None,");
+                        writer.writeLine("        }");
+                    }
+                );
+            }
 
-                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
-                const borrowedType = memberType.toString() === "String" ? "&str" : `&${memberType.toString()}`;
-
-                writer.writeBlock(`pub fn ${methodName}(&self) -> Option<${borrowedType}>`, () => {
-                    writer.writeLine("match self {");
-                    writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
-                    writer.writeLine("            _ => None,");
-                    writer.writeLine("        }");
-                });
-                writer.newLine();
-
-                // Also generate owned conversion
-                // For boxed named types, return unboxed type and dereference: Some(*value)
-                // For containers (Vec, HashMap), just return the value as-is
+            writer.newLine();
+            if (isOptionalVariant) {
+                // value is already Option<T>, just return it directly
+                const returnValue = isRecursive ? "value.map(|v| *v)" : "value";
+                writer.writeBlock(
+                    `pub fn into_${variant.methodSuffix}(self) -> Option<${unboxedReturnType.toString()}>`,
+                    () => {
+                        writer.writeLine("match self {");
+                        writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
+                        writer.writeLine("            _ => None,");
+                        writer.writeLine("        }");
+                    }
+                );
+            } else {
                 const returnValue = isRecursive ? "Some(*value)" : "Some(value)";
-                writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${unboxedMemberType.toString()}>`, () => {
-                    writer.writeLine("match self {");
-                    writer.writeLine(`            Self::${variantName}(value) => ${returnValue},`);
-                    writer.writeLine("            _ => None,");
-                    writer.writeLine("        }");
-                });
-                writer.newLine();
+                writer.writeBlock(
+                    `pub fn into_${variant.methodSuffix}(self) -> Option<${unboxedReturnType.toString()}>`,
+                    () => {
+                        writer.writeLine("match self {");
+                        writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
+                        writer.writeLine("            _ => None,");
+                        writer.writeLine("        }");
+                    }
+                );
             }
         });
     }
 
     private canDerivePartialEq(): boolean {
-        // Check if all variant types can support PartialEq derive
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
             return typeSupportsPartialEq(member.type, this.context);
         });
     }
 
     private canDeriveHashAndEq(): boolean {
-        // Check if all variant types can support Hash and Eq derives
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
             return typeSupportsHashAndEq(member.type, this.context);
         });
     }
 
-    private canImplementDisplay(): boolean {
-        // Check if all variant types support Display
-        // For now, we'll implement Display if all variants are named types
-        return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
-            // Named types (enums, objects, etc.) should have Display implementations
-            if (member.type.type === "named") {
-                return true;
-            }
-            // Primitive types all support Display
-            if (member.type.type === "primitive") {
-                return true;
-            }
-            return false;
+    private allVariantsSupportDisplay(variants: ResolvedVariant[]): boolean {
+        return variants.every((variant) => {
+            const typeRef = variant.typeRef;
+            return typeRef.type === "named" || typeRef.type === "primitive";
         });
     }
 
-    private generateDisplayImplementation(writer: rust.Writer, typeName: string): void {
+    private generateDisplayImplementation(
+        writer: rust.Writer,
+        typeName: string,
+        variants: ResolvedVariant[]
+    ): void {
         writer.writeLine(`impl fmt::Display for ${typeName} {`);
         writer.indent();
         writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
@@ -349,33 +408,25 @@ export class UndiscriminatedUnionGenerator {
         writer.writeLine("match self {");
         writer.indent();
 
-        // Generate match arms for each variant
-        this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
-            const variantName = this.getVariantNameForMember(member, index);
-
-            // Check if the type likely supports Display
-            if (member.type.type === "primitive") {
-                // Primitive types all support Display
-                writer.writeLine(`Self::${variantName}(value) => write!(f, "{}", value),`);
+        for (const variant of variants) {
+            const typeRef = variant.typeRef;
+            if (typeRef.type === "primitive") {
+                writer.writeLine(`Self::${variant.variantName}(value) => write!(f, "{}", value),`);
             } else if (
-                member.type.type === "container" &&
-                (member.type.container.type === "list" ||
-                    member.type.container.type === "set" ||
-                    member.type.container.type === "map")
+                typeRef.type === "container" &&
+                (typeRef.container.type === "list" ||
+                    typeRef.container.type === "set" ||
+                    typeRef.container.type === "map")
             ) {
-                // Collections should use Debug format
-                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
-            } else if (member.type.type === "named") {
-                // For named types, try to serialize to JSON as a fallback
-                // This ensures we always have a string representation
+                writer.writeLine(`Self::${variant.variantName}(value) => write!(f, "{:?}", value),`);
+            } else if (typeRef.type === "named") {
                 writer.writeLine(
-                    `Self::${variantName}(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),`
+                    `Self::${variant.variantName}(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),`
                 );
             } else {
-                // Default to Debug format for unknown types
-                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+                writer.writeLine(`Self::${variant.variantName}(value) => write!(f, "{:?}", value),`);
             }
-        });
+        }
 
         writer.dedent();
         writer.writeLine("}");
@@ -384,4 +435,21 @@ export class UndiscriminatedUnionGenerator {
         writer.dedent();
         writer.writeLine("}");
     }
+}
+
+/**
+ * Strips all nested optional/nullable wrappers from a type reference,
+ * matching the AST layer's `isAlreadyOptional` flattening behavior.
+ * e.g. optional<nullable<integer>> → integer (the caller adds the single Optional prefix).
+ */
+function unwrapOptional(typeRef: FernIr.TypeReference): FernIr.TypeReference {
+    if (typeRef.type === "container") {
+        if (typeRef.container.type === "optional") {
+            return unwrapOptional(typeRef.container.optional);
+        }
+        if (typeRef.container.type === "nullable") {
+            return unwrapOptional(typeRef.container.nullable);
+        }
+    }
+    return typeRef;
 }

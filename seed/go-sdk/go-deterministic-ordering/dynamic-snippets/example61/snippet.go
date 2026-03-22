@@ -1,12 +1,12 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
-    fern "github.com/go-deterministic-ordering/fern"
     types "github.com/go-deterministic-ordering/fern/types"
     uuid "github.com/google/uuid"
-    context "context"
 )
 
 func do() {

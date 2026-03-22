@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/required-nullable/fern"
     client "github.com/required-nullable/fern/client"
     option "github.com/required-nullable/fern/option"
-    fern "github.com/required-nullable/fern"
-    context "context"
 )
 
 func do() {

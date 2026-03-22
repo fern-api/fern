@@ -39,7 +39,9 @@ impl TestCaseBuilder {
     pub fn build(self) -> Result<TestCase, BuildError> {
         Ok(TestCase {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            params: self.params.ok_or_else(|| BuildError::missing_field("params"))?,
+            params: self
+                .params
+                .ok_or_else(|| BuildError::missing_field("params"))?,
         })
     }
 }

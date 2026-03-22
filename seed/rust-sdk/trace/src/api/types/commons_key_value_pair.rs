@@ -37,7 +37,9 @@ impl KeyValuePairBuilder {
     pub fn build(self) -> Result<KeyValuePair, BuildError> {
         Ok(KeyValuePair {
             key: self.key.ok_or_else(|| BuildError::missing_field("key"))?,
-            value: self.value.ok_or_else(|| BuildError::missing_field("value"))?,
+            value: self
+                .value
+                .ok_or_else(|| BuildError::missing_field("value"))?,
         })
     }
 }

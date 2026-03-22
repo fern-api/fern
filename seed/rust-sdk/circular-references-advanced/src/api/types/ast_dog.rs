@@ -29,7 +29,9 @@ impl DogBuilder {
     /// - [`fruit`](DogBuilder::fruit)
     pub fn build(self) -> Result<Dog, BuildError> {
         Ok(Dog {
-            fruit: self.fruit.ok_or_else(|| BuildError::missing_field("fruit"))?,
+            fruit: self
+                .fruit
+                .ok_or_else(|| BuildError::missing_field("fruit"))?,
         })
     }
 }

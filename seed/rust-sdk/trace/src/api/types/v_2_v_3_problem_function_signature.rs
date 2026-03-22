@@ -3,28 +3,28 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FunctionSignature2 {
-        #[serde(rename = "void")]
-        #[non_exhaustive]
-        Void {
-            #[serde(default)]
-            parameters: Vec<Parameter2>,
-        },
+    #[serde(rename = "void")]
+    #[non_exhaustive]
+    Void {
+        #[serde(default)]
+        parameters: Vec<Parameter2>,
+    },
 
-        #[serde(rename = "nonVoid")]
-        #[non_exhaustive]
-        NonVoid {
-            #[serde(flatten)]
-            data: NonVoidFunctionSignature2,
-        },
+    #[serde(rename = "nonVoid")]
+    #[non_exhaustive]
+    NonVoid {
+        #[serde(flatten)]
+        data: NonVoidFunctionSignature2,
+    },
 
-        #[serde(rename = "voidThatTakesActualResult")]
-        #[non_exhaustive]
-        VoidThatTakesActualResult {
-            #[serde(default)]
-            parameters: Vec<Parameter2>,
-            #[serde(rename = "actualResultType")]
-            actual_result_type: VariableType,
-        },
+    #[serde(rename = "voidThatTakesActualResult")]
+    #[non_exhaustive]
+    VoidThatTakesActualResult {
+        #[serde(default)]
+        parameters: Vec<Parameter2>,
+        #[serde(rename = "actualResultType")]
+        actual_result_type: VariableType,
+    },
 }
 
 impl FunctionSignature2 {
@@ -36,7 +36,13 @@ impl FunctionSignature2 {
         Self::NonVoid { data }
     }
 
-    pub fn void_that_takes_actual_result(parameters: Vec<Parameter2>, actual_result_type: VariableType) -> Self {
-        Self::VoidThatTakesActualResult { parameters, actual_result_type }
+    pub fn void_that_takes_actual_result(
+        parameters: Vec<Parameter2>,
+        actual_result_type: VariableType,
+    ) -> Self {
+        Self::VoidThatTakesActualResult {
+            parameters,
+            actual_result_type,
+        }
     }
 }
