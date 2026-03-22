@@ -37,8 +37,12 @@ impl TestCaseImplementation2Builder {
     /// - [`function`](TestCaseImplementation2Builder::function)
     pub fn build(self) -> Result<TestCaseImplementation2, BuildError> {
         Ok(TestCaseImplementation2 {
-            description: self.description.ok_or_else(|| BuildError::missing_field("description"))?,
-            function: self.function.ok_or_else(|| BuildError::missing_field("function"))?,
+            description: self
+                .description
+                .ok_or_else(|| BuildError::missing_field("description"))?,
+            function: self
+                .function
+                .ok_or_else(|| BuildError::missing_field("function"))?,
         })
     }
 }

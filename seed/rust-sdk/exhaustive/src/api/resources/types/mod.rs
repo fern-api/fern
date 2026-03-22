@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient};
+use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod docs;
 pub use docs::DocsClient;
@@ -15,9 +15,7 @@ pub struct TypesClient {
 impl TypesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config.clone())?
-})
+            http_client: HttpClient::new(config.clone())?,
+        })
     }
-
 }
-

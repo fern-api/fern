@@ -37,7 +37,9 @@ impl EntityBuilder {
     /// - [`name`](EntityBuilder::name)
     pub fn build(self) -> Result<Entity, BuildError> {
         Ok(Entity {
-            r#type: self.r#type.ok_or_else(|| BuildError::missing_field("r#type"))?,
+            r#type: self
+                .r#type
+                .ok_or_else(|| BuildError::missing_field("r#type"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
         })
     }

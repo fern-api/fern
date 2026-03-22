@@ -26,8 +26,6 @@ impl ImportingABuilder {
 
     /// Consumes the builder and constructs a [`ImportingA`].
     pub fn build(self) -> Result<ImportingA, BuildError> {
-        Ok(ImportingA {
-            a: self.a,
-        })
+        Ok(ImportingA { a: self.a })
     }
 }

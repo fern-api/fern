@@ -37,7 +37,9 @@ impl NonVoidFunctionDefinitionBuilder {
     /// - [`code`](NonVoidFunctionDefinitionBuilder::code)
     pub fn build(self) -> Result<NonVoidFunctionDefinition, BuildError> {
         Ok(NonVoidFunctionDefinition {
-            signature: self.signature.ok_or_else(|| BuildError::missing_field("signature"))?,
+            signature: self
+                .signature
+                .ok_or_else(|| BuildError::missing_field("signature"))?,
             code: self.code.ok_or_else(|| BuildError::missing_field("code"))?,
         })
     }

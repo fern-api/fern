@@ -40,8 +40,12 @@ impl ProblemFilesBuilder {
     /// - [`read_only_files`](ProblemFilesBuilder::read_only_files)
     pub fn build(self) -> Result<ProblemFiles, BuildError> {
         Ok(ProblemFiles {
-            solution_file: self.solution_file.ok_or_else(|| BuildError::missing_field("solution_file"))?,
-            read_only_files: self.read_only_files.ok_or_else(|| BuildError::missing_field("read_only_files"))?,
+            solution_file: self
+                .solution_file
+                .ok_or_else(|| BuildError::missing_field("solution_file"))?,
+            read_only_files: self
+                .read_only_files
+                .ok_or_else(|| BuildError::missing_field("read_only_files"))?,
         })
     }
 }

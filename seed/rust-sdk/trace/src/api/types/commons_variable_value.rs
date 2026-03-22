@@ -3,74 +3,62 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum VariableValue {
-        #[serde(rename = "integerValue")]
-        #[non_exhaustive]
-        IntegerValue {
-            value: i64,
-        },
+    #[serde(rename = "integerValue")]
+    #[non_exhaustive]
+    IntegerValue { value: i64 },
 
-        #[serde(rename = "booleanValue")]
-        #[non_exhaustive]
-        BooleanValue {
-            value: bool,
-        },
+    #[serde(rename = "booleanValue")]
+    #[non_exhaustive]
+    BooleanValue { value: bool },
 
-        #[serde(rename = "doubleValue")]
-        #[non_exhaustive]
-        DoubleValue {
-            value: f64,
-        },
+    #[serde(rename = "doubleValue")]
+    #[non_exhaustive]
+    DoubleValue { value: f64 },
 
-        #[serde(rename = "stringValue")]
-        #[non_exhaustive]
-        StringValue {
-            value: String,
-        },
+    #[serde(rename = "stringValue")]
+    #[non_exhaustive]
+    StringValue { value: String },
 
-        #[serde(rename = "charValue")]
-        #[non_exhaustive]
-        CharValue {
-            value: String,
-        },
+    #[serde(rename = "charValue")]
+    #[non_exhaustive]
+    CharValue { value: String },
 
-        #[serde(rename = "mapValue")]
-        #[non_exhaustive]
-        MapValue {
-            #[serde(rename = "keyValuePairs")]
-            #[serde(default)]
-            key_value_pairs: Vec<Box<KeyValuePair>>,
-        },
+    #[serde(rename = "mapValue")]
+    #[non_exhaustive]
+    MapValue {
+        #[serde(rename = "keyValuePairs")]
+        #[serde(default)]
+        key_value_pairs: Vec<Box<KeyValuePair>>,
+    },
 
-        #[serde(rename = "listValue")]
-        #[non_exhaustive]
-        ListValue {
-            value: Vec<Box<VariableValue>>,
-        },
+    #[serde(rename = "listValue")]
+    #[non_exhaustive]
+    ListValue { value: Vec<Box<VariableValue>> },
 
-        #[serde(rename = "binaryTreeValue")]
-        #[non_exhaustive]
-        BinaryTreeValue {
-            #[serde(flatten)]
-            data: BinaryTreeValue,
-        },
+    #[serde(rename = "binaryTreeValue")]
+    #[non_exhaustive]
+    BinaryTreeValue {
+        #[serde(flatten)]
+        data: BinaryTreeValue,
+    },
 
-        #[serde(rename = "singlyLinkedListValue")]
-        #[non_exhaustive]
-        SinglyLinkedListValue {
-            #[serde(flatten)]
-            data: SinglyLinkedListValue,
-        },
+    #[serde(rename = "singlyLinkedListValue")]
+    #[non_exhaustive]
+    SinglyLinkedListValue {
+        #[serde(flatten)]
+        data: SinglyLinkedListValue,
+    },
 
-        #[serde(rename = "doublyLinkedListValue")]
-        #[non_exhaustive]
-        DoublyLinkedListValue {
-            #[serde(flatten)]
-            data: DoublyLinkedListValue,
-        },
+    #[serde(rename = "doublyLinkedListValue")]
+    #[non_exhaustive]
+    DoublyLinkedListValue {
+        #[serde(flatten)]
+        data: DoublyLinkedListValue,
+    },
 
-        #[serde(rename = "nullValue")]
-        #[non_exhaustive]
-        NullValue {},
+    #[serde(rename = "nullValue")]
+    #[non_exhaustive]
+    NullValue {},
 }
 
 impl VariableValue {

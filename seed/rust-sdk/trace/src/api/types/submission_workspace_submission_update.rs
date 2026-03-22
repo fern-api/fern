@@ -40,8 +40,12 @@ impl WorkspaceSubmissionUpdateBuilder {
     /// - [`update_info`](WorkspaceSubmissionUpdateBuilder::update_info)
     pub fn build(self) -> Result<WorkspaceSubmissionUpdate, BuildError> {
         Ok(WorkspaceSubmissionUpdate {
-            update_time: self.update_time.ok_or_else(|| BuildError::missing_field("update_time"))?,
-            update_info: self.update_info.ok_or_else(|| BuildError::missing_field("update_info"))?,
+            update_time: self
+                .update_time
+                .ok_or_else(|| BuildError::missing_field("update_time"))?,
+            update_info: self
+                .update_info
+                .ok_or_else(|| BuildError::missing_field("update_info"))?,
         })
     }
 }

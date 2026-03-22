@@ -40,8 +40,12 @@ impl WorkspaceFilesBuilder {
     /// - [`read_only_files`](WorkspaceFilesBuilder::read_only_files)
     pub fn build(self) -> Result<WorkspaceFiles, BuildError> {
         Ok(WorkspaceFiles {
-            main_file: self.main_file.ok_or_else(|| BuildError::missing_field("main_file"))?,
-            read_only_files: self.read_only_files.ok_or_else(|| BuildError::missing_field("read_only_files"))?,
+            main_file: self
+                .main_file
+                .ok_or_else(|| BuildError::missing_field("main_file"))?,
+            read_only_files: self
+                .read_only_files
+                .ok_or_else(|| BuildError::missing_field("read_only_files"))?,
         })
     }
 }

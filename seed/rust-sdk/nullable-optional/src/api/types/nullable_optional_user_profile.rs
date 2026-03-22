@@ -188,7 +188,9 @@ impl UserProfileBuilder {
     pub fn build(self) -> Result<UserProfile, BuildError> {
         Ok(UserProfile {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            username: self.username.ok_or_else(|| BuildError::missing_field("username"))?,
+            username: self
+                .username
+                .ok_or_else(|| BuildError::missing_field("username"))?,
             nullable_string: self.nullable_string,
             nullable_integer: self.nullable_integer,
             nullable_boolean: self.nullable_boolean,

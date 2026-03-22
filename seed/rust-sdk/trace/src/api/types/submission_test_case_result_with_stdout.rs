@@ -37,8 +37,12 @@ impl TestCaseResultWithStdoutBuilder {
     /// - [`stdout`](TestCaseResultWithStdoutBuilder::stdout)
     pub fn build(self) -> Result<TestCaseResultWithStdout, BuildError> {
         Ok(TestCaseResultWithStdout {
-            result: self.result.ok_or_else(|| BuildError::missing_field("result"))?,
-            stdout: self.stdout.ok_or_else(|| BuildError::missing_field("stdout"))?,
+            result: self
+                .result
+                .ok_or_else(|| BuildError::missing_field("result"))?,
+            stdout: self
+                .stdout
+                .ok_or_else(|| BuildError::missing_field("stdout"))?,
         })
     }
 }

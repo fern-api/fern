@@ -3,36 +3,32 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionResponse {
-        #[serde(rename = "serverInitialized")]
-        #[non_exhaustive]
-        ServerInitialized {},
+    #[serde(rename = "serverInitialized")]
+    #[non_exhaustive]
+    ServerInitialized {},
 
-        #[serde(rename = "problemInitialized")]
-        #[non_exhaustive]
-        ProblemInitialized {
-            value: ProblemId,
-        },
+    #[serde(rename = "problemInitialized")]
+    #[non_exhaustive]
+    ProblemInitialized { value: ProblemId },
 
-        #[serde(rename = "workspaceInitialized")]
-        #[non_exhaustive]
-        WorkspaceInitialized {},
+    #[serde(rename = "workspaceInitialized")]
+    #[non_exhaustive]
+    WorkspaceInitialized {},
 
-        #[serde(rename = "serverErrored")]
-        #[non_exhaustive]
-        ServerErrored {
-            #[serde(flatten)]
-            data: ExceptionInfo,
-        },
+    #[serde(rename = "serverErrored")]
+    #[non_exhaustive]
+    ServerErrored {
+        #[serde(flatten)]
+        data: ExceptionInfo,
+    },
 
-        #[serde(rename = "codeExecutionUpdate")]
-        #[non_exhaustive]
-        CodeExecutionUpdate {
-            value: CodeExecutionUpdate,
-        },
+    #[serde(rename = "codeExecutionUpdate")]
+    #[non_exhaustive]
+    CodeExecutionUpdate { value: CodeExecutionUpdate },
 
-        #[serde(rename = "terminated")]
-        #[non_exhaustive]
-        Terminated {},
+    #[serde(rename = "terminated")]
+    #[non_exhaustive]
+    Terminated {},
 }
 
 impl SubmissionResponse {

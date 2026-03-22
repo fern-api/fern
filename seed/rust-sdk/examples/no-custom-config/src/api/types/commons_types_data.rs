@@ -3,17 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum Data {
-        #[serde(rename = "string")]
-        #[non_exhaustive]
-        r#String {
-            value: String,
-        },
+    #[serde(rename = "string")]
+    #[non_exhaustive]
+    r#String { value: String },
 
-        #[serde(rename = "base64")]
-        #[non_exhaustive]
-        Base64 {
-            value: Vec<u8>,
-        },
+    #[serde(rename = "base64")]
+    #[non_exhaustive]
+    Base64 { value: Vec<u8> },
 }
 
 impl Data {
