@@ -3,10 +3,10 @@
 package trace
 
 import (
-    uuid "github.com/google/uuid"
     json "encoding/json"
-    internal "github.com/trace/fern/internal"
     fmt "fmt"
+    uuid "github.com/google/uuid"
+    internal "github.com/trace/fern/internal"
     v2 "github.com/trace/fern/v2"
     time "time"
 )
