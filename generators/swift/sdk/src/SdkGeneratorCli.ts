@@ -68,8 +68,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.generateSourceFiles(context);
-        await this.generateRootFiles(context);
-        await this.generateTestFiles(context);
+        await Promise.all([this.generateRootFiles(context), this.generateTestFiles(context)]);
         await context.project.persist();
     }
 
