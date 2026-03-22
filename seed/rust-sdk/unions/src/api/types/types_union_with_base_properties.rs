@@ -3,27 +3,21 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithBaseProperties {
-        #[serde(rename = "integer")]
-        #[non_exhaustive]
-        Integer {
-            value: i64,
-            id: String,
-        },
+    #[serde(rename = "integer")]
+    #[non_exhaustive]
+    Integer { value: i64, id: String },
 
-        #[serde(rename = "string")]
-        #[non_exhaustive]
-        r#String {
-            value: String,
-            id: String,
-        },
+    #[serde(rename = "string")]
+    #[non_exhaustive]
+    r#String { value: String, id: String },
 
-        #[serde(rename = "foo")]
-        #[non_exhaustive]
-        Foo {
-            #[serde(flatten)]
-            data: Foo,
-            id: String,
-        },
+    #[serde(rename = "foo")]
+    #[non_exhaustive]
+    Foo {
+        #[serde(flatten)]
+        data: Foo,
+        id: String,
+    },
 }
 
 impl UnionWithBaseProperties {
@@ -41,9 +35,9 @@ impl UnionWithBaseProperties {
 
     pub fn get_id(&self) -> &str {
         match self {
-                    Self::Integer { id, .. } => id,
-                    Self::String { id, .. } => id,
-                    Self::Foo { id, .. } => id,
-                }
+            Self::Integer { id, .. } => id,
+            Self::String { id, .. } => id,
+            Self::Foo { id, .. } => id,
+        }
     }
 }
