@@ -15,7 +15,7 @@ RUN node --version
 RUN npm --version
 
 # Install ruff.
-RUN pip install ruff
+RUN pip install ruff==0.15.7
 RUN ruff --version
 
 # Set Python environment
