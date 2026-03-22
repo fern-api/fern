@@ -347,6 +347,16 @@ ${methods.join("\n\n")}
         return !hasExplicitAuth;
     }
 
+    /**
+     * Returns true if the header is `Sec-WebSocket-Protocol` (case-insensitive).
+     * This header is handled specially by tungstenite for RFC 6455 subprotocol
+     * negotiation and must NOT be inserted as a regular HTTP header, because
+     * tungstenite will fail the handshake if the server does not echo it back.
+     */
+    private isWebSocketProtocolHeader(header: FernIr.HttpHeader): boolean {
+        return header.name.wireValue.toLowerCase() === "sec-websocket-protocol";
+    }
+
     private buildConnectParams(channel: FernIr.WebSocketChannel): Array<{ name: string; type: string }> {
         const params: Array<{ name: string; type: string }> = [];
 
@@ -360,6 +370,11 @@ ${methods.join("\n\n")}
         }
 
         for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — tungstenite handles subprotocol
+            // negotiation internally and fails if the server doesn't echo it.
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
             params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
         }
 
@@ -399,6 +414,10 @@ ${methods.join("\n\n")}
         }
 
         for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — see isWebSocketProtocolHeader().
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
             const paramName = header.name.name.snakeCase.safeName;
             const wireValue = header.name.wireValue;
             headerLines.push(`        options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
