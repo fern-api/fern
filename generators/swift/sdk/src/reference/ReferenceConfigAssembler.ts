@@ -13,9 +13,9 @@ export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    public constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext, dynamicSnippetsGenerator?: DynamicSnippetsGenerator) {
         this.context = context;
-        this.dynamicSnippetsGenerator = this.buildDynamicSnippetsGenerator();
+        this.dynamicSnippetsGenerator = dynamicSnippetsGenerator ?? this.buildDynamicSnippetsGenerator();
     }
 
     private buildDynamicSnippetsGenerator(): DynamicSnippetsGenerator {
