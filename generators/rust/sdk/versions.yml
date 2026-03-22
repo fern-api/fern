@@ -1,5 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.25.1
+  changelogEntry:
+    - summary: |
+        Stop generating empty HTTP client stubs for WebSocket-only subpackages. When an AsyncAPI
+        channel creates a subpackage with no HTTP endpoints (e.g., `realtime`, `tts`), the generator
+        no longer emits redundant empty client structs in `resources/`. The actual WebSocket
+        functionality remains in `src/api/websocket/` via the `WebSocketChannelGenerator`. This
+        removes confusing name collisions between the empty HTTP-based `RealtimeClient` in resources
+        and the functional WebSocket-based `RealtimeClient` in the websocket module.
+      type: fix
+    - summary: |
+        WebSocket connector now always auto-injects the Authorization header from the stored
+        client token, matching the TypeScript SDK experience where `client.realtime.connect()`
+        works without manually passing auth. Previously, channels with an explicit Authorization
+        header in the AsyncAPI spec required users to pass the token themselves.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.25.0
   changelogEntry:
     - summary: |
@@ -8,7 +27,6 @@
       type: feat
   createdAt: "2026-03-22"
   irVersion: 65
-
 - version: 0.24.1
   changelogEntry:
     - summary: |

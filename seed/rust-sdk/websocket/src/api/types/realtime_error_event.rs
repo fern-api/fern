@@ -40,12 +40,8 @@ impl ErrorEventBuilder {
     /// - [`error_message`](ErrorEventBuilder::error_message)
     pub fn build(self) -> Result<ErrorEvent, BuildError> {
         Ok(ErrorEvent {
-            error_code: self
-                .error_code
-                .ok_or_else(|| BuildError::missing_field("error_code"))?,
-            error_message: self
-                .error_message
-                .ok_or_else(|| BuildError::missing_field("error_message"))?,
+            error_code: self.error_code.ok_or_else(|| BuildError::missing_field("error_code"))?,
+            error_message: self.error_message.ok_or_else(|| BuildError::missing_field("error_message"))?,
         })
     }
 }
