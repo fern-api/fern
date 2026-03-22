@@ -472,13 +472,16 @@ export class RootClientGenerator {
     // =============================================================================
 
     private getSubpackages(): FernIr.Subpackage[] {
-        return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
+        return this.package.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getAllSubpackagesForModuleDetection(): FernIr.Subpackage[] {
-        // Get ALL subpackages from the entire IR to detect nested directory structures
+        // Get ALL subpackages from the entire IR to detect nested directory structures,
+        // excluding WebSocket-only subpackages which don't generate resource files.
         const allSubpackages: FernIr.Subpackage[] = Object.values(this.context.ir.subpackages);
-        return allSubpackages;
+        return allSubpackages.filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getRootClientName(): string {
