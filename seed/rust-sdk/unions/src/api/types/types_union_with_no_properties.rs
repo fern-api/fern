@@ -3,16 +3,16 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithNoProperties {
-        #[serde(rename = "foo")]
-        #[non_exhaustive]
-        Foo {
-            #[serde(flatten)]
-            data: Foo,
-        },
+    #[serde(rename = "foo")]
+    #[non_exhaustive]
+    Foo {
+        #[serde(flatten)]
+        data: Foo,
+    },
 
-        #[serde(rename = "empty")]
-        #[non_exhaustive]
-        Empty {},
+    #[serde(rename = "empty")]
+    #[non_exhaustive]
+    Empty {},
 }
 
 impl UnionWithNoProperties {

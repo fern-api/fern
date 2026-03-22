@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.24.1
+  changelogEntry:
+    - summary: |
+        Fix `mod.rs` module declarations not being removed for types inlined into discriminated
+        union variants. The generator was deleting the struct files for inlined types but still
+        emitting `pub mod` and `pub use` declarations for them, causing `error[E0583]: file not
+        found for module` compilation errors in generated SDKs.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.24.0
   changelogEntry:
     - summary: |
