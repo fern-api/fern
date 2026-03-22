@@ -28,4 +28,11 @@ impl StreamEvent {
     pub fn error(error: String) -> Self {
         Self::Error { error, code: None }
     }
+
+    pub fn error_with_code(error: String, code: i64) -> Self {
+        Self::Error {
+            error,
+            code: Some(code),
+        }
+    }
 }

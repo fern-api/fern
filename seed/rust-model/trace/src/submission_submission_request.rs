@@ -83,4 +83,20 @@ impl SubmissionRequest {
     pub fn stop(submission_id: SubmissionId) -> Self {
         Self::Stop { submission_id }
     }
+
+    pub fn initialize_problem_request_with_problem_version(problem_id: ProblemId, problem_version: i64) -> Self {
+        Self::InitializeProblemRequest { problem_id, problem_version: Some(problem_version) }
+    }
+
+    pub fn submit_v_2_with_problem_version(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, problem_version: i64) -> Self {
+        Self::SubmitV2 { submission_id, language, submission_files, problem_id, problem_version: Some(problem_version), user_id: None }
+    }
+
+    pub fn submit_v_2_with_user_id(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, user_id: String) -> Self {
+        Self::SubmitV2 { submission_id, language, submission_files, problem_id, problem_version: None, user_id: Some(user_id) }
+    }
+
+    pub fn workspace_submit_with_user_id(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, user_id: String) -> Self {
+        Self::WorkspaceSubmit { submission_id, language, submission_files, user_id: Some(user_id) }
+    }
 }
