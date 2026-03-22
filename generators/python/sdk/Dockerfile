@@ -21,7 +21,6 @@ RUN ruff --version
 # Set Python environment
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
-ENV HTTPX_LOG_LEVEL=trace
 
 # Keep in sync with the poetry-core version in pyproject.toml
 RUN pip3 install poetry==1.8.5
