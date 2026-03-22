@@ -690,9 +690,16 @@ export class UnionGenerator {
                             const isOptional = isOptionalType(property.valueType);
 
                             if (property === optionalProperty) {
-                                // This is the target optional field: unwrap it from Option<T> to T
+                                // This is the target optional field: unwrap it from Option<T> to T.
+                                // We must strip ALL optional/nullable layers because the IR may have
+                                // nested wrappers (e.g. optional<nullable<string>> from OpenAPI) that
+                                // the AST deduplicates into a single Option<T> at the field level.
+                                let bareTypeRef = property.valueType;
+                                while (isOptionalType(bareTypeRef)) {
+                                    bareTypeRef = getInnerTypeFromOptional(bareTypeRef);
+                                }
                                 const innerType = generateRustTypeForTypeReference(
-                                    getInnerTypeFromOptional(property.valueType),
+                                    bareTypeRef,
                                     this.context,
                                     isRecursive
                                 );
