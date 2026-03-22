@@ -14,7 +14,7 @@ import {
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 } from "@fern-api/rust-dynamic-snippets";
-import { generateModels } from "@fern-api/rust-model";
+import { generateModels, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
@@ -471,30 +471,34 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
         const files: RustFile[] = [];
 
-        // Generate model files
-        const modelFiles = this.generateModelFiles(context);
+        // Generate model files (includes build_error.rs for builders)
+        // This also populates inlinedUnionVariantTypeIds on the model context
+        const modelContext = context.toModelGeneratorContext();
+        const modelFiles = this.generateModelFilesWithContext(context, modelContext);
         files.push(...modelFiles);
 
-        // Generate types module file
-        const typesModFile = this.generateTypesModFile(context);
+        // Generate types module file, passing inlined type IDs so we skip their mod declarations
+        const typesModFile = this.generateTypesModFile(context, modelContext.inlinedUnionVariantTypeIds);
         files.push(typesModFile);
 
         return files;
     }
 
-    private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
-                new RustFile({
-                    filename: file.filename,
-                    directory: RelativeFilePath.of("src/api/types"),
-                    fileContents: this.getFileContents(file)
-                })
-        );
+    private generateModelFilesWithContext(context: SdkGeneratorContext, modelContext: ModelGeneratorContext): RustFile[] {
+        return generateModels({ context: modelContext })
+            .filter((file) => file.filename !== "error.rs")
+            .map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/api/types"),
+                        fileContents: this.getFileContents(file)
+                    })
+            );
     }
 
-    private generateTypesModFile(context: SdkGeneratorContext): RustFile {
-        const typesModule = this.buildTypesModule(context);
+    private generateTypesModFile(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): RustFile {
+        const typesModule = this.buildTypesModule(context, inlinedTypeIds);
         return new RustFile({
             filename: "mod.rs",
             directory: RelativeFilePath.of("src/api/types"),
@@ -576,7 +580,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
@@ -600,7 +604,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
-    private buildTypesModule(context: SdkGeneratorContext): Module {
+    private buildTypesModule(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): Module {
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
@@ -609,7 +613,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const uniqueModuleNames = new Set<string>();
 
         // Add regular IR types
-        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            // Skip types that are inlined into discriminated union variants
+            if (inlinedTypeIds?.has(typeId)) {
+                continue;
+            }
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension

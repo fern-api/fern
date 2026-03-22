@@ -30,10 +30,10 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/query-parameters/fern/client"
-    fern "github.com/query-parameters/fern"
-    uuid "github.com/google/uuid"
     context "context"
+    uuid "github.com/google/uuid"
+    fern "github.com/query-parameters/fern"
+    client "github.com/query-parameters/fern/client"
 )
 
 func do() {

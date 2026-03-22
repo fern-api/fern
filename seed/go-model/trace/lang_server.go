@@ -4,8 +4,8 @@ package trace
 
 import (
     json "encoding/json"
-    internal "github.com/trace/fern/internal"
     fmt "fmt"
+    internal "github.com/trace/fern/internal"
 )
 
 

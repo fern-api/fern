@@ -39,6 +39,7 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     retryRateLimited,
     requireEnvVars
@@ -57,6 +58,7 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
@@ -265,6 +267,7 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview,
         fernignorePath,
+        skipFernignore,
         retryRateLimited
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);

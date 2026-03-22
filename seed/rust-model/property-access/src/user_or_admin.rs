@@ -45,7 +45,6 @@ impl UserOrAdmin {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for UserOrAdmin {

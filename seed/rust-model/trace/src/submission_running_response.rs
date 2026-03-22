@@ -1,9 +1,0 @@
-pub use crate::prelude::*;
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct RunningResponse {
-    #[serde(rename = "submissionId")]
-    #[serde(default)]
-    pub submission_id: SubmissionId,
-    pub state: RunningSubmissionState,
-}

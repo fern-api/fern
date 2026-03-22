@@ -34,7 +34,7 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         });
     });
 
-    async function createLocalTaskHandler() {
+    async function createLocalTaskHandler({ skipFernignore }: { skipFernignore?: boolean } = {}) {
         // Dynamic import to avoid hoisting issues with mocks from other test files
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
         const { AbsoluteFilePath } = await import("@fern-api/fs-utils");
@@ -62,7 +62,8 @@ describe("LocalTaskHandler - .fernignore handling", () => {
             ai: undefined,
             isWhitelabel: false,
             generatorLanguage: undefined,
-            absolutePathToSpecRepo: undefined
+            absolutePathToSpecRepo: undefined,
+            skipFernignore
         });
     }
 
@@ -223,5 +224,51 @@ describe("LocalTaskHandler - .fernignore handling", () => {
         expect(files).toContain("new_file.py");
         expect(files).not.toContain("old_file.py");
         expect(files).not.toContain("custom_test.py");
+    });
+
+    it("with skipFernignore, .fernignore is skipped and all files are overwritten", async () => {
+        // Set up: .fernignore protects custom_test.py, but skipFernignore should bypass it
+        await writeFile(join(localOutputDir, ".fernignore"), "custom_test.py\ncustom_config.json\n");
+        await writeFile(join(localOutputDir, "custom_test.py"), "# ORIGINAL custom content\n");
+        await writeFile(join(localOutputDir, "custom_config.json"), '{"custom": true}\n');
+        await writeFile(join(localOutputDir, "old_generated.py"), "# old generated\n");
+
+        // Generator produces new files (including one with a fernignored name)
+        await writeFile(join(tmpOutputDir, "custom_test.py"), "# GENERATED custom_test.py\n");
+        await writeFile(join(tmpOutputDir, "new_file.py"), "# new\n");
+
+        const handler = await createLocalTaskHandler({ skipFernignore: true });
+        await handler.copyGeneratedFiles();
+
+        // custom_test.py should be OVERWRITTEN (not preserved) because skipFernignore is true
+        const customTestContent = await readFile(join(localOutputDir, "custom_test.py"), "utf-8");
+        expect(customTestContent).toBe("# GENERATED custom_test.py\n");
+
+        // new_file.py should exist
+        const files = await readdir(localOutputDir);
+        expect(files).toContain("new_file.py");
+        expect(files).toContain("custom_test.py");
+
+        // old files not in generated output should be gone
+        expect(files).not.toContain("old_generated.py");
+        expect(files).not.toContain("custom_config.json");
+    });
+
+    it("with skipFernignore=false, .fernignore is still respected", async () => {
+        // Set up: .fernignore protects custom_test.py, skipFernignore=false (default behavior)
+        await writeFile(join(localOutputDir, ".fernignore"), "custom_test.py\n");
+        await writeFile(join(localOutputDir, "custom_test.py"), "# ORIGINAL custom content\n");
+
+        // Generator produces a new version of custom_test.py
+        await writeFile(join(tmpOutputDir, "custom_test.py"), "# GENERATED version\n");
+        await writeFile(join(tmpOutputDir, "client.py"), "# new client\n");
+        await writeFile(join(tmpOutputDir, "README.md"), "# README\n");
+
+        const handler = await createLocalTaskHandler({ skipFernignore: false });
+        await handler.copyGeneratedFiles();
+
+        // custom_test.py should be PRESERVED (not overwritten)
+        const customTestContent = await readFile(join(localOutputDir, "custom_test.py"), "utf-8");
+        expect(customTestContent).toBe("# ORIGINAL custom content\n");
     });
 });

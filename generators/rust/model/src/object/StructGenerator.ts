@@ -3,6 +3,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import {
+    collectBuilderFieldsFromExtends,
+    collectBuilderFieldsFromProperties,
+    writeBuilderCode
+} from "../utils/builderUtils.js";
 import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
@@ -28,13 +33,35 @@ export class StructGenerator {
     }
 
     public generate(): RustFile {
-        const rustStruct = this.generateStructForTypeDeclaration();
-        const fileContents = this.generateFileContents(rustStruct);
+        const properties = this.getEffectiveProperties();
+        const rustStruct = this.generateStructForTypeDeclaration(properties);
+        const fileContents = this.generateFileContents(rustStruct, properties);
         return new RustFile({
             filename: this.getFilename(),
             directory: this.getFileDirectory(),
             fileContents
         });
+    }
+
+    private get typeId(): string {
+        return this.typeDeclaration.name.typeId;
+    }
+
+    private get structName(): string {
+        return this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
+    }
+
+    /**
+     * Returns the effective properties for this struct, excluding any fields
+     * consumed by the parent discriminant (e.g. websocket server message types
+     * where the parent enum uses `#[serde(tag = "type")]` which consumes the
+     * `type` field for dispatch).
+     */
+    private getEffectiveProperties(): FernIr.ObjectProperty[] {
+        if (this.context.websocketServerMessageTypeIds.has(this.typeId)) {
+            return this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type");
+        }
+        return this.objectTypeDeclaration.properties;
     }
 
     private getFilename(): string {
@@ -45,7 +72,7 @@ export class StructGenerator {
         return RelativeFilePath.of("src");
     }
 
-    private generateFileContents(rustStruct: rust.Struct): string {
+    private generateFileContents(rustStruct: rust.Struct, properties: FernIr.ObjectProperty[]): string {
         const writer = rust.writer();
 
         // Add use statements
@@ -55,31 +82,28 @@ export class StructGenerator {
         // Write the struct
         rustStruct.write(writer);
 
+        // Write builder code
+        const inheritedFields = collectBuilderFieldsFromExtends(
+            this.objectTypeDeclaration.extends,
+            this.context
+        );
+        const propertyFields = collectBuilderFieldsFromProperties(properties, this.context, this.typeId);
+        writeBuilderCode(writer, this.structName, [...inheritedFields, ...propertyFields]);
+
         return writer.toString();
     }
 
-    private generateStructForTypeDeclaration(): rust.Struct {
+    private generateStructForTypeDeclaration(properties: FernIr.ObjectProperty[]): rust.Struct {
         const fields: rust.Field[] = [];
 
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
 
-        // Determine if this type is a WebSocket server message body type.
-        // If so, skip the `type` property because the parent enum uses
-        // #[serde(tag = "type")] which consumes that field for dispatch.
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-        const skipTypeField = typeId != null && this.context.websocketServerMessageTypeIds.has(typeId);
-
         // Add regular properties
-        const properties = skipTypeField
-            ? this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type")
-            : this.objectTypeDeclaration.properties;
-        fields.push(
-            ...properties.map((property) => this.generateRustFieldForProperty(property))
-        );
+        fields.push(...properties.map((property) => this.generateRustFieldForProperty(property)));
 
         return rust.struct({
-            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
+            name: this.structName,
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
             fields,
@@ -125,11 +149,8 @@ export class StructGenerator {
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty): rust.Field {
-        // Find the typeId for this struct to detect recursive fields
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-
         // Check if this field creates a recursive reference
-        const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+        const isRecursive = isFieldRecursive(this.typeId, property.valueType, this.context.ir);
 
         // Generate the field type, wrapping in Box<T> if recursive
         const fieldType = generateFieldType(property, this.context, isRecursive);
@@ -234,8 +255,7 @@ export class StructGenerator {
             }
         }
         // Check if this type is referenced by any undiscriminated union
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-        return typeId != null && this.context.undiscriminatedUnionMemberTypeIds.has(typeId);
+        return this.context.undiscriminatedUnionMemberTypeIds.has(this.typeDeclaration.name.typeId);
     }
 
     private canDeriveDefault(): boolean {

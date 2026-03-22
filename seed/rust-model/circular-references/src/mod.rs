@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Model Types**: 12 types for data representation
+//! - **Model Types**: 11 types for data representation
 
 pub mod importing_a;
 pub mod root_type;
@@ -16,7 +16,6 @@ pub mod ast_u;
 pub mod ast_field_value;
 pub mod ast_container_value;
 pub mod ast_primitive_value;
-pub mod ast_object_value;
 pub mod ast_json_like;
 pub mod ast_json_like_with_null_and_undefined;
 
@@ -29,7 +28,6 @@ pub use ast_u::U;
 pub use ast_field_value::FieldValue;
 pub use ast_container_value::ContainerValue;
 pub use ast_primitive_value::PrimitiveValue;
-pub use ast_object_value::ObjectValue;
 pub use ast_json_like::JsonLike;
 pub use ast_json_like_with_null_and_undefined::JsonLikeWithNullAndUndefined;
 
