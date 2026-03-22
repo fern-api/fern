@@ -42,20 +42,26 @@ impl TestCaseGrade {
     pub fn non_hidden_with_actual_result(
         passed: bool,
         actual_result: VariableValue,
+        exception: Option<ExceptionV2>,
         stdout: String,
     ) -> Self {
         Self::NonHidden {
             passed,
             actual_result: Some(actual_result),
-            exception: None,
+            exception,
             stdout,
         }
     }
 
-    pub fn non_hidden_with_exception(passed: bool, exception: ExceptionV2, stdout: String) -> Self {
+    pub fn non_hidden_with_exception(
+        passed: bool,
+        actual_result: Option<VariableValue>,
+        exception: ExceptionV2,
+        stdout: String,
+    ) -> Self {
         Self::NonHidden {
             passed,
-            actual_result: None,
+            actual_result,
             exception: Some(exception),
             stdout,
         }
