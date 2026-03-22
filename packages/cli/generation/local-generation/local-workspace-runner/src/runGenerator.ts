@@ -69,7 +69,6 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients,
     includeOptionalRequestPropertyExamples,
     inspect,
     executionEnvironment,
@@ -97,7 +96,6 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride: string | undefined;
     writeUnitTests: boolean;
     generateOauthClients: boolean;
-    generatePaginatedClients: boolean;
     includeOptionalRequestPropertyExamples: boolean;
     inspect: boolean;
     executionEnvironment?: ExecutionEnvironment;
@@ -208,7 +206,6 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToFernConfig,
         writeUnitTests,
         generateOauthClients,
-        generatePaginatedClients,
         whiteLabel,
         paths
     });

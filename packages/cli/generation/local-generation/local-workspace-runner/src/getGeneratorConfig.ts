@@ -90,7 +90,6 @@ export declare namespace getGeneratorConfig {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
-        generatePaginatedClients: boolean;
         whiteLabel?: boolean;
         paths: {
             snippetPath: AbsoluteFilePath | undefined;
@@ -185,7 +184,6 @@ export function getGeneratorConfig({
     absolutePathToFernConfig,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients,
     whiteLabel,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
@@ -276,7 +274,7 @@ export function getGeneratorConfig({
         whitelabel: whiteLabel ?? false,
         writeUnitTests,
         generateOauthClients,
-        generatePaginatedClients,
+        generatePaginatedClients: true,
         license: licenseInfo
     };
 }

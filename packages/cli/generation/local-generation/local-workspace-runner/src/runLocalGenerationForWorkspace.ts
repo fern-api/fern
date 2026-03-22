@@ -336,7 +336,6 @@ export async function runLocalGenerationForWorkspace({
                     outputVersionOverride: version,
                     writeUnitTests: true,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
-                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name

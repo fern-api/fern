@@ -199,7 +199,6 @@ export class GenerationRunner {
             outputVersionOverride,
             writeUnitTests: true,
             generateOauthClients: true,
-            generatePaginatedClients: true,
             includeOptionalRequestPropertyExamples: true,
             inspect,
             executionEnvironment: this.executionEnvironment,
