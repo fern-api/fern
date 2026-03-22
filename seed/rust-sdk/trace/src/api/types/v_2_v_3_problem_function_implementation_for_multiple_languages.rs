@@ -30,9 +30,7 @@ impl FunctionImplementationForMultipleLanguages2Builder {
     /// - [`code_by_language`](FunctionImplementationForMultipleLanguages2Builder::code_by_language)
     pub fn build(self) -> Result<FunctionImplementationForMultipleLanguages2, BuildError> {
         Ok(FunctionImplementationForMultipleLanguages2 {
-            code_by_language: self
-                .code_by_language
-                .ok_or_else(|| BuildError::missing_field("code_by_language"))?,
+            code_by_language: self.code_by_language.ok_or_else(|| BuildError::missing_field("code_by_language"))?,
         })
     }
 }

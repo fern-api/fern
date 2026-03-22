@@ -29,9 +29,7 @@ impl FigBuilder {
     /// - [`animal`](FigBuilder::animal)
     pub fn build(self) -> Result<Fig, BuildError> {
         Ok(Fig {
-            animal: self
-                .animal
-                .ok_or_else(|| BuildError::missing_field("animal"))?,
+            animal: self.animal.ok_or_else(|| BuildError::missing_field("animal"))?,
         })
     }
 }

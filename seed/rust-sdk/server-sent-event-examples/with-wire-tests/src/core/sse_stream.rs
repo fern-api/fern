@@ -138,7 +138,11 @@ where
             .unwrap_or("");
 
         // Extract main content type (before ';' parameter separator) and compare case-insensitively
-        let content_type_main = content_type.split(';').next().unwrap_or("").trim();
+        let content_type_main = content_type
+            .split(';')
+            .next()
+            .unwrap_or("")
+            .trim();
 
         if !content_type_main.eq_ignore_ascii_case("text/event-stream") {
             return Err(ApiError::SseParseError(format!(
@@ -210,9 +214,7 @@ where
         match this.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
                 // Reset the deadline for the next event
-                this.deadline
-                    .as_mut()
-                    .reset(tokio::time::Instant::now() + *this.timeout);
+                this.deadline.as_mut().reset(tokio::time::Instant::now() + *this.timeout);
 
                 // Check for terminator before parsing
                 if let Some(ref terminator) = this.terminator {
@@ -230,9 +232,7 @@ where
             }
             Poll::Ready(Some(Err(e))) => {
                 // Reset the deadline on error events too
-                this.deadline
-                    .as_mut()
-                    .reset(tokio::time::Instant::now() + *this.timeout);
+                this.deadline.as_mut().reset(tokio::time::Instant::now() + *this.timeout);
                 Poll::Ready(Some(Err(ApiError::SseParseError(e.to_string()))))
             }
             Poll::Ready(None) => Poll::Ready(None),
@@ -241,9 +241,7 @@ where
                 match this.deadline.as_mut().poll(cx) {
                     Poll::Ready(()) => {
                         // Timeout expired — reset deadline and yield a timeout error
-                        this.deadline
-                            .as_mut()
-                            .reset(tokio::time::Instant::now() + *this.timeout);
+                        this.deadline.as_mut().reset(tokio::time::Instant::now() + *this.timeout);
                         Poll::Ready(Some(Err(ApiError::StreamTimeout)))
                     }
                     Poll::Pending => Poll::Pending,
@@ -278,10 +276,7 @@ where
         match inner_pin.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
                 // Reset the deadline for the next event
-                inner_pin
-                    .deadline
-                    .as_mut()
-                    .reset(tokio::time::Instant::now() + *inner_pin.timeout);
+                inner_pin.deadline.as_mut().reset(tokio::time::Instant::now() + *inner_pin.timeout);
 
                 // Check for terminator
                 if let Some(ref terminator) = inner_pin.terminator {
@@ -310,10 +305,7 @@ where
             }
             Poll::Ready(Some(Err(e))) => {
                 // Reset the deadline on error events too
-                inner_pin
-                    .deadline
-                    .as_mut()
-                    .reset(tokio::time::Instant::now() + *inner_pin.timeout);
+                inner_pin.deadline.as_mut().reset(tokio::time::Instant::now() + *inner_pin.timeout);
                 Poll::Ready(Some(Err(ApiError::SseParseError(e.to_string()))))
             }
             Poll::Ready(None) => Poll::Ready(None),
@@ -322,10 +314,7 @@ where
                 match inner_pin.deadline.as_mut().poll(cx) {
                     Poll::Ready(()) => {
                         // Timeout expired — reset deadline and yield a timeout error
-                        inner_pin
-                            .deadline
-                            .as_mut()
-                            .reset(tokio::time::Instant::now() + *inner_pin.timeout);
+                        inner_pin.deadline.as_mut().reset(tokio::time::Instant::now() + *inner_pin.timeout);
                         Poll::Ready(Some(Err(ApiError::StreamTimeout)))
                     }
                     Poll::Pending => Poll::Pending,

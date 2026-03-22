@@ -51,11 +51,10 @@ impl CreatePlaylistRequestBuilder {
     /// - [`body`](CreatePlaylistRequestBuilder::body)
     pub fn build(self) -> Result<CreatePlaylistRequest, BuildError> {
         Ok(CreatePlaylistRequest {
-            datetime: self
-                .datetime
-                .ok_or_else(|| BuildError::missing_field("datetime"))?,
+            datetime: self.datetime.ok_or_else(|| BuildError::missing_field("datetime"))?,
             optional_datetime: self.optional_datetime,
             body: self.body.ok_or_else(|| BuildError::missing_field("body"))?,
         })
     }
 }
+

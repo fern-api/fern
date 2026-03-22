@@ -47,13 +47,9 @@ impl TestCaseTemplateBuilder {
     /// - [`implementation`](TestCaseTemplateBuilder::implementation)
     pub fn build(self) -> Result<TestCaseTemplate, BuildError> {
         Ok(TestCaseTemplate {
-            template_id: self
-                .template_id
-                .ok_or_else(|| BuildError::missing_field("template_id"))?,
+            template_id: self.template_id.ok_or_else(|| BuildError::missing_field("template_id"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            implementation: self
-                .implementation
-                .ok_or_else(|| BuildError::missing_field("implementation"))?,
+            implementation: self.implementation.ok_or_else(|| BuildError::missing_field("implementation"))?,
         })
     }
 }

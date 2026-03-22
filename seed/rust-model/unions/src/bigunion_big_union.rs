@@ -4,9 +4,10 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum BigUnion {
         #[serde(rename = "normalSweet")]
+        #[non_exhaustive]
         NormalSweet {
-            #[serde(flatten)]
-            data: NormalSweet,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -19,9 +20,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "thankfulFactor")]
+        #[non_exhaustive]
         ThankfulFactor {
-            #[serde(flatten)]
-            data: ThankfulFactor,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -34,9 +36,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "jumboEnd")]
+        #[non_exhaustive]
         JumboEnd {
-            #[serde(flatten)]
-            data: JumboEnd,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -49,9 +52,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "hastyPain")]
+        #[non_exhaustive]
         HastyPain {
-            #[serde(flatten)]
-            data: HastyPain,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -64,9 +68,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "mistySnow")]
+        #[non_exhaustive]
         MistySnow {
-            #[serde(flatten)]
-            data: MistySnow,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -79,9 +84,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "distinctFailure")]
+        #[non_exhaustive]
         DistinctFailure {
-            #[serde(flatten)]
-            data: DistinctFailure,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -94,9 +100,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "practicalPrinciple")]
+        #[non_exhaustive]
         PracticalPrinciple {
-            #[serde(flatten)]
-            data: PracticalPrinciple,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -109,9 +116,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "limpingStep")]
+        #[non_exhaustive]
         LimpingStep {
-            #[serde(flatten)]
-            data: LimpingStep,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -124,9 +132,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "vibrantExcitement")]
+        #[non_exhaustive]
         VibrantExcitement {
-            #[serde(flatten)]
-            data: VibrantExcitement,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -139,9 +148,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "activeDiamond")]
+        #[non_exhaustive]
         ActiveDiamond {
-            #[serde(flatten)]
-            data: ActiveDiamond,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -154,9 +164,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "popularLimit")]
+        #[non_exhaustive]
         PopularLimit {
-            #[serde(flatten)]
-            data: PopularLimit,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -169,9 +180,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "falseMirror")]
+        #[non_exhaustive]
         FalseMirror {
-            #[serde(flatten)]
-            data: FalseMirror,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -184,9 +196,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "primaryBlock")]
+        #[non_exhaustive]
         PrimaryBlock {
-            #[serde(flatten)]
-            data: PrimaryBlock,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -199,9 +212,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "rotatingRatio")]
+        #[non_exhaustive]
         RotatingRatio {
-            #[serde(flatten)]
-            data: RotatingRatio,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -214,9 +228,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "colorfulCover")]
+        #[non_exhaustive]
         ColorfulCover {
-            #[serde(flatten)]
-            data: ColorfulCover,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -229,9 +244,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "disloyalValue")]
+        #[non_exhaustive]
         DisloyalValue {
-            #[serde(flatten)]
-            data: DisloyalValue,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -244,9 +260,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "gruesomeCoach")]
+        #[non_exhaustive]
         GruesomeCoach {
-            #[serde(flatten)]
-            data: GruesomeCoach,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -259,9 +276,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "totalWork")]
+        #[non_exhaustive]
         TotalWork {
-            #[serde(flatten)]
-            data: TotalWork,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -274,9 +292,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "harmoniousPlay")]
+        #[non_exhaustive]
         HarmoniousPlay {
-            #[serde(flatten)]
-            data: HarmoniousPlay,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -289,9 +308,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "uniqueStress")]
+        #[non_exhaustive]
         UniqueStress {
-            #[serde(flatten)]
-            data: UniqueStress,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -304,9 +324,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "unwillingSmoke")]
+        #[non_exhaustive]
         UnwillingSmoke {
-            #[serde(flatten)]
-            data: UnwillingSmoke,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -319,9 +340,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "frozenSleep")]
+        #[non_exhaustive]
         FrozenSleep {
-            #[serde(flatten)]
-            data: FrozenSleep,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -334,9 +356,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "diligentDeal")]
+        #[non_exhaustive]
         DiligentDeal {
-            #[serde(flatten)]
-            data: DiligentDeal,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -349,9 +372,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "attractiveScript")]
+        #[non_exhaustive]
         AttractiveScript {
-            #[serde(flatten)]
-            data: AttractiveScript,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -364,9 +388,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "hoarseMouse")]
+        #[non_exhaustive]
         HoarseMouse {
-            #[serde(flatten)]
-            data: HoarseMouse,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -379,9 +404,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "circularCard")]
+        #[non_exhaustive]
         CircularCard {
-            #[serde(flatten)]
-            data: CircularCard,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -394,9 +420,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "potableBad")]
+        #[non_exhaustive]
         PotableBad {
-            #[serde(flatten)]
-            data: PotableBad,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -409,9 +436,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "triangularRepair")]
+        #[non_exhaustive]
         TriangularRepair {
-            #[serde(flatten)]
-            data: TriangularRepair,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -424,9 +452,10 @@ pub enum BigUnion {
         },
 
         #[serde(rename = "gaseousRoad")]
+        #[non_exhaustive]
         GaseousRoad {
-            #[serde(flatten)]
-            data: GaseousRoad,
+            #[serde(default)]
+            value: String,
             id: String,
             #[serde(rename = "created-at")]
             #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -440,6 +469,122 @@ pub enum BigUnion {
 }
 
 impl BigUnion {
+    pub fn normal_sweet(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::NormalSweet { value, id, created_at, archived_at }
+    }
+
+    pub fn thankful_factor(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::ThankfulFactor { value, id, created_at, archived_at }
+    }
+
+    pub fn jumbo_end(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::JumboEnd { value, id, created_at, archived_at }
+    }
+
+    pub fn hasty_pain(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::HastyPain { value, id, created_at, archived_at }
+    }
+
+    pub fn misty_snow(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::MistySnow { value, id, created_at, archived_at }
+    }
+
+    pub fn distinct_failure(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::DistinctFailure { value, id, created_at, archived_at }
+    }
+
+    pub fn practical_principle(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::PracticalPrinciple { value, id, created_at, archived_at }
+    }
+
+    pub fn limping_step(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::LimpingStep { value, id, created_at, archived_at }
+    }
+
+    pub fn vibrant_excitement(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::VibrantExcitement { value, id, created_at, archived_at }
+    }
+
+    pub fn active_diamond(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::ActiveDiamond { value, id, created_at, archived_at }
+    }
+
+    pub fn popular_limit(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::PopularLimit { value, id, created_at, archived_at }
+    }
+
+    pub fn false_mirror(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::FalseMirror { value, id, created_at, archived_at }
+    }
+
+    pub fn primary_block(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::PrimaryBlock { value, id, created_at, archived_at }
+    }
+
+    pub fn rotating_ratio(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::RotatingRatio { value, id, created_at, archived_at }
+    }
+
+    pub fn colorful_cover(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::ColorfulCover { value, id, created_at, archived_at }
+    }
+
+    pub fn disloyal_value(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::DisloyalValue { value, id, created_at, archived_at }
+    }
+
+    pub fn gruesome_coach(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::GruesomeCoach { value, id, created_at, archived_at }
+    }
+
+    pub fn total_work(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::TotalWork { value, id, created_at, archived_at }
+    }
+
+    pub fn harmonious_play(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::HarmoniousPlay { value, id, created_at, archived_at }
+    }
+
+    pub fn unique_stress(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::UniqueStress { value, id, created_at, archived_at }
+    }
+
+    pub fn unwilling_smoke(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::UnwillingSmoke { value, id, created_at, archived_at }
+    }
+
+    pub fn frozen_sleep(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::FrozenSleep { value, id, created_at, archived_at }
+    }
+
+    pub fn diligent_deal(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::DiligentDeal { value, id, created_at, archived_at }
+    }
+
+    pub fn attractive_script(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::AttractiveScript { value, id, created_at, archived_at }
+    }
+
+    pub fn hoarse_mouse(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::HoarseMouse { value, id, created_at, archived_at }
+    }
+
+    pub fn circular_card(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::CircularCard { value, id, created_at, archived_at }
+    }
+
+    pub fn potable_bad(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::PotableBad { value, id, created_at, archived_at }
+    }
+
+    pub fn triangular_repair(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::TriangularRepair { value, id, created_at, archived_at }
+    }
+
+    pub fn gaseous_road(value: String, id: String, created_at: DateTime<FixedOffset>, archived_at: Option<DateTime<FixedOffset>>) -> Self {
+        Self::GaseousRoad { value, id, created_at, archived_at }
+    }
+
     pub fn get_id(&self) -> &str {
         match self {
                     Self::NormalSweet { id, .. } => id,
@@ -541,5 +686,4 @@ impl BigUnion {
                     Self::GaseousRoad { archived_at, .. } => archived_at,
                 }
     }
-
 }

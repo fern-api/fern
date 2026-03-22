@@ -5,7 +5,8 @@ FROM golang:1.23.8-alpine3.20
 ENV YARN_CACHE_FOLDER=/.yarn
 
 RUN apk --no-cache add bash curl git zip
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
 # Copy Node from multi-stage build (consistent with go/sdk pattern)
 COPY --from=node /usr/local/bin/node /usr/local/bin/

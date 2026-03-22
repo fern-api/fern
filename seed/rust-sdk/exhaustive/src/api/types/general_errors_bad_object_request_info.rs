@@ -29,9 +29,7 @@ impl BadObjectRequestInfoBuilder {
     /// - [`message`](BadObjectRequestInfoBuilder::message)
     pub fn build(self) -> Result<BadObjectRequestInfo, BuildError> {
         Ok(BadObjectRequestInfo {
-            message: self
-                .message
-                .ok_or_else(|| BuildError::missing_field("message"))?,
+            message: self.message.ok_or_else(|| BuildError::missing_field("message"))?,
         })
     }
 }

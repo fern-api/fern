@@ -1,5 +1,5 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient};
+use crate::{ClientConfig, ApiError, HttpClient};
+use crate::api::{*};
 
 pub mod service;
 pub use service::ServiceClient3;
@@ -11,8 +11,10 @@ pub struct HealthClient {
 impl HealthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-            service: ServiceClient3::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?,
+    service: ServiceClient3::new(config.clone())?
+})
     }
+
 }
+
