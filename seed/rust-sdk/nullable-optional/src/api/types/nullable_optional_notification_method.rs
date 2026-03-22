@@ -69,4 +69,33 @@ impl NotificationMethod {
             badge: None,
         }
     }
+
+    pub fn email_with_html_content(
+        email_address: String,
+        subject: String,
+        html_content: String,
+    ) -> Self {
+        Self::Email {
+            email_address,
+            subject,
+            html_content: Some(html_content),
+        }
+    }
+
+    pub fn sms_with_short_code(phone_number: String, message: String, short_code: String) -> Self {
+        Self::Sms {
+            phone_number,
+            message,
+            short_code: Some(short_code),
+        }
+    }
+
+    pub fn push_with_badge(device_token: String, title: String, body: String, badge: i64) -> Self {
+        Self::Push {
+            device_token,
+            title,
+            body,
+            badge: Some(badge),
+        }
+    }
 }

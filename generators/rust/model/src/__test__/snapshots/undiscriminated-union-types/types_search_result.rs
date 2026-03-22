@@ -53,4 +53,8 @@ impl SearchResult {
     pub fn category(id: String, name: String, description: String) -> Self {
         Self::Category { id, name, description, parent_id: None }
     }
+
+    pub fn category_with_parent_id(id: String, name: String, description: String, parent_id: String) -> Self {
+        Self::Category { id, name, description, parent_id: Some(parent_id) }
+    }
 }
