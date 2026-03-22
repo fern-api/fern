@@ -57,13 +57,14 @@ impl SearchResult {
         title: String,
         content: String,
         author: String,
+        tags: Option<Vec<String>>,
     ) -> Self {
         Self::Document {
             id,
             title,
             content,
             author: Some(author),
-            tags: None,
+            tags,
         }
     }
 
@@ -71,13 +72,14 @@ impl SearchResult {
         id: String,
         title: String,
         content: String,
+        author: Option<String>,
         tags: Vec<String>,
     ) -> Self {
         Self::Document {
             id,
             title,
             content,
-            author: None,
+            author,
             tags: Some(tags),
         }
     }
