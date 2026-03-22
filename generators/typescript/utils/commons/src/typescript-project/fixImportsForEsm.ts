@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { existsSync, readFileSync } from "fs";
-import { readdir, readFile, writeFile } from "fs/promises";
+import { access, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
 // Define the possible import modifications
@@ -34,7 +33,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
     // Phase 1: Resolve tsconfig include/exclude paths and discover files within scope.
     // The old ts-morph implementation used project.getSourceFiles() which respects tsconfig
     // include/exclude. We replicate this by reading the tsconfig chain.
-    const { includeDirs, excludeDirs } = resolveIncludeExcludeDirectories(pathToProject);
+    const { includeDirs, excludeDirs } = await resolveIncludeExcludeDirectories(pathToProject);
     const fileExistenceCache = new Set<string>();
     for (const dir of includeDirs) {
         await collectFiles(dir, fileExistenceCache, excludeDirs);
@@ -198,9 +197,9 @@ interface IncludeExclude {
 
 // Resolve the tsconfig.json "include" and "exclude" directories, following the "extends" chain.
 // Returns absolute directory paths. Falls back to the project root if no include is found.
-function resolveIncludeExcludeDirectories(projectPath: string): IncludeExclude {
+async function resolveIncludeExcludeDirectories(projectPath: string): Promise<IncludeExclude> {
     const tsconfigPath = path.join(projectPath, "tsconfig.json");
-    const result = resolveFromTsconfig(tsconfigPath);
+    const result = await resolveFromTsconfig(tsconfigPath);
 
     return {
         includeDirs:
@@ -211,19 +210,23 @@ function resolveIncludeExcludeDirectories(projectPath: string): IncludeExclude {
 
 // Walk the tsconfig extends chain to collect include/exclude arrays.
 // TypeScript merges: child "include" overrides parent "include", same for "exclude".
-function resolveFromTsconfig(tsconfigPath: string): { include: string[]; exclude: string[] } {
-    if (!existsSync(tsconfigPath)) {
+async function resolveFromTsconfig(tsconfigPath: string): Promise<{ include: string[]; exclude: string[] }> {
+    const exists = await access(tsconfigPath).then(
+        () => true,
+        () => false
+    );
+    if (!exists) {
         return { include: [], exclude: [] };
     }
 
     try {
-        const raw = JSON.parse(readFileSync(tsconfigPath, "utf-8"));
+        const raw = JSON.parse(await readFile(tsconfigPath, "utf-8"));
 
         // Start with parent values if extending
         let parentResult = { include: [] as string[], exclude: [] as string[] };
         if (typeof raw.extends === "string") {
             const extendsPath = path.resolve(path.dirname(tsconfigPath), raw.extends);
-            parentResult = resolveFromTsconfig(extendsPath);
+            parentResult = await resolveFromTsconfig(extendsPath);
         }
 
         // Child arrays override parent arrays (TypeScript behavior)
