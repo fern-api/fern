@@ -33,4 +33,18 @@ impl UnionWithDuplicativeDiscriminants {
             title,
         }
     }
+
+    pub fn first_item_type_with_type(r#type: String, name: String) -> Self {
+        Self::FirstItemType {
+            r#type: Some(r#type),
+            name,
+        }
+    }
+
+    pub fn second_item_type_with_type(r#type: String, title: String) -> Self {
+        Self::SecondItemType {
+            r#type: Some(r#type),
+            title,
+        }
+    }
 }

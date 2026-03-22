@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        Generate convenience constructors for discriminated union variants with optional fields.
+        For each optional field in an inlined variant, a `{variant}_with_{field}` constructor is
+        generated that accepts the field as a required parameter (unwrapped from `Option<T>`) while
+        defaulting all other optional fields to `None`. For example, an `Assistant` variant with
+        optional `tool_calls` now gets an `assistant_with_tool_calls(tool_calls: Vec<ToolCall>)`
+        constructor.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+
 - version: 0.2.1
   changelogEntry:
     - summary: |

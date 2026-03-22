@@ -101,4 +101,14 @@ impl VariableType {
     pub fn doubly_linked_list_type() -> Self {
         Self::DoublyLinkedListType {}
     }
+
+    pub fn list_type_with_is_fixed_length(
+        value_type: Box<VariableType>,
+        is_fixed_length: bool,
+    ) -> Self {
+        Self::ListType {
+            value_type,
+            is_fixed_length: Some(is_fixed_length),
+        }
+    }
 }

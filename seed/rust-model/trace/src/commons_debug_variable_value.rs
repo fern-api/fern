@@ -152,4 +152,8 @@ impl DebugVariableValue {
     pub fn generic_value(stringified_value: String) -> Self {
         Self::GenericValue { stringified_type: None, stringified_value }
     }
+
+    pub fn generic_value_with_stringified_type(stringified_type: String, stringified_value: String) -> Self {
+        Self::GenericValue { stringified_type: Some(stringified_type), stringified_value }
+    }
 }

@@ -453,11 +453,28 @@ export class UnionGenerator {
             // Generate constructor methods for all variants
             // Since #[non_exhaustive] prevents direct construction from outside the crate,
             // these constructors provide the way to create variant instances.
+            let needsNewline = false;
             this.unionTypeDeclaration.types.forEach((unionType, index) => {
                 if (index > 0) {
                     writer.newLine();
                 }
                 this.generateVariantConstructor(writer, unionType);
+                needsNewline = true;
+            });
+
+            // Generate convenience constructors for inlined variants with optional fields.
+            // For each optional field in an inlined variant, generate a `{variant}_with_{field}`
+            // constructor that takes the field as a required parameter (unwrapped from Option)
+            // alongside any required fields, defaulting all other optional fields to None.
+            this.unionTypeDeclaration.types.forEach((unionType) => {
+                const convenienceConstructors = this.getConvenienceConstructorsForVariant(unionType);
+                convenienceConstructors.forEach((gen) => {
+                    if (needsNewline) {
+                        writer.newLine();
+                    }
+                    gen(writer);
+                    needsNewline = true;
+                });
             });
 
             // Generate getter methods for base properties
@@ -610,6 +627,103 @@ export class UnionGenerator {
                 });
             }
         });
+    }
+
+    /**
+     * For inlined union variants with optional fields, generates convenience constructors
+     * like `{variant}_with_{field}` that accept the optional field as a required parameter
+     * (unwrapped from Option<T> to T), alongside any required fields. All other optional
+     * fields default to None.
+     *
+     * For example, for an Assistant variant with optional fields `content`, `name`,
+     * `reasoning_content`, and `tool_calls`, this generates:
+     *   - `assistant_with_content(content: Content) -> Self`
+     *   - `assistant_with_tool_calls(tool_calls: Vec<ToolCall>) -> Self`
+     *   - etc.
+     */
+    private getConvenienceConstructorsForVariant(
+        unionType: FernIr.SingleUnionType
+    ): ((writer: rust.Writer) => void)[] {
+        const constructors: ((writer: rust.Writer) => void)[] = [];
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
+        const constructorBaseName = unionType.discriminantValue.name.snakeCase.unsafeName;
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
+        unionType.shape._visit({
+            noProperties: () => {},
+            singleProperty: () => {},
+            samePropertiesAsObject: (declaredTypeName) => {
+                const canInline = this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId);
+                if (!canInline) {
+                    return;
+                }
+
+                const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                if (referencedType?.shape.type !== "object") {
+                    return;
+                }
+
+                const properties = referencedType.shape.properties;
+                const optionalProperties = properties.filter((p) => isOptionalType(p.valueType));
+
+                // Only generate convenience constructors if there are optional fields
+                if (optionalProperties.length === 0) {
+                    return;
+                }
+
+                for (const optionalProperty of optionalProperties) {
+                    const optFieldName = this.context.escapeRustKeyword(optionalProperty.name.name.snakeCase.unsafeName);
+                    // Use the raw (unescaped) field name in the method name since r# prefixes
+                    // are not valid in function names
+                    const optFieldNameRaw = optionalProperty.name.name.snakeCase.unsafeName;
+                    const methodName = `${constructorBaseName}_with_${optFieldNameRaw}`;
+
+                    constructors.push((writer: rust.Writer) => {
+                        // Build required params + the one optional field (unwrapped)
+                        const params: string[] = [];
+                        const fieldAssignments: string[] = [];
+
+                        properties.forEach((property) => {
+                            const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+                            const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+                            const isOptional = isOptionalType(property.valueType);
+
+                            if (property === optionalProperty) {
+                                // This is the target optional field: unwrap it from Option<T> to T
+                                const innerType = generateRustTypeForTypeReference(
+                                    getInnerTypeFromOptional(property.valueType),
+                                    this.context,
+                                    isRecursive
+                                );
+                                params.push(`${fieldName}: ${innerType.toString()}`);
+                                fieldAssignments.push(`${fieldName}: Some(${fieldName})`);
+                            } else if (isOptional) {
+                                // Other optional fields default to None
+                                fieldAssignments.push(`${fieldName}: None`);
+                            } else {
+                                // Required fields are passed as parameters
+                                const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
+                                params.push(`${fieldName}: ${fieldType.toString()}`);
+                                fieldAssignments.push(fieldName);
+                            }
+                        });
+
+                        const baseParams = this.getBasePropertyParams();
+                        const allParams = [...params, ...baseParams];
+                        const baseFields = this.getBasePropertyFieldAssignments();
+                        const allFields = [...fieldAssignments, ...baseFields];
+
+                        writer.writeBlock(`pub fn ${methodName}(${allParams.join(", ")}) -> Self`, () => {
+                            writer.writeLine(`Self::${variantName} { ${allFields.join(", ")} }`);
+                        });
+                    });
+                }
+            },
+            _other: () => {}
+        });
+
+        return constructors;
     }
 
     private getBasePropertyParams(): string[] {
