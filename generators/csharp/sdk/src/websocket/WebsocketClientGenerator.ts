@@ -842,7 +842,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 // the Environment getter returns "" (not null) from base.BaseUrl
                 if (this.hasEnvironments) {
                     writer.writeLine(
-                        "Environment = string.IsNullOrEmpty(options?.Environment) ? (defaults?.Environment ?? \"\") : options.Environment,"
+                        'Environment = string.IsNullOrEmpty(options?.Environment) ? (defaults?.Environment ?? "") : options.Environment,'
                     );
                 }
 
