@@ -7,11 +7,28 @@ import chalk from "chalk";
 import { readFileSync } from "fs";
 import grayMatter from "gray-matter";
 
-interface MdxValidationError {
-    filepath: AbsoluteFilePath;
-    message: string;
-    line?: number;
-    column?: number;
+class MdxValidationError {
+    constructor(
+        public readonly filepath: AbsoluteFilePath,
+        public readonly message: string,
+        public readonly line?: number,
+        public readonly column?: number
+    ) {}
+
+    toString(): string {
+        let formatted = chalk.red(`\n  ${this.filepath}`);
+
+        if (this.line != null) {
+            formatted += chalk.yellow(`:${this.line}`);
+            if (this.column != null) {
+                formatted += chalk.yellow(`:${this.column}`);
+            }
+        }
+
+        formatted += chalk.gray(`\n    ${this.message}`);
+
+        return formatted;
+    }
 }
 
 export async function validateMdxFiles({
@@ -73,31 +90,11 @@ export async function validateMdxFiles({
                 }
             }
 
-            errors.push({
-                filepath,
-                message,
-                line,
-                column
-            });
+            errors.push(new MdxValidationError(filepath, message, line, column));
         }
     }
 
     return { errors, totalFiles: filesToCheck.length };
-}
-
-function formatErrorWithContext(error: MdxValidationError): string {
-    let formatted = chalk.red(`\n  ${error.filepath}`);
-
-    if (error.line != null) {
-        formatted += chalk.yellow(`:${error.line}`);
-        if (error.column != null) {
-            formatted += chalk.yellow(`:${error.column}`);
-        }
-    }
-
-    formatted += chalk.gray(`\n    ${error.message}`);
-
-    return formatted;
 }
 
 export function logMdxValidationResults({
@@ -115,7 +112,7 @@ export function logMdxValidationResults({
     }
 
     for (const error of errors) {
-        context.logger.error(formatErrorWithContext(error));
+        context.logger.error(error.toString());
     }
 
     context.logger.error("");

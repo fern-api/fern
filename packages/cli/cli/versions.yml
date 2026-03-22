@@ -2,14 +2,13 @@
 - version: 4.39.0
   changelogEntry:
     - summary: |
-        Add `fern docs lint` command to validate MDX syntax in documentation files.
+        Add `fern docs md check` command to validate MDX syntax in documentation files.
         The command parses all MDX files referenced in docs.yml and reports syntax
         errors with accurate file paths and line:column numbers, accounting for
         frontmatter offsets.
       type: feat
   createdAt: "2026-03-20"
   irVersion: 65
-  
 
 - version: 4.38.0
   changelogEntry:

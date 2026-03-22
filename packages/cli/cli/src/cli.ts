@@ -1650,7 +1650,6 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
-        addDocsLintCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
@@ -1663,6 +1662,7 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     // This command is in beta and not yet ready for general use
     cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
+        addDocsLintCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1900,14 +1900,14 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsLintCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "lint",
+        "check",
         "Validate MDX syntax in your docs",
         () => {
             // No additional options for this command
         },
         async () => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern docs lint"
+                command: "fern docs md check"
             });
 
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
