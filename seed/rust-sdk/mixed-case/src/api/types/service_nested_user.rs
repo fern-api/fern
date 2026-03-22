@@ -41,9 +41,7 @@ impl NestedUserBuilder {
     pub fn build(self) -> Result<NestedUser, BuildError> {
         Ok(NestedUser {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            nested_user: self
-                .nested_user
-                .ok_or_else(|| BuildError::missing_field("nested_user"))?,
+            nested_user: self.nested_user.ok_or_else(|| BuildError::missing_field("nested_user"))?,
         })
     }
 }

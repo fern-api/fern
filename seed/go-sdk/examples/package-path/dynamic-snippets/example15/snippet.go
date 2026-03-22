@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    context "context"
 )
 
 func do() {
@@ -31,11 +31,11 @@ func do() {
                 "Florence Pugh",
                 "Willem Dafoe",
             },
-            "releaseDate": "2023-12-08",
             "ratings": map[string]any{
-                "rottenTomatoes": 97,
                 "imdb": 7.6,
+                "rottenTomatoes": 97,
             },
+            "releaseDate": "2023-12-08",
         },
         Revenue: int64(1000000),
     }

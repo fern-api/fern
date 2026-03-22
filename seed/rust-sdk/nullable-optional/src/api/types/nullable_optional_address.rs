@@ -84,21 +84,13 @@ impl AddressBuilder {
     /// - [`tenant_id`](AddressBuilder::tenant_id)
     pub fn build(self) -> Result<Address, BuildError> {
         Ok(Address {
-            street: self
-                .street
-                .ok_or_else(|| BuildError::missing_field("street"))?,
+            street: self.street.ok_or_else(|| BuildError::missing_field("street"))?,
             city: self.city,
             state: self.state,
-            zip_code: self
-                .zip_code
-                .ok_or_else(|| BuildError::missing_field("zip_code"))?,
+            zip_code: self.zip_code.ok_or_else(|| BuildError::missing_field("zip_code"))?,
             country: self.country,
-            building_id: self
-                .building_id
-                .ok_or_else(|| BuildError::missing_field("building_id"))?,
-            tenant_id: self
-                .tenant_id
-                .ok_or_else(|| BuildError::missing_field("tenant_id"))?,
+            building_id: self.building_id.ok_or_else(|| BuildError::missing_field("building_id"))?,
+            tenant_id: self.tenant_id.ok_or_else(|| BuildError::missing_field("tenant_id"))?,
         })
     }
 }

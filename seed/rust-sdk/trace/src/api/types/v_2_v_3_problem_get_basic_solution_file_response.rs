@@ -30,9 +30,7 @@ impl GetBasicSolutionFileResponse2Builder {
     /// - [`solution_file_by_language`](GetBasicSolutionFileResponse2Builder::solution_file_by_language)
     pub fn build(self) -> Result<GetBasicSolutionFileResponse2, BuildError> {
         Ok(GetBasicSolutionFileResponse2 {
-            solution_file_by_language: self
-                .solution_file_by_language
-                .ok_or_else(|| BuildError::missing_field("solution_file_by_language"))?,
+            solution_file_by_language: self.solution_file_by_language.ok_or_else(|| BuildError::missing_field("solution_file_by_language"))?,
         })
     }
 }

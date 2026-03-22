@@ -40,9 +40,7 @@ impl StuntDoubleBuilder {
     pub fn build(self) -> Result<StuntDouble, BuildError> {
         Ok(StuntDouble {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            actor_or_actress_id: self
-                .actor_or_actress_id
-                .ok_or_else(|| BuildError::missing_field("actor_or_actress_id"))?,
+            actor_or_actress_id: self.actor_or_actress_id.ok_or_else(|| BuildError::missing_field("actor_or_actress_id"))?,
         })
     }
 }

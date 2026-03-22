@@ -88,27 +88,13 @@ impl CreateProblemRequestV2Builder {
     /// - [`is_public`](CreateProblemRequestV2Builder::is_public)
     pub fn build(self) -> Result<CreateProblemRequestV2, BuildError> {
         Ok(CreateProblemRequestV2 {
-            problem_name: self
-                .problem_name
-                .ok_or_else(|| BuildError::missing_field("problem_name"))?,
-            problem_description: self
-                .problem_description
-                .ok_or_else(|| BuildError::missing_field("problem_description"))?,
-            custom_files: self
-                .custom_files
-                .ok_or_else(|| BuildError::missing_field("custom_files"))?,
-            custom_test_case_templates: self
-                .custom_test_case_templates
-                .ok_or_else(|| BuildError::missing_field("custom_test_case_templates"))?,
-            testcases: self
-                .testcases
-                .ok_or_else(|| BuildError::missing_field("testcases"))?,
-            supported_languages: self
-                .supported_languages
-                .ok_or_else(|| BuildError::missing_field("supported_languages"))?,
-            is_public: self
-                .is_public
-                .ok_or_else(|| BuildError::missing_field("is_public"))?,
+            problem_name: self.problem_name.ok_or_else(|| BuildError::missing_field("problem_name"))?,
+            problem_description: self.problem_description.ok_or_else(|| BuildError::missing_field("problem_description"))?,
+            custom_files: self.custom_files.ok_or_else(|| BuildError::missing_field("custom_files"))?,
+            custom_test_case_templates: self.custom_test_case_templates.ok_or_else(|| BuildError::missing_field("custom_test_case_templates"))?,
+            testcases: self.testcases.ok_or_else(|| BuildError::missing_field("testcases"))?,
+            supported_languages: self.supported_languages.ok_or_else(|| BuildError::missing_field("supported_languages"))?,
+            is_public: self.is_public.ok_or_else(|| BuildError::missing_field("is_public"))?,
         })
     }
 }

@@ -25,6 +25,7 @@ export declare namespace GenerationRunner {
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
+        skipFernignore?: boolean;
     }
 }
 
@@ -44,7 +45,8 @@ export class GenerationRunner {
         outputVersionOverride,
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
-        inspect
+        inspect,
+        skipFernignore
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -68,7 +70,8 @@ export class GenerationRunner {
                                 irVersionOverride,
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
-                                inspect
+                                inspect,
+                                skipFernignore
                             });
 
                             interactiveTaskContext.logger.info(
@@ -119,7 +122,8 @@ export class GenerationRunner {
         irVersionOverride,
         outputVersionOverride,
         absolutePathToFernConfig,
-        inspect
+        inspect,
+        skipFernignore
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -130,6 +134,7 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
+        skipFernignore?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -201,7 +206,8 @@ export class GenerationRunner {
             ir: rawIr,
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
-            absolutePathToSpecRepo: undefined
+            absolutePathToSpecRepo: undefined,
+            skipFernignore
         });
     }
 }

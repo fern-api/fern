@@ -73,18 +73,11 @@ impl GetPlaylistsQueryRequestBuilder {
     pub fn build(self) -> Result<GetPlaylistsQueryRequest, BuildError> {
         Ok(GetPlaylistsQueryRequest {
             limit: self.limit,
-            other_field: self
-                .other_field
-                .ok_or_else(|| BuildError::missing_field("other_field"))?,
-            multi_line_docs: self
-                .multi_line_docs
-                .ok_or_else(|| BuildError::missing_field("multi_line_docs"))?,
-            optional_multiple_field: self
-                .optional_multiple_field
-                .ok_or_else(|| BuildError::missing_field("optional_multiple_field"))?,
-            multiple_field: self
-                .multiple_field
-                .ok_or_else(|| BuildError::missing_field("multiple_field"))?,
+            other_field: self.other_field.ok_or_else(|| BuildError::missing_field("other_field"))?,
+            multi_line_docs: self.multi_line_docs.ok_or_else(|| BuildError::missing_field("multi_line_docs"))?,
+            optional_multiple_field: self.optional_multiple_field.ok_or_else(|| BuildError::missing_field("optional_multiple_field"))?,
+            multiple_field: self.multiple_field.ok_or_else(|| BuildError::missing_field("multiple_field"))?,
         })
     }
 }
+

@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/nullable-allof-extends/fern/client"
-    fern "github.com/nullable-allof-extends/fern"
     context "context"
+    fern "github.com/nullable-allof-extends/fern"
+    client "github.com/nullable-allof-extends/fern/client"
 )
 
 func do() {

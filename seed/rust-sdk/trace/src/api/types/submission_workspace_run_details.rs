@@ -48,9 +48,7 @@ impl WorkspaceRunDetailsBuilder {
         Ok(WorkspaceRunDetails {
             exception_v_2: self.exception_v_2,
             exception: self.exception,
-            stdout: self
-                .stdout
-                .ok_or_else(|| BuildError::missing_field("stdout"))?,
+            stdout: self.stdout.ok_or_else(|| BuildError::missing_field("stdout"))?,
         })
     }
 }

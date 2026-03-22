@@ -29,9 +29,7 @@ impl GetFunctionSignatureRequestBuilder {
     /// - [`function_signature`](GetFunctionSignatureRequestBuilder::function_signature)
     pub fn build(self) -> Result<GetFunctionSignatureRequest, BuildError> {
         Ok(GetFunctionSignatureRequest {
-            function_signature: self
-                .function_signature
-                .ok_or_else(|| BuildError::missing_field("function_signature"))?,
+            function_signature: self.function_signature.ok_or_else(|| BuildError::missing_field("function_signature"))?,
         })
     }
 }

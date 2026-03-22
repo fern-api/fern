@@ -38,12 +38,8 @@ impl FileInfoBuilder {
     /// - [`contents`](FileInfoBuilder::contents)
     pub fn build(self) -> Result<FileInfo, BuildError> {
         Ok(FileInfo {
-            filename: self
-                .filename
-                .ok_or_else(|| BuildError::missing_field("filename"))?,
-            contents: self
-                .contents
-                .ok_or_else(|| BuildError::missing_field("contents"))?,
+            filename: self.filename.ok_or_else(|| BuildError::missing_field("filename"))?,
+            contents: self.contents.ok_or_else(|| BuildError::missing_field("contents"))?,
         })
     }
 }

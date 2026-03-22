@@ -19,7 +19,7 @@ import {
     typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
-import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
+import { canDeriveHashAndEq, canDerivePartialEq, generateFieldAttributes, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
 
 export class UnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -247,7 +247,9 @@ export class UnionGenerator {
         // Generate variant based on its shape
         unionType.shape._visit({
             noProperties: () => {
-                writer.writeLine(`    ${variantName},`);
+                // Use empty struct variant {} instead of unit variant for forward compatibility
+                // with #[non_exhaustive], fields can be added later without breaking changes
+                writer.writeLine(`    ${variantName} {},`);
             },
             singleProperty: (singleProperty) => {
                 // Check if this field creates a recursive reference
@@ -292,34 +294,55 @@ export class UnionGenerator {
                 writer.writeLine(`    },`);
             },
             samePropertiesAsObject: (declaredTypeName) => {
-                // Check if this referenced type creates a recursive reference
-                // For direct recursion, just check if the typeId matches
-                // For indirect recursion, we'd need to traverse the type graph
-                const isDirectRecursion = typeId && declaredTypeName.typeId === typeId;
+                // Check if this type can be inlined (only referenced by this variant)
+                const canInline = this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId);
 
-                // For indirect recursion, check if this type eventually references back to the union
-                let isRecursive = isDirectRecursion;
-                if (!isRecursive && typeId) {
-                    // Check if the referenced type contains a field that points back to this union
+                if (canInline) {
+                    // Inline the object's fields directly into the variant
                     const referencedType = this.context.ir.types[declaredTypeName.typeId];
                     if (referencedType?.shape.type === "object") {
-                        isRecursive = referencedType.shape.properties.some((prop) =>
-                            isFieldRecursive(typeId, prop.valueType, this.context.ir)
-                        );
+                        const properties = referencedType.shape.properties;
+                        if (properties.length === 0) {
+                            // Empty type: generate empty struct variant
+                            writer.writeLine(`    ${variantName} {},`);
+                        } else {
+                            // Inline fields directly into the variant
+                            writer.writeLine(`    ${variantName} {`);
+                            this.generateInlinedProperties(writer, properties, typeId);
+                            // Add base properties if they exist
+                            this.generateBaseProperties(writer);
+                            writer.writeLine(`    },`);
+                        }
+                    } else {
+                        // Fallback: shouldn't happen since we only inline object types
+                        writer.writeLine(`    ${variantName} {},`);
                     }
+                } else {
+                    // Shared type: keep data wrapper with #[serde(flatten)]
+                    // Check if this referenced type creates a recursive reference
+                    const isDirectRecursion = typeId && declaredTypeName.typeId === typeId;
+                    let isRecursive = isDirectRecursion;
+                    if (!isRecursive && typeId) {
+                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                        if (referencedType?.shape.type === "object") {
+                            isRecursive = referencedType.shape.properties.some((prop) =>
+                                isFieldRecursive(typeId, prop.valueType, this.context.ir)
+                            );
+                        }
+                    }
+
+                    const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
+                    const fieldTypeName = isRecursive ? `Box<${objectTypeName}>` : objectTypeName;
+
+                    writer.writeLine(`    ${variantName} {`);
+                    writer.writeLine(`        #[serde(flatten)]`);
+                    writer.writeLine(`        data: ${fieldTypeName},`);
+
+                    // Add base properties if they exist
+                    this.generateBaseProperties(writer);
+
+                    writer.writeLine(`    },`);
                 }
-
-                const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
-                const fieldTypeName = isRecursive ? `Box<${objectTypeName}>` : objectTypeName;
-
-                writer.writeLine(`    ${variantName} {`);
-                writer.writeLine(`        #[serde(flatten)]`);
-                writer.writeLine(`        data: ${fieldTypeName},`);
-
-                // Add base properties if they exist
-                this.generateBaseProperties(writer);
-
-                writer.writeLine(`    },`);
             },
             _other: () => {
                 // Fallback for unknown variant shapes
@@ -350,7 +373,32 @@ export class UnionGenerator {
             attributes.push(Attribute.serde.rename(discriminantValue));
         }
 
+        // Add #[non_exhaustive] on all variants to ensure adding fields later is non-breaking
+        attributes.push(Attribute.nonExhaustive());
+
         return attributes;
+    }
+
+    private generateInlinedProperties(
+        writer: rust.Writer,
+        properties: FernIr.ObjectProperty[],
+        unionTypeId: string | undefined
+    ): void {
+        properties.forEach((property) => {
+            const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+            const isRecursive = unionTypeId ? isFieldRecursive(unionTypeId, property.valueType, this.context.ir) : false;
+            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
+
+            // Generate field-level serde attributes (rename, skip_serializing_if, datetime, etc.)
+            const fieldAttributes = generateFieldAttributes(property, this.context);
+            fieldAttributes.forEach((attr) => {
+                writer.write("        ");
+                attr.write(writer);
+                writer.newLine();
+            });
+
+            writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
+        });
     }
 
     private generateBaseProperties(writer: rust.Writer): void {
@@ -400,34 +448,185 @@ export class UnionGenerator {
     }
 
     private generateImplementationBlock(writer: rust.Writer, typeName: string): void {
-        // Only generate implementation if we have base properties or need helper methods
-        if (this.unionTypeDeclaration.baseProperties.length === 0) {
-            return;
-        }
-
         writer.newLine();
         writer.writeBlock(`impl ${typeName}`, () => {
-            // Generate getter methods for base properties
-            this.unionTypeDeclaration.baseProperties.forEach((property) => {
-                const fieldName = property.name.name.snakeCase.unsafeName;
-                const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
-                const methodName = `get_${fieldName}`;
-
-                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
-                const returnType = fieldType.toString() === "String" ? "&str" : `&${fieldType.toString()}`;
-
-                writer.writeBlock(`pub fn ${methodName}(&self) -> ${returnType}`, () => {
-                    writer.writeLine("match self {");
-
-                    this.unionTypeDeclaration.types.forEach((unionType) => {
-                        const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
-                        writer.writeLine(`            Self::${variantName} { ${fieldName}, .. } => ${fieldName},`);
-                    });
-
-                    writer.writeLine("        }");
-                });
-                writer.newLine();
+            // Generate constructor methods for all variants
+            // Since #[non_exhaustive] prevents direct construction from outside the crate,
+            // these constructors provide the way to create variant instances.
+            this.unionTypeDeclaration.types.forEach((unionType, index) => {
+                if (index > 0) {
+                    writer.newLine();
+                }
+                this.generateVariantConstructor(writer, unionType);
             });
+
+            // Generate getter methods for base properties
+            if (this.unionTypeDeclaration.baseProperties.length > 0) {
+                this.unionTypeDeclaration.baseProperties.forEach((property) => {
+                    writer.newLine();
+                    const fieldName = property.name.name.snakeCase.unsafeName;
+                    const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
+                    const methodName = `get_${fieldName}`;
+
+                    // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                    const returnType = fieldType.toString() === "String" ? "&str" : `&${fieldType.toString()}`;
+
+                    writer.writeBlock(`pub fn ${methodName}(&self) -> ${returnType}`, () => {
+                        writer.writeLine("match self {");
+
+                        this.unionTypeDeclaration.types.forEach((unionType) => {
+                            const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+                            writer.writeLine(`            Self::${variantName} { ${fieldName}, .. } => ${fieldName},`);
+                        });
+
+                        writer.writeLine("        }");
+                    });
+                });
+            }
+        });
+    }
+
+    private generateVariantConstructor(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
+        const constructorName = unionType.discriminantValue.name.snakeCase.unsafeName;
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
+        unionType.shape._visit({
+            noProperties: () => {
+                // Empty constructor: pub fn variant_name() -> Self { Self::VariantName {} }
+                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
+                    writer.writeLine(`Self::${variantName} {}`);
+                });
+            },
+            singleProperty: (singleProperty) => {
+                const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
+                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
+                const fieldName = singleProperty.name.name.snakeCase.unsafeName;
+                const isOptional = isOptionalType(singleProperty.type);
+
+                const fieldTypeStr = isOptional
+                    ? `Option<${generateRustTypeForTypeReference(getInnerTypeFromOptional(singleProperty.type), this.context, isRecursive).toString()}>`
+                    : fieldType.toString();
+
+                // Constructor takes all fields as parameters
+                const baseParams = this.getBasePropertyParams();
+                const allParams = [`${fieldName}: ${fieldTypeStr}`, ...baseParams];
+                writer.writeBlock(`pub fn ${constructorName}(${allParams.join(", ")}) -> Self`, () => {
+                    const baseFields = this.getBasePropertyFieldAssignments();
+                    const allFields = [fieldName, ...baseFields];
+                    writer.writeLine(`Self::${variantName} { ${allFields.join(", ")} }`);
+                });
+            },
+            samePropertiesAsObject: (declaredTypeName) => {
+                const canInline = this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId);
+
+                if (canInline) {
+                    const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                    if (referencedType?.shape.type === "object") {
+                        const properties = referencedType.shape.properties;
+                        if (properties.length === 0) {
+                            // Empty inlined type: no parameters needed
+                            const baseParams = this.getBasePropertyParams();
+                            if (baseParams.length > 0) {
+                                writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
+                                    const baseFields = this.getBasePropertyFieldAssignments();
+                                    writer.writeLine(`Self::${variantName} { ${baseFields.join(", ")} }`);
+                                });
+                            } else {
+                                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
+                                    writer.writeLine(`Self::${variantName} {}`);
+                                });
+                            }
+                        } else {
+                            // Constructor takes required fields as parameters, optional fields default to None
+                            const requiredParams: string[] = [];
+                            const fieldAssignments: string[] = [];
+
+                            properties.forEach((property) => {
+                                const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+                                const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+                                const isOptional = isOptionalType(property.valueType);
+
+                                if (isOptional) {
+                                    // Optional fields default to None
+                                    fieldAssignments.push(`${fieldName}: None`);
+                                } else {
+                                    const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
+                                    requiredParams.push(`${fieldName}: ${fieldType.toString()}`);
+                                    fieldAssignments.push(fieldName);
+                                }
+                            });
+
+                            const baseParams = this.getBasePropertyParams();
+                            const allParams = [...requiredParams, ...baseParams];
+                            const baseFields = this.getBasePropertyFieldAssignments();
+                            const allFields = [...fieldAssignments, ...baseFields];
+
+                            writer.writeBlock(`pub fn ${constructorName}(${allParams.join(", ")}) -> Self`, () => {
+                                writer.writeLine(`Self::${variantName} { ${allFields.join(", ")} }`);
+                            });
+                        }
+                    } else {
+                        writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
+                            writer.writeLine(`Self::${variantName} {}`);
+                        });
+                    }
+                } else {
+                    // Shared type: constructor takes the data wrapper
+                    const isDirectRecursion = typeId && declaredTypeName.typeId === typeId;
+                    let isRecursive = isDirectRecursion;
+                    if (!isRecursive && typeId) {
+                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                        if (referencedType?.shape.type === "object") {
+                            isRecursive = referencedType.shape.properties.some((prop) =>
+                                isFieldRecursive(typeId, prop.valueType, this.context.ir)
+                            );
+                        }
+                    }
+
+                    const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
+                    const fieldTypeName = isRecursive ? `Box<${objectTypeName}>` : objectTypeName;
+
+                    const baseParams = this.getBasePropertyParams();
+                    const allParams = [`data: ${fieldTypeName}`, ...baseParams];
+                    const baseFields = this.getBasePropertyFieldAssignments();
+                    const allFields = ["data", ...baseFields];
+
+                    writer.writeBlock(`pub fn ${constructorName}(${allParams.join(", ")}) -> Self`, () => {
+                        writer.writeLine(`Self::${variantName} { ${allFields.join(", ")} }`);
+                    });
+                }
+            },
+            _other: () => {
+                // Fallback constructor for unknown variant shapes
+                const baseParams = this.getBasePropertyParams();
+                const allParams = ["data: serde_json::Value", ...baseParams];
+                const baseFields = this.getBasePropertyFieldAssignments();
+                const allFields = ["data", ...baseFields];
+
+                writer.writeBlock(`pub fn ${constructorName}(${allParams.join(", ")}) -> Self`, () => {
+                    writer.writeLine(`Self::${variantName} { ${allFields.join(", ")} }`);
+                });
+            }
+        });
+    }
+
+    private getBasePropertyParams(): string[] {
+        return this.unionTypeDeclaration.baseProperties.map((property) => {
+            const fieldName = property.name.name.snakeCase.unsafeName;
+            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
+            const isOptional = isOptionalType(property.valueType);
+            const fieldTypeStr = isOptional
+                ? `Option<${generateRustTypeForTypeReference(getInnerTypeFromOptional(property.valueType), this.context).toString()}>`
+                : fieldType.toString();
+            return `${fieldName}: ${fieldTypeStr}`;
+        });
+    }
+
+    private getBasePropertyFieldAssignments(): string[] {
+        return this.unionTypeDeclaration.baseProperties.map((property) => {
+            return property.name.name.snakeCase.unsafeName;
         });
     }
 
@@ -466,7 +665,16 @@ export class UnionGenerator {
         return this.unionTypeDeclaration.types.some((unionType) => {
             return unionType.shape._visit({
                 singleProperty: (singleProperty) => predicate(singleProperty.type),
-                samePropertiesAsObject: () => false, // Would need to resolve the object type
+                samePropertiesAsObject: (declaredTypeName) => {
+                    // For inlined types, check the object's properties directly
+                    if (this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
+                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                        if (referencedType?.shape.type === "object") {
+                            return referencedType.shape.properties.some((prop) => predicate(prop.valueType));
+                        }
+                    }
+                    return false;
+                },
                 noProperties: () => false,
                 _other: () => false
             });
@@ -506,7 +714,19 @@ export class UnionGenerator {
                     }
                 },
                 samePropertiesAsObject: (declaredTypeName) => {
-                    // This variant references another object type
+                    // For inlined types, collect the named types from the inlined properties
+                    // instead of the wrapper type (which no longer exists as a separate struct)
+                    if (this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
+                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                        if (referencedType?.shape.type === "object") {
+                            for (const prop of referencedType.shape.properties) {
+                                this.collectNamedTypesFromTypeRef(prop.valueType, variantTypeNames, visited);
+                            }
+                        }
+                        return;
+                    }
+
+                    // Non-inlined: import the wrapper type as before
                     const typeName = declaredTypeName.name.originalName;
                     if (!visited.has(typeName)) {
                         visited.add(typeName);
@@ -527,5 +747,35 @@ export class UnionGenerator {
         });
 
         return variantTypeNames;
+    }
+
+    private collectNamedTypesFromTypeRef(
+        typeRef: FernIr.TypeReference,
+        result: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[],
+        visited: Set<string>
+    ): void {
+        if (typeRef.type === "named") {
+            const typeName = typeRef.name.originalName;
+            if (!visited.has(typeName)) {
+                visited.add(typeName);
+                result.push({
+                    snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
+                    pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
+                });
+            }
+        } else if (typeRef.type === "container") {
+            typeRef.container._visit({
+                optional: (inner) => this.collectNamedTypesFromTypeRef(inner, result, visited),
+                nullable: (inner) => this.collectNamedTypesFromTypeRef(inner, result, visited),
+                list: (inner) => this.collectNamedTypesFromTypeRef(inner, result, visited),
+                set: (inner) => this.collectNamedTypesFromTypeRef(inner, result, visited),
+                map: (mapType) => {
+                    this.collectNamedTypesFromTypeRef(mapType.keyType, result, visited);
+                    this.collectNamedTypesFromTypeRef(mapType.valueType, result, visited);
+                },
+                literal: () => {},
+                _other: () => {}
+            });
+        }
     }
 }

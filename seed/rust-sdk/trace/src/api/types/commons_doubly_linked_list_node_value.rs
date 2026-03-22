@@ -55,9 +55,7 @@ impl DoublyLinkedListNodeValueBuilder {
     /// - [`val`](DoublyLinkedListNodeValueBuilder::val)
     pub fn build(self) -> Result<DoublyLinkedListNodeValue, BuildError> {
         Ok(DoublyLinkedListNodeValue {
-            node_id: self
-                .node_id
-                .ok_or_else(|| BuildError::missing_field("node_id"))?,
+            node_id: self.node_id.ok_or_else(|| BuildError::missing_field("node_id"))?,
             val: self.val.ok_or_else(|| BuildError::missing_field("val"))?,
             next: self.next,
             prev: self.prev,

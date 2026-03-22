@@ -38,9 +38,7 @@ impl BinaryTreeValueBuilder {
     pub fn build(self) -> Result<BinaryTreeValue, BuildError> {
         Ok(BinaryTreeValue {
             root: self.root,
-            nodes: self
-                .nodes
-                .ok_or_else(|| BuildError::missing_field("nodes"))?,
+            nodes: self.nodes.ok_or_else(|| BuildError::missing_field("nodes"))?,
         })
     }
 }

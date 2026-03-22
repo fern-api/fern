@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/bytes-upload/fern/client"
     bytes "bytes"
     context "context"
+    client "github.com/bytes-upload/fern/client"
 )
 
 func do() {

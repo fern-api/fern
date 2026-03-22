@@ -30,9 +30,7 @@ impl WorkspaceStarterFilesResponseV2Builder {
     /// - [`files_by_language`](WorkspaceStarterFilesResponseV2Builder::files_by_language)
     pub fn build(self) -> Result<WorkspaceStarterFilesResponseV2, BuildError> {
         Ok(WorkspaceStarterFilesResponseV2 {
-            files_by_language: self
-                .files_by_language
-                .ok_or_else(|| BuildError::missing_field("files_by_language"))?,
+            files_by_language: self.files_by_language.ok_or_else(|| BuildError::missing_field("files_by_language"))?,
         })
     }
 }

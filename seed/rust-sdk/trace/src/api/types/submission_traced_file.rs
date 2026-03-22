@@ -38,12 +38,8 @@ impl TracedFileBuilder {
     /// - [`directory`](TracedFileBuilder::directory)
     pub fn build(self) -> Result<TracedFile, BuildError> {
         Ok(TracedFile {
-            filename: self
-                .filename
-                .ok_or_else(|| BuildError::missing_field("filename"))?,
-            directory: self
-                .directory
-                .ok_or_else(|| BuildError::missing_field("directory"))?,
+            filename: self.filename.ok_or_else(|| BuildError::missing_field("filename"))?,
+            directory: self.directory.ok_or_else(|| BuildError::missing_field("directory"))?,
         })
     }
 }

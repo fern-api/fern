@@ -40,9 +40,7 @@ impl UpdatePlaylistRequestBuilder {
     pub fn build(self) -> Result<UpdatePlaylistRequest, BuildError> {
         Ok(UpdatePlaylistRequest {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            problems: self
-                .problems
-                .ok_or_else(|| BuildError::missing_field("problems"))?,
+            problems: self.problems.ok_or_else(|| BuildError::missing_field("problems"))?,
         })
     }
 }

@@ -30,10 +30,10 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+    fern "github.com/multi-url-environment/fern"
     client "github.com/multi-url-environment/fern/client"
     option "github.com/multi-url-environment/fern/option"
-    fern "github.com/multi-url-environment/fern"
-    context "context"
 )
 
 func do() {

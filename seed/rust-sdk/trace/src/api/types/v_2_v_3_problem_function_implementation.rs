@@ -37,9 +37,7 @@ impl FunctionImplementation2Builder {
     /// - [`r#impl`](FunctionImplementation2Builder::r#impl)
     pub fn build(self) -> Result<FunctionImplementation2, BuildError> {
         Ok(FunctionImplementation2 {
-            r#impl: self
-                .r#impl
-                .ok_or_else(|| BuildError::missing_field("r#impl"))?,
+            r#impl: self.r#impl.ok_or_else(|| BuildError::missing_field("r#impl"))?,
             imports: self.imports,
         })
     }
