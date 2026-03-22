@@ -1,12 +1,12 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
     types "github.com/exhaustive/fern/types"
     uuid "github.com/google/uuid"
-    context "context"
 )
 
 func do() {
