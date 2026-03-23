@@ -86,18 +86,24 @@ func TestCompletionsStreamWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	defer stream.Close()
-	eventCount := 0
+	var events []interface{}
 	for {
-		_, err := stream.Recv()
+		event, err := stream.Recv()
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
 			require.NoError(t, err, "Expected no error while reading SSE stream")
 		}
-		eventCount++
+		events = append(events, event)
 	}
-	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
+	require.Equal(t, 2, len(events), "Expected 2 SSE event(s)")
+	eventBytes0, marshalErr0 := json.Marshal(events[0])
+	require.NoError(t, marshalErr0, "Failed to marshal SSE event 0")
+	require.JSONEq(t, "{\"delta\":\"foo\",\"tokens\":1}", string(eventBytes0), "SSE event 0 content mismatch")
+	eventBytes1, marshalErr1 := json.Marshal(events[1])
+	require.NoError(t, marshalErr1, "Failed to marshal SSE event 1")
+	require.JSONEq(t, "{\"delta\":\"bar\",\"tokens\":2}", string(eventBytes1), "SSE event 1 content mismatch")
 	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
 }
 
@@ -124,18 +130,24 @@ func TestCompletionsStreamEventsWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	defer stream.Close()
-	eventCount := 0
+	var events []interface{}
 	for {
-		_, err := stream.Recv()
+		event, err := stream.Recv()
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
 			require.NoError(t, err, "Expected no error while reading SSE stream")
 		}
-		eventCount++
+		events = append(events, event)
 	}
-	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
+	require.Equal(t, 2, len(events), "Expected 2 SSE event(s)")
+	eventBytes0, marshalErr0 := json.Marshal(events[0])
+	require.NoError(t, marshalErr0, "Failed to marshal SSE event 0")
+	require.JSONEq(t, "{\"event\":\"completion\",\"content\":\"hello\"}", string(eventBytes0), "SSE event 0 content mismatch")
+	eventBytes1, marshalErr1 := json.Marshal(events[1])
+	require.NoError(t, marshalErr1, "Failed to marshal SSE event 1")
+	require.JSONEq(t, "{\"event\":\"error\",\"error\":\"something went wrong\"}", string(eventBytes1), "SSE event 1 content mismatch")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
 }
 
@@ -162,17 +174,23 @@ func TestCompletionsStreamEventsContextProtocolWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	defer stream.Close()
-	eventCount := 0
+	var events []interface{}
 	for {
-		_, err := stream.Recv()
+		event, err := stream.Recv()
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
 			require.NoError(t, err, "Expected no error while reading SSE stream")
 		}
-		eventCount++
+		events = append(events, event)
 	}
-	require.Equal(t, 2, eventCount, "Expected 2 SSE event(s)")
+	require.Equal(t, 2, len(events), "Expected 2 SSE event(s)")
+	eventBytes0, marshalErr0 := json.Marshal(events[0])
+	require.NoError(t, marshalErr0, "Failed to marshal SSE event 0")
+	require.JSONEq(t, "{\"content\":\"hello\",\"event\":\"completion\"}", string(eventBytes0), "SSE event 0 content mismatch")
+	eventBytes1, marshalErr1 := json.Marshal(events[1])
+	require.NoError(t, marshalErr1, "Failed to marshal SSE event 1")
+	require.JSONEq(t, "{\"error\":\"something went wrong\",\"event\":\"error\"}", string(eventBytes1), "SSE event 1 content mismatch")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
 }
