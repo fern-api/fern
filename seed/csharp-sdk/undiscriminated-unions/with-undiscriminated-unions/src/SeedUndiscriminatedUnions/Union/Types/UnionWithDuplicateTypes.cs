@@ -1,8 +1,8 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
@@ -253,7 +253,7 @@ public class UnionWithDuplicateTypes
     {
         public override UnionWithDuplicateTypes? Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -340,7 +340,7 @@ public class UnionWithDuplicateTypes
 
         public override UnionWithDuplicateTypes ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

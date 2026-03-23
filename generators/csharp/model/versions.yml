@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.8.0
+  changelogEntry:
+    - summary: |
+        Enforce `global::` prefix on all `System` namespace references in generated code.
+        This prevents CS0118/CS0426 compile errors when customer projects define a type or
+        namespace named `System`.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.7.0
   changelogEntry:
     - summary: |

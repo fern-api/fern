@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
@@ -62,14 +62,14 @@ public record Data
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value! : throw new System.Exception("Data.Type is not 'string'");
+        IsString ? (string)Value! : throw new global::System.Exception("Data.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'base64', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'base64'.</exception>
     public string AsBase64() =>
-        IsBase64 ? (string)Value! : throw new System.Exception("Data.Type is not 'base64'");
+        IsBase64 ? (string)Value! : throw new global::System.Exception("Data.Type is not 'base64'");
 
     public T Match<T>(
         Func<string, T> onString,
@@ -142,12 +142,12 @@ public record Data
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Data>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Data).IsAssignableFrom(typeToConvert);
 
         public override Data Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -204,7 +204,7 @@ public record Data
 
         public override Data ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

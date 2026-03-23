@@ -168,24 +168,24 @@ public readonly record struct DummyEnum : IStringEnum
 
     internal class DummyEnumSerializer : JsonConverter<DummyEnum>
     {
-        public override DummyEnum Read(ref System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+        public override DummyEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
         {
             var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
             return new DummyEnum(stringValue);
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value.Value);
         }
 
-        public override DummyEnum ReadAsPropertyName(ref System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+        public override DummyEnum ReadAsPropertyName(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
         {
             var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON property name could not be read as a string.");
             return new DummyEnum(stringValue);
         }
 
-        public override void WriteAsPropertyName(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
+        public override void WriteAsPropertyName(global::System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
         {
             writer.WritePropertyName(value.Value);
         }
