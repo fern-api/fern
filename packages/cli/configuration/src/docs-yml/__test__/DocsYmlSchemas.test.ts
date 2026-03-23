@@ -40,15 +40,17 @@ describe("DocsYmlSchemas", () => {
         expect(properties["check"]).toBeDefined();
     });
 
-    it("should default check rule severities to warn when rules are provided", () => {
+    it("should preserve explicitly configured check rule severities", () => {
         const parsed = DocsConfiguration.parse({
             instances: [],
             check: {
-                rules: {}
+                rules: {
+                    "example-validation": "error"
+                }
             }
         });
 
-        expect(parsed.check?.rules?.["example-validation"]).toBe("warn");
-        expect(parsed.check?.rules?.["broken-links"]).toBe("warn");
+        expect(parsed.check?.rules?.["example-validation"]).toBe("error");
+        expect(parsed.check?.rules?.["broken-links"]).toBeUndefined();
     });
 });

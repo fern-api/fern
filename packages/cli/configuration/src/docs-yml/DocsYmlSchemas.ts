@@ -565,8 +565,8 @@ export const RedirectConfig = z.object({
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
 
 export const CheckRulesConfig = z.object({
-    "example-validation": CheckRuleSeverity.default("warn"),
-    "broken-links": CheckRuleSeverity.default("warn")
+    "example-validation": CheckRuleSeverity.optional(),
+    "broken-links": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
