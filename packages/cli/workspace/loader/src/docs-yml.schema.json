@@ -241,6 +241,16 @@
         }
       ]
     },
+    "check": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.CheckConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "logo": {
       "oneOf": [
         {
@@ -4586,6 +4596,45 @@
         "source",
         "destination"
       ],
+      "additionalProperties": false
+    },
+    "docs.CheckRuleSeverity": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error"
+      ]
+    },
+    "docs.CheckRulesConfig": {
+      "type": "object",
+      "properties": {
+        "example-validation": {
+          "$ref": "#/definitions/docs.CheckRuleSeverity"
+        },
+        "broken-links": {
+          "$ref": "#/definitions/docs.CheckRuleSeverity"
+        }
+      },
+      "required": [
+        "example-validation",
+        "broken-links"
+      ],
+      "additionalProperties": false
+    },
+    "docs.CheckConfig": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRulesConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
       "additionalProperties": false
     },
     "docs.LogoConfiguration": {
