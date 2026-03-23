@@ -16,6 +16,7 @@ export class SentryClient {
                 release,
                 environment: sentryEnvironment,
                 defaultIntegrations: false,
+                integrations: [Sentry.rewriteFramesIntegration()],
                 tracesSampleRate: 0
             });
         }

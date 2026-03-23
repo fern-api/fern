@@ -104,6 +104,7 @@
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
     "@inquirer/prompts": "catalog:",
+    "@sentry/cli": "^2.42.2",
     "@sentry/node": "^10.45.0",
     "@types/axios": "catalog:",
     "@types/boxen": "catalog:",
