@@ -104,6 +104,8 @@
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
     "@inquirer/prompts": "catalog:",
+    "@sentry/cli": "^2.42.2",
+    "@sentry/node": "^10.45.0",
     "@types/axios": "catalog:",
     "@types/boxen": "catalog:",
     "@types/cli-progress": "catalog:",
@@ -117,7 +119,6 @@
     "@types/semver": "catalog:",
     "@types/tar": "catalog:",
     "@types/url-join": "4.0.1",
-
     "@types/ws": "catalog:",
     "@types/yargs": "^17.0.28",
     "axios": "catalog:",
@@ -143,7 +144,6 @@
     "typescript": "catalog:",
     "undici": "catalog:",
     "url-join": "catalog:",
-
     "vitest": "catalog:",
     "ws": "catalog:",
     "yaml": "catalog:",

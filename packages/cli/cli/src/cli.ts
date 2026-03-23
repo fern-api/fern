@@ -145,6 +145,10 @@ async function runCli() {
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
         } else {
+            // TODO: This is intentionally broad for initial rollout.
+            // We likely capture more than intended; narrow reporting with
+            // explicit error classification once we collect real-world signal.
+            await cliContext.captureException(error);
             cliContext.failWithoutThrowing("Failed.", error);
         }
     }
