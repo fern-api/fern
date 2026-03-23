@@ -58,6 +58,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.streamTerminator = null;
         this.sseReader = null;
         this.discriminatorProperty = null;
+        this.eventParser = null;
     }
 
     private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
