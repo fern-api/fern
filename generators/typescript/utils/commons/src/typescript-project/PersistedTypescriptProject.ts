@@ -466,7 +466,7 @@ export class PersistedTypescriptProject {
             cwd: this.directory,
             logger
         });
-        await git(["init"]);
+        await git(["-c", "gc.auto=0", "init"]);
         await git(["add", "."]);
         await git([
             "-c",
@@ -482,7 +482,7 @@ export class PersistedTypescriptProject {
         ]);
         await git(["clean", "-fdx"]);
 
-        await rm(join(this.directory, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(this.directory, RelativeFilePath.of(".git")), { recursive: true, maxRetries: 3, retryDelay: 100 });
     }
 
     public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {
