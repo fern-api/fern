@@ -43,6 +43,7 @@ export class TelemetryClient {
                 release: `cli@${Version}`,
                 environment: sentryEnvironment,
                 defaultIntegrations: false,
+                integrations: [Sentry.rewriteFramesIntegration()],
                 tracesSampleRate: 0
             });
         }
