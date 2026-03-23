@@ -11,7 +11,9 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithApiKey(
+            "X-Api-Key",
+        ),
     )
     client.Simple.GetSomething(
         context.TODO(),

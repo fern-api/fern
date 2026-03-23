@@ -45,7 +45,8 @@
     "diff",
     "@open-rpc/meta-schema",
     "readable-stream",
-    "zod-to-json-schema"
+    "zod-to-json-schema",
+    "@sentry/cli"
   ],
   "ignore": ["node_modules/**", "**/dist/**", "**/lib/**", "**/generated/**", "**/docker/**", "**/__test__/**"]
 }

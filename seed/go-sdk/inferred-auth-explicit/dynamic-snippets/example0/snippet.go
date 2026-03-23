@@ -12,7 +12,15 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithXApiKey(
+            "X-Api-Key",
+        ),
+        option.WithClientId(
+            "client_id",
+        ),
+        option.WithClientSecret(
+            "client_secret",
+        ),
     )
     request := &fern.GetTokenRequest{
         XApiKey: "X-Api-Key",
