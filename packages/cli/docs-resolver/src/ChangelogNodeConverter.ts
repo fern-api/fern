@@ -1,4 +1,4 @@
-import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
