@@ -8,7 +8,7 @@
         `#[serde(untagged)]` unions) remain strict to preserve correct variant dispatch.
         Additionally, generate `#[serde(flatten)] pub extra: HashMap<String, serde_json::Value>`
         on structs with `extraProperties` to capture unknown fields from the server.
-      type: feat
+      type: chore
   createdAt: "2026-03-23"
   irVersion: 65
 
