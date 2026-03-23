@@ -1,8 +1,8 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
@@ -166,7 +166,7 @@ public class Key
     {
         public override Key? Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -232,7 +232,7 @@ public class Key
 
         public override Key ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

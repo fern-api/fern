@@ -1,4 +1,4 @@
-using System.Net.WebSockets;
+using global::System.Net.WebSockets;
 using NUnit.Framework;
 using <%= namespace%>.Core.WebSockets;
 

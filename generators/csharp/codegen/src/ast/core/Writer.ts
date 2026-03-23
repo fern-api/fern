@@ -17,6 +17,8 @@ export declare namespace Writer {
         generation: Generation;
         /* Whether or not to skip writing imports */
         skipImports?: boolean;
+        /* Whether or not to skip adding global:: qualifier to System namespaces (e.g. for user-facing snippets) */
+        skipGlobalQualifier?: boolean;
     }
 }
 
@@ -36,12 +38,16 @@ export class Writer extends AbstractWriter {
     /* Whether or not to skip writing imports */
     public readonly skipImports: boolean;
 
+    /* Whether or not to skip adding global:: qualifier to System namespaces */
+    public readonly skipGlobalQualifier: boolean;
+
     constructor({
         namespace,
         allNamespaceSegments,
         allTypeClassReferences,
         generation,
-        skipImports = false
+        skipImports = false,
+        skipGlobalQualifier = false
     }: Writer.Args) {
         super();
         this.namespace = namespace;
@@ -49,6 +55,7 @@ export class Writer extends AbstractWriter {
         this.allTypeClassReferences = allTypeClassReferences;
         this.generation = generation;
         this.skipImports = skipImports;
+        this.skipGlobalQualifier = skipGlobalQualifier;
     }
 
     public addReference(reference: ClassReference): void {
@@ -134,11 +141,16 @@ ${this.buffer}`;
                 const resolvedNs = refs.length > 0 ? (refs[0] as ClassReference).resolveNamespace() : ns;
                 const firstSegment = resolvedNs.split(".")[0];
                 // Add global:: prefix when:
-                // 1. Any ref explicitly requires global qualification, OR
-                // 2. The first segment of the namespace is both a type name and a namespace root,
+                // 1. The namespace starts with "System" — always qualify to prevent
+                //    ambiguity when customer projects define a type or namespace named "System", OR
+                // 2. Any ref explicitly requires global qualification, OR
+                // 3. The first segment of the namespace is both a type name and a namespace root,
                 //    which would cause CS0426 in C# (e.g., class "Candid" shadowing namespace "Candid.Net")
                 const needsGlobal =
-                    refs.some((ref) => ref?.global) || this.generation.registry.hasTypeNamespaceConflict(firstSegment);
+                    !this.skipGlobalQualifier &&
+                    (firstSegment === "System" ||
+                        refs.some((ref) => ref?.global) ||
+                        this.generation.registry.hasTypeNamespaceConflict(firstSegment));
                 return `using ${needsGlobal ? "global::" : ""}${resolvedNs};`;
             })
             .join("\n");
@@ -148,7 +160,9 @@ ${this.buffer}`;
         }
 
         for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
-            result = `${result}using ${alias} = ${namespace};\n`;
+            const aliasFirstSegment = namespace.split(".")[0];
+            const aliasNeedsGlobal = !this.skipGlobalQualifier && aliasFirstSegment === "System";
+            result = `${result}using ${alias} = ${aliasNeedsGlobal ? "global::" : ""}${namespace};\n`;
         }
 
         return result;

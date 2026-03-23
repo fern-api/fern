@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -134,7 +134,9 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'running'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'running'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'ran', otherwise throws an exception.
@@ -143,7 +145,7 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.WorkspaceRunDetails AsRan() =>
         IsRan
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
+            : throw new global::System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
@@ -152,7 +154,9 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsStopped() =>
         IsStopped
             ? Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'stopped'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'stopped'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -161,7 +165,9 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsTraced() =>
         IsTraced
             ? Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'traced'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'traced'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceTracedUpdate"/> if <see cref="Type"/> is 'tracedV2', otherwise throws an exception.
@@ -170,7 +176,9 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.WorkspaceTracedUpdate AsTracedV2() =>
         IsTracedV2
             ? (SeedTrace.WorkspaceTracedUpdate)Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'tracedV2'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'tracedV2'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -179,7 +187,9 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'errored'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'errored'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -188,7 +198,9 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsFinished() =>
         IsFinished
             ? Value!
-            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'finished'");
+            : throw new global::System.Exception(
+                "WorkspaceSubmissionUpdateInfo.Type is not 'finished'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
@@ -373,12 +385,12 @@ public record WorkspaceSubmissionUpdateInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<WorkspaceSubmissionUpdateInfo>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(WorkspaceSubmissionUpdateInfo).IsAssignableFrom(typeToConvert);
 
         public override WorkspaceSubmissionUpdateInfo Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -464,7 +476,7 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override WorkspaceSubmissionUpdateInfo ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

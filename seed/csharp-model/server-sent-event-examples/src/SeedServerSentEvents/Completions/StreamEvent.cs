@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
@@ -64,7 +64,7 @@ public record StreamEvent
     public SeedServerSentEvents.CompletionEvent AsCompletion() =>
         IsCompletion
             ? (SeedServerSentEvents.CompletionEvent)Value!
-            : throw new System.Exception("StreamEvent.Event is not 'completion'");
+            : throw new global::System.Exception("StreamEvent.Event is not 'completion'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedServerSentEvents.ErrorEvent"/> if <see cref="Event"/> is 'error', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record StreamEvent
     public SeedServerSentEvents.ErrorEvent AsError() =>
         IsError
             ? (SeedServerSentEvents.ErrorEvent)Value!
-            : throw new System.Exception("StreamEvent.Event is not 'error'");
+            : throw new global::System.Exception("StreamEvent.Event is not 'error'");
 
     public T Match<T>(
         Func<SeedServerSentEvents.CompletionEvent, T> onCompletion,
@@ -146,12 +146,12 @@ public record StreamEvent
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<StreamEvent>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(StreamEvent).IsAssignableFrom(typeToConvert);
 
         public override StreamEvent Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -221,7 +221,7 @@ public record StreamEvent
 
         public override StreamEvent ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

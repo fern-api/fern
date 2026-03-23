@@ -1,4 +1,4 @@
-using System.Net.Http.Headers;
+using global::System.Net.Http.Headers;
 
 namespace SeedHttpHead;
 
