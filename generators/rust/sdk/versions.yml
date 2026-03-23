@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.5
+  changelogEntry:
+    - summary: |
+        Remove `Default` impl from `ApiClientBuilder` to improve forward compatibility.
+        The `..Default::default()` spread pattern on builder types can silently swallow
+        new required fields added in future versions. Removing `Default` ensures that
+        consumers are guided by the compiler to handle any new fields explicitly.
+        Updated README WebSocket snippets to use explicit `ClientConfig` construction
+        instead of the `..Default::default()` spread.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 0.26.4
   changelogEntry:
     - summary: |
@@ -8,7 +21,6 @@
       type: chore
   createdAt: "2026-03-23"
   irVersion: 65
-
 - version: 0.26.3
   changelogEntry:
     - summary: |
