@@ -3,13 +3,11 @@
 //! This module contains client implementations for:
 //!
 //! - **Auth**
-//! - **Realtime**
 
 use crate::api::websocket::RealtimeConnector;
 use crate::{ApiError, ClientConfig};
 
 pub mod auth;
-pub mod realtime;
 pub struct WebsocketAuthClient {
     pub config: ClientConfig,
     pub auth: AuthClient,
@@ -27,4 +25,3 @@ impl WebsocketAuthClient {
 }
 
 pub use auth::AuthClient;
-pub use realtime::RealtimeClient;

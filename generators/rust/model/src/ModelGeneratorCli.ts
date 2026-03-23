@@ -130,7 +130,11 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         // Collect unique module names and their corresponding type names from IR types
         if (context.ir.types) {
-            Object.values(context.ir.types).forEach((typeDeclaration) => {
+            Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
+                // Skip types that are inlined into discriminated union variants
+                if (context.inlinedUnionVariantTypeIds.has(typeId)) {
+                    return;
+                }
                 // Use centralized method to get unique filename and extract module name from it
                 const filename = context.getUniqueFilenameForType(typeDeclaration);
                 const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension

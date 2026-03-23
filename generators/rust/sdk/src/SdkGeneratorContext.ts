@@ -123,6 +123,15 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     /**
+     * Returns true if the subpackage has only a WebSocket channel and no HTTP service
+     * or endpoints in tree. These subpackages should not generate HTTP client stubs
+     * since the actual WebSocket functionality is handled by the WebSocketChannelGenerator.
+     */
+    public isWebSocketOnlySubpackage(subpackage: FernIr.Subpackage): boolean {
+        return subpackage.websocket != null && subpackage.service == null && !subpackage.hasEndpointsInTree;
+    }
+
+    /**
      * Scans all WebSocket channels and collects type IDs from server messages
      * that have named body types. These types are used as variants in a
      * `#[serde(tag = "type")]` enum, so their inner `type` property must be

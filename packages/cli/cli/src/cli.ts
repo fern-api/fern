@@ -73,6 +73,7 @@ import { generateToken } from "./commands/token/token.js";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
 import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/validateMdx.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
@@ -1682,6 +1683,7 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     // This command is in beta and not yet ready for general use
     cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
+        addDocsMdCheckCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1913,6 +1915,49 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 cliContext,
                 errorOnBrokenLinks: argv.strict
             });
+        }
+    );
+}
+
+function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "check",
+        "Validate MDX syntax in your docs",
+        () => {
+            // No additional options for this command
+        },
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md check"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            if (project.docsWorkspaces == null) {
+                cliContext.failAndThrow("No docs workspace found");
+            }
+
+            const docsWorkspace = project.docsWorkspaces;
+            let hasErrors = false;
+            await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+                const { errors, totalFiles } = await validateMdxFiles({
+                    workspace: docsWorkspace,
+                    context
+                });
+
+                logMdxValidationResults({ errors, totalFiles, context });
+
+                if (errors.length > 0) {
+                    hasErrors = true;
+                }
+            });
+
+            if (hasErrors) {
+                cliContext.failAndThrow("MDX validation failed");
+            }
         }
     );
 }

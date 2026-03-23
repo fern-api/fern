@@ -17,7 +17,7 @@ impl SearchRequestNeighborRequired {
         matches!(self, Self::User(_))
     }
 
-    pub fn is_nesteduser(&self) -> bool {
+    pub fn is_nested_user(&self) -> bool {
         matches!(self, Self::NestedUser(_))
     }
 
@@ -43,14 +43,14 @@ impl SearchRequestNeighborRequired {
         }
     }
 
-    pub fn as_nesteduser(&self) -> Option<&NestedUser> {
+    pub fn as_nested_user(&self) -> Option<&NestedUser> {
         match self {
             Self::NestedUser(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nesteduser(self) -> Option<NestedUser> {
+    pub fn into_nested_user(self) -> Option<NestedUser> {
         match self {
             Self::NestedUser(value) => Some(value),
             _ => None,

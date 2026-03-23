@@ -40,12 +40,8 @@ impl SendEventBuilder {
     /// - [`send_param`](SendEventBuilder::send_param)
     pub fn build(self) -> Result<SendEvent, BuildError> {
         Ok(SendEvent {
-            send_text: self
-                .send_text
-                .ok_or_else(|| BuildError::missing_field("send_text"))?,
-            send_param: self
-                .send_param
-                .ok_or_else(|| BuildError::missing_field("send_param"))?,
+            send_text: self.send_text.ok_or_else(|| BuildError::missing_field("send_text"))?,
+            send_param: self.send_param.ok_or_else(|| BuildError::missing_field("send_param"))?,
         })
     }
 }

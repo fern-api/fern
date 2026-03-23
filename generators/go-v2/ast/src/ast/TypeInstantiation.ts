@@ -445,7 +445,7 @@ export class TypeInstantiation extends AstNode {
 
     private writeAnyObject({ writer, value }: { writer: Writer; value: object }): void {
         writer.write("map[string]any");
-        const entries = Object.entries(value);
+        const entries = Object.entries(value).sort(([keyA], [keyB]) => (keyA < keyB ? -1 : keyA > keyB ? 1 : 0));
         if (entries.length === 0) {
             writer.write("{}");
             return;

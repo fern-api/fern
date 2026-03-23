@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/imdb/fern/inhereplease/client"
     option "github.com/imdb/fern/inhereplease/option"
-    context "context"
 )
 
 func do() {

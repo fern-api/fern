@@ -10,6 +10,7 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../Semaphore.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace.js";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test/index.js";
+import { printTestCases } from "../test/printTestCases.js";
 import { TaskContextFactory } from "../test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 
@@ -133,7 +134,7 @@ export async function runWithCustomFixture({
 
         await testRunner.build();
 
-        await testRunner.run({
+        const result = await testRunner.run({
             fixture: "custom",
             configuration: runFixtureConfig,
             inspect,
@@ -144,6 +145,8 @@ export async function runWithCustomFixture({
             absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
             lenient: true
         });
+
+        printTestCases([result]);
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
 

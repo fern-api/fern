@@ -307,16 +307,11 @@ export class RootClientGenerator {
             allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
         }
 
-        // WebSocket connector initializations (only those not colliding with HTTP sub-clients)
-        for (const { fieldName, connectorName, channel } of this.getUniqueWsConnectors(httpFieldNames)) {
-            const hasExplicitAuth = channel.headers.some(
-                (h) => h.name.wireValue.toLowerCase() === "authorization"
-            );
-            if (!hasExplicitAuth) {
-                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
-            } else {
-                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone())`);
-            }
+        // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
+        // Always pass the token so the connector can auto-inject the Authorization header,
+        // matching the TypeScript SDK experience where auth "just works".
+        for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
+            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
         }
 
         const initStr = allInits.join(",\n            ");
@@ -472,13 +467,16 @@ export class RootClientGenerator {
     // =============================================================================
 
     private getSubpackages(): FernIr.Subpackage[] {
-        return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
+        return this.package.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getAllSubpackagesForModuleDetection(): FernIr.Subpackage[] {
-        // Get ALL subpackages from the entire IR to detect nested directory structures
+        // Get ALL subpackages from the entire IR to detect nested directory structures,
+        // excluding WebSocket-only subpackages which don't generate resource files.
         const allSubpackages: FernIr.Subpackage[] = Object.values(this.context.ir.subpackages);
-        return allSubpackages;
+        return allSubpackages.filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getRootClientName(): string {

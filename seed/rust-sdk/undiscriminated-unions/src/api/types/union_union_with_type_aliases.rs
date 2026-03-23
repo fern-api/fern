@@ -15,7 +15,7 @@ impl UnionWithTypeAliases {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_userid(&self) -> bool {
+    pub fn is_user_id(&self) -> bool {
         matches!(self, Self::UserId(_))
     }
 
@@ -37,14 +37,14 @@ impl UnionWithTypeAliases {
         }
     }
 
-    pub fn as_userid(&self) -> Option<&UserId> {
+    pub fn as_user_id(&self) -> Option<&UserId> {
         match self {
             Self::UserId(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_userid(self) -> Option<UserId> {
+    pub fn into_user_id(self) -> Option<UserId> {
         match self {
             Self::UserId(value) => Some(value),
             _ => None,

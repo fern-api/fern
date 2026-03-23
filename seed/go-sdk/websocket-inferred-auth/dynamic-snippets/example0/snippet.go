@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/websocket-inferred-auth/fern"
     client "github.com/websocket-inferred-auth/fern/client"
     option "github.com/websocket-inferred-auth/fern/option"
-    fern "github.com/websocket-inferred-auth/fern"
-    context "context"
 )
 
 func do() {

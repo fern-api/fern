@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/endpoint-security-auth/fern/client"
     option "github.com/endpoint-security-auth/fern/option"
-    context "context"
 )
 
 func do() {
