@@ -1,6 +1,6 @@
-using System.Text.Json;
 using global::Contoso.Net;
 using global::Contoso.Net.Core;
+using global::System.Text.Json;
 
 namespace Contoso.Net.System;
 

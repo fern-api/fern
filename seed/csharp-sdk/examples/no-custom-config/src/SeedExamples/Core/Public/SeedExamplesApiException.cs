@@ -7,7 +7,7 @@ public class SeedExamplesApiException(
     string message,
     int statusCode,
     object body,
-    System.Exception? innerException = null
+    global::System.Exception? innerException = null
 ) : SeedExamplesException(message, innerException)
 {
     /// <summary>
