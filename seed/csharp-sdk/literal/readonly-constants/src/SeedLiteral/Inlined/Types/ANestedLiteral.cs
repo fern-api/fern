@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
@@ -43,7 +43,7 @@ public record ANestedLiteral : IJsonOnDeserialized
         public override string ToString() => Value;
 
         public override int GetHashCode() =>
-            Value.GetHashCode(global::System.StringComparison.Ordinal);
+            global::System.StringComparer.Ordinal.GetHashCode(Value);
 
         public override bool Equals(object? obj) => obj is MyLiteralLiteral;
 
@@ -78,6 +78,32 @@ public record ANestedLiteral : IJsonOnDeserialized
                 MyLiteralLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteStringValue(MyLiteralLiteral.Value);
+
+            public override MyLiteralLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (value != MyLiteralLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected \""
+                            + MyLiteralLiteral.Value
+                            + "\" for type discriminator but got \""
+                            + value
+                            + "\"."
+                    );
+                }
+                return new MyLiteralLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                MyLiteralLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(MyLiteralLiteral.Value);
         }
     }
 }

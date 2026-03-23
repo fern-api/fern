@@ -139,7 +139,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     filename,
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
-                    customPagerClassName: this.rubyContext.customConfig.customPagerName
+                    customPagerClassName: this.rubyContext.customConfig.customPagerName,
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders
                 })
             );
         }
@@ -149,12 +150,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         filename,
         gemNamespace,
         rootFolderName,
-        customPagerClassName
+        customPagerClassName,
+        omitFernHeaders
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
+        omitFernHeaders?: boolean;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -165,7 +168,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 variables: getTemplateVariables({
                     gemNamespace,
                     rootFolderName,
-                    customPagerClassName
+                    customPagerClassName,
+                    omitFernHeaders
                 })
             })
         );
@@ -216,11 +220,13 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 function getTemplateVariables({
     gemNamespace,
     rootFolderName,
-    customPagerClassName
+    customPagerClassName,
+    omitFernHeaders
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
+    omitFernHeaders?: boolean;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -228,7 +234,8 @@ function getTemplateVariables({
         sdkName: gemNamespace.toLowerCase(),
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
-        custom_pager_class_name: customPagerClassName ?? "CustomPager"
+        custom_pager_class_name: customPagerClassName ?? "CustomPager",
+        omitFernHeaders: omitFernHeaders ?? false
     };
 }
 

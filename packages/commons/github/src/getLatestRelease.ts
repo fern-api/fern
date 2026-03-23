@@ -1,13 +1,27 @@
 import { Octokit } from "octokit";
+import semver from "semver";
 
 import { parseRepository } from "./parseRepository.js";
+
+/**
+ * Returns true if the tag is a semver prerelease version.
+ * e.g. "1.0.0-beta", "v0.0.0-dev-abc123" → true; "1.0.0", "v2.3.4" → false.
+ */
+function isSemverPrerelease(tag: string): boolean {
+    return semver.prerelease(tag) != null;
+}
 
 /**
  * Returns the latest release tag on a github repository.
  *
  * Uses the GitHub "get latest release" endpoint, which returns the most recent
- * non-draft, non-prerelease release. This avoids the tag ordering issue where
- * listTags sorts by commit date rather than semantic version.
+ * non-draft, non-prerelease release. Note that "prerelease" here refers to
+ * GitHub's prerelease flag, not the semver concept. A release tagged
+ * "0.0.0-dev-abc123" may not be flagged as a GitHub prerelease but IS a semver
+ * prerelease.
+ *
+ * If the latest release has a semver prerelease tag, this function falls back to
+ * paginating through recent releases to find the first non-prerelease one.
  *
  * If the GITHUB_TOKEN environment variable is set, it will be used to authenticate
  * requests to the GitHub API, enabling access to private repositories.
@@ -29,7 +43,37 @@ export async function getLatestRelease(
             owner,
             repo
         });
-        return response.data.tag_name;
+        const tag = response.data.tag_name;
+
+        if (!isSemverPrerelease(tag)) {
+            return tag;
+        }
+
+        // The "latest" release is a semver prerelease — paginate through releases
+        // to find the first stable (non-semver-prerelease, non-draft, non-GitHub-prerelease) tag.
+        // The done() callback tells paginate to stop fetching further pages once we find a match.
+        const results = await octokit.paginate(
+            octokit.rest.repos.listReleases,
+            {
+                owner,
+                repo,
+                per_page: 100
+            },
+            (response, done) => {
+                for (const release of response.data) {
+                    if (release.draft || release.prerelease) {
+                        continue;
+                    }
+                    if (!isSemverPrerelease(release.tag_name)) {
+                        done();
+                        return [release.tag_name];
+                    }
+                }
+                return [];
+            }
+        );
+
+        return results[0];
     } catch {
         // No releases found (404) or other error — return undefined
         return undefined;

@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
@@ -77,6 +77,28 @@ public record SendResponse : IJsonOnDeserialized
                 SuccessLiteral value,
                 JsonSerializerOptions options
             ) => writer.WriteBooleanValue(SuccessLiteral.Value);
+
+            public override SuccessLiteral ReadAsPropertyName(
+                ref Utf8JsonReader reader,
+                global::System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var value = reader.GetString();
+                if (!bool.TryParse(value, out var boolValue) || boolValue != SuccessLiteral.Value)
+                {
+                    throw new JsonException(
+                        "Expected true for type discriminator but got \"" + value + "\"."
+                    );
+                }
+                return new SuccessLiteral();
+            }
+
+            public override void WriteAsPropertyName(
+                Utf8JsonWriter writer,
+                SuccessLiteral value,
+                JsonSerializerOptions options
+            ) => writer.WritePropertyName(SuccessLiteral.Value.ToString());
         }
     }
 }

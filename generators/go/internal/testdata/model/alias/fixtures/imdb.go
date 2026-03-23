@@ -309,6 +309,6 @@ func (u *Union) validate() error {
 	return nil
 }
 
-type Unknown = interface{}
+type Unknown = any
 
 type Uuid = uuid.UUID

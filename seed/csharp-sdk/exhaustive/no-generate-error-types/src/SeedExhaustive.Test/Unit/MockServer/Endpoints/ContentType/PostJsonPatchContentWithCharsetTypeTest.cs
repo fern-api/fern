@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types;
@@ -6,6 +6,7 @@ using SeedExhaustive.Types;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.ContentType;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostJsonPatchContentWithCharsetTypeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

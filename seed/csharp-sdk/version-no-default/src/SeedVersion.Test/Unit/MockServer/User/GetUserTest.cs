@@ -5,6 +5,7 @@ using SeedVersion.Test.Utils;
 namespace SeedVersion.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

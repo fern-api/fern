@@ -96,11 +96,9 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         referenceToEnvironmentValue: ts.Expression;
         baseUrlId: FernIr.EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
-        if (baseUrlId != null) {
-            throw new Error(
-                `Cannot get reference to single environment URL because baseUrlId is defined ("${baseUrlId}")`
-            );
-        }
+        // For single URL environments, baseUrlId is irrelevant since there's only one URL.
+        // This can happen when an AsyncAPI spec defines a named server (e.g. "production")
+        // which gets converted to a baseUrlId on the WebSocket channel.
         return referenceToEnvironmentValue;
     }
 

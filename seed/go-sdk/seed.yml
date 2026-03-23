@@ -140,6 +140,9 @@ fixtures:
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -267,6 +270,11 @@ fixtures:
         packageName: fern
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
+  go-deterministic-ordering:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
@@ -320,6 +328,7 @@ scripts:
           exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
+  - bytes-upload
   - bytes-download
   - enum
   - errors

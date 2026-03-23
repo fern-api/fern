@@ -6,6 +6,7 @@ using SeedCrossPackageTypeNames.Test.Utils;
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.Foo;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FindTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

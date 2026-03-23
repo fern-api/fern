@@ -6,6 +6,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Migration;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAttemptedMigrationsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

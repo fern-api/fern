@@ -209,6 +209,138 @@ export declare namespace Value {
 "
 `;
 
+exports[`GeneratedUnionTypeSchemaImpl > generateRawTypeDeclaration > generates raw type declaration for samePropertiesAsObject union 1`] = `
+"export declare namespace Shape {
+    export type Raw = Shape.Circle;
+
+    export interface Circle extends RawNamedType {
+        type: "circle";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > generateRawTypeDeclaration > generates raw type declaration in module for noProperties union 1`] = `
+"export declare namespace Event {
+    export type Raw = Event.Click;
+
+    export interface Click {
+        type: "click";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeSchemaToFile > calls writeSchemaToFile which delegates to generatedUnionSchema 1`] = `
+"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Event {
+    export type Raw = Event.Click;
+
+    export interface Click {
+        type: "click";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for mixed union type variants 1`] = `
+"export const Response: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Response {
+    export type Raw = Response.Empty | Response.Data | Response.Error;
+
+    export interface Empty {
+        type: "empty";
+    }
+
+    export interface Data extends RawNamedType {
+        type: "data";
+    }
+
+    export interface Error {
+        type: "error";
+        message: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for noProperties union types 1`] = `
+"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Event {
+    export type Raw = Event.Click | Event.Hover;
+
+    export interface Click {
+        type: "click";
+    }
+
+    export interface Hover {
+        type: "hover";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for samePropertiesAsObject union type 1`] = `
+"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Shape {
+    export type Raw = Shape.Circle;
+
+    export interface Circle extends RawNamedType {
+        type: "circle";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for singleProperty union type 1`] = `
+"export const Container: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Container {
+    export type Raw = Container.String;
+
+    export interface String {
+        type: "string";
+        value: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output with base properties 1`] = `
+"const _Base = object({});
+export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Event {
+    export type Raw = Event.Click;
+
+    export interface Click extends _Base {
+        type: "click";
+    }
+
+    export interface _Base {
+        timestamp: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output with includeUtilsOnUnionMembers 1`] = `
+"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Shape {
+    export type Raw = Shape.Circle;
+
+    export interface Circle {
+        type: "circle";
+    }
+}
+"
+`;
+
 exports[`TypeSchemaGenerator > passes noOptionalProperties to generated schemas 1`] = `
 "export const User: ObjectSchema<serializers.Raw, User> = objectWithoutOptionalProperties({});
 

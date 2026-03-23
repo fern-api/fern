@@ -13,5 +13,5 @@ pub mod resources;
 pub mod types;
 pub mod websocket;
 
-pub use resources::{AuthClient, RealtimeClient, WebsocketAuthClient};
+pub use resources::{AuthClient, WebsocketAuthClient};
 pub use types::*;

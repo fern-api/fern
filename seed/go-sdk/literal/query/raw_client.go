@@ -3,10 +3,10 @@
 package query
 
 import (
-    internal "github.com/literal/fern/internal"
-    core "github.com/literal/fern/core"
     context "context"
     fern "github.com/literal/fern"
+    core "github.com/literal/fern/core"
+    internal "github.com/literal/fern/internal"
     option "github.com/literal/fern/option"
     http "net/http"
 )

@@ -1,9 +1,10 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedEnum.Core;
 
 namespace SeedEnum;
 
-[JsonConverter(typeof(StringEnumSerializer<EnumWithSpecialCharacters>))]
+[JsonConverter(typeof(EnumWithSpecialCharacters.EnumWithSpecialCharactersSerializer))]
 [Serializable]
 public readonly record struct EnumWithSpecialCharacters : IStringEnum
 {
@@ -51,6 +52,55 @@ public readonly record struct EnumWithSpecialCharacters : IStringEnum
     public static explicit operator string(EnumWithSpecialCharacters value) => value.Value;
 
     public static explicit operator EnumWithSpecialCharacters(string value) => new(value);
+
+    internal class EnumWithSpecialCharactersSerializer : JsonConverter<EnumWithSpecialCharacters>
+    {
+        public override EnumWithSpecialCharacters Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new EnumWithSpecialCharacters(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            EnumWithSpecialCharacters value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+
+        public override EnumWithSpecialCharacters ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new EnumWithSpecialCharacters(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            EnumWithSpecialCharacters value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

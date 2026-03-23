@@ -4,6 +4,7 @@ using SeedApi.Test.Unit.MockServer;
 namespace SeedApi.Test.Unit.MockServer.Folder;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

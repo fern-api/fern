@@ -78,4 +78,31 @@ public class DateTimeJsonTests
             Assert.That(dateTime, Is.EqualTo(expected));
         }
     }
+
+    [Test]
+    public void ShouldSerializeDictionaryWithDateTimeKey()
+    {
+        var key = new DateTime(2023, 10, 5, 14, 30, 0, DateTimeKind.Utc);
+        var dict = new Dictionary<DateTime, string>
+        {
+            { key, "value_a" },
+        };
+        var json = JsonUtils.Serialize(dict);
+        Assert.That(json, Does.Contain("2023-10-05T14:30:00.000Z"));
+        Assert.That(json, Does.Contain("value_a"));
+    }
+
+    [Test]
+    public void ShouldDeserializeDictionaryWithDateTimeKey()
+    {
+        var json = """
+            {
+                "2023-10-05T14:30:00.000Z": "value_a"
+            }
+            """;
+        var dict = JsonUtils.Deserialize<Dictionary<DateTime, string>>(json);
+        Assert.That(dict, Is.Not.Null);
+        var key = new DateTime(2023, 10, 5, 14, 30, 0, DateTimeKind.Utc);
+        Assert.That(dict![key], Is.EqualTo("value_a"));
+    }
 }

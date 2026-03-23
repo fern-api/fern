@@ -4,6 +4,7 @@ using SeedPlainText.Test.Unit.MockServer;
 namespace SeedPlainText.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTextTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Test_.Unit.MockServer;
@@ -7,6 +7,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Playlist;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreatePlaylistTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

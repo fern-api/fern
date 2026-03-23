@@ -11,7 +11,7 @@ async fn main() {
         .get_foo(
             &GetFooQueryRequest {
                 optional_baz: Some("optional_baz".to_string()),
-                optional_nullable_baz: Some(Some("optional_nullable_baz".to_string())),
+                optional_nullable_baz: Some("optional_nullable_baz".to_string()),
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
             },

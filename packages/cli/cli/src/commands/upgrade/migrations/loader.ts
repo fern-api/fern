@@ -1,4 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { readFileSync, unlinkSync } from "fs";
@@ -7,7 +8,6 @@ import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
 import { pathToFileURL } from "url";
-
 import { Migration, MigrationModule, MigratorResult } from "./types.js";
 
 /**
@@ -264,7 +264,7 @@ export async function loadMigrationModule(params: {
         return module;
     } catch (error) {
         // Migration package doesn't exist or failed to install
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = extractErrorMessage(error);
 
         // 404 errors mean the migration package doesn't exist yet - this is expected
         // for generators that don't have migrations
@@ -394,7 +394,7 @@ export function runMigrations(params: {
             currentConfig = migration.migrateGeneratorConfig({ config: currentConfig, context });
             appliedVersions.push(migration.version);
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             throw new Error(
                 `Failed to apply migration for version ${migration.version}.\n\n` +
                     `Reason: ${errorMessage}\n\n` +

@@ -6,7 +6,6 @@ import { execFile } from "child_process";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
-import urlJoin from "url-join";
 import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
@@ -364,7 +363,29 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
+        // Stage dist contents and root documentation files into a temp directory
+        // so the output zip includes them alongside the compiled cjs/esm output.
+        const stagingDir = AbsoluteFilePath.of((await tmp.dir()).path);
+        const distDir = join(this.directory, this.distDirectory);
+        const distItems = await readdir(distDir);
+        for (const item of distItems) {
+            await cp(join(distDir, RelativeFilePath.of(item)), join(stagingDir, RelativeFilePath.of(item)), {
+                recursive: true
+            });
+        }
+
+        const ROOT_FILES_TO_INCLUDE = ["README.md", "reference.md", "CONTRIBUTING.md"];
+        for (const filename of ROOT_FILES_TO_INCLUDE) {
+            const src = join(this.directory, RelativeFilePath.of(filename));
+            try {
+                await cp(src, join(stagingDir, RelativeFilePath.of(filename)));
+            } catch (e) {
+                // File may not exist (e.g. whitelabel skips CONTRIBUTING.md)
+                logger.debug(`Skipping ${filename}: ${e}`);
+            }
+        }
+
+        await this.zipDirectoryContents(stagingDir, {
             logger,
             destinationPath,
             zipFilename,
@@ -420,7 +441,7 @@ export class PersistedTypescriptProject {
         });
 
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
-        const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
+        const registryUrlWithoutProtocol = `${parsedRegistryUrl.host}${parsedRegistryUrl.pathname}`;
 
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]

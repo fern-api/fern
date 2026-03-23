@@ -6,10 +6,11 @@ from ...type_hint import TypeHint
 
 
 class TypeAliasDeclaration(AstNode):
-    def __init__(self, name: str, type_hint: TypeHint, snippet: Optional[str] = None):
+    def __init__(self, name: str, type_hint: TypeHint, snippet: Optional[str] = None, docs: Optional[str] = None):
         self.name = name
         self.type_hint = type_hint
         self.snippet = snippet
+        self.docs = docs
         self.ghost_references: Set[Reference] = set()
 
     def get_metadata(self) -> AstNodeMetadata:
@@ -32,3 +33,9 @@ class TypeAliasDeclaration(AstNode):
         writer.write(f"{self.name} = ")
         self.type_hint.write(writer=writer)
         writer.write_newline_if_last_line_not()
+
+        if self.docs is not None:
+            writer.write_line('"""')
+            writer.write(self.docs)
+            writer.write_newline_if_last_line_not()
+            writer.write_line('"""')

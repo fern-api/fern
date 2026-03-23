@@ -82,9 +82,20 @@ interface WebhookVerificationEntry {
     webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
 }
 
+export interface ResolvedNaming {
+    namespace: string;
+    client: string;
+    error: string;
+    timeoutError: string;
+    environment: string;
+    environmentUrls: string;
+    version: string;
+}
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
+        naming: ResolvedNaming;
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
@@ -107,7 +118,7 @@ export declare namespace SdkGenerator {
         outputEsm: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
@@ -163,6 +174,7 @@ export declare namespace SdkGenerator {
 
 export class SdkGenerator {
     private namespaceExport: string;
+    private naming: ResolvedNaming;
     private context: GeneratorContext;
     private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
@@ -170,7 +182,7 @@ export class SdkGenerator {
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
-    private shouldGenerateWebsocketClients: boolean;
+    private generateWebSocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
@@ -248,6 +260,7 @@ export class SdkGenerator {
 
     constructor({
         namespaceExport,
+        naming,
         intermediateRepresentation,
         context,
         npmPackage,
@@ -261,6 +274,7 @@ export class SdkGenerator {
 
         this.context = context;
         this.namespaceExport = namespaceExport;
+        this.naming = naming;
         this.intermediateRepresentation = intermediateRepresentation;
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
@@ -276,7 +290,7 @@ export class SdkGenerator {
         this.generateOAuthClients =
             config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
-        this.shouldGenerateWebsocketClients = config.shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = config.generateWebSocketClients;
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -320,6 +334,7 @@ export class SdkGenerator {
         this.versionDeclarationReferencer = new VersionDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.version,
             apiVersion: this.intermediateRepresentation.apiVersion,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
@@ -344,6 +359,7 @@ export class SdkGenerator {
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.client,
             packageResolver: this.packageResolver
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
@@ -370,6 +386,8 @@ export class SdkGenerator {
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
+            namingOverride: naming.environment,
+            environmentUrlsNamingOverride: naming.environmentUrls,
             npmPackage: this.npmPackage,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
             relativePackagePath: this.relativePackagePath,
@@ -393,11 +411,13 @@ export class SdkGenerator {
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.error
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.timeoutError
         });
         this.nonStatusCodeErrorHandlerDeclarationReferencer = new NonStatusCodeErrorHandlerDeclarationReferencer({
             containingDirectory: [],
@@ -470,7 +490,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
-            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
+            generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
@@ -540,6 +560,7 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
+                allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
@@ -577,7 +598,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generated errors");
         this.generateHandleNonStatusCodeError();
         this.context.logger.debug("Generated handleNonStatusCodeError");
-        if (this.shouldGenerateWebsocketClients) {
+        if (this.generateWebSocketClients) {
             if (this.config.includeSerdeLayer) {
                 this.generateUnionedResponseSchemas();
                 this.context.logger.debug("Generated unioned response schemas");
@@ -1099,7 +1120,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
+            if (!package_.hasEndpointsInTree && (!this.generateWebSocketClients || package_.websocket == null)) {
                 continue;
             }
             this.withSourceFile({
@@ -2057,7 +2078,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
@@ -2096,7 +2117,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);
@@ -2115,6 +2136,16 @@ export class SdkGenerator {
                             moduleSpecifier: "./client/Client",
                             namedExports: [clientClassName]
                         });
+
+                        if (this.generateWebSocketClients && package_.websocket != null) {
+                            const socketClassName = this.websocketSocketDeclarationReferencer.getExportedName(
+                                packageId.subpackageId
+                            );
+                            sourceFile.addExportDeclaration({
+                                moduleSpecifier: "./client/Socket",
+                                namedExports: [socketClassName]
+                            });
+                        }
 
                         sourceFile.addExportDeclaration({
                             moduleSpecifier: "./client/index"

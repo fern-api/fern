@@ -2,6 +2,7 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { createHash } from "crypto";
 import { Eta } from "eta";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -153,7 +154,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format on the solution file using absolute path
+        // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
         const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
             doNotPipeOutput: false
@@ -435,8 +436,10 @@ dotnet_diagnostic.IDE0005.severity = error
     }
 
     /**
-     * Generates the .slnx solution file directly as XML, avoiding dotnet CLI overhead.
+     * Generates the solution file directly as a template, avoiding dotnet CLI overhead.
      * Computes relative paths from the solution directory to both project .csproj files.
+     * When `sln-format` is "sln", generates both .sln and .slnx files.
+     * When `sln-format` is "slnx" (default), generates only .slnx.
      */
     private async createSolutionFile({
         absolutePathToSolutionDirectory,
@@ -456,6 +459,7 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
+        // Always generate .slnx format
         const libraryCsprojRelative = path
             .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
             .replace(/\\/g, "/");
@@ -469,8 +473,53 @@ dotnet_diagnostic.IDE0005.severity = error
 </Solution>
 `;
 
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await writeFile(solutionFilePath, slnxContents);
+        const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(slnxFilePath, slnxContents);
+
+        // When sln-format is "sln", also generate the legacy .sln file
+        if (this.settings.slnFormat === "sln") {
+            const libraryCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+                .replace(/\//g, "\\");
+            const testCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+                .replace(/\//g, "\\");
+
+            const projectTypeGuid = "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC";
+            const libraryProjectGuid = generateDeterministicGuid(this.name);
+            const testProjectGuid = generateDeterministicGuid(testProjectName);
+
+            const slnContents = [
+                "Microsoft Visual Studio Solution File, Format Version 12.00",
+                "# Visual Studio Version 17",
+                "VisualStudioVersion = 17.0.31903.59",
+                "MinimumVisualStudioVersion = 10.0.40219.1",
+                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelativeBackslash}", "{${libraryProjectGuid}}"`,
+                "EndProject",
+                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelativeBackslash}", "{${testProjectGuid}}"`,
+                "EndProject",
+                "Global",
+                "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution",
+                "\t\tDebug|Any CPU = Debug|Any CPU",
+                "\t\tRelease|Any CPU = Release|Any CPU",
+                "\tEndGlobalSection",
+                "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution",
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                "\tEndGlobalSection",
+                "EndGlobal",
+                ""
+            ].join("\n");
+
+            const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
+            await writeFile(slnFilePath, slnContents);
+        }
     }
 
     private async createCoreDirectory({
@@ -578,10 +627,61 @@ dotnet_diagnostic.IDE0005.severity = error
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
                     context: this.context,
-                    namespaces: this.namespaces
+                    namespaces: this.namespaces,
+                    clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
                 }
             })
         );
+    }
+
+    private cachedClientOptionsRequiredDefaults: string | undefined;
+
+    /**
+     * When unified-client-options is enabled and auth fields are required,
+     * returns a string of extra initializer assignments for ClientOptions in tests
+     * (e.g. ', ClientId = "test", ClientSecret = "test"'). Otherwise returns "".
+     */
+    private getClientOptionsRequiredDefaults(): string {
+        if (this.cachedClientOptionsRequiredDefaults !== undefined) {
+            return this.cachedClientOptionsRequiredDefaults;
+        }
+        return (this.cachedClientOptionsRequiredDefaults = this.computeClientOptionsRequiredDefaults());
+    }
+
+    private computeClientOptionsRequiredDefaults(): string {
+        if (!this.context.generation.settings.unifiedClientOptions) {
+            return "";
+        }
+        const parts: string[] = [];
+
+        // BaseUrl is required when there's no default environment
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+        if (!hasDefaultEnvironment) {
+            parts.push(`BaseUrl = "http://localhost"`);
+        }
+
+        // Auth fields are required when isAuthMandatory is false (confusingly named)
+        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        if (!isOptional) {
+            for (const scheme of this.context.ir.auth.schemes) {
+                if (scheme.type === "bearer") {
+                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "basic") {
+                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
+                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "header") {
+                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                } else if (scheme.type === "oauth") {
+                    parts.push(`ClientId = "test"`);
+                    parts.push(`ClientSecret = "test"`);
+                }
+            }
+        }
+
+        if (parts.length === 0) {
+            return "";
+        }
+        return ", " + parts.join(", ");
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
@@ -706,6 +806,16 @@ function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
 }
 
+/**
+ * Generates a deterministic GUID from a project name using MD5 hashing.
+ * This ensures the same project name always produces the same GUID,
+ * making .sln files reproducible across generation runs.
+ */
+function generateDeterministicGuid(name: string): string {
+    const hash = createHash("md5").update(name).digest("hex");
+    return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-${hash.slice(12, 16)}-${hash.slice(16, 20)}-${hash.slice(20, 32)}`.toUpperCase();
+}
+
 declare namespace CsProj {
     interface Args {
         name: string;
@@ -748,6 +858,8 @@ class CsProj extends WithGeneration {
     public override toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
+        const indent = this.generation.constants.formatting.indent;
+        const legacyDeps = this.getLegacyFrameworkDependencies();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
@@ -773,15 +885,16 @@ ${projectGroup.join("\n")}
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
     <ItemGroup>
-        ${dependencies.join(`\n${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}`)}
-        ${this.getSseDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
-        ${this.getWebSocketAsyncDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
+        ${dependencies.join(`\n${indent}${indent}`)}
     </ItemGroup>
-${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
+    <ItemGroup Condition="${LEGACY_FRAMEWORK_CONDITION}">
+        ${legacyDeps.join(`\n${indent}${indent}`)}
+    </ItemGroup>
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
         <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
     </ItemGroup>
-${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.indent}`)}
+${this.getAdditionalItemGroups().join(`\n${indent}`)}
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>${this.generation.names.files.testProject}</_Parameter1>
@@ -793,6 +906,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 `;
     }
 
+    /**
+     * Returns package references that are needed on all target frameworks.
+     * Packages that ship in-box with net6.0+ are excluded here and emitted
+     * conditionally via {@link getLegacyFrameworkDependencies}.
+     */
     private getDependencies(): string[] {
         const result: string[] = [];
         result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
@@ -801,38 +919,51 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         );
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        // When use-undiscriminated-unions is false, we need the OneOf package
+        // When use-undiscriminated-unions is false, we need the OneOf package.
+        // System.Net.Http and System.Text.RegularExpressions are security version-floor
+        // overrides for OneOf.Extended's unpatched transitive dependencies — only needed
+        // when OneOf is present. System.Net.Http is also needed on net462 for the
+        // HttpClient assembly reference, which is handled separately via
+        // getLegacyFrameworkDependencies().
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
             result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
             result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+            result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         }
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
-        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
+        }
+        if (this.context.hasWebSocketEndpoints) {
+            result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
+            result.push('<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />');
+            result.push('<PackageReference Include="System.Threading.Channels" Version="8.0.0" />');
+        }
+        // SSE package — only in-box starting with net9.0, so keep unconditional for
+        // multi-targeted projects that include net8.0
+        if (this.context.hasSseEndpoints) {
+            result.push('<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />');
         }
         return result;
     }
 
     /**
-     * Adds the nuget dependencies for the websocket api client.
-     *
-     * @returns an array of strings that represent the nuget dependencies.
+     * Returns package references that should only be emitted for legacy (pre-net8.0) TFMs.
+     * These packages are included in the .NET shared framework starting with net8.0.
      */
-    private getWebSocketAsyncDependencies(): string[] {
-        return this.context.hasWebSocketEndpoints
-            ? [
-                  '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
-              ]
-            : [];
-    }
-
-    private getSseDependencies(): string[] {
-        return this.context.hasSseEndpoints
-            ? ['    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />']
-            : [];
+    private getLegacyFrameworkDependencies(): string[] {
+        const result: string[] = [];
+        for (const pkg of NET8_INBOX_PACKAGES) {
+            result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+        }
+        // System.Net.Http is in-box on net8.0+ but needed on legacy TFMs for the
+        // net462 assembly reference. When OneOf is used, it's already in the
+        // unconditional group as a security version-floor override, so skip here
+        // to avoid a duplicate PackageReference.
+        if (this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+        }
+        return result;
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
@@ -846,7 +977,8 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("");
         result.push("<ItemGroup>");
-        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />');
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.31.1" />');
         result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
         result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
@@ -859,6 +991,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 
         result.push("<ItemGroup>");
         for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            // Skip proto files provided by external packages (e.g. Google.Api.CommonProtos)
+            // to avoid conflicting with the types from those packages.
+            if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protobufSourceFilePath.startsWith(prefix))) {
+                continue;
+            }
             const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
             result.push(
                 `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
@@ -880,7 +1017,7 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
             );
         }
         result.push(
-            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(
             `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
@@ -950,3 +1087,31 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return path.win32.normalize(relativePath);
     }
 }
+
+/**
+ * Proto file path prefixes for types provided by external NuGet packages
+ * (e.g. Google.Api.CommonProtos). These files should be excluded from
+ * Grpc.Tools compilation to avoid conflicting type definitions.
+ */
+const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];
+
+/**
+ * MSBuild condition that matches target frameworks compatible with net8.0 or later.
+ * Uses IsTargetFrameworkCompatible for >= semantics rather than hardcoded TFM equality.
+ */
+const NET8_COMPATIBLE_CONDITION = "$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))";
+
+/**
+ * MSBuild condition that matches legacy (pre-net8.0) target frameworks.
+ * This is the negation of NET8_COMPATIBLE_CONDITION.
+ */
+const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
+
+/**
+ * Packages that are included in the .NET shared framework for net8.0+ and should
+ * only be emitted as PackageReference when targeting legacy TFMs (netstandard2.0, net462, etc.).
+ * Extend this list as more packages become in-box in future .NET versions.
+ */
+const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+    { name: "System.Text.Json", version: "8.0.5" }
+];

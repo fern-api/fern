@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -92,7 +92,9 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger1() =>
         IsInteger1
             ? (int)Value!
-            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'integer1'");
+            : throw new global::System.Exception(
+                "UnionWithDuplicatePrimitive.Type is not 'integer1'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'integer2', otherwise throws an exception.
@@ -101,7 +103,9 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger2() =>
         IsInteger2
             ? (int)Value!
-            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'integer2'");
+            : throw new global::System.Exception(
+                "UnionWithDuplicatePrimitive.Type is not 'integer2'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string1', otherwise throws an exception.
@@ -110,7 +114,9 @@ public record UnionWithDuplicatePrimitive
     public string AsString1() =>
         IsString1
             ? (string)Value!
-            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'string1'");
+            : throw new global::System.Exception(
+                "UnionWithDuplicatePrimitive.Type is not 'string1'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string2', otherwise throws an exception.
@@ -119,7 +125,9 @@ public record UnionWithDuplicatePrimitive
     public string AsString2() =>
         IsString2
             ? (string)Value!
-            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'string2'");
+            : throw new global::System.Exception(
+                "UnionWithDuplicatePrimitive.Type is not 'string2'"
+            );
 
     public T Match<T>(
         Func<int, T> onInteger1,
@@ -244,12 +252,12 @@ public record UnionWithDuplicatePrimitive
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicatePrimitive>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDuplicatePrimitive).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDuplicatePrimitive Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -316,6 +324,27 @@ public record UnionWithDuplicatePrimitive
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithDuplicatePrimitive ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithDuplicatePrimitive(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithDuplicatePrimitive value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

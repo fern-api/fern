@@ -516,12 +516,12 @@ describe("Type support", () => {
     describe("systemType", () => {
         it("systemType", () => {
             const type = generation.System.Type;
-            expect(getTypeOutput(type)).toBe("System.Type");
+            expect(getTypeOutput(type)).toBe("global::System.Type");
         });
 
         it("optional systemType", () => {
             const type = generation.System.Type.asOptional();
-            expect(getTypeOutput(type)).toBe("System.Type?");
+            expect(getTypeOutput(type)).toBe("global::System.Type?");
         });
     });
 
@@ -1095,7 +1095,7 @@ describe("Type support", () => {
             it("Optional<SystemType>", () => {
                 const type = generation.System.Type.asOptional();
                 expect(type.isOptional).toBe(true);
-                expect(getTypeOutput(type)).toBe("System.Type?");
+                expect(getTypeOutput(type)).toBe("global::System.Type?");
             });
 
             it("Optional<Action>", () => {

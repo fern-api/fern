@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedRequestParameters;
 using SeedRequestParameters.Test.Unit.MockServer;
@@ -7,6 +7,7 @@ using SeedRequestParameters.Test.Utils;
 namespace SeedRequestParameters.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUsernameTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

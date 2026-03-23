@@ -95,6 +95,8 @@ export const CsharpConfigSchema = z.object({
     "include-exception-handler": z.boolean().optional(),
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
+    "omit-fern-headers": z.boolean().optional(),
+    "unified-client-options": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
@@ -105,7 +107,13 @@ export const CsharpConfigSchema = z.object({
         ),
     "pascal-case-environments": z.boolean().optional(),
 
-    "experimental-enable-forward-compatible-enums": z.boolean().optional()
+    "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+
+    // Solution file format option.
+    // "sln" generates both .sln and .slnx files for compatibility with older
+    // .NET tooling or CI systems that do not yet support .slnx.
+    // "slnx" (default) generates only the modern .slnx format.
+    "sln-format": z.enum(["sln", "slnx"]).optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

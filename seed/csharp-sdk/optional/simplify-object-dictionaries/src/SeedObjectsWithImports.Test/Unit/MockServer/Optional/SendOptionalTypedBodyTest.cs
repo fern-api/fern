@@ -6,6 +6,7 @@ using SeedObjectsWithImports.Test.Utils;
 namespace SeedObjectsWithImports.Test.Unit.MockServer.Optional;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SendOptionalTypedBodyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

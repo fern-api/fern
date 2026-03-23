@@ -1,8 +1,12 @@
+imports:
+  root: __package__.yml
+
 types:
   Task:
     properties:
       name: string
       user: User
+      owner: root.User
 
   User:
     properties:
@@ -27,3 +31,9 @@ service:
       path: ""
       request: Task
       response: Task
+    getUser:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      response: root.User

@@ -18,7 +18,9 @@ export class RootClientGenerator {
         fieldName: string;
         clientName: string;
         moduleName: string;
+        channel: FernIr.WebSocketChannel;
     }>;
+    private readonly rootServiceGenerator: SubClientGenerator | null;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -32,6 +34,26 @@ export class RootClientGenerator {
         // Gather WebSocket connector info
         const wsGen = new WebSocketChannelGenerator(context);
         this.wsConnectors = wsGen.getConnectorInfo();
+
+        // Create a SubClientGenerator for root-level endpoints if the root package has a service
+        this.rootServiceGenerator = this.createRootServiceGenerator();
+    }
+
+    private createRootServiceGenerator(): SubClientGenerator | null {
+        const rootServiceId = this.package.service;
+        if (!rootServiceId) {
+            return null;
+        }
+
+        // Synthesize a Subpackage from the root Package (Subpackage extends Package with name + displayName)
+        const rootAsSubpackage: FernIr.Subpackage = {
+            ...this.package,
+            subpackages: [], // Don't pass children — they're handled as separate sub-clients
+            name: this.context.ir.apiName,
+            displayName: undefined
+        };
+
+        return new SubClientGenerator(this.context, rootAsSubpackage);
     }
 
     // =============================================================================
@@ -167,12 +189,36 @@ export class RootClientGenerator {
     }
 
     private generateImports(): UseStatement[] {
+        const crateItems = ["ClientConfig", "ApiError"];
+
+        // Add HttpClient and RequestOptions imports if root service has endpoints
+        if (this.rootServiceGenerator) {
+            crateItems.push("HttpClient", "RequestOptions");
+        }
+
         const imports: UseStatement[] = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ApiError"]
+                items: crateItems
             })
         ];
+
+        // Add reqwest::Method if root service has endpoints
+        if (this.rootServiceGenerator) {
+            imports.push(
+                new UseStatement({
+                    path: "reqwest",
+                    items: ["Method"]
+                })
+            );
+            // Add crate::api::* for custom types used in endpoint parameters/responses
+            imports.push(
+                new UseStatement({
+                    path: "crate::api",
+                    items: ["*"]
+                })
+            );
+        }
 
         // Import WebSocket connector types from the websocket module
         const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
@@ -195,10 +241,12 @@ export class RootClientGenerator {
 
     private generateRootClient(subpackages: FernIr.Subpackage[]): string {
         const clientName = this.getRootClientName();
+        const methods = this.rootServiceGenerator?.getEndpointMethods() ?? [];
         const rustRootClient = rust.client({
             name: clientName,
             fields: this.generateFields(subpackages),
-            constructors: [this.generateConstructor(subpackages)]
+            constructors: [this.generateConstructor(subpackages)],
+            ...(methods.length > 0 ? { methods } : {})
         });
         return rustRootClient.toString();
     }
@@ -207,12 +255,24 @@ export class RootClientGenerator {
         // Collect HTTP sub-client field names to avoid collisions with WS connectors
         const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
+        // Add http_client field if root package has endpoints
+        const httpClientField: rust.Client.Field[] = this.rootServiceGenerator
+            ? [
+                  {
+                      name: "http_client",
+                      type: rust.Type.reference(rust.reference({ name: "HttpClient" })).toString(),
+                      visibility: "pub" as const
+                  }
+              ]
+            : [];
+
         return [
             {
                 name: "config",
                 type: rust.Type.reference(rust.reference({ name: "ClientConfig" })).toString(),
                 visibility: "pub" as const
             },
+            ...httpClientField,
             ...this.clientGeneratorContext.subClients.map(({ fieldName, clientName }) => ({
                 name: fieldName,
                 type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
@@ -237,14 +297,21 @@ export class RootClientGenerator {
         const allInits: string[] = [];
         const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
+        // HttpClient initialization for root-level endpoints
+        if (this.rootServiceGenerator) {
+            allInits.push("http_client: HttpClient::new(config.clone())?");
+        }
+
         // HTTP sub-client initializations
         for (const { fieldName, clientName } of this.clientGeneratorContext.subClients) {
             allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
         }
 
-        // WebSocket connector initializations (only those not colliding with HTTP sub-clients)
+        // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
+        // Always pass the token so the connector can auto-inject the Authorization header,
+        // matching the TypeScript SDK experience where auth "just works".
         for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
-            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone())`);
+            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
         }
 
         const initStr = allInits.join(",\n            ");
@@ -400,13 +467,16 @@ export class RootClientGenerator {
     // =============================================================================
 
     private getSubpackages(): FernIr.Subpackage[] {
-        return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
+        return this.package.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getAllSubpackagesForModuleDetection(): FernIr.Subpackage[] {
-        // Get ALL subpackages from the entire IR to detect nested directory structures
+        // Get ALL subpackages from the entire IR to detect nested directory structures,
+        // excluding WebSocket-only subpackages which don't generate resource files.
         const allSubpackages: FernIr.Subpackage[] = Object.values(this.context.ir.subpackages);
-        return allSubpackages;
+        return allSubpackages.filter((subpackage) => !this.context.isWebSocketOnlySubpackage(subpackage));
     }
 
     private getRootClientName(): string {

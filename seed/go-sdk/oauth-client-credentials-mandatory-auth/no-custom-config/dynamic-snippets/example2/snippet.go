@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/oauth-client-credentials-mandatory-auth/fern"
     client "github.com/oauth-client-credentials-mandatory-auth/fern/client"
     option "github.com/oauth-client-credentials-mandatory-auth/fern/option"
-    fern "github.com/oauth-client-credentials-mandatory-auth/fern"
-    context "context"
 )
 
 func do() {

@@ -1,7 +1,13 @@
 import { GraphQLSpec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import {
+    assertNever,
+    extractErrorMessage,
+    isNonNullish,
+    replaceEnvVariables,
+    visitDiscriminatedUnion
+} from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -9,6 +15,7 @@ import {
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
+    stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
@@ -290,10 +297,10 @@ export class DocsDefinitionResolver {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
         }
 
-        // Store raw markdown content before any processing
+        // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(markdown);
         }
 
         // track all changelog markdown files in parsedDocsConfig.pages
@@ -320,8 +327,8 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
-                            // Also store the raw content for changelog files
-                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = file.contents;
+                            // Also store raw content for changelog files, stripping MDX comments
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(file.contents);
                         });
                     }
                 },
@@ -411,9 +418,7 @@ export class DocsDefinitionResolver {
                     filesToUploadSet.add(filepath);
                 }
             } catch (error) {
-                this.taskContext.logger.error(
-                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
-                );
+                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
                 throw error;
             }
         }
@@ -512,7 +517,7 @@ export class DocsDefinitionResolver {
             );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
-                markdown,
+                markdown: stripMdxComments(markdown),
                 editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
                 editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
                 rawMarkdown: rawMarkdown
@@ -1514,7 +1519,7 @@ export class DocsDefinitionResolver {
             }
 
             // Add to both collections so the file appears in the final pages output
-            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.rawMarkdownFiles[relativePath] = stripMdxComments(processedContent);
             this.parsedDocsConfig.pages[relativePath] = processedContent;
         }
 
@@ -1702,7 +1707,7 @@ export class DocsDefinitionResolver {
             return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
         } catch (e) {
             this.taskContext.logger.warn(
-                `Failed to parse _navigation.yml for library '${libraryName}': ${e instanceof Error ? e.message : String(e)}`
+                `Failed to parse _navigation.yml for library '${libraryName}': ${extractErrorMessage(e)}`
             );
             return null;
         }

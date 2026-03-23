@@ -4,6 +4,7 @@ using SeedAccept.Test.Unit.MockServer;
 namespace SeedAccept.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class EndpointTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

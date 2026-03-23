@@ -26,7 +26,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -58,7 +58,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/#{params[:tenant_id]}/user/",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/",
           body: Seed::User::Types::User.new(params).to_h,
           request_options: request_options
         )
@@ -95,7 +95,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/#{URI.encode_uri_component(params[:user_id].to_s)}",
           body: Seed::User::Types::User.new(body_params).to_h,
           request_options: request_options
         )
@@ -135,7 +135,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/search",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/#{URI.encode_uri_component(params[:user_id].to_s)}/search",
           query: query_params,
           request_options: request_options
         )
@@ -170,7 +170,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/#{URI.encode_uri_component(params[:user_id].to_s)}/metadata/v#{URI.encode_uri_component(params[:version].to_s)}",
           request_options: request_options
         )
         begin
@@ -207,7 +207,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}",
+          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/#{URI.encode_uri_component(params[:user_id].to_s)}/specifics/#{URI.encode_uri_component(params[:version].to_s)}/#{URI.encode_uri_component(params[:thought].to_s)}",
           request_options: request_options
         )
         begin

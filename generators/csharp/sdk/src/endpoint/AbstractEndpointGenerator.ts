@@ -42,15 +42,18 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     protected getUnpagedEndpointSignatureInfo({
         serviceId,
-        endpoint
+        endpoint,
+        isGrpc
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
+        isGrpc?: boolean;
     }): EndpointSignatureInfo {
         return this.getEndpointSignatureInfoFor({
             serviceId,
             endpoint,
-            endpointType: "unpaged"
+            endpointType: "unpaged",
+            isGrpc
         });
     }
 
@@ -71,11 +74,13 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     protected getEndpointSignatureInfoFor({
         serviceId,
         endpoint,
-        endpointType
+        endpointType,
+        isGrpc
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
         endpointType: "unpaged" | "paged";
+        isGrpc?: boolean;
     }): EndpointSignatureInfo {
         const request = getEndpointRequest({
             context: this.context,
@@ -96,7 +101,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         let returnType: ast.Type | undefined;
         switch (endpointType) {
             case "unpaged":
-                returnType = getEndpointReturnType({ context: this.context, endpoint });
+                returnType = getEndpointReturnType({ context: this.context, endpoint, isGrpc });
                 break;
             case "paged":
                 returnType = this.getPagerReturnType(endpoint);

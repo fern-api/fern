@@ -4,6 +4,7 @@ using SeedInferredAuthImplicit.Test.Unit.MockServer;
 namespace SeedInferredAuthImplicit.Test.Unit.MockServer.Nested.Api;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetSomethingTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

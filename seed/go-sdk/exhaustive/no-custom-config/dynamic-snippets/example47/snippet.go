@@ -1,10 +1,10 @@
 package example
 
 import (
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
     context "context"
+    client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    option "github.com/exhaustive/fern/option"
 )
 
 func do() {
@@ -16,13 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.Animal{
-        Dog: &types.Dog{
-            Name: "name",
-            LikesToWoof: true,
-        },
+    request := &endpoints.PutRequest{
+        Id: "id",
     }
-    client.Endpoints.Union.GetAndReturnUnion(
+    client.Endpoints.Put.Add(
         context.TODO(),
         request,
     )

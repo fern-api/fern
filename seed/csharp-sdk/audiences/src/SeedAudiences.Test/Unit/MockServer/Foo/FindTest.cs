@@ -6,6 +6,7 @@ using SeedAudiences.Test.Utils;
 namespace SeedAudiences.Test.Unit.MockServer.Foo;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FindTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -4,6 +4,7 @@ import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -23,7 +24,6 @@ import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
 import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
-
 /**
  * Runs generation using the legacy local-generation infrastructure.
  */
@@ -72,6 +72,9 @@ export namespace LegacyLocalGenerationRunner {
 
         /** Authentication token (required for self-hosted git generation) */
         token?: FernToken;
+
+        /** Whether to ignore .fernignore and overwrite all files */
+        skipFernignore?: boolean;
     }
 
     export interface Result {
@@ -141,7 +144,7 @@ export class LegacyLocalGenerationRunner {
             }
             return {
                 success: false,
-                error: error instanceof Error ? error.message : String(error)
+                error: extractErrorMessage(error)
             };
         }
     }
@@ -178,7 +181,8 @@ export class LegacyLocalGenerationRunner {
             runner: args.containerEngine,
             absolutePathToPreview: undefined,
             inspect: false,
-            ai: undefined
+            ai: undefined,
+            skipFernignore: args.skipFernignore
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {
@@ -231,7 +235,8 @@ export class LegacyLocalGenerationRunner {
             irVersionOverride: undefined,
             shouldGenerateDynamicSnippetTests: false,
             skipUnstableDynamicSnippetTests: true,
-            inspect: false
+            inspect: false,
+            skipFernignore: args.skipFernignore
         });
 
         if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {

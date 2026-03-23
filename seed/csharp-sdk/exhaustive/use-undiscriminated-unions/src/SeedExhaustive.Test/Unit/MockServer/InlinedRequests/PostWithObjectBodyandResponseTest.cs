@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive;
 using SeedExhaustive.Test.Unit.MockServer;
@@ -8,6 +8,7 @@ using SeedExhaustive.Types;
 namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

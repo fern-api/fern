@@ -38,6 +38,7 @@ class TypedDictAliasGenerator(AbstractAliasGenerator):
                 name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=True),
                 type_hint=self._type_hint,
                 snippet=self._snippet,
+                docs=self._docs,
             ),
             should_export=True,
         )

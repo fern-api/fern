@@ -115,6 +115,17 @@ public class ReconnectingWebSocketListenerGenerator {
                         .initializer("new $T<>()", ConcurrentLinkedQueue.class)
                         .build(),
 
+                // Binary message queue (thread-safe)
+                FieldSpec.builder(
+                                ParameterizedTypeName.get(
+                                        ClassName.get(ConcurrentLinkedQueue.class),
+                                        ClassName.get("okio", "ByteString")),
+                                "binaryMessageQueue",
+                                Modifier.PRIVATE,
+                                Modifier.FINAL)
+                        .initializer("new $T<>()", ConcurrentLinkedQueue.class)
+                        .build(),
+
                 // Executors
                 FieldSpec.builder(ScheduledExecutorService.class, "reconnectExecutor", Modifier.PRIVATE, Modifier.FINAL)
                         .initializer("$T.newSingleThreadScheduledExecutor()", Executors.class)
@@ -137,9 +148,11 @@ public class ReconnectingWebSocketListenerGenerator {
         methods.add(generateConnect());
         methods.add(generateDisconnect());
         methods.add(generateSend());
+        methods.add(generateSendBinary());
         methods.add(generateGetWebSocket()); // Add getter for thread-safe WebSocket access
         methods.add(generateOnOpen());
         methods.add(generateOnMessage());
+        methods.add(generateOnBinaryMessage());
         methods.add(generateOnFailure());
         methods.add(generateOnClosed());
         methods.add(generateGetNextDelay());
@@ -271,6 +284,7 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "- Waits up to 5 seconds for executor termination\n")
                 .addStatement("shouldReconnect.set(false)")
                 .addStatement("messageQueue.clear()")
+                .addStatement("binaryMessageQueue.clear()")
                 .beginControlFlow("if (webSocket != null)")
                 .addStatement("webSocket.close(1000, \"Client disconnecting\")")
                 .endControlFlow()
@@ -322,6 +336,41 @@ public class ReconnectingWebSocketListenerGenerator {
                 .build();
     }
 
+    private MethodSpec generateSendBinary() {
+        return MethodSpec.methodBuilder("sendBinary")
+                .addModifiers(Modifier.PUBLIC, Modifier.SYNCHRONIZED)
+                .returns(TypeName.BOOLEAN)
+                .addParameter(ClassName.get("okio", "ByteString"), "data")
+                .addJavadoc("Sends binary data or queues it if not connected.\n"
+                        + "\n"
+                        + "Thread-safe: Synchronized to prevent race conditions with flushMessageQueue().\n"
+                        + "\n"
+                        + "Behavior:\n"
+                        + "- If connected: Attempts direct send, queues if buffer full\n"
+                        + "- If disconnected: Queues data up to maxEnqueuedMessages limit\n"
+                        + "- If queue full: Data is dropped\n"
+                        + "\n"
+                        + "@param data The binary data to send\n"
+                        + "@return true if sent immediately, false if queued or dropped\n")
+                .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
+                .beginControlFlow("if (ws != null)")
+                .addStatement("boolean sent = ws.send(data)")
+                .beginControlFlow("if (!sent && binaryMessageQueue.size() < maxEnqueuedMessages)")
+                .addStatement("binaryMessageQueue.offer(data)")
+                .addStatement("return false")
+                .endControlFlow()
+                .addStatement("return sent")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .beginControlFlow("if (binaryMessageQueue.size() < maxEnqueuedMessages)")
+                .addStatement("binaryMessageQueue.offer(data)")
+                .addStatement("return false")
+                .endControlFlow()
+                .addStatement("return false")
+                .endControlFlow()
+                .build();
+    }
+
     private MethodSpec generateGetWebSocket() {
         return MethodSpec.methodBuilder("getWebSocket")
                 .addModifiers(Modifier.PUBLIC)
@@ -357,6 +406,17 @@ public class ReconnectingWebSocketListenerGenerator {
                 .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
                 .addParameter(String.class, "text")
                 .addStatement("onWebSocketMessage(webSocket, text)")
+                .build();
+    }
+
+    private MethodSpec generateOnBinaryMessage() {
+        return MethodSpec.methodBuilder("onMessage")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.VOID)
+                .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                .addParameter(ClassName.get("okio", "ByteString"), "bytes")
+                .addStatement("onWebSocketBinaryMessage(webSocket, bytes)")
                 .build();
     }
 
@@ -468,9 +528,11 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "1. Drains queue into temporary list to avoid holding lock during sends\n"
                         + "2. Attempts to send each message in order\n"
                         + "3. If any send fails, re-queues that message and all subsequent messages\n"
-                        + "4. Preserves message ordering during re-queueing\n")
+                        + "4. Preserves message ordering during re-queueing\n"
+                        + "5. Repeats for binary message queue\n")
                 .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
                 .beginControlFlow("if (ws != null)")
+                // Flush text messages
                 .addStatement(
                         "$T<String> tempQueue = new $T<>()",
                         ClassName.get("java.util", "ArrayList"),
@@ -479,11 +541,28 @@ public class ReconnectingWebSocketListenerGenerator {
                 .beginControlFlow("while ((message = messageQueue.poll()) != null)")
                 .addStatement("tempQueue.add(message)")
                 .endControlFlow()
-                .beginControlFlow("for (String msg : tempQueue)")
-                .beginControlFlow("if (!ws.send(msg))")
-                .addStatement("messageQueue.offer(msg)")
-                .beginControlFlow("for (int i = tempQueue.indexOf(msg) + 1; i < tempQueue.size(); i++)")
-                .addStatement("messageQueue.offer(tempQueue.get(i))")
+                .beginControlFlow("for (int i = 0; i < tempQueue.size(); i++)")
+                .beginControlFlow("if (!ws.send(tempQueue.get(i)))")
+                .beginControlFlow("for (int j = i; j < tempQueue.size(); j++)")
+                .addStatement("messageQueue.offer(tempQueue.get(j))")
+                .endControlFlow()
+                .addStatement("break")
+                .endControlFlow()
+                .endControlFlow()
+                // Flush binary messages
+                .addStatement(
+                        "$T<$T> tempBinaryQueue = new $T<>()",
+                        ClassName.get("java.util", "ArrayList"),
+                        ClassName.get("okio", "ByteString"),
+                        ClassName.get("java.util", "ArrayList"))
+                .addStatement("$T binaryMsg", ClassName.get("okio", "ByteString"))
+                .beginControlFlow("while ((binaryMsg = binaryMessageQueue.poll()) != null)")
+                .addStatement("tempBinaryQueue.add(binaryMsg)")
+                .endControlFlow()
+                .beginControlFlow("for (int i = 0; i < tempBinaryQueue.size(); i++)")
+                .beginControlFlow("if (!ws.send(tempBinaryQueue.get(i)))")
+                .beginControlFlow("for (int j = i; j < tempBinaryQueue.size(); j++)")
+                .addStatement("binaryMessageQueue.offer(tempBinaryQueue.get(j))")
                 .endControlFlow()
                 .addStatement("break")
                 .endControlFlow()
@@ -505,6 +584,12 @@ public class ReconnectingWebSocketListenerGenerator {
                     .returns(TypeName.VOID)
                     .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
                     .addParameter(String.class, "text")
+                    .build(),
+            MethodSpec.methodBuilder("onWebSocketBinaryMessage")
+                    .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)
+                    .returns(TypeName.VOID)
+                    .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                    .addParameter(ClassName.get("okio", "ByteString"), "bytes")
                     .build(),
             MethodSpec.methodBuilder("onWebSocketFailure")
                     .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)

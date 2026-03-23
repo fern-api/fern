@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedNullableOptional;
 using SeedNullableOptional.Test.Unit.MockServer;
@@ -7,6 +7,7 @@ using SeedNullableOptional.Test.Utils;
 namespace SeedNullableOptional.Test.Unit.MockServer.NullableOptional;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UpdateComplexProfileTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

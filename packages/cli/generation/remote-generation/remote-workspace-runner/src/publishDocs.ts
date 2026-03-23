@@ -32,6 +32,30 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+/**
+ * Sanitizes a preview ID to be valid in a DNS subdomain label.
+ * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
+ * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
+ */
+function sanitizePreviewId(id: string): string {
+    const sanitized = id
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-{2,}/g, "-")
+        .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
+}
+
+export class DocsPublishConflictError extends Error {
+    constructor() {
+        super("Another docs publish is currently in progress for this domain.");
+        this.name = "DocsPublishConflictError";
+    }
+}
+
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
@@ -53,6 +77,16 @@ export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): R
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
+interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
+}
+
 export async function publishDocs({
     token,
     organization,
@@ -63,6 +97,7 @@ export async function publishDocs({
     ossWorkspaces,
     context,
     preview,
+    previewId,
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
@@ -70,7 +105,9 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
-    docsUrl
+    docsUrl,
+    cliVersion,
+    ciSource
 }: {
     token: FernToken;
     organization: string;
@@ -81,6 +118,7 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
+    previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
@@ -89,6 +127,8 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
+    cliVersion?: string;
+    ciSource?: CISource;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -96,7 +136,18 @@ export async function publishDocs({
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }
 
-    const fdr = createFdrService({ token: token.value });
+    const headers: Record<string, string> = {};
+    if (cliVersion != null) {
+        headers["X-CLI-Version"] = cliVersion;
+    }
+    if (ciSource != null) {
+        headers["X-CI-Source"] = JSON.stringify(ciSource);
+        context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
+    const fdr = createFdrService({
+        token: token.value,
+        ...(Object.keys(headers).length > 0 && { headers })
+    });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
     if (excludeApis) {
@@ -203,13 +254,17 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
+                // previewId is defined in the oRPC contract but not yet exposed
+                // on the FdrClient's Fern-generated StartDocsPreviewRegisterRequestV2 type.
+                // The server accepts it, so we use a cast here until the client is migrated.
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths: filepaths,
                     images,
-                    basePath
-                });
+                    basePath,
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
+                } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -599,6 +654,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const errorObj = error as unknown as Record<string, unknown>;
+    const errorContent = errorObj?.content as Record<string, unknown> | undefined;
+    if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
+        throw new DocsPublishConflictError();
+    }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization);
     if (authErrorMessage != null) {

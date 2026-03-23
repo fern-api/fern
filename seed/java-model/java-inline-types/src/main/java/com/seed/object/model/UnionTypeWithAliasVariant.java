@@ -123,6 +123,10 @@ public final class UnionTypeWithAliasVariant {
   @JsonIgnoreProperties("type")
   private static final class AliasVariantValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private AliasVariantType value;
 
     @JsonCreator(
@@ -165,6 +169,10 @@ public final class UnionTypeWithAliasVariant {
   @JsonIgnoreProperties("type")
   private static final class NonAliasVariantValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private NonAliasVariant value;
 
     @JsonCreator(

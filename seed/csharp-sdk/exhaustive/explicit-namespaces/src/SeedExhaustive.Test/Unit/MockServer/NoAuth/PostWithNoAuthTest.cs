@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.NoAuth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostWithNoAuthTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

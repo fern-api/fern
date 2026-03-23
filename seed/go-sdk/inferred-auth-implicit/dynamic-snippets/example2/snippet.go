@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/inferred-auth-implicit/fern/client"
     option "github.com/inferred-auth-implicit/fern/option"
-    context "context"
 )
 
 func do() {

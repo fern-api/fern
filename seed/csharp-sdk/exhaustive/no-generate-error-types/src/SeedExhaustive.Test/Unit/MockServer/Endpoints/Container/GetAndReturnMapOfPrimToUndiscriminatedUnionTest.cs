@@ -6,6 +6,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnMapOfPrimToUndiscriminatedUnionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

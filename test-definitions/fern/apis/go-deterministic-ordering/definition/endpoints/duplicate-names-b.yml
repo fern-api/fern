@@ -1,0 +1,39 @@
+imports:
+  objects: ../types/object.yml
+
+service:
+  auth: true
+  base-path: /duplicate-names-b
+  endpoints:
+    create:
+      docs: Create endpoint for service B
+      path: ""
+      method: POST
+      request:
+        name: CreateRequestB
+        body:
+          properties:
+            description: string
+            count: integer
+      response: objects.ObjectWithOptionalField
+
+    get:
+      docs: Get endpoint for service B
+      path: /{id}
+      method: GET
+      request:
+        name: GetRequestB
+        path-parameters:
+          id: string
+        query-parameters:
+          expand: optional<boolean>
+
+    list:
+      docs: List endpoint for service B
+      path: ""
+      method: GET
+      request:
+        name: ListRequestB
+        query-parameters:
+          cursor: optional<string>
+          size: optional<integer>

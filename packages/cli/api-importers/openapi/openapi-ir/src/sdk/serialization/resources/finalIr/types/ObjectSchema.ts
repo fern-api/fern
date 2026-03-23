@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { WithAvailability } from "../../commons/types/WithAvailability.js";
 import { WithDescription } from "../../commons/types/WithDescription.js";
+import { WithEncoding } from "../../commons/types/WithEncoding.js";
 import { WithInline } from "../../commons/types/WithInline.js";
 import { WithName } from "../../commons/types/WithName.js";
 import { WithNamespace } from "../../commons/types/WithNamespace.js";
@@ -29,6 +30,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
         .extend(WithName)
         .extend(WithDescription)
         .extend(WithAvailability)
+        .extend(WithEncoding)
         .extend(WithSource)
         .extend(WithTitle)
         .extend(WithInline);
@@ -40,6 +42,7 @@ export declare namespace ObjectSchema {
             WithName.Raw,
             WithDescription.Raw,
             WithAvailability.Raw,
+            WithEncoding.Raw,
             WithSource.Raw,
             WithTitle.Raw,
             WithInline.Raw {

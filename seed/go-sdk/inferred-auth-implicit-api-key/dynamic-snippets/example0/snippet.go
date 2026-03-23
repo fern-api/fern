@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/inferred-auth-implicit-api-key/fern"
     client "github.com/inferred-auth-implicit-api-key/fern/client"
     option "github.com/inferred-auth-implicit-api-key/fern/option"
-    fern "github.com/inferred-auth-implicit-api-key/fern"
-    context "context"
 )
 
 func do() {

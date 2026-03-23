@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Test.Utils;
@@ -6,6 +6,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnDatetimeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

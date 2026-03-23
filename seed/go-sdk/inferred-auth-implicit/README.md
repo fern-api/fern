@@ -30,23 +30,14 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/inferred-auth-implicit/fern/client"
-    option "github.com/inferred-auth-implicit/fern/option"
-    fern "github.com/inferred-auth-implicit/fern"
     context "context"
+    fern "github.com/inferred-auth-implicit/fern"
+    client "github.com/inferred-auth-implicit/fern/client"
 )
 
 func do() {
     client := client.NewClient(
-        option.WithXApiKey(
-            "X-Api-Key",
-        ),
-        option.WithClientId(
-            "client_id",
-        ),
-        option.WithClientSecret(
-            "client_secret",
-        ),
+        nil,
     )
     request := &fern.GetTokenRequest{
         XApiKey: "X-Api-Key",

@@ -1485,12 +1485,12 @@ type ExtendedMovie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating   float64                `json:"rating" url:"rating"`
-	Tag      commons.Tag            `json:"tag" url:"tag"`
-	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Revenue  int64                  `json:"revenue" url:"revenue"`
-	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
+	Cast     []string       `json:"cast,omitempty" url:"cast,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1549,7 +1549,7 @@ func (e *ExtendedMovie) GetBook() *string {
 	return e.Book
 }
 
-func (e *ExtendedMovie) GetMetadata() map[string]interface{} {
+func (e *ExtendedMovie) GetMetadata() map[string]any {
 	if e == nil {
 		return nil
 	}
@@ -1639,7 +1639,7 @@ func (e *ExtendedMovie) SetBook(book *string) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetMetadata(metadata map[string]interface{}) {
+func (e *ExtendedMovie) SetMetadata(metadata map[string]any) {
 	e.Metadata = metadata
 	e.require(extendedMovieFieldMetadata)
 }
@@ -2257,11 +2257,11 @@ type Movie struct {
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating   float64                `json:"rating" url:"rating"`
-	Tag      commons.Tag            `json:"tag" url:"tag"`
-	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Revenue  int64                  `json:"revenue" url:"revenue"`
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2320,7 +2320,7 @@ func (m *Movie) GetBook() *string {
 	return m.Book
 }
 
-func (m *Movie) GetMetadata() map[string]interface{} {
+func (m *Movie) GetMetadata() map[string]any {
 	if m == nil {
 		return nil
 	}
@@ -2403,7 +2403,7 @@ func (m *Movie) SetBook(book *string) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetMetadata(metadata map[string]interface{}) {
+func (m *Movie) SetMetadata(metadata map[string]any) {
 	m.Metadata = metadata
 	m.require(movieFieldMetadata)
 }
@@ -2675,7 +2675,7 @@ var (
 )
 
 type Request struct {
-	Request interface{} `json:"request,omitempty" url:"request,omitempty"`
+	Request any `json:"request,omitempty" url:"request,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2684,7 +2684,7 @@ type Request struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Request) GetRequest() interface{} {
+func (r *Request) GetRequest() any {
 	if r == nil {
 		return nil
 	}
@@ -2707,7 +2707,7 @@ func (r *Request) require(field *big.Int) {
 
 // SetRequest sets the Request field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Request) SetRequest(request interface{}) {
+func (r *Request) SetRequest(request any) {
 	r.Request = request
 	r.require(requestFieldRequest)
 }
@@ -2760,7 +2760,7 @@ var (
 )
 
 type Response struct {
-	Response    interface{}   `json:"response,omitempty" url:"response,omitempty"`
+	Response    any           `json:"response,omitempty" url:"response,omitempty"`
 	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -2770,7 +2770,7 @@ type Response struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Response) GetResponse() interface{} {
+func (r *Response) GetResponse() any {
 	if r == nil {
 		return nil
 	}
@@ -2800,7 +2800,7 @@ func (r *Response) require(field *big.Int) {
 
 // SetResponse sets the Response field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Response) SetResponse(response interface{}) {
+func (r *Response) SetResponse(response any) {
 	r.Response = response
 	r.require(responseFieldResponse)
 }

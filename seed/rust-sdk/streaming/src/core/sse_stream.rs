@@ -5,9 +5,11 @@ use reqwest::{header::CONTENT_TYPE, Response};
 use reqwest_sse::{error::EventError, Event, EventSource};
 use serde::de::DeserializeOwned;
 use std::{
+    future::Future,
     marker::PhantomData,
     pin::Pin,
     task::{Context, Poll},
+    time::Duration,
 };
 
 /// Metadata from a Server-Sent Event
@@ -101,6 +103,9 @@ pub struct SseStream<T> {
     #[pin]
     inner: Pin<Box<dyn Stream<Item = Result<Event, EventError>> + Send>>,
     terminator: Option<String>,
+    timeout: Duration,
+    #[pin]
+    deadline: tokio::time::Sleep,
     _phantom: PhantomData<T>,
 }
 
@@ -113,6 +118,8 @@ where
     /// # Arguments
     /// * `response` - The HTTP response to parse as SSE
     /// * `terminator` - Optional terminator string (e.g., `"[DONE]"`) that signals end of stream
+    /// * `timeout` - Per-event timeout duration. If no event is received within this duration,
+    ///   the stream yields `ApiError::StreamTimeout`.
     ///
     /// # Errors
     /// Returns `ApiError::SseParseError` if:
@@ -121,6 +128,7 @@ where
     pub(crate) async fn new(
         response: Response,
         terminator: Option<String>,
+        timeout: Duration,
     ) -> Result<Self, ApiError> {
         // Validate Content-Type header (case-insensitive, handles parameters)
         let content_type = response
@@ -148,6 +156,8 @@ where
         Ok(Self {
             inner: Box::pin(events),
             terminator,
+            timeout,
+            deadline: tokio::time::sleep(timeout),
             _phantom: PhantomData,
         })
     }
@@ -196,9 +206,14 @@ where
     type Item = Result<T, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        let this = self.project();
+        let mut this = self.project();
         match this.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
+                // Reset the deadline for the next event
+                this.deadline
+                    .as_mut()
+                    .reset(tokio::time::Instant::now() + *this.timeout);
+
                 // Check for terminator before parsing
                 if let Some(ref terminator) = this.terminator {
                     if event.data == *terminator {
@@ -214,10 +229,26 @@ where
                 }
             }
             Poll::Ready(Some(Err(e))) => {
+                // Reset the deadline on error events too
+                this.deadline
+                    .as_mut()
+                    .reset(tokio::time::Instant::now() + *this.timeout);
                 Poll::Ready(Some(Err(ApiError::SseParseError(e.to_string()))))
             }
             Poll::Ready(None) => Poll::Ready(None),
-            Poll::Pending => Poll::Pending,
+            Poll::Pending => {
+                // Check if the per-event timeout has elapsed
+                match this.deadline.as_mut().poll(cx) {
+                    Poll::Ready(()) => {
+                        // Timeout expired — reset deadline and yield a timeout error
+                        this.deadline
+                            .as_mut()
+                            .reset(tokio::time::Instant::now() + *this.timeout);
+                        Poll::Ready(Some(Err(ApiError::StreamTimeout)))
+                    }
+                    Poll::Pending => Poll::Pending,
+                }
+            }
         }
     }
 }
@@ -242,10 +273,16 @@ where
         let this = self.project();
 
         // Access the inner stream's fields through pin projection
-        let inner_pin = this.inner.project();
+        let mut inner_pin = this.inner.project();
 
         match inner_pin.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
+                // Reset the deadline for the next event
+                inner_pin
+                    .deadline
+                    .as_mut()
+                    .reset(tokio::time::Instant::now() + *inner_pin.timeout);
+
                 // Check for terminator
                 if let Some(ref terminator) = inner_pin.terminator {
                     if event.data == *terminator {
@@ -272,10 +309,28 @@ where
                 }
             }
             Poll::Ready(Some(Err(e))) => {
+                // Reset the deadline on error events too
+                inner_pin
+                    .deadline
+                    .as_mut()
+                    .reset(tokio::time::Instant::now() + *inner_pin.timeout);
                 Poll::Ready(Some(Err(ApiError::SseParseError(e.to_string()))))
             }
             Poll::Ready(None) => Poll::Ready(None),
-            Poll::Pending => Poll::Pending,
+            Poll::Pending => {
+                // Check if the per-event timeout has elapsed
+                match inner_pin.deadline.as_mut().poll(cx) {
+                    Poll::Ready(()) => {
+                        // Timeout expired — reset deadline and yield a timeout error
+                        inner_pin
+                            .deadline
+                            .as_mut()
+                            .reset(tokio::time::Instant::now() + *inner_pin.timeout);
+                        Poll::Ready(Some(Err(ApiError::StreamTimeout)))
+                    }
+                    Poll::Pending => Poll::Pending,
+                }
+            }
         }
     }
 }

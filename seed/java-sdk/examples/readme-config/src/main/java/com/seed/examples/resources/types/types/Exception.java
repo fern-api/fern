@@ -100,6 +100,7 @@ public final class Exception {
     @JsonIgnoreProperties("type")
     private static final class GenericValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ExceptionInfo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

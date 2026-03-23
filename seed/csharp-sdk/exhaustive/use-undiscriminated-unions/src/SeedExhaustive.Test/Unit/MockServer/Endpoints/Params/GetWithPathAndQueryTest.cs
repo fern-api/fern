@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Unit.MockServer;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithPathAndQueryTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/package-yml/fern"
     client "github.com/package-yml/fern/client"
     option "github.com/package-yml/fern/option"
-    fern "github.com/package-yml/fern"
-    context "context"
 )
 
 func do() {
