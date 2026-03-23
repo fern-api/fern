@@ -1,4 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred auth. When an API definition includes an inferred auth
+        scheme, the generated Go SDK will automatically fetch tokens from the designated
+        token endpoint and inject `Authorization: Bearer <token>` headers on all
+        authenticated requests. Tokens are cached with automatic refresh based on
+        `expires_in` from the token response (defaults to 1 hour when omitted).
+
+        The generator produces `WithXxx()` client options for each credential parameter
+        defined on the token endpoint (e.g., `WithClientId`, `WithClientSecret`,
+        `WithXApiKey`), environment variable fallbacks when configured, and a
+        `core/token_provider.go` with thread-safe caching.
+
+        To use inferred auth, define an inferred auth scheme in your Fern API definition:
+
+        ```yaml
+        auth:
+          scheme: inferred
+          token-endpoint:
+            endpoint: auth.getToken
+            response-properties:
+              access-token: access_token
+              expires-in: expires_in
+        ```
+
+        Wire tests are also generated when `enableWireTests: true` is set in
+        custom config, validating automatic token fetch, caching, and custom
+        header passthrough.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 61
+
 - version: 1.30.3
   changelogEntry:
     - summary: |
@@ -41,7 +74,6 @@
       type: feat
   createdAt: "2026-03-12"
   irVersion: 61
-
 - version: 1.29.3
   changelogEntry:
     - summary: |

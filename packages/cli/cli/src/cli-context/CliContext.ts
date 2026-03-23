@@ -8,6 +8,7 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
 import { StdoutRedirector } from "./StdoutRedirector.js";
 import { TaskContextImpl } from "./TaskContextImpl.js";
@@ -29,6 +30,7 @@ export interface FernUpgradeInfo {
 
 export class CliContext {
     public readonly environment: CliEnvironment;
+    private readonly sentryClient: SentryClient;
 
     private didSucceed = true;
 
@@ -55,6 +57,7 @@ export class CliContext {
             packageVersion,
             cliName
         };
+        this.sentryClient = new SentryClient({ release: `cli@${this.environment.packageVersion}` });
     }
 
     private getPackageName() {
@@ -137,6 +140,7 @@ export class CliContext {
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
+        await this.sentryClient.flush();
         this.exitProgram({ code });
     }
 
@@ -236,6 +240,10 @@ export class CliContext {
         if (!this.isLocal) {
             (await getPosthogManager()).sendEvent(event);
         }
+    }
+
+    public async captureException(error: unknown): Promise<void> {
+        await this.sentryClient.captureException(error);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
