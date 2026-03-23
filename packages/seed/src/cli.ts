@@ -311,7 +311,7 @@ function addTestCommand(cli: Argv) {
                 let testCaseCount = 0;
                 for (const fixture of fixturesForGenerator) {
                     let fixtureName = fixture;
-                    let fixtureOutputFolder: string | undefined;
+                    let fixtureOutputFolder: string | undefined = argv.outputFolder;
                     if (fixture.includes(":")) {
                         const [name, folder] = fixture.split(":", 2);
                         fixtureName = name!;
