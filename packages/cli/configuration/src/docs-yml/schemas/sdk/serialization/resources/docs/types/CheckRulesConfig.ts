@@ -9,13 +9,13 @@ export const CheckRulesConfig: core.serialization.ObjectSchema<
     serializers.CheckRulesConfig.Raw,
     FernDocsConfig.CheckRulesConfig
 > = core.serialization.object({
-    exampleValidation: core.serialization.property("example-validation", CheckRuleSeverity),
-    brokenLinks: core.serialization.property("broken-links", CheckRuleSeverity),
+    exampleValidation: core.serialization.property("example-validation", CheckRuleSeverity.optional()),
+    brokenLinks: core.serialization.property("broken-links", CheckRuleSeverity.optional()),
 });
 
 export declare namespace CheckRulesConfig {
     export interface Raw {
-        "example-validation": CheckRuleSeverity.Raw;
-        "broken-links": CheckRuleSeverity.Raw;
+        "example-validation"?: CheckRuleSeverity.Raw | null;
+        "broken-links"?: CheckRuleSeverity.Raw | null;
     }
 }

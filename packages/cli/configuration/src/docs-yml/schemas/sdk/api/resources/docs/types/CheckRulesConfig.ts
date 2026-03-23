@@ -3,8 +3,8 @@
 import type * as FernDocsConfig from "../../../index.js";
 
 export interface CheckRulesConfig {
-    /** Severity for OpenAPI example validation. */
-    exampleValidation: FernDocsConfig.CheckRuleSeverity;
-    /** Severity for broken link detection. */
-    brokenLinks: FernDocsConfig.CheckRuleSeverity;
+    /** Severity for OpenAPI example validation. Default is warn. */
+    exampleValidation?: FernDocsConfig.CheckRuleSeverity;
+    /** Severity for broken link detection. Default is error. */
+    brokenLinks?: FernDocsConfig.CheckRuleSeverity;
 }

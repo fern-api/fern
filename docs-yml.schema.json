@@ -4609,16 +4609,26 @@
       "type": "object",
       "properties": {
         "example-validation": {
-          "$ref": "#/definitions/docs.CheckRuleSeverity"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "broken-links": {
-          "$ref": "#/definitions/docs.CheckRuleSeverity"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "required": [
-        "example-validation",
-        "broken-links"
-      ],
       "additionalProperties": false
     },
     "docs.CheckConfig": {
