@@ -1098,8 +1098,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^62.6.0
+        version: 62.6.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
