@@ -13,6 +13,6 @@ export interface LibraryConfiguration {
     output: FernDocsConfig.LibraryOutputConfiguration;
     /** The programming language of the library source code. */
     lang: FernDocsConfig.LibraryLanguage;
-    /** Language-specific configuration options. */
+    /** Language-specific configuration options. Valid fields depend on the lang value. */
     config?: FernDocsConfig.LibraryConfig;
 }
