@@ -449,18 +449,13 @@ function getPublishConfig({
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
-        const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
-        if (owner == null || repo == null) {
-            return context.failAndThrow(
-                `Invalid GitHub repository URI: ${generatorInvocation.raw.github.uri}. Expected format: owner/repo`
-            );
-        }
+        const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
         return FernIr.PublishingConfig.github({
-            owner,
-            repo,
+            owner: parsed.owner,
+            repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: irMode,
