@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.43.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer stripping the discriminant property from shared
+        `allOf` base schemas when they are used by `oneOf` discriminated union
+        variants. Previously, if a base schema like `Error` was extended by both
+        union members and standalone schemas, the discriminant property (e.g.
+        `code`) would be removed from the base, causing downstream `fern check`
+        errors on the union variant types.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 4.43.0
   changelogEntry:
     - summary: |
