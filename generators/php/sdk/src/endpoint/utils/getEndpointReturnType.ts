@@ -2,7 +2,6 @@ import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { endpointHasEmptyBodyResponse } from "./endpointHasEmptyBodyResponse.js";
 
 export function getEndpointReturnType({
     context,
@@ -14,8 +13,7 @@ export function getEndpointReturnType({
     if (endpoint.response?.body == null) {
         return undefined;
     }
-    const hasEmptyBodyResponse = endpointHasEmptyBodyResponse(endpoint);
-    const type = endpoint.response.body._visit({
+    return endpoint.response.body._visit({
         bytes: () => php.Type.string(),
         streamParameter: () => undefined,
         fileDownload: () => php.Type.string(),
@@ -26,8 +24,4 @@ export function getEndpointReturnType({
         text: () => php.Type.string(),
         _other: () => undefined
     });
-    if (type != null && hasEmptyBodyResponse) {
-        return type.toOptionalIfNotAlready();
-    }
-    return type;
 }
