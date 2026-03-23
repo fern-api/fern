@@ -575,6 +575,12 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             return;
         }
 
+        // If OAuth is already configured, skip inferred auth token fetching
+        // to avoid overwriting the OAuth SetTokenGetter call.
+        if (getOAuthClientCredentialsScheme(this.context.ir) != null) {
+            return;
+        }
+
         const authServiceFernFilepath = this.getInferredAuthServiceFernFilepath();
         if (authServiceFernFilepath == null) {
             return;
@@ -587,9 +593,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
         const methodName = this.context.getMethodName(tokenEndpoint.name);
         const credentialParams = this.getInferredAuthCredentialParameters();
-
-        // Check if OAuth already declared authOptions/authClient variables
-        const hasOAuth = getOAuthClientCredentialsScheme(this.context.ir) != null;
 
         writer.writeNode(
             go.codeblock((w) => {
@@ -606,28 +609,25 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 );
                 w.newLine();
 
-                // Only declare authOptions/authClient if OAuth hasn't already done so
-                if (!hasOAuth) {
-                    // Clone options for the auth client to avoid infinite recursion
-                    w.writeLine("authOptions := *options");
+                // Clone options for the auth client to avoid infinite recursion
+                w.writeLine("authOptions := *options");
 
-                    // Create the auth client
-                    const authClientImportPath = this.context.getClientFileLocation({
-                        fernFilepath: authServiceFernFilepath,
-                        subpackage: undefined
-                    }).importPath;
-                    w.write("authClient := ");
-                    w.writeNode(
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "NewClient",
-                                importPath: authClientImportPath
-                            }),
-                            arguments_: [go.codeblock("&authOptions")]
-                        })
-                    );
-                    w.newLine();
-                }
+                // Create the auth client
+                const authClientImportPath = this.context.getClientFileLocation({
+                    fernFilepath: authServiceFernFilepath,
+                    subpackage: undefined
+                }).importPath;
+                w.write("authClient := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewClient",
+                            importPath: authClientImportPath
+                        }),
+                        arguments_: [go.codeblock("&authOptions")]
+                    })
+                );
+                w.newLine();
 
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");

@@ -71,30 +71,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 			return response.AccessToken, expiresIn, nil
 		})
 	})
-	inferredAuthProvider := core.NewTokenProvider(
-		core.DefaultExpirySeconds,
-	)
-	options.SetTokenGetter(func() (string, error) {
-		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
-			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-				ClientId:     options.ClientId,
-				ClientSecret: options.ClientSecret,
-			})
-			if err != nil {
-				return "", 0, err
-			}
-			if response.AccessToken == "" {
-				return "", 0, errors.New(
-					"inferred auth response missing access token",
-				)
-			}
-			expiresIn := core.DefaultExpirySeconds
-			if response.ExpiresIn > 0 {
-				expiresIn = response.ExpiresIn
-			}
-			return response.AccessToken, expiresIn, nil
-		})
-	})
 	return &Client{
 		Auth:    auth.NewClient(options),
 		User:    user.NewClient(options),
