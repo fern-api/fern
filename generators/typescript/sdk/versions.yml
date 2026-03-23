@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.4
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during GitHub output mode when removing the temporary
+        `.git` directory in `deleteGitIgnoredFiles`. The `fs.rm` call now uses
+        `maxRetries: 3` to handle race conditions with git background processes
+        (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 3.59.3
   changelogEntry:
     - summary: |
