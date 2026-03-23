@@ -220,6 +220,7 @@ export class ClassReference extends Node implements Type {
                         // check to see if the abbreviation would be ambiguous
                         const segments = typeQualification.split(".");
                         if (
+                            shouldGlobal ||
                             this.registry.isAmbiguousTypeName(segments[0]) ||
                             this.registry.isAmbiguousNamespaceName(segments[0]) ||
                             this.registry.hasTypeNamespaceConflict(segments[0])

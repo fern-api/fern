@@ -117,7 +117,7 @@ public partial class DummyClient : IDummyClient
                 {
                     result = JsonUtils.Deserialize<StreamResponse>(line);
                 }
-                catch (System.Text.Json.JsonException e)
+                catch (JsonException e)
                 {
                     throw new SeedStreamingException("Failed to deserialize streaming response", e);
                 }

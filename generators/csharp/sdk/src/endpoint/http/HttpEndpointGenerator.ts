@@ -796,7 +796,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(`>(${jsonString})`);
                     writer.popScope();
                     if (context.generation.settings.redactResponseBodyOnError) {
-                        writer.writeLine("catch (System.Text.Json.JsonException e)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, " e)");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",
@@ -805,7 +806,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         );
                         writer.popScope();
                     } else {
-                        writer.writeLine("catch (System.Text.Json.JsonException)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, ")");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",

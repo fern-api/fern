@@ -55,7 +55,7 @@ public readonly record struct BasicType : IStringEnum
     {
         public override BasicType Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -78,7 +78,7 @@ public readonly record struct BasicType : IStringEnum
 
         public override BasicType ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

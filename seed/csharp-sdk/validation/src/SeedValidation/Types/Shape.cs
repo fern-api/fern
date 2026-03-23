@@ -57,7 +57,7 @@ public readonly record struct Shape : IStringEnum
     {
         public override Shape Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -80,7 +80,7 @@ public readonly record struct Shape : IStringEnum
 
         public override Shape ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

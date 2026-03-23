@@ -30,6 +30,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
+            // Snippets are user-facing code (READMEs, docs) — skip global:: qualifiers
+            // so the output looks clean. With empty allNamespaceSegments/allTypeClassReferences,
+            // the ambiguity and type-namespace conflict checks are already no-ops;
+            // this flag additionally suppresses the unconditional System prefix.
             skipGlobalQualifier: true
         });
     }
@@ -49,6 +53,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
+            // See generateSnippet for rationale.
             skipGlobalQualifier: true
         });
     }

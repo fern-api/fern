@@ -59,7 +59,7 @@ public readonly record struct ComplexType : IStringEnum
     {
         public override ComplexType Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -82,7 +82,7 @@ public readonly record struct ComplexType : IStringEnum
 
         public override ComplexType ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
