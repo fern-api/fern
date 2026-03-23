@@ -1018,35 +1018,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                                         eventParserLambda);
                             }
                         }
-                        // Fall back to old approach if we can't generate event parser
-                        String discriminatorProperty =
-                                discriminationInfo.getDiscriminatorProperty().orElse("event");
-                        if (terminator != null) {
-                            return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
-                                    bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
-                                    discriminatorProperty,
-                                    terminator);
-                        } else {
-                            return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
-                                    bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
-                                    discriminatorProperty);
-                        }
+                        throw new RuntimeException(
+                                "Failed to generate event parser lambda for SSE event-level discrimination. "
+                                        + "The discriminatorContext should always be available in the IR for protocol-discriminated unions.");
                     }
 
                     // Data-level discrimination or non-union: use standard SSE parsing

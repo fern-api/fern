@@ -206,8 +206,7 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createSseEventDiscriminatedStreamTest(ClassName streamClassName, ClassName testAnnotation) {
-        // Test fromSseWithEventDiscrimination using generic Map type (works for all SDKs)
-        // This tests the SSE envelope parsing where discriminator is at event level
+        // Test fromSseWithEventParser using a BiFunction that parses the event based on event type
         return MethodSpec.methodBuilder("testSseEventDiscriminatedStream")
                 .addAnnotation(testAnnotation)
                 .addModifiers(Modifier.PUBLIC)
@@ -232,19 +231,45 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get("java.io", "StringReader"),
                         ClassName.get("java.io", "StringReader"))
                 .addStatement(
-                        "$T<$T> sseStream = $T.fromSseWithEventDiscrimination($T.class, sseInput, $S)",
+                        "$T<$T, $T, $T> eventParser = (eventType, data) -> {\n"
+                                + "try {\n"
+                                + "    $T<$T, $T> parsed = $T.JSON_MAPPER.readValue(data, $T.class);\n"
+                                + "    $T<$T, $T> result = new $T<>(parsed);\n"
+                                + "    result.put($S, eventType);\n"
+                                + "    return result;\n"
+                                + "} catch ($T e) {\n"
+                                + "    throw new $T(e);\n"
+                                + "}\n"
+                                + "}",
+                        ClassName.get("java.util.function", "BiFunction"),
+                        ClassName.get(String.class),
+                        ClassName.get(String.class),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get(String.class),
+                        ClassName.get(Object.class),
+                        generatorContext.getPoetClassNameFactory().getCoreClassName("ObjectMappers"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get(String.class),
+                        ClassName.get(Object.class),
+                        ClassName.get("java.util", "HashMap"),
+                        "event",
+                        ClassName.get(Exception.class),
+                        ClassName.get(RuntimeException.class))
+                .addStatement(
+                        "$T<$T> sseStream = $T.fromSseWithEventParser($T.class, sseInput, eventParser)",
                         streamClassName,
                         ClassName.get("java.util", "Map"),
                         streamClassName,
-                        ClassName.get("java.util", "Map"),
-                        "event")
+                        ClassName.get("java.util", "Map"))
                 .addStatement("int expectedEvents = 2")
                 .addStatement("int actualEvents = 0")
                 .beginControlFlow("for ($T eventData : sseStream)", ClassName.get("java.util", "Map"))
                 .addStatement("actualEvents++")
-                .addComment("Event-level discrimination includes the event field in the parsed result")
+                .addComment("Event parser puts event type into the parsed map")
                 .addStatement("assertTrue(eventData.containsKey($S))", "event")
-                .addStatement("assertTrue(eventData.containsKey($S))", "data")
+                .addStatement("assertTrue(eventData.containsKey($S))", "status")
                 .endControlFlow()
                 .addStatement("assertEquals(expectedEvents, actualEvents)")
                 .build();

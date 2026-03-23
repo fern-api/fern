@@ -179,7 +179,7 @@ public class CompletionsWireTest {
                         .setResponseCode(200)
                         .setHeader("Content-Type", "text/event-stream")
                         .setBody(
-                                "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n\ndata: [DONE]\n"));
+                                "event: completion\ndata: {\"content\":\"hello\",\"event\":\"completion\"}\n\nevent: error\ndata: {\"error\":\"something went wrong\",\"event\":\"error\"}\n\ndata: [DONE]\n"));
         Iterable<StreamEventContextProtocol> response = client.completions()
                 .streamEventsContextProtocol(
                         StreamEventsRequest.builder().query("query").build());
@@ -227,7 +227,7 @@ public class CompletionsWireTest {
         // Validate event 0
         String event0Json = objectMapper.writeValueAsString(events.get(0));
         JsonNode event0Node = objectMapper.readTree(event0Json);
-        String expectedEvent0Json = "" + "{\n" + "  \"event\": \"completion\",\n" + "  \"content\": \"hello\"\n" + "}";
+        String expectedEvent0Json = "" + "{\n" + "  \"content\": \"hello\",\n" + "  \"event\": \"completion\"\n" + "}";
         JsonNode expectedEvent0Node = objectMapper.readTree(expectedEvent0Json);
         Assertions.assertTrue(
                 jsonEquals(expectedEvent0Node, event0Node), "SSE event 0 content does not match expected");
@@ -236,7 +236,7 @@ public class CompletionsWireTest {
         String event1Json = objectMapper.writeValueAsString(events.get(1));
         JsonNode event1Node = objectMapper.readTree(event1Json);
         String expectedEvent1Json =
-                "" + "{\n" + "  \"event\": \"error\",\n" + "  \"error\": \"something went wrong\"\n" + "}";
+                "" + "{\n" + "  \"error\": \"something went wrong\",\n" + "  \"event\": \"error\"\n" + "}";
         JsonNode expectedEvent1Node = objectMapper.readTree(expectedEvent1Json);
         Assertions.assertTrue(
                 jsonEquals(expectedEvent1Node, event1Node), "SSE event 1 content does not match expected");

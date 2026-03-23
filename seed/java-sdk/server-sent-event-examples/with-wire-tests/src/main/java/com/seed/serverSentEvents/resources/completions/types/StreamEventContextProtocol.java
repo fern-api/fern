@@ -128,6 +128,7 @@ public final class StreamEventContextProtocol {
     @JsonIgnoreProperties("event")
     private static final class CompletionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "event", allowSetters = true)
         private CompletionEvent value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -167,6 +168,7 @@ public final class StreamEventContextProtocol {
     @JsonIgnoreProperties("event")
     private static final class ErrorValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "event", allowSetters = true)
         private ErrorEvent value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -206,6 +208,7 @@ public final class StreamEventContextProtocol {
     @JsonIgnoreProperties("event")
     private static final class EventValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "event", allowSetters = true)
         private EventEvent value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
