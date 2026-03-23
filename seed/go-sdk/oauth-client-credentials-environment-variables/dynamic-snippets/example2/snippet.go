@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/oauth-client-credentials-environment-variables/fern/client"
     option "github.com/oauth-client-credentials-environment-variables/fern/option"
-    context "context"
 )
 
 func do() {

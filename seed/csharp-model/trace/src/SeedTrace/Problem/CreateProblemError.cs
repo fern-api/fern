@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -50,7 +50,7 @@ public record CreateProblemError
     public SeedTrace.GenericCreateProblemError AsGeneric() =>
         IsGeneric
             ? (SeedTrace.GenericCreateProblemError)Value!
-            : throw new System.Exception("CreateProblemError.ErrorType is not 'generic'");
+            : throw new global::System.Exception("CreateProblemError.ErrorType is not 'generic'");
 
     public T Match<T>(
         Func<SeedTrace.GenericCreateProblemError, T> onGeneric,
@@ -102,12 +102,12 @@ public record CreateProblemError
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateProblemError>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CreateProblemError).IsAssignableFrom(typeToConvert);
 
         public override CreateProblemError Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -170,7 +170,7 @@ public record CreateProblemError
 
         public override CreateProblemError ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

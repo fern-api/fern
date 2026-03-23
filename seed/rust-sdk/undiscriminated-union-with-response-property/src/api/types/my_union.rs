@@ -11,54 +11,54 @@ pub enum MyUnion {
 }
 
 impl MyUnion {
-    pub fn is_varianta(&self) -> bool {
+    pub fn is_variant_a(&self) -> bool {
         matches!(self, Self::VariantA(_))
     }
 
-    pub fn is_variantb(&self) -> bool {
+    pub fn is_variant_b(&self) -> bool {
         matches!(self, Self::VariantB(_))
     }
 
-    pub fn is_variantc(&self) -> bool {
+    pub fn is_variant_c(&self) -> bool {
         matches!(self, Self::VariantC(_))
     }
 
-    pub fn as_varianta(&self) -> Option<&VariantA> {
+    pub fn as_variant_a(&self) -> Option<&VariantA> {
         match self {
             Self::VariantA(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_varianta(self) -> Option<VariantA> {
+    pub fn into_variant_a(self) -> Option<VariantA> {
         match self {
             Self::VariantA(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_variantb(&self) -> Option<&VariantB> {
+    pub fn as_variant_b(&self) -> Option<&VariantB> {
         match self {
             Self::VariantB(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_variantb(self) -> Option<VariantB> {
+    pub fn into_variant_b(self) -> Option<VariantB> {
         match self {
             Self::VariantB(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_variantc(&self) -> Option<&VariantC> {
+    pub fn as_variant_c(&self) -> Option<&VariantC> {
         match self {
             Self::VariantC(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_variantc(self) -> Option<VariantC> {
+    pub fn into_variant_c(self) -> Option<VariantC> {
         match self {
             Self::VariantC(value) => Some(value),
             _ => None,

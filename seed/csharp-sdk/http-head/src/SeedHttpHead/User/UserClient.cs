@@ -1,5 +1,5 @@
-using System.Net.Http.Headers;
-using System.Text.Json;
+using global::System.Net.Http.Headers;
+using global::System.Text.Json;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead;

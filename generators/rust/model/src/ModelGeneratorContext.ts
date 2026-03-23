@@ -18,6 +18,14 @@ export class ModelGeneratorContext extends AbstractRustGeneratorContext<ModelCus
      */
     public undiscriminatedUnionMemberTypeIds: Set<string> = new Set();
 
+    /**
+     * Set of type IDs that are inlined into discriminated union variants.
+     * These types are only referenced by a single union variant's samePropertiesAsObject
+     * and nowhere else in the IR, so their fields are inlined directly into the variant
+     * instead of generating a separate struct with #[serde(flatten)].
+     */
+    public inlinedUnionVariantTypeIds: Set<string> = new Set();
+
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         // Model generator doesn't need the client templates, return empty array
         return [];

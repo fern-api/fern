@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/sse-examples-go/client"
-    sse "github.com/fern-api/sse-examples-go"
     context "context"
+    sse "github.com/fern-api/sse-examples-go"
+    client "github.com/fern-api/sse-examples-go/client"
 )
 
 func do() {

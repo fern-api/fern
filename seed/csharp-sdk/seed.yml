@@ -55,6 +55,38 @@ scripts:
     commands:
       build:
         - |
+          # Enforce global:: prefix for System namespace references in generated .cs files.
+          # This prevents compile breaks when customers have namespace conflicts (e.g., a class named "System").
+          #
+          # Fixtures to skip (add fixture directory names here if they are fundamentally
+          # incompatible with global:: enforcement, e.g. dotnet-format post-processing):
+          SKIP_GLOBAL_VALIDATION="fully-qualified-namespaces"
+
+          skip=false
+          for pattern in $SKIP_GLOBAL_VALIDATION; do
+            if echo "$(pwd)" | grep -q "$pattern"; then
+              echo "Skipping global:: validation (matched skip-list entry: $pattern)"
+              skip=true
+              break
+            fi
+          done
+
+          if [ "$skip" = false ]; then
+            # Check 1: using directives — e.g. "using System.Linq;"
+            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' || true)
+            # Check 2: inline references — e.g. "new System.Exception()", "System.Threading.Tasks.Task"
+            # Excludes using directives (already caught above), comments (// and ///), strings, and DynamicSnippets.
+            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
+            violations="${using_violations}${using_violations:+\n}${inline_violations}"
+            # Trim whitespace
+            violations=$(echo "$violations" | sed '/^$/d')
+            if [ -n "$violations" ]; then
+              echo "ERROR: Found unqualified System namespace references. Use 'global::System' instead:"
+              echo "$violations"
+              exit 1
+            fi
+          fi
+        - |
           # Check for .NET 10
           # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
           # otherwise install .NET 10

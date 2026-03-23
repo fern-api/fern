@@ -1,6 +1,6 @@
-using System.Text.Json;
 using global::Seed.CsharpNamespaceConflict;
 using global::Seed.CsharpNamespaceConflict.Core;
+using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework;

@@ -25,7 +25,7 @@ impl MixedType {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_stringlist(&self) -> bool {
+    pub fn is_string_list(&self) -> bool {
         matches!(self, Self::StringList(_))
     }
 
@@ -71,14 +71,14 @@ impl MixedType {
         }
     }
 
-    pub fn as_stringlist(&self) -> Option<&Vec<String>> {
+    pub fn as_string_list(&self) -> Option<&Vec<String>> {
         match self {
             Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_stringlist(self) -> Option<Vec<String>> {
+    pub fn into_string_list(self) -> Option<Vec<String>> {
         match self {
             Self::StringList(value) => Some(value),
             _ => None,

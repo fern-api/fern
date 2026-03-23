@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+using global::System.Diagnostics.CodeAnalysis;
 using SeedOauthClientCredentialsMandatoryAuth.Core;
 
 namespace SeedOauthClientCredentialsMandatoryAuth;

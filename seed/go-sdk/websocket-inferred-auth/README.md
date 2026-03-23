@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/websocket-inferred-auth/fern/client"
-    fern "github.com/websocket-inferred-auth/fern"
     context "context"
+    fern "github.com/websocket-inferred-auth/fern"
+    client "github.com/websocket-inferred-auth/fern/client"
 )
 
 func do() {

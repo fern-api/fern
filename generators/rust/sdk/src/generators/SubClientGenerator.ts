@@ -44,6 +44,13 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
+        // Skip generating HTTP client stubs for subpackages that only have a WebSocket
+        // channel and no HTTP service. The actual WebSocket functionality is handled by
+        // the WebSocketChannelGenerator which generates files in src/api/websocket/.
+        if (this.context.isWebSocketOnlySubpackage(this.subpackage)) {
+            return null;
+        }
+
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
         // If this subpackage has any children at all and is in a nested directory,
