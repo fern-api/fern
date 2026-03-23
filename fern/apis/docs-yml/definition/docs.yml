@@ -153,13 +153,11 @@ types:
   CheckRulesConfig:
     properties:
       example-validation:
-        type: CheckRuleSeverity
-        default: warn
-        docs: Severity for OpenAPI example validation.
+        type: optional<CheckRuleSeverity>
+        docs: Severity for OpenAPI example validation. Default is warn.
       broken-links:
-        type: CheckRuleSeverity
-        default: warn
-        docs: Severity for broken link detection.
+        type: optional<CheckRuleSeverity>
+        docs: Severity for broken link detection. Default is error.
 
   CheckConfig:
     docs: |
