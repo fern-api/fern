@@ -258,7 +258,7 @@ export async function publishDocs({
                 try {
                     startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                         orgId: CjsFdrSdk.OrgId(organization),
-                        authConfig: isPrivate ? { type: "private" } : { type: "public" },
+                        authConfig,
                         filepaths: filepaths,
                         images,
                         basePath,
