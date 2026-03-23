@@ -18,7 +18,7 @@ export function getEndpointReturnType({
         streamParameter: () => undefined,
         fileDownload: () => php.Type.string(),
         json: (reference) => {
-            return context.phpTypeMapper.convert({ reference: reference.responseBodyType });
+            return context.phpTypeMapper.convert({ reference: reference.responseBodyType }).toOptionalIfNotAlready();
         },
         streaming: () => undefined,
         text: () => php.Type.string(),
