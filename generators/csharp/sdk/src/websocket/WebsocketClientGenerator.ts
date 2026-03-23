@@ -357,14 +357,14 @@ export class WebSocketClientGenerator extends WithGeneration {
                 if (defaultEnv != null) {
                     const defaultUrl = defaultEnv.urls[baseUrlId];
                     if (defaultUrl != null) {
-                        this.defaultEnvironment = defaultUrl;
+                        this.defaultEnvironment = defaultEnv.name.pascalCase.safeName;
                     }
                 }
             }
 
-            // Fall back to the first environment's URL if no default was resolved
+            // Fall back to the first environment's name if no default was resolved
             if (this.defaultEnvironment == null && this.environments.length > 0) {
-                this.defaultEnvironment = this.environments[0]?.url;
+                this.defaultEnvironment = this.environments[0]?.environment;
             }
 
             if (!this.hasEnvironments && this.environments.length === 1) {

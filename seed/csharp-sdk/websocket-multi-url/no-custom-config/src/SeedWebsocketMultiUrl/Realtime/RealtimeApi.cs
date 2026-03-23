@@ -192,7 +192,7 @@ public partial class RealtimeApi
     /// </summary>
     public class Options
     {
-        private string _baseUrl = "wss://ws.production.com";
+        private string _baseUrl = "Production";
 
         /// <summary>
         /// The Websocket URL for the API connection.
@@ -271,9 +271,7 @@ public partial class RealtimeApi
                 case "Staging":
                     return Staging;
                 default:
-                    return string.IsNullOrEmpty(environment)
-                        ? "wss://ws.production.com"
-                        : environment;
+                    return string.IsNullOrEmpty(environment) ? "Production" : environment;
             }
         }
     }
