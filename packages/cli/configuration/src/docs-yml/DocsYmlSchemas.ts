@@ -560,6 +560,19 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+// ===== Check =====
+
+export const CheckRuleSeverity = z.enum(["warn", "error"]);
+
+export const CheckRulesConfig = z.object({
+    "example-validation": CheckRuleSeverity.default("warn"),
+    "broken-links": CheckRuleSeverity.default("warn")
+});
+
+export const CheckConfig = z.object({
+    rules: CheckRulesConfig.optional()
+});
+
 // ===== Integrations =====
 
 export const IntegrationsConfig = z.object({
@@ -931,6 +944,7 @@ export const DocsConfiguration = z.object({
     "ai-examples": AiExamplesConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
+    check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),
     "background-image": BackgroundImageConfiguration.optional(),

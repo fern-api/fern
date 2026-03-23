@@ -37,5 +37,18 @@ describe("DocsYmlSchemas", () => {
         expect(properties["typography"]).toBeDefined();
         expect(properties["layout"]).toBeDefined();
         expect(properties["ai-search"]).toBeDefined();
+        expect(properties["check"]).toBeDefined();
+    });
+
+    it("should default check rule severities to warn when rules are provided", () => {
+        const parsed = DocsConfiguration.parse({
+            instances: [],
+            check: {
+                rules: {}
+            }
+        });
+
+        expect(parsed.check?.rules?.["example-validation"]).toBe("warn");
+        expect(parsed.check?.rules?.["broken-links"]).toBe("warn");
     });
 });
