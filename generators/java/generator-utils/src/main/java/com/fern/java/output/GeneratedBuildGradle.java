@@ -215,7 +215,11 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                         .findFirst()
                         .orElse("Custom License");
 
-                firstLine = firstLine.trim().replaceAll("[.:;]+$", "").replaceAll("\\s+", " ");
+                firstLine = firstLine
+                        .trim()
+                        .replaceAll("^#+\\s*", "")
+                        .replaceAll("[.:;]+$", "")
+                        .replaceAll("\\s+", " ");
 
                 firstLine = firstLine.replace("'", "\\'");
 
