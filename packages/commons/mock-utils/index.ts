@@ -237,9 +237,9 @@ export class WireMock {
                         // Access jsonExample from the data field
                         const eventData = sseEvent.data?.jsonExample ?? {};
                         const dataJson = JSON.stringify(eventData);
-                        return `event: ${eventName}\ndata: ${dataJson}\n`;
+                        return `event: ${eventName}\ndata: ${dataJson}\n\n`;
                     })
-                    .join("\n");
+                    .join("");
             } else if (typeof bodyObj === "object") {
                 try {
                     body = JSON.stringify(bodyObj, null, 2);
