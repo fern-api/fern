@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.6
+  changelogEntry:
+    - summary: |
+        Make multi-variant enums forward-compatible by default with `__Unknown(String)` catch-all,
+        matching C#/TypeScript behavior. Single-variant enums (type discriminants used in
+        `#[serde(untagged)]` unions) remain strict to preserve correct variant dispatch.
+        Additionally, generate `#[serde(flatten)] pub extra: HashMap<String, serde_json::Value>`
+        on structs with `extraProperties` to capture unknown fields from the server.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 0.26.5
   changelogEntry:
     - summary: |
@@ -21,6 +33,7 @@
       type: chore
   createdAt: "2026-03-23"
   irVersion: 65
+
 - version: 0.26.3
   changelogEntry:
     - summary: |
