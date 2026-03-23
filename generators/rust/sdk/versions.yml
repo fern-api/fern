@@ -5,7 +5,7 @@
     - summary: |
         Add `Default` implementation for `ApiClientBuilder` and update README snippet generation
         to use a simpler struct-based client initialization pattern with `ClientConfig { token: ..., ..Default::default() }`.
-      type: feat
+      type: chore
   createdAt: "2026-03-23"
   irVersion: 65
 
