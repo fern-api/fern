@@ -333,7 +333,58 @@ export class TestMethodBuilder {
     }
 
     /**
+     * Returns the wire-value of the discriminant field if the endpoint uses
+     * protocol-level SSE discrimination, or undefined otherwise.
+     */
+    private getProtocolDiscriminantField(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming" || responseBody.value.type !== "sse") {
+            return undefined;
+        }
+        const payload = responseBody.value.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.context.ir.types[payload.typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        if (
+            "discriminatorContext" in union &&
+            (union as { discriminatorContext?: string }).discriminatorContext === "protocol"
+        ) {
+            return union.discriminant.wireValue;
+        }
+        return undefined;
+    }
+
+    /**
+     * Checks if the endpoint uses data-level SSE discrimination (i.e., has a
+     * discriminated union payload but NOT protocol-level discrimination).
+     */
+    private isDataLevelDiscriminatedSse(endpoint: FernIr.HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming" || responseBody.value.type !== "sse") {
+            return false;
+        }
+        const payload = responseBody.value.payload;
+        if (payload.type !== "named") {
+            return false;
+        }
+        const typeDecl = this.context.ir.types[payload.typeId];
+        if (!typeDecl || typeDecl.shape.type !== "union") {
+            return false;
+        }
+        // Data-level: has a union but NOT protocol-level
+        return !this.isProtocolDiscriminatedSse(endpoint);
+    }
+
+    /**
      * Generates a mock response in proper SSE format with Content-Type: text/event-stream header.
+     * Applies discrimination-aware formatting:
+     * - Data-level discrimination: SSE event: field is set to "message" (generic value)
+     * - Protocol-level discrimination: discriminant field is stripped from JSON data
      */
     private generateSseMockResponse(
         writer: Writer,
@@ -341,13 +392,29 @@ export class TestMethodBuilder {
         sseEvents: SseEventData[],
         statusCode: number
     ): void {
+        const isDataLevel = this.isDataLevelDiscriminatedSse(endpoint);
+        const protocolDiscriminantField = this.getProtocolDiscriminantField(endpoint);
+
         // Build SSE-formatted body string
         const sseLines: string[] = [];
         for (const event of sseEvents) {
             if (event.event) {
-                sseLines.push(`event: ${event.event}`);
+                // For data-level discrimination, use generic SSE event name
+                const eventName = isDataLevel ? "message" : event.event;
+                sseLines.push(`event: ${eventName}`);
             }
-            sseLines.push(`data: ${JSON.stringify(event.data)}`);
+            // For protocol-level discrimination, strip the discriminant from JSON data
+            let eventData = event.data;
+            if (
+                protocolDiscriminantField != null &&
+                typeof eventData === "object" &&
+                eventData !== null &&
+                !Array.isArray(eventData)
+            ) {
+                const { [protocolDiscriminantField]: _, ...rest } = eventData as Record<string, unknown>;
+                eventData = rest;
+            }
+            sseLines.push(`data: ${JSON.stringify(eventData)}`);
             sseLines.push(""); // blank line separates events
         }
 

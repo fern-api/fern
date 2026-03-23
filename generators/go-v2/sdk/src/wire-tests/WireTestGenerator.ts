@@ -745,7 +745,10 @@ export class WireTestGenerator {
                     writer.writeLine();
                 }
 
-                // Assert the deserialized content of each SSE event via JSON round-trip
+                // Assert the deserialized content of each SSE event via JSON round-trip.
+                // For protocol-level discrimination, the discriminant field is stripped
+                // from the mock data JSON but will be re-added by the Go SDK's EventUnmarshalFunc.
+                // We keep it in the expected JSON since json.Marshal will include it.
                 if (sseEvents != null && sseEvents.length > 0) {
                     for (let i = 0; i < sseEvents.length; i++) {
                         const event = sseEvents[i];

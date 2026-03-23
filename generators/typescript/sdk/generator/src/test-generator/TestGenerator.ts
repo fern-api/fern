@@ -1684,9 +1684,11 @@ describe("${serviceName}", () => {
                         throw new Error("Stream not supported in wire tests");
                     },
                     sse: (events) => {
-                        // For SSE endpoints with a protocol-discriminated union, the discriminant travels as
-                        // the SSE `event:` field and must be stripped from the data JSON.
+                        // For SSE endpoints with discrimination strategies, adjust mock data:
+                        // - Protocol-level: strip discriminant from data JSON (it travels as SSE event: field)
+                        // - Data-level: use generic SSE event name ("message") so it differs from data discriminant
                         let discriminantField: string | undefined;
+                        let isDataLevel = false;
                         if (opts != null) {
                             const ssePayload =
                                 opts.endpoint.response?.body?.type === "streaming" &&
@@ -1695,12 +1697,15 @@ describe("${serviceName}", () => {
                                     : undefined;
                             if (ssePayload != null && ssePayload.type === "named") {
                                 const typeDeclaration = opts.context.type.getTypeDeclaration(ssePayload);
-                                if (
-                                    typeDeclaration.shape.type === "union" &&
-                                    typeDeclaration.shape.discriminatorContext ===
+                                if (typeDeclaration.shape.type === "union") {
+                                    if (
+                                        typeDeclaration.shape.discriminatorContext ===
                                         FernIr.UnionDiscriminatorContext.Protocol
-                                ) {
-                                    discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                                    ) {
+                                        discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                                    } else {
+                                        isDataLevel = true;
+                                    }
                                 }
                             }
                         }
@@ -1716,7 +1721,9 @@ describe("${serviceName}", () => {
                                 delete copy[discriminantField];
                                 dataJson = copy;
                             }
-                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
+                            // For data-level discrimination, use generic SSE event name
+                            const eventName = isDataLevel ? "message" : event.event;
+                            return `event: ${eventName}\ndata: ${JSON.stringify(dataJson)}\n`;
                         });
                         return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },

@@ -110,7 +110,7 @@ public class CompletionsWireTest {
                         .setResponseCode(200)
                         .setHeader("Content-Type", "text/event-stream")
                         .setBody(
-                                "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n\ndata: [DONE]\n"));
+                                "event: message\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: message\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n\ndata: [DONE]\n"));
         Iterable<StreamEvent> response = client.completions()
                 .streamEvents(StreamEventsRequest.builder().query("query").build());
         RecordedRequest request = server.takeRequest();
@@ -179,7 +179,7 @@ public class CompletionsWireTest {
                         .setResponseCode(200)
                         .setHeader("Content-Type", "text/event-stream")
                         .setBody(
-                                "event: completion\ndata: {\"content\":\"hello\",\"event\":\"completion\"}\n\nevent: error\ndata: {\"error\":\"something went wrong\",\"event\":\"error\"}\n\ndata: [DONE]\n"));
+                                "event: completion\ndata: {\"content\":\"hello\"}\n\nevent: error\ndata: {\"error\":\"something went wrong\"}\n\ndata: [DONE]\n"));
         Iterable<StreamEventContextProtocol> response = client.completions()
                 .streamEventsContextProtocol(
                         StreamEventsRequest.builder().query("query").build());

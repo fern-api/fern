@@ -390,6 +390,11 @@ export class WireTestGenerator {
                 if (this.isStreamingEndpoint(endpoint)) {
                     const sseEvents = this.getSseEvents(staticIrExample);
                     if (sseEvents && sseEvents.length > 0) {
+                        // Determine the SSE discrimination context for this endpoint.
+                        // For protocol-level discrimination, the discriminant field is
+                        // stripped from the mock data JSON, so we must skip it in assertions.
+                        const protocolDiscriminantField = this.getProtocolDiscriminantField(endpoint);
+
                         // For SSE endpoints, collect events and assert on content
                         statements.push(python.codeBlock(`response = list(${apiCallAst.toString()})`));
                         statements.push(python.codeBlock(`assert len(response) == ${sseEvents.length}`));
@@ -401,6 +406,12 @@ export class WireTestGenerator {
                             const dataJson = event.data?.jsonExample;
                             if (dataJson != null && typeof dataJson === "object") {
                                 for (const [key, value] of Object.entries(dataJson as Record<string, unknown>)) {
+                                    // Skip the discriminant field for protocol-level discrimination
+                                    // endpoints, since it's stripped from the mock data JSON and
+                                    // won't be present on the deserialized object.
+                                    if (protocolDiscriminantField != null && key === protocolDiscriminantField) {
+                                        continue;
+                                    }
                                     if (typeof value === "string") {
                                         statements.push(
                                             python.codeBlock(
@@ -447,6 +458,33 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Returns the wire-value of the discriminant field if the endpoint uses
+     * protocol-level SSE discrimination, or undefined otherwise.
+     */
+    private getProtocolDiscriminantField(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "streaming" || responseBody.value.type !== "sse") {
+            return undefined;
+        }
+        const payload = responseBody.value.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.context.ir.types[payload.typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        if (
+            "discriminatorContext" in union &&
+            (union as { discriminatorContext?: string }).discriminatorContext === "protocol"
+        ) {
+            return union.discriminant.wireValue;
+        }
+        return undefined;
     }
 
     /**

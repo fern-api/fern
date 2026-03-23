@@ -145,6 +145,46 @@ export class WireMock {
         ].join("-");
     }
 
+    /**
+     * Determines the SSE discrimination strategy for an endpoint.
+     * Returns "protocol" if the SSE payload union uses protocol-level discrimination
+     * (i.e., the SSE `event:` field determines the variant), or "data" if discrimination
+     * is based on a field inside the JSON data payload, or undefined if not applicable.
+     */
+    private getSseDiscriminationContext(
+        ir: FernIr.IntermediateRepresentation,
+        endpoint: FernIr.HttpEndpoint
+    ): { context: "protocol" | "data"; discriminantField: string } | undefined {
+        if (endpoint.response?.body?.type !== "streaming") {
+            return undefined;
+        }
+        const streamingResponse = endpoint.response.body.value;
+        if (streamingResponse.type !== "sse") {
+            return undefined;
+        }
+        const payload = streamingResponse.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = ir.types[payload.typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        const discriminantField = union.discriminant.wireValue;
+        if (
+            "discriminatorContext" in union &&
+            (union as { discriminatorContext?: string }).discriminatorContext === "protocol"
+        ) {
+            return { context: "protocol", discriminantField };
+        }
+        // Check if this is a data-level discriminated union (has a discriminant but not protocol-level)
+        if (union.discriminant != null) {
+            return { context: "data", discriminantField };
+        }
+        return undefined;
+    }
+
     private convertExampleToMapping(
         ir: FernIr.IntermediateRepresentation,
         service: FernIr.HttpService,
@@ -230,12 +270,42 @@ export class WireMock {
             if (isSseResponse && Array.isArray(bodyObj)) {
                 // Format SSE response according to the SSE protocol
                 // Each event should be formatted as: event: <event_name>\ndata: <json_data>\n\n
+                //
+                // To properly test SSE discrimination strategies, the mock data must
+                // distinguish between data-level and protocol-level discrimination:
+                // - Data-level: the discriminant lives inside the JSON data payload,
+                //   so we set the SSE event: field to a generic value ("message")
+                //   that differs from the JSON discriminant. This proves the SDK
+                //   reads the discriminant from the data payload, not the SSE event: line.
+                // - Protocol-level: the discriminant is the SSE event: field itself,
+                //   so we strip the discriminant from the JSON data payload. This proves
+                //   the SDK reads the discriminant from the SSE protocol event name,
+                //   not from a field inside the data.
+                const discriminationInfo = this.getSseDiscriminationContext(ir, endpoint);
                 const sseEvents = bodyObj as Array<{ event: string; data: { jsonExample?: unknown } }>;
                 body = sseEvents
                     .map((sseEvent) => {
-                        const eventName = sseEvent.event || "message";
-                        // Access jsonExample from the data field
-                        const eventData = sseEvent.data?.jsonExample ?? {};
+                        let eventName = sseEvent.event || "message";
+                        let eventData = sseEvent.data?.jsonExample ?? {};
+
+                        if (discriminationInfo != null) {
+                            if (discriminationInfo.context === "data") {
+                                // Data-level discrimination: use generic SSE event name
+                                // so it differs from the discriminant in the JSON data.
+                                eventName = "message";
+                            } else if (discriminationInfo.context === "protocol") {
+                                // Protocol-level discrimination: strip the discriminant field
+                                // from the JSON data so only the SSE event: field carries it.
+                                if (typeof eventData === "object" && eventData !== null && !Array.isArray(eventData)) {
+                                    const { [discriminationInfo.discriminantField]: _, ...rest } = eventData as Record<
+                                        string,
+                                        unknown
+                                    >;
+                                    eventData = rest;
+                                }
+                            }
+                        }
+
                         const dataJson = JSON.stringify(eventData);
                         return `event: ${eventName}\ndata: ${dataJson}\n\n`;
                     })

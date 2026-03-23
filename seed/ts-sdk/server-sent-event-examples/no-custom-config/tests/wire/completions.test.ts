@@ -61,7 +61,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
         const rawResponseBody =
-            'event: completion\ndata: {"event":"completion","content":"hello"}\n\nevent: error\ndata: {"event":"error","error":"something went wrong"}\n\n';
+            'event: message\ndata: {"event":"completion","content":"hello"}\n\nevent: message\ndata: {"event":"error","error":"something went wrong"}\n\n';
 
         server
             .mockEndpoint()

@@ -46,7 +46,5 @@ def test_completions_stream_events_context_protocol() -> None:
     )
     assert len(response) == 2
     assert response[0].content == "hello"
-    assert response[0].event == "completion"
     assert response[1].error == "something went wrong"
-    assert response[1].event == "error"
     verify_request_count(test_id, "POST", "/stream-events-context-protocol", None, 1)
