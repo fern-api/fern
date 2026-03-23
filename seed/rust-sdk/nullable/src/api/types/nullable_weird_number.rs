@@ -5,9 +5,9 @@ pub use crate::prelude::*;
 pub enum WeirdNumber {
     Integer(i64),
 
-    NullableFloat(Option<f64>),
+    OptionalFloat(Option<f64>),
 
-    Optional2(Option<String>),
+    OptionalString(Option<String>),
 
     Double(f64),
 }
@@ -17,12 +17,12 @@ impl WeirdNumber {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_nullablefloat(&self) -> bool {
-        matches!(self, Self::NullableFloat(_))
+    pub fn is_optional_float(&self) -> bool {
+        matches!(self, Self::OptionalFloat(_))
     }
 
-    pub fn is_optional2(&self) -> bool {
-        matches!(self, Self::Optional2(_))
+    pub fn is_optional_string(&self) -> bool {
+        matches!(self, Self::OptionalString(_))
     }
 
     pub fn is_double(&self) -> bool {
@@ -43,30 +43,30 @@ impl WeirdNumber {
         }
     }
 
-    pub fn as_nullablefloat(&self) -> Option<&Option<f64>> {
+    pub fn as_optional_float(&self) -> Option<&f64> {
         match self {
-            Self::NullableFloat(value) => Some(value),
+            Self::OptionalFloat(value) => value.as_ref(),
             _ => None,
         }
     }
 
-    pub fn into_nullablefloat(self) -> Option<Option<f64>> {
+    pub fn into_optional_float(self) -> Option<f64> {
         match self {
-            Self::NullableFloat(value) => Some(value),
+            Self::OptionalFloat(value) => value,
             _ => None,
         }
     }
 
-    pub fn as_optional2(&self) -> Option<&Option<String>> {
+    pub fn as_optional_string(&self) -> Option<&str> {
         match self {
-            Self::Optional2(value) => Some(value),
+            Self::OptionalString(value) => value.as_deref(),
             _ => None,
         }
     }
 
-    pub fn into_optional2(self) -> Option<Option<String>> {
+    pub fn into_optional_string(self) -> Option<String> {
         match self {
-            Self::Optional2(value) => Some(value),
+            Self::OptionalString(value) => value,
             _ => None,
         }
     }

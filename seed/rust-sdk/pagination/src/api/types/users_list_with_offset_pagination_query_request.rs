@@ -16,3 +16,50 @@ pub struct UsersListWithOffsetPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub starting_after: Option<String>,
 }
+
+impl UsersListWithOffsetPaginationQueryRequest {
+    pub fn builder() -> UsersListWithOffsetPaginationQueryRequestBuilder {
+        UsersListWithOffsetPaginationQueryRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct UsersListWithOffsetPaginationQueryRequestBuilder {
+    page: Option<i64>,
+    per_page: Option<i64>,
+    order: Option<Order2>,
+    starting_after: Option<String>,
+}
+
+impl UsersListWithOffsetPaginationQueryRequestBuilder {
+    pub fn page(mut self, value: i64) -> Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn per_page(mut self, value: i64) -> Self {
+        self.per_page = Some(value);
+        self
+    }
+
+    pub fn order(mut self, value: Order2) -> Self {
+        self.order = Some(value);
+        self
+    }
+
+    pub fn starting_after(mut self, value: impl Into<String>) -> Self {
+        self.starting_after = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`UsersListWithOffsetPaginationQueryRequest`].
+    pub fn build(self) -> Result<UsersListWithOffsetPaginationQueryRequest, BuildError> {
+        Ok(UsersListWithOffsetPaginationQueryRequest {
+            page: self.page,
+            per_page: self.per_page,
+            order: self.order,
+            starting_after: self.starting_after,
+        })
+    }
+}

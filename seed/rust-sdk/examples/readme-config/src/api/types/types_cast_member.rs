@@ -19,7 +19,7 @@ impl CastMember {
         matches!(self, Self::Actress(_))
     }
 
-    pub fn is_stuntdouble(&self) -> bool {
+    pub fn is_stunt_double(&self) -> bool {
         matches!(self, Self::StuntDouble(_))
     }
 
@@ -51,14 +51,14 @@ impl CastMember {
         }
     }
 
-    pub fn as_stuntdouble(&self) -> Option<&StuntDouble> {
+    pub fn as_stunt_double(&self) -> Option<&StuntDouble> {
         match self {
             Self::StuntDouble(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_stuntdouble(self) -> Option<StuntDouble> {
+    pub fn into_stunt_double(self) -> Option<StuntDouble> {
         match self {
             Self::StuntDouble(value) => Some(value),
             _ => None,

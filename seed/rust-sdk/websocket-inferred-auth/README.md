@@ -105,11 +105,11 @@ The SDK supports WebSocket connections for real-time communication. Use the gene
 ```rust
 use seed_websocket_auth::prelude::*;
 
-let config = ClientConfig {
-    base_url: " ".to_string(),
-    api_key: Some("your-api-key".to_string())
-};
-let client = WebsocketAuthClient::new(config).expect("Failed to build client");
+let client = WebsocketAuthClient::new(ClientConfig {
+    token: Some("your-api-key".to_string()),
+    ..Default::default()
+})
+.expect("Failed to create client");
 
 // Connect to the WebSocket
 let mut realtime = client.realtime.connect(

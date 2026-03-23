@@ -1,11 +1,11 @@
 package example
 
 import (
-    client "github.com/bytes-upload/fern/client"
-    option "github.com/bytes-upload/fern/option"
-    fern "github.com/bytes-upload/fern"
     bytes "bytes"
     context "context"
+    fern "github.com/bytes-upload/fern"
+    client "github.com/bytes-upload/fern/client"
+    option "github.com/bytes-upload/fern/option"
 )
 
 func do() {

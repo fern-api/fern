@@ -1,9 +1,9 @@
 package example
 
 import (
+    context "context"
     client "github.com/nullable-allof-extends/fern/client"
     option "github.com/nullable-allof-extends/fern/option"
-    context "context"
 )
 
 func do() {

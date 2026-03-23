@@ -46,6 +46,7 @@ ${this.buffer}`
     private stringifyImports(): string {
         const result = Object.entries(this.imports)
             .filter(([importPath, _]) => importPath !== this.importPath) // Skip the target import path
+            .sort(([pathA], [pathB]) => (pathA < pathB ? -1 : pathA > pathB ? 1 : 0))
             .map(([importPath, alias]) => `    ${alias} "${importPath}"`)
             .join("\n");
 

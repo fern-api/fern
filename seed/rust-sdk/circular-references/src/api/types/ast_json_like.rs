@@ -15,11 +15,11 @@ pub enum JsonLike {
 }
 
 impl JsonLike {
-    pub fn is_jsonlikelist(&self) -> bool {
+    pub fn is_json_like_list(&self) -> bool {
         matches!(self, Self::JsonLikeList(_))
     }
 
-    pub fn is_stringtojsonlikemap(&self) -> bool {
+    pub fn is_string_to_json_like_map(&self) -> bool {
         matches!(self, Self::StringToJsonLikeMap(_))
     }
 
@@ -35,28 +35,28 @@ impl JsonLike {
         matches!(self, Self::Boolean(_))
     }
 
-    pub fn as_jsonlikelist(&self) -> Option<&Vec<JsonLike>> {
+    pub fn as_json_like_list(&self) -> Option<&Vec<JsonLike>> {
         match self {
             Self::JsonLikeList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_jsonlikelist(self) -> Option<Vec<JsonLike>> {
+    pub fn into_json_like_list(self) -> Option<Vec<JsonLike>> {
         match self {
             Self::JsonLikeList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_stringtojsonlikemap(&self) -> Option<&HashMap<String, JsonLike>> {
+    pub fn as_string_to_json_like_map(&self) -> Option<&HashMap<String, JsonLike>> {
         match self {
             Self::StringToJsonLikeMap(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_stringtojsonlikemap(self) -> Option<HashMap<String, JsonLike>> {
+    pub fn into_string_to_json_like_map(self) -> Option<HashMap<String, JsonLike>> {
         match self {
             Self::StringToJsonLikeMap(value) => Some(value),
             _ => None,

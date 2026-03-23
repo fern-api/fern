@@ -13,14 +13,14 @@ var value = map[string]any{
     "organization": "acme",
     "users": []any{
         map[string]any{
-            "name": "John Doe",
-            "age": 42,
             "active": false,
+            "age": 42,
+            "name": "John Doe",
         },
         map[string]any{
-            "name": "Jane Doe",
-            "age": 41,
             "active": true,
+            "age": 41,
+            "name": "Jane Doe",
         },
     },
 }"
@@ -31,9 +31,9 @@ exports[`Snippets > 'any (nested)' 1`] = `
 
 var value = map[string]any{
     "user": map[string]any{
-        "name": "John Doe",
-        "age": 42,
         "active": false,
+        "age": 42,
+        "name": "John Doe",
     },
 }"
 `;

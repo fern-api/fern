@@ -31,10 +31,10 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+    fern "github.com/oauth-client-credentials-default/fern"
     client "github.com/oauth-client-credentials-default/fern/client"
     option "github.com/oauth-client-credentials-default/fern/option"
-    fern "github.com/oauth-client-credentials-default/fern"
-    context "context"
 )
 
 func do() {

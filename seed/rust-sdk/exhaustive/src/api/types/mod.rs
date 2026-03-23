@@ -25,8 +25,6 @@ pub mod types_object_object_with_required_field;
 pub mod types_object_object_with_unknown_field;
 pub mod types_object_optional_alias;
 pub mod types_union_animal;
-pub mod types_union_cat;
-pub mod types_union_dog;
 pub mod types_union_mixed_type;
 
 pub use endpoints_pagination_paginated_response::PaginatedResponse;
@@ -56,6 +54,4 @@ pub use types_object_object_with_required_field::ObjectWithRequiredField;
 pub use types_object_object_with_unknown_field::ObjectWithUnknownField;
 pub use types_object_optional_alias::OptionalAlias;
 pub use types_union_animal::Animal;
-pub use types_union_cat::Cat;
-pub use types_union_dog::Dog;
 pub use types_union_mixed_type::MixedType;

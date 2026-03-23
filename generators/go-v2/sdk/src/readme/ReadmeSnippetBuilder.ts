@@ -37,7 +37,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) || context.ir.sdkConfig.hasPaginatedEndpoints;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId =

@@ -35,9 +35,11 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     noReplay,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -56,9 +58,11 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -148,7 +152,9 @@ export async function generateWorkspace({
                     ai,
                     replay,
                     noReplay,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    requireEnvVars,
+                    skipFernignore
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -164,9 +170,11 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
                     validateWorkspace: true,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars
                 });
             }
         })

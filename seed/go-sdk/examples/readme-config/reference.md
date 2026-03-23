@@ -369,11 +369,11 @@ request := &fern.Movie{
                 "Florence Pugh",
                 "Willem Dafoe",
             },
-            "releaseDate": "2023-12-08",
             "ratings": map[string]any{
-                "rottenTomatoes": 97,
                 "imdb": 7.6,
+                "rottenTomatoes": 97,
             },
+            "releaseDate": "2023-12-08",
         },
         Revenue: int64(1000000),
     }
