@@ -66,11 +66,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithPath(string $param, ?array $options = null): string
+    public function getWithPath(string $param, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -114,11 +114,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePath(string $param, ?array $options = null): string
+    public function getWithInlinePath(string $param, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -343,11 +343,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithPath(string $param, string $request, ?array $options = null): string
+    public function modifyWithPath(string $param, string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -393,11 +393,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string
+    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -442,11 +442,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithRequiredField
+     * @return ?ObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadWithPath(string $param, ?array $options = null): ObjectWithRequiredField
+    public function uploadWithPath(string $param, ?array $options = null): ?ObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -62,11 +62,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<LightweightProblemInfoV2>
+     * @return ?array<LightweightProblemInfoV2>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getLightweightProblems(?array $options = null): array
+    public function getLightweightProblems(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -109,11 +109,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<ProblemInfoV2>
+     * @return ?array<ProblemInfoV2>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getProblems(?array $options = null): array
+    public function getProblems(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -157,11 +157,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ProblemInfoV2
+     * @return ?ProblemInfoV2
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getLatestProblem(string $problemId, ?array $options = null): ProblemInfoV2
+    public function getLatestProblem(string $problemId, ?array $options = null): ?ProblemInfoV2
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -206,11 +206,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ProblemInfoV2
+     * @return ?ProblemInfoV2
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): ProblemInfoV2
+    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): ?ProblemInfoV2
     {
         $options = array_merge($this->options, $options ?? []);
         try {

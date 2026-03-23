@@ -58,11 +58,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersUriPaginationResponse
+     * @return ?ListUsersUriPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithUriPagination(?array $options = null): ListUsersUriPaginationResponse
+    public function listWithUriPagination(?array $options = null): ?ListUsersUriPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -103,11 +103,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPathPaginationResponse
+     * @return ?ListUsersPathPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithPathPagination(?array $options = null): ListUsersPathPaginationResponse
+    public function listWithPathPagination(?array $options = null): ?ListUsersPathPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

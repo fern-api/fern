@@ -60,11 +60,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnString(string $request, ?array $options = null): string
+    public function getAndReturnString(string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -107,11 +107,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return int
+     * @return ?int
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnInt(int $request, ?array $options = null): int
+    public function getAndReturnInt(int $request, ?array $options = null): ?int
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -154,11 +154,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return int
+     * @return ?int
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnLong(int $request, ?array $options = null): int
+    public function getAndReturnLong(int $request, ?array $options = null): ?int
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -201,11 +201,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return float
+     * @return ?float
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnDouble(float $request, ?array $options = null): float
+    public function getAndReturnDouble(float $request, ?array $options = null): ?float
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -248,11 +248,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnBool(bool $request, ?array $options = null): bool
+    public function getAndReturnBool(bool $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -295,11 +295,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DateTime
+     * @return ?DateTime
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnDatetime(DateTime $request, ?array $options = null): DateTime
+    public function getAndReturnDatetime(DateTime $request, ?array $options = null): ?DateTime
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -342,11 +342,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DateTime
+     * @return ?DateTime
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnDate(DateTime $request, ?array $options = null): DateTime
+    public function getAndReturnDate(DateTime $request, ?array $options = null): ?DateTime
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -389,11 +389,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnUuid(string $request, ?array $options = null): string
+    public function getAndReturnUuid(string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -436,11 +436,11 @@ class PrimitiveClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnBase64(string $request, ?array $options = null): string
+    public function getAndReturnBase64(string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

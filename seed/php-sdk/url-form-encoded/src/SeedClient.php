@@ -74,11 +74,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PostSubmitResponse
+     * @return ?PostSubmitResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function submitFormData(PostSubmitRequest $request, ?array $options = null): PostSubmitResponse
+    public function submitFormData(PostSubmitRequest $request, ?array $options = null): ?PostSubmitResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -121,11 +121,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(TokenRequest $request, ?array $options = null): TokenResponse
+    public function getToken(TokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -59,11 +59,11 @@ class FooClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ImportingType
+     * @return ?ImportingType
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ImportingType
+    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ?ImportingType
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

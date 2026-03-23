@@ -58,11 +58,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Exception
+     * @return ?Exception
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getException(string $notificationId, ?array $options = null): Exception
+    public function getException(string $notificationId, ?array $options = null): ?Exception
     {
         $options = array_merge($this->options, $options ?? []);
         try {

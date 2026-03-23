@@ -75,9 +75,9 @@ class ComplexClient
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (PaginatedConversationResponse $response) => $response?->pages?->next?->startingAfter ?? null,
+            getNextCursor: fn (?PaginatedConversationResponse $response) => $response?->pages?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (PaginatedConversationResponse $response) => $response?->conversations ?? [],
+            getItems: fn (?PaginatedConversationResponse $response) => $response?->conversations ?? [],
         );
     }
 
@@ -92,11 +92,11 @@ class ComplexClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PaginatedConversationResponse
+     * @return ?PaginatedConversationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _search(string $index, SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function _search(string $index, SearchRequest $request, ?array $options = null): ?PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

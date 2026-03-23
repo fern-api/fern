@@ -63,11 +63,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ExecutionSessionResponse
+     * @return ?ExecutionSessionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
+    public function createExecutionSession(string $language, ?array $options = null): ?ExecutionSessionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -197,11 +197,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return GetExecutionSessionStateResponse
+     * @return ?GetExecutionSessionStateResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
+    public function getExecutionSessionsState(?array $options = null): ?GetExecutionSessionStateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

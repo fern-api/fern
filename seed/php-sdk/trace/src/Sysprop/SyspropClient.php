@@ -99,11 +99,11 @@ class SyspropClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<value-of<Language>, int>
+     * @return ?array<value-of<Language>, int>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getNumWarmInstances(?array $options = null): array
+    public function getNumWarmInstances(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

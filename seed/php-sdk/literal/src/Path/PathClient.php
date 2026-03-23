@@ -58,11 +58,11 @@ class PathClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return SendResponse
+     * @return ?SendResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(string $id, ?array $options = null): SendResponse
+    public function send(string $id, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

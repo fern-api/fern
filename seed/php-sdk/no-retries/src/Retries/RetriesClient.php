@@ -58,11 +58,11 @@ class RetriesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(?array $options = null): array
+    public function getUsers(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

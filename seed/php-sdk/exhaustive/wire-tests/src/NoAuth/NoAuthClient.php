@@ -60,11 +60,11 @@ class NoAuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithNoAuth(mixed $request, ?array $options = null): bool
+    public function postWithNoAuth(mixed $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -61,11 +61,11 @@ class MetadataClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Metadata
+     * @return ?Metadata
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
+    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): ?Metadata
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -59,11 +59,11 @@ class TypesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UnionWithTime
+     * @return ?UnionWithTime
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string $id, ?array $options = null): UnionWithTime
+    public function get(string $id, ?array $options = null): ?UnionWithTime
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -105,11 +105,11 @@ class TypesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function update(UnionWithTime $request, ?array $options = null): bool
+    public function update(UnionWithTime $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -62,11 +62,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return File
+     * @return ?File
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): File
+    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): ?File
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];

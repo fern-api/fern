@@ -74,11 +74,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UserResponse
+     * @return ?UserResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUser(string $userId, ?array $options = null): UserResponse
+    public function getUser(string $userId, ?array $options = null): ?UserResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -122,11 +122,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UserResponse
+     * @return ?UserResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): UserResponse
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?UserResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -172,11 +172,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UserResponse
+     * @return ?UserResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateUser(string $userId, UpdateUserRequest $request, ?array $options = null): UserResponse
+    public function updateUser(string $userId, UpdateUserRequest $request, ?array $options = null): ?UserResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -221,11 +221,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<UserResponse>
+     * @return ?array<UserResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsers(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): array
+    public function listUsers(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -283,11 +283,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<UserResponse>
+     * @return ?array<UserResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchUsers(SearchUsersRequest $request, ?array $options = null): array
+    public function searchUsers(SearchUsersRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -341,11 +341,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ComplexProfile
+     * @return ?ComplexProfile
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createComplexProfile(ComplexProfile $request, ?array $options = null): ComplexProfile
+    public function createComplexProfile(ComplexProfile $request, ?array $options = null): ?ComplexProfile
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -390,11 +390,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ComplexProfile
+     * @return ?ComplexProfile
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getComplexProfile(string $profileId, ?array $options = null): ComplexProfile
+    public function getComplexProfile(string $profileId, ?array $options = null): ?ComplexProfile
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -439,11 +439,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ComplexProfile
+     * @return ?ComplexProfile
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateComplexProfile(string $profileId, UpdateComplexProfileRequest $request = new UpdateComplexProfileRequest(), ?array $options = null): ComplexProfile
+    public function updateComplexProfile(string $profileId, UpdateComplexProfileRequest $request = new UpdateComplexProfileRequest(), ?array $options = null): ?ComplexProfile
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -488,11 +488,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DeserializationTestResponse
+     * @return ?DeserializationTestResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testDeserialization(DeserializationTestRequest $request, ?array $options = null): DeserializationTestResponse
+    public function testDeserialization(DeserializationTestRequest $request, ?array $options = null): ?DeserializationTestResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -537,11 +537,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<UserResponse>
+     * @return ?array<UserResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function filterByRole(FilterByRoleRequest $request, ?array $options = null): array
+    public function filterByRole(FilterByRoleRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -643,11 +643,11 @@ class NullableOptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string>
+     * @return ?array<string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateTags(string $userId, UpdateTagsRequest $request, ?array $options = null): array
+    public function updateTags(string $userId, UpdateTagsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;getUsers() -> array</code></summary>
+<details><summary><code>$client-&gt;getUsers() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -24,7 +24,7 @@ $client->getUsers();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;getUser($userId) -> User</code></summary>
+<details><summary><code>$client-&gt;getUser($userId) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ $client->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;getToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 

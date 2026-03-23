@@ -100,11 +100,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function ping(?array $options = null): bool
+    public function ping(?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

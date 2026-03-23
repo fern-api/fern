@@ -91,9 +91,9 @@ class InlineUsersClient
                 $request->startingAfter = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -118,9 +118,9 @@ class InlineUsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersMixedTypePaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -145,9 +145,9 @@ class InlineUsersClient
                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -175,7 +175,7 @@ class InlineUsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -205,7 +205,7 @@ class InlineUsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -235,7 +235,7 @@ class InlineUsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -266,7 +266,7 @@ class InlineUsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->limit ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -297,9 +297,9 @@ class InlineUsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->limit ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
-            hasNextPage: fn (ListUsersPaginationResponse $response) => $response?->hasNextPage,
+            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->hasNextPage,
         );
     }
 
@@ -324,9 +324,9 @@ class InlineUsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -351,9 +351,9 @@ class InlineUsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -378,9 +378,9 @@ class InlineUsersClient
                 $request->startingAfter = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (UsernameCursor $response) => $response?->cursor?->after ?? null,
+            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameCursor $response) => $response?->cursor?->data ?? [],
+            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
         );
     }
 
@@ -408,7 +408,7 @@ class InlineUsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameContainer $response) => $response?->results ?? [],
+            getItems: fn (?UsernameContainer $response) => $response?->results ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -424,11 +424,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -484,11 +484,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersMixedTypePaginationResponse
+     * @return ?ListUsersMixedTypePaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
+    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ?ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -535,11 +535,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -582,11 +582,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -642,11 +642,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -702,11 +702,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -749,11 +749,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -806,11 +806,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -863,11 +863,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedResponse
+     * @return ?ListUsersExtendedResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
+    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ?ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -914,11 +914,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedOptionalListResponse
+     * @return ?ListUsersExtendedOptionalListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
+    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ?ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -965,11 +965,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameCursor
+     * @return ?UsernameCursor
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
+    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1016,11 +1016,11 @@ class InlineUsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameContainer
+     * @return ?UsernameContainer
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
+    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): ?UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -63,11 +63,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Organization
+     * @return ?Organization
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): Organization
+    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): ?Organization
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -109,11 +109,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): User
+    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -157,11 +157,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Organization>
+     * @return ?array<Organization>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): array
+    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

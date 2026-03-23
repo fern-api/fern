@@ -81,11 +81,11 @@ class SeedClient
      * @return (
      *    DocumentMetadata
      *   |DocumentUploadResult
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult
+    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -130,11 +130,11 @@ class SeedClient
      * @return (
      *    DocumentMetadata
      *   |DocumentUploadResult
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult
+    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {

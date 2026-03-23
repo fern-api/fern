@@ -59,11 +59,11 @@ class UnknownClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<mixed>
+     * @return ?array<mixed>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function post(mixed $request, ?array $options = null): array
+    public function post(mixed $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -106,11 +106,11 @@ class UnknownClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<mixed>
+     * @return ?array<mixed>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postObject(MyObject $request, ?array $options = null): array
+    public function postObject(MyObject $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

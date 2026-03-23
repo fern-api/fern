@@ -61,11 +61,11 @@ class OrganizationClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Organization
+     * @return ?Organization
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function create(CreateOrganizationRequest $request, ?array $options = null): Organization
+    public function create(CreateOrganizationRequest $request, ?array $options = null): ?Organization
     {
         $options = array_merge($this->options, $options ?? []);
         try {

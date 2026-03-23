@@ -58,11 +58,11 @@ class PutClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PutResponse
+     * @return ?PutResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function add(string $id, ?array $options = null): PutResponse
+    public function add(string $id, ?array $options = null): ?PutResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

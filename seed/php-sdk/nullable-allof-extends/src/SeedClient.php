@@ -72,11 +72,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return RootObject
+     * @return ?RootObject
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getTest(?array $options = null): RootObject
+    public function getTest(?array $options = null): ?RootObject
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -120,11 +120,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return RootObject
+     * @return ?RootObject
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createTest(RootObject $request, ?array $options = null): RootObject
+    public function createTest(RootObject $request, ?array $options = null): ?RootObject
     {
         $options = array_merge($this->options, $options ?? []);
         try {

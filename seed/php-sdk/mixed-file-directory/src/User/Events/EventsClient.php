@@ -69,11 +69,11 @@ class EventsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Event>
+     * @return ?array<Event>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listEvents(ListUserEventsRequest $request = new ListUserEventsRequest(), ?array $options = null): array
+    public function listEvents(ListUserEventsRequest $request = new ListUserEventsRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -60,11 +60,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return BigUnion
+     * @return ?BigUnion
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string $id, ?array $options = null): BigUnion
+    public function get(string $id, ?array $options = null): ?BigUnion
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -106,11 +106,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function update(BigUnion $request, ?array $options = null): bool
+    public function update(BigUnion $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -153,11 +153,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, bool>
+     * @return ?array<string, bool>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateMany(array $request, ?array $options = null): array
+    public function updateMany(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

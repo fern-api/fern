@@ -59,11 +59,11 @@ class PropertyBasedErrorClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function throwError(?array $options = null): string
+    public function throwError(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

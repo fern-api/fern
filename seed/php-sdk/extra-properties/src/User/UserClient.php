@@ -59,11 +59,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): User
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {

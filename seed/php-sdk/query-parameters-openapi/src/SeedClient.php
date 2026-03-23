@@ -76,11 +76,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return SearchResponse
+     * @return ?SearchResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function search(SearchRequest $request, ?array $options = null): SearchResponse
+    public function search(SearchRequest $request, ?array $options = null): ?SearchResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

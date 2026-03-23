@@ -61,11 +61,11 @@ class MigrationClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Migration>
+     * @return ?array<Migration>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array
+    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];

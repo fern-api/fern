@@ -61,11 +61,11 @@ class FileUploadExampleClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadFile(UploadFileRequest $request, ?array $options = null): string
+    public function uploadFile(UploadFileRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();

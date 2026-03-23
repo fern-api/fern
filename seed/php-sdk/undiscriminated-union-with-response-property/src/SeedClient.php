@@ -71,11 +71,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UnionResponse
+     * @return ?UnionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUnion(?array $options = null): UnionResponse
+    public function getUnion(?array $options = null): ?UnionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -116,11 +116,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UnionListResponse
+     * @return ?UnionListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUnions(?array $options = null): UnionListResponse
+    public function listUnions(?array $options = null): ?UnionListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

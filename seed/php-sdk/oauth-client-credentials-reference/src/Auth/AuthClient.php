@@ -59,11 +59,11 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(GetTokenRequest $request, ?array $options = null): TokenResponse
+    public function getToken(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

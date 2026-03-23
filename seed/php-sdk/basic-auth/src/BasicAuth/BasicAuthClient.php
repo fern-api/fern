@@ -59,11 +59,11 @@ class BasicAuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBasicAuth(?array $options = null): bool
+    public function getWithBasicAuth(?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -107,11 +107,11 @@ class BasicAuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithBasicAuth(mixed $request, ?array $options = null): bool
+    public function postWithBasicAuth(mixed $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

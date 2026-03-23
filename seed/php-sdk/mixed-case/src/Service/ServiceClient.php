@@ -61,11 +61,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Resource
+     * @return ?Resource
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, ?array $options = null): Resource
+    public function getResource(string $resourceId, ?array $options = null): ?Resource
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -107,11 +107,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Resource>
+     * @return ?array<Resource>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): array
+    public function listResources(ListResourcesRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
