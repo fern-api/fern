@@ -15,5 +15,6 @@ export {
     type ReplaceReferencedMarkdownResult,
     replaceReferencedMarkdown
 } from "./replaceReferencedMarkdown.js";
+export { stripMdxComments } from "./stripMdxComments.js";
 export { transformAtPrefixImports } from "./transformAtPrefixImports.js";
 export { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes.js";
