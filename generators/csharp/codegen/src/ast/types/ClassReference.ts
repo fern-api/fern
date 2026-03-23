@@ -162,16 +162,20 @@ export class ClassReference extends Node implements Type {
                 .some((each) => each !== this.namespace && this.registry.isRegisteredTypeName(`${each}.${this.name}`));
 
         const shouldGlobal =
+            !writer.skipGlobalQualifier &&
             // if the type is global, then we need to globally qualify the type
-            this.global ||
-            // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
-            this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
-            this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||
-            // if the first namespace segment is both a type name and a namespace root,
-            // the C# compiler will resolve it to the type instead of the namespace (CS0426)
-            this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
-            // or we always are going to be using fully qualified namespaces
-            writer.generation.settings.useFullyQualifiedNamespaces;
+            (this.global ||
+                // Always qualify System namespaces to prevent ambiguity when customer
+                // projects define a type or namespace named "System"
+                this.namespaceSegments[0] === "System" ||
+                // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
+                this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
+                this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||
+                // if the first namespace segment is both a type name and a namespace root,
+                // the C# compiler will resolve it to the type instead of the namespace (CS0426)
+                this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
+                // or we always are going to be using fully qualified namespaces
+                writer.generation.settings.useFullyQualifiedNamespaces);
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         // For attributes, strip the "Attribute" suffix from the fully qualified name
@@ -216,6 +220,7 @@ export class ClassReference extends Node implements Type {
                         // check to see if the abbreviation would be ambiguous
                         const segments = typeQualification.split(".");
                         if (
+                            shouldGlobal ||
                             this.registry.isAmbiguousTypeName(segments[0]) ||
                             this.registry.isAmbiguousNamespaceName(segments[0]) ||
                             this.registry.hasTypeNamespaceConflict(segments[0])

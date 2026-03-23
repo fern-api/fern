@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -190,7 +190,9 @@ public record CodeExecutionUpdate
     public SeedTrace.BuildingExecutorResponse AsBuildingExecutor() =>
         IsBuildingExecutor
             ? (SeedTrace.BuildingExecutorResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'buildingExecutor'");
+            : throw new global::System.Exception(
+                "CodeExecutionUpdate.Type is not 'buildingExecutor'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningResponse"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -199,7 +201,7 @@ public record CodeExecutionUpdate
     public SeedTrace.RunningResponse AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'running'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErroredResponse"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -208,7 +210,7 @@ public record CodeExecutionUpdate
     public SeedTrace.ErroredResponse AsErrored() =>
         IsErrored
             ? (SeedTrace.ErroredResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'errored'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.StoppedResponse"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
@@ -217,7 +219,7 @@ public record CodeExecutionUpdate
     public SeedTrace.StoppedResponse AsStopped() =>
         IsStopped
             ? (SeedTrace.StoppedResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'stopped'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GradedResponse"/> if <see cref="Type"/> is 'graded', otherwise throws an exception.
@@ -226,7 +228,7 @@ public record CodeExecutionUpdate
     public SeedTrace.GradedResponse AsGraded() =>
         IsGraded
             ? (SeedTrace.GradedResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'graded'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'graded'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GradedResponseV2"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
@@ -235,7 +237,7 @@ public record CodeExecutionUpdate
     public SeedTrace.GradedResponseV2 AsGradedV2() =>
         IsGradedV2
             ? (SeedTrace.GradedResponseV2)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'gradedV2'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'gradedV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRanResponse"/> if <see cref="Type"/> is 'workspaceRan', otherwise throws an exception.
@@ -244,7 +246,7 @@ public record CodeExecutionUpdate
     public SeedTrace.WorkspaceRanResponse AsWorkspaceRan() =>
         IsWorkspaceRan
             ? (SeedTrace.WorkspaceRanResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'workspaceRan'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'workspaceRan'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RecordingResponseNotification"/> if <see cref="Type"/> is 'recording', otherwise throws an exception.
@@ -253,7 +255,7 @@ public record CodeExecutionUpdate
     public SeedTrace.RecordingResponseNotification AsRecording() =>
         IsRecording
             ? (SeedTrace.RecordingResponseNotification)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'recording'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'recording'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RecordedResponseNotification"/> if <see cref="Type"/> is 'recorded', otherwise throws an exception.
@@ -262,7 +264,7 @@ public record CodeExecutionUpdate
     public SeedTrace.RecordedResponseNotification AsRecorded() =>
         IsRecorded
             ? (SeedTrace.RecordedResponseNotification)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'recorded'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'recorded'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.InvalidRequestResponse"/> if <see cref="Type"/> is 'invalidRequest', otherwise throws an exception.
@@ -271,7 +273,9 @@ public record CodeExecutionUpdate
     public SeedTrace.InvalidRequestResponse AsInvalidRequest() =>
         IsInvalidRequest
             ? (SeedTrace.InvalidRequestResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'invalidRequest'");
+            : throw new global::System.Exception(
+                "CodeExecutionUpdate.Type is not 'invalidRequest'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.FinishedResponse"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -280,7 +284,7 @@ public record CodeExecutionUpdate
     public SeedTrace.FinishedResponse AsFinished() =>
         IsFinished
             ? (SeedTrace.FinishedResponse)Value!
-            : throw new System.Exception("CodeExecutionUpdate.Type is not 'finished'");
+            : throw new global::System.Exception("CodeExecutionUpdate.Type is not 'finished'");
 
     public T Match<T>(
         Func<SeedTrace.BuildingExecutorResponse, T> onBuildingExecutor,
@@ -563,12 +567,12 @@ public record CodeExecutionUpdate
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CodeExecutionUpdate>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CodeExecutionUpdate).IsAssignableFrom(typeToConvert);
 
         public override CodeExecutionUpdate Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -682,7 +686,7 @@ public record CodeExecutionUpdate
 
         public override CodeExecutionUpdate ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

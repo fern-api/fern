@@ -1,5 +1,5 @@
-using System.Net.ServerSentEvents;
-using System.Text.Json;
+using global::System.Net.ServerSentEvents;
+using global::System.Text.Json;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
@@ -60,7 +60,7 @@ public partial class CompletionsClient : ICompletionsClient
                     {
                         result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
                     }
-                    catch (System.Text.Json.JsonException)
+                    catch (JsonException)
                     {
                         throw new SeedServerSentEventsException(
                             $"Unable to deserialize JSON response 'item.Data'"
@@ -141,7 +141,7 @@ public partial class CompletionsClient : ICompletionsClient
                     {
                         result = JsonUtils.Deserialize<StreamEvent>(item.Data);
                     }
-                    catch (System.Text.Json.JsonException)
+                    catch (JsonException)
                     {
                         throw new SeedServerSentEventsException(
                             $"Unable to deserialize JSON response 'item.Data'"

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
@@ -92,7 +92,7 @@ public record DiscriminatedLiteral
     public string AsCustomName() =>
         IsCustomName
             ? (string)Value!
-            : throw new System.Exception("DiscriminatedLiteral.Type is not 'customName'");
+            : throw new global::System.Exception("DiscriminatedLiteral.Type is not 'customName'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'defaultName', otherwise throws an exception.
@@ -101,7 +101,7 @@ public record DiscriminatedLiteral
     public string AsDefaultName() =>
         IsDefaultName
             ? (string)Value!
-            : throw new System.Exception("DiscriminatedLiteral.Type is not 'defaultName'");
+            : throw new global::System.Exception("DiscriminatedLiteral.Type is not 'defaultName'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'george', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record DiscriminatedLiteral
     public bool AsGeorge() =>
         IsGeorge
             ? (bool)Value!
-            : throw new System.Exception("DiscriminatedLiteral.Type is not 'george'");
+            : throw new global::System.Exception("DiscriminatedLiteral.Type is not 'george'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'literalGeorge', otherwise throws an exception.
@@ -119,7 +119,9 @@ public record DiscriminatedLiteral
     public bool AsLiteralGeorge() =>
         IsLiteralGeorge
             ? (bool)Value!
-            : throw new System.Exception("DiscriminatedLiteral.Type is not 'literalGeorge'");
+            : throw new global::System.Exception(
+                "DiscriminatedLiteral.Type is not 'literalGeorge'"
+            );
 
     public T Match<T>(
         Func<string, T> onCustomName,
@@ -241,12 +243,12 @@ public record DiscriminatedLiteral
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DiscriminatedLiteral>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(DiscriminatedLiteral).IsAssignableFrom(typeToConvert);
 
         public override DiscriminatedLiteral Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -317,7 +319,7 @@ public record DiscriminatedLiteral
 
         public override DiscriminatedLiteral ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

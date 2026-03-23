@@ -4,7 +4,7 @@ namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async System.Threading.Tasks.Task Do() {
         var client = new SeedCsharpNamespaceCollisionClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -12,7 +12,7 @@ public class Example1
         );
 
         await client.CreateTaskAsync(
-            new global::SeedCsharpNamespaceCollision.Task {
+            new SeedCsharpNamespaceCollision.Task {
                 Id = "id",
                 Name = "name",
                 Email = "email",

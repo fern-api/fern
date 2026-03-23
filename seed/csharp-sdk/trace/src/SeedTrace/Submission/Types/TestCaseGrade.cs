@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -64,7 +64,7 @@ public record TestCaseGrade
     public SeedTrace.TestCaseHiddenGrade AsHidden() =>
         IsHidden
             ? (SeedTrace.TestCaseHiddenGrade)Value!
-            : throw new System.Exception("TestCaseGrade.Type is not 'hidden'");
+            : throw new global::System.Exception("TestCaseGrade.Type is not 'hidden'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseNonHiddenGrade"/> if <see cref="Type"/> is 'nonHidden', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseGrade
     public SeedTrace.TestCaseNonHiddenGrade AsNonHidden() =>
         IsNonHidden
             ? (SeedTrace.TestCaseNonHiddenGrade)Value!
-            : throw new System.Exception("TestCaseGrade.Type is not 'nonHidden'");
+            : throw new global::System.Exception("TestCaseGrade.Type is not 'nonHidden'");
 
     public T Match<T>(
         Func<SeedTrace.TestCaseHiddenGrade, T> onHidden,
@@ -146,12 +146,12 @@ public record TestCaseGrade
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseGrade>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseGrade).IsAssignableFrom(typeToConvert);
 
         public override TestCaseGrade Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -216,7 +216,7 @@ public record TestCaseGrade
 
         public override TestCaseGrade ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
