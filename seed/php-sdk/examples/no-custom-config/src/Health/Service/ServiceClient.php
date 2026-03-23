@@ -119,6 +119,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {

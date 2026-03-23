@@ -93,6 +93,9 @@ class EventsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [Event::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

@@ -90,6 +90,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UnionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -132,6 +135,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UnionListResponse::fromJson($json);
             }
         } catch (JsonException $e) {

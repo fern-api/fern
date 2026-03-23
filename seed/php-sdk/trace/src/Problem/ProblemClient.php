@@ -85,6 +85,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return CreateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -132,6 +135,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UpdateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -219,6 +225,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return GetDefaultStarterFilesResponse::fromJson($json);
             }
         } catch (JsonException $e) {

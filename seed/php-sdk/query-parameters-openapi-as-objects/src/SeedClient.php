@@ -137,6 +137,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return SearchResponse::fromJson($json);
             }
         } catch (JsonException $e) {

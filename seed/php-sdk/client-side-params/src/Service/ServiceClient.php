@@ -110,6 +110,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -160,6 +163,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Resource::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -210,6 +216,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return SearchResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -281,6 +290,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return PaginatedUserResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -335,6 +347,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -381,6 +396,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -428,6 +446,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -525,6 +546,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [Connection::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -576,6 +600,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Connection::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -647,6 +674,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return PaginatedClientResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -701,6 +731,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Client::fromJson($json);
             }
         } catch (JsonException $e) {

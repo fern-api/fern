@@ -101,6 +101,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -146,6 +149,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

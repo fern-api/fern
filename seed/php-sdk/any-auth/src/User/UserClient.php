@@ -77,6 +77,9 @@ class UserClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -119,6 +122,9 @@ class UserClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

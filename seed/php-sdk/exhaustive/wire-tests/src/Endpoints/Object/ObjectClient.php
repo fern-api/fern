@@ -87,6 +87,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -131,6 +134,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -175,6 +181,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -219,6 +228,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -264,6 +276,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -308,6 +323,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -352,6 +370,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithUnknownField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -396,6 +417,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithDocumentedUnknownType::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -440,6 +464,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'mixed']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -488,6 +515,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {

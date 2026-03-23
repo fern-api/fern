@@ -82,6 +82,9 @@ class ImdbClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -125,6 +128,9 @@ class ImdbClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Movie::fromJson($json);
             }
         } catch (JsonException $e) {

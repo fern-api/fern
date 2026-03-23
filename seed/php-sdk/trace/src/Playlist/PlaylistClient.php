@@ -93,6 +93,9 @@ class PlaylistClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -150,6 +153,9 @@ class PlaylistClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [Playlist::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -196,6 +202,9 @@ class PlaylistClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {

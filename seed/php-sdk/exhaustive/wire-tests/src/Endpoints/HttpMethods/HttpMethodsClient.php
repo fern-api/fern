@@ -79,6 +79,9 @@ class HttpMethodsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -123,6 +126,9 @@ class HttpMethodsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -168,6 +174,9 @@ class HttpMethodsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -213,6 +222,9 @@ class HttpMethodsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -256,6 +268,9 @@ class HttpMethodsClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
