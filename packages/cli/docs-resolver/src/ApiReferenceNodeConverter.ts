@@ -243,6 +243,7 @@ export class ApiReferenceNodeConverter {
                     link: (link) => ({
                         id: this.#idgen.get(link.url),
                         type: "link",
+                        collapsed: undefined,
                         title: link.text,
                         icon: this.resolveIconFileId(link.icon),
                         url: FernNavigation.Url(link.url),
@@ -333,6 +334,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
+                collapsed: undefined,
                 children: convertedItems,
                 title:
                     pkg.title ??
@@ -369,6 +371,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
@@ -502,6 +505,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
+                collapsed: undefined,
                 children: [],
                 title: isSubpackage(subpackage)
                     ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -575,6 +579,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${endpointId}`),
                     type: "endpoint",
+                    collapsed: undefined,
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
@@ -621,6 +626,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webSocketId}`),
                     type: "webSocket",
+                    collapsed: undefined,
                     webSocketId,
                     title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
                     slug: (endpointItem.slug != null
@@ -662,6 +668,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webhookId}`),
                     type: "webhook",
+                    collapsed: undefined,
                     webhookId,
                     method: webhook.method,
                     title: endpointItem.title ?? webhook.name ?? urlJoin("/", ...webhook.path),
@@ -707,6 +714,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
                 type: "graphql" as const,
+                collapsed: undefined,
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
                 apiDefinitionId: this.apiDefinitionId,
@@ -858,6 +866,7 @@ export class ApiReferenceNodeConverter {
         return {
             id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
             type: "graphql" as const,
+            collapsed: undefined,
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
             apiDefinitionId: this.apiDefinitionId,
@@ -929,6 +938,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${grpcId}`),
                     type: "grpc",
+                    collapsed: undefined,
                     grpcId,
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     method: endpoint.protocol?.methodType ?? "UNARY",
@@ -958,6 +968,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
                     type: "endpoint",
+                    collapsed: undefined,
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
@@ -988,6 +999,7 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push({
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
                 type: "webSocket",
+                collapsed: undefined,
                 webSocketId,
                 title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
                 slug: parentSlug.apply(webSocket).get(),
@@ -1015,6 +1027,7 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push({
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webhookId}`),
                 type: "webhook",
+                collapsed: undefined,
                 webhookId,
                 method: webhook.method,
                 title: webhook.name ?? titleCase(webhook.id),
@@ -1066,6 +1079,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
+                    collapsed: undefined,
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
                         ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -1175,6 +1189,7 @@ export class ApiReferenceNodeConverter {
                     return {
                         id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
                         type: "graphql" as const,
+                        collapsed: undefined,
                         operationType: operation.operationType,
                         graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                         apiDefinitionId: this.apiDefinitionId,
@@ -1194,6 +1209,7 @@ export class ApiReferenceNodeConverter {
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
                     type: "apiPackage",
+                    collapsed: undefined,
                     children,
                     title: sectionTitle,
                     slug: sectionSlug.get(),
@@ -1220,6 +1236,7 @@ export class ApiReferenceNodeConverter {
             const namespaceNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children: namespaceChildren,
                 title: titleCase(namespace),
                 slug: namespaceSlug.get(),
@@ -1257,6 +1274,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
                     type: "graphql" as const,
+                    collapsed: undefined,
                     operationType: operation.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                     apiDefinitionId: this.apiDefinitionId,
@@ -1276,6 +1294,7 @@ export class ApiReferenceNodeConverter {
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children,
                 title: sectionTitle,
                 slug: sectionSlug.get(),

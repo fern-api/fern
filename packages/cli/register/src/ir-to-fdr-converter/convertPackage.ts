@@ -37,10 +37,10 @@ export function convertPackage(
             ...irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
             ...Object.keys(graphqlTypes ?? {}).map((typeId) => FdrCjsSdk.TypeId(typeId))
         ],
-        subpackages: irPackage.subpackages.map((subpackageId) => FdrCjsSdk.api.v1.SubpackageId(subpackageId)),
+        subpackages: irPackage.subpackages.map((subpackageId) => FdrCjsSdk.SubpackageId(subpackageId)),
         pointsTo:
             irPackage.navigationConfig != null
-                ? FdrCjsSdk.api.v1.SubpackageId(irPackage.navigationConfig.pointsTo)
+                ? FdrCjsSdk.SubpackageId(irPackage.navigationConfig.pointsTo)
                 : undefined,
         graphqlOperations: graphqlOperations ? Object.values(graphqlOperations) : []
     };
@@ -278,7 +278,7 @@ function convertService(
             errors: undefined,
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples,
-            protocol: irEndpoint.source?._visit<FdrCjsSdk.api.v1.Protocol | undefined>({
+            protocol: irEndpoint.source?._visit<FdrCjsSdk.Protocol | undefined>({
                 openapi: () => {
                     return { type: "rest" };
                 },
@@ -321,7 +321,7 @@ function convertWebSocketChannel(
                 headers: firstExample.headers ?? {},
                 messages:
                     firstExample.messages?.map((message) => ({
-                        type: FdrCjsSdk.api.v1.WebSocketMessageId(message.type),
+                        type: FdrCjsSdk.WebSocketMessageId(message.type),
                         body: message.body
                     })) ?? []
             });
@@ -354,7 +354,7 @@ function convertWebSocketChannel(
                 ),
                 messages: example.messages.map(
                     (message): FdrCjsSdk.api.v1.register.ExampleWebSocketMessage => ({
-                        type: FdrCjsSdk.api.v1.WebSocketMessageId(message.type),
+                        type: FdrCjsSdk.WebSocketMessageId(message.type),
                         body: message.body.jsonExample
                     })
                 )
@@ -406,7 +406,7 @@ function convertWebSocketChannel(
         ),
         messages: channel.messages.map(
             (message): FdrCjsSdk.api.v1.register.WebSocketMessage => ({
-                type: FdrCjsSdk.api.v1.WebSocketMessageId(message.type),
+                type: FdrCjsSdk.WebSocketMessageId(message.type),
                 displayName: message.displayName,
                 origin: message.origin,
                 body: convertMessageBody(message.body),
@@ -480,7 +480,7 @@ function convertIrEnvironments({
 }: {
     environmentsConfig: Ir.environment.EnvironmentsConfig;
     endpoint: Ir.http.HttpEndpoint;
-}): FdrCjsSdk.api.v1.commons.Environment[] {
+}): FdrCjsSdk.Environment[] {
     const environmentsConfigValue = environmentsConfig.environments;
     const endpointBaseUrlId = endpoint.baseUrl;
     const endpointBaseUrlIds = endpoint.v2BaseUrls;
@@ -542,7 +542,7 @@ function convertIrWebSocketEnvironments({
 }: {
     environmentsConfig: Ir.environment.EnvironmentsConfig;
     channel: Ir.websocket.WebSocketChannel;
-}): FdrCjsSdk.api.v1.commons.Environment[] {
+}): FdrCjsSdk.Environment[] {
     const environmentsConfigValue = environmentsConfig.environments;
     const channelBaseUrlId = channel.baseUrl;
     switch (environmentsConfigValue.type) {
@@ -618,7 +618,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
     const requestBodyShape = Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.v1.register.HttpRequestBodyShape | undefined>(
         irRequest,
         {
-            inlinedRequestBody: (inlinedRequestBody): FdrCjsSdk.api.v1.register.HttpRequestBodyShape.Json => {
+            inlinedRequestBody: (inlinedRequestBody): FdrCjsSdk.api.v1.register.HttpRequestBodyShape => {
                 return {
                     type: "json",
                     contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,

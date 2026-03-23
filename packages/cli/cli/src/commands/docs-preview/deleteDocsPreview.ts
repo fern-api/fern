@@ -64,14 +64,15 @@ export async function deleteDocsPreview({
 
         const fdr = createFdrService({ token: token.value });
 
-        const deleteResponse = await fdr.docs.v2.write.deleteDocsSite({
-            url: previewUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
-        });
-
-        if (deleteResponse.ok) {
+        try {
+            await fdr.docs.v2.write.deleteDocsSite({
+                url: previewUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
+            });
             context.logger.info(chalk.green(`Successfully deleted preview site: ${previewUrl}`));
-        } else {
-            switch (deleteResponse.error.error) {
+        } catch (error) {
+            const errorObj = error as Record<string, unknown>;
+            const errorType = errorObj?.error as string | undefined;
+            switch (errorType) {
                 case "UnauthorizedError":
                     return context.failAndThrow(
                         "You do not have permissions to delete this preview site. Reach out to support@buildwithfern.com"
@@ -79,7 +80,7 @@ export async function deleteDocsPreview({
                 case "DocsNotFoundError":
                     return context.failAndThrow(`Preview site not found: ${previewUrl}`);
                 default:
-                    return context.failAndThrow(`Failed to delete preview site: ${previewUrl}`, deleteResponse.error);
+                    return context.failAndThrow(`Failed to delete preview site: ${previewUrl}`, error);
             }
         }
     });

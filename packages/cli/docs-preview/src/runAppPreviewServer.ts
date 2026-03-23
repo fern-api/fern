@@ -146,7 +146,7 @@ class SlugChangeTracker {
         if (docsDefinition.config.root) {
             // Convert V1 navigation root to latest version
             const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
+                docsDefinition.config.root as FernNavigation.V1.RootNode
             );
             newSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
 
@@ -180,7 +180,7 @@ class SlugChangeTracker {
         if (docsDefinition.config.root) {
             // Convert V1 navigation root to latest version
             const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
+                docsDefinition.config.root as FernNavigation.V1.RootNode
             );
             this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
         } else {
