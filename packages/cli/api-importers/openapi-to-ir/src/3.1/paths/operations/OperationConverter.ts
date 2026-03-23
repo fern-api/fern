@@ -480,11 +480,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         // If there's both a successful response with a body and a no-content response (e.g., 204),
         // wrap the response body type in optional so generators produce nullable return types.
-        if (
-            hasNoContentResponse &&
-            hasSuccessfulResponse &&
-            convertedResponseBody?.response?.body != null
-        ) {
+        if (hasNoContentResponse && hasSuccessfulResponse && convertedResponseBody?.response?.body != null) {
             const body = convertedResponseBody.response.body;
             if (body.type === "json" && body.value.type === "response") {
                 const innerType = body.value.responseBodyType;
@@ -495,9 +491,7 @@ export class OperationConverter extends AbstractOperationConverter {
                         body: HttpResponseBody.json(
                             JsonResponse.response({
                                 ...body.value,
-                                responseBodyType: TypeReference.container(
-                                    ContainerType.optional(innerType)
-                                )
+                                responseBodyType: TypeReference.container(ContainerType.optional(innerType))
                             })
                         )
                     };
