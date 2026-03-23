@@ -1,20 +1,20 @@
-using global::Contoso.Net;
+using Contoso.Net;
 
 namespace Usage;
 
 public class Example3
 {
-    public async global::System.Threading.Tasks.Task Do() {
-        var client = new global::Contoso.Net.Contoso(
+    public async System.Threading.Tasks.Task Do() {
+        var client = new Contoso.Net.Contoso(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.System.CreateTaskAsync(
-            new global::Contoso.Net.System.Task {
+            new Contoso.Net.System.Task {
                 Name = "name",
-                User = new global::Contoso.Net.System.User {
+                User = new Contoso.Net.System.User {
                     Line1 = "line1",
                     Line2 = "line2",
                     City = "city",
@@ -22,7 +22,7 @@ public class Example3
                     Zip = "zip",
                     Country = "USA"
                 },
-                Owner = new global::Contoso.Net.System.User {
+                Owner = new Contoso.Net.System.User {
                     Line1 = "line1",
                     Line2 = "line2",
                     City = "city",

@@ -1536,8 +1536,12 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`using var stream = new System.IO.MemoryStream(`);
-                writer.writeLine(`    System.Text.Encoding.UTF8.GetBytes(rawJson));`);
+                writer.write("using var stream = new ");
+                writer.writeNode(this.System.IO.MemoryStream);
+                writer.writeLine("(");
+                writer.write("    ");
+                writer.writeNode(this.System.Text.Encoding_UTF8);
+                writer.writeLine(".GetBytes(rawJson));");
                 writer.writeTextStatement(`await OnTextMessage(stream).ConfigureAwait(false)`);
             })
         });

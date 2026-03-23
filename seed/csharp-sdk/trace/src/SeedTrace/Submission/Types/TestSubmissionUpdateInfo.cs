@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -120,7 +120,7 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'running'");
+            : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
@@ -129,7 +129,7 @@ public record TestSubmissionUpdateInfo
     public object AsStopped() =>
         IsStopped
             ? Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
+            : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -138,7 +138,7 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'errored'");
+            : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GradedTestCaseUpdate"/> if <see cref="Type"/> is 'gradedTestCase', otherwise throws an exception.
@@ -147,7 +147,9 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.GradedTestCaseUpdate AsGradedTestCase() =>
         IsGradedTestCase
             ? (SeedTrace.GradedTestCaseUpdate)Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'gradedTestCase'");
+            : throw new global::System.Exception(
+                "TestSubmissionUpdateInfo.Type is not 'gradedTestCase'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RecordedTestCaseUpdate"/> if <see cref="Type"/> is 'recordedTestCase', otherwise throws an exception.
@@ -156,7 +158,9 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.RecordedTestCaseUpdate AsRecordedTestCase() =>
         IsRecordedTestCase
             ? (SeedTrace.RecordedTestCaseUpdate)Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'recordedTestCase'");
+            : throw new global::System.Exception(
+                "TestSubmissionUpdateInfo.Type is not 'recordedTestCase'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -165,7 +169,7 @@ public record TestSubmissionUpdateInfo
     public object AsFinished() =>
         IsFinished
             ? Value!
-            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
+            : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
 
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
@@ -330,12 +334,12 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestSubmissionUpdateInfo>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestSubmissionUpdateInfo).IsAssignableFrom(typeToConvert);
 
         public override TestSubmissionUpdateInfo Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -421,7 +425,7 @@ public record TestSubmissionUpdateInfo
 
         public override TestSubmissionUpdateInfo ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

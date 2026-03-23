@@ -70,6 +70,21 @@
   createdAt: "2026-03-20"
   irVersion: 65
 
+- version: 4.38.1
+  changelogEntry:
+    - summary: |
+        Fix incorrect repository URL in generated package metadata when the
+        GitHub `uri` in `generators.yml` is a full URL (e.g.
+        `https://github.com/owner/repo`). The naive `split("/")` produced
+        `owner = "https:"` and `repo = ""`, generating broken URLs like
+        `git+https://github.com/https:/`. Both `getPublishConfig()` and
+        `newDummyPublishOutputConfig()` now use the existing `parseRepository()`
+        utility, which correctly handles full URLs, shorthand `owner/repo`,
+        and custom GitHub domains.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 4.38.0
   changelogEntry:
     - summary: |
