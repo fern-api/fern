@@ -1728,6 +1728,11 @@ func fileInfoToTypes(
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 
+	// Track request type names that have already been added per file to avoid
+	// generating duplicate type declarations when multiple endpoints share the
+	// same inlined request type name.
+	seenRequestTypes := make(map[fileInfo]map[string]bool)
+
 	for _, serviceId := range sortedMapKeys(irServices) {
 		irService := irServices[serviceId]
 		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
@@ -1747,6 +1752,16 @@ func fileInfoToTypes(
 				// Route to the service's subpackage
 				targetFileInfo = subpackageFileInfo
 			}
+
+			// Deduplicate by request type name within the same file.
+			requestTypeName := irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+			if seenRequestTypes[targetFileInfo] == nil {
+				seenRequestTypes[targetFileInfo] = make(map[string]bool)
+			}
+			if seenRequestTypes[targetFileInfo][requestTypeName] {
+				continue
+			}
+			seenRequestTypes[targetFileInfo][requestTypeName] = true
 
 			result[targetFileInfo] = append(
 				result[targetFileInfo],

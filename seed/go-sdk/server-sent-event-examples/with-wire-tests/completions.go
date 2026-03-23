@@ -102,52 +102,6 @@ func (s *StreamEventsRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	streamEventsRequestFieldQuery = big.NewInt(1 << 0)
-)
-
-type StreamEventsRequest struct {
-	Query string `json:"query" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *StreamEventsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetQuery sets the Query field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamEventsRequest) SetQuery(query string) {
-	s.Query = query
-	s.require(streamEventsRequestFieldQuery)
-}
-
-func (s *StreamEventsRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamEventsRequest
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = StreamEventsRequest(body)
-	return nil
-}
-
-func (s *StreamEventsRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamEventsRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	completionEventFieldContent = big.NewInt(1 << 0)
 )
 

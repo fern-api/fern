@@ -373,17 +373,21 @@ export class Streamer {
                     importPath: this.context.getCoreImportPath()
                 })
             );
-            // The type reference for the union pointer type
             const unionRef = go.typeReference({
                 name: unionInfo.unionTypeName,
                 importPath: unionInfo.unionTypeImportPath
             });
-            writer.write(`[*`);
+            // The type parameter must match the Streamer[T] type parameter (non-pointer).
+            writer.write(`[`);
             writer.writeNode(unionRef);
-            writer.write(`](func(eventType string, data []byte) (*`);
+            writer.write(`](func(eventType string, data []byte) (`);
             writer.writeNode(unionRef);
             writer.writeLine(`, error) {`);
             writer.indent();
+            // Declare zero value for error returns
+            writer.write(`var zero `);
+            writer.writeNode(unionRef);
+            writer.writeLine(``);
             writer.writeLine(`switch eventType {`);
             for (const variant of unionInfo.variants) {
                 writer.writeLine(`case "${variant.wireValue}":`);
@@ -401,16 +405,16 @@ export class Streamer {
                     writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
                     writer.writeLine(`(data, &value); err != nil {`);
                     writer.indent();
-                    writer.writeLine(`return nil, err`);
+                    writer.writeLine(`return zero, err`);
                     writer.dedent();
                     writer.writeLine(`}`);
-                    writer.write(`return &`);
+                    writer.write(`return `);
                     writer.writeNode(unionRef);
                     writer.writeLine(
                         `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
                     );
                 } else if (variant.variantType.propertiesType === "noProperties") {
-                    writer.write(`return &`);
+                    writer.write(`return `);
                     writer.writeNode(unionRef);
                     writer.writeLine(`{${unionInfo.discriminantFieldName}: "${variant.wireValue}"}, nil`);
                 } else if (variant.variantType.propertiesType === "singleProperty") {
@@ -425,10 +429,10 @@ export class Streamer {
                     writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
                     writer.writeLine(`(data, &value); err != nil {`);
                     writer.indent();
-                    writer.writeLine(`return nil, err`);
+                    writer.writeLine(`return zero, err`);
                     writer.dedent();
                     writer.writeLine(`}`);
-                    writer.write(`return &`);
+                    writer.write(`return `);
                     writer.writeNode(unionRef);
                     writer.writeLine(
                         `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
@@ -438,13 +442,13 @@ export class Streamer {
             }
             writer.writeLine(`default:`);
             writer.indent();
-            writer.write(`return nil, `);
+            writer.write(`return zero, `);
             writer.writeNode(go.typeReference({ name: "Errorf", importPath: "fmt" }));
             writer.writeLine(`("unknown SSE event type: %s", eventType)`);
             writer.dedent();
             writer.writeLine(`}`);
             writer.dedent();
-            writer.writeLine(`})`);
+            writer.write(`})`);
         });
     }
 }
