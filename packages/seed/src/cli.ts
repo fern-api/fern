@@ -305,6 +305,32 @@ function addTestCommand(cli: Argv) {
                     }
                 }
 
+                // Compute the actual test case count from fixturesForGenerator using the
+                // same expansion logic that testWorkspaceFixtures.ts uses, so we don't
+                // spin up more containers than there are test cases.
+                let testCaseCount = 0;
+                for (const fixture of fixturesForGenerator) {
+                    let fixtureName = fixture;
+                    let fixtureOutputFolder: string | undefined;
+                    if (fixture.includes(":")) {
+                        const [name, folder] = fixture.split(":", 2);
+                        fixtureName = name!;
+                        fixtureOutputFolder = folder;
+                    }
+                    const config = generator.workspaceConfig.fixtures?.[fixtureName];
+                    if (config != null) {
+                        if (fixtureOutputFolder != null) {
+                            // Only count the matching output folder
+                            testCaseCount += config.filter((c) => c.outputFolder === fixtureOutputFolder).length || 1;
+                        } else {
+                            testCaseCount += config.length;
+                        }
+                    } else {
+                        testCaseCount += 1;
+                    }
+                }
+                const effectiveParallelism = Math.min(argv.parallel, testCaseCount);
+
                 if (argv.local) {
                     if (generator.workspaceConfig.test.local == null) {
                         throw new Error(
@@ -339,7 +365,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory.create("docker-script-runner"),
                         argv["log-level"],
                         argv.containerRuntime as "docker" | "podman" | undefined,
-                        argv.parallel
+                        effectiveParallelism
                     );
                     testRunner = new ContainerTestRunner({
                         generator,
@@ -350,7 +376,7 @@ function addTestCommand(cli: Argv) {
                         scriptRunner,
                         inspect: argv.inspect,
                         runner: argv.containerRuntime as "docker" | "podman" | undefined,
-                        parallelism: argv.parallel,
+                        parallelism: effectiveParallelism,
                         workspaceCache: new WorkspaceCache(),
                         logLevel: argv["log-level"]
                     });
