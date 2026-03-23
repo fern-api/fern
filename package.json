@@ -149,7 +149,7 @@
       "minimatch": ">=10.2.3",
       "qs": "6.14.2",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "1.1.13-4b95137adf",
+      "@fern-api/fdr-sdk": "1.1.13-31b7d20b66",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4",
