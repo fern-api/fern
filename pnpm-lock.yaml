@@ -7162,24 +7162,48 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../commons/api-workspace-commons
+      '@fern-api/asyncapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/asyncapi-to-ir
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/fdr-sdk':
+        specifier: 0.145.12-b50d999d1
+        version: 0.145.12-b50d999d1(typescript@5.9.3)
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
       '@fern-api/openapi-ir':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi-to-ir
+      '@fern-api/openrpc-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openrpc-to-ir
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../commons/path-utils
+      '@fern-api/register':
+        specifier: workspace:*
+        version: link:../../register
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/v3-importer-commons':
+        specifier: workspace:*
+        version: link:../../api-importers/v3-importer-commons
+      '@open-rpc/meta-schema':
+        specifier: 'catalog:'
+        version: 1.14.9
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
@@ -7190,6 +7214,12 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      esbuild:
+        specifier: 'catalog:'
+        version: 0.27.3
+      tsup:
+        specifier: 'catalog:'
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
