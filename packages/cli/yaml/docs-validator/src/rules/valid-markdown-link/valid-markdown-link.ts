@@ -45,7 +45,9 @@ export const ValidMarkdownLinks: Rule = {
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
         // from the docs definition resolver, once there's a light way to retrieve it.
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root as FernNavigation.V1.RootNode);
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+            resolvedDocsDefinition.config.root as FernNavigation.V1.RootNode
+        );
 
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);

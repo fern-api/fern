@@ -612,11 +612,7 @@ function convertToFilePathPairs(
     return toRet;
 }
 
-async function startDocsRegisterFailed(
-    error: unknown,
-    context: TaskContext,
-    organization: string
-): Promise<never> {
+async function startDocsRegisterFailed(error: unknown, context: TaskContext, organization: string): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
         properties: {

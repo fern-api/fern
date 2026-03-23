@@ -447,22 +447,10 @@ function convertLayoutConfig(
                 : layout.searchbarPlacement === "header-tabs"
                   ? "HEADER_TABS"
                   : "SIDEBAR",
-        switcherPlacement:
-            !layout.switcherPlacement || layout.switcherPlacement === "header"
-                ? "HEADER"
-                : "SIDEBAR",
-        tabsPlacement:
-            layout.tabsPlacement === "header"
-                ? "HEADER"
-                : "SIDEBAR",
-        contentAlignment:
-            layout.contentAlignment === "left"
-                ? "LEFT"
-                : "CENTER",
-        headerPosition:
-            layout.headerPosition === "static"
-                ? "ABSOLUTE"
-                : "FIXED",
+        switcherPlacement: !layout.switcherPlacement || layout.switcherPlacement === "header" ? "HEADER" : "SIDEBAR",
+        tabsPlacement: layout.tabsPlacement === "header" ? "HEADER" : "SIDEBAR",
+        contentAlignment: layout.contentAlignment === "left" ? "LEFT" : "CENTER",
+        headerPosition: layout.headerPosition === "static" ? "ABSOLUTE" : "FIXED",
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false

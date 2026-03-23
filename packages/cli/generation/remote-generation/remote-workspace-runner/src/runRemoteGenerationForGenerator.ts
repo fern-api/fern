@@ -187,9 +187,7 @@ export async function runRemoteGenerationForGenerator({
     } catch (error) {
         const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
         if (sourceUploader.sourceTypes.has("protobuf")) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to register API definition: ${JSON.stringify(error)}`
-            );
+            interactiveTaskContext.failAndThrow(`Failed to register API definition: ${JSON.stringify(error)}`);
         }
     }
 
