@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.4
+  changelogEntry:
+    - summary: |
+        Add `Default` implementation for `ApiClientBuilder` and update README snippet generation
+        to use a simpler struct-based client initialization pattern with `ClientConfig { token: ..., ..Default::default() }`.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 0.26.3
   changelogEntry:
     - summary: |
