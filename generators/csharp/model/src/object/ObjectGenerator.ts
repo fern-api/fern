@@ -23,8 +23,6 @@ interface PropertyConverterInfo {
     wireValue: string;
     /** The C# type of the property */
     csharpType: ast.Type;
-    /** Whether the property is wrapped in Optional<T> */
-    isOptional: boolean;
     /** Whether the C# type uses the OptionalWrapper (renders as Optional<T>) vs Optional (renders as T?) */
     isOptionalWrapper: boolean;
     /** Whether the property has [NullableAttribute] semantics */
@@ -146,7 +144,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 propertyName,
                 wireValue: property.name.wireValue,
                 csharpType,
-                isOptional: typeInfo.isOptional,
                 isOptionalWrapper: is.OptionalWrapper(csharpType),
                 isNullable: typeInfo.isNullable,
                 isReadOnly,
@@ -391,13 +388,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     private writeWriteMethodBody(writer: Writer, propertyInfos: PropertyConverterInfo[]): void {
         writer.writeTextStatement("writer.WriteStartObject()");
 
+        const enableExplicitNullableOptional = this.context.generation.settings.enableExplicitNullableOptional;
+
         for (const prop of propertyInfos) {
             // ReadOnly properties should not be serialized
             if (prop.isReadOnly) {
                 continue;
             }
-
-            const enableExplicitNullableOptional = this.context.generation.settings.enableExplicitNullableOptional;
 
             if (prop.isWriteOnly) {
                 // WriteOnly properties are not deserialized and receive default! in Read.
