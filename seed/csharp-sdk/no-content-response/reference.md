@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">CreateAsync</a>(CreateContactRequest { ... }) -> WithRawResponseTask&lt;Contact?&gt;</code></summary>
+<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">CreateAsync</a>(CreateContactRequest { ... }) -> WithRawResponseTask&lt;Contact&gt;</code></summary>
 <dl>
 <dd>
 
