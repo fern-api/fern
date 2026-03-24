@@ -4,6 +4,8 @@ package completions
 
 import (
 	context "context"
+	json "encoding/json"
+	fmt "fmt"
 	http "net/http"
 
 	sse "github.com/fern-api/sse-examples-go"
@@ -128,7 +130,7 @@ func (c *Client) StreamEventsContextProtocol(
 	)
 	headers.Add("Accept", "text/event-stream")
 	streamer := internal.NewStreamer[sse.StreamEventContextProtocol](c.caller)
-	return streamer.Stream(
+	return streamer.StreamWithEventUnmarshal(
 		ctx,
 		&internal.StreamParams{
 			URL:                endpointURL,
@@ -146,5 +148,30 @@ func (c *Client) StreamEventsContextProtocol(
 			Request:            request,
 			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
 		},
+		core.EventUnmarshalFunc[sse.StreamEventContextProtocol](func(eventType string, data []byte) (sse.StreamEventContextProtocol, error) {
+			var zero sse.StreamEventContextProtocol
+			switch eventType {
+			case "completion":
+				var value *sse.CompletionEvent
+				if err := json.Unmarshal(data, &value); err != nil {
+					return zero, err
+				}
+				return sse.StreamEventContextProtocol{Event: "completion", Completion: value}, nil
+			case "error":
+				var value *sse.ErrorEvent
+				if err := json.Unmarshal(data, &value); err != nil {
+					return zero, err
+				}
+				return sse.StreamEventContextProtocol{Event: "error", Error: value}, nil
+			case "notification":
+				var value *sse.EventEvent
+				if err := json.Unmarshal(data, &value); err != nil {
+					return zero, err
+				}
+				return sse.StreamEventContextProtocol{Event: "notification", Notification: value}, nil
+			default:
+				return zero, fmt.Errorf("unknown SSE event type: %s", eventType)
+			}
+		}),
 	)
 }
