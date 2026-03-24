@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedWebsocketMultiUrl.Test/SeedWebsocketMultiUrl.Test.csproj" />
+  <Project Path="src/SeedWebsocketMultiUrl/SeedWebsocketMultiUrl.csproj" />
+</Solution>
