@@ -349,6 +349,12 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  server-sent-event-examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -443,5 +449,4 @@ allowedFailures:
   - pagination-custom
   - response-property
   - streaming-parameter
-  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
