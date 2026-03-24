@@ -8,15 +8,27 @@ types:
     properties:
       content: string
 
+  EventEvent:
+    properties:
+      name: string
+
   ErrorEvent:
     properties:
       error: string
       code: optional<integer>
 
-  StreamEvent:
+  StreamEventContextProtocol:
     discriminant:
       value: event
       context: protocol
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+      notification: EventEvent
+
+  StreamEvent:
+    discriminant:
+      value: event
     union:
       completion: CompletionEvent
       error: ErrorEvent
@@ -87,7 +99,48 @@ service:
             stream:
               - event: completion
                 data:
-                  content: "content"
+                  event: completion
+                  content: "hello"
+              - event: error
+                data:
+                  event: error
+                  error: "something went wrong"
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"
+
+    streamEventsContextProtocol:
+      method: POST
+      path: /stream-events-context-protocol
+      request:
+        name: StreamEventsContextProtocolRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEventContextProtocol
+        format: sse
+        terminator: "[DONE]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  content: "hello"
+              - event: error
+                data:
+                  error: "something went wrong"
+              - event: notification
+                data:
+                  name: "update available"
         - name: "Bad request"
           request:
             query: ""

@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,7 +37,7 @@ public final class CreateUserWithRequiredQueryRequest {
     /**
      * @return Required tenant ID
      */
-    @JsonProperty("tenantId")
+    @JsonIgnore
     public String getTenantId() {
         return tenantId;
     }

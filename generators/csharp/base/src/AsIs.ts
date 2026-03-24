@@ -70,7 +70,6 @@ export const AsIsFiles = {
         DateOnlyConverter: "DateOnlyConverter.Template.cs",
         DateTimeSerializer: "DateTimeSerializer.Template.cs",
         EnumConverter: "EnumConverter.Template.cs",
-        EnumSerializer: "EnumSerializer.Template.cs",
         JsonAccessAttribute: "JsonAccessAttribute.Template.cs",
         JsonConfiguration: "JsonConfiguration.Template.cs",
         Nullable: "NullableAttribute.Template.cs",
