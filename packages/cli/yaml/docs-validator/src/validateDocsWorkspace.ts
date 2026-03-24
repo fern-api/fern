@@ -12,6 +12,10 @@ import {
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
+import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
+import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
+import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
+import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
@@ -27,6 +31,15 @@ function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): Sev
     }
 }
 
+const CHECK_RULE_CONFIG_TO_RULE_NAME = {
+    exampleValidation: ValidOpenApiExamples.name,
+    brokenLinks: ValidMarkdownLinks.name,
+    noNonComponentRefs: NoNonComponentRefsRule.name,
+    validLocalReferences: ValidLocalReferencesRule.name,
+    noCircularRedirects: NoCircularRedirectsRule.name,
+    validDocsEndpoints: ValidDocsEndpoints.name
+} satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
+
 function buildSeverityOverrides(
     checkConfig: docsYml.RawSchemas.CheckConfig | undefined
 ): Map<string, SeverityOverride> {
@@ -35,11 +48,13 @@ function buildSeverityOverrides(
     if (rulesConfig == null) {
         return severityOverrides;
     }
-    if (rulesConfig.exampleValidation != null) {
-        severityOverrides.set(ValidOpenApiExamples.name, toSeverityOverride(rulesConfig.exampleValidation));
-    }
-    if (rulesConfig.brokenLinks != null) {
-        severityOverrides.set(ValidMarkdownLinks.name, toSeverityOverride(rulesConfig.brokenLinks));
+    for (const [configKey, ruleName] of Object.entries(CHECK_RULE_CONFIG_TO_RULE_NAME) as Array<
+        [keyof docsYml.RawSchemas.CheckRulesConfig, string]
+    >) {
+        const severity = rulesConfig[configKey];
+        if (severity != null) {
+            severityOverrides.set(ruleName, toSeverityOverride(severity));
+        }
     }
     return severityOverrides;
 }
@@ -76,6 +91,9 @@ export async function runRulesOnDocsWorkspace({
     const rules = [...selectedRules];
     const severityOverrides = buildSeverityOverrides(workspace.config.check);
     const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
+    // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.
+    // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
+    // until those CLI args are removed.
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
         rules.push(ValidMarkdownLinks);
     }
