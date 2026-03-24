@@ -1,5 +1,5 @@
-using System.Collections.Concurrent;
-using System.Text;
+using global::System.Collections.Concurrent;
+using global::System.Text;
 using NUnit.Framework;
 using SeedWebsocket.Core.WebSockets;
 
@@ -71,7 +71,7 @@ public class E2eWebSocketTests
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for binary echo");
         Assert.That(received.Task.Result, Is.EqualTo(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF }));
 
-        await client.Stop(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done");
+        await client.Stop(global::System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done");
         client.Dispose();
     }
 
@@ -245,7 +245,7 @@ public class E2eWebSocketTests
         Assert.That(result, Is.EqualTo(received.Task), "Timed out waiting for binary broadcast");
         Assert.That(received.Task.Result, Is.EqualTo(new byte[] { 0xCA, 0xFE }));
 
-        await conn.Stop(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done");
+        await conn.Stop(global::System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done");
         conn.Dispose();
     }
 
@@ -596,7 +596,7 @@ public class E2eWebSocketTests
         }
         catch (Exception ex)
             when (ex
-                    is System.Net.WebSockets.WebSocketException
+                    is global::System.Net.WebSockets.WebSocketException
                         or TaskCanceledException
                         or OperationCanceledException
                         or InvalidOperationException

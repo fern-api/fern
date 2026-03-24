@@ -7,6 +7,19 @@
   createdAt: "2026-03-23"
   irVersion: 65
 
+- version: 4.43.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer stripping the discriminant property from shared
+        `allOf` base schemas when they are used by `oneOf` discriminated union
+        variants. Previously, if a base schema like `Error` was extended by both
+        union members and standalone schemas, the discriminant property (e.g.
+        `code`) would be removed from the base, causing downstream `fern check`
+        errors on the union variant types.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 4.43.0
   changelogEntry:
     - summary: |
@@ -16,6 +29,14 @@
         frontmatter offsets.
       type: feat
   createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 4.42.1
+  changelogEntry:
+    - summary: |
+        Strip MDX comments (`{/* ... */}`) from markdown.
+      type: fix
+  createdAt: "2026-03-23"
   irVersion: 65
 
 - version: 4.42.0
@@ -67,6 +88,21 @@
         fern generate --group csharp-sdk --no-require-env-vars
         ```
       type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 4.38.1
+  changelogEntry:
+    - summary: |
+        Fix incorrect repository URL in generated package metadata when the
+        GitHub `uri` in `generators.yml` is a full URL (e.g.
+        `https://github.com/owner/repo`). The naive `split("/")` produced
+        `owner = "https:"` and `repo = ""`, generating broken URLs like
+        `git+https://github.com/https:/`. Both `getPublishConfig()` and
+        `newDummyPublishOutputConfig()` now use the existing `parseRepository()`
+        utility, which correctly handles full URLs, shorthand `owner/repo`,
+        and custom GitHub domains.
+      type: fix
   createdAt: "2026-03-20"
   irVersion: 65
 

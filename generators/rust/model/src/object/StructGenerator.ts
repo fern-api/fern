@@ -88,7 +88,9 @@ export class StructGenerator {
             this.context
         );
         const propertyFields = collectBuilderFieldsFromProperties(properties, this.context, this.typeId);
-        writeBuilderCode(writer, this.structName, [...inheritedFields, ...propertyFields]);
+        writeBuilderCode(writer, this.structName, [...inheritedFields, ...propertyFields], {
+            hasExtraProperties: this.objectTypeDeclaration.extraProperties
+        });
 
         return writer.toString();
     }
@@ -101,6 +103,11 @@ export class StructGenerator {
 
         // Add regular properties
         fields.push(...properties.map((property) => this.generateRustFieldForProperty(property)));
+
+        // Add extra properties field if the object allows additional properties
+        if (this.objectTypeDeclaration.extraProperties) {
+            fields.push(this.generateExtraPropertiesField());
+        }
 
         return rust.struct({
             name: this.structName,
@@ -173,6 +180,24 @@ export class StructGenerator {
         });
     }
 
+    /**
+     * Generates a catch-all field for extra/unknown properties using
+     * `#[serde(flatten)] pub extra: HashMap<String, serde_json::Value>`.
+     */
+    private generateExtraPropertiesField(): rust.Field {
+        return rust.field({
+            name: "extra",
+            type: rust.Type.reference(
+                rust.reference({ name: "std::collections::HashMap<String, serde_json::Value>" })
+            ),
+            visibility: PUBLIC,
+            attributes: [Attribute.serde.flatten()],
+            docs: rust.docComment({
+                summary: "Additional properties that are not part of the defined schema."
+            })
+        });
+    }
+
     private generateInheritanceFields(): rust.Field[] {
         const fields: rust.Field[] = [];
 
@@ -216,6 +241,10 @@ export class StructGenerator {
     }
 
     private needsDeriveHashAndEq(): boolean {
+        // HashMap<String, Value> does not implement Hash or Eq
+        if (this.objectTypeDeclaration.extraProperties) {
+            return false;
+        }
         // Check if all field types can support Hash and Eq derives
         const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.objectTypeDeclaration.properties, this.context);
         const isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
