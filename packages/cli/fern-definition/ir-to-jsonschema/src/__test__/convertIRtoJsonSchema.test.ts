@@ -70,6 +70,7 @@ describe("convertIRtoJsonSchema", async () => {
                     }
 
                     const json = JSON.stringify(jsonschema, undefined, 2);
+                    // biome-ignore lint/suspicious/noMisplacedAssertion: assertion is inside a dynamic it() call that biome can't detect
                     await expect(json).toMatchFileSnapshot(
                         RelativeFilePath.of(
                             `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`
