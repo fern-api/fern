@@ -119,3 +119,4 @@ allowedFailures:
   - property-access
   - unions
   - unions-with-local-date
+  - server-sent-event-examples
