@@ -566,7 +566,11 @@ export const CheckRuleSeverity = z.enum(["warn", "error"]);
 
 export const CheckRulesConfig = z.object({
     "example-validation": CheckRuleSeverity.optional(),
-    "broken-links": CheckRuleSeverity.optional()
+    "broken-links": CheckRuleSeverity.optional(),
+    "no-non-component-refs": CheckRuleSeverity.optional(),
+    "valid-local-references": CheckRuleSeverity.optional(),
+    "no-circular-redirects": CheckRuleSeverity.optional(),
+    "valid-docs-endpoints": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
