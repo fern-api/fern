@@ -260,9 +260,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeTextStatement(
-                    "var json = reader.GetString()"
-                );
+                writer.writeTextStatement("var json = reader.GetString()");
                 writer.write("return JsonSerializer.Deserialize<");
                 writer.writeNode(objectReference);
                 writer.writeTextStatement(">(json, options)");
