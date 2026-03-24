@@ -1,0 +1,257 @@
+{
+  "info": {
+    "name": "no-content-response",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Contacts",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Create Contact",
+          "request": {
+            "description": "Creates a new contact. Returns 200 with the contact or 204 with no content.",
+            "url": {
+              "raw": "{{baseUrl}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Creates a new contact. Returns 200 with the contact or 204 with no content.",
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"email\": \"email\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Creates a new contact. Returns 200 with the contact or 204 with no content.",
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"email\": \"email\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"email\": \"email\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Contact",
+          "request": {
+            "description": "Gets a contact by ID. Returns 200 with the contact.",
+            "url": {
+              "raw": "{{baseUrl}}/contacts/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Gets a contact by ID. Returns 200 with the contact.",
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"email\": \"email\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Gets a contact by ID. Returns 200 with the contact.",
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"email\": \"email\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

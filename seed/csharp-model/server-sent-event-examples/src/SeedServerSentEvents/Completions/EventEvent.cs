@@ -11,6 +11,9 @@ public record EventEvent : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [JsonPropertyName("event")]
+    public required string Event { get; set; }
+
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 

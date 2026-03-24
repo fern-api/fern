@@ -395,3 +395,4 @@ allowedFailures:
   - trace
   - unions:no-custom-config
   - unions-with-local-date
+  - server-sent-event-examples

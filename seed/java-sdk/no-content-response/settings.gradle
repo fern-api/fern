@@ -1,0 +1,3 @@
+rootProject.name = 'no-content-response'
+
+include 'sample-app'

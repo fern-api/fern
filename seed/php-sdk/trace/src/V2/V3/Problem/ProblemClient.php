@@ -81,6 +81,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return JsonDecoder::decodeArray($json, [LightweightProblemInfoV2::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -125,6 +128,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return JsonDecoder::decodeArray($json, [ProblemInfoV2::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -170,6 +176,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ProblemInfoV2::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -216,6 +225,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ProblemInfoV2::fromJson($json);
             }
         } catch (JsonException $e) {

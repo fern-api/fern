@@ -98,6 +98,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -140,6 +143,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -183,6 +189,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
