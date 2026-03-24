@@ -115,3 +115,6 @@ seed-remote-local/*
 
 # Test logs from test-remote-local.sh
 test-remote-local-logs-*/
+
+
+seed/ts-sdk/server-sent-event-examples/tests/wire/sse-deserialization.test.ts
