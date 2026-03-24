@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/pagination-uri-path/fern/client"
     option "github.com/pagination-uri-path/fern/option"
 )

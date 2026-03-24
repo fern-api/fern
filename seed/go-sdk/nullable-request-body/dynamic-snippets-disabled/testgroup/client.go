@@ -4,6 +4,7 @@ package testgroup
 
 import (
 	context "context"
+
 	fern "github.com/nullable-request-body/fern"
 	core "github.com/nullable-request-body/fern/core"
 	internal "github.com/nullable-request-body/fern/internal"

@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	os "os"
+
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
-	os "os"
 )
 
 type Client struct {

@@ -4,6 +4,7 @@ package auth
 
 import (
 	context "context"
+
 	fern "github.com/inferred-auth-implicit-api-key/fern"
 	core "github.com/inferred-auth-implicit-api-key/fern/core"
 	internal "github.com/inferred-auth-implicit-api-key/fern/internal"

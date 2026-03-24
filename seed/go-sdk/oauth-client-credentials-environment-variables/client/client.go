@@ -5,6 +5,8 @@ package client
 import (
 	context "context"
 	errors "errors"
+	os "os"
+
 	fern "github.com/oauth-client-credentials-environment-variables/fern"
 	auth "github.com/oauth-client-credentials-environment-variables/fern/auth"
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
@@ -13,7 +15,6 @@ import (
 	client "github.com/oauth-client-credentials-environment-variables/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
 	simple "github.com/oauth-client-credentials-environment-variables/fern/simple"
-	os "os"
 )
 
 type Client struct {

@@ -3,10 +3,11 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
 	api "github.com/oauth-client-credentials-environment-variables/fern/nestednoauth/api"
-	os "os"
 )
 
 type Client struct {

@@ -4,6 +4,7 @@ package imdb
 
 import (
 	context "context"
+
 	fern "github.com/go-content-type/fern"
 	core "github.com/go-content-type/fern/core"
 	internal "github.com/go-content-type/fern/internal"

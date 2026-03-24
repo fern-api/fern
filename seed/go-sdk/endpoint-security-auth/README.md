@@ -32,6 +32,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/endpoint-security-auth/fern"
     client "github.com/endpoint-security-auth/fern/client"
     option "github.com/endpoint-security-auth/fern/option"

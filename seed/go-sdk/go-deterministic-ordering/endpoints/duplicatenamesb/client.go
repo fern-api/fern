@@ -4,6 +4,7 @@ package duplicatenamesb
 
 import (
 	context "context"
+
 	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"

@@ -4,11 +4,12 @@ package fileuploadexample
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/file-upload-openapi/fern"
 	core "github.com/file-upload-openapi/fern/core"
 	internal "github.com/file-upload-openapi/fern/internal"
 	option "github.com/file-upload-openapi/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

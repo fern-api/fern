@@ -4,10 +4,11 @@ package simple
 
 import (
 	context "context"
+	os "os"
+
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
-	os "os"
 )
 
 type Client struct {

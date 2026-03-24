@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/mixed-file-directory/fern/core"
 	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
 	user "github.com/mixed-file-directory/fern/user"
-	http "net/http"
 )
 
 type RawClient struct {
