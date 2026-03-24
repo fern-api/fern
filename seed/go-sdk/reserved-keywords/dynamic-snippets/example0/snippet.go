@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/reserved-keywords/fern"
     client "github.com/reserved-keywords/fern/client"
     option "github.com/reserved-keywords/fern/option"

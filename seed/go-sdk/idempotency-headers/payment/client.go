@@ -4,6 +4,7 @@ package payment
 
 import (
 	context "context"
+
 	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"

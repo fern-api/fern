@@ -67,6 +67,8 @@ export async function buildCli(config) {
         tsupOverrides = {}
     } = config;
 
+    const version = process.argv[2] || packageJson.version;
+
     // Build with tsup
     await tsup.build({
         entry: { cli: "src/main.ts" },
@@ -77,7 +79,7 @@ export async function buildCli(config) {
         clean: true,
         env: {
             ...env,
-            CLI_VERSION: process.argv[2] || packageJson.version
+            CLI_VERSION: version
         },
         ...tsupOverrides
     });

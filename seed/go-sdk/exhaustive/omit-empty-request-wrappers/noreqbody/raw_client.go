@@ -4,11 +4,12 @@ package noreqbody
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	http "net/http"
 )
 
 type RawClient struct {

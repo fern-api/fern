@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/fern-api/path-parameters-go/client"
     option "github.com/fern-api/path-parameters-go/option"
 )

@@ -4,6 +4,7 @@ package dummy
 
 import (
 	context "context"
+
 	core "github.com/no-environment/fern/core"
 	internal "github.com/no-environment/fern/internal"
 	option "github.com/no-environment/fern/option"

@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     commons "github.com/examples/fern/pleaseinhere/commons"

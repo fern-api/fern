@@ -5,6 +5,7 @@ package endpoints
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	types "github.com/go-deterministic-ordering/fern/types"
 )

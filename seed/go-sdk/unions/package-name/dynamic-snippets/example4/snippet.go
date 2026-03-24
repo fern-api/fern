@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     unions "github.com/fern-api/unions-go"
     client "github.com/fern-api/unions-go/client"
     option "github.com/fern-api/unions-go/option"

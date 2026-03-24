@@ -4,11 +4,12 @@ package complex
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

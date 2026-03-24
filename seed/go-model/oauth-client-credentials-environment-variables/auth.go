@@ -5,6 +5,7 @@ package oauthclientcredentialsenvironmentvariables
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
 )
 

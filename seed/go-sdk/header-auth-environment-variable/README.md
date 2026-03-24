@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/header-auth-environment-variable/fern/client"
     option "github.com/header-auth-environment-variable/fern/option"
 )

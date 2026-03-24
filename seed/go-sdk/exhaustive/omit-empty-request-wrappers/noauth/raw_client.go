@@ -4,11 +4,12 @@ package noauth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

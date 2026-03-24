@@ -5,13 +5,14 @@ package client
 import (
 	context "context"
 	errors "errors"
+	os "os"
+
 	fern "github.com/endpoint-security-auth/fern"
 	auth "github.com/endpoint-security-auth/fern/auth"
 	core "github.com/endpoint-security-auth/fern/core"
 	internal "github.com/endpoint-security-auth/fern/internal"
 	option "github.com/endpoint-security-auth/fern/option"
 	user "github.com/endpoint-security-auth/fern/user"
-	os "os"
 )
 
 type Client struct {
@@ -43,18 +44,17 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.Password == "" {
 		options.Password = os.Getenv("MY_PASSWORD")
 	}
-	oauthTokenProvider := core.NewOAuthTokenProvider(
-		options.ClientID,
-		options.ClientSecret,
-	)
 	authOptions := *options
 	authClient := auth.NewClient(
 		&authOptions,
 	)
+	inferredAuthProvider := core.NewTokenProvider(
+		core.DefaultExpirySeconds,
+	)
 	options.SetTokenGetter(func() (string, error) {
-		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-				ClientId:     options.ClientID,
+				ClientId:     options.ClientId,
 				ClientSecret: options.ClientSecret,
 			})
 			if err != nil {
@@ -62,7 +62,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			}
 			if response.AccessToken == "" {
 				return "", 0, errors.New(
-					"oauth response missing access token",
+					"inferred auth response missing access token",
 				)
 			}
 			expiresIn := core.DefaultExpirySeconds

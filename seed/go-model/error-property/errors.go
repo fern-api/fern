@@ -5,6 +5,7 @@ package errorproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/error-property/fern/internal"
 )
 

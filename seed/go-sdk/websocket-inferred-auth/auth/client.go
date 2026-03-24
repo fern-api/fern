@@ -4,6 +4,7 @@ package auth
 
 import (
 	context "context"
+
 	fern "github.com/websocket-inferred-auth/fern"
 	core "github.com/websocket-inferred-auth/fern/core"
 	internal "github.com/websocket-inferred-auth/fern/internal"
