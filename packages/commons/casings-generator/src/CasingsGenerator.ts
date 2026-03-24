@@ -33,7 +33,7 @@ export interface CasingsGenerator {
  * objects with all casing variants computed, regardless of whether casing overrides exist.
  */
 export interface FullCasingsGenerator {
-    generateName(name: string | Name | NameAndWireValue | NameOrString, opts?: { preserveUnderscores?: boolean }): Name;
+    generateName(name: NameOrString | NameAndWireValue, opts?: { preserveUnderscores?: boolean }): Name;
     generateNameAndWireValue(
         input: NameAndWireValueOrString,
         opts?: { preserveUnderscores?: boolean }
