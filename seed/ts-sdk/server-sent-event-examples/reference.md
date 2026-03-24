@@ -122,7 +122,7 @@ for await (const item of response) {
 
 ```typescript
 const response = await client.completions.streamEventsContextProtocol({
-    query: "query"
+    query: ""
 });
 for await (const item of response) {
     console.log(item);
