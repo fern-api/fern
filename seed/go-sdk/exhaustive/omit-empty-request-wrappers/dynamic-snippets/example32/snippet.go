@@ -1,9 +1,11 @@
 package example
 
 import (
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
     context "context"
+
+    client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    option "github.com/exhaustive/fern/option"
 )
 
 func do() {
@@ -15,10 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Endpoints.Params.ModifyWithPath(
+    request := &endpoints.GetWithQuery{
+        Query: "query",
+        Number: 1,
+    }
+    client.Endpoints.Params.GetWithQuery(
         context.TODO(),
-        "param",
         request,
     )
 }

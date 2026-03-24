@@ -2,9 +2,12 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct WithContentTypeRequest {
+    #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
+    #[serde(default)]
     pub foo: String,
+    #[serde(default)]
     pub bar: MyObject,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub foo_bar: Option<MyObject>,
@@ -36,4 +39,55 @@ impl WithContentTypeRequest {
 
     form
 }
+}
+
+impl WithContentTypeRequest {
+    pub fn builder() -> WithContentTypeRequestBuilder {
+        WithContentTypeRequestBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct WithContentTypeRequestBuilder {
+    file: Option<Vec<u8>>,
+    foo: Option<String>,
+    bar: Option<MyObject>,
+    foo_bar: Option<MyObject>,
+}
+
+impl WithContentTypeRequestBuilder {
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+
+    pub fn foo(mut self, value: impl Into<String>) -> Self {
+        self.foo = Some(value.into());
+        self
+    }
+
+    pub fn bar(mut self, value: MyObject) -> Self {
+        self.bar = Some(value);
+        self
+    }
+
+    pub fn foo_bar(mut self, value: MyObject) -> Self {
+        self.foo_bar = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`WithContentTypeRequest`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`file`](WithContentTypeRequestBuilder::file)
+    /// - [`foo`](WithContentTypeRequestBuilder::foo)
+    /// - [`bar`](WithContentTypeRequestBuilder::bar)
+    pub fn build(self) -> Result<WithContentTypeRequest, BuildError> {
+        Ok(WithContentTypeRequest {
+            file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
+            foo: self.foo.ok_or_else(|| BuildError::missing_field("foo"))?,
+            bar: self.bar.ok_or_else(|| BuildError::missing_field("bar"))?,
+            foo_bar: self.foo_bar,
+        })
+    }
 }

@@ -18,12 +18,12 @@ catalog:
   "@biomejs/biome": 2.4.4
   "@blueprintjs/eslint-plugin": ^6.1.22
   "@blueprintjs/stylelint-plugin": ^4.1.14
-  "@boundaryml/baml": ^0.211.2
+  "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 0.145.12-b50d999d1
+  "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
   "@fern-api/generator-cli": 0.6.4
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
@@ -32,54 +32,6 @@ catalog:
   "@fern-fern/fiddle-sdk": 0.0.775
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
-  "@fern-fern/ir-v1-model": 0.0.2
-  "@fern-fern/ir-v10-model": 0.0.1
-  "@fern-fern/ir-v11-model": 0.0.2
-  "@fern-fern/ir-v12-model": 0.0.12
-  "@fern-fern/ir-v13-model": 0.0.1
-  "@fern-fern/ir-v14-model": 0.0.1
-  "@fern-fern/ir-v15-model": 0.0.1
-  "@fern-fern/ir-v16-model": 0.0.4
-  "@fern-fern/ir-v17-model": 0.0.1
-  "@fern-fern/ir-v18-model": 0.0.1
-  "@fern-fern/ir-v19-model": 0.0.5
-  "@fern-fern/ir-v2-model": 0.0.2
-  "@fern-fern/ir-v20-model": 0.0.2
-  "@fern-fern/ir-v21-model": 0.0.1
-  "@fern-fern/ir-v22-model": 0.0.22
-  "@fern-fern/ir-v23-sdk": 1.0.0
-  "@fern-fern/ir-v24-sdk": 1.0.0
-  "@fern-fern/ir-v25-sdk": 1.0.0
-  "@fern-fern/ir-v26-sdk": 1.0.0
-  "@fern-fern/ir-v27-sdk": 1.0.0
-  "@fern-fern/ir-v28-sdk": 1.0.0
-  "@fern-fern/ir-v29-sdk": 1.0.0
-  "@fern-fern/ir-v3-model": 0.0.4
-  "@fern-fern/ir-v30-sdk": 1.0.0
-  "@fern-fern/ir-v31-sdk": 1.0.0
-  "@fern-fern/ir-v32-sdk": 1.0.1
-  "@fern-fern/ir-v33-sdk": 1.0.1
-  "@fern-fern/ir-v34-sdk": 1.0.1
-  "@fern-fern/ir-v35-sdk": 1.0.1
-  "@fern-fern/ir-v36-sdk": 1.0.1
-  "@fern-fern/ir-v37-sdk": 1.0.1
-  "@fern-fern/ir-v38-sdk": 1.0.1
-  "@fern-fern/ir-v39-sdk": 1.0.1
-  "@fern-fern/ir-v4-model": 0.0.4
-  "@fern-fern/ir-v40-sdk": 1.0.1
-  "@fern-fern/ir-v41-sdk": 1.0.1
-  "@fern-fern/ir-v42-sdk": 1.0.1
-  "@fern-fern/ir-v43-sdk": 1.0.1
-  "@fern-fern/ir-v44-sdk": 1.0.1
-  "@fern-fern/ir-v45-sdk": 1.0.1
-  "@fern-fern/ir-v46-sdk": 1.0.1
-  "@fern-fern/ir-v47-sdk": 1.0.1
-  "@fern-fern/ir-v48-sdk": 1.0.1
-  "@fern-fern/ir-v49-sdk": 1.0.1
-  "@fern-fern/ir-v5-model": 0.0.3
-  "@fern-fern/ir-v50-sdk": 1.0.1
-  "@fern-fern/ir-v51-sdk": 1.0.1
-  "@fern-fern/ir-v52-sdk": 1.0.1
   "@fern-fern/ir-v53-sdk": 1.0.1
   "@fern-fern/ir-v54-sdk": 1.0.1
   "@fern-fern/ir-v55-sdk": 1.0.1
@@ -87,14 +39,10 @@ catalog:
   "@fern-fern/ir-v57-sdk": 1.0.1
   "@fern-fern/ir-v58-sdk": 1.0.1
   "@fern-fern/ir-v59-sdk": 1.0.1
-  "@fern-fern/ir-v6-model": 0.0.33
   "@fern-fern/ir-v60-sdk": 1.0.1
   "@fern-fern/ir-v61-sdk": 1.0.1
   "@fern-fern/ir-v62-sdk": 1.0.1
   "@fern-fern/ir-v63-sdk": 1.0.2
-  "@fern-fern/ir-v7-model": 0.0.2
-  "@fern-fern/ir-v8-model": 0.0.1
-  "@fern-fern/ir-v9-model": 0.0.1
   "@fern-fern/legacy-docs-config": 0.0.58
   "@fern-fern/postman-sdk": 0.1.1
   "@inquirer/prompts": ^7.1.0
@@ -180,7 +128,7 @@ catalog:
   esutils: ^2.0.3
   express: ^4.22.0
   fast-levenshtein: ^3.0.0
-  file-type: ^19.0.0
+  file-type: ^21.3.2
   find-up: ^6.3.0
   form-data: 4.0.4
   fs-extra: ^11.1.1
@@ -215,7 +163,7 @@ catalog:
   micromark-extension-math: ^3.1.0
   micromark-extension-mdxjs: ^3.0.0
   mime-types: ^2.1.35
-  minimatch: ^10.2.1
+  minimatch: ^10.2.3
   moment: ^2.30.1
   next-mdx-remote: ^6.0.0
   node-fetch: 2.7.0
@@ -239,14 +187,14 @@ catalog:
   remark-mdx: ^3.0.1
   remark-stringify: ^11.0.0
   semver-diff: ^4.0.0
-  simple-git: ^3.24.0
+  simple-git: ^3.32.3
   sort-package-json: 3.6.1
   stream-json: ^1.8.0
   strip-ansi: ^7.1.0
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.8
+  tar: ^7.5.11
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -260,18 +208,19 @@ catalog:
   turbo: ^2.8.10
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.23.0
+  undici: ^6.24.0
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
   uuid: ^9.0.1
   validate-npm-package-name: ^5.0.1
-  vitest: ^4.0.18
+  "@vitest/coverage-v8": ^4.1.0
+  vitest: ^4.1.0
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
   ws: ^8.17.1
   xml2js: ^0.6.2
   yaml: ^2.4.5
-  yauzl: ^3.2.0
+  yauzl: ^3.2.1
   yazl: ^3.3.1
   zod: ^3.22.3

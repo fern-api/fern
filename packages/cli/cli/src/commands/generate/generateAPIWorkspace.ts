@@ -7,15 +7,14 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
@@ -36,8 +35,11 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
-    noReplay
+    noReplay,
+    retryRateLimited,
+    requireEnvVars
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -56,8 +58,11 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -71,9 +76,18 @@ export async function generateWorkspace({
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
     if (groupNameOrDefault == null) {
-        return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
-        );
+        const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
+        const longestGroupName = Math.max(...groupNames.map((name) => name.length));
+        const currentArgs = process.argv.slice(2).join(" ");
+        const message =
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n` +
+            groupNames
+                .map((name) => {
+                    const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
+                    return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
+                })
+                .join("\n");
+        return context.failAndThrow(message);
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -90,14 +104,6 @@ export async function generateWorkspace({
     if (!useLocalDocker && !token) {
         return context.failAndThrow("Please run fern login");
     }
-
-    // Validate workspace once before running all groups
-    await validateAPIWorkspaceAndLogIssues({
-        workspace: await workspace.toFernWorkspace({ context }),
-        context,
-        logWarnings: false,
-        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
-    });
 
     // Run generation for all resolved groups in parallel
     await Promise.all(
@@ -145,7 +151,10 @@ export async function generateWorkspace({
                     inspect,
                     ai,
                     replay,
-                    noReplay
+                    noReplay,
+                    validateWorkspace: true,
+                    requireEnvVars,
+                    skipFernignore
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -161,7 +170,11 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
-                    dynamicIrOnly
+                    skipFernignore,
+                    dynamicIrOnly,
+                    validateWorkspace: true,
+                    retryRateLimited,
+                    requireEnvVars
                 });
             }
         })

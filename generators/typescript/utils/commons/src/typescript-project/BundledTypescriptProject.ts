@@ -146,7 +146,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath,
             isolatedModules: true,
             isolatedDeclarations: true,
             verbatimModuleSyntax: true
@@ -292,17 +291,21 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
         pathToTypesFile: string;
     }): {
         node: string;
-        import: string;
-        require: string;
+        import: { types: string; default: string };
+        require: { types: string; default: string };
         default: string;
-        types: string;
     } {
         return {
             node: this.getPathToNodeDistFile(bundleFilename),
-            import: this.getPathToBrowserEsmDistFile(bundleFilename),
-            require: this.getPathToBrowserCjsDistFile(bundleFilename),
-            default: this.getPathToBrowserCjsDistFile(bundleFilename),
-            types: pathToTypesFile
+            import: {
+                types: pathToTypesFile,
+                default: this.getPathToBrowserEsmDistFile(bundleFilename)
+            },
+            require: {
+                types: pathToTypesFile,
+                default: this.getPathToBrowserCjsDistFile(bundleFilename)
+            },
+            default: this.getPathToBrowserCjsDistFile(bundleFilename)
         };
     }
 

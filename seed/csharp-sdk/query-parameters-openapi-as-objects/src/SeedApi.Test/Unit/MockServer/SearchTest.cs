@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedApi;
 using SeedApi.Test.Utils;
@@ -6,6 +6,7 @@ using SeedApi.Test.Utils;
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SearchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -33,6 +34,8 @@ public class SearchTest : BaseMockServerTest
                     .WithParam("optionalDeadline", "2024-01-15T09:30:00.000Z")
                     .WithParam("optionalString", "optionalString")
                     .WithParam("filter", "filter")
+                    .WithParam("tags", "tags")
+                    .WithParam("optionalTags", "optionalTags")
                     .UsingGet()
             )
             .RespondWith(
@@ -97,6 +100,8 @@ public class SearchTest : BaseMockServerTest
                     },
                 ],
                 Filter = ["filter"],
+                Tags = ["tags"],
+                OptionalTags = ["optionalTags"],
                 Neighbor = new User
                 {
                     Name = "name",

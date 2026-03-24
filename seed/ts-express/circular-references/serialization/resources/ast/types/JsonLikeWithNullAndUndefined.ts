@@ -21,7 +21,7 @@ export const JsonLikeWithNullAndUndefined: core.serialization.Schema<
 export declare namespace JsonLikeWithNullAndUndefined {
     export type Raw =
         | ((serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null | undefined)[]
-        | Record<string, (serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null | undefined>
+        | Record<string, (serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null>
         | ((string | null | undefined) | null | undefined)
         | ((number | null | undefined) | null | undefined)
         | ((boolean | null | undefined) | null | undefined);

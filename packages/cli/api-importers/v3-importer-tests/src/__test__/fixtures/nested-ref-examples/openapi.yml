@@ -1,0 +1,59 @@
+swagger: "2.0"
+info:
+  title: Nested Ref Examples Test
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+schemes:
+  - https
+paths:
+  /markets:
+    get:
+      operationId: getMarkets
+      summary: List available markets
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/responses.GetMarkets"
+definitions:
+  responses.GetMarkets:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/responses.MarketResp"
+  responses.MarketResp:
+    type: object
+    properties:
+      asset_kind:
+        type: string
+        example: PERP
+      base_currency:
+        type: string
+        example: ETH
+      option_cross_margin_params:
+        allOf:
+          - $ref: "#/definitions/responses.PerpetualOptionCrossMarginParams"
+  responses.PerpetualOptionCrossMarginParams:
+    type: object
+    properties:
+      imf:
+        $ref: "#/definitions/responses.PerpetualOptionMarginParams"
+      mmf:
+        $ref: "#/definitions/responses.PerpetualOptionMarginParams"
+  responses.PerpetualOptionMarginParams:
+    type: object
+    properties:
+      long_itm:
+        type: string
+        example: "0.2"
+      premium_multiplier:
+        type: string
+        example: "1.2"
+      short_itm:
+        type: string
+        example: "0.4"

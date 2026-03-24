@@ -85,7 +85,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (this.streamingExtension.type === "stream") {
             const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
             const contentTypes = Object.keys(this.responseBody.content ?? {});
-            for (const contentType of contentTypes) {
+
+            // When format is SSE, prefer text/event-stream content type over others
+            const sortedContentTypes =
+                this.streamingExtension.format === "sse"
+                    ? [
+                          ...contentTypes.filter((type) => type.includes("text/event-stream")),
+                          ...contentTypes.filter((type) => !type.includes("text/event-stream"))
+                      ]
+                    : contentTypes;
+
+            for (const contentType of sortedContentTypes) {
                 const mediaTypeObject = this.responseBody.content?.[contentType];
                 if (mediaTypeObject == null) {
                     continue;
@@ -164,9 +174,12 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
         }
 
-        // For success status codes (2xx), return an empty response instead of undefined
+        // For success status codes (2xx), return an empty response instead of undefined.
+        // Skip 204 No Content responses — they have no body by definition,
+        // and creating a synthetic body would prevent generators from detecting
+        // the no-content case and making the return type optional.
         const statusCodeNum = parseInt(this.statusCode);
-        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
+        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300 && statusCodeNum !== 204) {
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
                     type: "object",

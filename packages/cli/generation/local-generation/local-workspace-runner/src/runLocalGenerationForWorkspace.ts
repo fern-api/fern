@@ -1,14 +1,21 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit,
+    getPackageNameFromGeneratorConfig
+} from "@fern-api/api-workspace-commons";
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -21,6 +28,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -37,7 +45,10 @@ export async function runLocalGenerationForWorkspace({
     runner,
     ai,
     replay,
-    noReplay
+    noReplay,
+    validateWorkspace,
+    requireEnvVars,
+    skipFernignore
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -52,12 +63,49 @@ export async function runLocalGenerationForWorkspace({
     ai: generatorsYml.AiServicesSchema | undefined;
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
+    validateWorkspace?: boolean;
+    requireEnvVars?: boolean;
+    skipFernignore?: boolean;
 }): Promise<void> {
+    // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
+    // This avoids wasted work when one generator would fail the version check.
+    const userProvidedVersion = version;
+    if (userProvidedVersion != null) {
+        if (absolutePathToPreview != null) {
+            context.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${userProvidedVersion} may already exist on the package registry.`
+            );
+        } else {
+            for (const generatorInvocation of generatorGroup.generators) {
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                await checkVersionDoesNotAlreadyExist({
+                    version: userProvidedVersion,
+                    packageName,
+                    generatorInvocation,
+                    context
+                });
+            }
+        }
+    }
+
+    const autoVersioningCache = new AutoVersioningCache();
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const isPreview = absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        {
+                            onError: (e) => {
+                                if (!isPreview && (requireEnvVars ?? true)) {
+                                    interactiveTaskContext.failAndThrow(e);
+                                }
+                            }
+                        },
+                        { substituteAsEmpty: isPreview }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
@@ -66,6 +114,15 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                }
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
                     apiName: fernWorkspace.definition.rootApiFile.contents.name,
@@ -96,7 +153,8 @@ export async function runLocalGenerationForWorkspace({
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
+                        generatorConfig: generatorInvocation.config,
+                        originGitCommit: getOriginGitCommit()
                     }
                 });
 
@@ -234,7 +292,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
-                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`
                         );
                     }
                 }
@@ -254,9 +312,16 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
+                const {
+                    shouldCommit,
+                    autoVersioningCommitMessage,
+                    autoVersioningChangelogEntry,
+                    autoVersioningPrDescription,
+                    autoVersioningVersionBumpReason
+                } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
-                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    absolutePathToFernConfig:
+                        workspace.generatorsConfiguration?.absolutePathToConfiguration ?? projectConfig._absolutePath,
                     workspace: fernWorkspace,
                     generatorInvocation,
                     absolutePathToLocalOutput,
@@ -278,7 +343,10 @@ export async function runLocalGenerationForWorkspace({
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
-                    ai
+                    ai,
+                    autoVersioningCache,
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
+                    skipFernignore
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -303,6 +371,9 @@ export async function runLocalGenerationForWorkspace({
                                 mode: selfhostedGithubConfig.mode ?? "push",
                                 branch: selfhostedGithubConfig.branch,
                                 commitMessage: autoVersioningCommitMessage,
+                                changelogEntry: autoVersioningChangelogEntry,
+                                prDescription: autoVersioningPrDescription,
+                                versionBumpReason: autoVersioningVersionBumpReason,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name
                             },
@@ -342,39 +413,9 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    // Check output.package-name for npm/PyPI/etc.
-    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
-        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // Check output.coordinate for Maven (Java)
-        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
-        if (coordinate != null) {
-            return coordinate;
-        }
-    }
-
-    // Check config.package_name if output.package-name is not set
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // go-sdk generator uses module.path to set the package name
-        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
-        if (modulePath != null) {
-            return modulePath;
-        }
-    }
-    return undefined;
-}
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
-    generatorInvocation: GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation
 ): AbsoluteFilePath | undefined {
     if (absolutePathToPreview == null) {
         return undefined;
@@ -408,18 +449,13 @@ function getPublishConfig({
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
-        const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
-        if (owner == null || repo == null) {
-            return context.failAndThrow(
-                `Invalid GitHub repository URI: ${generatorInvocation.raw.github.uri}. Expected format: owner/repo`
-            );
-        }
+        const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
         return FernIr.PublishingConfig.github({
-            owner,
-            repo,
+            owner: parsed.owner,
+            repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: irMode,

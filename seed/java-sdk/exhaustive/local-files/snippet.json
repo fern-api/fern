@@ -287,6 +287,58 @@
             }
         },
         {
+            "example_identifier": "BackslashExample",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-unknown-field",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"$ref\", \"https://example.com/schema\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"$ref\", \"https://example.com/schema\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d448288f",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-unknown-field",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "26cc0307",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-documented-unknown-type",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.DocumentedUnknownType;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDocumentedUnknownType(\n            ObjectWithDocumentedUnknownType\n                .builder()\n                .documentedUnknownType(\n                    DocumentedUnknownType.of(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.DocumentedUnknownType;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDocumentedUnknownType(\n            ObjectWithDocumentedUnknownType\n                .builder()\n                .documentedUnknownType(\n                    DocumentedUnknownType.of(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d3bae07f",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-map-of-documented-unknown-type",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.DocumentedUnknownType;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(\n            new HashMap<String, Object>() {{\n                put(\"string\", DocumentedUnknownType.of(new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }}));\n            }}\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.DocumentedUnknownType;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(\n            new HashMap<String, Object>() {{\n                put(\"string\", DocumentedUnknownType.of(new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }}));\n            }}\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "method": "POST",

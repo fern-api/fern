@@ -50,6 +50,10 @@ export function buildQueryParameter({
         queryParameterSchema["allow-multiple"] = true;
     }
 
+    if (queryParameter.explode != null) {
+        queryParameterSchema.explode = queryParameter.explode;
+    }
+
     if (queryParameter.description != null) {
         queryParameterSchema.docs = queryParameter.description;
     }
@@ -74,7 +78,8 @@ export function buildQueryParameter({
         queryParameterSchema.docs == null &&
         queryParameterSchema.name == null &&
         queryParameterSchema.availability == null &&
-        queryParameterSchema.validation == null
+        queryParameterSchema.validation == null &&
+        queryParameterSchema.explode == null
     ) {
         return queryParameterType;
     }

@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: Test inferring SSE streaming from text/event-stream MIME type
+  version: 1.0.0
+paths:
+  "/completions/stream":
+    post:
+      x-fern-sdk-group-name: completions
+      x-fern-sdk-method-name: stream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: "Streamed completion response"
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/CompletionChunk"
+  "/completions/create":
+    post:
+      x-fern-sdk-group-name: completions
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: "Non-streaming completion response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completion"
+  "/completions/both":
+    post:
+      x-fern-sdk-group-name: completions
+      x-fern-sdk-method-name: createWithStream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: "Response with both JSON and SSE content types"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completion"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/CompletionChunk"
+components:
+  schemas:
+    CompletionRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+      required:
+        - prompt
+    Completion:
+      type: object
+      properties:
+        text:
+          type: string
+    CompletionChunk:
+      type: object
+      properties:
+        delta:
+          type: string

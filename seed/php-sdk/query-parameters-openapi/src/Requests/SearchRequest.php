@@ -80,6 +80,16 @@ class SearchRequest extends JsonSerializableType
     public ?array $filter;
 
     /**
+     * @var ?array<string> $tags List of tags. Serialized as a comma-separated list.
+     */
+    public ?array $tags;
+
+    /**
+     * @var ?array<string> $optionalTags Optional list of tags. Serialized as a comma-separated list.
+     */
+    public ?array $optionalTags;
+
+    /**
      * @var (
      *    User
      *   |NestedUser
@@ -121,6 +131,8 @@ class SearchRequest extends JsonSerializableType
      *   optionalUser?: ?User,
      *   excludeUser?: ?array<User>,
      *   filter?: ?array<string>,
+     *   tags?: ?array<string>,
+     *   optionalTags?: ?array<string>,
      *   neighbor?: (
      *    User
      *   |NestedUser
@@ -146,6 +158,8 @@ class SearchRequest extends JsonSerializableType
         $this->optionalUser = $values['optionalUser'] ?? null;
         $this->excludeUser = $values['excludeUser'] ?? null;
         $this->filter = $values['filter'] ?? null;
+        $this->tags = $values['tags'] ?? null;
+        $this->optionalTags = $values['optionalTags'] ?? null;
         $this->neighbor = $values['neighbor'] ?? null;
         $this->neighborRequired = $values['neighborRequired'];
     }

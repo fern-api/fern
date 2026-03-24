@@ -82,6 +82,22 @@ public final class ErrorInfo {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof ErrorInfo && value.equals(((ErrorInfo) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -112,6 +128,7 @@ public final class ErrorInfo {
     @JsonIgnoreProperties("type")
     private static final class CompileErrorValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private CompileError value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -151,6 +168,7 @@ public final class ErrorInfo {
     @JsonIgnoreProperties("type")
     private static final class RuntimeErrorValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private RuntimeError value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -190,6 +208,7 @@ public final class ErrorInfo {
     @JsonIgnoreProperties("type")
     private static final class InternalErrorValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private InternalError value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

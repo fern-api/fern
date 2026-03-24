@@ -764,6 +764,19 @@
     "generators.APIDefinitionPathSchema": {
       "type": "string"
     },
+    "generators.OverridesSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "generators.UnionSettingsSchema": {
       "type": "string",
       "enum": [
@@ -936,7 +949,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -991,7 +1004,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -1748,6 +1761,14 @@
         }
       ]
     },
+    "generators.CoerceConstsTo": {
+      "type": "string",
+      "enum": [
+        "literals",
+        "enums",
+        "enums-coerceable-to-literals"
+      ]
+    },
     "generators.FormParameterEncoding": {
       "type": "string",
       "enum": [
@@ -1967,6 +1988,36 @@
             }
           ]
         },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -2159,7 +2210,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2315,6 +2366,36 @@
             }
           ]
         },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2347,7 +2428,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2401,7 +2482,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2787,6 +2868,36 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
             },
             {
               "type": "null"
@@ -3925,6 +4036,19 @@
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "headers": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
               }
             },
             {

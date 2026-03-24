@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
 public partial class S3Client : IS3Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal S3Client(RawClient client)
     {
@@ -40,7 +40,9 @@ public partial class S3Client : IS3Client
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -66,7 +68,9 @@ public partial class S3Client : IS3Client
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedMultiUrlEnvironmentApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

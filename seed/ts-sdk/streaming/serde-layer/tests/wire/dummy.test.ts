@@ -9,6 +9,7 @@ describe("DummyClient", () => {
         const client = new SeedStreamingClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { stream: false, num_events: 5 };
         const rawResponseBody = { id: "id", name: "name" };
+
         server
             .mockEndpoint()
             .post("/generate")

@@ -70,6 +70,42 @@ export interface FixtureGroup {
 }
 
 /**
+ * Parse the base fixture name from a fixture string.
+ * For "exhaustive:config-a", returns "exhaustive".
+ * For "alias", returns "alias".
+ */
+export function getBaseFixtureName(fixture: string): string {
+    const colonIndex = fixture.indexOf(":");
+    return colonIndex >= 0 ? fixture.substring(0, colonIndex) : fixture;
+}
+
+/**
+ * Calculate the weight of each fixture based on its base fixture's variant count.
+ * Fixtures belonging to a base fixture with many variants are weighted higher,
+ * reflecting that multi-variant fixtures tend to be more complex and slower to run.
+ *
+ * @param fixtures - Array of fixture names (may include "fixture:outputFolder" format)
+ * @returns Map from fixture name to its weight
+ */
+export function getFixtureWeights(fixtures: string[]): Map<string, number> {
+    // Count variants per base fixture
+    const variantCounts = new Map<string, number>();
+    for (const fixture of fixtures) {
+        const base = getBaseFixtureName(fixture);
+        variantCounts.set(base, (variantCounts.get(base) ?? 0) + 1);
+    }
+
+    // Weight each fixture by its base fixture's variant count
+    const weights = new Map<string, number>();
+    for (const fixture of fixtures) {
+        const base = getBaseFixtureName(fixture);
+        weights.set(fixture, variantCounts.get(base) ?? 1);
+    }
+
+    return weights;
+}
+
+/**
  * Calculate the recommended number of groups for a generator based on fixture count.
  * Uses a heuristic: 1 group per 10 fixtures, with a minimum of 1 and maximum of 15.
  * Returns 0 if the fixture count is small enough to run in a single job.
@@ -89,7 +125,16 @@ export function calculateRecommendedGroups(fixtureCount: number): number {
 }
 
 /**
- * Split fixtures into groups for parallel test execution.
+ * Split fixtures into groups for parallel test execution using weight-balanced
+ * bin-packing. Each fixture is weighted by its base fixture's variant count,
+ * so fixtures with many variants (which tend to be more complex) are distributed
+ * evenly across groups. This prevents CI imbalance where one job gets all the
+ * heavy fixtures and takes much longer than others.
+ *
+ * Uses a greedy LPT (Longest Processing Time) algorithm: fixtures are sorted by
+ * weight descending, then each is assigned to the group with the lowest current
+ * total weight.
+ *
  * If numGroups is 0 or fixtures.length <= 20, returns a single group with ["all"].
  *
  * @param fixtures - Array of fixture names to split
@@ -105,21 +150,41 @@ export function splitFixturesIntoGroups(fixtures: string[], numGroups: number): 
         return [{ fixtures: ["all"] }];
     }
 
-    // Calculate fixtures per group (ceiling division)
-    const fixturesPerGroup = Math.ceil(fixtures.length / effectiveNumGroups);
+    // Calculate weight for each fixture based on its base fixture's variant count
+    const weights = getFixtureWeights(fixtures);
 
-    // Create groups by splitting fixtures evenly
-    const groups: FixtureGroup[] = [];
+    // Create indexed fixture list sorted by weight descending (LPT scheduling)
+    // For equal weights, preserve original order for determinism
+    const indexedFixtures = fixtures.map((fixture, index) => ({
+        fixture,
+        weight: weights.get(fixture) ?? 1,
+        originalIndex: index
+    }));
+    indexedFixtures.sort((a, b) => b.weight - a.weight || a.originalIndex - b.originalIndex);
+
+    // Initialize groups with weight tracking
+    const groups: { fixtures: string[]; totalWeight: number }[] = [];
     for (let i = 0; i < effectiveNumGroups; i++) {
-        const start = i * fixturesPerGroup;
-        const end = start + fixturesPerGroup;
-        const groupFixtures = fixtures.slice(start, end);
+        groups.push({ fixtures: [], totalWeight: 0 });
+    }
 
-        // Skip empty groups
-        if (groupFixtures.length > 0) {
-            groups.push({ fixtures: groupFixtures });
+    // Greedy bin-packing: assign each fixture to the group with lowest total weight
+    for (const { fixture, weight } of indexedFixtures) {
+        let lightestIdx = 0;
+        for (let i = 1; i < groups.length; i++) {
+            const current = groups[i];
+            const lightest = groups[lightestIdx];
+            if (current != null && lightest != null && current.totalWeight < lightest.totalWeight) {
+                lightestIdx = i;
+            }
+        }
+        const targetGroup = groups[lightestIdx];
+        if (targetGroup != null) {
+            targetGroup.fixtures.push(fixture);
+            targetGroup.totalWeight += weight;
         }
     }
 
-    return groups;
+    // Filter out empty groups and return fixture lists only
+    return groups.filter((g) => g.fixtures.length > 0).map((g) => ({ fixtures: g.fixtures }));
 }

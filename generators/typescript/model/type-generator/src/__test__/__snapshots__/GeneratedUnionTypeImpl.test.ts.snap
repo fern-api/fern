@@ -1,0 +1,386 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with baseProperties 1`] = `
+"{
+    type: "foo",
+    id: "example-value"
+}"
+`;
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with extendProperties 1`] = `
+"{
+    type: "foo",
+    name: "example-value"
+}"
+`;
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with includeUtilsOnUnionMembers (calls builder) 1`] = `"MyUnion.foo()"`;
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with noProperties shape 1`] = `
+"{
+    type: "foo"
+}"
+`;
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with samePropertiesAsObject shape 1`] = `
+"{
+    type: "circle",
+    radius: 5
+}"
+`;
+
+exports[`GeneratedUnionTypeImpl > buildExample > builds example with singleProperty shape 1`] = `
+"{
+    type: "foo",
+    value: "example-value"
+}"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateForInlineUnion > returns parenthesized union type node 1`] = `"({} | {})"`;
+
+exports[`GeneratedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes when generateReadWriteOnlyTypes is true 1`] = `"({} | {})"`;
+
+exports[`GeneratedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes when generateReadWriteOnlyTypes is true 2`] = `"({} | {})"`;
+
+exports[`GeneratedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes when generateReadWriteOnlyTypes is true 3`] = `"({} | {})"`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates basic union with singleProperty members 1`] = `
+"export type MyUnion = 
+    | MyUnion.Foo
+    | MyUnion.Bar;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+        value: string;
+    }
+
+    export interface Bar {
+        type: "bar";
+        value: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with baseProperties 1`] = `
+"export type UnionWithBase = 
+    | UnionWithBase.Foo
+    | UnionWithBase.Bar;
+
+export namespace UnionWithBase {
+    export interface Foo extends _Base {
+        type: "foo";
+    }
+
+    export interface Bar extends _Base {
+        type: "bar";
+    }
+
+    export interface _Base {
+        id: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with docs on members 1`] = `
+"export type MyUnion = 
+    /**
+     * The foo variant. */
+    | MyUnion.Foo
+    /**
+     * The bar variant. */
+    | MyUnion.Bar;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+    }
+
+    export interface Bar {
+        type: "bar";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with docs on type 1`] = `
+"/**
+ * This is a simple union type.
+ */
+export type MyUnion = 
+    | MyUnion.Foo
+    | MyUnion.Bar;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+    }
+
+    export interface Bar {
+        type: "bar";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with examples in docs 1`] = `
+"/**
+ * A union type.
+ *
+ * @example
+ *     {
+ *         type: "foo"
+ *     }
+ */
+export type MyUnion = 
+    | MyUnion.Foo
+    | MyUnion.Bar;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+    }
+
+    export interface Bar {
+        type: "bar";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with extends 1`] = `
+"export type Shape = 
+    | Shape.Foo
+    | Shape.Bar;
+
+export namespace Shape {
+    export interface Foo extends _Base {
+        type: "foo";
+    }
+
+    export interface Bar extends _Base {
+        type: "bar";
+    }
+
+    export interface _Base extends WithName {
+        id: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with includeOtherInUnionTypes 1`] = `
+"export type MyUnion = 
+    | MyUnion.Foo
+    | MyUnion._Unknown;
+
+export namespace MyUnion {
+    export interface Foo extends _Utils {
+        type: "foo";
+        value: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        type: string;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: MyUnion._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        foo: (value: string) => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
+    }
+}
+
+export const MyUnion = {
+        foo: (value: string): MyUnion.Foo => {
+            return {
+                value: value,
+                type: "foo",
+                "_visit": function <_Result>(this: MyUnion.Foo, visitor: MyUnion._Visitor<_Result>) {
+                    return MyUnion._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (value: {
+            type: string;
+        }): MyUnion._Unknown => {
+            return {
+                ...value,
+                "_visit": function <_Result>(this: MyUnion._Unknown, visitor: MyUnion._Visitor<_Result>) {
+                    return MyUnion._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: MyUnion, visitor: MyUnion._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "foo": return visitor.foo((value as MyUnion.Foo).value);
+                default: return visitor._other(value);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with includeUtilsOnUnionMembers (builders + visitor) 1`] = `
+"export type MyUnion = 
+    | MyUnion.Foo
+    | MyUnion.Bar;
+
+export namespace MyUnion {
+    export interface Foo extends _Utils {
+        type: "foo";
+        value: string;
+    }
+
+    export interface Bar extends _Utils {
+        type: "bar";
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: MyUnion._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        foo: (value: string) => _Result;
+        bar: () => _Result;
+        _other: (value: {
+                type: string;
+            }) => _Result;
+    }
+}
+
+export const MyUnion = {
+        foo: (value: string): MyUnion.Foo => {
+            return {
+                value: value,
+                type: "foo",
+                "_visit": function <_Result>(this: MyUnion.Foo, visitor: MyUnion._Visitor<_Result>) {
+                    return MyUnion._visit(this, visitor);
+                }
+            };
+        },
+
+        bar: (): MyUnion.Bar => {
+            return {
+                type: "bar",
+                "_visit": function <_Result>(this: MyUnion.Bar, visitor: MyUnion._Visitor<_Result>) {
+                    return MyUnion._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: MyUnion, visitor: MyUnion._Visitor<_Result>): _Result => {
+            switch (value.type) {
+                case "foo": return visitor.foo(value.value);
+                case "bar": return visitor.bar();
+                default: return visitor._other(value);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with mixed member shapes 1`] = `
+"export type MixedUnion = 
+    | MixedUnion.Value
+    | MixedUnion.Circle
+    | MixedUnion.Empty;
+
+export namespace MixedUnion {
+    export interface Value {
+        type: "value";
+        data: string;
+    }
+
+    export interface Circle extends Circle {
+        type: "circle";
+    }
+
+    export interface Empty {
+        type: "empty";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with noProperties members 1`] = `
+"export type UnionWithNoProperties = 
+    | UnionWithNoProperties.Foo
+    | UnionWithNoProperties.Empty;
+
+export namespace UnionWithNoProperties {
+    export interface Foo {
+        type: "foo";
+    }
+
+    export interface Empty {
+        type: "empty";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with retainOriginalCasing 1`] = `
+"export type MyUnion = 
+    | MyUnion.Foo;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+        value: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with samePropertiesAsObject members 1`] = `
+"export type Shape = 
+    | Shape.Circle
+    | Shape.Square;
+
+export namespace Shape {
+    export interface Circle extends Circle {
+        type: "circle";
+    }
+
+    export interface Square extends Square {
+        type: "square";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union with single member 1`] = `
+"export type UnionWithSingleElement = 
+    | UnionWithSingleElement.Foo;
+
+export namespace UnionWithSingleElement {
+    export interface Foo {
+        type: "foo";
+        name: string;
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeImpl > generateStatements / writeToFile > generates union without serde layer 1`] = `
+"export type MyUnion = 
+    | MyUnion.Foo;
+
+export namespace MyUnion {
+    export interface Foo {
+        type: "foo";
+        value: string;
+    }
+}
+"
+`;

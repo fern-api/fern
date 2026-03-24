@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -22,6 +21,17 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./package_": {
+            "import": {
+                "types": "./dist/esm/api/resources/package/exports.d.mts",
+                "default": "./dist/esm/api/resources/package/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/package/exports.d.ts",
+                "default": "./dist/cjs/api/resources/package/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/package/exports.js"
         },
         "./package.json": "./package.json"
     },

@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { type AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import fs from "fs";
 import { mkdir, readFile } from "fs/promises";
@@ -205,7 +206,7 @@ void yargs(hideBin(process.argv))
                         try {
                             config = JSON.parse(configContent);
                         } catch (parseError) {
-                            const parseMessage = parseError instanceof Error ? parseError.message : String(parseError);
+                            const parseMessage = extractErrorMessage(parseError);
                             throw new Error(`Failed to parse pipeline config as JSON: ${parseMessage}`);
                         }
 
@@ -246,7 +247,7 @@ void yargs(hideBin(process.argv))
                         // Use process.exitCode instead of process.exit() to allow stdout to drain
                         process.exitCode = result.success ? 0 : 1;
                     } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
+                        const errorMessage = extractErrorMessage(error);
                         process.stderr.write(`Pipeline failed: ${errorMessage}\n`);
                         process.exitCode = 1;
                     }
@@ -339,7 +340,7 @@ void yargs(hideBin(process.argv))
                             process.stdout.write(JSON.stringify(result, null, 2) + "\n");
                             process.exit(0);
                         } catch (error) {
-                            const errorMessage = error instanceof Error ? error.message : String(error);
+                            const errorMessage = extractErrorMessage(error);
                             process.stderr.write(`Replay init failed: ${errorMessage}\n`);
                             process.exit(1);
                         }
@@ -427,7 +428,7 @@ void yargs(hideBin(process.argv))
 
                             process.exit(0);
                         } catch (error) {
-                            const errorMessage = error instanceof Error ? error.message : String(error);
+                            const errorMessage = extractErrorMessage(error);
                             process.stderr.write(`Bootstrap failed: ${errorMessage}\n`);
                             process.exit(1);
                         }

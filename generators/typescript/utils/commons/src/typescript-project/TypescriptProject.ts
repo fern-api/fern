@@ -47,6 +47,15 @@ const COMMON_SCRIPTS = {
 } as const;
 type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 
+/** Shared version constants for formatter / linter packages. */
+const TOOL_VERSIONS = {
+    BIOME: "2.4.3",
+    PRETTIER: "3.7.4",
+    OXFMT: "0.35.0",
+    OXLINT: "1.50.0",
+    OXLINT_TSGOLINT: "0.14.2"
+} as const;
+
 export abstract class TypescriptProject {
     protected static readonly DEFAULT_SRC_DIRECTORY = "src";
     protected static readonly TEST_DIRECTORY = "tests";
@@ -212,6 +221,8 @@ export abstract class TypescriptProject {
             buildCommand: this.getBuildCommand(),
             formatCommand: this.getFormatCommand(),
             checkFixCommand: this.getCheckFixCommand(),
+            checkFixPackages: this.getCheckFixPackages(),
+            checkFixToolBinaries: this.getCheckFixToolBinaries(),
             packageManager: this.packageManager
         });
     }
@@ -369,6 +380,50 @@ export abstract class TypescriptProject {
         return [COMMON_SCRIPTS.CHECK_FIX];
     }
 
+    /**
+     * Returns the exact package specifiers (name@version) required by the
+     * configured formatter and linter so they can be installed in isolation
+     * without pulling in the full dependency tree.
+     */
+    protected getCheckFixPackages(): string[] {
+        const packages: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            packages.push(`@biomejs/biome@${TOOL_VERSIONS.BIOME}`);
+        }
+        if (this.formatter === "prettier") {
+            packages.push(`prettier@${TOOL_VERSIONS.PRETTIER}`);
+        }
+        if (this.formatter === "oxfmt") {
+            packages.push(`oxfmt@${TOOL_VERSIONS.OXFMT}`);
+        }
+        if (this.linter === "oxlint") {
+            packages.push(`oxlint@${TOOL_VERSIONS.OXLINT}`);
+            packages.push(`oxlint-tsgolint@${TOOL_VERSIONS.OXLINT_TSGOLINT}`);
+        }
+        return packages;
+    }
+
+    /**
+     * Returns the binary names that must be on PATH for check:fix to work
+     * without installing packages (e.g. ["biome"], ["prettier", "oxlint"]).
+     */
+    protected getCheckFixToolBinaries(): string[] {
+        const binaries: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            binaries.push("biome");
+        }
+        if (this.formatter === "prettier") {
+            binaries.push("prettier");
+        }
+        if (this.formatter === "oxfmt") {
+            binaries.push("oxfmt");
+        }
+        if (this.linter === "oxlint") {
+            binaries.push("oxlint");
+        }
+        return binaries;
+    }
+
     protected getBuildCommand(): string[] {
         return [COMMON_SCRIPTS.BUILD];
     }
@@ -381,17 +436,17 @@ export abstract class TypescriptProject {
             typescript: "~5.7.2"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
-            deps["@biomejs/biome"] = "2.4.3";
+            deps["@biomejs/biome"] = TOOL_VERSIONS.BIOME;
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.50.0";
-            deps["oxlint-tsgolint"] = "0.14.2";
+            deps["oxlint"] = TOOL_VERSIONS.OXLINT;
+            deps["oxlint-tsgolint"] = TOOL_VERSIONS.OXLINT_TSGOLINT;
         }
         if (this.formatter === "prettier") {
-            deps["prettier"] = "3.7.4";
+            deps["prettier"] = TOOL_VERSIONS.PRETTIER;
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.35.0";
+            deps["oxfmt"] = TOOL_VERSIONS.OXFMT;
         }
         return deps;
     }

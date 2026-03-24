@@ -42,7 +42,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly HEADERS_PROPERTY_NAME = "headers";
     private static readonly HEADERS_VARIABLE_NAME = "_headers";
 
+    private static readonly PROTOCOLS_PROPERTY_NAME = "protocols";
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
+    private static readonly CONNECTION_TIMEOUT_PROPERTY_NAME = "connectionTimeoutInSeconds";
+    private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
     private static readonly ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
@@ -187,6 +190,19 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     };
                 }),
                 {
+                    name: GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createUnionTypeNode([
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createArrayTypeNode(
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                            )
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["WebSocket subprotocols to use for the connection."]
+                },
+                {
                     name: GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
@@ -219,6 +235,18 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
                     docs: ["Number of reconnect attempts. Defaults to 30."]
+                },
+                {
+                    name: GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+                    hasQuestionToken: true,
+                    docs: ["The timeout for establishing the WebSocket connection in seconds."]
+                },
+                {
+                    name: GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createTypeReferenceNode("AbortSignal")),
+                    hasQuestionToken: true,
+                    docs: ["A signal to abort the WebSocket connection."]
                 }
             ],
             isExported: true
@@ -288,6 +316,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
         }
 
+        // Add protocols binding
+        bindingElements.push(
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME)
+            )
+        );
+
         // Add additional query parameters binding
         bindingElements.push(
             ts.factory.createBindingElement(
@@ -319,6 +356,16 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 undefined,
                 undefined,
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME)
+            ),
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME)
+            ),
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME)
             )
         );
 
@@ -510,7 +557,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
             url: context.coreUtilities.urlUtils.join._invoke([baseUrl, url]),
-            protocols: ts.factory.createArrayLiteralExpression([]),
+            protocols: ts.factory.createBinaryExpression(
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createArrayLiteralExpression([])
+            ),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
                     "debug",
@@ -531,10 +582,34 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             GeneratedDefaultWebsocketImplementation.DEFAULT_NUM_RECONNECT_ATTEMPTS
                         )
                     )
+                ),
+                // connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined
+                ts.factory.createPropertyAssignment(
+                    "connectionTimeout",
+                    ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier(
+                                GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier(
+                                GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.AsteriskToken),
+                            ts.factory.createNumericLiteral(1000)
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        ts.factory.createIdentifier("undefined")
+                    )
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters: this.getMergedQueryParameters()
+            queryParameters: this.getMergedQueryParameters(),
+            abortSignal: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME)
         });
     }
 

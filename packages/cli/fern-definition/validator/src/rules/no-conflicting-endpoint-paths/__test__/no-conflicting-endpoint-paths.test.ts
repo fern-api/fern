@@ -20,6 +20,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> foo /{pathParam}/foo`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -27,6 +28,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> bar /{pathParam}/bar`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -36,6 +38,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - c.yml -> bar /c/{pathParam}`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -44,6 +47,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - c.yml -> bar /c/{pathParam}`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -52,6 +56,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> foo /{pathParam}/foo`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: RelativeFilePath.of("c.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -61,6 +66,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> bar /{pathParam}/bar`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: RelativeFilePath.of("c.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -68,6 +74,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - d.yml -> bar /`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: RelativeFilePath.of("d.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             },
             {
@@ -75,6 +82,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - d.yml -> foo /`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: RelativeFilePath.of("d.yml"),
+                name: "no-conflicting-endpoint-paths",
                 severity: "warning"
             }
         ];

@@ -11,19 +11,12 @@ paths:
         application/json:
           schema:
             properties:
-              indexType:
+              index_type:
                 $ref: "#/components/schemas/IndexType"
               details:
-                $ref: "#/components/schemas/Any"
+                $ref: "#/components/schemas/GoogleProtobufAny"
 components:
   schemas:
-    Any:
-      type: object
-      x-fern-encoding:
-        proto:
-          type: google.protobuf.Any
-    GoogleProtobufAny:
-      x-fern-ignore: true
     Metadata:
       oneOf:
         - type: object
@@ -64,33 +57,35 @@ components:
           $ref: "#/components/schemas/Metadata"
     UpdateRequest:
       properties:
-        setMetadata:
+        set_metadata:
           $ref: "#/components/schemas/Metadata"
-        indexType:
+        index_type:
           $ref: "#/components/schemas/IndexType"
-        indexTypes:
+        index_types:
           type: array
           items:
             $ref: "#/components/schemas/IndexType"
         details:
-          $ref: "#/components/schemas/Any"
+          $ref: "#/components/schemas/GoogleProtobufAny"
     UpdateResponse:
       properties:
-        indexType:
+        index_type:
           $ref: "#/components/schemas/IndexType"
         details:
-          $ref: "#/components/schemas/Any"
-        indexTypes:
+          $ref: "#/components/schemas/GoogleProtobufAny"
+        index_types:
           type: array
           items:
             $ref: "#/components/schemas/IndexType"
+    CreateRequest:
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
     Column:
       properties:
         metadata:
           $ref: "#/components/schemas/Metadata"
     IndexType:
-      x-fern-sdk-group-name:
-        - dataservice
       x-fern-type-name: IndexType
       enum:
         - INDEX_TYPE_INVALID

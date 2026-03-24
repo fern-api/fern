@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
+using SeedMixedCase.Test.Utils;
 
 namespace SeedMixedCase.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class NestedUserTest
 {
     [NUnit.Framework.Test]
@@ -48,7 +49,7 @@ public class NestedUserTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "Name": "username",
               "NestedUser": {
@@ -64,22 +65,6 @@ public class NestedUserTest
               }
             }
             """;
-        var actualObj = new NestedUser
-        {
-            Name = "username",
-            NestedUser_ = new User
-            {
-                UserName = "nestedUsername",
-                MetadataTags = new List<string>() { "tag1", "tag2" },
-                ExtraProperties = new Dictionary<string, string>()
-                {
-                    { "foo", "bar" },
-                    { "baz", "qux" },
-                },
-            },
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<NestedUser>(inputJson);
     }
 }

@@ -3,7 +3,7 @@
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedExamples)](https://nuget.org/packages/SeedExamples)
+[![nuget shield](https://img.shields.io/nuget/v/Fernexamples)](https://nuget.org/packages/Fernexamples)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -22,6 +22,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
   - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
@@ -36,7 +38,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedExamples
+dotnet add package Fernexamples
 ```
 
 ## Reference
@@ -45,7 +47,7 @@ A full reference for this library is available [here](./reference.md).
 
 ## Base Readme Custom Section
 
-Base Readme Custom Content for SeedExamples
+Base Readme Custom Content for Fernexamples
 
 ## Override Section
 
@@ -53,7 +55,7 @@ Override Content
 
 ## Generator Invocation Custom Section
 
-Generator Invocation Custom Content for SeedExamples
+Generator Invocation Custom Content for Fernexamples
 
 ## Usage
 
@@ -179,6 +181,38 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Service.CreateMovieAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Service.CreateMovieAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Service.CreateMovieAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
 ```
 
 ### Forward Compatible Enums

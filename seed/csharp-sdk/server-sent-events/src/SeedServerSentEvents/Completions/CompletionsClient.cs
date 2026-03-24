@@ -1,11 +1,12 @@
-using System.Net.ServerSentEvents;
+using global::System.Net.ServerSentEvents;
+using global::System.Text.Json;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
 public partial class CompletionsClient : ICompletionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CompletionsClient(RawClient client)
     {
@@ -31,7 +32,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
@@ -60,7 +60,7 @@ public partial class CompletionsClient : ICompletionsClient
                     {
                         result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
                     }
-                    catch (System.Text.Json.JsonException)
+                    catch (JsonException)
                     {
                         throw new SeedServerSentEventsException(
                             $"Unable to deserialize JSON response 'item.Data'"
@@ -71,7 +71,9 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -101,7 +103,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream-no-terminator",
                     Body = request,
@@ -126,7 +127,7 @@ public partial class CompletionsClient : ICompletionsClient
                     {
                         result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
                     }
-                    catch (System.Text.Json.JsonException)
+                    catch (JsonException)
                     {
                         throw new SeedServerSentEventsException(
                             $"Unable to deserialize JSON response 'item.Data'"
@@ -137,7 +138,9 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

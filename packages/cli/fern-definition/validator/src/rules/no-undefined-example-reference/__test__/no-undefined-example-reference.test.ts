@@ -29,6 +29,7 @@ describe("no-undefined-example-reference", () => {
                     }
                 ],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
+                name: "no-undefined-example-reference",
                 severity: "fatal"
             },
             {
@@ -42,6 +43,7 @@ describe("no-undefined-example-reference", () => {
                     }
                 ],
                 relativeFilepath: RelativeFilePath.of("folder/nested.yml"),
+                name: "no-undefined-example-reference",
                 severity: "fatal"
             }
         ]);

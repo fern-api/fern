@@ -115,6 +115,12 @@ class SeedClient
         if ($request->filter != null) {
             $query['filter'] = $request->filter;
         }
+        if ($request->tags != null) {
+            $query['tags'] = $request->tags;
+        }
+        if ($request->optionalTags != null) {
+            $query['optionalTags'] = $request->optionalTags;
+        }
         if ($request->neighbor != null) {
             $query['neighbor'] = JsonSerializer::serializeUnion($request->neighbor, new Union(User::class, NestedUser::class, 'string', 'integer'));
         }
@@ -131,6 +137,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return SearchResponse::fromJson($json);
             }
         } catch (JsonException $e) {

@@ -29,6 +29,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -44,6 +45,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -59,6 +61,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -74,6 +77,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -89,6 +93,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
 
@@ -106,6 +111,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -121,6 +127,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -136,6 +143,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -151,6 +159,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -166,6 +175,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
 
@@ -183,6 +193,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -198,6 +209,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -213,6 +225,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
 
@@ -230,6 +243,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -245,6 +259,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -260,6 +275,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -275,6 +291,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -290,6 +307,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -305,6 +323,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -320,6 +339,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
 
@@ -337,6 +357,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -352,6 +373,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -367,6 +389,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -382,6 +405,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -397,6 +421,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -413,6 +438,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -429,6 +455,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -444,6 +471,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
             {
@@ -460,6 +488,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
+                name: "valid-example-endpoint-call",
                 severity: "fatal"
             }
         ];

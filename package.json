@@ -19,6 +19,7 @@
     "test": "turbo run test --filter=!@fern-api/ete-tests",
     "test:debug": "turbo run test:debug --filter=!@fern-api/ete-tests",
     "test:update": "turbo run test:update --filter=!@fern-api/ete-tests",
+    "test:coverage": "turbo run test:coverage",
     "test:update:dockerless": "turbo run test:update --filter=!@fern-api/ete-tests --filter=!@fern-api/docker-utils",
     "test:ete": "turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2 && pnpm seed:build && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2 && pnpm seed:build && pnpm --filter @fern-api/ete-tests test -- -u",
@@ -145,14 +146,16 @@
     "overrides": {
       "ajv": "8.18.0",
       "node-fetch@2.x>whatwg-url": "^14.0.0",
-      "minimatch": ">=10.2.1",
+      "minimatch": ">=10.2.3",
       "qs": "6.14.2",
       "url-join": "^4.0.1",
       "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4",
-      "@fern-api/ui-core-utils": "0.145.12-b50d999d1"
+      "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
+      "vite": "^7.0.0",
+      "yauzl": "^3.2.1"
     }
   },
   "dependencies": {

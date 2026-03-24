@@ -6,15 +6,16 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
 	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -25,11 +26,11 @@ func VerifyRequestCount(
 	queryParams map[string]string,
 	expected int,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	wiremockURL := os.Getenv("WIREMOCK_URL")
+	if wiremockURL == "" {
+		wiremockURL = "http://localhost:8080"
 	}
-	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
+	WiremockAdminURL := wiremockURL + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
@@ -67,11 +68,10 @@ func VerifyRequestCount(
 func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -138,11 +138,10 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -164,11 +163,10 @@ func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -194,11 +192,10 @@ func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -270,11 +267,10 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -345,11 +341,10 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -469,14 +464,94 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock", "POST", "/object/get-and-return-nested-with-required-field-list", nil, 1)
 }
 
+func TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &types.ObjectWithUnknownField{
+		Unknown: map[string]any{
+			"$ref": "https://example.com/schema",
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithUnknownField(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock", "POST", "/object/get-and-return-with-unknown-field", nil, 1)
+}
+
+func TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &types.ObjectWithDocumentedUnknownType{
+		DocumentedUnknownType: map[string]any{
+			"key": "value",
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-with-documented-unknown-type", nil, 1)
+}
+
+func TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := map[string]types.DocumentedUnknownType{
+		"string": map[string]any{
+			"key": "value",
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-map-of-documented-unknown-type", nil, 1)
+}
+
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)

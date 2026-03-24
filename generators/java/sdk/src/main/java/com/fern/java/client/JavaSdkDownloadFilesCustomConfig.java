@@ -62,6 +62,21 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @JsonProperty("custom-plugins")
+    Optional<List<String>> customPlugins();
+
+    @Value.Default
+    @JsonProperty("custom-interceptors")
+    default Boolean customInterceptors() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-forward-compatible-enums")
+    default Boolean enableForwardCompatibleEnums() {
+        return true;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

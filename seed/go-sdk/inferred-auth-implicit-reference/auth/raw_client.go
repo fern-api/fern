@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/inferred-auth-implicit-reference/fern"
 	core "github.com/inferred-auth-implicit-reference/fern/core"
 	internal "github.com/inferred-auth-implicit-reference/fern/internal"
 	option "github.com/inferred-auth-implicit-reference/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

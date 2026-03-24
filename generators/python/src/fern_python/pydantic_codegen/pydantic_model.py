@@ -367,23 +367,52 @@ class PydanticModel:
 
         single_field = required_non_discriminator_fields[0]
 
-        # Generate the __init__ method body
+        # Generate the __init__ method body using *args/**kwargs to be compatible with
+        # pydantic's internal deserialization. When pydantic deserializes a response from JSON,
+        # it may call __init__(**data) where data uses alias keys (e.g. "ticketReference")
+        # rather than the Python field name (e.g. "ticket_reference"). A required positional
+        # parameter would cause a TypeError in that case. Using *args/**kwargs with overloads
+        # preserves the positional construction API while allowing pydantic to pass data freely.
         def write_init_body(writer: AST.NodeWriter) -> None:
-            writer.write(f"super().__init__({single_field.name}={single_field.name}, **kwargs)")
+            writer.write_line("if args:")
+            with writer.indent():
+                writer.write_line(f"kwargs.pop('{single_field.name}', None)")
+                writer.write_line(f"super().__init__({single_field.name}=args[0], **kwargs)")
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write("super().__init__(**kwargs)")
+
+        # Overload 1: positional construction - e.g. Isin("US0378331005")
+        overload_positional = AST.FunctionSignature(
+            parameters=[
+                AST.FunctionParameter(
+                    name=single_field.name,
+                    type_hint=single_field.type_hint,
+                ),
+            ],
+            return_type=AST.TypeHint.none(),
+        )
+
+        # Overload 2: keyword construction - e.g. Isin(isin="US0378331005")
+        overload_keyword = AST.FunctionSignature(
+            named_parameters=[
+                AST.NamedFunctionParameter(
+                    name=single_field.name,
+                    type_hint=single_field.type_hint,
+                ),
+            ],
+            return_type=AST.TypeHint.none(),
+        )
 
         init_declaration = AST.FunctionDeclaration(
             name="__init__",
             signature=AST.FunctionSignature(
-                parameters=[
-                    AST.FunctionParameter(
-                        name=single_field.name,
-                        type_hint=single_field.type_hint,
-                    ),
-                ],
+                include_args=True,
                 include_kwargs=True,
                 return_type=AST.TypeHint.none(),
             ),
             body=AST.CodeWriter(write_init_body),
+            overloads=[overload_positional, overload_keyword],
         )
 
         self._class_declaration.add_method(declaration=init_declaration)

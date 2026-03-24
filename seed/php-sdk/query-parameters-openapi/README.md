@@ -100,6 +100,12 @@ $client->search(
         'filter' => [
             'filter',
         ],
+        'tags' => [
+            'tags',
+        ],
+        'optionalTags' => [
+            'optionalTags',
+        ],
         'neighbor' => new User([
             'name' => 'name',
             'tags' => [

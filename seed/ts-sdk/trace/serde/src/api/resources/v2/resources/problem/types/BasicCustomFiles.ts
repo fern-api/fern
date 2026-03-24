@@ -5,6 +5,6 @@ import type * as SeedTrace from "../../../../../index.js";
 export interface BasicCustomFiles {
     methodName: string;
     signature: SeedTrace.v2.NonVoidFunctionSignature;
-    additionalFiles: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
+    additionalFiles: Partial<Record<SeedTrace.Language, SeedTrace.v2.Files>>;
     basicTestCaseTemplate: SeedTrace.v2.BasicTestCaseTemplate;
 }

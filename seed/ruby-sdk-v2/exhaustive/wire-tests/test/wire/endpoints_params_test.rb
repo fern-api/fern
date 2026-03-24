@@ -201,7 +201,7 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "POST",
-      url_path: "/params/path/upload-path",
+      url_path: "/params/path/{param}",
       query_params: nil,
       expected: 1
     )

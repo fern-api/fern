@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 5 types for API operations
-//! - **Model Types**: 31 types for data representation
+//! - **Model Types**: 30 types for data representation
 
 pub mod r#type;
 pub mod identifier;
@@ -32,7 +32,6 @@ pub mod types_node;
 pub mod types_tree;
 pub mod types_metadata;
 pub mod types_exception;
-pub mod types_exception_info;
 pub mod types_migration_status;
 pub mod types_migration;
 pub mod types_request;
@@ -69,7 +68,6 @@ pub use types_node::Node;
 pub use types_tree::Tree;
 pub use types_metadata::Metadata2;
 pub use types_exception::Exception;
-pub use types_exception_info::ExceptionInfo;
 pub use types_migration_status::MigrationStatus;
 pub use types_migration::Migration;
 pub use types_request::Request;

@@ -24,21 +24,23 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorConte
     protected doGenerate(): CSharpFile {
         const enum_ = this.csharp.enum_({
             ...this.classReference,
-            access: ast.Access.Public,
-            annotations: [
-                this.csharp.annotation({
-                    reference: this.System.Text.Json.Serialization.JsonConverter(),
-                    argument: this.csharp.codeblock((writer: Writer) => {
-                        writer.write("typeof(");
-                        writer.writeNode(this.csharp.classReferenceInternal(this.Types.EnumSerializer));
-                        writer.write("<");
-                        writer.writeNode(this.classReference);
-                        writer.write(">");
-                        writer.write(")");
-                    })
-                })
-            ]
+            access: ast.Access.Public
         });
+
+        // Enable per-enum serializer generation (no reflection)
+        const serializerRef = enum_.enableSerializerGeneration();
+
+        // Add JsonConverter annotation pointing to the generated serializer
+        enum_.addAnnotation(
+            this.csharp.annotation({
+                reference: this.System.Text.Json.Serialization.JsonConverter(),
+                argument: this.csharp.codeblock((writer: Writer) => {
+                    writer.write("typeof(");
+                    writer.writeNode(this.csharp.classReferenceInternal(serializerRef));
+                    writer.write(")");
+                })
+            })
+        );
 
         this.enumDeclaration.values.forEach((member) =>
             enum_.addMember({ name: member.name.name.pascalCase.safeName, value: member.name.wireValue })

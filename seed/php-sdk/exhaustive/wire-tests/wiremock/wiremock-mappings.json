@@ -598,6 +598,84 @@
       }
     },
     {
+      "id": "233729b0-81c8-4fb3-aa53-793afa48096a",
+      "name": "getAndReturnWithUnknownField - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-unknown-field",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "233729b0-81c8-4fb3-aa53-793afa48096a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+      "name": "getAndReturnWithDocumentedUnknownType - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+      "name": "getAndReturnMapOfDocumentedUnknownType - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
@@ -628,7 +706,15 @@
       "name": "listItems - default",
       "request": {
         "urlPathTemplate": "/pagination",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "limit": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -717,7 +803,15 @@
       "name": "getWithQuery - default",
       "request": {
         "urlPathTemplate": "/params",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -744,7 +838,15 @@
       "name": "getWithAllowMultipleQuery - default",
       "request": {
         "urlPathTemplate": "/params",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -776,6 +878,11 @@
           "param": {
             "equalTo": "param"
           }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
         }
       },
       "response": {
@@ -806,6 +913,11 @@
         "pathParameters": {
           "param": {
             "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
           }
         }
       },
@@ -879,37 +991,6 @@
         }
       },
       "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
-      "name": "uploadWithPath - default",
-      "request": {
-        "urlPathTemplate": "/params/path/{param}",
-        "method": "POST",
-        "pathParameters": {
-          "param": {
-            "equalTo": "upload-path"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"string\": \"uploaded\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1453,6 +1534,6 @@
     }
   ],
   "meta": {
-    "total": 53
+    "total": 55
   }
 }

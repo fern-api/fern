@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -68,14 +68,16 @@ public record Metadata
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new System.Exception("Metadata.Type is not 'html'");
+        IsHtml ? (string)Value! : throw new global::System.Exception("Metadata.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'markdown', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'markdown'.</exception>
     public string AsMarkdown() =>
-        IsMarkdown ? (string)Value! : throw new System.Exception("Metadata.Type is not 'markdown'");
+        IsMarkdown
+            ? (string)Value!
+            : throw new global::System.Exception("Metadata.Type is not 'markdown'");
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -157,12 +159,12 @@ public record Metadata
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Metadata>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Metadata).IsAssignableFrom(typeToConvert);
 
         public override Metadata Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -235,6 +237,27 @@ public record Metadata
                 json[property.Key] = property.Value;
             }
             json.WriteTo(writer, options);
+        }
+
+        public override Metadata ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Metadata(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Metadata value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

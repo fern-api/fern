@@ -8,5 +8,6 @@
       "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
     ]
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

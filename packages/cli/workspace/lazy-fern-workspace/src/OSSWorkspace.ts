@@ -5,6 +5,7 @@ import {
     GraphQLSpec,
     getOpenAPISettings,
     IdentifiableSource,
+    OpenAPISettings,
     OpenAPISpec,
     ProtobufSpec,
     Spec
@@ -12,13 +13,13 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { isNonNullish } from "@fern-api/core-utils";
+import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
+import { type ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -29,7 +30,6 @@ import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
-import { MaybeValid } from "./protobuf/utils.js";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
 export declare namespace OSSWorkspace {
@@ -39,6 +39,30 @@ export declare namespace OSSWorkspace {
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
+}
+
+/**
+ * Collapses a boolean per-spec setting into a single workspace-level value.
+ *
+ * - If no spec explicitly defines the setting (all undefined) → returns undefined (defaults apply)
+ * - If at least one spec defines it → returns true only if no spec explicitly sets it to false
+ *   (undefined specs are treated as neutral / "don't care")
+ *
+ * This ensures that enabling a setting on a subset of specs works correctly,
+ * without breaking users who don't set it at all. See https://github.com/fern-api/fern/issues/6408
+ */
+function collapseSpecBooleanSetting(
+    specs: (OpenAPISpec | ProtobufSpec)[],
+    getter: (settings: OpenAPISettings | undefined) => boolean | undefined
+): boolean | undefined {
+    const values = specs.map((spec) => getter(spec.settings));
+    const hasAnyExplicit = values.some((v) => v != null);
+    if (!hasAnyExplicit) {
+        return undefined;
+    }
+    // If at least one spec explicitly defines the setting, treat undefined as neutral.
+    // Only return false if a spec explicitly sets it to false.
+    return values.every((v) => v == null || v === true);
 }
 
 function convertRemoveDiscriminantsFromSchemas(
@@ -70,35 +94,45 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
     private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
+    // Cache for protobuf → OpenAPI generation results, keyed by relativePathToDependency.
+    // This avoids running buf generate twice when both toFernWorkspace() and
+    // validateOSSWorkspace() need the same OpenAPI specs.
+    private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
+        const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
-            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
-            respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
-            wrapReferencesToNullableInOptional: specs.every(
-                (spec) => spec.settings?.wrapReferencesToNullableInOptional
+            respectReadonlySchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectReadonlySchemas),
+            respectNullableSchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectNullableSchemas),
+            wrapReferencesToNullableInOptional: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.wrapReferencesToNullableInOptional
             ),
             removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
-            coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
-            coerceEnumsToLiterals: specs.every((spec) => spec.settings?.coerceEnumsToLiterals),
-            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
-            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
-            useBytesForBinaryResponse: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.useBytesForBinaryResponse),
-            respectForwardCompatibleEnums: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.respectForwardCompatibleEnums),
-            inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            coerceOptionalSchemasToNullable: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.coerceOptionalSchemasToNullable
+            ),
+            coerceEnumsToLiterals: collapseSpecBooleanSetting(specs, (s) => s?.coerceEnumsToLiterals),
+            onlyIncludeReferencedSchemas: collapseSpecBooleanSetting(specs, (s) => s?.onlyIncludeReferencedSchemas),
+            inlinePathParameters: collapseSpecBooleanSetting(specs, (s) => s?.inlinePathParameters),
+            objectQueryParameters: collapseSpecBooleanSetting(specs, (s) => s?.objectQueryParameters),
+            useBytesForBinaryResponse: collapseSpecBooleanSetting(openapiSpecs, (s) => s?.useBytesForBinaryResponse),
+            respectForwardCompatibleEnums: collapseSpecBooleanSetting(
+                openapiSpecs,
+                (s) => s?.respectForwardCompatibleEnums
+            ),
+            inlineAllOfSchemas: collapseSpecBooleanSetting(specs, (s) => s?.inlineAllOfSchemas),
             resolveAliases: (() => {
-                // Require that resolveAliases is true/provided for all specs
-                const allHaveResolveAliases = specs.every((spec) => spec.settings?.resolveAliases);
-                if (!allHaveResolveAliases) {
+                // Only collapse if at least one spec explicitly defines resolveAliases
+                const values = specs.map((spec) => spec.settings?.resolveAliases);
+                const hasAnyExplicit = values.some((v) => v != null);
+                if (!hasAnyExplicit) {
+                    return undefined;
+                }
+                // If any spec explicitly sets it to false, return false
+                if (values.some((v) => v === false)) {
                     return false;
                 }
 
@@ -110,14 +144,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
-            pathParameterOrder: specs[0]?.settings?.pathParameterOrder
+            pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
+            coerceConstsTo: specs[0]?.settings?.coerceConstsTo
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
+        const hasProtobufSpecs = specs.some((spec) => spec.type === "protobuf");
         this.parseOptions = {
             onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
             respectReadonlySchemas: this.respectReadonlySchemas,
@@ -136,7 +173,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             groupMultiApiEnvironments: this.groupMultiApiEnvironments,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
-            pathParameterOrder: this.pathParameterOrder
+            pathParameterOrder: this.pathParameterOrder,
+            coerceConstsTo: this.coerceConstsTo,
+            respectByteFormat: hasProtobufSpecs
         };
     }
 
@@ -174,10 +213,32 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             } catch (error) {
                 context.logger.error(
                     `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                    error instanceof Error ? error.message : String(error)
+                    extractErrorMessage(error)
                 );
             }
         }
+    }
+
+    /**
+     * Returns cached OpenAPI specs (including protobuf → OpenAPI conversions).
+     * The expensive buf generate work is performed once per unique
+     * relativePathToDependency and reused across getOpenAPIIr(),
+     * getIntermediateRepresentation(), and workspace validation.
+     */
+    public getOpenAPISpecsCached({
+        context,
+        relativePathToDependency
+    }: {
+        context: TaskContext;
+        relativePathToDependency?: RelativeFilePath;
+    }): Promise<OpenAPISpec[]> {
+        const key = relativePathToDependency ?? "";
+        let cached = this.openApiSpecsCache.get(key);
+        if (cached == null) {
+            cached = getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+            this.openApiSpecsCache.set(key, cached);
+        }
+        return cached;
     }
 
     public async getOpenAPIIr(
@@ -192,7 +253,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
-        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        const openApiSpecs = await this.getOpenAPISpecsCached({ context, relativePathToDependency });
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -224,7 +285,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         generateV1Examples: boolean;
         logWarnings: boolean;
     }): Promise<IntermediateRepresentation> {
-        const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        // Start protobuf IR generation in parallel with OpenAPI processing
+        const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
+
+        const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
         const authOverrides =
@@ -265,12 +329,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             switch (document.type) {
                 case "openapi": {
+                    const spec = document.value as OpenAPIV3_1.Document;
+                    const namespace =
+                        document.namespace ??
+                        ((spec as Record<string, unknown>)["x-fern-sdk-namespace"] as string | undefined);
                     const converterContext = new OpenAPIConverterContext3_1({
-                        namespace: document.namespace,
+                        namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value as OpenAPIV3_1.Document,
+                        spec,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         authOverrides,
@@ -286,8 +354,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     break;
                 }
                 case "asyncapi": {
+                    const asyncApiNamespace =
+                        document.namespace ??
+                        ((document.value as unknown as Record<string, unknown>)["x-fern-sdk-namespace"] as
+                            | string
+                            | undefined);
                     const converterContext = new AsyncAPIConverterContext({
-                        namespace: document.namespace,
+                        namespace: asyncApiNamespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
@@ -295,6 +368,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
+                        authOverrides,
                         enableUniqueErrorsPerEndpoint,
                         settings: getOpenAPISettings({ options: document.settings }),
                         generateV1Examples
@@ -364,52 +438,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
                 }
-            } else if (spec.type === "protobuf") {
-                // Handle protobuf specs by calling buf generate with protoc-gen-fern
-                try {
-                    const protobufIRGenerator = new ProtobufIRGenerator({ context });
-                    const protobufIRFilepath = await protobufIRGenerator.generate({
-                        absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
-                        absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
-                        local: true,
-                        deps: spec.dependencies
-                    });
-
-                    const result = await readFile(protobufIRFilepath, "utf-8");
-
-                    const casingsGenerator = constructCasingsGenerator({
-                        generationLanguage: "typescript",
-                        keywords: undefined,
-                        smartCasing: false
-                    });
-
-                    if (result != null) {
-                        let serializedIr: MaybeValid<IntermediateRepresentation>;
-                        try {
-                            serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
-                                allowUnrecognizedEnumValues: true,
-                                skipValidation: true
-                            });
-                            if (serializedIr.ok) {
-                                mergedIr =
-                                    mergedIr === undefined
-                                        ? serializedIr.value
-                                        : mergeIntermediateRepresentation(
-                                              mergedIr,
-                                              serializedIr.value,
-                                              casingsGenerator
-                                          );
-                            } else {
-                                throw new Error();
-                            }
-                        } catch (error) {
-                            context.logger.log("error", "Failed to parse protobuf IR: ");
-                        }
-                    }
-                } catch (error) {
-                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
-                }
             }
+        }
+
+        // Await and merge protobuf IR results (generated in parallel with OpenAPI processing)
+        const protobufIRResults = await protobufIRResultsPromise;
+        const protobufCasingsGenerator = constructCasingsGenerator({
+            generationLanguage: "typescript",
+            keywords: undefined,
+            smartCasing: false
+        });
+        for (const ir of protobufIRResults) {
+            mergedIr =
+                mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, protobufCasingsGenerator);
         }
 
         for (const errorCollector of errorCollectors) {
@@ -439,6 +480,45 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             throw new Error("Failed to generate intermediate representation");
         }
         return mergedIr;
+    }
+
+    private async generateAllProtobufIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
+        const protobufSpecs = this.allSpecs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf");
+        if (protobufSpecs.length === 0) {
+            return [];
+        }
+
+        // Process specs sequentially because ProtobufIRGenerator.generate()
+        // runs `npm install -g` which is not safe to invoke concurrently.
+        const results: IntermediateRepresentation[] = [];
+        for (const spec of protobufSpecs) {
+            try {
+                const protobufIRGenerator = new ProtobufIRGenerator({ context });
+                const protobufIRFilepath = await protobufIRGenerator.generate({
+                    absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
+                    local: true,
+                    deps: spec.dependencies
+                });
+
+                const result = await readFile(protobufIRFilepath, "utf-8");
+                if (result != null) {
+                    const serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true
+                    });
+                    if (serializedIr.ok) {
+                        results.push(serializedIr.value);
+                        continue;
+                    }
+                    context.logger.log("error", "Failed to parse protobuf IR");
+                }
+            } catch (error) {
+                context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+            }
+        }
+
+        return results;
     }
 
     public async toFernWorkspace(
@@ -504,7 +584,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    private async convertSpecsOverrideToSpecs(
+    protected async convertSpecsOverrideToSpecs(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
@@ -517,9 +597,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
                 const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
-                const absoluteFilepathToOverrides = spec.overrides
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
-                    : undefined;
+                // Handle both single override path and array of override paths
+                let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+                const specOverridePaths: AbsoluteFilePath[] = [];
+
+                // Add spec-level overrides
+                if (spec.overrides != null) {
+                    if (Array.isArray(spec.overrides)) {
+                        specOverridePaths.push(
+                            ...spec.overrides.map((override) =>
+                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                            )
+                        );
+                    } else {
+                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                    }
+                }
+
+                // Set the final overrides array
+                if (specOverridePaths.length > 0) {
+                    absoluteFilepathToOverrides =
+                        specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
+                }
                 const absoluteFilepathToOverlays = spec.overlays
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
                     : undefined;
@@ -555,10 +654,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return [
             this.absoluteFilePath,
             ...this.allSpecs
-                .flatMap((spec) => [
-                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
-                    spec.absoluteFilepathToOverrides
-                ])
+                .flatMap((spec) => {
+                    const mainPath =
+                        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath;
+                    // Handle both single override path and array of override paths
+                    const overridePaths = Array.isArray(spec.absoluteFilepathToOverrides)
+                        ? spec.absoluteFilepathToOverrides
+                        : spec.absoluteFilepathToOverrides != null
+                          ? [spec.absoluteFilepathToOverrides]
+                          : [];
+                    return [mainPath, ...overridePaths];
+                })
                 .filter(isNonNullish)
         ];
     }

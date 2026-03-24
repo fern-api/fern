@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/url-form-encoded/fern"
 	core "github.com/url-form-encoded/fern/core"
 	internal "github.com/url-form-encoded/fern/internal"
 	option "github.com/url-form-encoded/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -66,6 +67,47 @@ func (r *RawClient) SubmitFormData(
 		return nil, err
 	}
 	return &core.Response[*fern.PostSubmitResponse]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetToken(
+	ctx context.Context,
+	request *fern.TokenRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.TokenResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/token"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *fern.TokenResponse
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.TokenResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

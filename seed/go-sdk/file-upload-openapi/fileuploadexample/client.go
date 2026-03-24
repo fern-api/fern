@@ -4,6 +4,7 @@ package fileuploadexample
 
 import (
 	context "context"
+
 	fern "github.com/file-upload-openapi/fern"
 	core "github.com/file-upload-openapi/fern/core"
 	internal "github.com/file-upload-openapi/fern/internal"

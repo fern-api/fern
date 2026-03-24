@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v65
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -41,7 +41,7 @@ customFixtureConfig:
     packageVersion: "0.1.0"
 
 fixtures:
-  simple:
+  simple-api:
     - customConfig: null
       outputFolder: basic
     - customConfig:
@@ -133,6 +133,18 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  websocket:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
+  websocket-bearer-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
+  websocket-inferred-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
   license:
     - customConfig: null
       outputFolder: basic

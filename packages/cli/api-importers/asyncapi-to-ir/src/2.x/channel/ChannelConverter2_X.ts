@@ -12,9 +12,11 @@ import { camelCase, startCase } from "lodash-es";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext.js";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name.js";
 import { AsyncAPIV2 } from "../index.js";
 
 export declare namespace ChannelConverter2_X {
@@ -91,7 +93,9 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         });
         const channelAddressExtensionValue = channelAddressExtension.convert();
         const channelAddress = this.transformToValidPath(channelAddressExtensionValue ?? this.channelPath);
-        const baseUrl = this.channel.servers?.[0] ?? Object.keys(this.context.spec.servers ?? {})[0];
+        const baseUrl =
+            this.resolveServerName(this.channel.servers?.[0]) ??
+            this.resolveServerName(Object.keys(this.context.spec.servers ?? {})[0]);
         const path = constructHttpPath(channelAddress);
         const groupName = camelCase(this.channelPath);
 
@@ -101,6 +105,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
@@ -108,7 +114,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 connectMethodName: undefined, // AsyncAPI v2 doesn't support x-fern-sdk-method-name on channels
                 baseUrl,
                 path,
-                auth: false,
+                auth,
                 headers,
                 queryParameters,
                 pathParameters,
@@ -131,6 +137,28 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             audiences,
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private hasServerSecurity(): boolean {
+        const servers = this.context.spec.servers ?? {};
+
+        if (this.channel.servers && this.channel.servers.length > 0) {
+            for (const serverName of this.channel.servers) {
+                const server = (servers as Record<string, AsyncAPIV2.ServerV2>)[serverName];
+                if (server?.security && server.security.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (const server of Object.values(servers)) {
+            const serverV2 = server as AsyncAPIV2.ServerV2;
+            if (serverV2.security && serverV2.security.length > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private convertMessage({
@@ -222,7 +250,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: this.breadcrumbs
                 }),
                 docs: operation.description,
-                methodName: undefined // AsyncAPI v2 doesn't support x-fern-sdk-method-name extension
+                methodName: this.getOperationMethodName(operation)
             };
         }
 
@@ -296,6 +324,31 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
             }
         }
+    }
+
+    /**
+     * Resolves the effective server name by looking up the server in the spec
+     * and checking for x-fern-server-name extension.
+     */
+    private resolveServerName(serverKey: string | undefined): string | undefined {
+        if (serverKey == null) {
+            return undefined;
+        }
+        const specServers = this.context.spec.servers;
+        if (specServers != null && serverKey in specServers) {
+            const server = specServers[serverKey];
+            return AbstractServerConverter.getServerName(serverKey, server);
+        }
+        return serverKey;
+    }
+
+    private getOperationMethodName(operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent): string | undefined {
+        const sdkMethodNameExtension = new SdkMethodNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation,
+            context: this.context
+        });
+        return sdkMethodNameExtension.convert();
     }
 
     private convertBindingQueryParameters({

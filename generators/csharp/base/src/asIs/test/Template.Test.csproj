@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <LangVersion>12</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -30,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\<%= projectName%>\<%= projectName%>.csproj" />
+        <ProjectReference Include="<%= projectReferencePath%>" />
     </ItemGroup>
 
     <Import Project="<%= testProjectName%>.Custom.props" Condition="Exists('<%= testProjectName%>.Custom.props')" />

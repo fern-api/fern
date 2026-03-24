@@ -35,3 +35,8 @@ export interface RuleViolation {
     severity: "fatal" | "error" | "warning";
     message: string;
 }
+
+export interface NamedRuleVisitors {
+    name: string;
+    visitors: RuleVisitors;
+}

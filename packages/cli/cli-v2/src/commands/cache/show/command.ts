@@ -67,10 +67,8 @@ export class ShowCommand {
         context.stdout.info(`Total size: ${formatBytes(stats.totalSize)}`);
         context.stdout.info("");
 
-        context.stdout.info("IR Cache:");
-        if (stats.ir.entryCount === 0) {
-            context.stdout.info("  (empty)");
-        } else {
+        if (stats.ir.entryCount > 0) {
+            context.stdout.info("IR Cache:");
             context.stdout.info(`  ${stats.ir.entryCount} entries (${formatBytes(stats.ir.totalSize)})`);
 
             if (Object.keys(stats.ir.byVersion).length > 0) {
@@ -87,19 +85,17 @@ export class ShowCommand {
                     );
                 }
             }
+            context.stdout.info("");
         }
-        context.stdout.info("");
 
-        context.stdout.info("Logs:");
-        if (stats.logs.fileCount === 0) {
-            context.stdout.info("  (empty)");
-        } else {
+        if (stats.logs.fileCount > 0) {
+            context.stdout.info("Logs:");
             context.stdout.info(`  ${stats.logs.fileCount} files (${formatBytes(stats.logs.totalSize)})`);
         }
     }
 }
 
-export function addShowCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addShowCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new ShowCommand();
     command(
         cli,
@@ -111,7 +107,6 @@ export function addShowCommand(cli: Argv<GlobalArgs>, parentPath?: string): void
                 type: "boolean",
                 description: "Output in JSON format",
                 default: false
-            }),
-        parentPath
+            })
     );
 }

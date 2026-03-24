@@ -7,7 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
+        "string": .object([
+            "key": .string("value")
+        ])
+    ])
 }
 
 try await main()

@@ -4,6 +4,7 @@ package api
 
 import (
 	context "context"
+
 	core "github.com/oauth-client-credentials/fern/core"
 	internal "github.com/oauth-client-credentials/fern/internal"
 	option "github.com/oauth-client-credentials/fern/option"

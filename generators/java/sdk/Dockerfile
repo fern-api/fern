@@ -25,6 +25,13 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
+# Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
+# (async parser bypasses maxNumberLength constraint, leading to potential DoS)
+RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
+      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
+    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
+
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
@@ -71,7 +78,7 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@latest && npm install -g glob@11.1.0
+RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
 
 # Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
@@ -81,14 +88,31 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package glob && \
     rm glob-11.1.0.tgz
 
-# Patch npm's bundled tar to 7.5.8 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx
+# Patch npm's bundled tar to 7.5.11 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx,
+# GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative Linkpath)
 # Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.8.tgz -o tar-7.5.8.tgz && \
-    tar -xzf tar-7.5.8.tgz && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.11.tgz -o tar-7.5.11.tgz && \
+    tar -xzf tar-7.5.11.tgz && \
     mv package tar && \
-    rm tar-7.5.8.tgz
+    rm tar-7.5.11.tgz
+
+# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
+# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
+RUN for dir in \
+      /usr/local/lib/node_modules/glob/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
+        tar -xzf minimatch-10.2.3.tgz && \
+        mv package minimatch && \
+        rm minimatch-10.2.3.tgz; \
+      fi; \
+    done
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2

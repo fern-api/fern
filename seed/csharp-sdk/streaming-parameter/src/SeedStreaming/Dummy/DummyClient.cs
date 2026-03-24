@@ -1,10 +1,11 @@
+using global::System.Text.Json;
 using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
 public partial class DummyClient : IDummyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal DummyClient(RawClient client)
     {
@@ -30,7 +31,6 @@ public partial class DummyClient : IDummyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "generate",
                     Body = request,
@@ -51,7 +51,7 @@ public partial class DummyClient : IDummyClient
                 {
                     result = JsonUtils.Deserialize<StreamResponse>(line);
                 }
-                catch (System.Text.Json.JsonException)
+                catch (JsonException)
                 {
                     throw new SeedStreamingException($"Unable to deserialize JSON response 'line'");
                 }
@@ -59,7 +59,9 @@ public partial class DummyClient : IDummyClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedStreamingApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

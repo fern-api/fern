@@ -4,10 +4,11 @@ package api
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/oauth-client-credentials-mandatory-auth/fern/core"
 	internal "github.com/oauth-client-credentials-mandatory-auth/fern/internal"
 	option "github.com/oauth-client-credentials-mandatory-auth/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -196,7 +196,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-EndpointHttpResponse response = client.service().withRawResponse().endpoint(...);
+SeedAcceptHttpResponse response = client.service().withRawResponse().endpoint(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

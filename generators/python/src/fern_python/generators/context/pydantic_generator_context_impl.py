@@ -112,6 +112,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     uint_64=lambda _: None,
                     date=lambda _: None,
                     date_time=lambda _: None,
+                    date_time_rfc_2822=lambda _: None,
                     uuid_=lambda _: None,
                     base_64=lambda _: None,
                     float_=lambda _: None,

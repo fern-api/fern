@@ -15,7 +15,8 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
-_WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
+_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
+_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
 _PROJECT_NAME: str = "seed-server-sent-events"
 
 # This file lives at tests/conftest.py, so the project root is one level up.
@@ -41,8 +42,17 @@ def _get_wiremock_port() -> str:
 
 def _start_wiremock() -> None:
     """Starts the WireMock container using docker-compose."""
-    global _STARTED, _WIREMOCK_PORT
+    global _STARTED, _EXTERNAL, _WIREMOCK_URL
     if _STARTED:
+        return
+
+    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
+    existing_url = os.environ.get("WIREMOCK_URL")
+    if existing_url:
+        _WIREMOCK_URL = existing_url
+        _EXTERNAL = True
+        _STARTED = True
+        print(f"\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
         return
 
     print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
@@ -54,8 +64,9 @@ def _start_wiremock() -> None:
             text=True,
         )
         _WIREMOCK_PORT = _get_wiremock_port()
-        os.environ["WIREMOCK_PORT"] = _WIREMOCK_PORT
-        print(f"WireMock container is ready on port {_WIREMOCK_PORT}")
+        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
+        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
+        print(f"WireMock container is ready at {_WIREMOCK_URL}")
         _STARTED = True
     except subprocess.CalledProcessError as e:
         print(f"Failed to start WireMock: {e.stderr}")
@@ -64,6 +75,10 @@ def _start_wiremock() -> None:
 
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
+    if _EXTERNAL:
+        # Container is managed externally; nothing to tear down.
+        return
+
     print("\nStopping WireMock container...")
     subprocess.run(
         ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],

@@ -6,7 +6,7 @@ namespace SeedWebsocket.Core.WebSockets;
 /// Contains information about a WebSocket reconnection event.
 /// Provides details about the reason for reconnection.
 /// </summary>
-internal class ReconnectionInfo
+public class ReconnectionInfo
 {
     /// <summary>
     /// Initializes a new instance of the ReconnectionInfo class.

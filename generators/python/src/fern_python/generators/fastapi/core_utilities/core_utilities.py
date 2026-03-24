@@ -136,7 +136,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"},
+            exports={"serialize_datetime", "parse_rfc2822_datetime", "Rfc2822DateTime"},
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:
@@ -275,6 +275,18 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
+        )
+
+    def get_rfc2822_datetime_type_hint(self) -> AST.TypeHint:
+        """Return a type hint referencing Rfc2822DateTime from datetime_utils (V1/V2 compatible)."""
+        return AST.TypeHint(
+            AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "datetime_utils"),
+                    named_import="Rfc2822DateTime",
+                ),
+            )
         )
 
     def BearerToken(self) -> AST.ClassReference:

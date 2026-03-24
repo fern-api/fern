@@ -19,6 +19,7 @@ describe("no-response-property", () => {
                 message: "Response does not have a property named id.",
                 nodePath: ["service", "endpoints", "getMovie"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-response-property",
                 severity: "fatal"
             }
         ]);

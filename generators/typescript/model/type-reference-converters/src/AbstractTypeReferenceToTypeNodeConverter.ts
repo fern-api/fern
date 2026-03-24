@@ -368,19 +368,26 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         const keyTypeNode = this.convert({ ...params, typeReference: map.keyType });
         const valueTypeNode = this.convert({ ...params, typeReference: map.valueType });
         return this.generateNonOptionalTypeReferenceNode({
-            typeNode: ts.factory.createTypeReferenceNode("Record", [keyTypeNode.typeNode, valueTypeNode.typeNode]),
+            typeNode: ts.factory.createTypeReferenceNode("Record", [
+                keyTypeNode.typeNode,
+                valueTypeNode.typeNodeWithoutUndefined
+            ]),
             requestTypeNode:
                 keyTypeNode.requestTypeNode || valueTypeNode.requestTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.requestTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.requestTypeNode ?? valueTypeNode.typeNode
+                          valueTypeNode.requestTypeNodeWithoutUndefined ??
+                              valueTypeNode.requestTypeNode ??
+                              valueTypeNode.typeNodeWithoutUndefined
                       ])
                     : undefined,
             responseTypeNode:
                 keyTypeNode.responseTypeNode || valueTypeNode.responseTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyTypeNode.responseTypeNode ?? keyTypeNode.typeNode,
-                          valueTypeNode.responseTypeNode ?? valueTypeNode.typeNode
+                          valueTypeNode.responseTypeNodeWithoutUndefined ??
+                              valueTypeNode.responseTypeNode ??
+                              valueTypeNode.typeNodeWithoutUndefined
                       ])
                     : undefined
         });
@@ -389,22 +396,27 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected mapWithOptionalValues(map: FernIr.MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const valueType = this.convert({ ...params, typeReference: map.valueType });
         const keyType = this.convert({ ...params, typeReference: map.keyType });
-        const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);
         return this.generateNonOptionalTypeReferenceNode({
-            typeNode: ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode]),
+            typeNode: ts.factory.createTypeReferenceNode("Partial", [
+                ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, valueType.typeNode])
+            ]),
             requestTypeNode: this.generateReadWriteOnlyTypes
-                ? keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
-                    ? ts.factory.createTypeReferenceNode("Record", [
-                          keyType.requestTypeNode ?? keyType.typeNode,
-                          optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
+                ? keyType.requestTypeNode || valueType.requestTypeNode
+                    ? ts.factory.createTypeReferenceNode("Partial", [
+                          ts.factory.createTypeReferenceNode("Record", [
+                              keyType.requestTypeNode ?? keyType.typeNode,
+                              valueType.requestTypeNode ?? valueType.typeNode
+                          ])
                       ])
                     : undefined
                 : undefined,
             responseTypeNode: this.generateReadWriteOnlyTypes
-                ? keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
-                    ? ts.factory.createTypeReferenceNode("Record", [
-                          keyType.responseTypeNode ?? keyType.typeNode,
-                          optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
+                ? keyType.responseTypeNode || valueType.responseTypeNode
+                    ? ts.factory.createTypeReferenceNode("Partial", [
+                          ts.factory.createTypeReferenceNode("Record", [
+                              keyType.responseTypeNode ?? keyType.typeNode,
+                              valueType.responseTypeNode ?? valueType.typeNode
+                          ])
                       ])
                     : undefined
                 : undefined

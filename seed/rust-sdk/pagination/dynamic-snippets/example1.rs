@@ -12,7 +12,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),

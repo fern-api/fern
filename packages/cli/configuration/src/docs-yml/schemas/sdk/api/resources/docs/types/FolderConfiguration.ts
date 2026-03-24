@@ -14,7 +14,7 @@ export interface FolderConfiguration extends FernDocsConfig.WithPermissions, Fer
     hidden?: boolean;
     skipSlug?: boolean;
     /** Deprecated. Use `collapsible` and `collapsed-by-default` instead. */
-    collapsed?: boolean;
+    collapsed?: FernDocsConfig.CollapsedValue;
     /** Whether the section can be expanded/collapsed by the user. */
     collapsible?: boolean;
     /** Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open). */

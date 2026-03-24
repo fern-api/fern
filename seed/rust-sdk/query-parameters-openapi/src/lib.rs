@@ -53,6 +53,8 @@
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
 //!                 })],
 //!                 filter: vec![Some("filter".to_string())],
+//!                 tags: vec![Some("tags".to_string())],
+//!                 optional_tags: vec![Some("optionalTags".to_string())],
 //!                 neighbor: Some(SearchRequestNeighbor::User(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
@@ -78,15 +80,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
-pub use error::{ApiError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use error::{ApiError, BuildError};

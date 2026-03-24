@@ -63,7 +63,8 @@ class BlockList {
 
     public addBlock(block: Block): void {
         if (this.hasBlock(block.id)) {
-            throw new Error(`block with id "${block.id}" already exists`);
+            console.warn(`[readme] Duplicate block with id "${block.id}" detected; overriding with latest content`);
+            this.blocks = this.blocks.filter((b) => b.id !== block.id);
         }
         this.ids.add(block.id);
         this.blocks.push(block);
@@ -79,7 +80,9 @@ class BlockList {
 
     public insertBlock(block: Block, precedingBlockId?: string): void {
         if (this.hasBlock(block.id)) {
-            throw new Error(`block with id "${block.id}" already exists`);
+            console.warn(`[readme] Duplicate block with id "${block.id}" detected; overriding with latest content`);
+            this.blocks = this.blocks.filter((b) => b.id !== block.id);
+            this.ids.delete(block.id);
         }
         if (precedingBlockId === undefined) {
             this.addBlock(block);

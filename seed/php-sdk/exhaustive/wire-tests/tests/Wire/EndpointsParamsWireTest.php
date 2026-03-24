@@ -212,7 +212,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/params/path/upload-path",
+            "/params/path/{param}",
             null,
             1
         );
@@ -222,10 +222,11 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     protected function setUp(): void {
         parent::setUp();
+        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
         $this->client = new SeedClient(
             token: 'test-token',
         options: [
-            'baseUrl' => 'http://localhost:8080',
+            'baseUrl' => $wiremockUrl,
         ],
         );
     }

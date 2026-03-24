@@ -1,11 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    fern "github.com/exhaustive/fern"
-    context "context"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,15 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
-        ),
+    request := &types.ObjectWithDocumentedUnknownType{
+        DocumentedUnknownType: map[string]any{
+            "key": "value",
+        },
     }
-    client.Endpoints.Pagination.ListItems(
+    client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
         context.TODO(),
         request,
     )

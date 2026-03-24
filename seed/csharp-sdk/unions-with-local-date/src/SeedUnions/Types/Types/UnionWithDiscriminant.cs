@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithDiscriminant.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithDiscriminant.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Bar AsBar() =>
         IsBar
             ? (SeedUnions.Bar)Value!
-            : throw new System.Exception("UnionWithDiscriminant.Type is not 'bar'");
+            : throw new global::System.Exception("UnionWithDiscriminant.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -148,12 +148,12 @@ public record UnionWithDiscriminant
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDiscriminant>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDiscriminant).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDiscriminant Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -210,6 +210,27 @@ public record UnionWithDiscriminant
                 } ?? new JsonObject();
             json["_type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithDiscriminant ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithDiscriminant(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithDiscriminant value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

@@ -9,5 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ServiceClient, AcceptClient};
-
+pub use resources::{AcceptClient, ServiceClient};

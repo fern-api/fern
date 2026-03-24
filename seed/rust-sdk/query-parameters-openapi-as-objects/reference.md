@@ -60,6 +60,8 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 })],
                 filter: vec![Some("filter".to_string())],
+                tags: vec![Some("tags".to_string())],
+                optional_tags: vec![Some("optionalTags".to_string())],
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
@@ -192,6 +194,22 @@ async fn main() {
 <dd>
 
 **filter:** `Option<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `Option<String>` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_tags:** `Option<String>` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

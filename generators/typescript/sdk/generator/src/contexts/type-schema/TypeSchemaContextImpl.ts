@@ -55,6 +55,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private typeSchemaGenerator: TypeSchemaGenerator;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    // Tracks exported names that have been directly imported in the current schema file,
+    // mapping exported name -> fern filepath string. Used to detect name collisions
+    // when different packages define types with the same name.
+    private directImportedNames: Map<string, string> = new Map();
+    private currentSchemaName: string | undefined;
 
     constructor({
         sourceFile,
@@ -113,6 +118,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getGeneratedTypeSchema(typeName: FernIr.DeclaredTypeName): GeneratedTypeSchema {
+        this.directImportedNames.clear();
+        this.currentSchemaName = this.typeSchemaDeclarationReferencer.getExportedName(typeName);
         const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -168,19 +175,61 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference });
     }
 
+    /**
+     * Checks whether directly importing the given type would cause a duplicate identifier.
+     * This happens when:
+     * 1. Another type with the same exported name but from a different fern filepath
+     *    has already been directly imported in this schema file.
+     * 2. The exported name matches the current schema name (e.g., importing SecurityFinding
+     *    into the SecurityFinding schema).
+     */
+    private wouldCauseDirectImportCollision(typeName: FernIr.DeclaredTypeName): boolean {
+        const exportedName = this.typeSchemaDeclarationReferencer.getExportedName(typeName);
+        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => p.originalName).join("/");
+
+        // Check if the exported name collides with the schema name itself
+        if (this.currentSchemaName != null && exportedName === this.currentSchemaName) {
+            return true;
+        }
+
+        // Check if another type with the same exported name but different filepath
+        // has already been directly imported
+        const existingFilepath = this.directImportedNames.get(exportedName);
+        if (existingFilepath != null && existingFilepath !== fernFilepathKey) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Records that a type has been directly imported, for future collision detection.
+     */
+    private recordDirectImport(typeName: FernIr.DeclaredTypeName): void {
+        const exportedName = this.typeSchemaDeclarationReferencer.getExportedName(typeName);
+        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => p.originalName).join("/");
+        this.directImportedNames.set(exportedName, fernFilepathKey);
+    }
+
     public getReferenceToRawNamedType(typeName: FernIr.DeclaredTypeName): Reference {
         const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const isCircular = typeDeclaration.referencedTypes.has(typeName.typeId);
+        const wouldCollide = this.wouldCauseDirectImportCollision(typeName);
+
+        if (!isCircular && !wouldCollide) {
+            this.recordDirectImport(typeName);
+        }
 
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
             name: typeName,
-            importStrategy: isCircular
-                ? {
-                      type: "fromRoot",
-                      useDynamicImport: false,
-                      namespaceImport: "serializers"
-                  }
-                : { type: "direct" },
+            importStrategy:
+                isCircular || wouldCollide
+                    ? {
+                          type: "fromRoot",
+                          useDynamicImport: false,
+                          namespaceImport: "serializers"
+                      }
+                    : { type: "direct" },
             // TODO this should not be hardcoded here
             subImport: ["Raw"],
             importsManager: this.importsManager,
@@ -212,11 +261,17 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             .getReferenceToType({
                 name: typeName,
                 importStrategy: (() => {
-                    // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
                         // Circular references should be imported from the root.
                         return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" };
                     } else if (isGeneratingSchema) {
+                        const wouldCollide = this.wouldCauseDirectImportCollision(typeName);
+                        if (wouldCollide) {
+                            // Use namespace import to avoid duplicate identifier issues
+                            // when different packages define types with the same name.
+                            return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" };
+                        }
+                        this.recordDirectImport(typeName);
                         return { type: "direct" };
                     } else {
                         return { type: "fromRoot", namespaceImport: "serializers" };

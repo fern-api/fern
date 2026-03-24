@@ -66,9 +66,31 @@ export class ObjectSchemaConverter extends AbstractConverter<
         const objectHasRequiredProperties = this.schema.required != null && this.schema.required.length > 0;
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = propertiesInlinedTypes;
         let propertiesByAudience: Record<string, Set<string>> = basePropertiesByAudience;
+
+        // Collect properties from all resolved referenced allOf schemas so we can
+        // merge base property schemas (e.g. type: array) into inline overrides that
+        // only specify partial info (e.g. items without type: array).
+        const resolvedParentProperties: Record<string, OpenAPIV3_1.SchemaObject> = {};
+        for (const allOfSchemaOrReference of this.schema.allOf ?? []) {
+            if (this.context.isReferenceObject(allOfSchemaOrReference)) {
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: allOfSchemaOrReference,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (resolved?.properties != null) {
+                    for (const [key, propSchema] of Object.entries(resolved.properties)) {
+                        if (!this.context.isReferenceObject(propSchema) && resolvedParentProperties[key] == null) {
+                            resolvedParentProperties[key] = propSchema;
+                        }
+                    }
+                }
+            }
+        }
+
         for (const [index, allOfSchemaOrReference] of (this.schema.allOf ?? []).entries()) {
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
             let allOfSchema: OpenAPIV3_1.SchemaObject;
+            let isInlineAllOf = false;
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
                 const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: allOfSchemaOrReference,
@@ -102,10 +124,105 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 }
             } else {
                 allOfSchema = allOfSchemaOrReference;
+                isInlineAllOf = true;
             }
 
             if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
                 hasAdditionalProperties = true;
+            }
+
+            // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
+            // (e.g., oneOf with variants containing `not: {}` properties).
+            // Extract properties from each variant as optional properties on the parent object.
+            const variants = allOfSchema.oneOf ?? allOfSchema.anyOf;
+            if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                const seenKeys = new Set(properties.map((p) => p.name.wireValue));
+                for (const [variantIndex, variantSchemaOrRef] of variants.entries()) {
+                    const variantBreadcrumbs = [
+                        ...breadcrumbs,
+                        allOfSchema.oneOf != null ? "oneOf" : "anyOf",
+                        variantIndex.toString()
+                    ];
+                    const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
+                        ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                              schemaOrReference: variantSchemaOrRef,
+                              breadcrumbs: variantBreadcrumbs
+                          })
+                        : variantSchemaOrRef;
+                    if (variantSchema == null) {
+                        continue;
+                    }
+
+                    // Filter out properties with `not: {}` schema (meaning "property must not exist")
+                    const filteredProperties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> =
+                        {};
+                    for (const [key, propertySchema] of Object.entries(variantSchema.properties ?? {})) {
+                        if (!this.context.isReferenceObject(propertySchema) && "not" in propertySchema) {
+                            continue;
+                        }
+                        filteredProperties[key] = propertySchema;
+                    }
+
+                    // All properties from oneOf/anyOf variants are optional on the parent object
+                    // since only one variant's properties are present at a time
+                    const filteredKeys = Object.keys(filteredProperties).filter((key) => !seenKeys.has(key));
+                    if (filteredKeys.length === 0) {
+                        continue;
+                    }
+
+                    const filteredPropertiesForConvert: Record<
+                        string,
+                        OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+                    > = {};
+                    for (const key of filteredKeys) {
+                        const prop = filteredProperties[key];
+                        if (prop != null) {
+                            filteredPropertiesForConvert[key] = prop;
+                            seenKeys.add(key);
+                        }
+                    }
+
+                    const {
+                        convertedProperties: variantProperties,
+                        inlinedTypesFromProperties: inlinedTypesFromVariant,
+                        referencedTypes: variantReferencedTypes,
+                        propertiesByAudience: variantPropertiesByAudience
+                    } = convertProperties({
+                        properties: filteredPropertiesForConvert,
+                        required: [], // All variant properties are optional on the parent
+                        breadcrumbs: variantBreadcrumbs,
+                        context: this.context,
+                        errorCollector: this.context.errorCollector
+                    });
+
+                    properties.push(...variantProperties);
+                    inlinedTypes = { ...inlinedTypes, ...inlinedTypesFromVariant };
+                    propertiesByAudience = { ...propertiesByAudience, ...variantPropertiesByAudience };
+                    variantReferencedTypes.forEach((typeId) => {
+                        referencedTypes.add(typeId);
+                    });
+                }
+                continue;
+            }
+
+            // Merge base property schemas from referenced allOf parents into inline
+            // override properties. This handles cases like allOf narrowing array items
+            // without redeclaring type: array — the base schema's type/structure is
+            // carried forward so the property is correctly recognized.
+            // Only apply to inline allOf elements — resolved references that fell through
+            // the extends_ check already have their own complete property schemas.
+            let mergedProperties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> =
+                allOfSchema.properties ?? {};
+            if (isInlineAllOf) {
+                mergedProperties = {};
+                for (const [key, propSchema] of Object.entries(allOfSchema.properties ?? {})) {
+                    const parentProp = resolvedParentProperties[key];
+                    if (parentProp != null && !this.context.isReferenceObject(propSchema)) {
+                        mergedProperties[key] = { ...parentProp, ...propSchema };
+                    } else {
+                        mergedProperties[key] = propSchema;
+                    }
+                }
             }
 
             const {
@@ -114,7 +231,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 referencedTypes: allOfReferencedTypes,
                 propertiesByAudience: allOfPropertiesByAudience
             } = convertProperties({
-                properties: allOfSchema.properties ?? {},
+                properties: mergedProperties,
                 required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
                 breadcrumbs,
                 context: this.context,

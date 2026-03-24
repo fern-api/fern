@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -22,6 +21,28 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./level1": {
+            "import": {
+                "types": "./dist/esm/api/resources/level1/exports.d.mts",
+                "default": "./dist/esm/api/resources/level1/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/level1/exports.d.ts",
+                "default": "./dist/cjs/api/resources/level1/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/level1/exports.js"
+        },
+        "./level1/level2": {
+            "import": {
+                "types": "./dist/esm/api/resources/level1/resources/level2/exports.d.mts",
+                "default": "./dist/esm/api/resources/level1/resources/level2/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/level1/resources/level2/exports.d.ts",
+                "default": "./dist/cjs/api/resources/level1/resources/level2/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/level1/resources/level2/exports.js"
         },
         "./package.json": "./package.json"
     },

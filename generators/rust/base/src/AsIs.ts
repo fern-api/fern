@@ -55,6 +55,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "sse_stream.rs"
     },
+    WebSocket: {
+        relativePathToDir: "src/core",
+        filename: "websocket.rs"
+    },
     FlexibleDatetime: {
         relativePathToDir: "src/core",
         filename: "flexible_datetime.rs"

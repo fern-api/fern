@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Discriminator Shared Base Test
+  version: 1.0.0
+
+paths:
+  /items:
+    get:
+      operationId: listItems
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/BadRequestError"
+                  - $ref: "#/components/schemas/InvalidInputError"
+                discriminator:
+                  propertyName: code
+                  mapping:
+                    BAD_REQUEST: "#/components/schemas/BadRequestError"
+                    INVALID_INPUT: "#/components/schemas/InvalidInputError"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+
+components:
+  schemas:
+    ItemsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+      required:
+        - items
+
+    # Base error schema with both `code` and `message` required.
+    # The `code` property must be preserved on this schema even though it is
+    # used as the discriminator in the BadRequest oneOf response above.
+    Error:
+      type: object
+      description: Base error schema
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+      required:
+        - code
+        - message
+
+    # Discriminated union members (referenced by the 400 oneOf with discriminator on `code`)
+    BadRequestError:
+      description: The request was malformed
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
+            code:
+              type: string
+              enum: ["BAD_REQUEST"]
+
+    InvalidInputError:
+      description: The request contained invalid input
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
+            code:
+              type: string
+              enum: ["INVALID_INPUT"]
+            invalidFields:
+              type: array
+              items:
+                type: string
+
+    # Non-discriminated union error schemas that also extend Error.
+    # These must still have `code` in their properties.
+    UnauthorizedError:
+      description: Authentication failed
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
+            code:
+              type: string
+              enum: ["UNABLE_TO_AUTHENTICATE"]
+
+    ForbiddenError:
+      description: Access denied
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
+            code:
+              type: string
+              enum: ["ACCESS_DENIED"]

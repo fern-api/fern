@@ -1,7 +1,7 @@
 import { DefinitionFileSchema, NodePath } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileAstNodeTypes, DefinitionFileAstNodeVisitor, DefinitionFileAstVisitor } from "./ast/index.js";
-import { RuleVisitors } from "./Rule.js";
+import { NamedRuleVisitors } from "./Rule.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 export function createDefinitionFileAstVisitorForRules({
@@ -12,19 +12,20 @@ export function createDefinitionFileAstVisitorForRules({
 }: {
     relativeFilepath: RelativeFilePath;
     contents: DefinitionFileSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
 }): DefinitionFileAstVisitor {
     function createAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes>(
         nodeType: K
     ): Record<K, DefinitionFileAstNodeVisitor<K>> {
         const visit: DefinitionFileAstNodeVisitor<K> = (node: DefinitionFileAstNodeTypes[K], nodePath: NodePath) => {
-            for (const ruleVisitors of allRuleVisitors) {
+            for (const { name: ruleName, visitors: ruleVisitors } of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.definitionFile?.[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
+                            name: ruleName,
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,

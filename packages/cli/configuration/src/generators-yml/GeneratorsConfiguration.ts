@@ -87,18 +87,21 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
+    inferForwardCompatible: boolean | undefined;
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
 }
 
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
-    overrides: string | undefined;
+    overrides: string | string[] | undefined;
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
@@ -177,6 +180,7 @@ export interface GeneratorInvocation {
         specs?: ApiConfigurationV2SpecsSchema;
         auth?: RawSchemas.ApiAuthSchema;
         "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+        headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     };
 }
 

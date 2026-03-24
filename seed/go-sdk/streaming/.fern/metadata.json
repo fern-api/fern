@@ -9,5 +9,6 @@
       "path": "github.com/fern-api/stream-go"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v2.0.0"
 }

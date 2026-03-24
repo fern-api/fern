@@ -1,9 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -15,8 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPath(
+    request := map[string]types.DocumentedUnknownType{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
+    client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
         context.TODO(),
-        "param",
+        request,
     )
 }

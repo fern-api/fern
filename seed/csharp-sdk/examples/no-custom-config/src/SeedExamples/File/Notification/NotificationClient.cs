@@ -4,7 +4,7 @@ namespace SeedExamples.File_.Notification;
 
 public partial class NotificationClient : INotificationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NotificationClient(RawClient client)
     {

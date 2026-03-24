@@ -41,10 +41,30 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
-        const files = Object.values(AsIsFiles);
+        let files = Object.values(AsIsFiles);
+        // Exclude core/mod.rs — it's generated dynamically to only declare modules for files that exist.
+        // The static asIs mod.rs always declares mod sse_stream and mod websocket, which breaks
+        // cargo fmt when those files are conditionally excluded (cargo fmt doesn't evaluate #[cfg]).
+        files = files.filter((file) => file !== AsIsFiles.CoreMod);
         // Only include sse_stream.rs when there are streaming endpoints
         if (!this.hasStreamingEndpoints()) {
-            return files.filter((file) => file.filename !== "sse_stream.rs");
+            files = files.filter((file) => file.filename !== "sse_stream.rs");
+        }
+        // Only include websocket.rs when there are WebSocket channels
+        if (!this.hasWebSocketChannels()) {
+            files = files.filter((file) => file.filename !== "websocket.rs");
+        }
+        // Only include bigint_string.rs when big integer types are used
+        if (!this.usesBigInteger()) {
+            files = files.filter((file) => file.filename !== "bigint_string.rs");
+        }
+        // Only include base64_bytes.rs when base64 types are used
+        if (!this.usesBase64()) {
+            files = files.filter((file) => file.filename !== "base64_bytes.rs");
+        }
+        // Only include flexible_datetime.rs when datetime/date types are used
+        if (!this.usesDateTime()) {
+            files = files.filter((file) => file.filename !== "flexible_datetime.rs");
         }
         return files;
     }
@@ -76,7 +96,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {
-        return new ModelGeneratorContext(
+        const modelContext = new ModelGeneratorContext(
             this.ir,
             this.config,
             ModelCustomConfigSchema.parse({
@@ -92,5 +112,49 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             }),
             this.generatorNotificationService
         );
+
+        // Pass WebSocket server message type IDs so StructGenerator can skip
+        // the `type` property on those structs (conflicts with #[serde(tag = "type")])
+        if (this.hasWebSocketChannels()) {
+            modelContext.websocketServerMessageTypeIds = this.computeWebSocketServerMessageTypeIds();
+        }
+
+        return modelContext;
+    }
+
+    /**
+     * Returns true if the subpackage has only a WebSocket channel and no HTTP service
+     * or endpoints in tree. These subpackages should not generate HTTP client stubs
+     * since the actual WebSocket functionality is handled by the WebSocketChannelGenerator.
+     */
+    public isWebSocketOnlySubpackage(subpackage: FernIr.Subpackage): boolean {
+        return subpackage.websocket != null && subpackage.service == null && !subpackage.hasEndpointsInTree;
+    }
+
+    /**
+     * Scans all WebSocket channels and collects type IDs from server messages
+     * that have named body types. These types are used as variants in a
+     * `#[serde(tag = "type")]` enum, so their inner `type` property must be
+     * skipped to avoid deserialization conflicts.
+     */
+    private computeWebSocketServerMessageTypeIds(): Set<string> {
+        const typeIds = new Set<string>();
+        const websocketChannels = this.ir.websocketChannels;
+        if (!websocketChannels) {
+            return typeIds;
+        }
+
+        for (const channel of Object.values(websocketChannels)) {
+            for (const msg of channel.messages) {
+                if (msg.origin !== "server") {
+                    continue;
+                }
+                if (msg.body.type === "reference" && msg.body.bodyType.type === "named") {
+                    typeIds.add(msg.body.bodyType.typeId);
+                }
+            }
+        }
+
+        return typeIds;
     }
 }

@@ -44,17 +44,44 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
-        const hasSubClients = this.hasSubClients();
+        // Skip generating HTTP client stubs for subpackages that only have a WebSocket
+        // channel and no HTTP service. The actual WebSocket functionality is handled by
+        // the WebSocketChannelGenerator which generates files in src/api/websocket/.
+        if (this.context.isWebSocketOnlySubpackage(this.subpackage)) {
+            return null;
+        }
+
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
-        // If this subpackage has subclients and is in a nested directory,
-        // we'll generate a unified mod.rs instead of a separate client file
-        if (hasSubClients && fernFilepathDir) {
+        // If this subpackage has any children at all and is in a nested directory,
+        // we'll generate a unified mod.rs instead of a separate client file.
+        // We check ALL children (not just service-having ones) because any child
+        // creates a subdirectory via generateNestedModFiles. If the client filename
+        // matches a child directory name, Rust's module resolution finds both
+        // file.rs and file/mod.rs, causing an ambiguity error.
+        const hasAnyChildren = this.subpackage.subpackages.length > 0;
+        if (hasAnyChildren && fernFilepathDir) {
             return null; // Skip separate client file generation
         }
 
         // Generate regular client file for subpackages without subclients
         const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
+
+        // Check if this standalone file would collide with a directory created by
+        // another subpackage. This happens when multiple subpackages map to the same
+        // path (e.g., from HTTP + AsyncAPI sources) and one has children that create
+        // a subdirectory matching this file's module name. In Rust, both `X.rs` and
+        // `X/mod.rs` resolve to module `X`, causing an ambiguity error.
+        const moduleName = filename.replace(".rs", "");
+        const parentDir = fernFilepathDir ?? "";
+        const potentialConflictDir = parentDir ? `${parentDir}/${moduleName}` : moduleName;
+        const wouldCollideWithDirectory = Object.values(this.context.ir.subpackages).some((otherSubpackage) => {
+            const otherDir = this.context.getDirectoryForFernFilepath(otherSubpackage.fernFilepath);
+            return otherDir === potentialConflictDir || (otherDir != null && otherDir.startsWith(potentialConflictDir + "/"));
+        });
+        if (wouldCollideWithDirectory) {
+            return null; // Skip standalone file; another subpackage creates a directory with the same module name
+        }
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({
@@ -76,6 +103,44 @@ export class SubClientGenerator {
             directory: RelativeFilePath.of(directory),
             fileContents: module.toString()
         });
+    }
+
+    /**
+     * Returns the raw client code (struct + impl with all endpoint methods) and imports
+     * for embedding in a unified mod.rs file. Used by RootClientGenerator when this
+     * subpackage's client code needs to be inlined alongside submodule declarations.
+     */
+    public generateRawClientContent(): { rawDeclarations: string[]; imports: UseStatement[] } {
+        const endpoints = this.service?.endpoints || [];
+
+        const rustClient = rust.client({
+            name: this.subClientName,
+            fields: this.generateFields(),
+            constructors: [this.generateConstructor()],
+            methods: this.convertEndpointsToHttpMethods(endpoints)
+        });
+
+        return {
+            rawDeclarations: [rustClient.toString()],
+            imports: this.generateImports()
+        };
+    }
+
+    /**
+     * Returns just the endpoint methods for this service, without the client struct wrapper.
+     * Used by RootClientGenerator to add root-level endpoint methods directly on the main client.
+     */
+    public getEndpointMethods(): rust.Client.SimpleMethod[] {
+        const endpoints = this.service?.endpoints || [];
+        return this.convertEndpointsToHttpMethods(endpoints);
+    }
+
+    /**
+     * Returns the imports required by this service's endpoint methods.
+     * Used by RootClientGenerator to merge root-level endpoint imports.
+     */
+    public getEndpointImports(): UseStatement[] {
+        return this.generateImports();
     }
 
     public generateModFile(): RustFile | null {
@@ -871,7 +936,8 @@ export class SubClientGenerator {
             let paramType = param.type.toString();
 
             if (param.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
 
             if (param.optional) {
@@ -885,7 +951,8 @@ export class SubClientGenerator {
         if (requestBodyParam) {
             let paramType = requestBodyParam.type.toString();
             if (requestBodyParam.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -908,9 +975,15 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            // MIXED: Request body contains both body + query fields
-            this.addRequestBodyParameter(endpoint, params);
-            // Query params are now included in the request body struct
+            if (this.isBytesEndpoint(endpoint)) {
+                // BYTES + QUERY: bytes body can't hold query fields, add them separately
+                this.addRequestBodyParameter(endpoint, params);
+                this.addIndividualQueryParameters(endpoint, params);
+            } else {
+                // MIXED: Request body contains both body + query fields
+                this.addRequestBodyParameter(endpoint, params);
+                // Query params are now included in the request body struct
+            }
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);
@@ -923,13 +996,26 @@ export class SubClientGenerator {
         return params;
     }
 
+    private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
+            params.push({
+                name: paramName,
+                type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
+                isRef: this.shouldPassByReference(queryParam.valueType),
+                optional: false
+            });
+        }
+    }
+
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
+                    const paramName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     params.push({
-                        name: pathParam.name.snakeCase.safeName,
+                        name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
                         isRef: this.shouldPassByReference(pathParam.valueType),
                         optional: false
@@ -1260,7 +1346,10 @@ export class SubClientGenerator {
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
         const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
-        if (endpoint?.requestBody) {
+        if (endpoint && this.isBytesEndpoint(endpoint)) {
+            // BYTES body: query params are individual method parameters
+            return `${fieldName}.clone()`;
+        } else if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
         } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
@@ -1373,9 +1462,10 @@ export class SubClientGenerator {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
+                    const escapedName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
-                        pathParam.name.snakeCase.safeName
+                        escapedName
                     );
                     pathParams.push(paramName);
                 }
@@ -1424,10 +1514,10 @@ export class SubClientGenerator {
         if (requestBodyParam && endpoint.requestBody) {
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
-                return "Some(serde_json::to_value(&request.body).unwrap_or_default())";
+                return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
             }
             // For other cases, serialize the whole request
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+            return "Some(serde_json::to_value(request).map_err(ApiError::Serialization)?)";
         }
         return "None";
     }
@@ -1437,6 +1527,13 @@ export class SubClientGenerator {
             return false;
         }
         return endpoint.requestBody.type === "fileUpload";
+    }
+
+    private isBytesEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        if (!endpoint.requestBody) {
+            return false;
+        }
+        return endpoint.requestBody.type === "bytes";
     }
 
     private getReturnType(endpoint: FernIr.HttpEndpoint): rust.Type {

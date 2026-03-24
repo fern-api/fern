@@ -5,6 +5,7 @@ package anyauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/any-auth/fern/internal"
 )
 

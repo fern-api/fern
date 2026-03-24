@@ -17,6 +17,7 @@ import {
     Type,
     UseStatement
 } from "@fern-api/rust-codegen";
+import { BUILD_ERROR_RS } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator {
@@ -34,7 +35,7 @@ export class ErrorGenerator {
             implBlocks: [this.buildErrorImpl()]
         });
 
-        return errorModule.toString();
+        return errorModule.toString() + "\n" + BUILD_ERROR_RS;
     }
 
     private buildErrorEnum(): Enum {
@@ -75,7 +76,7 @@ export class ErrorGenerator {
     }
 
     private getStandardVariants(): EnumVariant[] {
-        return [
+        const variants = [
             this.buildStandardVariant("Http", "HTTP error {status}: {message}", [
                 { name: "status", type: Type.primitive(PrimitiveType.U16) },
                 { name: "message", type: Type.string() }
@@ -90,8 +91,17 @@ export class ErrorGenerator {
             this.buildStandardVariant("InvalidHeader", "Invalid header value"),
             this.buildStandardVariant("RequestClone", "Could not clone request for retry"),
             this.buildStandardVariant("StreamTerminated", "SSE stream terminated"),
+            this.buildStandardVariant("StreamTimeout", "SSE stream timed out waiting for next event"),
             this.buildStandardVariant("SseParseError", "SSE parse error: {0}", undefined, [Type.string()])
         ];
+
+        if (this.context.hasWebSocketChannels()) {
+            variants.push(
+                this.buildStandardVariant("WebSocketError", "WebSocket error: {0}", undefined, [Type.string()])
+            );
+        }
+
+        return variants;
     }
 
     private buildStandardVariant(

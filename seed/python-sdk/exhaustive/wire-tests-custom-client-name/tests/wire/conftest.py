@@ -25,9 +25,8 @@ except (TypeError, ValueError):
 
 
 def _get_wiremock_base_url() -> str:
-    """Returns the WireMock base URL using the dynamically assigned port."""
-    port = os.environ.get("WIREMOCK_PORT", "8080")
-    return f"http://localhost:{port}"
+    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
+    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
 def get_client(test_id: str) -> Exhaustive:

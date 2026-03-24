@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix floating-point serialization of integer-valued doubles. Values like
+        `24000.0` are now serialized as `24000` instead of `24000.0` in JSON
+        output.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 63
+  version: 1.8.6
+
+- changelogEntry:
+    - summary: |
         Upgrade IR version to 63.
       type: chore
   createdAt: "2026-01-12"

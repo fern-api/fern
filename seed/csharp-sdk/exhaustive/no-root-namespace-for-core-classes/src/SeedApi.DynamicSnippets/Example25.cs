@@ -13,8 +13,14 @@ public class Example25
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+            new Dictionary<string, object>(){
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
+            }
         );
     }
 

@@ -4,7 +4,7 @@
 //!
 //! - **Payment**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod payment;
 pub struct IdempotencyHeadersClient {
@@ -16,10 +16,9 @@ impl IdempotencyHeadersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            payment: PaymentClient::new(config.clone())?
+            payment: PaymentClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use payment::PaymentClient;

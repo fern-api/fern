@@ -1,0 +1,14 @@
+name: websocket-multi-url
+auth: bearer
+environments:
+  Production:
+    urls:
+      rest: https://api.production.com
+      wss: wss://ws.production.com
+  Staging:
+    urls:
+      rest: https://api.staging.com
+      wss: wss://ws.staging.com
+default-environment: Production
+error-discrimination:
+  strategy: status-code

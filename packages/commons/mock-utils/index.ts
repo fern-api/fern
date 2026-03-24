@@ -18,6 +18,7 @@ export interface WireMockMapping {
         urlPathTemplate: string;
         method: string;
         pathParameters?: Record<string, { equalTo: string }>;
+        queryParameters?: Record<string, { equalTo: string }>;
         formParameters?: Record<string, unknown>;
         bodyPatterns?: Array<{ matchesJsonPath: string }>;
     };
@@ -165,6 +166,18 @@ export class WireMock {
             }
         }
 
+        // Extract query parameters from example
+        const queryParameters: Record<string, { equalTo: string }> = {};
+        for (const param of example?.queryParameters || []) {
+            const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
+            if (paramValue !== undefined) {
+                const paramName = param.name?.wireValue;
+                if (paramName) {
+                    queryParameters[paramName] = { equalTo: paramValue };
+                }
+            }
+        }
+
         // Determine response status and body
         let status = 200;
         let bodyObj: string | number | boolean | object = "";
@@ -260,6 +273,7 @@ export class WireMock {
                 urlPathTemplate,
                 method: endpoint.method,
                 pathParameters: Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+                queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
                 formParameters: {},
                 // For SSE endpoints that share a URL path with non-SSE endpoints,
                 // add body pattern to match stream: true
@@ -325,6 +339,9 @@ export class WireMock {
             return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample;
         }
         if (typeof value.jsonExample === "number") {
+            return value.jsonExample.toString();
+        }
+        if (typeof value.jsonExample === "boolean") {
             return value.jsonExample.toString();
         }
         return undefined;

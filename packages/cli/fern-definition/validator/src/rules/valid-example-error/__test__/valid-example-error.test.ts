@@ -16,6 +16,7 @@ describe("valid-example-error", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
+                name: "valid-example-error",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("error.yml"),
                 nodePath: ["errors", "ForbiddenError", "type"],

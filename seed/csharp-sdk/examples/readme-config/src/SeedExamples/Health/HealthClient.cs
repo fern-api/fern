@@ -4,7 +4,7 @@ namespace SeedExamples.Health;
 
 public partial class HealthClient : IHealthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HealthClient(RawClient client)
     {

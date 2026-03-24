@@ -50,20 +50,38 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     ) {
         if (this.hasPagination(endpoint)) {
-            this.generatePagerMethod(cls, {
-                serviceId,
-                endpoint,
-                rawClientReference,
-                rawClient
-            });
-
-            if (endpoint.pagination.type !== "custom") {
-                this.generateUnpagedMethod(cls, {
-                    serviceId,
-                    endpoint,
-                    rawClientReference,
-                    rawClient
-                });
+            switch (endpoint.pagination.type) {
+                case "offset":
+                case "cursor":
+                    this.generatePagerMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    this.generateUnpagedMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    break;
+                case "custom":
+                    this.generatePagerMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    break;
+                case "uri":
+                case "path":
+                    this.context.logger.warn(
+                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                    );
+                    return;
+                default:
+                    assertNever(endpoint.pagination);
             }
         } else {
             this.generateUnpagedMethod(cls, {
@@ -377,7 +395,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     });
 
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
                     writer.writeLine("try");
                     writer.pushScope();
@@ -444,7 +462,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 },
                 text: () => {
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
 
                     // Return WithRawResponse<string>
@@ -576,7 +594,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // Error handling
         writer.pushScope();
         writer.writeTextStatement(
-            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
         );
 
         if (
@@ -616,7 +634,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.popScope();
     }
 
-    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
@@ -625,14 +643,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
             }
         }
-        return this.csharp.codeblock("_client.Options.BaseUrl");
+        return undefined;
     }
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
             writer.pushScope();
             writer.writeTextStatement(
-                `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
             );
             if (
                 endpoint.errors.length > 0 &&
@@ -778,7 +796,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(`>(${jsonString})`);
                     writer.popScope();
                     if (context.generation.settings.redactResponseBodyOnError) {
-                        writer.writeLine("catch (System.Text.Json.JsonException e)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, " e)");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",
@@ -787,7 +806,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         );
                         writer.popScope();
                     } else {
-                        writer.writeLine("catch (System.Text.Json.JsonException)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, ")");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",
@@ -942,7 +962,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                     // Deserialize the response as json
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
                     writer.writeLine("try");
                     writer.pushScope();
@@ -1031,7 +1051,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.pushScope();
 
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
 
                     // Wrap in WithRawResponseTask
@@ -1171,6 +1191,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer
                     });
                     break;
+                case "uri":
+                case "path":
+                    throw new Error(
+                        `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                    );
                 default:
                     assertNever(endpoint.pagination);
             }
@@ -1807,7 +1832,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return {
             code: this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
                 writer.writeLine(".Add(_client.Options.Headers)");

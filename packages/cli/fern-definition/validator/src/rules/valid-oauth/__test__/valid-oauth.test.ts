@@ -72,6 +72,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getToken cannot reference nested $request properties like '$request.credentials.client_id'; expected '$request.client-id' instead.",
                 nodePath: ["service", "endpoints", "getToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -79,6 +80,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getToken cannot reference nested $request properties like '$request.credentials.client_secret'; expected '$request.client-secret' instead.",
                 nodePath: ["service", "endpoints", "getToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             }
         ];
@@ -106,6 +108,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getTokenWithClientCredentials specifies 'access-token' $response.accessToken, which is not a valid 'access-token' type.",
                 nodePath: ["service", "endpoints", "getTokenWithClientCredentials"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -113,6 +116,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getTokenWithClientCredentials specifies 'expires-in' $response.expiresIn, which is not a valid 'expires-in' type.",
                 nodePath: ["service", "endpoints", "getTokenWithClientCredentials"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -120,6 +124,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint refreshToken specifies 'refresh-token' $request.refreshTokenDoesNotExist, which is not a valid 'refresh-token' type.",
                 nodePath: ["service", "endpoints", "refreshToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -127,6 +132,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint refreshToken specifies 'access-token' $response.accessTokenDoesNotExist, which is not a valid 'access-token' type.",
                 nodePath: ["service", "endpoints", "refreshToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -134,6 +140,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint refreshToken specifies 'expires-in' $response.expiresInDoesNotExist, which is not a valid 'expires-in' type.",
                 nodePath: ["service", "endpoints", "refreshToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -141,6 +148,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint refreshToken specifies 'refresh-token' $response.refreshTokenDoesNotExist, which is not a valid 'refresh-token' type.",
                 nodePath: ["service", "endpoints", "refreshToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             }
         ];
@@ -168,6 +176,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getToken is missing a valid client-id, such as '$request.client_id'.",
                 nodePath: ["service", "endpoints", "getToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -175,6 +184,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getToken is missing a valid client-secret, such as '$request.client_secret'.",
                 nodePath: ["service", "endpoints", "getToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             },
             {
@@ -182,6 +192,7 @@ describe("valid-oauth", () => {
                     "OAuth configuration for endpoint getToken specifies 'scopes' $request.scopes, which is not a valid 'scopes' type.",
                 nodePath: ["service", "endpoints", "getToken"],
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
+                name: "valid-oauth",
                 severity: "fatal"
             }
         ];

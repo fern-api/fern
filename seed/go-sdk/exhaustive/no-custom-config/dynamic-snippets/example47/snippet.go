@@ -1,9 +1,11 @@
 package example
 
 import (
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
     context "context"
+
+    client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    option "github.com/exhaustive/fern/option"
 )
 
 func do() {
@@ -15,7 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithEndingSlash(
+    request := &endpoints.PutRequest{
+        Id: "id",
+    }
+    client.Endpoints.Put.Add(
         context.TODO(),
+        request,
     )
 }

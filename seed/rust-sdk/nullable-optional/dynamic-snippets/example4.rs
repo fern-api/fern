@@ -14,7 +14,7 @@ async fn main() {
                 query: "query".to_string(),
                 department: Some("department".to_string()),
                 role: Some("role".to_string()),
-                is_active: Some(Some(true)),
+                is_active: Some(true),
             },
             None,
         )

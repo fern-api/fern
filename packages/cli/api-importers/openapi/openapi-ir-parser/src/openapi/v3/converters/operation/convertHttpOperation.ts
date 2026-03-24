@@ -34,7 +34,8 @@ export function convertHttpOperation({
     suffix,
     streamFormat,
     streamTerminator,
-    source
+    source,
+    streamRequestNameOverride
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -43,8 +44,9 @@ export function convertHttpOperation({
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
     source: Source;
+    streamRequestNameOverride?: string;
 }): EndpointWithExample[] {
-    const { document, operation, path, method, baseBreadcrumbs } = operationContext;
+    const { document, operation, path, method, baseBreadcrumbs, pathItem } = operationContext;
 
     const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
     const requestNameOverride = getExtension<string>(operation, [
@@ -330,7 +332,7 @@ export function convertHttpOperation({
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
-        requestNameOverride: requestNameOverride ?? undefined,
+        requestNameOverride: streamRequestNameOverride ?? requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName(
             isMultipleRequests
                 ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
@@ -343,7 +345,7 @@ export function convertHttpOperation({
         servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
-                : (operation.servers ?? []).map((server) =>
+                : (operation.servers ?? pathItem.servers ?? []).map((server) =>
                       convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
                   ),
         description: operation.description,

@@ -23,7 +23,7 @@ jobs:
     steps:
       # Note: this will trigger to the default branch of the repo, not the workflow_dispatch branch
       - name: Trigger Seed Tests with Metrics
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.ACTIONS_PAT }}
           event-type: seed-test-metrics

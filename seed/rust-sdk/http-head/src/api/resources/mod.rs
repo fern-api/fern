@@ -4,7 +4,7 @@
 //!
 //! - **User**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod user;
 pub struct HttpHeadClient {
@@ -16,10 +16,9 @@ impl HttpHeadClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            user: UserClient::new(config.clone())?
+            user: UserClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use user::UserClient;

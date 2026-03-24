@@ -75,16 +75,31 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
-        this.dependencyManager.add("percent-encoding", "2.3");
-        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
-        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
 
-        // Always include chrono and uuid for QueryBuilder support
-        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
-        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        // Conditionally include ordered-float only when floating-point sets are used
+        if (this.usesOrderedFloat()) {
+            this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        }
 
-        // Add base64 for encoding/decoding base64 fields in JSON
-        this.dependencyManager.add("base64", "0.22");
+        // Conditionally include num-bigint only when big integer types are used
+        if (this.usesBigInteger()) {
+            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include chrono only when datetime/date types are used
+        if (this.usesDateTime()) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include uuid only when UUID types are used
+        if (this.usesUuid()) {
+            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        }
+
+        // Conditionally include base64 only when base64 types are used
+        if (this.usesBase64()) {
+            this.dependencyManager.add("base64", "0.22");
+        }
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
 
@@ -118,28 +133,30 @@ export abstract class AbstractRustGeneratorContext<
         // Track auto-detected default features
         const autoDetectedDefaults: string[] = [];
 
-        // Always declare multipart feature (empty if not used, to avoid cfg warnings)
+        // Only declare multipart feature when file upload endpoints exist
         if (hasFileUpload) {
-            // Add multipart feature that enables reqwest/multipart
             this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
             autoDetectedDefaults.push("multipart");
-        } else {
-            // Add empty multipart feature to satisfy cfg checks
-            this.dependencyManager.addFeature("multipart", []);
         }
 
-        // Always declare sse feature (empty if not used, to avoid cfg warnings)
+        const hasWebSocket = this.hasWebSocketChannels();
+
+        // Only declare websocket feature when WebSocket channels exist
+        if (hasWebSocket) {
+            this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
+            this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
+
+            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding"]);
+            autoDetectedDefaults.push("websocket");
+        }
+
+        // Only declare sse feature when streaming endpoints exist
         if (hasStreaming) {
-            // Add SSE-specific dependencies as optional
             this.dependencyManager.add("reqwest-sse", { version: "0.1", optional: true });
             this.dependencyManager.add("pin-project", { version: "1.1", optional: true });
 
-            // Add sse feature that enables SSE dependencies
             this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
             autoDetectedDefaults.push("sse");
-        } else {
-            // Add empty sse feature to satisfy cfg checks
-            this.dependencyManager.addFeature("sse", []);
         }
 
         // Add custom features from configuration
@@ -159,7 +176,7 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -351,6 +368,108 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR uses base64 types
+     */
+    public usesBase64(): boolean {
+        return this.irUsesType("BASE_64");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double) in sets,
+     * which requires ordered-float for Hash/Ord implementations.
+     */
+    public usesOrderedFloat(): boolean {
+        for (const typeDecl of Object.values(this.ir.types)) {
+            if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if a type shape uses floating point types inside sets
+     * (which requires OrderedFloat for Hash/Ord)
+     */
+    private typeShapeUsesOrderedFloat(shape: FernIr.Type): boolean {
+        return shape._visit({
+            alias: (alias: FernIr.AliasTypeDeclaration) =>
+                this.typeReferenceUsesOrderedFloat(alias.aliasOf),
+            enum: () => false,
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesOrderedFloat(property.valueType)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: FernIr.UnionTypeDeclaration) => {
+                for (const variant of union.types) {
+                    const uses = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesOrderedFloat(property.type),
+                        samePropertiesAsObject: () => false,
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (uses) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesOrderedFloat(member.type)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a floating-point type inside a set container
+     */
+    private typeReferenceUsesOrderedFloat(typeRef: FernIr.TypeReference): boolean {
+        return typeRef._visit({
+            primitive: () => false,
+            container: (container: FernIr.ContainerType) => {
+                return container._visit({
+                    list: () => false,
+                    set: (setType: FernIr.TypeReference) => {
+                        // Check if the set element type is a float/double
+                        return setType._visit({
+                            primitive: (primitive: FernIr.PrimitiveType) => {
+                                return primitive.v1 === "FLOAT" || primitive.v1 === "DOUBLE";
+                            },
+                            container: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(optional),
+                    nullable: (nullable: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(nullable),
+                    map: (map: FernIr.MapType) =>
+                        this.typeReferenceUsesOrderedFloat(map.keyType) ||
+                        this.typeReferenceUsesOrderedFloat(map.valueType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    /**
      * Get the datetime type to use for datetime primitives.
      * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
      * or "utc" for DateTime<Utc> - converts everything to UTC.
@@ -372,6 +491,14 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR has any streaming endpoints
      */
+    public hasWebSocketChannels(): boolean {
+        return (
+            this.customConfig.enableWebsockets &&
+            this.ir.websocketChannels != null &&
+            Object.keys(this.ir.websocketChannels).length > 0
+        );
+    }
+
     public hasStreamingEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some((endpoint) => {

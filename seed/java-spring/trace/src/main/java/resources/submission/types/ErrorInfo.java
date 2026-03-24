@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -87,6 +88,22 @@ public final class ErrorInfo {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof ErrorInfo && value.equals(((ErrorInfo) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -124,6 +141,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class CompileErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private CompileError value;
 
     @JsonCreator(
@@ -166,6 +187,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class RuntimeErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private RuntimeError value;
 
     @JsonCreator(
@@ -208,6 +233,10 @@ public final class ErrorInfo {
   @JsonIgnoreProperties("type")
   private static final class InternalErrorValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private InternalError value;
 
     @JsonCreator(

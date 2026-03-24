@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -170,9 +171,9 @@ export function parseAsyncAPIV3({
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        const serverNameOverride = getExtension<string>(server, FernAsyncAPIExtension.FERN_SERVER_NAME);
         servers[serverId] = {
-            // Always preserve server names from AsyncAPI spec
-            name: serverId,
+            name: serverNameOverride ?? serverId,
             url: constructServerUrl(server.protocol, server.host)
         };
     }
@@ -368,6 +369,125 @@ export function parseAsyncAPIV3({
             }
         }
 
+        // Also read query parameters from channel.bindings.ws.query (the standard
+        // WebSocket binding location per the AsyncAPI WebSocket bindings spec).
+        // Skip any parameters already added from channel.parameters to avoid duplicates.
+        if (channel.bindings?.ws?.query != null) {
+            const queryParamNames = new Set(queryParameters.map((qp) => qp.name));
+            const requiredSet = new Set(channel.bindings.ws.query.required ?? []);
+            for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
+                if (queryParamNames.has(name)) {
+                    continue;
+                }
+                if (isReferenceObject(schema)) {
+                    const resolvedSchema = context.resolveSchemaReference(schema);
+                    const isRequired = requiredSet.has(name);
+                    const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                        ? [false, !isRequired]
+                        : [!isRequired, false];
+                    queryParameters.push({
+                        name,
+                        schema: convertReferenceObject(
+                            schema,
+                            isOptional,
+                            isNullable,
+                            context,
+                            [channelPath, name],
+                            undefined,
+                            source,
+                            context.namespace
+                        ),
+                        description: resolvedSchema.description,
+                        parameterNameOverride: undefined,
+                        availability: convertAvailability(resolvedSchema),
+                        source,
+                        explode: undefined
+                    });
+                    continue;
+                }
+                const isRequired = requiredSet.has(name);
+                const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                    ? [false, !isRequired]
+                    : [!isRequired, false];
+                queryParameters.push({
+                    name,
+                    schema: convertSchema(
+                        schema,
+                        isOptional,
+                        isNullable,
+                        context,
+                        [channelPath, name],
+                        source,
+                        context.namespace
+                    ),
+                    description: schema.description,
+                    parameterNameOverride: undefined,
+                    availability: convertAvailability(schema),
+                    source,
+                    explode: undefined
+                });
+            }
+        }
+
+        // Also read headers from channel.bindings.ws.headers (standard WebSocket binding location).
+        // Skip any headers already added from channel.parameters to avoid duplicates.
+        if (channel.bindings?.ws?.headers != null) {
+            const headerNames = new Set(headers.map((h) => h.name));
+            const requiredSet = new Set(channel.bindings.ws.headers.required ?? []);
+            for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
+                if (headerNames.has(name)) {
+                    continue;
+                }
+                if (isReferenceObject(schema)) {
+                    const resolvedSchema = context.resolveSchemaReference(schema);
+                    const isRequired = requiredSet.has(name);
+                    const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                        ? [false, !isRequired]
+                        : [!isRequired, false];
+                    headers.push({
+                        name,
+                        schema: convertReferenceObject(
+                            schema,
+                            isOptional,
+                            isNullable,
+                            context,
+                            [channelPath, name],
+                            undefined,
+                            source,
+                            context.namespace
+                        ),
+                        description: resolvedSchema.description,
+                        parameterNameOverride: undefined,
+                        env: undefined,
+                        availability: convertAvailability(resolvedSchema),
+                        source
+                    });
+                    continue;
+                }
+                const isRequired = requiredSet.has(name);
+                const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                    ? [false, !isRequired]
+                    : [!isRequired, false];
+                headers.push({
+                    name,
+                    schema: convertSchema(
+                        schema,
+                        isOptional,
+                        isNullable,
+                        context,
+                        [channelPath, name],
+                        source,
+                        context.namespace
+                    ),
+                    description: schema.description,
+                    parameterNameOverride: undefined,
+                    env: undefined,
+                    availability: convertAvailability(schema),
+                    source
+                });
+            }
+        }
+
         if (
             headers.length > 0 ||
             queryParameters.length > 0 ||
@@ -414,7 +534,7 @@ export function parseAsyncAPIV3({
                 }
             } catch (error) {
                 context.logger.warn(
-                    `Failed to build examples for channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                    `Failed to build examples for channel ${channelPath}: ${extractErrorMessage(error)}`
                 );
             }
 
@@ -597,7 +717,7 @@ function convertMessageReferencesToWebsocketSchemas({
             }
         } catch (error) {
             context.logger.warn(
-                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${extractErrorMessage(error)}`
             );
         }
     });

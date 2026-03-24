@@ -13,10 +13,13 @@ import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context
+    context,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members (useful for seed run against customer configs that may use a different CLI version) */
+    lenient?: boolean;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (filepath == null) {
@@ -27,9 +30,9 @@ export async function loadRawGeneratorsConfiguration({
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
         const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
-            allowUnrecognizedEnumValues: false,
-            unrecognizedObjectKeys: "fail",
-            allowUnrecognizedUnionMembers: false,
+            allowUnrecognizedEnumValues: lenient === true,
+            unrecognizedObjectKeys: lenient === true ? "passthrough" : "fail",
+            allowUnrecognizedUnionMembers: lenient === true,
             skipValidation: false,
             breadcrumbsPrefix: undefined,
             omitUndefined: false
@@ -52,6 +55,26 @@ export async function loadRawGeneratorsConfiguration({
                 }
             }
 
+            // When the YAML error reason indicates a "bad indentation" or anchor issue and
+            // the offending line contains a value starting with @, it is almost certainly an
+            // unquoted scoped npm package name (e.g. @scope/package).  The @ character is a
+            // reserved YAML anchor symbol, so the parser emits a confusing indentation error
+            // instead of a clear "invalid character" message.
+            if (
+                e.mark != null &&
+                (e.reason === "bad indentation of a mapping entry" ||
+                    e.reason === "unexpected end of the stream within a flow collection")
+            ) {
+                const fileContent = contentsStr.toString();
+                const lines = fileContent.split("\n");
+                const errorLine = e.mark.line >= 0 && e.mark.line < lines.length ? lines[e.mark.line] : undefined;
+                if (errorLine != null && /:\s+@/.test(errorLine)) {
+                    errorMessage +=
+                        '\n\nHint: Values starting with "@" (such as scoped npm packages) must be wrapped in quotes.' +
+                        '\n  Example: package-name: "@scope/package"';
+                }
+            }
+
             context.failAndThrow(errorMessage);
         } else {
             throw e;
@@ -62,12 +85,19 @@ export async function loadRawGeneratorsConfiguration({
 
 export async function loadGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context
+    context,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members */
+    lenient?: boolean;
 }): Promise<generatorsYml.GeneratorsConfiguration | undefined> {
-    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({
+        absolutePathToWorkspace,
+        context,
+        lenient
+    });
     if (rawGeneratorsConfiguration == null) {
         return undefined;
     }

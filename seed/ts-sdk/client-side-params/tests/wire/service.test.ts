@@ -26,6 +26,7 @@ describe("ServiceClient", () => {
                 metadata: { metadata: { key: "value" } },
             },
         ];
+
         server.mockEndpoint().get("/api/resources").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listResources({
@@ -77,6 +78,7 @@ describe("ServiceClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             metadata: { metadata: { key: "value" } },
         };
+
         server
             .mockEndpoint()
             .get("/api/resources/resourceId")
@@ -129,6 +131,7 @@ describe("ServiceClient", () => {
             total: 1,
             next_offset: 1,
         };
+
         server
             .mockEndpoint()
             .post("/api/resources/search")
@@ -272,6 +275,7 @@ describe("ServiceClient", () => {
             length: 1,
             total: 1,
         };
+
         server.mockEndpoint().get("/api/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listUsers({
@@ -434,6 +438,7 @@ describe("ServiceClient", () => {
             given_name: "given_name",
             family_name: "family_name",
         };
+
         server.mockEndpoint().get("/api/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getUserById("userId", {
@@ -544,6 +549,7 @@ describe("ServiceClient", () => {
             given_name: "given_name",
             family_name: "family_name",
         };
+
         server
             .mockEndpoint()
             .post("/api/users")
@@ -676,6 +682,7 @@ describe("ServiceClient", () => {
             given_name: "given_name",
             family_name: "family_name",
         };
+
         server
             .mockEndpoint()
             .patch("/api/users/userId")
@@ -792,6 +799,7 @@ describe("ServiceClient", () => {
                 metadata: { metadata: { key: "value" } },
             },
         ];
+
         server.mockEndpoint().get("/api/connections").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listConnections({
@@ -856,6 +864,7 @@ describe("ServiceClient", () => {
             is_domain_connection: true,
             metadata: { metadata: { key: "value" } },
         };
+
         server
             .mockEndpoint()
             .get("/api/connections/connectionId")
@@ -964,6 +973,7 @@ describe("ServiceClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/api/clients").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listClients({
@@ -1148,6 +1158,7 @@ describe("ServiceClient", () => {
             client_metadata: { client_metadata: { key: "value" } },
             mobile: { mobile: { key: "value" } },
         };
+
         server
             .mockEndpoint()
             .get("/api/clients/clientId")

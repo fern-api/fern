@@ -101,14 +101,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "default": false,
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1979,7 +1985,7 @@
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
-    "hasStreamingEndpoints": false,
+    "hasStreamingEndpoints": true,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",

@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -32,8 +32,46 @@ export class WireTestSetupGenerator {
         return new WireMock().convertToWireMock(ir);
     }
 
+    /**
+     * ISO 8601 datetime pattern that matches values with `.000` milliseconds.
+     * Example: "2008-01-02T00:00:00.000Z" or "2008-01-02T00:00:00.000+05:00"
+     */
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strips ".000" milliseconds from all datetime query parameter values in WireMock stub mappings.
+     * Ruby's DateTime/Time ISO 8601 serialization omits zero fractional seconds, so the SDK
+     * sends e.g. "2024-09-08T12:00:00Z" while mock-utils generates "2024-09-08T12:00:00.000Z"
+     * (via Date.toISOString()). Since WireMock's equalTo matcher is exact-match, the stubs
+     * never fire unless we strip the zero milliseconds.
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    private static stripDatetimeMilliseconds(stubMapping: WireMockStubMapping): void {
+        for (const mapping of stubMapping.mappings) {
+            if (mapping.request.queryParameters) {
+                for (const [, value] of Object.entries(mapping.request.queryParameters)) {
+                    const paramValue = value as { equalTo: string };
+                    if (
+                        paramValue.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    ) {
+                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    }
+                }
+            }
+        }
+    }
+
     private generateWireMockConfigFile(): void {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+
+        // mock-utils generates datetime values using Date.toISOString() which always includes
+        // ".000Z" milliseconds. Ruby's DateTime/Time ISO 8601 serialization omits fractional
+        // seconds, so the SDK sends e.g. "2024-09-08T12:00:00Z". Strip the zero milliseconds
+        // from WireMock stubs so that equalTo exact-matching works correctly.
+        WireTestSetupGenerator.stripDatetimeMilliseconds(wireMockConfigContent);
 
         // Add OAuth token endpoint mapping if inferred auth is present
         const inferredAuth = this.context.getInferredAuth();
@@ -180,7 +218,7 @@ export class WireTestSetupGenerator {
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
@@ -223,8 +261,8 @@ require "${rootFolderName}"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = "http://localhost:8080"
-  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"
+  WIREMOCK_BASE_URL = ENV['WIREMOCK_URL'] || 'http://localhost:8080'
+  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin"
 
   def setup
     super
@@ -241,7 +279,8 @@ class WireMockTestCase < Minitest::Test
   # @param query_params [Hash, nil] Query parameters to match
   # @param expected [Integer] Expected number of requests
   def verify_request_count(test_id:, method:, url_path:, query_params: nil, expected:)
-    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")
+    admin_url = ENV['WIREMOCK_URL'] ? "#{ENV['WIREMOCK_URL']}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
 
@@ -287,14 +326,25 @@ require "test_helper"
 
 # WireMock container lifecycle management for wire tests.
 # It automatically starts the WireMock container before tests and stops it after.
+# If WIREMOCK_URL is already set (external orchestration), container management is skipped.
 
 WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml", __dir__)
 
 # Start WireMock container when this file is required
-if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE)
+if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE) && !ENV["WIREMOCK_URL"]
   puts "Starting WireMock container..."
   unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
     warn "Failed to start WireMock container"
+  end
+
+  # Discover the dynamically assigned port and set WIREMOCK_URL
+  port_output = \`docker compose -f #{WIREMOCK_COMPOSE_FILE} port wiremock 8080 2>&1\`.strip
+  if port_output =~ /:(\\d+)$/
+    ENV["WIREMOCK_URL"] = "http://localhost:#{$1}"
+    puts "WireMock container is ready at #{ENV['WIREMOCK_URL']}"
+  else
+    ENV["WIREMOCK_URL"] = "http://localhost:8080"
+    puts "WireMock container is ready (default port 8080)"
   end
 
   # Stop WireMock container after all tests complete

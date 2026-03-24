@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -14,10 +14,13 @@ public class Example24
             }
         );
 
-        await client.Endpoints.Pagination.ListItemsAsync(
-            new ListItemsRequest {
-                Cursor = "cursor",
-                Limit = 1
+        await client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(
+            new ObjectWithDocumentedUnknownType {
+                DocumentedUnknownType = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+
             }
         );
     }

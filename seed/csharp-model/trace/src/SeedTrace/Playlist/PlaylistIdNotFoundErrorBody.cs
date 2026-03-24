@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -50,7 +50,9 @@ public record PlaylistIdNotFoundErrorBody
     public string AsPlaylistId() =>
         IsPlaylistId
             ? (string)Value!
-            : throw new System.Exception("PlaylistIdNotFoundErrorBody.Type is not 'playlistId'");
+            : throw new global::System.Exception(
+                "PlaylistIdNotFoundErrorBody.Type is not 'playlistId'"
+            );
 
     public T Match<T>(Func<string, T> onPlaylistId, Func<string, object?, T> onUnknown_)
     {
@@ -97,12 +99,12 @@ public record PlaylistIdNotFoundErrorBody
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PlaylistIdNotFoundErrorBody>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PlaylistIdNotFoundErrorBody).IsAssignableFrom(typeToConvert);
 
         public override PlaylistIdNotFoundErrorBody Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -153,6 +155,27 @@ public record PlaylistIdNotFoundErrorBody
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override PlaylistIdNotFoundErrorBody ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new PlaylistIdNotFoundErrorBody(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            PlaylistIdNotFoundErrorBody value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index";
 
 export interface GetDefaultStarterFilesResponse {
-    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Partial<Record<SeedTrace.Language, SeedTrace.ProblemFiles>>;
 }

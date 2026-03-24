@@ -11,10 +11,9 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_datetime_like_string(
-            &ObjectWithDatetimeLikeString {
-                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
-                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+        .get_and_return_with_unknown_field(
+            &ObjectWithUnknownField {
+                unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
             },
             None,
         )

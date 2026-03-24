@@ -10,6 +10,7 @@ describe("CompletionsClient", () => {
         const rawRequestBody = { query: "foo" };
         const rawResponseBody =
             'event: completion\ndata: {"delta":"hello","tokens":1}\n\nevent: completion\ndata: {"delta":" world","tokens":2}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream")
@@ -37,6 +38,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
         const rawResponseBody = 'event: completion\ndata: {"delta":"delta","tokens":1}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream-no-terminator")

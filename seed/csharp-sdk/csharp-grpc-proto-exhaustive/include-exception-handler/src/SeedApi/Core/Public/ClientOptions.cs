@@ -1,3 +1,4 @@
+using Grpc.Net.Client;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -50,7 +51,7 @@ public partial class ClientOptions
     } = [];
 
     /// <summary>
-    /// The http client used to make requests.
+    /// The max number of retries to attempt.
     /// </summary>
     public int MaxRetries { get;
 #if NET5_0_OR_GREATER
@@ -70,6 +71,17 @@ public partial class ClientOptions
         set;
 #endif
     } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The options used for gRPC client endpoints.
+    /// </summary>
+    public GrpcChannelOptions? GrpcOptions { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// Clones this and returns a new instance

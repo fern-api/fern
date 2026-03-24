@@ -6,6 +6,7 @@ using SeedExhaustive.Types.Union;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Union;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnUnionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

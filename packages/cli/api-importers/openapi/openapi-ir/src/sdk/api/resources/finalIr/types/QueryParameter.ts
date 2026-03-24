@@ -10,4 +10,6 @@ export interface QueryParameter
     schema: FernOpenapiIr.Schema;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /** Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style. */
+    explode: boolean | undefined;
 }

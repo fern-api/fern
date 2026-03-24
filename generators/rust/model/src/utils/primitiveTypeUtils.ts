@@ -185,6 +185,57 @@ export function isUnknownType(typeRef: FernIr.TypeReference): boolean {
     return typeRef.type === "unknown";
 }
 
+/**
+ * Check if a type has a natural Default implementation in Rust.
+ * Primitives (String, bool, i64, f64, etc.) and containers (Vec, HashMap, HashSet)
+ * all implement Default. Named types (enums, structs) may not.
+ * Used to add #[serde(default)] so missing fields get zero-values during deserialization.
+ */
+export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGeneratorContext): boolean {
+    if (typeRef.type === "primitive") {
+        return true;
+    }
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            list: () => true,
+            map: () => true,
+            set: () => true,
+            optional: () => true,
+            nullable: () => true,
+            literal: () => false,
+            _other: () => false
+        });
+    }
+    if (typeRef.type === "named" && context) {
+        return namedTypeSupportsDefault(typeRef.typeId, context, new Set());
+    }
+    return false;
+}
+
+/**
+ * Check if a named type (object) supports Default by checking if all its fields
+ * have types that implement Default. Enums and unions don't derive Default.
+ */
+function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext, visited: Set<string>): boolean {
+    if (visited.has(typeId)) {
+        return false;
+    }
+    visited.add(typeId);
+    const typeDecl = context.ir.types[typeId];
+    if (!typeDecl) {
+        return false;
+    }
+    if (typeDecl.shape.type === "object") {
+        return typeDecl.shape.properties.every((prop) =>
+            hasDefaultImpl(prop.valueType, context)
+        );
+    }
+    if (typeDecl.shape.type === "alias") {
+        return hasDefaultImpl(typeDecl.shape.aliasOf, context);
+    }
+    return false;
+}
+
 export function isOptionalType(typeReference: FernIr.TypeReference): boolean {
     return typeReference._visit<boolean>({
         container: (container) => {
@@ -240,6 +291,47 @@ export function getInnerTypeFromOptional(typeReference: FernIr.TypeReference): F
         _other: () => {
             throw new Error("Type is not optional");
         }
+    });
+}
+
+/**
+ * Check if a TypeReference resolves to a string primitive or string literal.
+ * Used to decide whether a builder setter should use `impl Into<String>`.
+ */
+export function isStringType(typeReference: FernIr.TypeReference): boolean {
+    return typeReference._visit<boolean>({
+        container: (container) => {
+            return container._visit<boolean>({
+                literal: (literal) => literal.type === "string",
+                optional: () => false,
+                nullable: () => false,
+                list: () => false,
+                map: () => false,
+                set: () => false,
+                _other: () => false
+            });
+        },
+        primitive: (primitive) => {
+            return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
+                string: () => true,
+                boolean: () => false,
+                integer: () => false,
+                uint: () => false,
+                uint64: () => false,
+                long: () => false,
+                float: () => false,
+                double: () => false,
+                bigInteger: () => false,
+                date: () => false,
+                dateTime: () => false,
+                base64: () => false,
+                uuid: () => false,
+                _other: () => false
+            });
+        },
+        named: () => false,
+        unknown: () => false,
+        _other: () => false
     });
 }
 

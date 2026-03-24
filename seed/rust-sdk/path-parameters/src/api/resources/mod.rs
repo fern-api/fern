@@ -5,7 +5,7 @@
 //! - **Organizations**
 //! - **User**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod organizations;
 pub mod user;
@@ -20,10 +20,9 @@ impl PathParametersClient {
         Ok(Self {
             config: config.clone(),
             organizations: OrganizationsClient::new(config.clone())?,
-            user: UserClient::new(config.clone())?
+            user: UserClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use organizations::OrganizationsClient;

@@ -43,6 +43,24 @@ public partial interface IObjectClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<ObjectWithUnknownField> GetAndReturnWithUnknownFieldAsync(
+        ObjectWithUnknownField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<ObjectWithDocumentedUnknownType> GetAndReturnWithDocumentedUnknownTypeAsync(
+        ObjectWithDocumentedUnknownType request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<Dictionary<string, object?>> GetAndReturnMapOfDocumentedUnknownTypeAsync(
+        Dictionary<string, object?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
