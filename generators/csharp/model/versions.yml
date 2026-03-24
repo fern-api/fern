@@ -5,7 +5,7 @@
         Add ASP.NET Core model binding tests. Each generated test class now includes
         `TestModelBinding` methods that verify models can be deserialized using
         `JsonSerializerDefaults.Web` (the default used by ASP.NET Core's `[FromBody]`
-        model binder) and that the result re-serializes to equivalent JSON.
+        model binder) and that the result matches the expected object.
       type: feat
   createdAt: "2026-03-24"
   irVersion: 65
