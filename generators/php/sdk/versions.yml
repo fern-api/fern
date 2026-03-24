@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.3
+  changelogEntry:
+    - summary: |
+        Fix 204 No Content handling for endpoints with a JSON response type.
+        Previously, endpoints returning an empty body (e.g. 204) would throw a
+        `BrevoException` even on a successful response. Now all JSON response
+        return types are nullable (`?Type`) and the generated code returns `null`
+        instead of throwing when the response body is empty.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 62
+
 - version: 2.2.2
   changelogEntry:
     - summary: |
