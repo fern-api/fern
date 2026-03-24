@@ -34,4 +34,16 @@ public class NameTest
             """;
         JsonAssert.Roundtrips<Name>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "id": "name-sdfg8ajk",
+              "value": "name"
+            }
+            """;
+        JsonAssert.ModelBinds<Name>(json);
+    }
 }

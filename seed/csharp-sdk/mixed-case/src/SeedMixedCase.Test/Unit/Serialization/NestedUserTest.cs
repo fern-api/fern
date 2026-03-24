@@ -67,4 +67,26 @@ public class NestedUserTest
             """;
         JsonAssert.Roundtrips<NestedUser>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "Name": "username",
+              "NestedUser": {
+                "userName": "nestedUsername",
+                "metadata_tags": [
+                  "tag1",
+                  "tag2"
+                ],
+                "EXTRA_PROPERTIES": {
+                  "foo": "bar",
+                  "baz": "qux"
+                }
+              }
+            }
+            """;
+        JsonAssert.ModelBinds<NestedUser>(json);
+    }
 }

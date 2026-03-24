@@ -44,4 +44,19 @@ public class MetadataTest
             """;
         JsonAssert.Roundtrips<Metadata>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "id": "metadata-js8dg24b",
+              "data": {
+                "foo": "bar",
+                "baz": "qux"
+              }
+            }
+            """;
+        JsonAssert.ModelBinds<Metadata>(json);
+    }
 }

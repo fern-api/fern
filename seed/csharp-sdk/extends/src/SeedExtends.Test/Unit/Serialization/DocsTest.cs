@@ -35,4 +35,15 @@ public class DocsTest
             """;
         JsonAssert.Roundtrips<Docs>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "docs": "Types extend this type to include a docs property."
+            }
+            """;
+        JsonAssert.ModelBinds<Docs>(json);
+    }
 }

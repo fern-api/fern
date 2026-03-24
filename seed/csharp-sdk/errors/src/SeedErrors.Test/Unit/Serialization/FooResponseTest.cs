@@ -32,4 +32,15 @@ public class FooResponseTest
             """;
         JsonAssert.Roundtrips<FooResponse>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "bar": "hello"
+            }
+            """;
+        JsonAssert.ModelBinds<FooResponse>(json);
+    }
 }

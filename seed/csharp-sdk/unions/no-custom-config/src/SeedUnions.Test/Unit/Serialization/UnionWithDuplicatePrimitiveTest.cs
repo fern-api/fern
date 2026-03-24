@@ -38,6 +38,18 @@ public class UnionWithDuplicatePrimitiveTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "integer1",
+              "value": 9
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -63,6 +75,18 @@ public class UnionWithDuplicatePrimitiveTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "integer2",
+              "value": 5
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
     }
 
     [NUnit.Framework.Test]
@@ -94,6 +118,18 @@ public class UnionWithDuplicatePrimitiveTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "type": "string1",
+              "value": "bar1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_4()
     {
         var json = """
@@ -119,5 +155,17 @@ public class UnionWithDuplicatePrimitiveTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithDuplicatePrimitive>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_4()
+    {
+        var json = """
+            {
+              "type": "string1",
+              "value": "bar2"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
     }
 }

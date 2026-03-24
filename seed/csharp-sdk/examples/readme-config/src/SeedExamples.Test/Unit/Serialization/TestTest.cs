@@ -35,6 +35,18 @@ public class TestTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "and",
+              "value": true
+            }
+            """;
+        JsonAssert.ModelBinds<SeedExamples.Test>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -58,5 +70,17 @@ public class TestTest
             }
             """;
         JsonAssert.Roundtrips<SeedExamples.Test>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "or",
+              "value": true
+            }
+            """;
+        JsonAssert.ModelBinds<SeedExamples.Test>(json);
     }
 }

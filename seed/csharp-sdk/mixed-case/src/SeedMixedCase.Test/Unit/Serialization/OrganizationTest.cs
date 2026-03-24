@@ -32,4 +32,15 @@ public class OrganizationTest
             """;
         JsonAssert.Roundtrips<Organization>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "name": "orgName"
+            }
+            """;
+        JsonAssert.ModelBinds<Organization>(json);
+    }
 }

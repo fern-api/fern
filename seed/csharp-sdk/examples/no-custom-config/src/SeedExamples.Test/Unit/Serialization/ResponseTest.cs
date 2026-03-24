@@ -74,4 +74,27 @@ public class ResponseTest
             """;
         JsonAssert.Roundtrips<Response>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "response": "Initializing...",
+              "identifiers": [
+                {
+                  "type": "primitive",
+                  "value": "example",
+                  "label": "Primitive"
+                },
+                {
+                  "type": "unknown",
+                  "value": "{}",
+                  "label": "Unknown"
+                }
+              ]
+            }
+            """;
+        JsonAssert.ModelBinds<Response>(json);
+    }
 }

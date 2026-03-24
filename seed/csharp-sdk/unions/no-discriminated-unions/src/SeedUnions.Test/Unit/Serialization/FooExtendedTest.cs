@@ -36,6 +36,18 @@ public class FooExtendedTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "name": "example1",
+              "age": 5
+            }
+            """;
+        JsonAssert.ModelBinds<FooExtended>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -59,5 +71,17 @@ public class FooExtendedTest
             }
             """;
         JsonAssert.Roundtrips<FooExtended>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "name": "example2",
+              "age": 10
+            }
+            """;
+        JsonAssert.ModelBinds<FooExtended>(json);
     }
 }

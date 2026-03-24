@@ -38,6 +38,18 @@ public class UnionWithMultipleNoPropertiesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "foo",
+              "name": "example"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -64,6 +76,17 @@ public class UnionWithMultipleNoPropertiesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "empty1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -87,5 +110,16 @@ public class UnionWithMultipleNoPropertiesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithMultipleNoProperties>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "type": "empty2"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
     }
 }

@@ -44,4 +44,17 @@ public class UserTest
             """;
         JsonAssert.Roundtrips<User>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "name": "Alice",
+              "age": 30,
+              "location": "Wonderland"
+            }
+            """;
+        JsonAssert.ModelBinds<User>(json);
+    }
 }

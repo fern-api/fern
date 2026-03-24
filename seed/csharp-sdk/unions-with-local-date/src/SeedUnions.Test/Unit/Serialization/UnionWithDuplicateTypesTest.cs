@@ -38,6 +38,18 @@ public class UnionWithDuplicateTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "foo1",
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicateTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -63,5 +75,17 @@ public class UnionWithDuplicateTypesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithDuplicateTypes>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "foo2",
+              "name": "example2"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithDuplicateTypes>(json);
     }
 }

@@ -75,6 +75,23 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
                 }),
                 isAsync: false
             });
+
+            testClass.addTestMethod({
+                name: `TestModelBinding${testNumber}`,
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine("var json = ");
+                    writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.Types.JsonAssert,
+                            method: "ModelBinds",
+                            generics: [this.classReference],
+                            arguments_: [this.csharp.codeblock("json")]
+                        })
+                    );
+                }),
+                isAsync: false
+            });
         });
         return new CSharpFile({
             clazz: testClass.getClass(),

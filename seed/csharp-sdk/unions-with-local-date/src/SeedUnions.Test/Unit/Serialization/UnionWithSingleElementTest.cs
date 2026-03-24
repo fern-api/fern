@@ -36,4 +36,16 @@ public class UnionWithSingleElementTest
             """;
         JsonAssert.Roundtrips<UnionWithSingleElement>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "type": "foo",
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSingleElement>(json);
+    }
 }

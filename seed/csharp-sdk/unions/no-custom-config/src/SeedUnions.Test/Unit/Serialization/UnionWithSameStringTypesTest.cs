@@ -38,6 +38,18 @@ public class UnionWithSameStringTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "customFormat",
+              "value": "custom-123"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -66,6 +78,18 @@ public class UnionWithSameStringTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "regularString",
+              "value": "regular text"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -91,5 +115,17 @@ public class UnionWithSameStringTypesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithSameStringTypes>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "type": "patternString",
+              "value": "PATTERN123"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
     }
 }

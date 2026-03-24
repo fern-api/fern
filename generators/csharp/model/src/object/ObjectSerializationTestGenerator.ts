@@ -77,6 +77,23 @@ export class ObjectSerializationTestGenerator extends FileGenerator<CSharpFile> 
                 }),
                 isAsync: false
             });
+
+            this.testClass.addTestMethod({
+                name: `TestModelBinding${testNumber}`,
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine("var json = ");
+                    writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.Types.JsonAssert,
+                            method: "ModelBinds",
+                            generics: [this.classBeingTested],
+                            arguments_: [this.csharp.codeblock("json")]
+                        })
+                    );
+                }),
+                isAsync: false
+            });
         });
         return new CSharpFile({
             clazz: this.testClass.getClass(),

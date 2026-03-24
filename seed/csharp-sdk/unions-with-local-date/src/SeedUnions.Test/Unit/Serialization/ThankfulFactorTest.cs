@@ -34,6 +34,17 @@ public class ThankfulFactorTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "value": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<ThankfulFactor>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -58,6 +69,17 @@ public class ThankfulFactorTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "value": "example2"
+            }
+            """;
+        JsonAssert.ModelBinds<ThankfulFactor>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -79,5 +101,16 @@ public class ThankfulFactorTest
             }
             """;
         JsonAssert.Roundtrips<ThankfulFactor>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "value": "example3"
+            }
+            """;
+        JsonAssert.ModelBinds<ThankfulFactor>(json);
     }
 }

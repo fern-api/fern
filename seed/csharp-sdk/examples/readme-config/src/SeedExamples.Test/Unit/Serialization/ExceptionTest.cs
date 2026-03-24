@@ -47,4 +47,18 @@ public class ExceptionTest
             """;
         JsonAssert.Roundtrips<SeedExamples.Exception>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "type": "generic",
+              "exceptionType": "Unavailable",
+              "exceptionMessage": "This component is unavailable!",
+              "exceptionStacktrace": "<logs>"
+            }
+            """;
+        JsonAssert.ModelBinds<SeedExamples.Exception>(json);
+    }
 }

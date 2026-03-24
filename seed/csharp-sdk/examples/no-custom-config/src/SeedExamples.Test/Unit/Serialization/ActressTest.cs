@@ -34,4 +34,16 @@ public class ActressTest
             """;
         JsonAssert.Roundtrips<Actress>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "name": "Jennifer Lawrence",
+              "id": "actor_456"
+            }
+            """;
+        JsonAssert.ModelBinds<Actress>(json);
+    }
 }

@@ -38,6 +38,18 @@ public class UnionWithNoPropertiesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "foo",
+              "name": "example"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithNoProperties>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -59,5 +71,16 @@ public class UnionWithNoPropertiesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithNoProperties>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "empty"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithNoProperties>(json);
     }
 }

@@ -42,6 +42,19 @@ public class FileTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "name": "file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        JsonAssert.ModelBinds<SeedObjectsWithImports.File>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -72,5 +85,18 @@ public class FileTest
             }
             """;
         JsonAssert.Roundtrips<SeedObjectsWithImports.File>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "name": "another_file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        JsonAssert.ModelBinds<SeedObjectsWithImports.File>(json);
     }
 }

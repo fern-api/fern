@@ -34,4 +34,16 @@ public class EntityTest
             """;
         JsonAssert.Roundtrips<Entity>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "type": "unknown",
+              "name": "unknown"
+            }
+            """;
+        JsonAssert.ModelBinds<Entity>(json);
+    }
 }

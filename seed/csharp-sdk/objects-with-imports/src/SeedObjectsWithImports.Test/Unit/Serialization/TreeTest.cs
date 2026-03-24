@@ -112,4 +112,38 @@ public class TreeTest
             """;
         JsonAssert.Roundtrips<Tree>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "nodes": [
+                {
+                  "id": "node-8dvgfja2",
+                  "label": "left",
+                  "metadata": {
+                    "id": "metadata-kjasf923",
+                    "data": {
+                      "foo": "bar",
+                      "baz": "qux"
+                    }
+                  }
+                },
+                {
+                  "id": "node-cwda9fi2x",
+                  "label": "right",
+                  "metadata": {
+                    "id": "metadata-lkasdfv9j",
+                    "data": {
+                      "one": "two",
+                      "three": "four"
+                    }
+                  }
+                }
+              ]
+            }
+            """;
+        JsonAssert.ModelBinds<Tree>(json);
+    }
 }

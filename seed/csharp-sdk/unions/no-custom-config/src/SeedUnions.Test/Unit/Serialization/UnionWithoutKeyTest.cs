@@ -38,6 +38,18 @@ public class UnionWithoutKeyTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "foo",
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithoutKey>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -63,5 +75,17 @@ public class UnionWithoutKeyTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithoutKey>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "bar",
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithoutKey>(json);
     }
 }

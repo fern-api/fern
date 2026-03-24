@@ -38,6 +38,18 @@ public class UnionWithSameNumberTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "positiveInt",
+              "value": 100
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameNumberTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -66,6 +78,18 @@ public class UnionWithSameNumberTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "negativeInt",
+              "value": -50
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameNumberTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -91,5 +115,17 @@ public class UnionWithSameNumberTypesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithSameNumberTypes>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "type": "anyNumber",
+              "value": 3.14159
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSameNumberTypes>(json);
     }
 }

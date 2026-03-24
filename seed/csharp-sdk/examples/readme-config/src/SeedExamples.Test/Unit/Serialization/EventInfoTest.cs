@@ -51,4 +51,20 @@ public class EventInfoTest
             """;
         JsonAssert.Roundtrips<EventInfo>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "type": "metadata",
+              "id": "metadata-alskjfg8",
+              "data": {
+                "one": "two"
+              },
+              "jsonString": "{\"one\": \"two\"}"
+            }
+            """;
+        JsonAssert.ModelBinds<EventInfo>(json);
+    }
 }

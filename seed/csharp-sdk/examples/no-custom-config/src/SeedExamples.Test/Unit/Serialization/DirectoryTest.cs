@@ -83,4 +83,32 @@ public class DirectoryTest
             """;
         JsonAssert.Roundtrips<SeedExamples.Directory>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "name": "root",
+              "files": [
+                {
+                  "name": "file.txt",
+                  "contents": "..."
+                }
+              ],
+              "directories": [
+                {
+                  "name": "tmp",
+                  "files": [
+                    {
+                      "name": "another_file.txt",
+                      "contents": "..."
+                    }
+                  ]
+                }
+              ]
+            }
+            """;
+        JsonAssert.ModelBinds<SeedExamples.Directory>(json);
+    }
 }

@@ -44,4 +44,18 @@ public class TypeTest
             """;
         JsonAssert.Roundtrips<SeedValidation.Type>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "decimal": 1.1,
+              "even": 2,
+              "name": "rules",
+              "shape": "SQUARE"
+            }
+            """;
+        JsonAssert.ModelBinds<SeedValidation.Type>(json);
+    }
 }

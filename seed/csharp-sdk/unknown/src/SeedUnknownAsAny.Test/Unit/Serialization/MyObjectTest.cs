@@ -45,4 +45,18 @@ public class MyObjectTest
             """;
         JsonAssert.Roundtrips<MyObject>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "unknown": {
+                "boolVal": true,
+                "strVal": "string"
+              }
+            }
+            """;
+        JsonAssert.ModelBinds<MyObject>(json);
+    }
 }

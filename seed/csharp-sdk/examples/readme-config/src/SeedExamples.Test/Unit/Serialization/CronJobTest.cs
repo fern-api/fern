@@ -32,4 +32,15 @@ public class CronJobTest
             """;
         JsonAssert.Roundtrips<CronJob>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "expression": "0 */6 * * *"
+            }
+            """;
+        JsonAssert.ModelBinds<CronJob>(json);
+    }
 }

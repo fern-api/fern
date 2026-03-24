@@ -38,6 +38,18 @@ public class UnionWithSubTypesTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "foo",
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSubTypes>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -65,5 +77,18 @@ public class UnionWithSubTypesTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithSubTypes>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "fooExtended",
+              "name": "example2",
+              "age": 5
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithSubTypes>(json);
     }
 }

@@ -34,4 +34,16 @@ public class DataTest
             """;
         JsonAssert.Roundtrips<Data>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "type": "string",
+              "value": "data"
+            }
+            """;
+        JsonAssert.ModelBinds<Data>(json);
+    }
 }

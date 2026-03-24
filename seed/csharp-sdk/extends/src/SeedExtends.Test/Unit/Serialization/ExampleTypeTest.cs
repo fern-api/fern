@@ -38,4 +38,16 @@ public class ExampleTypeTest
             """;
         JsonAssert.Roundtrips<ExampleType>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "docs": "This is an example type.",
+              "name": "Example"
+            }
+            """;
+        JsonAssert.ModelBinds<ExampleType>(json);
+    }
 }

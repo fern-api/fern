@@ -34,6 +34,17 @@ public class FooTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "name": "example1"
+            }
+            """;
+        JsonAssert.ModelBinds<Foo>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -55,5 +66,16 @@ public class FooTest
             }
             """;
         JsonAssert.Roundtrips<Foo>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "name": "example2"
+            }
+            """;
+        JsonAssert.ModelBinds<Foo>(json);
     }
 }

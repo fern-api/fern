@@ -34,4 +34,16 @@ public class MigrationTest
             """;
         JsonAssert.Roundtrips<Migration>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "name": "001_init",
+              "status": "RUNNING"
+            }
+            """;
+        JsonAssert.ModelBinds<Migration>(json);
+    }
 }

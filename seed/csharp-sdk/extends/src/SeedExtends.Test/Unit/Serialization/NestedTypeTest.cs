@@ -41,4 +41,17 @@ public class NestedTypeTest
             """;
         JsonAssert.Roundtrips<NestedType>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "docs": "This is an example nested type.",
+              "name": "NestedExample",
+              "raw": "{\"nested\": \"example\"}"
+            }
+            """;
+        JsonAssert.ModelBinds<NestedType>(json);
+    }
 }

@@ -93,6 +93,37 @@ public class NodeTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "name": "root",
+              "nodes": [
+                {
+                  "name": "left"
+                },
+                {
+                  "name": "right"
+                }
+              ],
+              "trees": [
+                {
+                  "nodes": [
+                    {
+                      "name": "left"
+                    },
+                    {
+                      "name": "right"
+                    }
+                  ]
+                }
+              ]
+            }
+            """;
+        JsonAssert.ModelBinds<Node>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -117,6 +148,17 @@ public class NodeTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "name": "left"
+            }
+            """;
+        JsonAssert.ModelBinds<Node>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -138,5 +180,16 @@ public class NodeTest
             }
             """;
         JsonAssert.Roundtrips<Node>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "name": "right"
+            }
+            """;
+        JsonAssert.ModelBinds<Node>(json);
     }
 }

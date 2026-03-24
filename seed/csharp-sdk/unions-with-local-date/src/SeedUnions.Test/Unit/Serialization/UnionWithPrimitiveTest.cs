@@ -36,6 +36,18 @@ public class UnionWithPrimitiveTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "integer",
+              "value": 9
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithPrimitive>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -59,5 +71,17 @@ public class UnionWithPrimitiveTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithPrimitive>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "string",
+              "value": "bar"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithPrimitive>(json);
     }
 }

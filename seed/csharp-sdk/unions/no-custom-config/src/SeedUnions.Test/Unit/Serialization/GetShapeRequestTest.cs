@@ -32,4 +32,15 @@ public class GetShapeRequestTest
             """;
         JsonAssert.Roundtrips<GetShapeRequest>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "id": "example"
+            }
+            """;
+        JsonAssert.ModelBinds<GetShapeRequest>(json);
+    }
 }

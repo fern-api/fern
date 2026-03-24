@@ -53,4 +53,22 @@ public class TreeTest
             """;
         JsonAssert.Roundtrips<Tree>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "nodes": [
+                {
+                  "name": "left"
+                },
+                {
+                  "name": "right"
+                }
+              ]
+            }
+            """;
+        JsonAssert.ModelBinds<Tree>(json);
+    }
 }

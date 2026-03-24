@@ -33,4 +33,16 @@ public class TypeTest
             """;
         JsonAssert.Roundtrips<SeedAlias.Type>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "id": "type-df89sdg1",
+              "name": "foo"
+            }
+            """;
+        JsonAssert.ModelBinds<SeedAlias.Type>(json);
+    }
 }

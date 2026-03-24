@@ -38,4 +38,16 @@ public class ChildTest
             """;
         JsonAssert.Roundtrips<Child>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "parent": "Property from the parent",
+              "child": "Property from the child"
+            }
+            """;
+        JsonAssert.ModelBinds<Child>(json);
+    }
 }

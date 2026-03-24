@@ -57,4 +57,23 @@ public class UserTest
             """;
         JsonAssert.Roundtrips<User>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "userName": "username",
+              "metadata_tags": [
+                "tag1",
+                "tag2"
+              ],
+              "EXTRA_PROPERTIES": {
+                "foo": "bar",
+                "baz": "qux"
+              }
+            }
+            """;
+        JsonAssert.ModelBinds<User>(json);
+    }
 }

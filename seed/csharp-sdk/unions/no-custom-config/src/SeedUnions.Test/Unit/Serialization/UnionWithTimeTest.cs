@@ -37,6 +37,18 @@ public class UnionWithTimeTest
     }
 
     [NUnit.Framework.Test]
+    public void TestModelBinding_1()
+    {
+        var json = """
+            {
+              "type": "value",
+              "value": 5
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithTime>(json);
+    }
+
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -60,6 +72,18 @@ public class UnionWithTimeTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithTime>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_2()
+    {
+        var json = """
+            {
+              "type": "date",
+              "value": "1994-01-01"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithTime>(json);
     }
 
     [NUnit.Framework.Test]
@@ -90,5 +114,17 @@ public class UnionWithTimeTest
             }
             """;
         JsonAssert.Roundtrips<UnionWithTime>(inputJson);
+    }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding_3()
+    {
+        var json = """
+            {
+              "type": "datetime",
+              "value": "1994-01-01T01:01:01Z"
+            }
+            """;
+        JsonAssert.ModelBinds<UnionWithTime>(json);
     }
 }

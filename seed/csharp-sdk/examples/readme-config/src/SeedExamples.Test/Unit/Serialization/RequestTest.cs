@@ -32,4 +32,15 @@ public class RequestTest
             """;
         JsonAssert.Roundtrips<Request>(inputJson);
     }
+
+    [NUnit.Framework.Test]
+    public void TestModelBinding()
+    {
+        var json = """
+            {
+              "request": {}
+            }
+            """;
+        JsonAssert.ModelBinds<Request>(json);
+    }
 }
