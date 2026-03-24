@@ -87,6 +87,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -131,6 +134,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -175,6 +181,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -219,6 +228,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -264,6 +276,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -308,6 +323,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -352,6 +370,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithUnknownField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -396,6 +417,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithDocumentedUnknownType::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -440,6 +464,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'mixed']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -488,6 +515,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return ObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {
