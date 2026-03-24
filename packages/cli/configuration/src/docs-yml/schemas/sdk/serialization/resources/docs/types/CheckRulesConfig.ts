@@ -11,11 +11,19 @@ export const CheckRulesConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     exampleValidation: core.serialization.property("example-validation", CheckRuleSeverity.optional()),
     brokenLinks: core.serialization.property("broken-links", CheckRuleSeverity.optional()),
+    noNonComponentRefs: core.serialization.property("no-non-component-refs", CheckRuleSeverity.optional()),
+    validLocalReferences: core.serialization.property("valid-local-references", CheckRuleSeverity.optional()),
+    noCircularRedirects: core.serialization.property("no-circular-redirects", CheckRuleSeverity.optional()),
+    validDocsEndpoints: core.serialization.property("valid-docs-endpoints", CheckRuleSeverity.optional()),
 });
 
 export declare namespace CheckRulesConfig {
     export interface Raw {
         "example-validation"?: CheckRuleSeverity.Raw | null;
         "broken-links"?: CheckRuleSeverity.Raw | null;
+        "no-non-component-refs"?: CheckRuleSeverity.Raw | null;
+        "valid-local-references"?: CheckRuleSeverity.Raw | null;
+        "no-circular-redirects"?: CheckRuleSeverity.Raw | null;
+        "valid-docs-endpoints"?: CheckRuleSeverity.Raw | null;
     }
 }
