@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "Stream events",
+            "example_identifier": "Stream events context protocol",
             "id": {
                 "method": "POST",
                 "path": "/stream-events-context-protocol",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "Bad request",
+            "example_identifier": "Bad request context protocol",
             "id": {
                 "method": "POST",
                 "path": "/stream-events-context-protocol",

@@ -248,10 +248,10 @@ public class AsyncRawCompletionsClient {
                                                     ErrorEvent variantValue =
                                                             ObjectMappers.JSON_MAPPER.readValue(data, ErrorEvent.class);
                                                     return StreamEventContextProtocol.error(variantValue);
-                                                } else if ("notification".equals(eventType)) {
+                                                } else if ("event".equals(eventType)) {
                                                     EventEvent variantValue =
                                                             ObjectMappers.JSON_MAPPER.readValue(data, EventEvent.class);
-                                                    return StreamEventContextProtocol.notification(variantValue);
+                                                    return StreamEventContextProtocol.event(variantValue);
                                                 }
                                                 return ObjectMappers.JSON_MAPPER.readValue(
                                                         data, StreamEventContextProtocol.class);
