@@ -174,9 +174,12 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
         }
 
-        // For success status codes (2xx), return an empty response instead of undefined
+        // For success status codes (2xx), return an empty response instead of undefined.
+        // Skip 204 No Content responses — they have no body by definition,
+        // and creating a synthetic body would prevent generators from detecting
+        // the no-content case and making the return type optional.
         const statusCodeNum = parseInt(this.statusCode);
-        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
+        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300 && statusCodeNum !== 204) {
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
                     type: "object",

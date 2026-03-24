@@ -289,7 +289,7 @@
                 }
               },
               "description": null,
-              "body": "[\n    {\n        \"event\": \"completion\",\n        \"content\": \"content\"\n    }\n]",
+              "body": "[\n    {\n        \"event\": \"completion\",\n        \"content\": \"hello\"\n    },\n    {\n        \"event\": \"error\",\n        \"error\": \"something went wrong\"\n    }\n]",
               "_postman_previewlanguage": "json"
             },
             {
@@ -385,6 +385,204 @@
                   ],
                   "path": [
                     "stream-events"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Stream Events Context Protocol",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/stream-events-context-protocol",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stream-events-context-protocol"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"query\": \"query\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events-context-protocol",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events-context-protocol"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "[\n    {\n        \"event\": \"completion\",\n        \"content\": \"hello\"\n    },\n    {\n        \"event\": \"error\",\n        \"error\": \"something went wrong\"\n    },\n    {\n        \"event\": \"notification\",\n        \"name\": \"update available\"\n    }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events-context-protocol",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events-context-protocol"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"bad request\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events-context-protocol",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events-context-protocol"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "[\n    {\n        \"event\": \"completion\",\n        \"content\": \"content\"\n    }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events-context-protocol",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events-context-protocol"
                   ],
                   "query": [],
                   "variable": []

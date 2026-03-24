@@ -119,6 +119,57 @@ func (c *CompletionEvent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+type EventEvent struct {
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *EventEvent) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventEvent) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler EventEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EventEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventEvent) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ErrorEvent struct {
 	Error string `json:"error" url:"error"`
 	Code  *int   `json:"code,omitempty" url:"code,omitempty"`
@@ -176,6 +227,13 @@ func (e *ErrorEvent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+type StreamEventContextProtocol struct {
+	Event        string
+	Completion   CompletionEvent
+	Error        ErrorEvent
+	Notification EventEvent
 }
 
 type StreamEvent struct {
