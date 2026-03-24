@@ -34,8 +34,8 @@ class StreamEventContextProtocol_Error(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class StreamEventContextProtocol_Notification(UniversalBaseModel):
-    event: typing.Literal["notification"] = "notification"
+class StreamEventContextProtocol_Event(UniversalBaseModel):
+    event: typing.Literal["event"] = "event"
     name: str
 
     if IS_PYDANTIC_V2:
@@ -48,7 +48,7 @@ class StreamEventContextProtocol_Notification(UniversalBaseModel):
 
 StreamEventContextProtocol = typing_extensions.Annotated[
     typing.Union[
-        StreamEventContextProtocol_Completion, StreamEventContextProtocol_Error, StreamEventContextProtocol_Notification
+        StreamEventContextProtocol_Completion, StreamEventContextProtocol_Error, StreamEventContextProtocol_Event
     ],
     pydantic.Field(discriminator="event"),
 ]
