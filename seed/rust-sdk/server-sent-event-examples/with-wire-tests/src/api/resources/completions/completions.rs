@@ -46,4 +46,21 @@ impl CompletionsClient {
             )
             .await
     }
+
+    pub async fn stream_events_context_protocol(
+        &self,
+        request: &StreamEventsContextProtocolRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<SseStream<StreamEventContextProtocol>, ApiError> {
+        self.http_client
+            .execute_sse_request(
+                Method::POST,
+                "stream-events-context-protocol",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+                Some("[DONE]".to_string()),
+            )
+            .await
+    }
 }
