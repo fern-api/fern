@@ -332,17 +332,26 @@ func (e *ErrorEvent) String() string {
 }
 
 var (
-	eventEventFieldName = big.NewInt(1 << 0)
+	eventEventFieldEvent = big.NewInt(1 << 0)
+	eventEventFieldName  = big.NewInt(1 << 1)
 )
 
 type EventEvent struct {
-	Name string `json:"name" url:"name"`
+	Event string `json:"event" url:"event"`
+	Name  string `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (e *EventEvent) GetEvent() string {
+	if e == nil {
+		return ""
+	}
+	return e.Event
 }
 
 func (e *EventEvent) GetName() string {
@@ -364,6 +373,13 @@ func (e *EventEvent) require(field *big.Int) {
 		e.explicitFields = big.NewInt(0)
 	}
 	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetEvent sets the Event field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventEvent) SetEvent(event string) {
+	e.Event = event
+	e.require(eventEventFieldEvent)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -533,10 +549,10 @@ func (s *StreamEvent) validate() error {
 }
 
 type StreamEventContextProtocol struct {
-	Event        string
-	Completion   *CompletionEvent
-	Error        *ErrorEvent
-	Notification *EventEvent
+	Event      string
+	Completion *CompletionEvent
+	Error      *ErrorEvent
+	Event      *EventEvent
 }
 
 func (s *StreamEventContextProtocol) GetEvent() string {
@@ -560,11 +576,11 @@ func (s *StreamEventContextProtocol) GetError() *ErrorEvent {
 	return s.Error
 }
 
-func (s *StreamEventContextProtocol) GetNotification() *EventEvent {
+func (s *StreamEventContextProtocol) GetEvent() *EventEvent {
 	if s == nil {
 		return nil
 	}
-	return s.Notification
+	return s.Event
 }
 
 func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
@@ -591,12 +607,12 @@ func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		s.Error = value
-	case "notification":
+	case "event":
 		value := new(EventEvent)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		s.Notification = value
+		s.Event = value
 	}
 	return nil
 }
@@ -611,8 +627,8 @@ func (s StreamEventContextProtocol) MarshalJSON() ([]byte, error) {
 	if s.Error != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Error, "event", "error")
 	}
-	if s.Notification != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Notification, "event", "notification")
+	if s.Event != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Event, "event", "event")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -620,7 +636,7 @@ func (s StreamEventContextProtocol) MarshalJSON() ([]byte, error) {
 type StreamEventContextProtocolVisitor interface {
 	VisitCompletion(*CompletionEvent) error
 	VisitError(*ErrorEvent) error
-	VisitNotification(*EventEvent) error
+	VisitEvent(*EventEvent) error
 }
 
 func (s *StreamEventContextProtocol) Accept(visitor StreamEventContextProtocolVisitor) error {
@@ -630,8 +646,8 @@ func (s *StreamEventContextProtocol) Accept(visitor StreamEventContextProtocolVi
 	if s.Error != nil {
 		return visitor.VisitError(s.Error)
 	}
-	if s.Notification != nil {
-		return visitor.VisitNotification(s.Notification)
+	if s.Event != nil {
+		return visitor.VisitEvent(s.Event)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -647,8 +663,8 @@ func (s *StreamEventContextProtocol) validate() error {
 	if s.Error != nil {
 		fields = append(fields, "error")
 	}
-	if s.Notification != nil {
-		fields = append(fields, "notification")
+	if s.Event != nil {
+		fields = append(fields, "event")
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {

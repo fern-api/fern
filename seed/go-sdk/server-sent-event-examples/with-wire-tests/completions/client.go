@@ -156,19 +156,19 @@ func (c *Client) StreamEventsContextProtocol(
 				if err := json.Unmarshal(data, &value); err != nil {
 					return zero, err
 				}
-				return sse.StreamEventContextProtocol{Event: "completion", Completion: value}, nil
+				return sse.StreamEventContextProtocol{EventDiscriminant: "completion", Completion: value}, nil
 			case "error":
 				var value *sse.ErrorEvent
 				if err := json.Unmarshal(data, &value); err != nil {
 					return zero, err
 				}
-				return sse.StreamEventContextProtocol{Event: "error", Error: value}, nil
-			case "notification":
+				return sse.StreamEventContextProtocol{EventDiscriminant: "error", Error: value}, nil
+			case "event":
 				var value *sse.EventEvent
 				if err := json.Unmarshal(data, &value); err != nil {
 					return zero, err
 				}
-				return sse.StreamEventContextProtocol{Event: "notification", Notification: value}, nil
+				return sse.StreamEventContextProtocol{EventDiscriminant: "event", Event: value}, nil
 			default:
 				return zero, fmt.Errorf("unknown SSE event type: %s", eventType)
 			}
