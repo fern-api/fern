@@ -23,7 +23,7 @@ jobs:
     if: ${{ inputs.version != null }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-tags: true
 

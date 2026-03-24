@@ -29,7 +29,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/typescript-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -59,7 +59,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/python-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -89,7 +89,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/csharp/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -119,7 +119,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/go-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -149,7 +149,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/ruby-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -179,7 +179,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/php/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -209,7 +209,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/swift/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -239,7 +239,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/java-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
