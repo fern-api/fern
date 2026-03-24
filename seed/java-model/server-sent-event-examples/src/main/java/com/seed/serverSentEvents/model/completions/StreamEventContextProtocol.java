@@ -40,8 +40,8 @@ public final class StreamEventContextProtocol {
     return new StreamEventContextProtocol(new ErrorValue(value));
   }
 
-  public static StreamEventContextProtocol notification(EventEvent value) {
-    return new StreamEventContextProtocol(new NotificationValue(value));
+  public static StreamEventContextProtocol event(EventEvent value) {
+    return new StreamEventContextProtocol(new EventValue(value));
   }
 
   public boolean isCompletion() {
@@ -52,8 +52,8 @@ public final class StreamEventContextProtocol {
     return value instanceof ErrorValue;
   }
 
-  public boolean isNotification() {
-    return value instanceof NotificationValue;
+  public boolean isEvent() {
+    return value instanceof EventValue;
   }
 
   public boolean _isUnknown() {
@@ -74,9 +74,9 @@ public final class StreamEventContextProtocol {
     return Optional.empty();
   }
 
-  public Optional<EventEvent> getNotification() {
-    if (isNotification()) {
-      return Optional.of(((NotificationValue) value).value);
+  public Optional<EventEvent> getEvent() {
+    if (isEvent()) {
+      return Optional.of(((EventValue) value).value);
     }
     return Optional.empty();
   }
@@ -114,7 +114,7 @@ public final class StreamEventContextProtocol {
 
     T visitError(ErrorEvent error);
 
-    T visitNotification(EventEvent notification);
+    T visitEvent(EventEvent event);
 
     T _visitUnknown(Object unknownType);
   }
@@ -128,7 +128,7 @@ public final class StreamEventContextProtocol {
   @JsonSubTypes({
       @JsonSubTypes.Type(CompletionValue.class),
       @JsonSubTypes.Type(ErrorValue.class),
-      @JsonSubTypes.Type(NotificationValue.class)
+      @JsonSubTypes.Type(EventValue.class)
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
@@ -229,9 +229,9 @@ public final class StreamEventContextProtocol {
     }
   }
 
-  @JsonTypeName("notification")
+  @JsonTypeName("event")
   @JsonIgnoreProperties("event")
-  private static final class NotificationValue implements Value {
+  private static final class EventValue implements Value {
     @JsonUnwrapped
     @JsonIgnoreProperties(
         value = "event",
@@ -242,25 +242,25 @@ public final class StreamEventContextProtocol {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
     )
-    private NotificationValue() {
+    private EventValue() {
     }
 
-    private NotificationValue(EventEvent value) {
+    private EventValue(EventEvent value) {
       this.value = value;
     }
 
     @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitNotification(value);
+      return visitor.visitEvent(value);
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
-      return other instanceof NotificationValue && equalTo((NotificationValue) other);
+      return other instanceof EventValue && equalTo((EventValue) other);
     }
 
-    private boolean equalTo(NotificationValue other) {
+    private boolean equalTo(EventValue other) {
       return value.equals(other.value);
     }
 
