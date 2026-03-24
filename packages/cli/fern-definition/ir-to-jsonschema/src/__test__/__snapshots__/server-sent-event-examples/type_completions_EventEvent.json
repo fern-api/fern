@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
