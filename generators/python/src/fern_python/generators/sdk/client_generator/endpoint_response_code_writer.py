@@ -1,4 +1,4 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, List, Optional, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
@@ -107,6 +107,25 @@ class EndpointResponseCodeWriter:
 
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            # Check if this is a protocol-discriminated union
+            protocol_union_info = self._get_protocol_discriminated_union_info(stream_response)
+
+            if protocol_union_info is not None:
+                _, union_shape, variants = protocol_union_info
+                sse_yield_node = self._generate_protocol_discriminated_sse_yield(
+                    stream_response, union_shape, variants
+                )
+                sse_try_body: list[AST.AstNode] = [sse_yield_node]
+            else:
+                sse_try_body = [
+                    AST.YieldStatement(
+                        self._context.core_utilities.get_construct_sse(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                        ),
+                    ),
+                ]
+
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -151,14 +170,7 @@ class EndpointResponseCodeWriter:
                                 else_code=None,
                             ),
                             AST.TryStatement(
-                                body=[
-                                    AST.YieldStatement(
-                                        self._context.core_utilities.get_construct_sse(
-                                            self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
-                                        ),
-                                    ),
-                                ],
+                                body=sse_try_body,
                                 handlers=[
                                     AST.ExceptHandler(
                                         body=[
@@ -870,3 +882,126 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+    def _get_protocol_discriminated_union_info(
+        self, stream_response: ir_types.StreamingResponse
+    ) -> Optional[
+        Tuple[
+            ir_types.TypeDeclaration,
+            ir_types.UnionTypeDeclaration,
+            List[ir_types.SingleUnionType],
+        ]
+    ]:
+        """Check if the SSE payload is a protocol-discriminated union.
+
+        Returns (type_declaration, union_shape, variants) if it is, or None otherwise.
+        """
+        stream_union = stream_response.get_as_union()
+        if stream_union.type != "sse":
+            return None
+        payload = stream_union.payload
+        payload_union = payload.get_as_union()
+        if payload_union.type != "named":
+            return None
+        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
+            payload_union.type_id
+        )
+        shape_union = type_declaration.shape.get_as_union()
+        if shape_union.type != "union":
+            return None
+        if (
+            not hasattr(shape_union, "discriminator_context")
+            or shape_union.discriminator_context is None
+            or shape_union.discriminator_context != "protocol"
+        ):
+            return None
+        return (type_declaration, shape_union, list(shape_union.types))
+
+    def _generate_protocol_discriminated_sse_yield(
+        self,
+        stream_response: ir_types.StreamingResponse,
+        union_shape: ir_types.UnionTypeDeclaration,
+        variants: List[ir_types.SingleUnionType],
+    ) -> AST.AstNode:
+        """Generate an if/elif chain that dispatches on _sse.event to the correct variant type.
+
+        For each variant, generates:
+            if _sse.event == "<wire_value>":
+                _parsed_data = json.loads(_sse.data)
+                yield typing.cast(UnionType, parse_obj_as(VariantType, _parsed_data))
+        """
+        sse_var = EndpointResponseCodeWriter.SSE_VARIABLE
+        union_type_hint = self._get_streaming_response_data_type(stream_response)
+        conditions: list[AST.IfConditionLeaf] = []
+
+        for variant in variants:
+            wire_value = variant.discriminant_value.wire_value
+            variant_shape = variant.shape.get_as_union()
+
+            # Determine the variant type reference for deserialization
+            if variant_shape.properties_type == "samePropertiesAsObject":
+                variant_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    ir_types.TypeReference.factory.named(
+                        ir_types.DeclaredTypeName(
+                            type_id=variant_shape.type_id,
+                            fern_filepath=variant_shape.fern_filepath,
+                            name=variant_shape.name,
+                            display_name=None,
+                        )
+                    )
+                )
+            elif variant_shape.properties_type == "singleProperty":
+                variant_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    variant_shape.type
+                )
+            else:
+                # noProperties - just yield the union type with only the discriminant
+                variant_type_hint = None
+
+            yield_body: list[AST.AstNode] = []
+            if variant_type_hint is not None:
+                # _parsed_data = json.loads(_sse.data)
+                yield_body.append(
+                    AST.VariableDeclaration(
+                        name="_parsed_data",
+                        initializer=AST.Expression(
+                            Json.loads(AST.Expression(f"{sse_var}.data"))
+                        ),
+                    )
+                )
+                # yield typing.cast(UnionType, parse_obj_as(VariantType, _parsed_data))
+                yield_body.append(
+                    AST.YieldStatement(
+                        AST.TypeHint.invoke_cast(
+                            type_casted_to=union_type_hint,
+                            value_being_casted=self._context.core_utilities.get_construct(
+                                variant_type_hint,
+                                AST.Expression("_parsed_data"),
+                            ),
+                        )
+                    )
+                )
+            else:
+                # noProperties variant - parse the data as a dict and yield cast
+                yield_body.append(
+                    AST.YieldStatement(
+                        AST.TypeHint.invoke_cast(
+                            type_casted_to=union_type_hint,
+                            value_being_casted=AST.Expression(
+                                Json.loads(AST.Expression(f"{sse_var}.data"))
+                            ),
+                        )
+                    )
+                )
+
+            conditions.append(
+                AST.IfConditionLeaf(
+                    condition=AST.Expression(f"{sse_var}.event == {repr(wire_value)}"),
+                    code=yield_body,
+                )
+            )
+
+        return AST.ConditionalTree(
+            conditions=conditions,
+            else_code=None,
+        )

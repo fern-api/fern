@@ -3,6 +3,17 @@
 - version: 5.0.6
   changelogEntry:
     - summary: |
+        Fix SSE wire test generation to assert on deserialized event content instead of
+        only iterating the stream. Generated tests now collect SSE events into a list and
+        assert on event count and individual property values. Also adds happy-path tests
+        for protocol-discriminated SSE endpoints.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
         Fix `construct_type` to resolve `ForwardRef` annotations in nested model fields
         and use strict Literal discriminant matching for undiscriminated unions.
 
