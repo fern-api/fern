@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -78,7 +78,7 @@ public record FieldValue
     public SeedApi.PrimitiveValue AsPrimitiveValue() =>
         IsPrimitiveValue
             ? (SeedApi.PrimitiveValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'primitive_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'primitive_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ObjectValue"/> if <see cref="Type"/> is 'object_value', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FieldValue
     public SeedApi.ObjectValue AsObjectValue() =>
         IsObjectValue
             ? (SeedApi.ObjectValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'object_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'object_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ContainerValue"/> if <see cref="Type"/> is 'container_value', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FieldValue
     public SeedApi.ContainerValue AsContainerValue() =>
         IsContainerValue
             ? (SeedApi.ContainerValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'container_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'container_value'");
 
     public T Match<T>(
         Func<SeedApi.PrimitiveValue, T> onPrimitiveValue,
@@ -191,12 +191,12 @@ public record FieldValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FieldValue>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FieldValue).IsAssignableFrom(typeToConvert);
 
         public override FieldValue Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -269,7 +269,7 @@ public record FieldValue
 
         public override FieldValue ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

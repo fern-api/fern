@@ -14,6 +14,8 @@ buildCli({
         VENUS_AUDIENCE: "venus-dev",
         LOCAL_STORAGE_FOLDER: ".fern-local",
         POSTHOG_API_KEY: null,
+        SENTRY_DSN: null,
+        SENTRY_ENVIRONMENT: "local",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
         DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "http://localhost:9090/fdr/",

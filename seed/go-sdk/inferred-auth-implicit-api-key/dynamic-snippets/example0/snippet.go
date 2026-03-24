@@ -12,7 +12,9 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithApiKey(
+            "X-Api-Key",
+        ),
     )
     request := &fern.GetTokenRequest{
         ApiKey: "api_key",

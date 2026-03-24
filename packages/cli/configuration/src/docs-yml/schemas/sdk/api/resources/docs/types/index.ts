@@ -22,6 +22,8 @@ export * from "./BackgroundImageThemedConfig.js";
 export * from "./BodyThemeConfig.js";
 export * from "./ChangelogConfiguration.js";
 export * from "./ChangelogFolderRelativePath.js";
+export * from "./CollapsedStringValue.js";
+export * from "./CollapsedValue.js";
 export * from "./ColorConfig.js";
 export * from "./ColorsConfiguration.js";
 export * from "./ColorThemedConfig.js";

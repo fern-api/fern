@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+using global::System.Diagnostics.CodeAnalysis;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable;

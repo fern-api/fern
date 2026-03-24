@@ -1,9 +1,12 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct User {
     #[serde(default)]
     pub name: String,
+    /// Additional properties that are not part of the defined schema.
+    #[serde(flatten)]
+    pub extra: std::collections::HashMap<String, serde_json::Value>,
 }
 
 impl User {
@@ -30,6 +33,7 @@ impl UserBuilder {
     pub fn build(self) -> Result<User, BuildError> {
         Ok(User {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
+            extra: Default::default(),
         })
     }
 }

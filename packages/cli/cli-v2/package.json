@@ -79,6 +79,7 @@
     "@fern-api/yaml-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
+    "@sentry/node": "^10.45.0",
     "@types/inquirer": "catalog:",
     "@types/is-ci": "catalog:",
     "@types/js-yaml": "catalog:",

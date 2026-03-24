@@ -158,6 +158,10 @@ export const BackgroundImageConfiguration = z.union([z.string(), BackgroundImage
 
 export const CssConfig = z.union([z.string(), z.array(z.string())]);
 
+export const CollapsedStringValue = z.enum(["open-by-default"]);
+
+export const CollapsedValue = z.union([z.boolean(), CollapsedStringValue]);
+
 // ===== Base/mixin schemas =====
 
 export const WithPermissions = z.object({
@@ -646,7 +650,7 @@ export const FolderConfiguration = WithPermissions.merge(WithFeatureFlags).merge
         icon: z.string().optional(),
         hidden: z.boolean().optional(),
         "skip-slug": z.boolean().optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         availability: Availability.optional()
@@ -700,7 +704,7 @@ export const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatur
         icon: z.string().optional(),
         hidden: z.boolean().optional(),
         "skip-slug": z.boolean().optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         availability: Availability.optional(),
@@ -740,7 +744,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         postman: z.string().optional(),
         summary: z.string().optional(),
         layout: z.array(ApiReferenceLayoutItem).optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         icon: z.string().optional(),
         slug: z.string().optional(),
         hidden: z.boolean().optional(),
@@ -773,7 +777,7 @@ export const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merg
         section: z.string(),
         path: z.string().optional(),
         contents: z.array(NavigationItem),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         slug: z.string().optional(),

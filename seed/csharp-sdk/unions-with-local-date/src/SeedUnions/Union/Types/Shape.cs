@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -67,7 +67,7 @@ public record Shape
     public SeedUnions.Circle AsCircle() =>
         IsCircle
             ? (SeedUnions.Circle)Value!
-            : throw new System.Exception("Shape.Type is not 'circle'");
+            : throw new global::System.Exception("Shape.Type is not 'circle'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
@@ -76,7 +76,7 @@ public record Shape
     public SeedUnions.Square AsSquare() =>
         IsSquare
             ? (SeedUnions.Square)Value!
-            : throw new System.Exception("Shape.Type is not 'square'");
+            : throw new global::System.Exception("Shape.Type is not 'square'");
 
     public T Match<T>(
         Func<SeedUnions.Circle, T> onCircle,
@@ -155,12 +155,12 @@ public record Shape
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Shape).IsAssignableFrom(typeToConvert);
 
         public override Shape Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -231,7 +231,7 @@ public record Shape
 
         public override Shape ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
