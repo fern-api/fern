@@ -4,6 +4,7 @@ package nullable
 
 import (
 	context "context"
+
 	fern "github.com/nullable/fern"
 	core "github.com/nullable/fern/core"
 	internal "github.com/nullable/fern/internal"

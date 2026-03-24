@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/go-content-type/fern"
     client "github.com/go-content-type/fern/client"
     option "github.com/go-content-type/fern/option"

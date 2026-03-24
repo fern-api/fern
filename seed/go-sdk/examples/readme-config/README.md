@@ -52,6 +52,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     commons "github.com/examples/fern/commons"

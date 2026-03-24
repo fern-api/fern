@@ -4,11 +4,12 @@ package primitive
 
 import (
 	context "context"
+	time "time"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type Client struct {

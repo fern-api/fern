@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	os "os"
+
 	fern "github.com/any-auth/fern"
 	core "github.com/any-auth/fern/core"
 	internal "github.com/any-auth/fern/internal"
 	option "github.com/any-auth/fern/option"
-	os "os"
 )
 
 type Client struct {

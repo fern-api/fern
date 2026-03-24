@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/nullable-allof-extends/fern"
 	core "github.com/nullable-allof-extends/fern/core"
 	internal "github.com/nullable-allof-extends/fern/internal"
 	option "github.com/nullable-allof-extends/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

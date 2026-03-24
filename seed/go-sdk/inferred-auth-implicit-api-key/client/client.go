@@ -5,6 +5,7 @@ package client
 import (
 	context "context"
 	errors "errors"
+
 	fern "github.com/inferred-auth-implicit-api-key/fern"
 	auth "github.com/inferred-auth-implicit-api-key/fern/auth"
 	core "github.com/inferred-auth-implicit-api-key/fern/core"

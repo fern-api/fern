@@ -5,6 +5,7 @@ package client
 import (
 	context "context"
 	errors "errors"
+
 	fern "github.com/inferred-auth-implicit-no-expiry/fern"
 	auth "github.com/inferred-auth-implicit-no-expiry/fern/auth"
 	core "github.com/inferred-auth-implicit-no-expiry/fern/core"

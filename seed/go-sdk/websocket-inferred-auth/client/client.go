@@ -5,6 +5,7 @@ package client
 import (
 	context "context"
 	errors "errors"
+
 	fern "github.com/websocket-inferred-auth/fern"
 	auth "github.com/websocket-inferred-auth/fern/auth"
 	core "github.com/websocket-inferred-auth/fern/core"

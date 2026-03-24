@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	sse "github.com/fern-api/sse-examples-go"
 	client "github.com/fern-api/sse-examples-go/client"
 	option "github.com/fern-api/sse-examples-go/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
