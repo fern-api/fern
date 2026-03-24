@@ -45,12 +45,14 @@ describe("DocsYmlSchemas", () => {
             instances: [],
             check: {
                 rules: {
-                    "example-validation": "error"
+                    "example-validation": "error",
+                    "valid-docs-endpoints": "warn"
                 }
             }
         });
 
         expect(parsed.check?.rules?.["example-validation"]).toBe("error");
+        expect(parsed.check?.rules?.["valid-docs-endpoints"]).toBe("warn");
         expect(parsed.check?.rules?.["broken-links"]).toBeUndefined();
     });
 });
