@@ -103,6 +103,9 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                }
                 return UsernameCursor::fromJson($json);
             }
         } catch (JsonException $e) {
