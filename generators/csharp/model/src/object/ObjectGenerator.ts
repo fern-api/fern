@@ -399,7 +399,16 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
             const enableExplicitNullableOptional = this.context.generation.settings.enableExplicitNullableOptional;
 
-            if (prop.isOptionalWrapper) {
+            if (prop.isWriteOnly) {
+                // WriteOnly properties are not deserialized and receive default! in Read.
+                // Must null-check to avoid writing null for reference types after round-trip.
+                writer.writeLine(`if (value.${prop.propertyName} != null)`);
+                writer.pushScope();
+                writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
+                writer.write("JsonSerializer.Serialize(writer, value.");
+                writer.writeTextStatement(`${prop.propertyName}, options)`);
+                writer.popScope();
+            } else if (prop.isOptionalWrapper) {
                 // Optional<T> properties: write only if IsDefined
                 writer.writeLine(`if (value.${prop.propertyName}.IsDefined)`);
                 writer.pushScope();

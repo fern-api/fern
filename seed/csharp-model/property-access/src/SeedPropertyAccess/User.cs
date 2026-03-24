@@ -112,8 +112,11 @@ public record User
         public override void Write(Utf8JsonWriter writer, User value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("password");
-            JsonSerializer.Serialize(writer, value.Password, options);
+            if (value.Password != null)
+            {
+                writer.WritePropertyName("password");
+                JsonSerializer.Serialize(writer, value.Password, options);
+            }
             writer.WritePropertyName("profile");
             JsonSerializer.Serialize(writer, value.Profile, options);
             if (value.AdditionalProperties != null)

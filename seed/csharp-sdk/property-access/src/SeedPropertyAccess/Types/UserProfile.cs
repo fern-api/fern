@@ -110,8 +110,11 @@ public record UserProfile
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("verification");
             JsonSerializer.Serialize(writer, value.Verification, options);
-            writer.WritePropertyName("ssn");
-            JsonSerializer.Serialize(writer, value.Ssn, options);
+            if (value.Ssn != null)
+            {
+                writer.WritePropertyName("ssn");
+                JsonSerializer.Serialize(writer, value.Ssn, options);
+            }
             if (value.AdditionalProperties != null)
             {
                 foreach (var kvp in value.AdditionalProperties)

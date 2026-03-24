@@ -129,8 +129,11 @@ public record Admin
             writer.WriteStartObject();
             writer.WritePropertyName("adminLevel");
             JsonSerializer.Serialize(writer, value.AdminLevel, options);
-            writer.WritePropertyName("password");
-            JsonSerializer.Serialize(writer, value.Password, options);
+            if (value.Password != null)
+            {
+                writer.WritePropertyName("password");
+                JsonSerializer.Serialize(writer, value.Password, options);
+            }
             writer.WritePropertyName("profile");
             JsonSerializer.Serialize(writer, value.Profile, options);
             if (value.AdditionalProperties != null)

@@ -100,8 +100,11 @@ public record Task
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("email");
             JsonSerializer.Serialize(writer, value.Email, options);
-            writer.WritePropertyName("password");
-            JsonSerializer.Serialize(writer, value.Password, options);
+            if (value.Password != null)
+            {
+                writer.WritePropertyName("password");
+                JsonSerializer.Serialize(writer, value.Password, options);
+            }
             if (value.AdditionalProperties != null)
             {
                 foreach (var kvp in value.AdditionalProperties)
