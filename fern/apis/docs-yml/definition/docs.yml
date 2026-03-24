@@ -157,7 +157,19 @@ types:
         docs: Severity for OpenAPI example validation. Default is warn.
       broken-links:
         type: optional<CheckRuleSeverity>
-        docs: Severity for broken link detection. Default is error.
+        docs: Severity for broken link detection. Defaults to error for broken internal links and warn for malformed URLs.
+      no-non-component-refs:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for non-component OpenAPI reference validation. Default is error.
+      valid-local-references:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for local OpenAPI reference validation. Default is warn.
+      no-circular-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for circular redirect validation. Default is error.
+      valid-docs-endpoints:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for docs endpoint URL validation. Default is warn.
 
   CheckConfig:
     docs: |
