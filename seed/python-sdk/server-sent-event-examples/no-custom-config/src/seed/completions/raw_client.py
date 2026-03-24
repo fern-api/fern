@@ -258,7 +258,7 @@ class RawCompletionsClient:
                                                 ),
                                             ),
                                         )
-                                    elif _sse.event == "notification":
+                                    elif _sse.event == "event":
                                         _parsed_data = json.loads(_sse.data)
                                         yield typing.cast(
                                             StreamEventContextProtocol,
@@ -544,7 +544,7 @@ class AsyncRawCompletionsClient:
                                                 ),
                                             ),
                                         )
-                                    elif _sse.event == "notification":
+                                    elif _sse.event == "event":
                                         _parsed_data = json.loads(_sse.data)
                                         yield typing.cast(
                                             StreamEventContextProtocol,

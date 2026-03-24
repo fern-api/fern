@@ -14,7 +14,7 @@ if typing.TYPE_CHECKING:
         StreamEventContextProtocol,
         StreamEventContextProtocol_Completion,
         StreamEventContextProtocol_Error,
-        StreamEventContextProtocol_Notification,
+        StreamEventContextProtocol_Event,
     )
     from .streamed_completion import StreamedCompletion
 _dynamic_imports: typing.Dict[str, str] = {
@@ -25,7 +25,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StreamEventContextProtocol": ".stream_event_context_protocol",
     "StreamEventContextProtocol_Completion": ".stream_event_context_protocol",
     "StreamEventContextProtocol_Error": ".stream_event_context_protocol",
-    "StreamEventContextProtocol_Notification": ".stream_event_context_protocol",
+    "StreamEventContextProtocol_Event": ".stream_event_context_protocol",
     "StreamEvent_Completion": ".stream_event",
     "StreamEvent_Error": ".stream_event",
     "StreamedCompletion": ".streamed_completion",
@@ -61,7 +61,7 @@ __all__ = [
     "StreamEventContextProtocol",
     "StreamEventContextProtocol_Completion",
     "StreamEventContextProtocol_Error",
-    "StreamEventContextProtocol_Notification",
+    "StreamEventContextProtocol_Event",
     "StreamEvent_Completion",
     "StreamEvent_Error",
     "StreamedCompletion",

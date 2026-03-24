@@ -113,7 +113,7 @@ class CompletionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.completions.stream_events_context_protocol(
-            query="query",
+            query="",
         )
         for chunk in response:
             yield chunk
@@ -245,7 +245,7 @@ class AsyncCompletionsClient:
 
         async def main() -> None:
             response = await client.completions.stream_events_context_protocol(
-                query="query",
+                query="",
             )
             async for chunk in response:
                 yield chunk

@@ -7,6 +7,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class EventEvent(UniversalBaseModel):
+    event: str
     name: str
 
     if IS_PYDANTIC_V2:
