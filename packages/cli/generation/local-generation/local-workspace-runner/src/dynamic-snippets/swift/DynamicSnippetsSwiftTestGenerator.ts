@@ -7,6 +7,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
+import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
@@ -42,11 +43,11 @@ export class DynamicSnippetsSwiftTestGenerator {
         requests
     }: {
         outputDir: AbsoluteFilePath;
-        requests: dynamic.EndpointSnippetRequest[];
+        requests: DynamicSnippetsTestRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
-        for (const [idx, request] of requests.entries()) {
+        for (const [idx, { endpointId, request }] of requests.entries()) {
             try {
                 const convertedRequest = convertDynamicEndpointSnippetRequest(request);
                 if (convertedRequest == null) {
@@ -54,7 +55,8 @@ export class DynamicSnippetsSwiftTestGenerator {
                 }
                 const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
                     config: {},
-                    style: Style.Full
+                    style: Style.Full,
+                    endpointId
                 });
                 const dynamicSnippetFilePath = this.getTestFilePath({
                     absolutePathToOutputDir,

@@ -17,10 +17,13 @@ export async function generateDynamicSnippetsTestSuite({
     return {
         ir: ir.dynamic,
         config,
-        requests: Object.values(ir.dynamic.endpoints).flatMap((endpoint) =>
+        requests: Object.entries(ir.dynamic.endpoints).flatMap(([endpointId, endpoint]) =>
             (endpoint.examples ?? []).map((example) => ({
-                ...example,
-                baseUrl: "https://api.fern.com"
+                endpointId,
+                request: {
+                    ...example,
+                    baseUrl: "https://api.fern.com"
+                }
             }))
         )
     };
