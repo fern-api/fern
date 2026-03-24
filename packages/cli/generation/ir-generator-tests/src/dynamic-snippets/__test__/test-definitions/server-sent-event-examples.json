@@ -305,6 +305,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -323,8 +324,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -538,6 +538,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -556,14 +557,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "completion": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:CompletionEvent",
                     "discriminantValue": {
+                        "wireValue": "completion",
                         "name": {
                             "originalName": "completion",
                             "camelCase": {
@@ -582,8 +583,7 @@
                                 "unsafeName": "Completion",
                                 "safeName": "Completion"
                             }
-                        },
-                        "wireValue": "completion"
+                        }
                     },
                     "properties": []
                 },
@@ -591,6 +591,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:ErrorEvent",
                     "discriminantValue": {
+                        "wireValue": "error",
                         "name": {
                             "originalName": "error",
                             "camelCase": {
@@ -609,8 +610,7 @@
                                 "unsafeName": "Error",
                                 "safeName": "Error"
                             }
-                        },
-                        "wireValue": "error"
+                        }
                     },
                     "properties": []
                 },
@@ -618,6 +618,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:EventEvent",
                     "discriminantValue": {
+                        "wireValue": "notification",
                         "name": {
                             "originalName": "notification",
                             "camelCase": {
@@ -636,8 +637,7 @@
                                 "unsafeName": "Notification",
                                 "safeName": "Notification"
                             }
-                        },
-                        "wireValue": "notification"
+                        }
                     },
                     "properties": []
                 }
@@ -1303,6 +1303,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "query",
                                 "name": {
                                     "originalName": "query",
                                     "camelCase": {
@@ -1321,8 +1322,7 @@
                                         "unsafeName": "Query",
                                         "safeName": "Query"
                                     }
-                                },
-                                "wireValue": "query"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
