@@ -7,10 +7,10 @@ import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import chalk from "chalk";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { logMdxValidationResults, validateMdxFiles } from "../validate/validateMdx.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
@@ -165,16 +165,22 @@ export async function generateDocsWorkspace({
             excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks)
         });
 
+        // Validate MDX files
+        const { errors, totalFiles } = await validateMdxFiles({
+            workspace: docsWorkspace,
+            context
+        });
+
+        const { hasErrors } = logMdxValidationResults({ errors, totalFiles, context });
+
+        if (hasErrors) {
+            context.failAndThrow();
+        }
+
         context.logger.info("Validation complete, starting remote docs generation...");
 
-        const filterStart = performance.now();
-        const ossWorkspaces = await filterOssWorkspaces(project);
-        const filterTime = performance.now() - filterStart;
-        context.logger.debug(
-            `Filtered OSS workspaces (${ossWorkspaces.length} workspaces) in ${filterTime.toFixed(0)}ms`
-        );
-
         const generationStart = performance.now();
+        const ossWorkspaces = await filterOssWorkspaces(project);
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,

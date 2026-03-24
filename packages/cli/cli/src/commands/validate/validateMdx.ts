@@ -18,7 +18,7 @@ class MdxValidationError {
 
     toString(): string {
         const relativePath = path.relative(process.cwd(), this.filepath);
-        let formatted = chalk.red(`\n  ${relativePath}`);
+        let formatted = chalk.red(relativePath);
 
         if (this.line != null) {
             formatted += chalk.yellow(`:${this.line}`);
@@ -27,7 +27,7 @@ class MdxValidationError {
             }
         }
 
-        formatted += chalk.gray(`\n    ${this.message}`);
+        formatted += chalk.gray(`\n  ${this.message}`);
 
         return formatted;
     }
@@ -107,15 +107,18 @@ export function logMdxValidationResults({
     errors: MdxValidationError[];
     totalFiles: number;
     context: TaskContext;
-}): void {
+}): { hasErrors: boolean } {
     if (errors.length === 0) {
-        context.logger.info(chalk.green(`\n✓ All ${totalFiles} MDX files are valid`));
-        return;
+        context.logger.info(chalk.green(`✓ All ${totalFiles} MDX files are valid`));
+        return { hasErrors: false };
     }
+
+    context.logger.error(chalk.red(`✗ Found ${errors.length} MDX validation error${errors.length === 1 ? "" : "s"}`));
 
     for (const error of errors) {
         context.logger.error(error.toString());
     }
 
     context.logger.error("");
+    return { hasErrors: true };
 }

@@ -17,7 +17,8 @@ export function logViolations({
     logWarnings,
     logSummary = true,
     logBreadcrumbs = true,
-    elapsedMillis = 0
+    elapsedMillis = 0,
+    successMessage
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
@@ -25,6 +26,7 @@ export function logViolations({
     logSummary?: boolean;
     logBreadcrumbs?: boolean;
     elapsedMillis?: number;
+    successMessage?: string;
 }): LogViolationsResponse {
     // dedupe violations before processing
     const deduplicatedViolations: ValidationViolation[] = [];
@@ -69,7 +71,7 @@ export function logViolations({
 
     // log the summary at the end so that it's not pushed out of view by the violations
     if (logSummary) {
-        logViolationsSummary({ context, stats, logWarnings, elapsedMillis });
+        logViolationsSummary({ context, stats, logWarnings, elapsedMillis, successMessage });
     }
 
     return {
@@ -196,12 +198,14 @@ function logViolationsSummary({
     stats,
     context,
     logWarnings,
-    elapsedMillis = 0
+    elapsedMillis = 0,
+    successMessage
 }: {
     stats: ViolationStats;
     context: TaskContext;
     logWarnings: boolean;
     elapsedMillis?: number;
+    successMessage?: string;
 }): void {
     const { numFatal, numErrors, numWarnings } = stats;
 
@@ -216,7 +220,7 @@ function logViolationsSummary({
     } else if (numWarnings > 0) {
         context.logger.warn(message);
     } else {
-        context.logger.info(chalk.green("✓ All checks passed"));
+        context.logger.info(chalk.green(successMessage ?? "✓ All checks passed"));
     }
 }
 

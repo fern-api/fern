@@ -101,7 +101,8 @@ export async function validateDocsWorkspaceWithoutExiting({
         logWarnings,
         logSummary,
         logBreadcrumbs: false,
-        elapsedMillis
+        elapsedMillis,
+        successMessage: "✓ Docs configuration validated"
     });
 
     if (errorOnBrokenLinks) {

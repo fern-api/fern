@@ -8,6 +8,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
+import { logMdxValidationResults, validateMdxFiles } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
@@ -58,6 +59,22 @@ export async function validateWorkspaces({
                 hasAnyErrors = true;
             }
         }
+
+        // Validate MDX files separately (warnings only, doesn't block)
+        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            const { errors, totalFiles } = await validateMdxFiles({
+                workspace: docsWorkspace,
+                context
+            });
+
+            // Only log errors if --warnings flag is set, don't log success message
+            if (logWarnings && errors.length > 0) {
+                for (const error of errors) {
+                    context.logger.error(error.toString());
+                }
+                context.logger.error("");
+            }
+        });
     }
 
     // Collect API violations (using runTaskForWorkspace to preserve [api]: prefix for fatal errors)

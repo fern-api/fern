@@ -1931,10 +1931,14 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 command: "fern docs md check"
             });
 
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            });
+            const project = await loadProjectAndRegisterWorkspacesWithContext(
+                cliContext,
+                {
+                    commandLineApiWorkspace: undefined,
+                    defaultToAllApiWorkspaces: true
+                },
+                true
+            );
 
             if (project.docsWorkspaces == null) {
                 cliContext.failAndThrow("No docs workspace found");
@@ -1948,9 +1952,9 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     context
                 });
 
-                logMdxValidationResults({ errors, totalFiles, context });
+                const { hasErrors: mdxHasErrors } = logMdxValidationResults({ errors, totalFiles, context });
 
-                if (errors.length > 0) {
+                if (mdxHasErrors) {
                     hasErrors = true;
                 }
             });

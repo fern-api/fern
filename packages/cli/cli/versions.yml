@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add MDX validation to `fern generate --docs` and `fern check --warnings` commands.
+      type: feat
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 4.43.0
   changelogEntry:
     - summary: |
