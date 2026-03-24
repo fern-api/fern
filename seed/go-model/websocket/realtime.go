@@ -5,6 +5,7 @@ package websocket
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/websocket/fern/internal"
 )
 

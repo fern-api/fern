@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/multi-line-docs/fern/client"
     option "github.com/multi-line-docs/fern/option"
 )

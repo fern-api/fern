@@ -4,6 +4,7 @@ package nullableoptional
 
 import (
 	context "context"
+
 	fern "github.com/nullable-optional/fern"
 	core "github.com/nullable-optional/fern/core"
 	internal "github.com/nullable-optional/fern/internal"

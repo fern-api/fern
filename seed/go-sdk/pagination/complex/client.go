@@ -4,6 +4,7 @@ package complex
 
 import (
 	context "context"
+
 	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"

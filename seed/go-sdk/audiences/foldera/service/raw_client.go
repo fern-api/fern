@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/audiences/fern/core"
 	foldera "github.com/audiences/fern/foldera"
 	internal "github.com/audiences/fern/internal"
 	option "github.com/audiences/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

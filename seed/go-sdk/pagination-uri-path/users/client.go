@@ -4,6 +4,7 @@ package users
 
 import (
 	context "context"
+
 	fern "github.com/pagination-uri-path/fern"
 	core "github.com/pagination-uri-path/fern/core"
 	internal "github.com/pagination-uri-path/fern/internal"

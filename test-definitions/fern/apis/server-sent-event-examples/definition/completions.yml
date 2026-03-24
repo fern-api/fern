@@ -10,7 +10,11 @@ types:
 
   EventEvent:
     properties:
+<<<<<<< HEAD
       event: string
+=======
+      name: string
+>>>>>>> origin/main
 
   ErrorEvent:
     properties:
@@ -24,7 +28,11 @@ types:
     union:
       completion: CompletionEvent
       error: ErrorEvent
+<<<<<<< HEAD
       event: EventEvent
+=======
+      notification: EventEvent
+>>>>>>> origin/main
 
   StreamEvent:
     discriminant:
@@ -116,7 +124,11 @@ service:
       method: POST
       path: /stream-events-context-protocol
       request:
+<<<<<<< HEAD
         name: StreamEventsRequest
+=======
+        name: StreamEventsContextProtocolRequest
+>>>>>>> origin/main
         body:
           properties:
             query: string
@@ -138,6 +150,12 @@ service:
               - event: error
                 data:
                   error: "something went wrong"
+<<<<<<< HEAD
+=======
+              - event: notification
+                data:
+                  name: "update available"
+>>>>>>> origin/main
         - name: "Bad request"
           request:
             query: ""

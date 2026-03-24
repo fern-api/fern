@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	auth "github.com/oauth-client-credentials-nested-root/fern/auth"
 	core "github.com/oauth-client-credentials-nested-root/fern/core"
 	internal "github.com/oauth-client-credentials-nested-root/fern/internal"

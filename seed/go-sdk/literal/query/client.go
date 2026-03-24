@@ -4,6 +4,7 @@ package query
 
 import (
 	context "context"
+
 	fern "github.com/literal/fern"
 	core "github.com/literal/fern/core"
 	internal "github.com/literal/fern/internal"

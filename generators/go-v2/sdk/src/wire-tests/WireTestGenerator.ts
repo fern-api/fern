@@ -7,6 +7,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { InferredAuthWireTestGenerator } from "./InferredAuthWireTestGenerator.js";
 import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
@@ -90,6 +91,13 @@ export class WireTestGenerator {
         const oauthTestFile = oauthTestGenerator.generate();
         if (oauthTestFile != null) {
             this.context.project.addGoFiles(oauthTestFile);
+        }
+
+        // Generate inferred auth wire tests if the API uses inferred auth
+        const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
+        const inferredAuthTestFile = inferredAuthTestGenerator.generate();
+        if (inferredAuthTestFile != null) {
+            this.context.project.addGoFiles(inferredAuthTestFile);
         }
     }
 

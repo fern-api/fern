@@ -5,14 +5,15 @@ package inlineusers
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+	strconv "strconv"
+
 	uuid "github.com/google/uuid"
 	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	inlineusers "github.com/pagination/fern/inlineusers"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
-	http "net/http"
-	strconv "strconv"
 )
 
 type Client struct {

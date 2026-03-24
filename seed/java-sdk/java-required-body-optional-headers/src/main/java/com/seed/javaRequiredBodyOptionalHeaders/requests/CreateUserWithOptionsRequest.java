@@ -53,7 +53,7 @@ public final class CreateUserWithOptionsRequest {
     /**
      * @return Whether to validate the request
      */
-    @JsonProperty("validate")
+    @JsonIgnore
     public Optional<Boolean> getValidate() {
         return validate;
     }

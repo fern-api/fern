@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/undiscriminated-unions/fern"
     client "github.com/undiscriminated-unions/fern/client"
 )
