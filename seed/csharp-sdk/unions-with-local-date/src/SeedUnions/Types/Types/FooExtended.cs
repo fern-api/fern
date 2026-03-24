@@ -97,5 +97,25 @@ public record FooExtended
             }
             writer.WriteEndObject();
         }
+
+        public override FooExtended ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<FooExtended>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            FooExtended value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

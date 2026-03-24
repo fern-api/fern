@@ -87,5 +87,25 @@ public record GruesomeCoach
             }
             writer.WriteEndObject();
         }
+
+        public override GruesomeCoach ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<GruesomeCoach>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            GruesomeCoach value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

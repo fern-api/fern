@@ -121,5 +121,25 @@ public record PaginatedConversationResponse
             }
             writer.WriteEndObject();
         }
+
+        public override PaginatedConversationResponse ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<PaginatedConversationResponse>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            PaginatedConversationResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

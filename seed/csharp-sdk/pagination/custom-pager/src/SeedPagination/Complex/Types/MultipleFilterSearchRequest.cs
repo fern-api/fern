@@ -117,5 +117,25 @@ public record MultipleFilterSearchRequest
             }
             writer.WriteEndObject();
         }
+
+        public override MultipleFilterSearchRequest ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<MultipleFilterSearchRequest>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            MultipleFilterSearchRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

@@ -126,5 +126,25 @@ public record TestCaseNonHiddenGrade
             }
             writer.WriteEndObject();
         }
+
+        public override TestCaseNonHiddenGrade ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<TestCaseNonHiddenGrade>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            TestCaseNonHiddenGrade value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

@@ -94,5 +94,25 @@ public record ObjectWithDocumentedUnknownType
             }
             writer.WriteEndObject();
         }
+
+        public override ObjectWithDocumentedUnknownType ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<ObjectWithDocumentedUnknownType>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ObjectWithDocumentedUnknownType value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

@@ -112,5 +112,25 @@ public record ObjectWithDatetimeLikeString
             }
             writer.WriteEndObject();
         }
+
+        public override ObjectWithDatetimeLikeString ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<ObjectWithDatetimeLikeString>(json, options);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ObjectWithDatetimeLikeString value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }

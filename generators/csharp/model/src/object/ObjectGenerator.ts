@@ -238,6 +238,63 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             })
         });
 
+        // ReadAsPropertyName method - for dictionary key deserialization
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: objectReference,
+            name: "ReadAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.System.Text.Json.Utf8JsonReader
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement(
+                    "var json = reader.GetString()"
+                );
+                writer.write("return JsonSerializer.Deserialize<");
+                writer.writeNode(objectReference);
+                writer.writeTextStatement(">(json, options)");
+            })
+        });
+
+        // WriteAsPropertyName method - for dictionary key serialization
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "WriteAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.System.Text.Json.Utf8JsonWriter
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: objectReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.write("var json = JsonSerializer.Serialize(value, options)");
+                writer.writeLine(";");
+                writer.writeTextStatement("writer.WritePropertyName(json)");
+            })
+        });
+
         enclosingClass.addNestedClass(converterClass);
     }
 

@@ -104,5 +104,28 @@ public record VoidFunctionSignatureThatTakesActualResult
             }
             writer.WriteEndObject();
         }
+
+        public override VoidFunctionSignatureThatTakesActualResult ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var json = reader.GetString();
+            return JsonSerializer.Deserialize<VoidFunctionSignatureThatTakesActualResult>(
+                json,
+                options
+            );
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            VoidFunctionSignatureThatTakesActualResult value,
+            JsonSerializerOptions options
+        )
+        {
+            var json = JsonSerializer.Serialize(value, options);
+            writer.WritePropertyName(json);
+        }
     }
 }
