@@ -47,14 +47,11 @@ public class UnionWithSubTypesTest
               "name": "example1"
             }
             """;
-        var expectedObject = new UnionWithSubTypes(
-            new UnionWithSubTypes.Foo(new Foo { Name = "example1" })
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithSubTypes>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -97,13 +94,10 @@ public class UnionWithSubTypesTest
               "age": 5
             }
             """;
-        var expectedObject = new UnionWithSubTypes(
-            new UnionWithSubTypes.FooExtended(new FooExtended { Name = "example2", Age = 5 })
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithSubTypes>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

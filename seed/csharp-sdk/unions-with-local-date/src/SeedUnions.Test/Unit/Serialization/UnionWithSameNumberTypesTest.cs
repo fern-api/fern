@@ -47,9 +47,6 @@ public class UnionWithSameNumberTypesTest
               "value": 100
             }
             """;
-        var expectedObject = new UnionWithSameNumberTypes(
-            new UnionWithSameNumberTypes.PositiveInt(100)
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -57,7 +54,7 @@ public class UnionWithSameNumberTypesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -97,9 +94,6 @@ public class UnionWithSameNumberTypesTest
               "value": -50
             }
             """;
-        var expectedObject = new UnionWithSameNumberTypes(
-            new UnionWithSameNumberTypes.NegativeInt(-50)
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -107,7 +101,7 @@ public class UnionWithSameNumberTypesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -147,9 +141,6 @@ public class UnionWithSameNumberTypesTest
               "value": 3.14159
             }
             """;
-        var expectedObject = new UnionWithSameNumberTypes(
-            new UnionWithSameNumberTypes.AnyNumber(3.14159)
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -157,6 +148,6 @@ public class UnionWithSameNumberTypesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -45,11 +45,10 @@ public class EntityTest
               "name": "unknown"
             }
             """;
-        var expectedObject = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Entity>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -44,12 +44,11 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new SeedExamples.Test.And(true));
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedExamples.Test>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -87,11 +86,10 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new SeedExamples.Test.Or(true));
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedExamples.Test>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -45,11 +45,10 @@ public class MigrationTest
               "status": "RUNNING"
             }
             """;
-        var expectedObject = new Migration { Name = "001_init", Status = MigrationStatus.Running };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Migration>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

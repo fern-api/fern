@@ -45,12 +45,11 @@ public class FooExtendedTest
               "age": 5
             }
             """;
-        var expectedObject = new FooExtended { Name = "example1", Age = 5 };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<FooExtended>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -88,11 +87,10 @@ public class FooExtendedTest
               "age": 10
             }
             """;
-        var expectedObject = new FooExtended { Name = "example2", Age = 10 };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<FooExtended>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

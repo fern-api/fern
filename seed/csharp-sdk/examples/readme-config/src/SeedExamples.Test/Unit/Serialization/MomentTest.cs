@@ -58,20 +58,10 @@ public class MomentTest
               "datetime": "1994-01-01T01:01:01Z"
             }
             """;
-        var expectedObject = new Moment
-        {
-            Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
-            Date = new DateOnly(1994, 1, 1),
-            Datetime = DateTime.Parse(
-                "1994-01-01T01:01:01.000Z",
-                null,
-                DateTimeStyles.AdjustToUniversal
-            ),
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Moment>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

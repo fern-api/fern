@@ -58,15 +58,10 @@ public class MetadataTest
               }
             }
             """;
-        var expectedObject = new Metadata
-        {
-            Id = "metadata-js8dg24b",
-            Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Metadata>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

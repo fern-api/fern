@@ -42,12 +42,11 @@ public class ThankfulFactorTest
               "value": "example1"
             }
             """;
-        var expectedObject = new ThankfulFactor { Value = "example1" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -82,12 +81,11 @@ public class ThankfulFactorTest
               "value": "example2"
             }
             """;
-        var expectedObject = new ThankfulFactor { Value = "example2" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -122,11 +120,10 @@ public class ThankfulFactorTest
               "value": "example3"
             }
             """;
-        var expectedObject = new ThankfulFactor { Value = "example3" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

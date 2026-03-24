@@ -48,14 +48,11 @@ public class UnionWithOptionalTimeTest
               "value": "1994-01-01"
             }
             """;
-        var expectedObject = new UnionWithOptionalTime(
-            new UnionWithOptionalTime.Date(new DateOnly(1994, 1, 1))
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithOptionalTime>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -97,16 +94,11 @@ public class UnionWithOptionalTimeTest
               "value": "1994-01-01T01:01:01Z"
             }
             """;
-        var expectedObject = new UnionWithOptionalTime(
-            new UnionWithOptionalTime.Datetime(
-                DateTime.Parse("1994-01-01T01:01:01.000Z", null, DateTimeStyles.AdjustToUniversal)
-            )
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithOptionalTime>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -144,12 +136,11 @@ public class UnionWithOptionalTimeTest
               "value": null
             }
             """;
-        var expectedObject = new UnionWithOptionalTime(new UnionWithOptionalTime.Date(null));
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithOptionalTime>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -187,11 +178,10 @@ public class UnionWithOptionalTimeTest
               "value": null
             }
             """;
-        var expectedObject = new UnionWithOptionalTime(new UnionWithOptionalTime.Datetime(null));
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithOptionalTime>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

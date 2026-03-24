@@ -42,11 +42,10 @@ public class GetShapeRequestTest
               "id": "example"
             }
             """;
-        var expectedObject = new GetShapeRequest { Id = "example" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<GetShapeRequest>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

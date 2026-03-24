@@ -42,11 +42,10 @@ public class FooResponseTest
               "bar": "hello"
             }
             """;
-        var expectedObject = new FooResponse { Bar = "hello" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<FooResponse>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

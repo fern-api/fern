@@ -127,36 +127,10 @@ public class ExtendedMovieTest
               "revenue": 1000000
             }
             """;
-        var expectedObject = new ExtendedMovie
-        {
-            Id = "movie-sda231x",
-            Title = "Pulp Fiction",
-            From = "Quentin Tarantino",
-            Rating = 8.5,
-            Type = "movie",
-            Tag = "tag-12efs9dv",
-            Cast = new List<string>()
-            {
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            },
-            Metadata = new Dictionary<string, object?>()
-            {
-                { "academyAward", true },
-                { "releaseDate", "2023-12-08" },
-                {
-                    "ratings",
-                    new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
-                },
-            },
-            Revenue = 1000000,
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ExtendedMovie>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

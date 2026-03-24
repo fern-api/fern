@@ -81,8 +81,6 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var json = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
-                    writer.write("var expectedObject  = ");
-                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                     writer.writeLine(
                         "var options = new global::System.Text.Json.JsonSerializerOptions(global::System.Text.Json.JsonSerializerDefaults.Web);"
                     );
@@ -95,8 +93,12 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
                             arguments_: [this.csharp.codeblock("json"), this.csharp.codeblock("options")]
                         })
                     );
-                    writer.writeTextStatement(
-                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.Types.JsonAssert,
+                            method: "AreEqual",
+                            arguments_: [this.csharp.codeblock("deserializedObject!"), this.csharp.codeblock("json")]
+                        })
                     );
                 }),
                 isAsync: false

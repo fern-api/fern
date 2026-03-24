@@ -42,11 +42,10 @@ public class CronJobTest
               "expression": "0 */6 * * *"
             }
             """;
-        var expectedObject = new CronJob { Expression = "0 */6 * * *" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<CronJob>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

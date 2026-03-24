@@ -47,14 +47,11 @@ public class UnionWithoutKeyTest
               "name": "example1"
             }
             """;
-        var expectedObject = new UnionWithoutKey(
-            new UnionWithoutKey.Foo(new Foo { Name = "example1" })
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithoutKey>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -94,13 +91,10 @@ public class UnionWithoutKeyTest
               "name": "example1"
             }
             """;
-        var expectedObject = new UnionWithoutKey(
-            new UnionWithoutKey.Bar(new Bar { Name = "example1" })
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithoutKey>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

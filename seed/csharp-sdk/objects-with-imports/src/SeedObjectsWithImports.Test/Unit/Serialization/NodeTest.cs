@@ -76,21 +76,11 @@ public class NodeTest
               }
             }
             """;
-        var expectedObject = new Node
-        {
-            Id = "node-8dvgfja2",
-            Label = "left",
-            Metadata = new Metadata
-            {
-                Id = "metadata-kjasf923",
-                Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
-            },
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Node>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -158,20 +148,10 @@ public class NodeTest
               }
             }
             """;
-        var expectedObject = new Node
-        {
-            Id = "node-cwda9fi2x",
-            Label = "right",
-            Metadata = new Metadata
-            {
-                Id = "metadata-lkasdfv9j",
-                Data = new Dictionary<string, string>() { { "one", "two" }, { "three", "four" } },
-            },
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Node>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -66,20 +66,10 @@ public class EventInfoTest
               "jsonString": "{\"one\": \"two\"}"
             }
             """;
-        var expectedObject = new EventInfo(
-            new Commons.EventInfo.Metadata(
-                new Commons.Metadata
-                {
-                    Id = "metadata-alskjfg8",
-                    Data = new Dictionary<string, string>() { { "one", "two" } },
-                    JsonString = "{\"one\": \"two\"}",
-                }
-            )
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<EventInfo>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

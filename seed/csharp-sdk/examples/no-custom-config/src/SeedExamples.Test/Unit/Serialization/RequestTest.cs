@@ -42,11 +42,10 @@ public class RequestTest
               "request": {}
             }
             """;
-        var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Request>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

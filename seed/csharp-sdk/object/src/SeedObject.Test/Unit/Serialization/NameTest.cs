@@ -45,11 +45,10 @@ public class NameTest
               "value": "name"
             }
             """;
-        var expectedObject = new Name { Id = "name-sdfg8ajk", Value = "name" };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Name>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

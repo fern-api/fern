@@ -110,29 +110,10 @@ public class DirectoryTest
               ]
             }
             """;
-        var expectedObject = new SeedExamples.Directory
-        {
-            Name = "root",
-            Files = new List<SeedExamples.File>()
-            {
-                new SeedExamples.File { Name = "file.txt", Contents = "..." },
-            },
-            Directories = new List<SeedExamples.Directory>()
-            {
-                new SeedExamples.Directory
-                {
-                    Name = "tmp",
-                    Files = new List<SeedExamples.File>()
-                    {
-                        new SeedExamples.File { Name = "another_file.txt", Contents = "..." },
-                    },
-                },
-            },
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedExamples.Directory>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -75,20 +75,10 @@ public class UserTest
               }
             }
             """;
-        var expectedObject = new User
-        {
-            UserName = "username",
-            MetadataTags = new List<string>() { "tag1", "tag2" },
-            ExtraProperties = new Dictionary<string, string>()
-            {
-                { "foo", "bar" },
-                { "baz", "qux" },
-            },
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<User>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

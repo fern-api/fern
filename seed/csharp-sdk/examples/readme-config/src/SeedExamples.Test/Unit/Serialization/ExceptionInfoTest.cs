@@ -53,16 +53,10 @@ public class ExceptionInfoTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var expectedObject = new ExceptionInfo
-        {
-            ExceptionType = "Unavailable",
-            ExceptionMessage = "This component is unavailable!",
-            ExceptionStacktrace = "<logs>",
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ExceptionInfo>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

@@ -53,16 +53,10 @@ public class NestedTypeTest
               "raw": "{\"nested\": \"example\"}"
             }
             """;
-        var expectedObject = new NestedType
-        {
-            Docs = "This is an example nested type.",
-            Name = "NestedExample",
-            Raw = "{\"nested\": \"example\"}",
-        };
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<NestedType>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }

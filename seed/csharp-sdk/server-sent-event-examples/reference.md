@@ -80,3 +80,45 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 </dl>
 </details>
 
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsContextProtocolAsync</a>(StreamEventsContextProtocolRequest { ... }) -> IAsyncEnumerable&lt;StreamEventContextProtocol&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+client.Completions.StreamEventsContextProtocolAsync(
+    new StreamEventsContextProtocolRequest { Query = "query" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `StreamEventsContextProtocolRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

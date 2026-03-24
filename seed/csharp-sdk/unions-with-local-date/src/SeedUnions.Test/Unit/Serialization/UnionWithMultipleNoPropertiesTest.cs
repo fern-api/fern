@@ -47,9 +47,6 @@ public class UnionWithMultipleNoPropertiesTest
               "name": "example"
             }
             """;
-        var expectedObject = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Foo(new Foo { Name = "example" })
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -57,7 +54,7 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -94,9 +91,6 @@ public class UnionWithMultipleNoPropertiesTest
               "type": "empty1"
             }
             """;
-        var expectedObject = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Empty1()
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -104,7 +98,7 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 
     [NUnit.Framework.Test]
@@ -141,9 +135,6 @@ public class UnionWithMultipleNoPropertiesTest
               "type": "empty2"
             }
             """;
-        var expectedObject = new UnionWithMultipleNoProperties(
-            new UnionWithMultipleNoProperties.Empty2()
-        );
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
@@ -151,6 +142,6 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+        JsonAssert.AreEqual(deserializedObject!, json);
     }
 }
