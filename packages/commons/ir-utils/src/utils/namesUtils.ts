@@ -5,7 +5,7 @@ import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString } from "
  * A unified input type that accepts any name-like value:
  * - string (compressed NameOrString or NameAndWireValueOrString)
  * - Name (full casing object)
- * - NameAndWireValue (wireValue + name pair)
+ * - NameAndWireValue (wireValue + name pair, where name may itself be a string or a full Name)
  */
 export type NameInput = NameOrString | NameAndWireValueOrString;
 
@@ -53,8 +53,11 @@ export function getNameFromWireValue(nameAndWireValue: NameAndWireValueOrString)
 }
 
 /**
- * Ensure a NameAndWireValueOrString is a full NameAndWireValue object.
- * If the value is a string, creates a NameAndWireValue with both wireValue and name set to the string.
+ * Ensure a NameAndWireValueOrString is a full NameAndWireValue object with a fully inflated Name.
+ * If the value is a string, creates a NameAndWireValue with wireValue = name = the string (compressed form).
+ * If the value is a NameAndWireValue whose name is still a string (compressed V66 form), the name
+ * field is left as-is — callers that need a fully inflated Name should use CaseConverter or the
+ * V66→V65 migration to inflate it. This function only ensures structural NameAndWireValue shape.
  */
 export function ensureNameAndWireValue(nameAndWireValue: NameAndWireValueOrString): NameAndWireValue {
     if (typeof nameAndWireValue === "string") {
@@ -79,7 +82,14 @@ export function getSnakeCaseUnsafe(input: NameInput): string {
 }
 
 // Lazy-initialized default casings generator for fallback casing computation.
-// Used only when a NameOrString is a plain string and we need to compute casings.
+// Used only when a NameOrString is a plain string (compressed V66 form) and we need to compute casings.
+//
+// NOTE: This generator has no language or keyword context, so the *safe* variants (e.g. snakeCaseSafe,
+// camelCaseSafe) will NOT apply language-specific reserved-keyword escaping. These helpers are safe to
+// call for *unsafe* casing variants, or in contexts where the compressed string form is only seen by
+// generators that receive fully-inflated V65 IR (i.e. all non-TS generators via the V66→V65 migration).
+// TypeScript generators that consume V66 IR natively should always receive full Name objects from the
+// CasingsGenerator and will not reach the string branch here.
 let _defaultCasingsGenerator: ReturnType<typeof constructFullCasingsGenerator> | undefined;
 function getDefaultCasingsGenerator(): ReturnType<typeof constructFullCasingsGenerator> {
     if (_defaultCasingsGenerator == null) {

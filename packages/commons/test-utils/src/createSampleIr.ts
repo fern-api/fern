@@ -1,4 +1,3 @@
-import { constructFullCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -84,16 +83,10 @@ export async function createMigratedSampleIr<T = unknown>(
 ): Promise<T> {
     const ir = await createSampleIr(absolutePathToWorkspace, opts);
     const context = opts?.context ?? createMockTaskContext();
-    const casingsGenerator = constructFullCasingsGenerator({
-        generationLanguage: opts?.generationLanguage,
-        keywords: opts?.keywords,
-        smartCasing: opts?.smartCasing ?? true
-    });
     const migrated = INTERMEDIATE_REPRESENTATION_MIGRATOR.migrateThroughVersion<T>({
         version: targetIrVersion,
         intermediateRepresentation: ir,
-        context,
-        casingsGenerator
+        context
     });
     return migrated.ir;
 }

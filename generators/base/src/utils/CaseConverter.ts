@@ -4,17 +4,18 @@ import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString, SafeAnd
 
 /**
  * Unified input type for CaseConverter methods.
- * Accepts a plain string (originalName), a full Name object, or a NameAndWireValue object.
+ * Accepts any name-like value: a plain string, a full Name object, a NameAndWireValue
+ * (where .name may itself be a string or full Name), or a compressed NameAndWireValueOrString string.
  */
-export type NameInput = string | Name | NameAndWireValue;
+export type NameInput = NameOrString | NameAndWireValueOrString;
 
 /**
  * CaseConverter provides a unified interface for accessing casing variants of names
- * in the IR. It transparently handles all three forms that a name can take:
+ * in the IR. It transparently handles all forms a name can take:
  *
- * - `string`: just the originalName, needs casing computation
+ * - `string`: compressed NameOrString or NameAndWireValueOrString — needs casing computation
  * - `Name`: full object with all casing variants pre-computed
- * - `NameAndWireValue`: has wireValue + name (which itself may be string or Name)
+ * - `NameAndWireValue`: wireValue + name, where name may itself be a string or full Name
  *
  * This class replaces direct property access patterns like `name.camelCase.safeName`
  * with method calls like `caseConverter.camelCaseSafe(name)`.
@@ -71,7 +72,7 @@ export class CaseConverter {
 
     // --- Wire value ---
 
-    wireValue(input: NameAndWireValue | NameAndWireValueOrString): string {
+    wireValue(input: NameAndWireValueOrString): string {
         if (typeof input === "string") {
             return input;
         }

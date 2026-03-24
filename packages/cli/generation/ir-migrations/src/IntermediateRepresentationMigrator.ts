@@ -1,4 +1,3 @@
-import { CasingsGenerator } from "@fern-api/casings-generator";
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -29,7 +28,6 @@ export interface IntermediateRepresentationMigrator {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-        casingsGenerator?: CasingsGenerator;
     }) => MigratedIntermediateMigration<unknown>;
     migrateThroughMigration<LaterVersion, EarlierVersion>(args: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
@@ -42,7 +40,6 @@ export interface IntermediateRepresentationMigrator {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-        casingsGenerator?: CasingsGenerator;
     }): MigratedIntermediateMigration<Migrated>;
     getIRVersionForGenerator(args: { targetGenerator: GeneratorNameAndVersion }): string | undefined;
 }
@@ -95,20 +92,17 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     public migrateForGenerator({
         intermediateRepresentation,
         context,
-        targetGenerator,
-        casingsGenerator
+        targetGenerator
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-        casingsGenerator?: CasingsGenerator;
     }): MigratedIntermediateMigration<unknown> {
         return this.migrate({
             intermediateRepresentation,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
             context,
-            targetGenerator,
-            casingsGenerator
+            targetGenerator
         });
     }
 
@@ -161,14 +155,12 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         version,
         intermediateRepresentation,
         context,
-        targetGenerator,
-        casingsGenerator
+        targetGenerator
     }: {
         version: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-        casingsGenerator?: CasingsGenerator;
     }): MigratedIntermediateMigration<Migrated> {
         this.validateMinimumVersion(version, targetGenerator);
         let hasEncounteredMigrationYet = false;
@@ -194,8 +186,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 return isEncounteringMigration || !hasEncounteredMigrationYet;
             },
             context,
-            targetGenerator,
-            casingsGenerator
+            targetGenerator
         });
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -210,14 +201,12 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation,
         shouldMigrate,
         context,
-        targetGenerator,
-        casingsGenerator
+        targetGenerator
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion | undefined;
-        casingsGenerator?: CasingsGenerator;
     }): MigratedIntermediateMigration<Migrated> {
         let migrated: unknown = intermediateRepresentation;
         let jsonify: () => Promise<unknown> = async () => {
@@ -232,8 +221,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);
             migrated = migration.migrateBackwards(migrated, {
                 taskContext: context,
-                targetGenerator,
-                casingsGenerator
+                targetGenerator
             });
             jsonify = () => Promise.resolve().then(() => migration.jsonifyEarlierVersion(migrated));
         }

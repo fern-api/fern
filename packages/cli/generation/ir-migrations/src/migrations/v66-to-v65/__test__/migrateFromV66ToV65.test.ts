@@ -17,7 +17,7 @@ describe("migrateFromV66ToV65", () => {
         overrides: Partial<IrVersions.V66.ir.IntermediateRepresentation>
     ): IrVersions.V66.ir.IntermediateRepresentation => {
         return {
-            fdrAPI: { apiDefinitionId: "test-api-id" },
+            fdrApiDefinitionId: undefined,
             apiVersion: undefined,
             apiName: "TestApi",
             apiDisplayName: undefined,
@@ -69,8 +69,7 @@ describe("migrateFromV66ToV65", () => {
                 webhooks: undefined,
                 websocket: undefined,
                 hasEndpointsInTree: false,
-                navigationConfig: undefined,
-                pointsTo: undefined
+                navigationConfig: undefined
             },
             sdkConfig: {
                 isAuthMandatory: false,

@@ -168,11 +168,16 @@ function inflateIr(
     };
 
     const inflateNamedTypeDefault = (def: IrVersions.V66.NamedTypeDefault): IrVersions.V65.NamedTypeDefault => {
-        return IrVersions.V65.NamedTypeDefault.enum({
-            name: inflateNameAndWireValue(def.name),
-            docs: def.docs,
-            availability: def.availability
-        });
+        switch (def.type) {
+            case "enum":
+                return IrVersions.V65.NamedTypeDefault.enum({
+                    name: inflateNameAndWireValue(def.name),
+                    docs: def.docs,
+                    availability: def.availability
+                });
+            default:
+                assertNever(def.type);
+        }
     };
 
     // ===== V2 Examples helpers =====
@@ -228,7 +233,12 @@ function inflateIr(
     };
 
     const inflateSource = (source: IrVersions.V66.Source): IrVersions.V65.Source => {
-        return IrVersions.V65.Source.proto(inflateProtobufType(source.value));
+        switch (source.type) {
+            case "proto":
+                return IrVersions.V65.Source.proto(inflateProtobufType(source.value));
+            default:
+                assertNever(source.type);
+        }
     };
 
     const inflateTypeDeclaration = (td: IrVersions.V66.TypeDeclaration): IrVersions.V65.TypeDeclaration => ({
@@ -1685,14 +1695,19 @@ function inflateIr(
     // ===== ApiVersionScheme inflate =====
 
     const inflateApiVersionScheme = (scheme: IrVersions.V66.ApiVersionScheme): IrVersions.V65.ApiVersionScheme => {
-        return IrVersions.V65.ApiVersionScheme.header({
-            header: inflateHeader(scheme.header),
-            value: {
-                default: scheme.value.default != null ? inflateEnumValue(scheme.value.default) : undefined,
-                values: scheme.value.values.map(inflateEnumValue),
-                forwardCompatible: scheme.value.forwardCompatible
-            }
-        });
+        switch (scheme.type) {
+            case "header":
+                return IrVersions.V65.ApiVersionScheme.header({
+                    header: inflateHeader(scheme.header),
+                    value: {
+                        default: scheme.value.default != null ? inflateEnumValue(scheme.value.default) : undefined,
+                        values: scheme.value.values.map(inflateEnumValue),
+                        forwardCompatible: scheme.value.forwardCompatible
+                    }
+                });
+            default:
+                assertNever(scheme.type);
+        }
     };
 
     // ===== Dynamic IR inflate =====

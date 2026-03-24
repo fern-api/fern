@@ -6,19 +6,26 @@ import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved.js";
 
 /**
- * Used at IR generation time. Always returns fully inflated Name/NameAndWireValue
- * objects with all casing variants computed.
+ * Used at IR generation time. Returns compressed NameOrString / NameAndWireValueOrString:
+ * - generateName returns the plain string (originalName) when no casing overrides exist,
+ *   or a full Name object when casing overrides require it.
+ * - generateNameAndWireValue returns a plain string when wireValue === name and no overrides,
+ *   or a { wireValue, name: NameOrString } object otherwise.
+ *
+ * Consumers that need fully-inflated Name objects (generators, FDR) either:
+ * - receive V65 IR (inflated by the V66→V65 migration), or
+ * - use FullCasingsGenerator / ir-utils helpers which handle NameOrString transparently.
  */
 export interface CasingsGenerator {
     generateName(
         name: string,
         opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
-    ): Name;
+    ): NameOrString;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
         opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
-    }): NameAndWireValue;
+    }): NameAndWireValueOrString;
 }
 
 /**
@@ -146,14 +153,24 @@ export function constructCasingsGenerator({
 }: CasingsConfig): CasingsGenerator {
     const config: CasingsConfig = { generationLanguage, keywords, smartCasing };
     return {
-        generateName: (inputName, opts) => {
-            return computeName(inputName, opts ?? {}, config);
+        generateName: (inputName, opts): NameOrString => {
+            // Only compute full Name when casing overrides require it; otherwise compress to string.
+            if (opts?.casingOverrides != null) {
+                return computeName(inputName, opts, config);
+            }
+            return inputName;
         },
-        generateNameAndWireValue: ({ name, wireValue, opts }) => {
-            return {
-                wireValue,
-                name: computeName(name, opts ?? {}, config)
-            };
+        generateNameAndWireValue: ({ name, wireValue, opts }): NameAndWireValueOrString => {
+            if (opts?.casingOverrides != null) {
+                // Casing overrides require a full Name object.
+                return { wireValue, name: computeName(name, opts, config) };
+            }
+            if (wireValue === name) {
+                // wireValue and name are identical — compress to a single string.
+                return wireValue;
+            }
+            // wireValue differs from name — keep the pair but compress name to string.
+            return { wireValue, name };
         }
     };
 }

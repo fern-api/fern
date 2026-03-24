@@ -260,20 +260,17 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
             smartCasing: false
         });
 
-        it("returns a full Name object even when no casingOverrides provided", () => {
+        it("returns a plain string when no casingOverrides provided", () => {
             const result = generator.generateName("myField");
-            expect(typeof result).toBe("object");
-            expect(result.originalName).toBe("myField");
-            expect(result.camelCase).toBeDefined();
-            expect(result.pascalCase).toBeDefined();
-            expect(result.snakeCase).toBeDefined();
-            expect(result.screamingSnakeCase).toBeDefined();
+            expect(result).toBe("myField");
         });
 
-        it("returns a full Name when casingOverrides provided", () => {
+        it("returns a full Name when casingOverrides are provided", () => {
             const result = generator.generateName("myField", { casingOverrides: { camel: "myField" } });
             expect(typeof result).toBe("object");
-            expect(result.originalName).toBe("myField");
+            if (typeof result !== "string") {
+                expect(result.originalName).toBe("myField");
+            }
         });
     });
 });
