@@ -58,11 +58,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersUriPaginationResponse
+     * @return ?ListUsersUriPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithUriPagination(?array $options = null): ListUsersUriPaginationResponse
+    public function listWithUriPagination(?array $options = null): ?ListUsersUriPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -78,7 +78,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersUriPaginationResponse::fromJson($json);
             }
@@ -103,11 +103,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPathPaginationResponse
+     * @return ?ListUsersPathPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithPathPagination(?array $options = null): ListUsersPathPaginationResponse
+    public function listWithPathPagination(?array $options = null): ?ListUsersPathPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -123,7 +123,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPathPaginationResponse::fromJson($json);
             }
