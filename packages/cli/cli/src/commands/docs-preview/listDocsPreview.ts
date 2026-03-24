@@ -54,17 +54,11 @@ export async function listDocsPreview({
             }
         }
 
-        // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com
-        // The hash can be alphanumeric or a UUID with hyphens (e.g., 9b2b47f0-c44b-4338-b579-46872f33404a)
-        const previewUrlPattern = /-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/;
-
-        const previewDeployments: PreviewDeployment[] = listResponse.body.urls
-            .filter((item) => previewUrlPattern.test(item.domain))
-            .map((item) => ({
-                url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-                organizationId: item.organizationId,
-                updatedAt: item.updatedAt
-            }));
+        const previewDeployments: PreviewDeployment[] = listResponse.body.urls.map((item) => ({
+            url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+            organizationId: item.organizationId,
+            updatedAt: item.updatedAt
+        }));
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");
