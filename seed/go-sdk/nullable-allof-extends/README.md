@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/nullable-allof-extends/fern"
     client "github.com/nullable-allof-extends/fern/client"
 )

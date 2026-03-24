@@ -32,6 +32,7 @@ package example
 import (
     bytes "bytes"
     context "context"
+
     client "github.com/bytes-upload/fern/client"
 )
 

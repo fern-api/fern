@@ -5,6 +5,7 @@ package file
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	fern "github.com/objects-with-imports/fern"
 	internal "github.com/objects-with-imports/fern/internal"
 )

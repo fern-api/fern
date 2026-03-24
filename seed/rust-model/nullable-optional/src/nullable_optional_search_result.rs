@@ -45,4 +45,12 @@ impl SearchResult {
     pub fn document(id: String, title: String, content: String) -> Self {
         Self::Document { id, title, content, author: None, tags: None }
     }
+
+    pub fn document_with_author(id: String, title: String, content: String, author: String, tags: Option<Vec<String>>) -> Self {
+        Self::Document { id, title, content, author: Some(author), tags }
+    }
+
+    pub fn document_with_tags(id: String, title: String, content: String, author: Option<String>, tags: Vec<String>) -> Self {
+        Self::Document { id, title, content, author, tags: Some(tags) }
+    }
 }

@@ -6,26 +6,24 @@ pub enum StreamEvent {
     #[serde(rename = "completion")]
     #[non_exhaustive]
     Completion {
-        #[serde(default)]
-        content: String,
+        #[serde(flatten)]
+        data: CompletionEvent,
     },
 
     #[serde(rename = "error")]
     #[non_exhaustive]
     Error {
-        #[serde(default)]
-        error: String,
-        #[serde(skip_serializing_if = "Option::is_none")]
-        code: Option<i64>,
+        #[serde(flatten)]
+        data: ErrorEvent,
     },
 }
 
 impl StreamEvent {
-    pub fn completion(content: String) -> Self {
-        Self::Completion { content }
+    pub fn completion(data: CompletionEvent) -> Self {
+        Self::Completion { data }
     }
 
-    pub fn error(error: String) -> Self {
-        Self::Error { error, code: None }
+    pub fn error(data: ErrorEvent) -> Self {
+        Self::Error { data }
     }
 }

@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	io "io"
+
 	fern "github.com/bytes-upload/fern"
 	core "github.com/bytes-upload/fern/core"
 	internal "github.com/bytes-upload/fern/internal"
 	option "github.com/bytes-upload/fern/option"
-	io "io"
 )
 
 type Client struct {

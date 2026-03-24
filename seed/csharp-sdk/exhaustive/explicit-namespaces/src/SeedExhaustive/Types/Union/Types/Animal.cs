@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Union;
@@ -64,7 +64,7 @@ public record Animal
     public SeedExhaustive.Types.Union.Dog AsDog() =>
         IsDog
             ? (SeedExhaustive.Types.Union.Dog)Value!
-            : throw new System.Exception("Animal.Animal_ is not 'dog'");
+            : throw new global::System.Exception("Animal.Animal_ is not 'dog'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedExhaustive.Types.Union.Cat"/> if <see cref="Animal_"/> is 'cat', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record Animal
     public SeedExhaustive.Types.Union.Cat AsCat() =>
         IsCat
             ? (SeedExhaustive.Types.Union.Cat)Value!
-            : throw new System.Exception("Animal.Animal_ is not 'cat'");
+            : throw new global::System.Exception("Animal.Animal_ is not 'cat'");
 
     public T Match<T>(
         Func<SeedExhaustive.Types.Union.Dog, T> onDog,
@@ -146,12 +146,12 @@ public record Animal
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Animal>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Animal).IsAssignableFrom(typeToConvert);
 
         public override Animal Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -220,7 +220,7 @@ public record Animal
 
         public override Animal ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

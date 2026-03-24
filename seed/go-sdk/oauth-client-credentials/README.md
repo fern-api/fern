@@ -32,6 +32,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/oauth-client-credentials/fern"
     client "github.com/oauth-client-credentials/fern/client"
     option "github.com/oauth-client-credentials/fern/option"

@@ -40,8 +40,8 @@ Instantiate and use the client with the following:
 
 ```csharp
 using SeedBytesUpload;
-using System.IO;
-using System.Text;
+using global::System.IO;
+using global::System.Text;
 
 var client = new SeedBytesUploadClient();
 await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));

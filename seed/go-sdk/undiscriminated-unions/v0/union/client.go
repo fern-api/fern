@@ -4,6 +4,7 @@ package union
 
 import (
 	context "context"
+
 	fern "github.com/undiscriminated-unions/fern"
 	core "github.com/undiscriminated-unions/fern/core"
 	internal "github.com/undiscriminated-unions/fern/internal"

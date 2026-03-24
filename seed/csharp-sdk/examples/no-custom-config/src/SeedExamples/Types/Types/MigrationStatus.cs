@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -65,7 +65,7 @@ public readonly record struct MigrationStatus : IStringEnum
     {
         public override MigrationStatus Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -88,7 +88,7 @@ public readonly record struct MigrationStatus : IStringEnum
 
         public override MigrationStatus ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

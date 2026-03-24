@@ -29,6 +29,15 @@ describe("parseRepository", () => {
         }).toThrow(Error);
     });
 
+    it("full URL produces correct owner and repo (FER-9146)", async () => {
+        // Previously, code used uri.split("/") which would produce
+        // owner = "https:" and repo = "" for full URLs.
+        const reference = parseRepository("https://github.com/anduril/lattice-sdk-javascript");
+        expect(reference.owner).toBe("anduril");
+        expect(reference.repo).toBe("lattice-sdk-javascript");
+        expect(reference.repoUrl).toBe("https://github.com/anduril/lattice-sdk-javascript");
+    });
+
     it("custom github domain", async () => {
         const test = "https://github.acme.com/engineering/api-client-sdk.git";
         const reference = parseRepository(test);

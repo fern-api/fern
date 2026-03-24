@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 using SeedCsharpReadonlyRequest;
 using SeedCsharpReadonlyRequest.Core;

@@ -5,6 +5,7 @@ package extends
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/extends/fern/internal"
 )
 

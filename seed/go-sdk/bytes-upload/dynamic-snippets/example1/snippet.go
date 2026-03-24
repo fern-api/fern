@@ -3,6 +3,7 @@ package example
 import (
     bytes "bytes"
     context "context"
+
     fern "github.com/bytes-upload/fern"
     client "github.com/bytes-upload/fern/client"
     option "github.com/bytes-upload/fern/option"

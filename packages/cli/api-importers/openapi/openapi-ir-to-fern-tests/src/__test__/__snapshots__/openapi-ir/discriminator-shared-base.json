@@ -1,0 +1,466 @@
+{
+  "title": "Discriminator Shared Base Test",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listItems",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListItemsRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "ListItemsResponse",
+          "schema": "ItemsResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "value": {
+              "commonProperties": [],
+              "discriminantProperty": "code",
+              "discriminatorContext": "data",
+              "generatedName": "BadRequestErrorBody",
+              "schemas": {
+                "BAD_REQUEST": {
+                  "generatedName": "ComponentsSchemasBadRequestError",
+                  "schema": "BadRequestError",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "INVALID_INPUT": {
+                  "generatedName": "ComponentsSchemasInvalidInputError",
+                  "schema": "InvalidInputError",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              },
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "discriminated"
+            },
+            "type": "oneOf"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "code": {
+                      "value": {
+                        "value": "BAD_REQUEST",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
+        },
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "schema": "UnauthorizedError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": []
+        },
+        "403": {
+          "generatedName": "ForbiddenError",
+          "schema": {
+            "generatedName": "ForbiddenErrorBody",
+            "schema": "ForbiddenError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Forbidden",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": []
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/items",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "items": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "items",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ItemsResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "itemsResponseItems",
+            "key": "items",
+            "schema": {
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ItemsResponseItemsItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "ItemsResponseItems",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ItemsResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Error": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "errorCode",
+            "key": "code",
+            "schema": {
+              "description": "Machine-readable error code",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ErrorCode",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "errorMessage",
+            "key": "message",
+            "schema": {
+              "description": "Human-readable error message",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ErrorMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Base error schema",
+        "generatedName": "Error",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "BadRequestError": {
+        "allOf": [
+          {
+            "generatedName": "Error",
+            "schema": "Error",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "description": "The request was malformed",
+        "generatedName": "BadRequestError",
+        "nameOverride": "BadRequestErrorBody",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InvalidInputError": {
+        "allOf": [
+          {
+            "generatedName": "Error",
+            "schema": "Error",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "invalidInputErrorInvalidFields",
+            "key": "invalidFields",
+            "schema": {
+              "generatedName": "InvalidInputErrorInvalidFields",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "InvalidInputErrorInvalidFieldsItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "InvalidInputErrorInvalidFields",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "The request contained invalid input",
+        "generatedName": "InvalidInputError",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UnauthorizedError": {
+        "allOf": [
+          {
+            "generatedName": "Error",
+            "schema": "Error",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "Error": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "unauthorizedErrorCode",
+            "key": "code",
+            "schema": {
+              "generatedName": "UnauthorizedErrorCode",
+              "description": "Machine-readable error code",
+              "value": {
+                "description": "Machine-readable error code",
+                "generatedName": "UnauthorizedErrorCode",
+                "values": [
+                  {
+                    "generatedName": "UNABLE_TO_AUTHENTICATE",
+                    "value": "UNABLE_TO_AUTHENTICATE",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Authentication failed",
+        "generatedName": "UnauthorizedError",
+        "nameOverride": "UnauthorizedErrorBody",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ForbiddenError": {
+        "allOf": [
+          {
+            "generatedName": "Error",
+            "schema": "Error",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "Error": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "forbiddenErrorCode",
+            "key": "code",
+            "schema": {
+              "generatedName": "ForbiddenErrorCode",
+              "description": "Machine-readable error code",
+              "value": {
+                "description": "Machine-readable error code",
+                "generatedName": "ForbiddenErrorCode",
+                "values": [
+                  {
+                    "generatedName": "ACCESS_DENIED",
+                    "value": "ACCESS_DENIED",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Access denied",
+        "generatedName": "ForbiddenError",
+        "nameOverride": "ForbiddenErrorBody",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

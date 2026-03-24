@@ -111,7 +111,8 @@ export function collectBuilderFieldsFromExtends(
 export function writeBuilderCode(
     writer: rust.Writer,
     structName: string,
-    fields: BuilderFieldInfo[]
+    fields: BuilderFieldInfo[],
+    options?: { hasExtraProperties?: boolean }
 ): void {
     const builderName = `${structName}Builder`;
 
@@ -172,6 +173,9 @@ export function writeBuilderCode(
         } else {
             writer.writeLine(`            ${field.name}: self.${field.name},`);
         }
+    }
+    if (options?.hasExtraProperties) {
+        writer.writeLine(`            extra: Default::default(),`);
     }
     writer.writeLine(`        })`);
     writer.writeLine(`    }`);

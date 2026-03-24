@@ -1,6 +1,6 @@
-using System.Net;
-using System.Net.WebSockets;
-using System.Text;
+using global::System.Net;
+using global::System.Net.WebSockets;
+using global::System.Text;
 
 namespace <%= testNamespace%>.Core.WebSockets;
 
@@ -59,7 +59,7 @@ internal sealed class TestWebSocketServer : IAsyncDisposable
 
     private static int GetAvailablePort()
     {
-        var listener = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);
+        var listener = new global::System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);
         listener.Start();
         var port = ((IPEndPoint)listener.LocalEndpoint).Port;
         listener.Stop();

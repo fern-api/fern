@@ -435,6 +435,9 @@ function maybeRemoveDiscriminantsFromSchemas(
     if (context.options.removeDiscriminantsFromSchemas === generatorsYml.RemoveDiscriminantsFromSchemas.Never) {
         return schemas;
     }
+
+    const protectedParents = getParentSchemaIdsWithNonUnionChildren(schemas, context);
+
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
@@ -473,6 +476,9 @@ function maybeRemoveDiscriminantsFromSchemas(
 
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
+            if (protectedParents.has(parentSchemaId)) {
+                continue;
+            }
             const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];
             if (parentSchema == null || parentSchema.type !== "object") {
                 continue;
@@ -490,6 +496,31 @@ function maybeRemoveDiscriminantsFromSchemas(
         }
     }
     return result;
+}
+
+/**
+ * Collects parent schema IDs that have at least one allOf child NOT participating
+ * in any discriminated union. These parents are "shared" across union and non-union
+ * schemas, so their discriminant properties must not be stripped.
+ */
+function getParentSchemaIdsWithNonUnionChildren(
+    schemas: Record<string, SchemaWithExample>,
+    context: AbstractOpenAPIV3ParserContext
+): Set<SchemaId> {
+    const protectedParents = new Set<SchemaId>();
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            continue;
+        }
+        const ref: OpenAPIV3.ReferenceObject = { $ref: `#/components/schemas/${schemaId}` };
+        if (context.getReferencesFromDiscriminatedUnion(ref) != null) {
+            continue;
+        }
+        for (const parentId of getAllParentSchemaIds({ schema, schemas })) {
+            protectedParents.add(parentId);
+        }
+    }
+    return protectedParents;
 }
 
 function maybeAddBackDiscriminantsFromSchemas(

@@ -49,4 +49,8 @@ impl Animal {
     pub fn bird(name: String, can_fly: bool) -> Self {
         Self::Bird { name, can_fly, wing_span: None }
     }
+
+    pub fn bird_with_wing_span(name: String, can_fly: bool, wing_span: f64) -> Self {
+        Self::Bird { name, can_fly, wing_span: Some(wing_span) }
+    }
 }

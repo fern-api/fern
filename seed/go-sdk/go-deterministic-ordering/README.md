@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )

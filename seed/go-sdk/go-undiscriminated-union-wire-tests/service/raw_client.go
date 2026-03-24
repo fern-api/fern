@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-undiscriminated-union-wire-tests/fern"
 	core "github.com/go-undiscriminated-union-wire-tests/fern/core"
 	internal "github.com/go-undiscriminated-union-wire-tests/fern/internal"
 	option "github.com/go-undiscriminated-union-wire-tests/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

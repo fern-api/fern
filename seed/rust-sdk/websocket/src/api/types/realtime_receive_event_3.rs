@@ -30,9 +30,7 @@ impl ReceiveEvent3Builder {
     /// - [`receive_text_3`](ReceiveEvent3Builder::receive_text_3)
     pub fn build(self) -> Result<ReceiveEvent3, BuildError> {
         Ok(ReceiveEvent3 {
-            receive_text_3: self
-                .receive_text_3
-                .ok_or_else(|| BuildError::missing_field("receive_text_3"))?,
+            receive_text_3: self.receive_text_3.ok_or_else(|| BuildError::missing_field("receive_text_3"))?,
         })
     }
 }
