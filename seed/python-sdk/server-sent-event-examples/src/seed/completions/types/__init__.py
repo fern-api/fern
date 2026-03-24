@@ -8,12 +8,24 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .completion_event import CompletionEvent
     from .error_event import ErrorEvent
+    from .event_event import EventEvent
     from .stream_event import StreamEvent, StreamEvent_Completion, StreamEvent_Error
+    from .stream_event_context_protocol import (
+        StreamEventContextProtocol,
+        StreamEventContextProtocol_Completion,
+        StreamEventContextProtocol_Error,
+        StreamEventContextProtocol_Notification,
+    )
     from .streamed_completion import StreamedCompletion
 _dynamic_imports: typing.Dict[str, str] = {
     "CompletionEvent": ".completion_event",
     "ErrorEvent": ".error_event",
+    "EventEvent": ".event_event",
     "StreamEvent": ".stream_event",
+    "StreamEventContextProtocol": ".stream_event_context_protocol",
+    "StreamEventContextProtocol_Completion": ".stream_event_context_protocol",
+    "StreamEventContextProtocol_Error": ".stream_event_context_protocol",
+    "StreamEventContextProtocol_Notification": ".stream_event_context_protocol",
     "StreamEvent_Completion": ".stream_event",
     "StreamEvent_Error": ".stream_event",
     "StreamedCompletion": ".streamed_completion",
@@ -44,7 +56,12 @@ def __dir__():
 __all__ = [
     "CompletionEvent",
     "ErrorEvent",
+    "EventEvent",
     "StreamEvent",
+    "StreamEventContextProtocol",
+    "StreamEventContextProtocol_Completion",
+    "StreamEventContextProtocol_Error",
+    "StreamEventContextProtocol_Notification",
     "StreamEvent_Completion",
     "StreamEvent_Error",
     "StreamedCompletion",
