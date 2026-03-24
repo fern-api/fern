@@ -60,11 +60,11 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
+    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -84,7 +84,7 @@ class AuthClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return TokenResponse::fromJson($json);
             }
@@ -110,11 +110,11 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
+    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -134,7 +134,7 @@ class AuthClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return TokenResponse::fromJson($json);
             }

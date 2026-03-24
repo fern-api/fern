@@ -59,11 +59,11 @@ class EnumClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return value-of<WeatherReport>
+     * @return ?value-of<WeatherReport>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnEnum(string $request, ?array $options = null): string
+    public function getAndReturnEnum(string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,7 +80,7 @@ class EnumClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json); // @phpstan-ignore-line
             }
