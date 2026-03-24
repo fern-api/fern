@@ -1,10 +1,11 @@
+using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
 using SeedNullableOptional.Core;
-using global::System.Text.Json;
 
 namespace SeedNullableOptional;
 
-[JsonConverter(typeof(UserResponse.JsonConverter))][Serializable]
+[JsonConverter(typeof(UserResponse.JsonConverter))]
+[Serializable]
 public record UserResponse
 {
     [JsonPropertyName("id")]
@@ -13,58 +14,70 @@ public record UserResponse
     [JsonPropertyName("username")]
     public required string Username { get; set; }
 
-    [Nullable][JsonPropertyName("email")]
+    [Nullable]
+    [JsonPropertyName("email")]
     public string? Email { get; set; }
 
-    [Optional][JsonPropertyName("phone")]
+    [Optional]
+    [JsonPropertyName("phone")]
     public string? Phone { get; set; }
 
     [JsonPropertyName("createdAt")]
     public required DateTime CreatedAt { get; set; }
 
-    [Nullable][JsonPropertyName("updatedAt")]
+    [Nullable]
+    [JsonPropertyName("updatedAt")]
     public DateTime? UpdatedAt { get; set; }
 
-    [Optional][JsonPropertyName("address")]
+    [Optional]
+    [JsonPropertyName("address")]
     public Address? Address { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UserResponse>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) => typeof(UserResponse).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UserResponse).IsAssignableFrom(typeToConvert);
 
-        public override UserResponse? Read(ref Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options) {
+        public override UserResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
             if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
-            
+
             string _id = default;
             string _username = default;
             string? _email = default;
-            var _phone = string?.Undefined;
+            string? _phone = default;
             DateTime _createdAt = default;
             DateTime? _updatedAt = default;
-            var _address = Address?.Undefined;
+            Address? _address = default;
             var extensionData = new Dictionary<string, JsonElement>();
-            
+
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 throw new JsonException("Expected StartObject");
             }
-            
+
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
                 var propertyName = reader.GetString();
                 reader.Read();
-                
+
                 switch (propertyName)
                 {
                     case "id":
@@ -77,7 +90,7 @@ public record UserResponse
                         _email = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     case "phone":
-                        _phone = string?.Of(JsonSerializer.Deserialize<string>(ref reader, options));
+                        _phone = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     case "createdAt":
                         _createdAt = JsonSerializer.Deserialize<DateTime>(ref reader, options);
@@ -86,14 +99,14 @@ public record UserResponse
                         _updatedAt = JsonSerializer.Deserialize<DateTime?>(ref reader, options);
                         break;
                     case "address":
-                        _address = Address?.Of(JsonSerializer.Deserialize<Address>(ref reader, options));
+                        _address = JsonSerializer.Deserialize<Address?>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
                         break;
                 }
             }
-            
+
             return new UserResponse
             {
                 Id = _id,
@@ -104,11 +117,15 @@ public record UserResponse
                 UpdatedAt = _updatedAt,
                 Address = _address,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
-            }
-;
+            };
         }
 
-        public override void Write(Utf8JsonWriter writer, UserResponse value, JsonSerializerOptions options) {
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserResponse value,
+            JsonSerializerOptions options
+        )
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
@@ -116,19 +133,19 @@ public record UserResponse
             JsonSerializer.Serialize(writer, value.Username, options);
             writer.WritePropertyName("email");
             JsonSerializer.Serialize(writer, value.Email, options);
-            if (value.Phone.IsDefined)
+            if (value.Phone != null)
             {
                 writer.WritePropertyName("phone");
-                JsonSerializer.Serialize(writer, value.Phone.Value, options);
+                JsonSerializer.Serialize(writer, value.Phone, options);
             }
             writer.WritePropertyName("createdAt");
             JsonSerializer.Serialize(writer, value.CreatedAt, options);
             writer.WritePropertyName("updatedAt");
             JsonSerializer.Serialize(writer, value.UpdatedAt, options);
-            if (value.Address.IsDefined)
+            if (value.Address != null)
             {
                 writer.WritePropertyName("address");
-                JsonSerializer.Serialize(writer, value.Address.Value, options);
+                JsonSerializer.Serialize(writer, value.Address, options);
             }
             if (value.AdditionalProperties != null)
             {
@@ -140,7 +157,5 @@ public record UserResponse
             }
             writer.WriteEndObject();
         }
-
     }
-
 }

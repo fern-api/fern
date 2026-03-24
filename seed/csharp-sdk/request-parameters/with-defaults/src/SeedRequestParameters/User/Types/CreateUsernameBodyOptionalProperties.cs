@@ -1,97 +1,113 @@
+using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
 using SeedRequestParameters.Core;
-using global::System.Text.Json;
 
 namespace SeedRequestParameters;
 
-[JsonConverter(typeof(CreateUsernameBodyOptionalProperties.JsonConverter))][Serializable]
+[JsonConverter(typeof(CreateUsernameBodyOptionalProperties.JsonConverter))]
+[Serializable]
 public record CreateUsernameBodyOptionalProperties
 {
-    [Optional][JsonPropertyName("username")]
+    [Optional]
+    [JsonPropertyName("username")]
     public string? Username { get; set; }
 
-    [Optional][JsonPropertyName("password")]
+    [Optional]
+    [JsonPropertyName("password")]
     public string? Password { get; set; }
 
-    [Optional][JsonPropertyName("name")]
+    [Optional]
+    [JsonPropertyName("name")]
     public string? Name { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateUsernameBodyOptionalProperties>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) => typeof(CreateUsernameBodyOptionalProperties).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(CreateUsernameBodyOptionalProperties).IsAssignableFrom(typeToConvert);
 
-        public override CreateUsernameBodyOptionalProperties? Read(ref Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options) {
+        public override CreateUsernameBodyOptionalProperties? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
             if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
-            
-            var _username = string?.Undefined;
-            var _password = string?.Undefined;
-            var _name = string?.Undefined;
+
+            string? _username = default;
+            string? _password = default;
+            string? _name = default;
             var extensionData = new Dictionary<string, JsonElement>();
-            
+
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 throw new JsonException("Expected StartObject");
             }
-            
+
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
                 var propertyName = reader.GetString();
                 reader.Read();
-                
+
                 switch (propertyName)
                 {
                     case "username":
-                        _username = string?.Of(JsonSerializer.Deserialize<string>(ref reader, options));
+                        _username = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     case "password":
-                        _password = string?.Of(JsonSerializer.Deserialize<string>(ref reader, options));
+                        _password = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     case "name":
-                        _name = string?.Of(JsonSerializer.Deserialize<string>(ref reader, options));
+                        _name = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
                         break;
                 }
             }
-            
+
             return new CreateUsernameBodyOptionalProperties
             {
                 Username = _username,
                 Password = _password,
                 Name = _name,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
-            }
-;
+            };
         }
 
-        public override void Write(Utf8JsonWriter writer, CreateUsernameBodyOptionalProperties value, JsonSerializerOptions options) {
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateUsernameBodyOptionalProperties value,
+            JsonSerializerOptions options
+        )
+        {
             writer.WriteStartObject();
-            if (value.Username.IsDefined)
+            if (value.Username != null)
             {
                 writer.WritePropertyName("username");
-                JsonSerializer.Serialize(writer, value.Username.Value, options);
+                JsonSerializer.Serialize(writer, value.Username, options);
             }
-            if (value.Password.IsDefined)
+            if (value.Password != null)
             {
                 writer.WritePropertyName("password");
-                JsonSerializer.Serialize(writer, value.Password.Value, options);
+                JsonSerializer.Serialize(writer, value.Password, options);
             }
-            if (value.Name.IsDefined)
+            if (value.Name != null)
             {
                 writer.WritePropertyName("name");
-                JsonSerializer.Serialize(writer, value.Name.Value, options);
+                JsonSerializer.Serialize(writer, value.Name, options);
             }
             if (value.AdditionalProperties != null)
             {
@@ -103,7 +119,5 @@ public record CreateUsernameBodyOptionalProperties
             }
             writer.WriteEndObject();
         }
-
     }
-
 }

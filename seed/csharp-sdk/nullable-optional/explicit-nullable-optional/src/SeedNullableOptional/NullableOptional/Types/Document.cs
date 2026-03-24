@@ -55,7 +55,7 @@ public record Document
             string _title = default;
             string _content = default;
             string? _author = default;
-            var _tags = IEnumerable<string>?.Undefined;
+            IEnumerable<string>? _tags = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -83,8 +83,9 @@ public record Document
                         _author = JsonSerializer.Deserialize<string?>(ref reader, options);
                         break;
                     case "tags":
-                        _tags = IEnumerable<string>?.Of(
-                            JsonSerializer.Deserialize<IEnumerable<string>>(ref reader, options)
+                        _tags = JsonSerializer.Deserialize<IEnumerable<string>?>(
+                            ref reader,
+                            options
                         );
                         break;
                     default:
@@ -119,10 +120,10 @@ public record Document
             JsonSerializer.Serialize(writer, value.Content, options);
             writer.WritePropertyName("author");
             JsonSerializer.Serialize(writer, value.Author, options);
-            if (value.Tags.IsDefined)
+            if (value.Tags != null)
             {
                 writer.WritePropertyName("tags");
-                JsonSerializer.Serialize(writer, value.Tags.Value, options);
+                JsonSerializer.Serialize(writer, value.Tags, options);
             }
             if (value.AdditionalProperties != null)
             {

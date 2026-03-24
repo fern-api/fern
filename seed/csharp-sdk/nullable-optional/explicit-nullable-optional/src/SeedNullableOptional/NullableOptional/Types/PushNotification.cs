@@ -1,10 +1,11 @@
+using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
 using SeedNullableOptional.Core;
-using global::System.Text.Json;
 
 namespace SeedNullableOptional;
 
-[JsonConverter(typeof(PushNotification.JsonConverter))][Serializable]
+[JsonConverter(typeof(PushNotification.JsonConverter))]
+[Serializable]
 public record PushNotification
 {
     [JsonPropertyName("deviceToken")]
@@ -16,43 +17,52 @@ public record PushNotification
     [JsonPropertyName("body")]
     public required string Body { get; set; }
 
-    [Optional][JsonPropertyName("badge")]
+    [Optional]
+    [JsonPropertyName("badge")]
     public int? Badge { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PushNotification>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) => typeof(PushNotification).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(PushNotification).IsAssignableFrom(typeToConvert);
 
-        public override PushNotification? Read(ref Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options) {
+        public override PushNotification? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
             if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
-            
+
             string _deviceToken = default;
             string _title = default;
             string _body = default;
-            var _badge = int?.Undefined;
+            int? _badge = default;
             var extensionData = new Dictionary<string, JsonElement>();
-            
+
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 throw new JsonException("Expected StartObject");
             }
-            
+
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
                 var propertyName = reader.GetString();
                 reader.Read();
-                
+
                 switch (propertyName)
                 {
                     case "deviceToken":
@@ -65,14 +75,14 @@ public record PushNotification
                         _body = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "badge":
-                        _badge = int?.Of(JsonSerializer.Deserialize<int>(ref reader, options));
+                        _badge = JsonSerializer.Deserialize<int?>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
                         break;
                 }
             }
-            
+
             return new PushNotification
             {
                 DeviceToken = _deviceToken,
@@ -80,11 +90,15 @@ public record PushNotification
                 Body = _body,
                 Badge = _badge,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
-            }
-;
+            };
         }
 
-        public override void Write(Utf8JsonWriter writer, PushNotification value, JsonSerializerOptions options) {
+        public override void Write(
+            Utf8JsonWriter writer,
+            PushNotification value,
+            JsonSerializerOptions options
+        )
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceToken");
             JsonSerializer.Serialize(writer, value.DeviceToken, options);
@@ -92,10 +106,10 @@ public record PushNotification
             JsonSerializer.Serialize(writer, value.Title, options);
             writer.WritePropertyName("body");
             JsonSerializer.Serialize(writer, value.Body, options);
-            if (value.Badge.IsDefined)
+            if (value.Badge != null)
             {
                 writer.WritePropertyName("badge");
-                JsonSerializer.Serialize(writer, value.Badge.Value, options);
+                JsonSerializer.Serialize(writer, value.Badge, options);
             }
             if (value.AdditionalProperties != null)
             {
@@ -107,7 +121,5 @@ public record PushNotification
             }
             writer.WriteEndObject();
         }
-
     }
-
 }

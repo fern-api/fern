@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast, Writer } from "@fern-api/csharp-codegen";
+import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -25,6 +25,8 @@ interface PropertyConverterInfo {
     csharpType: ast.Type;
     /** Whether the property is wrapped in Optional<T> */
     isOptional: boolean;
+    /** Whether the C# type uses the OptionalWrapper (renders as Optional<T>) vs Optional (renders as T?) */
+    isOptionalWrapper: boolean;
     /** Whether the property has [NullableAttribute] semantics */
     isNullable: boolean;
     /** Whether the property is read-only (should not be serialized) */
@@ -145,6 +147,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 wireValue: property.name.wireValue,
                 csharpType,
                 isOptional: typeInfo.isOptional,
+                isOptionalWrapper: is.OptionalWrapper(csharpType),
                 isNullable: typeInfo.isNullable,
                 isReadOnly,
                 isWriteOnly,
@@ -259,7 +262,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 // Literal properties use their default initializer (= new())
                 continue;
             }
-            if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
+            if (prop.isOptionalWrapper) {
                 writer.write("var ");
                 writer.write(this.getLocalVarName(prop.propertyName));
                 writer.write(" = ");
@@ -312,7 +315,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             writer.writeLine(`case "${prop.wireValue}":`);
             writer.indent();
 
-            if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
+            if (prop.isOptionalWrapper) {
                 // Wrap in Optional<T>.Of(...)
                 writer.write(`${this.getLocalVarName(prop.propertyName)} = `);
                 this.writeOptionalTypePrefix(writer, prop);
@@ -396,7 +399,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
             const enableExplicitNullableOptional = this.context.generation.settings.enableExplicitNullableOptional;
 
-            if (prop.isOptional && enableExplicitNullableOptional) {
+            if (prop.isOptionalWrapper) {
                 // Optional<T> properties: write only if IsDefined
                 writer.writeLine(`if (value.${prop.propertyName}.IsDefined)`);
                 writer.pushScope();

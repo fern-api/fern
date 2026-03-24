@@ -60,7 +60,7 @@ public record Metadata
             string? _avatar = default;
             var _activated = Optional<bool?>.Undefined;
             Status _status = default;
-            var _values = Dictionary<string, string?>?.Undefined;
+            Dictionary<string, string?>? _values = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -93,11 +93,9 @@ public record Metadata
                         _status = JsonSerializer.Deserialize<Status>(ref reader, options);
                         break;
                     case "values":
-                        _values = Dictionary<string, string?>?.Of(
-                            JsonSerializer.Deserialize<Dictionary<string, string?>>(
-                                ref reader,
-                                options
-                            )
+                        _values = JsonSerializer.Deserialize<Dictionary<string, string?>?>(
+                            ref reader,
+                            options
                         );
                         break;
                     default:
@@ -138,10 +136,10 @@ public record Metadata
             }
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.Values.IsDefined)
+            if (value.Values != null)
             {
                 writer.WritePropertyName("values");
-                JsonSerializer.Serialize(writer, value.Values.Value, options);
+                JsonSerializer.Serialize(writer, value.Values, options);
             }
             if (value.AdditionalProperties != null)
             {
