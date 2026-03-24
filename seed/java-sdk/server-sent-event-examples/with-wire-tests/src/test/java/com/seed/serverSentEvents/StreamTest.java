@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
@@ -76,14 +77,24 @@ public final class StreamTest {
                 mapToSseWithEvent("end", createMap("status", "complete")));
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
-        Stream<Map> sseStream = Stream.fromSseWithEventDiscrimination(Map.class, sseInput, "event");
+        BiFunction<String, String, Map> eventParser = (eventType, data) -> {
+            try {
+                Map<String, Object> parsed = ObjectMappers.JSON_MAPPER.readValue(data, Map.class);
+                Map<String, Object> result = new HashMap<>(parsed);
+                result.put("event", eventType);
+                return result;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+        Stream<Map> sseStream = Stream.fromSseWithEventParser(Map.class, sseInput, eventParser);
         int expectedEvents = 2;
         int actualEvents = 0;
         for (Map eventData : sseStream) {
             actualEvents++;
-            // Event-level discrimination includes the event field in the parsed result
+            // Event parser puts event type into the parsed map
             assertTrue(eventData.containsKey("event"));
-            assertTrue(eventData.containsKey("data"));
+            assertTrue(eventData.containsKey("status"));
         }
         assertEquals(expectedEvents, actualEvents);
     }

@@ -17,6 +17,9 @@ import com.seed.serverSentEvents.resources.completions.errors.BadRequestError;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
+import com.seed.serverSentEvents.resources.completions.types.CompletionEvent;
+import com.seed.serverSentEvents.resources.completions.types.ErrorEvent;
+import com.seed.serverSentEvents.resources.completions.types.EventEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamEventContextProtocol;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
@@ -131,9 +134,7 @@ public class RawCompletionsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedServerSentEventsHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
-                        response);
+                        Stream.fromSse(StreamEvent.class, new ResponseBodyReader(response), "[DONE]"), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -190,8 +191,31 @@ public class RawCompletionsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedServerSentEventsHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamEventContextProtocol.class, new ResponseBodyReader(response), "event", "[DONE]"),
+                        Stream.fromSseWithEventParser(
+                                StreamEventContextProtocol.class,
+                                new ResponseBodyReader(response),
+                                (eventType, data) -> {
+                                    try {
+                                        if ("completion".equals(eventType)) {
+                                            CompletionEvent variantValue =
+                                                    ObjectMappers.JSON_MAPPER.readValue(data, CompletionEvent.class);
+                                            return StreamEventContextProtocol.completion(variantValue);
+                                        } else if ("error".equals(eventType)) {
+                                            ErrorEvent variantValue =
+                                                    ObjectMappers.JSON_MAPPER.readValue(data, ErrorEvent.class);
+                                            return StreamEventContextProtocol.error(variantValue);
+                                        } else if ("notification".equals(eventType)) {
+                                            EventEvent variantValue =
+                                                    ObjectMappers.JSON_MAPPER.readValue(data, EventEvent.class);
+                                            return StreamEventContextProtocol.notification(variantValue);
+                                        }
+                                        return ObjectMappers.JSON_MAPPER.readValue(
+                                                data, StreamEventContextProtocol.class);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException("Failed to parse SSE event: " + eventType, e);
+                                    }
+                                },
+                                "[DONE]"),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
