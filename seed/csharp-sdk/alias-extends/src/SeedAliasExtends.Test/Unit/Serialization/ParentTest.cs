@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedAliasExtends;
 using SeedAliasExtends.Core;
@@ -45,10 +46,7 @@ public class ParentTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Parent>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<Parent>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

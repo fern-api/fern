@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
@@ -45,10 +46,7 @@ public class NormalSweetTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<NormalSweet>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<NormalSweet>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -88,10 +86,7 @@ public class NormalSweetTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<NormalSweet>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<NormalSweet>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -131,10 +126,7 @@ public class NormalSweetTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<NormalSweet>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<NormalSweet>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

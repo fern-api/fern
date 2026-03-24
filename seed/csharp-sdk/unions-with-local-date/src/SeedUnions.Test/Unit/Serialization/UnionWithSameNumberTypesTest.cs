@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
@@ -52,11 +53,10 @@ public class UnionWithSameNumberTypesTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
+            json,
+            options
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -103,11 +103,10 @@ public class UnionWithSameNumberTypesTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
+            json,
+            options
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -154,11 +153,10 @@ public class UnionWithSameNumberTypesTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithSameNumberTypes>(
+            json,
+            options
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

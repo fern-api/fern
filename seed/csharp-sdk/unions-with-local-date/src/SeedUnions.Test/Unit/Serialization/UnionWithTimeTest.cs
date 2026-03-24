@@ -1,4 +1,5 @@
 using global::System.Globalization;
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
@@ -49,10 +50,7 @@ public class UnionWithTimeTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithTime>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -95,10 +93,7 @@ public class UnionWithTimeTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithTime>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -149,10 +144,7 @@ public class UnionWithTimeTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithTime>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
@@ -52,11 +53,7 @@ public class UnionWithSingleElementTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSingleElement>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithSingleElement>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

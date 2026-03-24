@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.Test.Utils;
@@ -60,7 +61,7 @@ public class FileTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
+        var deserializedObject = JsonSerializer.Deserialize<SeedObjectsWithImports.File>(
             json,
             options
         );
@@ -119,7 +120,7 @@ public class FileTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
+        var deserializedObject = JsonSerializer.Deserialize<SeedObjectsWithImports.File>(
             json,
             options
         );

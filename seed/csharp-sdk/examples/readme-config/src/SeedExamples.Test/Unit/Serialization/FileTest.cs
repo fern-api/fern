@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExamples.Core;
 using SeedExamples.Test_.Utils;
@@ -47,10 +48,7 @@ public class FileTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<SeedExamples.File>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -93,10 +91,7 @@ public class FileTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<SeedExamples.File>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

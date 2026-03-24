@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
@@ -104,10 +105,7 @@ public class NestedUserTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<NestedUser>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<NestedUser>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

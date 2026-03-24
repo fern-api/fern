@@ -88,8 +88,14 @@ export class ObjectSerializationTestGenerator extends FileGenerator<CSharpFile> 
                     writer.writeLine(
                         "var options = new global::System.Text.Json.JsonSerializerOptions(global::System.Text.Json.JsonSerializerDefaults.Web);"
                     );
-                    writer.writeLine(
-                        `var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<${this.classBeingTested.name}>(json, options);`
+                    writer.write("var deserializedObject = ");
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            on: this.System.Text.Json.JsonSerializer,
+                            method: "Deserialize",
+                            generics: [this.classBeingTested],
+                            arguments_: [this.csharp.codeblock("json"), this.csharp.codeblock("options")]
+                        })
                     );
                     writer.writeTextStatement(
                         "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"

@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -48,10 +49,7 @@ public class ActressTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Actress>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<Actress>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

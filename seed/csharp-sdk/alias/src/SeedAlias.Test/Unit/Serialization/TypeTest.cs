@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedAlias.Core;
 using SeedAlias.Test.Utils;
@@ -47,10 +48,7 @@ public class TypeTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Type>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<SeedAlias.Type>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

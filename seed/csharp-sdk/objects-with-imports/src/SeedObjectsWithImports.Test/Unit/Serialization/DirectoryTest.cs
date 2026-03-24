@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.Test.Utils;
@@ -159,7 +160,7 @@ public class DirectoryTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Directory>(
+        var deserializedObject = JsonSerializer.Deserialize<SeedObjectsWithImports.File_.Directory>(
             json,
             options
         );

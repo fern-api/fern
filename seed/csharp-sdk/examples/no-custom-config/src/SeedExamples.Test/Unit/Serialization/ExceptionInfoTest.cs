@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -61,10 +62,7 @@ public class ExceptionInfoTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<ExceptionInfo>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<ExceptionInfo>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

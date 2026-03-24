@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
@@ -52,11 +53,7 @@ public class UnionWithNoPropertiesTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithNoProperties>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithNoProperties>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -96,11 +93,7 @@ public class UnionWithNoPropertiesTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject =
-            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithNoProperties>(
-                json,
-                options
-            );
+        var deserializedObject = JsonSerializer.Deserialize<UnionWithNoProperties>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

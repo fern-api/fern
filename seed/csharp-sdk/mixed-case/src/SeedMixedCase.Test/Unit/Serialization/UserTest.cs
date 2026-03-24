@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
@@ -87,10 +88,7 @@ public class UserTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<User>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<User>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

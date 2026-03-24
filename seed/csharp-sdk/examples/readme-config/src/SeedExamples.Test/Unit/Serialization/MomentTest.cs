@@ -1,4 +1,5 @@
 using global::System.Globalization;
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -70,10 +71,7 @@ public class MomentTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Moment>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<Moment>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

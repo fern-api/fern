@@ -1,3 +1,4 @@
+using global::System.Text.Json;
 using NUnit.Framework;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
@@ -68,10 +69,7 @@ public class MyObjectTest
         var options = new global::System.Text.Json.JsonSerializerOptions(
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
-        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<MyObject>(
-            json,
-            options
-        );
+        var deserializedObject = JsonSerializer.Deserialize<MyObject>(json, options);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }
