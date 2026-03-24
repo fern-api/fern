@@ -75,9 +75,9 @@ class ComplexClient
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
+            getNextCursor: fn (?PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
+            getItems: fn (?PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
         );
     }
 
@@ -92,11 +92,11 @@ class ComplexClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PaginatedConversationResponse
+     * @return ?PaginatedConversationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _search(string $index, SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function _search(string $index, SearchRequest $request, ?array $options = null): ?PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -113,7 +113,7 @@ class ComplexClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return PaginatedConversationResponse::fromJson($json);
             }

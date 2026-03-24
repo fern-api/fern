@@ -4,6 +4,7 @@ namespace Seed\Core;
 
 use Seed\Auth\AuthClient;
 use DateTime;
+use Seed\Exceptions\SeedException;
 
 /**
  * The InferredAuthProvider retrieves an access token from the configured token endpoint.
@@ -88,6 +89,10 @@ class InferredAuthProvider
         ];
 
         $tokenResponse = $this->authClient->getTokenWithClientCredentials($values);
+
+        if ($tokenResponse === null) {
+            throw new SeedException(message: "Expected a token response, but received an empty response.");
+        }
 
         $this->accessToken = $tokenResponse->accessToken;
         $this->expiresAt = $this->getExpiresAt($tokenResponse->expiresIn, $this->BUFFER_IN_MINUTES);

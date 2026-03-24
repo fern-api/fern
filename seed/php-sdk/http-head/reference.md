@@ -25,7 +25,7 @@ $client->user->head();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;list($request) -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;list($request) -> ?array</code></summary>
 <dl>
 <dd>
 
