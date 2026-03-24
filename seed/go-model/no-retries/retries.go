@@ -5,6 +5,7 @@ package noretries
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/no-retries/fern/internal"
 )
 
