@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.Nullable;
-import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +48,7 @@ public final class GetFooRequest {
     /**
      * @return An optional baz
      */
-    @JsonProperty("optional_baz")
+    @JsonIgnore
     public Optional<String> getOptionalBaz() {
         return optionalBaz;
     }
@@ -69,7 +67,7 @@ public final class GetFooRequest {
     /**
      * @return A required baz
      */
-    @JsonProperty("required_baz")
+    @JsonIgnore
     public String getRequiredBaz() {
         return requiredBaz;
     }
@@ -82,18 +80,6 @@ public final class GetFooRequest {
         if (requiredNullableBaz == null) {
             return Optional.empty();
         }
-        return requiredNullableBaz;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("optional_nullable_baz")
-    private Optional<String> _getOptionalNullableBaz() {
-        return optionalNullableBaz;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("required_nullable_baz")
-    private Optional<String> _getRequiredNullableBaz() {
         return requiredNullableBaz;
     }
 
