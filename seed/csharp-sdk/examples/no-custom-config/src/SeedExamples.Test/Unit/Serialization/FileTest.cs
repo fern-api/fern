@@ -43,7 +43,15 @@ public class FileTest
               "contents": "..."
             }
             """;
-        JsonAssert.ModelBinds<SeedExamples.File>(json);
+        var expectedObject = new SeedExamples.File { Name = "file.txt", Contents = "..." };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -81,6 +89,14 @@ public class FileTest
               "contents": "..."
             }
             """;
-        JsonAssert.ModelBinds<SeedExamples.File>(json);
+        var expectedObject = new SeedExamples.File { Name = "another_file.txt", Contents = "..." };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<File>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

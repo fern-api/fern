@@ -48,6 +48,18 @@ public class ChildTest
               "child": "Property from the child"
             }
             """;
-        JsonAssert.ModelBinds<Child>(json);
+        var expectedObject = new Child
+        {
+            Parent = "Property from the parent",
+            Child_ = "Property from the child",
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Child>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

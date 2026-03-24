@@ -127,6 +127,42 @@ public class DirectoryTest
               ]
             }
             """;
-        JsonAssert.ModelBinds<SeedObjectsWithImports.File_.Directory>(json);
+        var expectedObject = new SeedObjectsWithImports.File_.Directory
+        {
+            Name = "root",
+            Files = new List<SeedObjectsWithImports.File>()
+            {
+                new SeedObjectsWithImports.File
+                {
+                    Name = "file.txt",
+                    Contents = "...",
+                    Info = SeedObjectsWithImports.FileInfo.Regular,
+                },
+            },
+            Directories = new List<SeedObjectsWithImports.File_.Directory>()
+            {
+                new SeedObjectsWithImports.File_.Directory
+                {
+                    Name = "tmp",
+                    Files = new List<SeedObjectsWithImports.File>()
+                    {
+                        new SeedObjectsWithImports.File
+                        {
+                            Name = "another_file.txt",
+                            Contents = "...",
+                            Info = SeedObjectsWithImports.FileInfo.Regular,
+                        },
+                    },
+                },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Directory>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

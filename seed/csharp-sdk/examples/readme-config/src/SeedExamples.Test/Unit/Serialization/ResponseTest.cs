@@ -95,6 +95,32 @@ public class ResponseTest
               ]
             }
             """;
-        JsonAssert.ModelBinds<Response>(json);
+        var expectedObject = new Response
+        {
+            Response_ = "Initializing...",
+            Identifiers = new List<Identifier>()
+            {
+                new Identifier
+                {
+                    Type = BasicType.Primitive,
+                    Value = "example",
+                    Label = "Primitive",
+                },
+                new Identifier
+                {
+                    Type = ComplexType.Unknown,
+                    Value = "{}",
+                    Label = "Unknown",
+                },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Response>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

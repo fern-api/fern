@@ -46,7 +46,18 @@ public class UnionWithSameStringTypesTest
               "value": "custom-123"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
+        var expectedObject = new UnionWithSameStringTypes(
+            new UnionWithSameStringTypes.CustomFormat("custom-123")
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameStringTypes>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -86,7 +97,18 @@ public class UnionWithSameStringTypesTest
               "value": "regular text"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
+        var expectedObject = new UnionWithSameStringTypes(
+            new UnionWithSameStringTypes.RegularString("regular text")
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameStringTypes>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -126,6 +148,17 @@ public class UnionWithSameStringTypesTest
               "value": "PATTERN123"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithSameStringTypes>(json);
+        var expectedObject = new UnionWithSameStringTypes(
+            new UnionWithSameStringTypes.PatternString("PATTERN123")
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithSameStringTypes>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

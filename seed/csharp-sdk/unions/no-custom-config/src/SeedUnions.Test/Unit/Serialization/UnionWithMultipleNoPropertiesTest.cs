@@ -46,7 +46,18 @@ public class UnionWithMultipleNoPropertiesTest
               "name": "example"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
+        var expectedObject = new UnionWithMultipleNoProperties(
+            new UnionWithMultipleNoProperties.Foo(new Foo { Name = "example" })
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithMultipleNoProperties>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -83,7 +94,18 @@ public class UnionWithMultipleNoPropertiesTest
               "type": "empty1"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
+        var expectedObject = new UnionWithMultipleNoProperties(
+            new UnionWithMultipleNoProperties.Empty1()
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithMultipleNoProperties>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -120,6 +142,17 @@ public class UnionWithMultipleNoPropertiesTest
               "type": "empty2"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithMultipleNoProperties>(json);
+        var expectedObject = new UnionWithMultipleNoProperties(
+            new UnionWithMultipleNoProperties.Empty2()
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithMultipleNoProperties>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

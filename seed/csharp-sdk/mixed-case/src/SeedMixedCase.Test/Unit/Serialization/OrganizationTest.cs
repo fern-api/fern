@@ -41,6 +41,14 @@ public class OrganizationTest
               "name": "orgName"
             }
             """;
-        JsonAssert.ModelBinds<Organization>(json);
+        var expectedObject = new Organization { Name = "orgName" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Organization>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

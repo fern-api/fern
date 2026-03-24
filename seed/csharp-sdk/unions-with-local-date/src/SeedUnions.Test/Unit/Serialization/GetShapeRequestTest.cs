@@ -41,6 +41,12 @@ public class GetShapeRequestTest
               "id": "example"
             }
             """;
-        JsonAssert.ModelBinds<GetShapeRequest>(json);
+        var expectedObject = new GetShapeRequest { Id = "example" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<GetShapeRequest>(json, options);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

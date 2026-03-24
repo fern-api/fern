@@ -55,6 +55,22 @@ public class UserTest
               "location": "Wonderland"
             }
             """;
-        JsonAssert.ModelBinds<User>(json);
+        var expectedObject = new User
+        {
+            Name = "Alice",
+            AdditionalProperties = new AdditionalProperties
+            {
+                ["age"] = 30,
+                ["location"] = "Wonderland",
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<User>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

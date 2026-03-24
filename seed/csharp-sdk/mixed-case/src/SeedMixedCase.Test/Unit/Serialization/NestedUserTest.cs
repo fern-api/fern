@@ -87,6 +87,27 @@ public class NestedUserTest
               }
             }
             """;
-        JsonAssert.ModelBinds<NestedUser>(json);
+        var expectedObject = new NestedUser
+        {
+            Name = "username",
+            NestedUser_ = new User
+            {
+                UserName = "nestedUsername",
+                MetadataTags = new List<string>() { "tag1", "tag2" },
+                ExtraProperties = new Dictionary<string, string>()
+                {
+                    { "foo", "bar" },
+                    { "baz", "qux" },
+                },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<NestedUser>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

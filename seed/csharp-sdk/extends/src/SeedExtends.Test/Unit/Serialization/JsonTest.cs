@@ -48,6 +48,18 @@ public class JsonTest
               "raw": "{\"docs\": true, \"json\": true}"
             }
             """;
-        JsonAssert.ModelBinds<Json>(json);
+        var expectedObject = new Json
+        {
+            Docs = "Types extend this type to include a docs and json property.",
+            Raw = "{\"docs\": true, \"json\": true}",
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Json>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

@@ -44,6 +44,14 @@ public class ActressTest
               "id": "actor_456"
             }
             """;
-        JsonAssert.ModelBinds<Actress>(json);
+        var expectedObject = new Actress { Name = "Jennifer Lawrence", Id = "actor_456" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Actress>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

@@ -144,6 +144,47 @@ public class TreeTest
               ]
             }
             """;
-        JsonAssert.ModelBinds<Tree>(json);
+        var expectedObject = new Tree
+        {
+            Nodes = new List<Node>()
+            {
+                new Node
+                {
+                    Id = "node-8dvgfja2",
+                    Label = "left",
+                    Metadata = new Metadata
+                    {
+                        Id = "metadata-kjasf923",
+                        Data = new Dictionary<string, string>()
+                        {
+                            { "foo", "bar" },
+                            { "baz", "qux" },
+                        },
+                    },
+                },
+                new Node
+                {
+                    Id = "node-cwda9fi2x",
+                    Label = "right",
+                    Metadata = new Metadata
+                    {
+                        Id = "metadata-lkasdfv9j",
+                        Data = new Dictionary<string, string>()
+                        {
+                            { "one", "two" },
+                            { "three", "four" },
+                        },
+                    },
+                },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Tree>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

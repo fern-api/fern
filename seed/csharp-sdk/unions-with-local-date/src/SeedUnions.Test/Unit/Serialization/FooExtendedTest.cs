@@ -44,7 +44,15 @@ public class FooExtendedTest
               "age": 5
             }
             """;
-        JsonAssert.ModelBinds<FooExtended>(json);
+        var expectedObject = new FooExtended { Name = "example1", Age = 5 };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<FooExtended>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -82,6 +90,14 @@ public class FooExtendedTest
               "age": 10
             }
             """;
-        JsonAssert.ModelBinds<FooExtended>(json);
+        var expectedObject = new FooExtended { Name = "example2", Age = 10 };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<FooExtended>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

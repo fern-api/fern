@@ -41,6 +41,14 @@ public class RequestTest
               "request": {}
             }
             """;
-        JsonAssert.ModelBinds<Request>(json);
+        var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Request>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

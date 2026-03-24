@@ -41,7 +41,15 @@ public class BarTest
               "name": "example1"
             }
             """;
-        JsonAssert.ModelBinds<Bar>(json);
+        var expectedObject = new Bar { Name = "example1" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Bar>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -76,6 +84,14 @@ public class BarTest
               "name": "example2"
             }
             """;
-        JsonAssert.ModelBinds<Bar>(json);
+        var expectedObject = new Bar { Name = "example2" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Bar>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

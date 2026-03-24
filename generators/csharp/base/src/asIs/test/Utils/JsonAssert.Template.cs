@@ -27,16 +27,4 @@ internal static class JsonAssert
         AreEqual(deserialized!, json);
     }
 
-    /// <summary>
-    /// Asserts that the given JSON string can be deserialized by ASP.NET Core's default
-    /// model binding (System.Text.Json with JsonSerializerDefaults.Web) and that the
-    /// resulting object re-serializes to equivalent JSON via the SDK serializer.
-    /// </summary>
-    internal static void ModelBinds<T>(string json)
-    {
-        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-        var deserialized = JsonSerializer.Deserialize<T>(json, options);
-        Assert.That(deserialized, Is.Not.Null);
-        AreEqual(deserialized!, json);
-    }
 }

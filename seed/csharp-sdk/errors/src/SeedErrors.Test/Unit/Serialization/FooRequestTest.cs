@@ -41,6 +41,14 @@ public class FooRequestTest
               "bar": "hello"
             }
             """;
-        JsonAssert.ModelBinds<FooRequest>(json);
+        var expectedObject = new FooRequest { Bar = "hello" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<FooRequest>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

@@ -45,7 +45,15 @@ public class UnionWithTimeTest
               "value": 5
             }
             """;
-        JsonAssert.ModelBinds<UnionWithTime>(json);
+        var expectedObject = new UnionWithTime(new UnionWithTime.ValueInner(5));
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -83,7 +91,15 @@ public class UnionWithTimeTest
               "value": "1994-01-01"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithTime>(json);
+        var expectedObject = new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1)));
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -125,6 +141,18 @@ public class UnionWithTimeTest
               "value": "1994-01-01T01:01:01Z"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithTime>(json);
+        var expectedObject = new UnionWithTime(
+            new UnionWithTime.Datetime(
+                DateTime.Parse("1994-01-01T01:01:01.000Z", null, DateTimeStyles.AdjustToUniversal)
+            )
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<UnionWithTime>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

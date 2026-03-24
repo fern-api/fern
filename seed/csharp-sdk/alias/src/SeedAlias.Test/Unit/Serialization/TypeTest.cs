@@ -43,6 +43,14 @@ public class TypeTest
               "name": "foo"
             }
             """;
-        JsonAssert.ModelBinds<SeedAlias.Type>(json);
+        var expectedObject = new SeedAlias.Type { Id = "type-df89sdg1", Name = "foo" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Type>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

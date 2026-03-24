@@ -44,6 +44,17 @@ public class DocsTest
               "docs": "Types extend this type to include a docs property."
             }
             """;
-        JsonAssert.ModelBinds<Docs>(json);
+        var expectedObject = new Docs
+        {
+            Docs_ = "Types extend this type to include a docs property.",
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Docs>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

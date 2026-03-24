@@ -44,6 +44,14 @@ public class DataTest
               "value": "data"
             }
             """;
-        JsonAssert.ModelBinds<Data>(json);
+        var expectedObject = new Data(new Data.String("data"));
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Data>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

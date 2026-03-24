@@ -46,7 +46,18 @@ public class UnionWithDuplicatePrimitiveTest
               "value": 9
             }
             """;
-        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+        var expectedObject = new UnionWithDuplicatePrimitive(
+            new UnionWithDuplicatePrimitive.Integer1(9)
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithDuplicatePrimitive>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -86,7 +97,18 @@ public class UnionWithDuplicatePrimitiveTest
               "value": 5
             }
             """;
-        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+        var expectedObject = new UnionWithDuplicatePrimitive(
+            new UnionWithDuplicatePrimitive.Integer2(5)
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithDuplicatePrimitive>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -126,7 +148,18 @@ public class UnionWithDuplicatePrimitiveTest
               "value": "bar1"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+        var expectedObject = new UnionWithDuplicatePrimitive(
+            new UnionWithDuplicatePrimitive.String1("bar1")
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithDuplicatePrimitive>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -166,6 +199,17 @@ public class UnionWithDuplicatePrimitiveTest
               "value": "bar2"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithDuplicatePrimitive>(json);
+        var expectedObject = new UnionWithDuplicatePrimitive(
+            new UnionWithDuplicatePrimitive.String1("bar2")
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithDuplicatePrimitive>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

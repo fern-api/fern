@@ -44,7 +44,13 @@ public class UnionWithPrimitiveTest
               "value": 9
             }
             """;
-        JsonAssert.ModelBinds<UnionWithPrimitive>(json);
+        var expectedObject = new UnionWithPrimitive(new UnionWithPrimitive.Integer(9));
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithPrimitive>(json, options);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -82,6 +88,12 @@ public class UnionWithPrimitiveTest
               "value": "bar"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithPrimitive>(json);
+        var expectedObject = new UnionWithPrimitive(new UnionWithPrimitive.String("bar"));
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithPrimitive>(json, options);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

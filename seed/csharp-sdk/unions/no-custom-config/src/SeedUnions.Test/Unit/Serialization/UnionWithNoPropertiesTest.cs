@@ -46,7 +46,18 @@ public class UnionWithNoPropertiesTest
               "name": "example"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithNoProperties>(json);
+        var expectedObject = new UnionWithNoProperties(
+            new UnionWithNoProperties.Foo(new Foo { Name = "example" })
+        );
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithNoProperties>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -81,6 +92,15 @@ public class UnionWithNoPropertiesTest
               "type": "empty"
             }
             """;
-        JsonAssert.ModelBinds<UnionWithNoProperties>(json);
+        var expectedObject = new UnionWithNoProperties(new UnionWithNoProperties.Empty());
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject =
+            global::System.Text.Json.JsonSerializer.Deserialize<UnionWithNoProperties>(
+                json,
+                options
+            );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

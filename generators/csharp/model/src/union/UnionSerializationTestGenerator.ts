@@ -81,13 +81,16 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var json = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
-                    writer.writeNodeStatement(
-                        this.csharp.invokeMethod({
-                            on: this.Types.JsonAssert,
-                            method: "ModelBinds",
-                            generics: [this.classReference],
-                            arguments_: [this.csharp.codeblock("json")]
-                        })
+                    writer.write("var expectedObject  = ");
+                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
+                    writer.writeLine(
+                        "var options = new global::System.Text.Json.JsonSerializerOptions(global::System.Text.Json.JsonSerializerDefaults.Web);"
+                    );
+                    writer.writeLine(
+                        `var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<${this.classReference.name}>(json, options);`
+                    );
+                    writer.writeTextStatement(
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
                     );
                 }),
                 isAsync: false

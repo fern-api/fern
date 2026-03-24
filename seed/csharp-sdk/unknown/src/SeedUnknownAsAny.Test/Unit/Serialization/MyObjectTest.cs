@@ -57,6 +57,21 @@ public class MyObjectTest
               }
             }
             """;
-        JsonAssert.ModelBinds<MyObject>(json);
+        var expectedObject = new MyObject
+        {
+            Unknown = new Dictionary<object, object?>()
+            {
+                { "boolVal", true },
+                { "strVal", "string" },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<MyObject>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

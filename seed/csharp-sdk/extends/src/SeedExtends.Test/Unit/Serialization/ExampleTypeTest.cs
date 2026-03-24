@@ -48,6 +48,18 @@ public class ExampleTypeTest
               "name": "Example"
             }
             """;
-        JsonAssert.ModelBinds<ExampleType>(json);
+        var expectedObject = new ExampleType
+        {
+            Docs = "This is an example type.",
+            Name = "Example",
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<ExampleType>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

@@ -120,7 +120,34 @@ public class NodeTest
               ]
             }
             """;
-        JsonAssert.ModelBinds<Node>(json);
+        var expectedObject = new Node
+        {
+            Name = "root",
+            Nodes = new List<Node>()
+            {
+                new Node { Name = "left" },
+                new Node { Name = "right" },
+            },
+            Trees = new List<Tree>()
+            {
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node { Name = "left" },
+                        new Node { Name = "right" },
+                    },
+                },
+            },
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Node>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -155,7 +182,15 @@ public class NodeTest
               "name": "left"
             }
             """;
-        JsonAssert.ModelBinds<Node>(json);
+        var expectedObject = new Node { Name = "left" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Node>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -190,6 +225,14 @@ public class NodeTest
               "name": "right"
             }
             """;
-        JsonAssert.ModelBinds<Node>(json);
+        var expectedObject = new Node { Name = "right" };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Node>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }

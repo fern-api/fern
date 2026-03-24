@@ -56,6 +56,20 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        JsonAssert.ModelBinds<SeedValidation.Type>(json);
+        var expectedObject = new SeedValidation.Type
+        {
+            Decimal = 1.1,
+            Even = 2,
+            Name = "rules",
+            Shape = Shape.Square,
+        };
+        var options = new global::System.Text.Json.JsonSerializerOptions(
+            global::System.Text.Json.JsonSerializerDefaults.Web
+        );
+        var deserializedObject = global::System.Text.Json.JsonSerializer.Deserialize<Type>(
+            json,
+            options
+        );
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }
