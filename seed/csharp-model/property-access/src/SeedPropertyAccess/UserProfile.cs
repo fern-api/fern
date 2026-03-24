@@ -7,13 +7,10 @@ namespace SeedPropertyAccess;
 /// <summary>
 /// User profile object
 /// </summary>
+[JsonConverter(typeof(UserProfile.JsonConverter))]
 [Serializable]
-public record UserProfile : IJsonOnDeserialized
+public record UserProfile
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// The name of the user.
     /// </summary>
@@ -36,12 +33,93 @@ public record UserProfile : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<UserProfile>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UserProfile).IsAssignableFrom(typeToConvert);
+
+        public override UserProfile? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _name = default;
+            UserProfileVerification _verification = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "name":
+                        _name = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "verification":
+                        _verification = JsonSerializer.Deserialize<UserProfileVerification>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "ssn":
+                        reader.Skip();
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new UserProfile
+            {
+                Name = _name,
+                Verification = _verification,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserProfile value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("name");
+            JsonSerializer.Serialize(writer, value.Name, options);
+            writer.WritePropertyName("verification");
+            JsonSerializer.Serialize(writer, value.Verification, options);
+            writer.WritePropertyName("ssn");
+            JsonSerializer.Serialize(writer, value.Ssn, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

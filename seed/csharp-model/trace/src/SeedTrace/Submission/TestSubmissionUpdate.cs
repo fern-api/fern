@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(TestSubmissionUpdate.JsonConverter))]
 [Serializable]
-public record TestSubmissionUpdate : IJsonOnDeserialized
+public record TestSubmissionUpdate
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("updateTime")]
     public required DateTime UpdateTime { get; set; }
 
@@ -20,12 +17,88 @@ public record TestSubmissionUpdate : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<TestSubmissionUpdate>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(TestSubmissionUpdate).IsAssignableFrom(typeToConvert);
+
+        public override TestSubmissionUpdate? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            DateTime _updateTime = default;
+            TestSubmissionUpdateInfo _updateInfo = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "updateTime":
+                        _updateTime = JsonSerializer.Deserialize<DateTime>(ref reader, options);
+                        break;
+                    case "updateInfo":
+                        _updateInfo = JsonSerializer.Deserialize<TestSubmissionUpdateInfo>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new TestSubmissionUpdate
+            {
+                UpdateTime = _updateTime,
+                UpdateInfo = _updateInfo,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TestSubmissionUpdate value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("updateTime");
+            JsonSerializer.Serialize(writer, value.UpdateTime, options);
+            writer.WritePropertyName("updateInfo");
+            JsonSerializer.Serialize(writer, value.UpdateInfo, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

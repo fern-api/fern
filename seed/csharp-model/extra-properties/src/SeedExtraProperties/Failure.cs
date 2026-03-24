@@ -1,30 +1,101 @@
+using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
 using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
+[JsonConverter(typeof(Failure.JsonConverter))]
 [Serializable]
-public record Failure : IJsonOnDeserialized, IJsonOnSerializing
+public record Failure
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, object?> _extensionData =
-        new Dictionary<string, object?>();
-
     [JsonPropertyName("status")]
     public string Status { get; set; } = "failure";
 
     [JsonIgnore]
     public AdditionalProperties AdditionalProperties { get; set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
-    void IJsonOnSerializing.OnSerializing() =>
-        AdditionalProperties.CopyToExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<Failure>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(Failure).IsAssignableFrom(typeToConvert);
+
+        public override Failure? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _status = default;
+            var extensionData = new Dictionary<string, object?>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "status":
+                        _status = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    default:
+                        if (reader.TokenType == JsonTokenType.Null)
+                        {
+                            extensionData[propertyName!] = null;
+                        }
+                        else
+                        {
+                            extensionData[propertyName!] = JsonSerializer.Deserialize<object>(
+                                ref reader,
+                                options
+                            );
+                        }
+                        break;
+                }
+            }
+
+            return new Failure
+            {
+                Status = _status,
+                AdditionalProperties = new AdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Failure value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("status");
+            JsonSerializer.Serialize(writer, value.Status, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    JsonSerializer.Serialize(writer, kvp.Value, options);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -5,25 +5,91 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
+[JsonConverter(typeof(VoidFunctionSignature.JsonConverter))]
 [Serializable]
-public record VoidFunctionSignature : IJsonOnDeserialized
+public record VoidFunctionSignature
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("parameters")]
     public IEnumerable<Parameter> Parameters { get; set; } = new List<Parameter>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<VoidFunctionSignature>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(VoidFunctionSignature).IsAssignableFrom(typeToConvert);
+
+        public override VoidFunctionSignature? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<Parameter> _parameters = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "parameters":
+                        _parameters = JsonSerializer.Deserialize<IEnumerable<Parameter>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new VoidFunctionSignature
+            {
+                Parameters = _parameters,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            VoidFunctionSignature value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("parameters");
+            JsonSerializer.Serialize(writer, value.Parameters, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

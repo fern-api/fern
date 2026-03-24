@@ -5,13 +5,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[JsonConverter(typeof(SearchRequest.JsonConverter))]
 [Serializable]
-public record SearchRequest : IJsonOnDeserialized
+public record SearchRequest
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("pagination")]
     public StartingAfterPaging? Pagination { get; set; }
 
@@ -24,12 +21,93 @@ public record SearchRequest : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<SearchRequest>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(SearchRequest).IsAssignableFrom(typeToConvert);
+
+        public override SearchRequest? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            StartingAfterPaging? _pagination = default;
+            OneOf<SingleFilterSearchRequest, MultipleFilterSearchRequest> _query = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "pagination":
+                        _pagination = JsonSerializer.Deserialize<StartingAfterPaging?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "query":
+                        _query = JsonSerializer.Deserialize<
+                            OneOf<SingleFilterSearchRequest, MultipleFilterSearchRequest>
+                        >(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new SearchRequest
+            {
+                Pagination = _pagination,
+                Query = _query,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SearchRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Pagination != null)
+            {
+                writer.WritePropertyName("pagination");
+                JsonSerializer.Serialize(writer, value.Pagination, options);
+            }
+            writer.WritePropertyName("query");
+            JsonSerializer.Serialize(writer, value.Query, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

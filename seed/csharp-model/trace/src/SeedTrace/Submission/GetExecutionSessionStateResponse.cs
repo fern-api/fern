@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(GetExecutionSessionStateResponse.JsonConverter))]
 [Serializable]
-public record GetExecutionSessionStateResponse : IJsonOnDeserialized
+public record GetExecutionSessionStateResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("states")]
     public Dictionary<string, ExecutionSessionState> States { get; set; } =
         new Dictionary<string, ExecutionSessionState>();
@@ -24,12 +21,103 @@ public record GetExecutionSessionStateResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<GetExecutionSessionStateResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(GetExecutionSessionStateResponse).IsAssignableFrom(typeToConvert);
+
+        public override GetExecutionSessionStateResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Dictionary<string, ExecutionSessionState> _states = default;
+            int? _numWarmingInstances = default;
+            IEnumerable<string> _warmingSessionIds = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "states":
+                        _states = JsonSerializer.Deserialize<
+                            Dictionary<string, ExecutionSessionState>
+                        >(ref reader, options);
+                        break;
+                    case "numWarmingInstances":
+                        _numWarmingInstances = JsonSerializer.Deserialize<int?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "warmingSessionIds":
+                        _warmingSessionIds = JsonSerializer.Deserialize<IEnumerable<string>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new GetExecutionSessionStateResponse
+            {
+                States = _states,
+                NumWarmingInstances = _numWarmingInstances,
+                WarmingSessionIds = _warmingSessionIds,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            GetExecutionSessionStateResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("states");
+            JsonSerializer.Serialize(writer, value.States, options);
+            if (value.NumWarmingInstances != null)
+            {
+                writer.WritePropertyName("numWarmingInstances");
+                JsonSerializer.Serialize(writer, value.NumWarmingInstances, options);
+            }
+            writer.WritePropertyName("warmingSessionIds");
+            JsonSerializer.Serialize(writer, value.WarmingSessionIds, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

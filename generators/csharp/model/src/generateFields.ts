@@ -8,7 +8,7 @@ type Literal = FernIr.Literal;
 import { generateNestedBoolLiteralBody, generateNestedStringLiteralBody } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
-interface TypeInfo {
+export interface TypeInfo {
     isOptional: boolean;
     isNullable: boolean;
 }
@@ -18,7 +18,7 @@ interface TypeInfo {
  * - optional: Type is wrapped in Optional<T> container
  * - nullable: Type is wrapped in nullable container OR optional with nullable inner type
  */
-function analyzeTypeReference(typeReference: TypeReference, context: ModelGeneratorContext): TypeInfo {
+export function analyzeTypeReference(typeReference: TypeReference, context: ModelGeneratorContext): TypeInfo {
     const result: TypeInfo = {
         isOptional: false,
         isNullable: false

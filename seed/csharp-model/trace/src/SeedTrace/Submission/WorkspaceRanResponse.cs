@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(WorkspaceRanResponse.JsonConverter))]
 [Serializable]
-public record WorkspaceRanResponse : IJsonOnDeserialized
+public record WorkspaceRanResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("submissionId")]
     public required string SubmissionId { get; set; }
 
@@ -20,12 +17,88 @@ public record WorkspaceRanResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<WorkspaceRanResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(WorkspaceRanResponse).IsAssignableFrom(typeToConvert);
+
+        public override WorkspaceRanResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _submissionId = default;
+            WorkspaceRunDetails _runDetails = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "submissionId":
+                        _submissionId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "runDetails":
+                        _runDetails = JsonSerializer.Deserialize<WorkspaceRunDetails>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new WorkspaceRanResponse
+            {
+                SubmissionId = _submissionId,
+                RunDetails = _runDetails,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            WorkspaceRanResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("submissionId");
+            JsonSerializer.Serialize(writer, value.SubmissionId, options);
+            writer.WritePropertyName("runDetails");
+            JsonSerializer.Serialize(writer, value.RunDetails, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

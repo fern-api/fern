@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -9,9 +9,31 @@ type ObjectProperty = FernIr.ObjectProperty;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 
-import { generateFields } from "../generateFields.js";
+import { analyzeTypeReference, generateFields } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
+
+/**
+ * Metadata collected for each property to drive JsonConverter generation.
+ */
+interface PropertyConverterInfo {
+    /** The PascalCase property name used in C# */
+    propertyName: string;
+    /** The JSON wire name */
+    wireValue: string;
+    /** The C# type of the property */
+    csharpType: ast.Type;
+    /** Whether the property is wrapped in Optional<T> */
+    isOptional: boolean;
+    /** Whether the property has [NullableAttribute] semantics */
+    isNullable: boolean;
+    /** Whether the property is read-only (should not be serialized) */
+    isReadOnly: boolean;
+    /** Whether the property is write-only (should not be deserialized) */
+    isWriteOnly: boolean;
+    /** Whether this is a literal property (has a fixed initializer value) */
+    isLiteral: boolean;
+}
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -29,18 +51,23 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     public doGenerate(): CSharpFile {
-        const interfaces = [this.System.Text.Json.Serialization.IJsonOnDeserialized];
-        if (this.objectDeclaration.extraProperties) {
-            interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
-        }
-
         const class_ = this.csharp.class_({
             reference: this.classReference,
             summary: this.typeDeclaration.docs,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record,
-            interfaceReferences: interfaces,
-            annotations: [this.System.Serializable]
+            annotations: [
+                this.csharp.annotation({
+                    reference: this.System.Text.Json.Serialization.JsonConverter(),
+                    argument: this.csharp.codeblock((writer: Writer) => {
+                        writer.write("typeof(");
+                        writer.writeNode(this.classReference);
+                        writer.write(".JsonConverter");
+                        writer.write(")");
+                    })
+                }),
+                this.System.Serializable
+            ]
         });
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
         generateFields(class_, {
@@ -49,11 +76,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             context: this.context
         });
 
-        this.addExtensionDataField(class_);
-        const additionalProperties = this.addAdditionalPropertiesProperty(class_);
-        this.addOnDeserialized(class_, additionalProperties);
-        this.addOnSerializing(class_, additionalProperties);
+        this.addAdditionalPropertiesProperty(class_);
         this.context.getToStringMethod(class_);
+
+        // Collect property metadata for the converter
+        const propertyInfos = this.collectPropertyInfos(properties);
+
+        // Generate the nested JsonConverter class
+        this.generateJsonConverter(class_, propertyInfos);
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
@@ -72,33 +102,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         });
     }
 
-    private addExtensionDataField(class_: ast.Class): void {
-        class_.addField({
-            origin: class_.explicit("_extensionData"),
-            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-            access: ast.Access.Private,
-            readonly: true,
-            type: this.Collection.idictionary(
-                this.Primitive.string,
-                this.objectDeclaration.extraProperties
-                    ? this.Primitive.object.asOptional()
-                    : this.System.Text.Json.JsonElement,
-                {
-                    dontSimplify: true
-                }
-            ),
-            initializer: this.objectDeclaration.extraProperties
-                ? this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.Primitive.object.asOptional()
-                  ).new()
-                : this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.System.Text.Json.JsonElement
-                  ).new()
-        });
-    }
-
     private addAdditionalPropertiesProperty(class_: ast.Class) {
         return class_.addField({
             origin: class_.explicit("AdditionalProperties"),
@@ -114,26 +117,343 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         });
     }
 
-    private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {
-        if (this.objectDeclaration.extraProperties) {
-            class_.addMethod({
-                name: "OnSerializing",
-                interfaceReference: this.System.Text.Json.Serialization.IJsonOnSerializing,
-                parameters: [],
-                bodyType: ast.Method.BodyType.Expression,
-                body: this.csharp.codeblock(`${additionalProperties.name}.CopyToExtensionData(_extensionData)`)
+    /**
+     * Collects converter metadata for each property.
+     */
+    private collectPropertyInfos(
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[]
+    ): PropertyConverterInfo[] {
+        return properties.map((property) => {
+            const typeInfo = analyzeTypeReference(property.valueType, this.context);
+            const csharpType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
+            const propertyName = this.getPropertyName({
+                className: this.classReference.name,
+                objectProperty: property.name
             });
+            const isLiteral =
+                this.context.getLiteralInitializerFromTypeReference({ typeReference: property.valueType }) != null;
+
+            let isReadOnly = false;
+            let isWriteOnly = false;
+            if ("propertyAccess" in property && property.propertyAccess) {
+                isReadOnly = property.propertyAccess === "READ_ONLY";
+                isWriteOnly = property.propertyAccess === "WRITE_ONLY";
+            }
+
+            return {
+                propertyName,
+                wireValue: property.name.wireValue,
+                csharpType,
+                isOptional: typeInfo.isOptional,
+                isNullable: typeInfo.isNullable,
+                isReadOnly,
+                isWriteOnly,
+                isLiteral
+            };
+        });
+    }
+
+    /**
+     * Generates a nested JsonConverter<T> class inside the object class.
+     */
+    private generateJsonConverter(enclosingClass: ast.Class, propertyInfos: PropertyConverterInfo[]): void {
+        const objectReference = this.classReference;
+        const converterClass = this.csharp.class_({
+            origin: enclosingClass.explicit("JsonConverter"),
+            access: ast.Access.Internal,
+            namespace: this.classReference.namespace,
+            enclosingType: this.classReference,
+            sealed: true,
+            parentClassReference: this.System.Text.Json.Serialization.JsonConverter(objectReference),
+            annotations: [this.System.Serializable]
+        });
+
+        // CanConvert method
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: this.Primitive.boolean,
+            name: "CanConvert",
+            parameters: [
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                })
+            ],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.write("typeof(");
+                writer.writeNode(this.classReference);
+                writer.write(").IsAssignableFrom(typeToConvert)");
+            })
+        });
+
+        // Read method
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: objectReference.asOptional(),
+            name: "Read",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.System.Text.Json.Utf8JsonReader
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                this.writeReadMethodBody(writer, propertyInfos);
+            })
+        });
+
+        // Write method
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "Write",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.System.Text.Json.Utf8JsonWriter
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: objectReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                this.writeWriteMethodBody(writer, propertyInfos);
+            })
+        });
+
+        enclosingClass.addNestedClass(converterClass);
+    }
+
+    /**
+     * Generates the Read method body for the JsonConverter.
+     */
+    private writeReadMethodBody(writer: Writer, propertyInfos: PropertyConverterInfo[]): void {
+        // Handle null token
+        writer.writeLine("if (reader.TokenType == JsonTokenType.Null)");
+        writer.pushScope();
+        writer.writeTextStatement("return null");
+        writer.popScope();
+        writer.writeLine();
+
+        // Declare local variables for each property
+        for (const prop of propertyInfos) {
+            if (prop.isWriteOnly) {
+                // WriteOnly properties are not deserialized
+                continue;
+            }
+            if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
+                writer.write("var ");
+                writer.write(this.getLocalVarName(prop.propertyName));
+                writer.write(" = ");
+                // For Optional<T>, initialize as undefined
+                writer.write("Optional<");
+                this.writeOptionalInnerType(writer, prop);
+                writer.writeTextStatement(">.Undefined");
+            } else {
+                writer.writeNode(prop.csharpType);
+                writer.write(` ${this.getLocalVarName(prop.propertyName)} = default`);
+                writer.writeTextStatement("");
+            }
+        }
+
+        // Extension data dictionary
+        if (this.objectDeclaration.extraProperties) {
+            writer.writeTextStatement("var extensionData = new Dictionary<string, object?>()");
+        } else {
+            writer.writeTextStatement("var extensionData = new Dictionary<string, JsonElement>()");
+        }
+        writer.writeLine();
+
+        // Check for StartObject
+        writer.writeLine("if (reader.TokenType != JsonTokenType.StartObject)");
+        writer.pushScope();
+        writer.writeTextStatement('throw new JsonException("Expected StartObject")');
+        writer.popScope();
+        writer.writeLine();
+
+        // Main read loop
+        writer.writeLine("while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)");
+        writer.pushScope();
+        writer.writeTextStatement("var propertyName = reader.GetString()");
+        writer.writeTextStatement("reader.Read()");
+        writer.writeLine();
+        writer.writeLine("switch (propertyName)");
+        writer.pushScope();
+
+        for (const prop of propertyInfos) {
+            if (prop.isWriteOnly) {
+                // WriteOnly = don't deserialize, skip the value
+                writer.writeLine(`case "${prop.wireValue}":`);
+                writer.indent();
+                writer.writeTextStatement("reader.Skip()");
+                writer.writeTextStatement("break");
+                writer.dedent();
+                continue;
+            }
+
+            writer.writeLine(`case "${prop.wireValue}":`);
+            writer.indent();
+
+            if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
+                // Wrap in Optional<T>.Of(...)
+                writer.write(`${this.getLocalVarName(prop.propertyName)} = Optional<`);
+                this.writeOptionalInnerType(writer, prop);
+                writer.write(">.Of(");
+                writer.write("JsonSerializer.Deserialize<");
+                this.writeOptionalInnerType(writer, prop);
+                writer.write(">(ref reader, options)");
+                writer.writeTextStatement(")");
+            } else {
+                writer.write(`${this.getLocalVarName(prop.propertyName)} = `);
+                writer.write("JsonSerializer.Deserialize<");
+                writer.writeNode(prop.csharpType);
+                writer.writeTextStatement(">(ref reader, options)");
+            }
+            writer.writeTextStatement("break");
+            writer.dedent();
+        }
+
+        // Default case: capture unknown properties
+        writer.writeLine("default:");
+        writer.indent();
+        if (this.objectDeclaration.extraProperties) {
+            writer.writeLine("if (reader.TokenType == JsonTokenType.Null)");
+            writer.pushScope();
+            writer.writeTextStatement("extensionData[propertyName!] = null");
+            writer.popScope();
+            writer.writeLine("else");
+            writer.pushScope();
+            writer.writeTextStatement(
+                "extensionData[propertyName!] = JsonSerializer.Deserialize<object>(ref reader, options)"
+            );
+            writer.popScope();
+        } else {
+            writer.writeTextStatement("extensionData[propertyName!] = JsonElement.ParseValue(ref reader)");
+        }
+        writer.writeTextStatement("break");
+        writer.dedent();
+
+        writer.popScope(); // end switch
+        writer.popScope(); // end while
+        writer.writeLine();
+
+        // Construct the return object
+        writer.write("return new ");
+        writer.writeNode(this.classReference);
+        writer.writeLine();
+        writer.pushScope();
+        for (const prop of propertyInfos) {
+            if (prop.isWriteOnly) {
+                continue;
+            }
+            writer.writeLine(`${prop.propertyName} = ${this.getLocalVarName(prop.propertyName)},`);
+        }
+        if (this.objectDeclaration.extraProperties) {
+            writer.writeLine("AdditionalProperties = new AdditionalProperties(extensionData),");
+        } else {
+            writer.writeLine("AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),");
+        }
+        writer.popScope();
+        writer.writeSemicolonIfLastCharacterIsNot();
+        writer.writeLine();
+    }
+
+    /**
+     * Generates the Write method body for the JsonConverter.
+     */
+    private writeWriteMethodBody(writer: Writer, propertyInfos: PropertyConverterInfo[]): void {
+        writer.writeTextStatement("writer.WriteStartObject()");
+
+        for (const prop of propertyInfos) {
+            // ReadOnly properties should not be serialized
+            if (prop.isReadOnly) {
+                continue;
+            }
+
+            const enableExplicitNullableOptional = this.context.generation.settings.enableExplicitNullableOptional;
+
+            if (prop.isOptional && enableExplicitNullableOptional) {
+                // Optional<T> properties: write only if IsDefined
+                writer.writeLine(`if (value.${prop.propertyName}.IsDefined)`);
+                writer.pushScope();
+                writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
+                writer.write("JsonSerializer.Serialize(writer, value.");
+                writer.writeTextStatement(`${prop.propertyName}.Value, options)`);
+                writer.popScope();
+            } else if (prop.isNullable && enableExplicitNullableOptional) {
+                // Nullable with [NullableAttribute]: always write, even if null
+                writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
+                writer.write("JsonSerializer.Serialize(writer, value.");
+                writer.writeTextStatement(`${prop.propertyName}, options)`);
+            } else if (prop.csharpType.isOptional && !prop.isLiteral) {
+                // Standard nullable property (no explicit nullable/optional attributes):
+                // skip if null (equivalent to DefaultIgnoreCondition.WhenWritingNull)
+                writer.writeLine(`if (value.${prop.propertyName} != null)`);
+                writer.pushScope();
+                writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
+                writer.write("JsonSerializer.Serialize(writer, value.");
+                writer.writeTextStatement(`${prop.propertyName}, options)`);
+                writer.popScope();
+            } else {
+                // Required/non-nullable properties and literal properties: always write
+                writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
+                writer.write("JsonSerializer.Serialize(writer, value.");
+                writer.writeTextStatement(`${prop.propertyName}, options)`);
+            }
+        }
+
+        // Write additional properties / extension data
+        writer.writeLine("if (value.AdditionalProperties != null)");
+        writer.pushScope();
+        writer.writeLine("foreach (var kvp in value.AdditionalProperties)");
+        writer.pushScope();
+        writer.writeTextStatement("writer.WritePropertyName(kvp.Key)");
+        if (this.objectDeclaration.extraProperties) {
+            writer.writeTextStatement("JsonSerializer.Serialize(writer, kvp.Value, options)");
+        } else {
+            writer.writeTextStatement("kvp.Value.WriteTo(writer)");
+        }
+        writer.popScope(); // end foreach
+        writer.popScope(); // end if
+
+        writer.writeTextStatement("writer.WriteEndObject()");
+    }
+
+    /**
+     * Writes the inner type of an Optional<T> property (the T part).
+     */
+    private writeOptionalInnerType(writer: Writer, prop: PropertyConverterInfo): void {
+        if (prop.isNullable) {
+            writer.writeNode(prop.csharpType.asNonOptional());
+            writer.write("?");
+        } else {
+            writer.writeNode(prop.csharpType.asNonOptional());
         }
     }
 
-    private addOnDeserialized(class_: ast.Class, additionalProperties: ast.Field): void {
-        class_.addMethod({
-            name: "OnDeserialized",
-            interfaceReference: this.System.Text.Json.Serialization.IJsonOnDeserialized,
-            parameters: [],
-            bodyType: ast.Method.BodyType.Expression,
-            body: this.csharp.codeblock(`${additionalProperties.name}.CopyFromExtensionData(_extensionData)`)
-        });
+    /**
+     * Gets a local variable name for use in the Read method.
+     * Uses camelCase with leading underscore to avoid conflicts.
+     */
+    private getLocalVarName(propertyName: string): string {
+        return `_${propertyName.charAt(0).toLowerCase()}${propertyName.slice(1)}`;
     }
 
     public doGenerateSnippet({

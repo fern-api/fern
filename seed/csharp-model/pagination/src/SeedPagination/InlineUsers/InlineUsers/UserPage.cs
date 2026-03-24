@@ -5,13 +5,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
+[JsonConverter(typeof(UserPage.JsonConverter))]
 [Serializable]
-public record UserPage : IJsonOnDeserialized
+public record UserPage
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("data")]
     public required UserListContainer Data { get; set; }
 
@@ -21,12 +18,88 @@ public record UserPage : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<UserPage>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UserPage).IsAssignableFrom(typeToConvert);
+
+        public override UserPage? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            UserListContainer _data = default;
+            string? _next = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "data":
+                        _data = JsonSerializer.Deserialize<UserListContainer>(ref reader, options);
+                        break;
+                    case "next":
+                        _next = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new UserPage
+            {
+                Data = _data,
+                Next = _next,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserPage value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("data");
+            JsonSerializer.Serialize(writer, value.Data, options);
+            if (value.Next != null)
+            {
+                writer.WritePropertyName("next");
+                JsonSerializer.Serialize(writer, value.Next, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(DescribeResponse.JsonConverter))]
 [Serializable]
-public record DescribeResponse : IJsonOnDeserialized
+public record DescribeResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("namespaces")]
     public Dictionary<string, NamespaceSummary>? Namespaces { get; set; }
 
@@ -43,9 +40,6 @@ public record DescribeResponse : IJsonOnDeserialized
             TotalCount = value.TotalCount,
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the DescribeResponse type into its Protobuf-equivalent representation.
@@ -80,5 +74,110 @@ public record DescribeResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<DescribeResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(DescribeResponse).IsAssignableFrom(typeToConvert);
+
+        public override DescribeResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Dictionary<string, NamespaceSummary>? _namespaces = default;
+            uint? _dimension = default;
+            float? _fullness = default;
+            uint? _totalCount = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "namespaces":
+                        _namespaces = JsonSerializer.Deserialize<Dictionary<
+                            string,
+                            NamespaceSummary
+                        >?>(ref reader, options);
+                        break;
+                    case "dimension":
+                        _dimension = JsonSerializer.Deserialize<uint?>(ref reader, options);
+                        break;
+                    case "fullness":
+                        _fullness = JsonSerializer.Deserialize<float?>(ref reader, options);
+                        break;
+                    case "total_count":
+                        _totalCount = JsonSerializer.Deserialize<uint?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new DescribeResponse
+            {
+                Namespaces = _namespaces,
+                Dimension = _dimension,
+                Fullness = _fullness,
+                TotalCount = _totalCount,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            DescribeResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Namespaces != null)
+            {
+                writer.WritePropertyName("namespaces");
+                JsonSerializer.Serialize(writer, value.Namespaces, options);
+            }
+            if (value.Dimension != null)
+            {
+                writer.WritePropertyName("dimension");
+                JsonSerializer.Serialize(writer, value.Dimension, options);
+            }
+            if (value.Fullness != null)
+            {
+                writer.WritePropertyName("fullness");
+                JsonSerializer.Serialize(writer, value.Fullness, options);
+            }
+            if (value.TotalCount != null)
+            {
+                writer.WritePropertyName("total_count");
+                JsonSerializer.Serialize(writer, value.TotalCount, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

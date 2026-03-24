@@ -7,13 +7,10 @@ namespace SeedValidation;
 /// <summary>
 /// Defines properties with default values and validation rules.
 /// </summary>
+[JsonConverter(typeof(Type.JsonConverter))]
 [Serializable]
-public record Type : IJsonOnDeserialized
+public record Type
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("decimal")]
     public required double Decimal { get; set; }
 
@@ -29,12 +26,95 @@ public record Type : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<Type>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(Type).IsAssignableFrom(typeToConvert);
+
+        public override Type? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            double _decimal = default;
+            int _even = default;
+            string _name = default;
+            Shape _shape = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "decimal":
+                        _decimal = JsonSerializer.Deserialize<double>(ref reader, options);
+                        break;
+                    case "even":
+                        _even = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "name":
+                        _name = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "shape":
+                        _shape = JsonSerializer.Deserialize<Shape>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new Type
+            {
+                Decimal = _decimal,
+                Even = _even,
+                Name = _name,
+                Shape = _shape,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("decimal");
+            JsonSerializer.Serialize(writer, value.Decimal, options);
+            writer.WritePropertyName("even");
+            JsonSerializer.Serialize(writer, value.Even, options);
+            writer.WritePropertyName("name");
+            JsonSerializer.Serialize(writer, value.Name, options);
+            writer.WritePropertyName("shape");
+            JsonSerializer.Serialize(writer, value.Shape, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

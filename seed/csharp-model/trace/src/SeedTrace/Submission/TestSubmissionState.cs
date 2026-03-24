@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(TestSubmissionState.JsonConverter))]
 [Serializable]
-public record TestSubmissionState : IJsonOnDeserialized
+public record TestSubmissionState
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("problemId")]
     public required string ProblemId { get; set; }
 
@@ -26,12 +23,108 @@ public record TestSubmissionState : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<TestSubmissionState>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(TestSubmissionState).IsAssignableFrom(typeToConvert);
+
+        public override TestSubmissionState? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _problemId = default;
+            IEnumerable<TestCase> _defaultTestCases = default;
+            IEnumerable<TestCase> _customTestCases = default;
+            TestSubmissionStatus _status = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "problemId":
+                        _problemId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "defaultTestCases":
+                        _defaultTestCases = JsonSerializer.Deserialize<IEnumerable<TestCase>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "customTestCases":
+                        _customTestCases = JsonSerializer.Deserialize<IEnumerable<TestCase>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "status":
+                        _status = JsonSerializer.Deserialize<TestSubmissionStatus>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new TestSubmissionState
+            {
+                ProblemId = _problemId,
+                DefaultTestCases = _defaultTestCases,
+                CustomTestCases = _customTestCases,
+                Status = _status,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TestSubmissionState value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("problemId");
+            JsonSerializer.Serialize(writer, value.ProblemId, options);
+            writer.WritePropertyName("defaultTestCases");
+            JsonSerializer.Serialize(writer, value.DefaultTestCases, options);
+            writer.WritePropertyName("customTestCases");
+            JsonSerializer.Serialize(writer, value.CustomTestCases, options);
+            writer.WritePropertyName("status");
+            JsonSerializer.Serialize(writer, value.Status, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

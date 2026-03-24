@@ -5,13 +5,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
+[JsonConverter(typeof(TestCaseTemplate.JsonConverter))]
 [Serializable]
-public record TestCaseTemplate : IJsonOnDeserialized
+public record TestCaseTemplate
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("templateId")]
     public required string TemplateId { get; set; }
 
@@ -24,12 +21,95 @@ public record TestCaseTemplate : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<TestCaseTemplate>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(TestCaseTemplate).IsAssignableFrom(typeToConvert);
+
+        public override TestCaseTemplate? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _templateId = default;
+            string _name = default;
+            TestCaseImplementation _implementation = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "templateId":
+                        _templateId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "name":
+                        _name = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "implementation":
+                        _implementation = JsonSerializer.Deserialize<TestCaseImplementation>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new TestCaseTemplate
+            {
+                TemplateId = _templateId,
+                Name = _name,
+                Implementation = _implementation,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TestCaseTemplate value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("templateId");
+            JsonSerializer.Serialize(writer, value.TemplateId, options);
+            writer.WritePropertyName("name");
+            JsonSerializer.Serialize(writer, value.Name, options);
+            writer.WritePropertyName("implementation");
+            JsonSerializer.Serialize(writer, value.Implementation, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

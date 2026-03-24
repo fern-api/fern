@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(QueryResult.JsonConverter))]
 [Serializable]
-public record QueryResult : IJsonOnDeserialized
+public record QueryResult
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("matches")]
     public IEnumerable<ScoredColumn>? Matches { get; set; }
 
@@ -32,9 +29,6 @@ public record QueryResult : IJsonOnDeserialized
             Namespace = value.Namespace,
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the QueryResult type into its Protobuf-equivalent representation.
@@ -57,5 +51,90 @@ public record QueryResult : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<QueryResult>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(QueryResult).IsAssignableFrom(typeToConvert);
+
+        public override QueryResult? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<ScoredColumn>? _matches = default;
+            string? _namespace = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "matches":
+                        _matches = JsonSerializer.Deserialize<IEnumerable<ScoredColumn>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "namespace":
+                        _namespace = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new QueryResult
+            {
+                Matches = _matches,
+                Namespace = _namespace,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            QueryResult value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Matches != null)
+            {
+                writer.WritePropertyName("matches");
+                JsonSerializer.Serialize(writer, value.Matches, options);
+            }
+            if (value.Namespace != null)
+            {
+                writer.WritePropertyName("namespace");
+                JsonSerializer.Serialize(writer, value.Namespace, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

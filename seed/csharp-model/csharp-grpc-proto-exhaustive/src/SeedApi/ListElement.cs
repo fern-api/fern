@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(ListElement.JsonConverter))]
 [Serializable]
-public record ListElement : IJsonOnDeserialized
+public record ListElement
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -25,9 +22,6 @@ public record ListElement : IJsonOnDeserialized
     {
         return new ListElement { Id = value.Id };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the ListElement type into its Protobuf-equivalent representation.
@@ -46,5 +40,77 @@ public record ListElement : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ListElement>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ListElement).IsAssignableFrom(typeToConvert);
+
+        public override ListElement? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string? _id = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "id":
+                        _id = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ListElement
+            {
+                Id = _id,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ListElement value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Id != null)
+            {
+                writer.WritePropertyName("id");
+                JsonSerializer.Serialize(writer, value.Id, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

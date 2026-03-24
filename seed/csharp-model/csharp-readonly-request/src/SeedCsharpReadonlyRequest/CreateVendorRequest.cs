@@ -7,13 +7,10 @@ namespace SeedCsharpReadonlyRequest;
 /// <summary>
 /// Request to create vendors
 /// </summary>
+[JsonConverter(typeof(CreateVendorRequest.JsonConverter))]
 [Serializable]
-public record CreateVendorRequest : IJsonOnDeserialized
+public record CreateVendorRequest
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// Map of vendor ID to vendor data
     /// </summary>
@@ -23,12 +20,81 @@ public record CreateVendorRequest : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<CreateVendorRequest>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(CreateVendorRequest).IsAssignableFrom(typeToConvert);
+
+        public override CreateVendorRequest? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Dictionary<string, Vendor> _vendors = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "vendors":
+                        _vendors = JsonSerializer.Deserialize<Dictionary<string, Vendor>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new CreateVendorRequest
+            {
+                Vendors = _vendors,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateVendorRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("vendors");
+            JsonSerializer.Serialize(writer, value.Vendors, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

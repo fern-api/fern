@@ -7,13 +7,10 @@ namespace SeedNullableOptional;
 /// <summary>
 /// Test object with nullable and optional fields
 /// </summary>
+[JsonConverter(typeof(UserProfile.JsonConverter))]
 [Serializable]
-public record UserProfile : IJsonOnDeserialized
+public record UserProfile
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
@@ -71,12 +68,263 @@ public record UserProfile : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<UserProfile>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UserProfile).IsAssignableFrom(typeToConvert);
+
+        public override UserProfile? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _id = default;
+            string _username = default;
+            string? _nullableString = default;
+            int? _nullableInteger = default;
+            bool? _nullableBoolean = default;
+            DateTime? _nullableDate = default;
+            Address? _nullableObject = default;
+            IEnumerable<string>? _nullableList = default;
+            Dictionary<string, string>? _nullableMap = default;
+            string? _optionalString = default;
+            int? _optionalInteger = default;
+            bool? _optionalBoolean = default;
+            DateTime? _optionalDate = default;
+            Address? _optionalObject = default;
+            IEnumerable<string>? _optionalList = default;
+            Dictionary<string, string>? _optionalMap = default;
+            string? _optionalNullableString = default;
+            Address? _optionalNullableObject = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "id":
+                        _id = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "username":
+                        _username = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "nullableString":
+                        _nullableString = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "nullableInteger":
+                        _nullableInteger = JsonSerializer.Deserialize<int?>(ref reader, options);
+                        break;
+                    case "nullableBoolean":
+                        _nullableBoolean = JsonSerializer.Deserialize<bool?>(ref reader, options);
+                        break;
+                    case "nullableDate":
+                        _nullableDate = JsonSerializer.Deserialize<DateTime?>(ref reader, options);
+                        break;
+                    case "nullableObject":
+                        _nullableObject = JsonSerializer.Deserialize<Address?>(ref reader, options);
+                        break;
+                    case "nullableList":
+                        _nullableList = JsonSerializer.Deserialize<IEnumerable<string>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "nullableMap":
+                        _nullableMap = JsonSerializer.Deserialize<Dictionary<string, string>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalString":
+                        _optionalString = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "optionalInteger":
+                        _optionalInteger = JsonSerializer.Deserialize<int?>(ref reader, options);
+                        break;
+                    case "optionalBoolean":
+                        _optionalBoolean = JsonSerializer.Deserialize<bool?>(ref reader, options);
+                        break;
+                    case "optionalDate":
+                        _optionalDate = JsonSerializer.Deserialize<DateTime?>(ref reader, options);
+                        break;
+                    case "optionalObject":
+                        _optionalObject = JsonSerializer.Deserialize<Address?>(ref reader, options);
+                        break;
+                    case "optionalList":
+                        _optionalList = JsonSerializer.Deserialize<IEnumerable<string>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalMap":
+                        _optionalMap = JsonSerializer.Deserialize<Dictionary<string, string>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalNullableString":
+                        _optionalNullableString = JsonSerializer.Deserialize<string?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalNullableObject":
+                        _optionalNullableObject = JsonSerializer.Deserialize<Address?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new UserProfile
+            {
+                Id = _id,
+                Username = _username,
+                NullableString = _nullableString,
+                NullableInteger = _nullableInteger,
+                NullableBoolean = _nullableBoolean,
+                NullableDate = _nullableDate,
+                NullableObject = _nullableObject,
+                NullableList = _nullableList,
+                NullableMap = _nullableMap,
+                OptionalString = _optionalString,
+                OptionalInteger = _optionalInteger,
+                OptionalBoolean = _optionalBoolean,
+                OptionalDate = _optionalDate,
+                OptionalObject = _optionalObject,
+                OptionalList = _optionalList,
+                OptionalMap = _optionalMap,
+                OptionalNullableString = _optionalNullableString,
+                OptionalNullableObject = _optionalNullableObject,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserProfile value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            JsonSerializer.Serialize(writer, value.Id, options);
+            writer.WritePropertyName("username");
+            JsonSerializer.Serialize(writer, value.Username, options);
+            if (value.NullableString != null)
+            {
+                writer.WritePropertyName("nullableString");
+                JsonSerializer.Serialize(writer, value.NullableString, options);
+            }
+            if (value.NullableInteger != null)
+            {
+                writer.WritePropertyName("nullableInteger");
+                JsonSerializer.Serialize(writer, value.NullableInteger, options);
+            }
+            if (value.NullableBoolean != null)
+            {
+                writer.WritePropertyName("nullableBoolean");
+                JsonSerializer.Serialize(writer, value.NullableBoolean, options);
+            }
+            if (value.NullableDate != null)
+            {
+                writer.WritePropertyName("nullableDate");
+                JsonSerializer.Serialize(writer, value.NullableDate, options);
+            }
+            if (value.NullableObject != null)
+            {
+                writer.WritePropertyName("nullableObject");
+                JsonSerializer.Serialize(writer, value.NullableObject, options);
+            }
+            if (value.NullableList != null)
+            {
+                writer.WritePropertyName("nullableList");
+                JsonSerializer.Serialize(writer, value.NullableList, options);
+            }
+            if (value.NullableMap != null)
+            {
+                writer.WritePropertyName("nullableMap");
+                JsonSerializer.Serialize(writer, value.NullableMap, options);
+            }
+            if (value.OptionalString != null)
+            {
+                writer.WritePropertyName("optionalString");
+                JsonSerializer.Serialize(writer, value.OptionalString, options);
+            }
+            if (value.OptionalInteger != null)
+            {
+                writer.WritePropertyName("optionalInteger");
+                JsonSerializer.Serialize(writer, value.OptionalInteger, options);
+            }
+            if (value.OptionalBoolean != null)
+            {
+                writer.WritePropertyName("optionalBoolean");
+                JsonSerializer.Serialize(writer, value.OptionalBoolean, options);
+            }
+            if (value.OptionalDate != null)
+            {
+                writer.WritePropertyName("optionalDate");
+                JsonSerializer.Serialize(writer, value.OptionalDate, options);
+            }
+            if (value.OptionalObject != null)
+            {
+                writer.WritePropertyName("optionalObject");
+                JsonSerializer.Serialize(writer, value.OptionalObject, options);
+            }
+            if (value.OptionalList != null)
+            {
+                writer.WritePropertyName("optionalList");
+                JsonSerializer.Serialize(writer, value.OptionalList, options);
+            }
+            if (value.OptionalMap != null)
+            {
+                writer.WritePropertyName("optionalMap");
+                JsonSerializer.Serialize(writer, value.OptionalMap, options);
+            }
+            if (value.OptionalNullableString != null)
+            {
+                writer.WritePropertyName("optionalNullableString");
+                JsonSerializer.Serialize(writer, value.OptionalNullableString, options);
+            }
+            if (value.OptionalNullableObject != null)
+            {
+                writer.WritePropertyName("optionalNullableObject");
+                JsonSerializer.Serialize(writer, value.OptionalNullableObject, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }
