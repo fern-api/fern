@@ -23,6 +23,14 @@ pub struct ApiClientBuilder {
     config: ClientConfig,
 }
 
+impl Default for ApiClientBuilder {
+    fn default() -> Self {
+        Self {
+            config: ClientConfig::default(),
+        }
+    }
+}
+
 impl ApiClientBuilder {
     /// Create a new builder with the specified base URL
     pub fn new(base_url: impl Into<String>) -> Self {

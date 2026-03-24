@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    fern "github.com/inferred-auth-implicit-reference/fern"
     client "github.com/inferred-auth-implicit-reference/fern/client"
     option "github.com/inferred-auth-implicit-reference/fern/option"
-    fern "github.com/inferred-auth-implicit-reference/fern"
-    context "context"
 )
 
 func do() {
@@ -12,7 +12,12 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithClientId(
+            "client_id",
+        ),
+        option.WithClientSecret(
+            "client_secret",
+        ),
     )
     request := &fern.GetTokenRequest{
         ClientId: "client_id",

@@ -45,7 +45,6 @@ impl ColorOrOperand {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for ColorOrOperand {

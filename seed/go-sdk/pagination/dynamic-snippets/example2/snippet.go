@@ -1,11 +1,11 @@
 package example
 
 import (
-    client "github.com/pagination/fern/client"
-    option "github.com/pagination/fern/option"
-    inlineusers "github.com/pagination/fern/inlineusers"
-    fern "github.com/pagination/fern"
     context "context"
+    fern "github.com/pagination/fern"
+    client "github.com/pagination/fern/client"
+    inlineusers "github.com/pagination/fern/inlineusers"
+    option "github.com/pagination/fern/option"
 )
 
 func do() {

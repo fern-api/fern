@@ -12,6 +12,9 @@ type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
 
+// TokenGetter is a function that returns an access token.
+type TokenGetter func() (string, error)
+
 // RequestOptions defines all of the possible request options.
 //
 // This type is primarily used by the generated code and is not meant
@@ -24,6 +27,10 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
+	tokenGetter     TokenGetter
+	XApiKey         string
+	ClientId        string
+	ClientSecret    string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -46,6 +53,11 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	if r.tokenGetter != nil {
+		if token, err := r.tokenGetter(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
+	}
 	return header
 }
 
@@ -119,4 +131,37 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
+}
+
+// XApiKeyOption implements the RequestOption interface.
+type XApiKeyOption struct {
+	XApiKey string
+}
+
+func (x *XApiKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.XApiKey = x.XApiKey
+}
+
+// ClientIdOption implements the RequestOption interface.
+type ClientIdOption struct {
+	ClientId string
+}
+
+func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientId = c.ClientId
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
+}
+
+// SetTokenGetter sets the token getter function for inferred auth.
+// This is an internal method and should not be called directly.
+func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
+	r.tokenGetter = getter
 }

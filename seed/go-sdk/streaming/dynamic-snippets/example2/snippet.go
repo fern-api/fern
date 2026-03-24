@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+    stream "github.com/fern-api/stream-go/v2"
     client "github.com/fern-api/stream-go/v2/client"
     option "github.com/fern-api/stream-go/v2/option"
-    stream "github.com/fern-api/stream-go/v2"
-    context "context"
 )
 
 func do() {

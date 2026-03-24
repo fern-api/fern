@@ -3,18 +3,49 @@
 using global::System.Net.WebSockets;
 using global::System.Text;
 using global::System.Threading.Channels;
+using Microsoft.Extensions.Logging;
 
 namespace SeedWebsocket.Core.WebSockets;
 
 internal partial class WebSocketConnection
 {
-    private readonly Channel<string> _textSendQueue = Channel.CreateUnbounded<string>(
-        new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
-    );
+    // Timestamped wrapper for queue messages
+    private readonly record struct QueuedMessage<T>(DateTime EnqueuedAt, T Payload);
 
-    private readonly Channel<byte[]> _binarySendQueue = Channel.CreateUnbounded<byte[]>(
-        new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
-    );
+    private Channel<QueuedMessage<string>>? _textSendQueue;
+    private Channel<QueuedMessage<byte[]>>? _binarySendQueue;
+
+    private void InitializeSendQueues()
+    {
+        if (SendQueueLimit > 0)
+        {
+            _textSendQueue = Channel.CreateBounded<QueuedMessage<string>>(
+                new BoundedChannelOptions(SendQueueLimit)
+                {
+                    SingleReader = true,
+                    SingleWriter = false,
+                    FullMode = BoundedChannelFullMode.DropWrite,
+                }
+            );
+            _binarySendQueue = Channel.CreateBounded<QueuedMessage<byte[]>>(
+                new BoundedChannelOptions(SendQueueLimit)
+                {
+                    SingleReader = true,
+                    SingleWriter = false,
+                    FullMode = BoundedChannelFullMode.DropWrite,
+                }
+            );
+        }
+        else
+        {
+            _textSendQueue = Channel.CreateUnbounded<QueuedMessage<string>>(
+                new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
+            );
+            _binarySendQueue = Channel.CreateUnbounded<QueuedMessage<byte[]>>(
+                new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
+            );
+        }
+    }
 
     /// <summary>
     /// Queues a text message for sending. Actual send happens on a background thread.
@@ -22,7 +53,8 @@ internal partial class WebSocketConnection
     /// <returns>true if the message was written to the queue</returns>
     public bool Send(string message)
     {
-        return _textSendQueue.Writer.TryWrite(message);
+        return _textSendQueue?.Writer.TryWrite(new QueuedMessage<string>(DateTime.UtcNow, message))
+            ?? false;
     }
 
     /// <summary>
@@ -31,7 +63,9 @@ internal partial class WebSocketConnection
     /// <returns>true if the message was written to the queue</returns>
     public bool Send(byte[] message)
     {
-        return _binarySendQueue.Writer.TryWrite(message);
+        return _binarySendQueue?.Writer.TryWrite(
+                new QueuedMessage<byte[]>(DateTime.UtcNow, message)
+            ) ?? false;
     }
 
     /// <summary>
@@ -136,15 +170,39 @@ internal partial class WebSocketConnection
                 throw new ArgumentException($"Unknown message type: {message.GetType()}");
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        await _client
-            .SendAsync(
-                payload,
-                messageType,
-                true,
-                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
+        using var sendCts =
+            cancellationToken != default
+                ? CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None,
+                    cancellationToken
+                )
+                : CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None
+                );
+        sendCts.CancelAfter(SendTimeout);
+
+        try
+        {
+            await _client
+                .SendAsync(payload, messageType, true, sendCts.Token)
+                .ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+            when (sendCts.IsCancellationRequested
+                && !cancellationToken.IsCancellationRequested
+                && !(_cancellation?.IsCancellationRequested ?? false)
             )
-            .ConfigureAwait(false);
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds
+            );
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                    + "The remote peer may be unreachable. Connection has been aborted."
+            );
+        }
     }
 
     private async global::System.Threading.Tasks.Task SendInternalSynchronized(
@@ -179,15 +237,39 @@ internal partial class WebSocketConnection
             return;
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        await _client
-            .SendAsync(
-                payload,
-                WebSocketMessageType.Binary,
-                true,
-                linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None)
+        using var sendCts =
+            cancellationToken != default
+                ? CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None,
+                    cancellationToken
+                )
+                : CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None
+                );
+        sendCts.CancelAfter(SendTimeout);
+
+        try
+        {
+            await _client
+                .SendAsync(payload, WebSocketMessageType.Binary, true, sendCts.Token)
+                .ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+            when (sendCts.IsCancellationRequested
+                && !cancellationToken.IsCancellationRequested
+                && !(_cancellation?.IsCancellationRequested ?? false)
             )
-            .ConfigureAwait(false);
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds
+            );
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                    + "The remote peer may be unreachable. Connection has been aborted."
+            );
+        }
     }
 
     private async global::System.Threading.Tasks.Task SendInternal(
@@ -200,42 +282,78 @@ internal partial class WebSocketConnection
             return;
         }
 
-        using var linkedCts = CreateLinkedToken(cancellationToken);
-        var token = linkedCts?.Token ?? (_cancellation?.Token ?? CancellationToken.None);
-#if NET6_0_OR_GREATER
-        await _client
-            .SendAsync(payload, WebSocketMessageType.Binary, true, token)
-            .ConfigureAwait(false);
-#else
-        await SendInternal(new ArraySegment<byte>(payload.ToArray()), cancellationToken)
-            .ConfigureAwait(false);
-#endif
-    }
+        using var sendCts =
+            cancellationToken != default
+                ? CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None,
+                    cancellationToken
+                )
+                : CancellationTokenSource.CreateLinkedTokenSource(
+                    _cancellation?.Token ?? CancellationToken.None
+                );
+        sendCts.CancelAfter(SendTimeout);
 
-    private CancellationTokenSource? CreateLinkedToken(CancellationToken cancellationToken)
-    {
-        if (cancellationToken == default)
+        try
         {
-            return null;
+#if NET6_0_OR_GREATER
+            await _client
+                .SendAsync(payload, WebSocketMessageType.Binary, true, sendCts.Token)
+                .ConfigureAwait(false);
+#else
+            await _client
+                .SendAsync(
+                    new ArraySegment<byte>(payload.ToArray()),
+                    WebSocketMessageType.Binary,
+                    true,
+                    sendCts.Token
+                )
+                .ConfigureAwait(false);
+#endif
         }
-
-        var internalToken = _cancellation?.Token ?? CancellationToken.None;
-        return internalToken != CancellationToken.None
-            ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, internalToken)
-            : CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        catch (OperationCanceledException)
+            when (sendCts.IsCancellationRequested
+                && !cancellationToken.IsCancellationRequested
+                && !(_cancellation?.IsCancellationRequested ?? false)
+            )
+        {
+            _logger.LogWarning(
+                "SendAsync timed out after {Timeout}ms, aborting connection",
+                SendTimeout.TotalMilliseconds
+            );
+            _client?.Abort();
+            throw new WebsocketException(
+                $"SendAsync timed out after {SendTimeout.TotalMilliseconds}ms. "
+                    + "The remote peer may be unreachable. Connection has been aborted."
+            );
+        }
     }
 
     private async global::System.Threading.Tasks.Task DrainTextQueue(CancellationToken token)
     {
+        if (_textSendQueue == null)
+            return;
         try
         {
             while (await _textSendQueue.Reader.WaitToReadAsync(token))
             {
-                while (_textSendQueue.Reader.TryRead(out var message))
+                while (_textSendQueue.Reader.TryRead(out var msg))
                 {
+                    // Skip expired messages
+                    if (
+                        SendCacheItemTimeout.HasValue
+                        && msg.EnqueuedAt.Add(SendCacheItemTimeout.Value) < DateTime.UtcNow
+                    )
+                    {
+                        _logger.LogDebug(
+                            "Dropping expired text message (enqueued {EnqueuedAt})",
+                            msg.EnqueuedAt
+                        );
+                        continue;
+                    }
+
                     try
                     {
-                        await SendInternalSynchronized(new RequestTextMessage(message));
+                        await SendInternalSynchronized(new RequestTextMessage(msg.Payload));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception e)
@@ -250,15 +368,30 @@ internal partial class WebSocketConnection
 
     private async global::System.Threading.Tasks.Task DrainBinaryQueue(CancellationToken token)
     {
+        if (_binarySendQueue == null)
+            return;
         try
         {
             while (await _binarySendQueue.Reader.WaitToReadAsync(token))
             {
-                while (_binarySendQueue.Reader.TryRead(out var message))
+                while (_binarySendQueue.Reader.TryRead(out var msg))
                 {
+                    // Skip expired messages
+                    if (
+                        SendCacheItemTimeout.HasValue
+                        && msg.EnqueuedAt.Add(SendCacheItemTimeout.Value) < DateTime.UtcNow
+                    )
+                    {
+                        _logger.LogDebug(
+                            "Dropping expired binary message (enqueued {EnqueuedAt})",
+                            msg.EnqueuedAt
+                        );
+                        continue;
+                    }
+
                     try
                     {
-                        await SendInternalSynchronized(new ArraySegment<byte>(message));
+                        await SendInternalSynchronized(new ArraySegment<byte>(msg.Payload));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception e)

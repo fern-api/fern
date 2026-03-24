@@ -15,6 +15,45 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     private readonly Func<Stream, global::System.Threading.Tasks.Task> _onTextMessage;
 
     /// <summary>
+    /// Enable or disable automatic reconnection. Default: false.
+    /// </summary>
+    public bool IsReconnectionEnabled { get; set; }
+
+    /// <summary>
+    /// Time to wait before reconnecting if no message comes from the server.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the last reconnection attempt failed.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the connection is lost with a transient error.
+    /// Set null to disable (reconnect immediately). Default: null.
+    /// </summary>
+    public TimeSpan? LostReconnectTimeout { get; set; }
+
+    /// <summary>
+    /// How often to check the WebSocket state for silent disconnections.
+    /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
+    /// See: https://github.com/dotnet/runtime/issues/110496
+    /// Set to null to disable. Default: 5 seconds.
+    /// </summary>
+    public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -55,6 +94,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Default: 5 seconds.
     /// </summary>
     public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Gets the current connection status of the WebSocket.
@@ -209,6 +256,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
         ExceptionOccurred.Dispose();
         Closed.Dispose();
         Connected.Dispose();
+        Reconnecting.Dispose();
     }
 
     /// <summary>
@@ -252,6 +300,13 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 #endif
             HttpInvoker = HttpInvoker,
             ConnectTimeout = ConnectTimeout,
+            SendTimeout = SendTimeout,
+            IsReconnectionEnabled = IsReconnectionEnabled,
+            ReconnectTimeout = ReconnectTimeout,
+            ErrorReconnectTimeout = ErrorReconnectTimeout,
+            LostReconnectTimeout = LostReconnectTimeout,
+            StateCheckInterval = StateCheckInterval,
+            Backoff = Backoff,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>
@@ -261,11 +316,17 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             },
             DisconnectionHappened = async d =>
             {
+                Status = ConnectionStatus.Disconnected;
                 await Closed
                     .RaiseEvent(
                         new Closed { Code = (int?)d.CloseStatus, Reason = d.CloseStatusDescription }
                     )
                     .ConfigureAwait(false);
+            },
+            ReconnectionHappened = async info =>
+            {
+                Status = ConnectionStatus.Connected;
+                await Reconnecting.RaiseEvent(info).ConfigureAwait(false);
             },
         };
 
@@ -296,6 +357,11 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
     public readonly Event<Exception> ExceptionOccurred = new();
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public readonly Event<ReconnectionInfo> Reconnecting = new();
 
     /// <summary>
     /// Event that is raised when a property value changes.

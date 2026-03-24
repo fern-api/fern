@@ -145,7 +145,7 @@
                 "$TURBO_ROOT$/shared/stylelintrc.shared.json",
                 "$TURBO_ROOT$/tsconfig.eslint.json"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:dev": {
             "outputs": ["dist/dev/**"],
@@ -164,7 +164,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:local": {
             "outputs": ["dist/local/**"],
@@ -183,7 +183,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:prod": {
             "outputs": ["dist/prod/**"],
@@ -202,7 +202,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist": {
             "outputs": ["dist/**"],

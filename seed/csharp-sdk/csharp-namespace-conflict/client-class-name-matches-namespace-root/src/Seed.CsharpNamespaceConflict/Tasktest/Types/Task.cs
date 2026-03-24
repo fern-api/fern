@@ -1,6 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using global::Seed.CsharpNamespaceConflict.Core;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace Seed.CsharpNamespaceConflict;
 

@@ -14,7 +14,7 @@ public partial class TasktestClient : ITasktestClient
     /// <example><code>
     /// await client.Tasktest.HelloAsync();
     /// </code></example>
-    public async System.Threading.Tasks.Task HelloAsync(
+    public async global::System.Threading.Tasks.Task HelloAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

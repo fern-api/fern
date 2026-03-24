@@ -51,12 +51,12 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/examples/fern/client"
-    option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    commons "github.com/examples/fern/commons"
-    uuid "github.com/google/uuid"
     context "context"
+    fern "github.com/examples/fern"
+    client "github.com/examples/fern/client"
+    commons "github.com/examples/fern/commons"
+    option "github.com/examples/fern/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {

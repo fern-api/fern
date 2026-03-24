@@ -30,14 +30,20 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/inferred-auth-implicit-reference/fern/client"
-    fern "github.com/inferred-auth-implicit-reference/fern"
     context "context"
+    fern "github.com/inferred-auth-implicit-reference/fern"
+    client "github.com/inferred-auth-implicit-reference/fern/client"
+    option "github.com/inferred-auth-implicit-reference/fern/option"
 )
 
 func do() {
     client := client.NewClient(
-        nil,
+        option.WithClientId(
+            "client_id",
+        ),
+        option.WithClientSecret(
+            "client_secret",
+        ),
     )
     request := &fern.GetTokenRequest{
         ClientId: "client_id",

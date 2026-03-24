@@ -1,4 +1,3 @@
-use chrono::{DateTime, TimeZone, Utc};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
@@ -39,14 +38,6 @@ impl QueryBuilder {
 
     /// Add an integer parameter (accept both required/optional)
     pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
-    /// Add a big integer parameter (accept both required/optional)
-    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
@@ -110,45 +101,6 @@ impl QueryBuilder {
             if let Some(v) = value.into() {
                 self.params.push((key.to_string(), v.to_string()));
             }
-        }
-        self
-    }
-
-    /// Add a datetime parameter (any DateTime timezone)
-    pub fn datetime<Tz: TimeZone>(
-        mut self,
-        key: &str,
-        value: impl Into<Option<DateTime<Tz>>>,
-    ) -> Self
-    where
-        Tz::Offset: std::fmt::Display,
-    {
-        if let Some(v) = value.into() {
-            self.params.push((
-                key.to_string(),
-                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
-        }
-        self
-    }
-
-    /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
-    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
-    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
-        if let Some(v) = value.into() {
-            // Convert NaiveDate to DateTime<Utc> at start of day
-            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((
-                key.to_string(),
-                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
         }
         self
     }
@@ -312,7 +264,6 @@ fn tokenize_query(input: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::{NaiveDate, TimeZone, Utc};
 
     // ===========================
     // QueryBuilder tests
@@ -368,42 +319,6 @@ mod tests {
         assert_eq!(
             result,
             Some(vec![("active".to_string(), "true".to_string())])
-        );
-    }
-
-    #[test]
-    fn test_uuid_param() {
-        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
-        let result = QueryBuilder::new().uuid("id", Some(id)).build();
-        assert_eq!(
-            result,
-            Some(vec![(
-                "id".to_string(),
-                "550e8400-e29b-41d4-a716-446655440000".to_string()
-            )])
-        );
-    }
-
-    #[test]
-    fn test_datetime_param_formats_rfc3339() {
-        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
-        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
-        assert_eq!(
-            result,
-            Some(vec![(
-                "since".to_string(),
-                "2024-01-15T09:30:00Z".to_string()
-            )])
-        );
-    }
-
-    #[test]
-    fn test_date_param_converts_to_midnight_utc() {
-        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
-        let result = QueryBuilder::new().date("on", Some(date)).build();
-        assert_eq!(
-            result,
-            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
         );
     }
 
@@ -520,16 +435,6 @@ mod tests {
                 ("page".to_string(), "1".to_string()),
                 ("active".to_string(), "true".to_string()),
             ])
-        );
-    }
-
-    #[test]
-    fn test_big_int_param() {
-        let big = num_bigint::BigInt::from(999_999_999_999i64);
-        let result = QueryBuilder::new().big_int("value", Some(big)).build();
-        assert_eq!(
-            result,
-            Some(vec![("value".to_string(), "999999999999".to_string())])
         );
     }
 

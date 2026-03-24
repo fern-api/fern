@@ -1,5 +1,5 @@
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+using global::System.Runtime.Serialization;
+using global::System.Text.Json.Serialization;
 
 namespace SeedEnum;
 

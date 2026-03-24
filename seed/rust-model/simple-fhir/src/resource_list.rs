@@ -85,7 +85,6 @@ impl ResourceList {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for ResourceList {

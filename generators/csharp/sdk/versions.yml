@@ -1,4 +1,149 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.53.0
+  changelogEntry:
+    - summary: |
+        Enforce `global::` prefix on all `System` namespace references in generated code.
+        This prevents CS0118/CS0426 compile errors when customer projects define a type or
+        namespace named `System` (e.g., root namespace `Foo.Net` with a class `System`).
+        All `using System.*` directives and inline `System.*` type references now use
+        `global::System.*`. A CI validation script in seed.yml enforces this going forward.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.52.0
+  changelogEntry:
+    - summary: |
+        Conditionally emit System.Text.Json as a PackageReference only when
+        targeting pre-net8.0 TFMs (netstandard2.0, net462). The package is
+        wrapped in an ItemGroup with an MSBuild IsTargetFrameworkCompatible
+        condition so it is skipped for net8.0+ where it ships in-box.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.51.1
+  changelogEntry:
+    - summary: |
+        Remove dead `#elif NET7_0_OR_GREATER` and `#else` branches inside
+        `QueryStringBuilder` that could only execute on .NET 6 or .NET 7,
+        which are no longer targeted.
+      type: chore
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.51.0
+  changelogEntry:
+    - summary: |
+        Add `net9.0` target framework to all generated C# SDK projects. The library
+        now targets `net462;net8.0;net9.0;netstandard2.0`, enabling `#if NET9_0_OR_GREATER`
+        code paths such as `ClientWebSocketOptions.KeepAliveTimeout` for transport-level
+        dead connection detection. Test projects now target `net9.0` instead of `net8.0`.
+      type: feat
+    - summary: |
+        Add comprehensive WebSocket unit and end-to-end test templates. All generated
+        WebSocket SDKs now ship with 349 tests covering `AsyncLock`, `Event<T>`,
+        `ReconnectStrategy`, `DisconnectionInfo`, `RequestMessage`, `Query`,
+        `WebSocketConnection`, `WebSocketClient`, `ReconnectionInfo`, and
+        `WebsocketException`. End-to-end tests run against an in-process
+        `TestWebSocketServer` and cover echo, rapid-fire, reconnection, server close,
+        abort recovery, concurrent clients, large messages, and full lifecycle.
+        Templates are conditionally emitted when the Fern definition includes WebSocket
+        endpoints.
+      type: feat
+    - summary: |
+        Expose `StateCheckInterval` property on `WebSocketClient`. The property
+        (default: 5 seconds) forwards to `WebSocketConnection` in `ConnectAsync`,
+        allowing callers to control how often the background state monitor polls
+        for silent disconnections.
+      type: feat
+    - summary: |
+        Fix server-initiated close skipping reconnection. When the server sent a
+        `WebSocketMessageType.Close` frame, the `Listen()` method used `return`
+        which exited entirely — bypassing the `ReconnectSynchronized` call. Changed
+        to `break` with a `closedByServer` flag so reconnection executes with
+        `ReconnectionType.ByServer`.
+      type: fix
+    - summary: |
+        Fix `CancelReconnection` flag being ignored for server-initiated close.
+        The `OnDisconnectionHappened` callback fires in the Close handler and the
+        user can set `info.CancelReconnection = true`, but this flag was never
+        checked before calling `ReconnectSynchronized`. Now captured into a local
+        `cancelReconnect` variable and checked before reconnecting.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.50.0
+  changelogEntry:
+    - summary: |
+        Add exponential backoff reconnection strategy for WebSocket connections.
+        A new `ReconnectStrategy` class provides configurable exponential backoff
+        (doubling intervals from 1s to 60s), optional random jitter (0-25%) to
+        prevent thundering herd, and configurable max attempts. The strategy is
+        exposed as a `ReconnectBackoff` property on the generated Options class
+        and wired through `WebSocketClient` to `WebSocketConnection.Reconnect()`.
+        When max attempts are exhausted, reconnection stops and a disconnection
+        event is raised. The backoff resets on successful reconnection.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 2.49.0
+  changelogEntry:
+    - summary: |
+        Add per-send timeout to prevent `SendAsync` hangs. A new `SendTimeout` property
+        (default: 30 seconds) on `WebSocketConnection` wraps every `SendAsync` call with a
+        linked `CancellationTokenSource` that fires `CancelAfter(SendTimeout)`. When the
+        timeout elapses the connection is aborted and a `WebsocketException` is thrown,
+        preventing a single dead connection from blocking the send lock for up to 30 minutes.
+        See: https://github.com/dotnet/runtime/issues/125257
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.48.0
+  changelogEntry:
+    - summary: |
+        Add bounded send queue with message expiration to `WebSocketConnection`. The
+        unbounded `Channel<T>` queues are replaced with configurable bounded channels
+        (`SendQueueLimit`, default: 10,000) that use `BoundedChannelFullMode.DropWrite`
+        to reject new messages when the queue is full. A `SendCacheItemTimeout` property
+        (default: 30 minutes) causes stale messages to be silently dropped during drain,
+        preventing memory growth during network outages and avoiding sending outdated
+        messages after reconnection. Set `SendQueueLimit` to 0 for unbounded or
+        `SendCacheItemTimeout` to null to disable expiration.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.47.0
+  changelogEntry:
+    - summary: |
+        Add receive hang detection via a background state monitor task. A new
+        `StateCheckInterval` property (default: 5 seconds) controls how often the
+        monitor polls `WebSocket.State`. When the state transitions to `Closed`,
+        `Aborted`, or `CloseReceived` — indicating the TCP connection died without
+        notifying the receive loop — the monitor cancels the pending `ReceiveAsync`
+        via a linked `CancellationTokenSource`. This works around known .NET runtime
+        issues where `ReceiveAsync` hangs indefinitely on silent TCP disconnections
+        (dotnet/runtime#110496) and `Abort()` fails to cancel a pending receive
+        (dotnet/runtime#44272). Set `StateCheckInterval` to `null` to disable.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 2.46.0
+  changelogEntry:
+    - summary: |
+        Wire up WebSocket reconnection logic. The `WebSocketConnection` template now
+        contains a complete reconnection implementation ported from the Marfusios library:
+        heartbeat timer (`ReconnectTimeout`), error-retry timer (`ErrorReconnectTimeout`),
+        lost-connection delay (`LostReconnectTimeout`), and `Reconnect()`/`ReconnectOrFail()`
+        public methods. The generated WebSocket API classes expose a `Reconnecting` event
+        and an `IsReconnectionEnabled` option (default: `false`) so callers can opt in to
+        automatic reconnection. All timeout properties are configurable with sensible defaults.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.45.1
   changelogEntry:
     - summary: |
