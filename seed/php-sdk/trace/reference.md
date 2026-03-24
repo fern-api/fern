@@ -752,7 +752,7 @@ $client->admin->storeTracedWorkspaceV2(
 </details>
 
 ## Homepage
-<details><summary><code>$client-&gt;homepage-&gt;getHomepageProblems() -> array</code></summary>
+<details><summary><code>$client-&gt;homepage-&gt;getHomepageProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -823,7 +823,7 @@ $client->homepage->setHomepageProblems(
 </details>
 
 ## Migration
-<details><summary><code>$client-&gt;migration-&gt;getAttemptedMigrations($request) -> array</code></summary>
+<details><summary><code>$client-&gt;migration-&gt;getAttemptedMigrations($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -868,7 +868,7 @@ $client->migration->getAttemptedMigrations(
 </details>
 
 ## Playlist
-<details><summary><code>$client-&gt;playlist-&gt;createPlaylist($serviceParam, $request) -> Playlist</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;createPlaylist($serviceParam, $request) -> ?Playlist</code></summary>
 <dl>
 <dd>
 
@@ -959,7 +959,7 @@ $client->playlist->createPlaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;getPlaylists($serviceParam, $request) -> array</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;getPlaylists($serviceParam, $request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1069,7 +1069,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;getPlaylist($serviceParam, $playlistId) -> Playlist</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;getPlaylist($serviceParam, $playlistId) -> ?Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1280,7 +1280,7 @@ $client->playlist->deletePlaylist(
 </details>
 
 ## Problem
-<details><summary><code>$client-&gt;problem-&gt;createProblem($request) -> CreateProblemResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;createProblem($request) -> ?CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1396,7 +1396,7 @@ $client->problem->createProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;problem-&gt;updateProblem($problemId, $request) -> UpdateProblemResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;updateProblem($problemId, $request) -> ?UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1577,7 +1577,7 @@ $client->problem->deleteProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;problem-&gt;getDefaultStarterFiles($request) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;getDefaultStarterFiles($request) -> ?GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1670,7 +1670,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>$client-&gt;submission-&gt;createExecutionSession($language) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;createExecutionSession($language) -> ?ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1838,7 +1838,7 @@ $client->submission->stopExecutionSession(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;submission-&gt;getExecutionSessionsState() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;getExecutionSessionsState() -> ?GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1915,7 +1915,7 @@ $client->sysprop->setNumWarmInstances(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;sysprop-&gt;getNumWarmInstances() -> array</code></summary>
+<details><summary><code>$client-&gt;sysprop-&gt;getNumWarmInstances() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1941,7 +1941,7 @@ $client->sysprop->getNumWarmInstances();
 </details>
 
 ## V2 Problem
-<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLightweightProblems() -> array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLightweightProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1980,7 +1980,7 @@ $client->v2->problem->getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblems() -> array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -2019,7 +2019,7 @@ $client->v2->problem->getProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLatestProblem($problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLatestProblem($problemId) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2075,7 +2075,7 @@ $client->v2->problem->getLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2141,7 +2141,7 @@ $client->v2->problem->getProblemVersion(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLightweightProblems() -> array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLightweightProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -2180,7 +2180,7 @@ $client->v2->problem->getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblems() -> array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -2219,7 +2219,7 @@ $client->v2->problem->getProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLatestProblem($problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLatestProblem($problemId) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2275,7 +2275,7 @@ $client->v2->problem->getLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 

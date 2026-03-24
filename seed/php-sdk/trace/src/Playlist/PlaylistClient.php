@@ -67,11 +67,11 @@ class PlaylistClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Playlist
+     * @return ?Playlist
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
+    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): ?Playlist
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -94,7 +94,7 @@ class PlaylistClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Playlist::fromJson($json);
             }
@@ -123,11 +123,11 @@ class PlaylistClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Playlist>
+     * @return ?array<Playlist>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
+    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -154,7 +154,7 @@ class PlaylistClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [Playlist::class]); // @phpstan-ignore-line
             }
@@ -183,11 +183,11 @@ class PlaylistClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Playlist
+     * @return ?Playlist
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
+    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): ?Playlist
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -203,7 +203,7 @@ class PlaylistClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Playlist::fromJson($json);
             }
