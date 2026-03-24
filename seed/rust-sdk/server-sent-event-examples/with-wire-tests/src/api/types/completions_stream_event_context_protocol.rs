@@ -17,9 +17,11 @@ pub enum StreamEventContextProtocol {
         data: ErrorEvent,
     },
 
-    #[serde(rename = "notification")]
+    #[serde(rename = "event")]
     #[non_exhaustive]
-    Notification {
+    Event {
+        #[serde(default)]
+        event: String,
         #[serde(default)]
         name: String,
     },
@@ -34,7 +36,7 @@ impl StreamEventContextProtocol {
         Self::Error { data }
     }
 
-    pub fn notification(name: String) -> Self {
-        Self::Notification { name }
+    pub fn event(event: String, name: String) -> Self {
+        Self::Event { event, name }
     }
 }
