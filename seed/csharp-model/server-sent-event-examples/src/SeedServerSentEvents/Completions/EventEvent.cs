@@ -8,6 +8,9 @@ namespace SeedServerSentEvents;
 [Serializable]
 public record EventEvent
 {
+    [JsonPropertyName("event")]
+    public required string Event { get; set; }
+
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
@@ -37,6 +40,7 @@ public record EventEvent
                 return null;
             }
 
+            string _event = default;
             string _name = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
@@ -52,6 +56,9 @@ public record EventEvent
 
                 switch (propertyName)
                 {
+                    case "event":
+                        _event = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
                     case "name":
                         _name = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
@@ -63,6 +70,7 @@ public record EventEvent
 
             return new EventEvent
             {
+                Event = _event,
                 Name = _name,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
@@ -75,6 +83,8 @@ public record EventEvent
         )
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("event");
+            JsonSerializer.Serialize(writer, value.Event, options);
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
             if (value.AdditionalProperties != null)
