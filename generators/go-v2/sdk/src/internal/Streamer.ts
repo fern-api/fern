@@ -26,6 +26,7 @@ export class Streamer {
     public static CONSTRUCTOR_FUNC_NAME = "NewStreamer";
     public static STREAM_PARAMS_TYPE_NAME = "StreamParams";
     public static STREAM_METHOD_NAME = "Stream";
+    public static STREAM_WITH_EVENT_UNMARSHAL_METHOD_NAME = "StreamWithEventUnmarshal";
 
     private context: SdkGeneratorContext;
 
@@ -172,6 +173,28 @@ export class Streamer {
             name: "ErrorDecoder",
             value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
         });
+        const protocolUnionInfo = this.getProtocolDiscriminatedUnionInfo(args.streamingResponse);
+        if (protocolUnionInfo != null) {
+            // For protocol-discriminated unions, use StreamWithEventUnmarshal
+            // which receives the SSE event type and raw data, and returns the
+            // deserialized union type.
+            return go.codeblock((writer) => {
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: args.streamerVariable,
+                        method: Streamer.STREAM_WITH_EVENT_UNMARSHAL_METHOD_NAME,
+                        arguments_: [
+                            this.context.getContextParameterReference(),
+                            go.TypeInstantiation.structPointer({
+                                typeReference: this.getStreamParamsTypeReference(),
+                                fields: arguments_
+                            }),
+                            this.generateEventUnmarshalFunc(protocolUnionInfo)
+                        ]
+                    })
+                );
+            });
+        }
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeMethod({
@@ -275,6 +298,157 @@ export class Streamer {
         ) {
             return undefined;
         }
+        // For protocol-discriminated unions, we still set EventDiscriminator for the stream format,
+        // but discrimination is handled by the event unmarshal function.
         return go.TypeInstantiation.string(union.discriminant.wireValue);
+    }
+
+    private getProtocolDiscriminatedUnionInfo(streamingResponse: FernIr.StreamingResponse):
+        | {
+              unionTypeName: string;
+              unionTypeImportPath: string;
+              discriminantFieldName: string;
+              variants: Array<{
+                  wireValue: string;
+                  fieldName: string;
+                  variantType: FernIr.SingleUnionTypeProperties;
+                  typeId?: FernIr.TypeId;
+                  singlePropertyType?: FernIr.TypeReference;
+              }>;
+          }
+        | undefined {
+        if (streamingResponse.type !== "sse") {
+            return undefined;
+        }
+        const payload = streamingResponse.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(payload.typeId);
+        if (typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        if (
+            !("discriminatorContext" in union) ||
+            (union as { discriminatorContext?: string }).discriminatorContext !== "protocol"
+        ) {
+            return undefined;
+        }
+        const location = this.context.getLocationForTypeId(payload.typeId);
+        // Apply the same rename logic as the Go type generator (resolveUnionDiscriminantName):
+        // if the discriminant field name collides with any variant field name, append "Discriminant".
+        let discriminantFieldName = this.context.getFieldName(union.discriminant.name);
+        const variantFieldNames = new Set(
+            union.types.map((singleUnionType) => this.context.getFieldName(singleUnionType.discriminantValue.name))
+        );
+        if (variantFieldNames.has(discriminantFieldName)) {
+            discriminantFieldName = discriminantFieldName + "Discriminant";
+        }
+        return {
+            unionTypeName: this.context.getClassName(typeDeclaration.name.name),
+            unionTypeImportPath: location.importPath,
+            discriminantFieldName,
+            variants: union.types.map((singleUnionType) => ({
+                wireValue: singleUnionType.discriminantValue.wireValue,
+                fieldName: this.context.getFieldName(singleUnionType.discriminantValue.name),
+                variantType: singleUnionType.shape,
+                typeId:
+                    singleUnionType.shape.propertiesType === "samePropertiesAsObject"
+                        ? singleUnionType.shape.typeId
+                        : undefined,
+                singlePropertyType:
+                    singleUnionType.shape.propertiesType === "singleProperty" ? singleUnionType.shape.type : undefined
+            }))
+        };
+    }
+
+    private generateEventUnmarshalFunc(
+        unionInfo: NonNullable<ReturnType<Streamer["getProtocolDiscriminatedUnionInfo"]>>
+    ): go.AstNode {
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.typeReference({
+                    name: "EventUnmarshalFunc",
+                    importPath: this.context.getCoreImportPath()
+                })
+            );
+            const unionRef = go.typeReference({
+                name: unionInfo.unionTypeName,
+                importPath: unionInfo.unionTypeImportPath
+            });
+            // The type parameter must match the Streamer[T] type parameter (non-pointer).
+            writer.write(`[`);
+            writer.writeNode(unionRef);
+            writer.write(`](func(eventType string, data []byte) (`);
+            writer.writeNode(unionRef);
+            writer.writeLine(`, error) {`);
+            writer.indent();
+            // Declare zero value for error returns
+            writer.write(`var zero `);
+            writer.writeNode(unionRef);
+            writer.writeLine(``);
+            writer.writeLine(`switch eventType {`);
+            for (const variant of unionInfo.variants) {
+                writer.writeLine(`case "${variant.wireValue}":`);
+                writer.indent();
+                if (variant.variantType.propertiesType === "samePropertiesAsObject" && variant.typeId != null) {
+                    const variantTypeDecl = this.context.getTypeDeclarationOrThrow(variant.typeId);
+                    const variantTypeRef = go.typeReference({
+                        name: this.context.getClassName(variantTypeDecl.name.name),
+                        importPath: this.context.getLocationForTypeId(variant.typeId).importPath
+                    });
+                    writer.write(`var value *`);
+                    writer.writeNode(variantTypeRef);
+                    writer.writeLine(``);
+                    writer.write(`if err := `);
+                    writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
+                    writer.writeLine(`(data, &value); err != nil {`);
+                    writer.indent();
+                    writer.writeLine(`return zero, err`);
+                    writer.dedent();
+                    writer.writeLine(`}`);
+                    writer.write(`return `);
+                    writer.writeNode(unionRef);
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
+                } else if (variant.variantType.propertiesType === "noProperties") {
+                    writer.write(`return `);
+                    writer.writeNode(unionRef);
+                    writer.writeLine(`{${unionInfo.discriminantFieldName}: "${variant.wireValue}"}, nil`);
+                } else if (variant.variantType.propertiesType === "singleProperty") {
+                    writer.write(`var value `);
+                    if (variant.singlePropertyType != null) {
+                        this.context.goTypeMapper.convert({ reference: variant.singlePropertyType }).write(writer);
+                    } else {
+                        writer.write(variant.fieldName);
+                    }
+                    writer.writeLine(``);
+                    writer.write(`if err := `);
+                    writer.writeNode(go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }));
+                    writer.writeLine(`(data, &value); err != nil {`);
+                    writer.indent();
+                    writer.writeLine(`return zero, err`);
+                    writer.dedent();
+                    writer.writeLine(`}`);
+                    writer.write(`return `);
+                    writer.writeNode(unionRef);
+                    writer.writeLine(
+                        `{${unionInfo.discriminantFieldName}: "${variant.wireValue}", ${variant.fieldName}: value}, nil`
+                    );
+                }
+                writer.dedent();
+            }
+            writer.writeLine(`default:`);
+            writer.indent();
+            writer.write(`return zero, `);
+            writer.writeNode(go.typeReference({ name: "Errorf", importPath: "fmt" }));
+            writer.writeLine(`("unknown SSE event type: %s", eventType)`);
+            writer.dedent();
+            writer.writeLine(`}`);
+            writer.dedent();
+            writer.write(`})`);
+        });
     }
 }

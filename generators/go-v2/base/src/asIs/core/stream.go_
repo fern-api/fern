@@ -29,10 +29,17 @@ const (
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 )
 
+// EventUnmarshalFunc is a function that unmarshals SSE event data based on the
+// event type from the SSE envelope. This is used for protocol-level discrimination
+// where the union discriminant comes from the SSE event: field rather than from
+// within the JSON data payload.
+type EventUnmarshalFunc[T any] func(eventType string, data []byte) (T, error)
+
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
-	reader streamReader
-	closer io.Closer
+	reader           streamReader
+	closer           io.Closer
+	eventUnmarshal   EventUnmarshalFunc[T]
 }
 
 // StreamOption adapts the behavior of the Stream.
@@ -74,10 +81,9 @@ func WithFormat(format StreamFormat) StreamOption {
 	}
 }
 
-// WithEventDiscriminator configures the SSE stream reader to inject the
-// SSE event field value as a JSON discriminator into the data payload.
-// This is used for protocol-level discrimination where the union discriminant
-// comes from the SSE event: field rather than from within the JSON data.
+// WithEventDiscriminator configures the SSE stream reader to track the
+// SSE event field value. When used with WithEventUnmarshalFunc, the event
+// type is passed to the custom unmarshal function for protocol-level discrimination.
 func WithEventDiscriminator(field string) StreamOption {
 	return func(opts *streamOptions) {
 		opts.eventDiscriminator = field
@@ -109,15 +115,43 @@ func NewStream[T any](response *http.Response, opts ...StreamOption) *Stream[T] 
 	}
 }
 
+// NewStreamWithEventUnmarshal constructs a new Stream that uses a custom event
+// unmarshal function for protocol-level SSE discrimination. The eventUnmarshal
+// function receives the SSE event type and raw data bytes, and returns the
+// deserialized value.
+func NewStreamWithEventUnmarshal[T any](response *http.Response, eventUnmarshal EventUnmarshalFunc[T], opts ...StreamOption) *Stream[T] {
+	options := new(streamOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
+	return &Stream[T]{
+		reader:         newStreamReader(response.Body, options),
+		closer:         response.Body,
+		eventUnmarshal: eventUnmarshal,
+	}
+}
+
 // Recv reads a message from the stream, returning io.EOF when
 // all the messages have been read.
 func (s Stream[T]) Recv() (T, error) {
 	var value T
-	bytes, err := s.reader.ReadFromStream()
+	// For protocol-level SSE discrimination, use the event-aware reader
+	// to get both the event type and data, then delegate to the custom
+	// unmarshal function.
+	if s.eventUnmarshal != nil {
+		if sseReader, ok := s.reader.(*SseStreamReader); ok {
+			eventType, data, err := sseReader.ReadEventFromStream()
+			if err != nil {
+				return value, err
+			}
+			return s.eventUnmarshal(eventType, data)
+		}
+	}
+	rawBytes, err := s.reader.ReadFromStream()
 	if err != nil {
 		return value, err
 	}
-	if err := json.Unmarshal(bytes, &value); err != nil {
+	if err := json.Unmarshal(rawBytes, &value); err != nil {
 		return value, err
 	}
 	return value, nil
@@ -314,21 +348,28 @@ func (s *SseStreamReader) isTerminated(bytes []byte) bool {
 }
 
 func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
-
 	event, err := s.nextEvent()
 	if err != nil {
 		return nil, err
 	}
-	// Check if the event data is the terminator (e.g. "[DONE]")
 	if s.isTerminated(event.data) {
 		return nil, io.EOF
 	}
-	// For protocol-level discrimination, inject the SSE event field value
-	// as the discriminator key into the JSON data payload.
-	if s.options.eventDiscriminator != "" && len(event.event) > 0 {
-		event.data = injectDiscriminator(event.data, s.options.eventDiscriminator, string(event.event))
-	}
 	return event.data, nil
+}
+
+// ReadEventFromStream reads the next SSE event and returns both the event type
+// and the data payload. This is used for protocol-level discrimination where
+// the event type determines which variant to deserialize into.
+func (s *SseStreamReader) ReadEventFromStream() (string, []byte, error) {
+	event, err := s.nextEvent()
+	if err != nil {
+		return "", nil, err
+	}
+	if s.isTerminated(event.data) {
+		return "", nil, io.EOF
+	}
+	return string(event.event), event.data, nil
 }
 
 func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
@@ -397,46 +438,6 @@ func (event *SseEvent) String() string {
 	return fmt.Sprintf("SseEvent{id: %q, event: %q, data: %q, retry: %q}", event.id, event.event, event.data, event.retry)
 }
 
-// injectDiscriminator inserts a JSON key-value pair for the discriminator
-// at the beginning of a JSON object. For example, given data `{"content":"Hello"}`,
-// field "type", and value "completion", it produces `{"type":"completion","content":"Hello"}`.
-//
-// If the data already contains the discriminator key, it is returned unchanged
-// to avoid duplicate keys.
-func injectDiscriminator(data []byte, field string, value string) []byte {
-	trimmed := bytes.TrimSpace(data)
-	if len(trimmed) == 0 || trimmed[0] != '{' {
-		return data
-	}
-	// Skip injection if the key already exists in the data.
-	quotedField := fmt.Sprintf("%q", field)
-	if bytes.Contains(data, []byte(quotedField+":")) || bytes.Contains(data, []byte(quotedField+" :")) {
-		return data
-	}
-	// Build the injected key-value: "field":"value"
-	injected := quotedField + ":" + fmt.Sprintf("%q", value)
-	// Find the opening brace in the original data
-	openIdx := bytes.IndexByte(data, '{')
-	after := data[openIdx+1:]
-	// Check if the object has existing content (non-empty after trimming)
-	afterTrimmed := bytes.TrimSpace(after)
-	var result []byte
-	if len(afterTrimmed) == 0 || afterTrimmed[0] == '}' {
-		// Empty object: {"field":"value"}
-		result = make([]byte, 0, len(data)+len(injected))
-		result = append(result, data[:openIdx+1]...)
-		result = append(result, injected...)
-		result = append(result, after...)
-	} else {
-		// Non-empty object: {"field":"value",<existing>}
-		result = make([]byte, 0, len(data)+len(injected)+1)
-		result = append(result, data[:openIdx+1]...)
-		result = append(result, injected...)
-		result = append(result, ',')
-		result = append(result, after...)
-	}
-	return result
-}
 
 type SseEvent struct {
 	id    []byte
