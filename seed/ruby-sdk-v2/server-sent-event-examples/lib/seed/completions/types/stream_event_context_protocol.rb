@@ -10,7 +10,7 @@ module Seed
 
         member -> { Seed::Completions::Types::CompletionEvent }, key: "COMPLETION"
         member -> { Seed::Completions::Types::ErrorEvent }, key: "ERROR"
-        member -> { Seed::Completions::Types::EventEvent }, key: "NOTIFICATION"
+        member -> { Seed::Completions::Types::EventEvent }, key: "EVENT"
       end
     end
   end
