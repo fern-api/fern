@@ -95,12 +95,75 @@ describe("SSE deserialization — discriminator edge cases", () => {
     });
 
     // ─── streamEventsContextProtocol (discriminator FROM SSE envelope) ──
+    //
+    // In protocol mode, the SSE envelope's event type is the discriminator.
+    // It must be injected into the data JSON under a key that does NOT
+    // collide with any field in the variant types.
+    //
+    // Currently the generator uses "event" as the discriminator key, which
+    // collides with EventEvent.event. The assertions below use "sseEvent"
+    // as the discriminator key to express the correct behavior: the envelope
+    // discriminator and the data payload fields are separate concerns.
+    //
+    // These tests are expected to FAIL until the generator is fixed.
 
-    test("streamEventsContextProtocol: all three variants including EventEvent", async () => {
+    test("streamEventsContextProtocol: completion and error variants — envelope injects discriminator", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawResponseBody =
-            'event: completion\ndata: {"content":"hello"}\n\nevent: error\ndata: {"error":"boom","code":503}\n\nevent: notification\ndata: {"name":"update ready"}\n\n';
+            'event: completion\ndata: {"content":"hello"}\n\nevent: error\ndata: {"error":"boom","code":503}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody({ query: "inject" })
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.completions.streamEventsContextProtocol({ query: "inject" });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            { sseEvent: "completion", content: "hello" },
+            { sseEvent: "error", error: "boom", code: 503 },
+        ]);
+    });
+
+    test("streamEventsContextProtocol: EventEvent variant — envelope discriminator must not collide with data 'event' field", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        // EventEvent has {event: string, name: string} in its data payload.
+        // The envelope discriminator must use a different key so both values are preserved.
+        const rawResponseBody = 'event: event\ndata: {"event":"update","name":"some particular update"}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody({ query: "event-variant" })
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.completions.streamEventsContextProtocol({ query: "event-variant" });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([{ sseEvent: "event", event: "update", name: "some particular update" }]);
+    });
+
+    test("streamEventsContextProtocol: all three variants", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawResponseBody =
+            'event: completion\ndata: {"content":"hello"}\n\n' +
+            'event: error\ndata: {"error":"something went wrong"}\n\n' +
+            'event: event\ndata: {"event":"update","name":"some particular update"}\n\n';
 
         server
             .mockEndpoint()
@@ -117,82 +180,9 @@ describe("SSE deserialization — discriminator edge cases", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { event: "completion", content: "hello" },
-            { event: "error", error: "boom", code: 503 },
-            { event: "notification", name: "update ready" },
-        ]);
-    });
-
-    test("streamEventsContextProtocol: adversarial — data has discriminator key, data wins over envelope", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawResponseBody = 'event: error\ndata: {"event":"completion","content":"data wins"}\n\n';
-
-        server
-            .mockEndpoint()
-            .post("/stream-events-context-protocol")
-            .jsonBody({ query: "adversarial" })
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
-
-        const response = await client.completions.streamEventsContextProtocol({ query: "adversarial" });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([{ event: "completion", content: "data wins" }]);
-    });
-
-    test("streamEventsContextProtocol: redundant event key in data matches envelope", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawResponseBody = 'event: error\ndata: {"event":"error","error":"redundant key"}\n\n';
-
-        server
-            .mockEndpoint()
-            .post("/stream-events-context-protocol")
-            .jsonBody({ query: "redundant" })
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
-
-        const response = await client.completions.streamEventsContextProtocol({ query: "redundant" });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([{ event: "error", error: "redundant key" }]);
-    });
-
-    test("streamEventsContextProtocol: mixed injected, redundant, and conflicting discriminators", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawResponseBody =
-            'event: completion\ndata: {"content":"first"}\n\n' +
-            'event: error\ndata: {"event":"error","error":"second"}\n\n' +
-            'event: error\ndata: {"event":"notification","name":"third"}\n\n';
-
-        server
-            .mockEndpoint()
-            .post("/stream-events-context-protocol")
-            .jsonBody({ query: "mixed" })
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
-
-        const response = await client.completions.streamEventsContextProtocol({ query: "mixed" });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([
-            { event: "completion", content: "first" },
-            { event: "error", error: "second" },
-            { event: "notification", name: "third" },
+            { sseEvent: "completion", content: "hello" },
+            { sseEvent: "error", error: "something went wrong" },
+            { sseEvent: "event", event: "update", name: "some particular update" },
         ]);
     });
 
@@ -215,7 +205,7 @@ describe("SSE deserialization — discriminator edge cases", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "error", error: "no code here" }]);
+        expect(events).toEqual([{ sseEvent: "error", error: "no code here" }]);
     });
 });
 TESTEOF
@@ -227,4 +217,8 @@ pnpm install --frozen-lockfile 2>&1 || pnpm install 2>&1
 
 echo ""
 echo "=== Running SSE deserialization tests ==="
+echo "=== NOTE: streamEventsContextProtocol tests are EXPECTED to fail ==="
+echo "=== They assert correct behavior using 'sseEvent' as the discriminator key ==="
+echo "=== to avoid collision with EventEvent.event — the generator must be fixed ==="
+echo ""
 pnpm vitest run --project wire tests/wire/sse-deserialization.test.ts
