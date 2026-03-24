@@ -10,7 +10,7 @@ from .stream_event_context_protocol import (
     StreamEventContextProtocol,
     StreamEventContextProtocol_Completion,
     StreamEventContextProtocol_Error,
-    StreamEventContextProtocol_Notification,
+    StreamEventContextProtocol_Event,
 )
 from .streamed_completion import StreamedCompletion
 
@@ -22,7 +22,7 @@ __all__ = [
     "StreamEventContextProtocol",
     "StreamEventContextProtocol_Completion",
     "StreamEventContextProtocol_Error",
-    "StreamEventContextProtocol_Notification",
+    "StreamEventContextProtocol_Event",
     "StreamEvent_Completion",
     "StreamEvent_Error",
     "StreamedCompletion",

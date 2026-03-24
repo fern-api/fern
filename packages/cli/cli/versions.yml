@@ -12,6 +12,17 @@
   createdAt: "2026-03-24"
   irVersion: 65
 
+- version: 4.43.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer to produce optional response types when an endpoint
+        has both a 200 (with body) and a 204 (No Content) response. Previously the
+        204 response was silently ignored, causing generators to emit non-nullable
+        return types and attempt deserialization on empty bodies. Both the v3 parser
+        and v3.1 importer paths are fixed.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
 - version: 4.43.1
   changelogEntry:
     - summary: |
@@ -24,7 +35,6 @@
       type: fix
   createdAt: "2026-03-23"
   irVersion: 65
-
 - version: 4.43.0
   changelogEntry:
     - summary: |
