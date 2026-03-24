@@ -5,7 +5,7 @@ import type * as SeedServerSentEvents from "../../../index.js";
 export type StreamEventContextProtocol =
     | SeedServerSentEvents.StreamEventContextProtocol.Completion
     | SeedServerSentEvents.StreamEventContextProtocol.Error
-    | SeedServerSentEvents.StreamEventContextProtocol.Notification;
+    | SeedServerSentEvents.StreamEventContextProtocol.Event;
 
 export namespace StreamEventContextProtocol {
     export interface Completion extends SeedServerSentEvents.CompletionEvent {
@@ -16,7 +16,7 @@ export namespace StreamEventContextProtocol {
         event: "error";
     }
 
-    export interface Notification extends SeedServerSentEvents.EventEvent {
-        event: "notification";
+    export interface Event extends SeedServerSentEvents.EventEvent {
+        event: "event";
     }
 }
