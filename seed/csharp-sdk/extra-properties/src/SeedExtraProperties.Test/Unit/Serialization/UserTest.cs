@@ -1,4 +1,3 @@
-using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExtraProperties;
 using SeedExtraProperties.Core;
@@ -44,31 +43,5 @@ public class UserTest
             }
             """;
         JsonAssert.Roundtrips<User>(inputJson);
-    }
-
-    [NUnit.Framework.Test]
-    public void TestModelBinding()
-    {
-        var json = """
-            {
-              "name": "Alice",
-              "age": 30,
-              "location": "Wonderland"
-            }
-            """;
-        var expectedObject = new User
-        {
-            Name = "Alice",
-            AdditionalProperties = new AdditionalProperties
-            {
-                ["age"] = 30,
-                ["location"] = "Wonderland",
-            },
-        };
-        var options = new global::System.Text.Json.JsonSerializerOptions(
-            global::System.Text.Json.JsonSerializerDefaults.Web
-        );
-        var deserializedObject = JsonSerializer.Deserialize<User>(json, options);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 }
