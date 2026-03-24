@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +38,7 @@ public final class UpdateUserRequest {
     /**
      * @return If true, validate the update without persisting
      */
-    @JsonProperty("dryRun")
+    @JsonIgnore
     public Optional<Boolean> getDryRun() {
         return dryRun;
     }
