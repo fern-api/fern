@@ -5,6 +5,7 @@ package folderd
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/audiences/fern/internal"
 )
 

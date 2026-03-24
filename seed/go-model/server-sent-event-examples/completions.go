@@ -5,6 +5,7 @@ package serversentevents
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/server-sent-event-examples/fern/internal"
 )
 
