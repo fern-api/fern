@@ -53,6 +53,7 @@ public final class BuilderGenerator {
     private final boolean supportAdditionalProperties;
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
+    private final boolean useBuilderConstructor;
     private final Set<String> allPropertyCamelCaseNames;
 
     public BuilderGenerator(
@@ -62,7 +63,8 @@ public final class BuilderGenerator {
             boolean isSerialized,
             boolean supportAdditionalProperties,
             boolean disableRequiredPropertyBuilderChecks,
-            boolean builderNotNullChecks) {
+            boolean builderNotNullChecks,
+            boolean useBuilderConstructor) {
         this.objectClassName = objectClassName;
         this.nullableClassName = nullableClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
@@ -86,6 +88,7 @@ public final class BuilderGenerator {
         this.isSerialized = isSerialized;
         this.supportAdditionalProperties = supportAdditionalProperties;
         this.builderNotNullChecks = builderNotNullChecks;
+        this.useBuilderConstructor = useBuilderConstructor;
     }
 
     public Optional<ObjectBuilder> generate() {
@@ -219,9 +222,15 @@ public final class BuilderGenerator {
             }
         }
 
-        builderImplTypeSpec.addMethod(getBaseBuildMethod()
-                .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
-                .build());
+        if (useBuilderConstructor) {
+            builderImplTypeSpec.addMethod(getBaseBuildMethod()
+                    .addStatement("return new $T(this)", objectClassName)
+                    .build());
+        } else {
+            builderImplTypeSpec.addMethod(getBaseBuildMethod()
+                    .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
+                    .build());
+        }
 
         if (this.supportAdditionalProperties) {
             builderImplTypeSpec.addField(FieldSpec.builder(
@@ -440,10 +449,13 @@ public final class BuilderGenerator {
 
     private PoetTypeWithClassName buildFinal(
             StagedBuilderConfig stagedBuilderConfig, ImmutableBuilderImplBuilder.Builder builderImpl) {
-        builderImpl.addReversedMethods(getBaseBuildMethod()
-                .addAnnotation(ClassName.get("", "java.lang.Override"))
-                .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
-                .build());
+        MethodSpec.Builder buildMethod = getBaseBuildMethod().addAnnotation(ClassName.get("", "java.lang.Override"));
+        if (useBuilderConstructor) {
+            buildMethod.addStatement("return new $T(this)", objectClassName);
+        } else {
+            buildMethod.addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments));
+        }
+        builderImpl.addReversedMethods(buildMethod.build());
 
         ClassName finalStageClassName = objectClassName.nestedClass(StageBuilderConstants.FINAL_STAGE_CLASS_NAME);
         TypeSpec.Builder finalStageBuilder = TypeSpec.interfaceBuilder(

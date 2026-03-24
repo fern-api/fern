@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
-import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchRequest;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,12 +14,12 @@ public class Example12 {
         client.nullableOptional()
                 .getSearchResults(SearchRequest.builder()
                         .query("query")
-                        .includeTypes(OptionalNullable.of(Arrays.asList("includeTypes", "includeTypes")))
-                        .filters(OptionalNullable.of(new HashMap<String, Optional<String>>() {
+                        .includeTypes(Optional.of(Arrays.asList("includeTypes", "includeTypes")))
+                        .filters(new HashMap<String, Optional<String>>() {
                             {
-                                put("filters", OptionalNullable.of("filters"));
+                                put("filters", Optional.of("filters"));
                             }
-                        }))
+                        })
                         .build());
     }
 }

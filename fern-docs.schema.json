@@ -348,7 +348,17 @@
           }
         },
         "collapsed": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "open-by-default"
+              ]
+            }
+          ]
         },
         "slug": {
           "type": "string"

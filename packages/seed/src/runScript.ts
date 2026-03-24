@@ -12,7 +12,7 @@ export async function runScript({
 }: {
     commands: string[];
     workingDir: string;
-    logger: Logger;
+    logger?: Logger;
     doNotPipeOutput: boolean;
     env?: Record<string, string>;
 }): Promise<loggingExeca.ReturnValue> {

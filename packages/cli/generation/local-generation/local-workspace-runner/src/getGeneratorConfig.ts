@@ -1,6 +1,7 @@
 import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { parseRepository } from "@fern-api/github";
 import {
     CratesOutput,
     GithubPublishInfo as FiddleGithubPublishInfo,
@@ -326,8 +327,8 @@ function newDummyPublishOutputConfig(
     let repoUrl = "";
     if (generatorInvocation.raw?.github != null) {
         if (isGithubSelfhosted(generatorInvocation.raw.github)) {
-            // Convert shorthand uri (owner/repo) to full URL format to match Fiddle's behavior
-            repoUrl = `https://github.com/${generatorInvocation.raw.github.uri}`;
+            const parsed = parseRepository(generatorInvocation.raw.github.uri);
+            repoUrl = parsed.repoUrl;
         } else {
             repoUrl = generatorInvocation.raw?.github.repository;
         }

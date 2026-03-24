@@ -1,6 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix floating-point serialization of integer-valued doubles. Values like
+        `24000.0` are now serialized as `24000` instead of `24000.0` in JSON
+        output.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 63
+  version: 2.0.0-rc8
+
+- changelogEntry:
+    - summary: |
+        Generate `WrappedAlias.java` in the Spring generator output when
+        `wrapped-aliases` is enabled (the default). `NullableNonemptyFilter`
+        references `WrappedAlias` for alias-of-optional empty checks, causing
+        compilation errors when the class is missing.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 63
+  version: 2.0.0-rc7
+
+- changelogEntry:
+    - summary: |
+        Generate `Nullable.java` and `NullableNonemptyFilter.java` core files
+        in the Spring generator output. Previously, only `OptionalNullable.java`
+        was generated, but the shared builder and type generation code references
+        `Nullable` and `NullableNonemptyFilter` for fields using `nullable<T>`,
+        causing missing class compilation errors.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 63
+  version: 2.0.0-rc6
+
+- changelogEntry:
+    - summary: |
         Upgrade IR version to 63.
       type: chore
   createdAt: "2026-01-12"

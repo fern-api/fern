@@ -109,10 +109,15 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
+    extends Omit<
+        CjsFdrSdk.docs.v1.commons.MetadataConfig,
+        "og:image" | "og:logo" | "twitter:image" | "og:background-image"
+    > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
+    "og:dynamic": boolean | undefined;
+    "og:background-image": FilepathOrUrl | undefined;
 }
 
 export type ColorConfiguration =
@@ -323,7 +328,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
         collapsible: boolean | undefined;
         collapsedByDefault: boolean | undefined;
         slug: string | undefined;
@@ -349,7 +354,7 @@ export declare namespace DocsNavigationItem {
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
@@ -420,6 +425,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
         collapsible: boolean | undefined;
         collapsedByDefault: boolean | undefined;
         availability: Availability | undefined;

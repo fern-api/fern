@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -65,11 +66,10 @@ func VerifyRequestCount(
 func TestReqWithHeadersGetWithCustomHeaderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)

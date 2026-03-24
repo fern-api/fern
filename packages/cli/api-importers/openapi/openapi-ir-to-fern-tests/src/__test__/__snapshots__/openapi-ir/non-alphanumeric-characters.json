@@ -112,9 +112,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],

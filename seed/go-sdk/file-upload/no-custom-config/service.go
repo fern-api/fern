@@ -164,8 +164,8 @@ func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type OptionalArgsRequest struct {
-	ImageFile io.Reader   `json:"-" url:"-"`
-	Request   interface{} `json:"request,omitempty" url:"-"`
+	ImageFile io.Reader `json:"-" url:"-"`
+	Request   any       `json:"request,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -188,7 +188,7 @@ type MyRequest struct {
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
-	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata      any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
 	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
@@ -556,7 +556,7 @@ type MyOtherRequest struct {
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
-	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata           any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
 	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`

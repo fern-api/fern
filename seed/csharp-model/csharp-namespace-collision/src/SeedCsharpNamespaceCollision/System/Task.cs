@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedCsharpNamespaceCollision;
 using SeedCsharpNamespaceCollision.Core;
 
@@ -17,6 +17,9 @@ public record Task : IJsonOnDeserialized
 
     [JsonPropertyName("user")]
     public required User User { get; set; }
+
+    [JsonPropertyName("owner")]
+    public required User Owner { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

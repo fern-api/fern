@@ -7,6 +7,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { InferredAuthWireTestGenerator } from "./InferredAuthWireTestGenerator.js";
 import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
@@ -57,7 +58,10 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
 
-        for (const [serviceName, endpoints] of endpointsByService.entries()) {
+        const sortedServices = Array.from(endpointsByService.entries()).sort(([a], [b]) =>
+            a < b ? -1 : a > b ? 1 : 0
+        );
+        for (const [serviceName, endpoints] of sortedServices) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
@@ -88,6 +92,13 @@ export class WireTestGenerator {
         if (oauthTestFile != null) {
             this.context.project.addGoFiles(oauthTestFile);
         }
+
+        // Generate inferred auth wire tests if the API uses inferred auth
+        const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
+        const inferredAuthTestFile = inferredAuthTestGenerator.generate();
+        if (inferredAuthTestFile != null) {
+            this.context.project.addGoFiles(inferredAuthTestFile);
+        }
     }
 
     private async generateServiceTestFile(
@@ -97,6 +108,13 @@ export class WireTestGenerator {
     ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
+            // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
+            // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
+            if (endpoint.requestBody?.type === "bytes") {
+                this.context.logger.debug(`Skipping wire test for endpoint ${endpoint.id} - bytes request body`);
+                continue;
+            }
+
             // Skip endpoints that return primitive date types due to Go SDK date parsing issue
             // (Go's time.Time JSON unmarshaling expects RFC3339 datetime format, not date-only)
             if (this.endpointReturnsPrimitiveDate(endpoint)) {
@@ -163,7 +181,8 @@ export class WireTestGenerator {
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
         const serviceTestFileContent = go.codeblock((writer) => {
-            for (const [_, importPath] of imports.entries()) {
+            const sortedImports = Array.from(imports.entries()).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+            for (const [_, importPath] of sortedImports) {
                 // Manually add any imports that were used in the snippet (client/request types)
                 // but that may not be used in the rest of the generated test file and therefore would be missed
                 writer.addImport(importPath);
@@ -195,7 +214,7 @@ export class WireTestGenerator {
             filename: serviceName + "_test.go",
             packageName: `${serviceName}_test`,
             rootImportPath: this.context.getRootImportPath(),
-            importPath: "", // unecessary for wire tests since nothing will import FROM this file
+            importPath: "", // unnecessary for wire tests since nothing will import FROM this file
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
@@ -742,11 +761,31 @@ export class WireTestGenerator {
             return "nil";
         }
 
+        // Build a set of query parameter wire names that have datetime type so we can
+        // normalize their values to include millisecond precision (matching RFC3339Milli
+        // format used by the Go SDK's query.go serialization).
+        const datetimeQueryParams = new Set<string>();
+        for (const qp of endpoint.queryParameters) {
+            const primitive = this.context.maybePrimitive(qp.valueType);
+            if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
+                datetimeQueryParams.add(qp.name.wireValue);
+            }
+        }
+
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
+                let stringValue = String(paramValue);
+                // Normalize datetime values to always include milliseconds, matching the
+                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                if (datetimeQueryParams.has(paramName)) {
+                    const date = new Date(stringValue);
+                    if (!isNaN(date.getTime())) {
+                        stringValue = date.toISOString();
+                    }
+                }
+                const value = JSON.stringify(stringValue);
                 queryParamEntries.push(`${key}: ${value}`);
             }
         }

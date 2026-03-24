@@ -76,7 +76,7 @@ export class TokenCommand {
     }
 }
 
-export function addTokenCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addTokenCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new TokenCommand();
     command(
         cli,
@@ -91,7 +91,6 @@ export function addTokenCommand(cli: Argv<GlobalArgs>, parentPath?: string): voi
                 })
                 .example("$0 auth token", "Generate token for workspace organization")
                 .example("$0 auth token --org acme", "Generate token for specific organization")
-                .example("export FERN_TOKEN=$($0 auth token)", "Export token to variable"),
-        parentPath
+                .example("export FERN_TOKEN=$($0 auth token)", "Export token to variable")
     );
 }

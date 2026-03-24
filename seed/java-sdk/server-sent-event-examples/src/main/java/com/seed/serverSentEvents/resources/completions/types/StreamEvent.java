@@ -67,6 +67,22 @@ public final class StreamEvent {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof StreamEvent && value.equals(((StreamEvent) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -91,6 +107,7 @@ public final class StreamEvent {
     @JsonIgnoreProperties("event")
     private static final class CompletionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "event", allowSetters = true)
         private CompletionEvent value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -130,6 +147,7 @@ public final class StreamEvent {
     @JsonIgnoreProperties("event")
     private static final class ErrorValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "event", allowSetters = true)
         private ErrorEvent value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

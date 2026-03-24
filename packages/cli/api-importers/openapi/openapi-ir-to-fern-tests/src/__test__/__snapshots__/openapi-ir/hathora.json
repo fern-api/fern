@@ -4360,6 +4360,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePrivateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
@@ -4381,9 +4382,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -4782,6 +4781,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePublicLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
@@ -4803,9 +4803,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5204,6 +5202,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLocalLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
@@ -5225,9 +5224,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5658,6 +5655,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLobbyRequestInitialConfig",
@@ -5679,9 +5677,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -6503,6 +6499,7 @@
                 },
                 "value": {
                   "generatedName": "SetLobbyStateRequestStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "SetLobbyStateRequestState",
@@ -8389,9 +8386,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -9786,9 +9781,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9853,9 +9846,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -9874,9 +9865,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10091,9 +10080,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10108,9 +10095,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10245,9 +10230,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10262,9 +10245,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10279,9 +10260,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10320,9 +10299,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10401,9 +10378,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -10422,9 +10397,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10565,9 +10538,7 @@
                       },
                       "type": "reference"
                     },
-                    "audiences": [],
-                    "readonly": false,
-                    "writeonly": false
+                    "audiences": []
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -10735,9 +10706,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10752,9 +10721,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10812,9 +10779,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -10859,6 +10824,7 @@
                 },
                 "value": {
                   "generatedName": "LobbyStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "LobbyState",
@@ -10885,6 +10851,7 @@
               },
               "value": {
                 "generatedName": "LobbyInitialConfigValue",
+                "groupName": [],
                 "type": "unknown"
               },
               "generatedName": "LobbyInitialConfig",
@@ -10980,9 +10947,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10997,9 +10962,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11014,9 +10977,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11449,9 +11410,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11466,9 +11425,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11483,9 +11440,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11500,9 +11455,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11603,9 +11556,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11620,9 +11571,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11651,9 +11600,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11668,9 +11615,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11685,9 +11630,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11836,9 +11779,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11873,9 +11814,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11890,9 +11829,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11921,9 +11858,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11952,9 +11887,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11997,9 +11930,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],

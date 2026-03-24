@@ -3,6 +3,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import {
+    collectBuilderFieldsFromExtends,
+    collectBuilderFieldsFromProperties,
+    writeBuilderCode
+} from "../utils/builderUtils.js";
 import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
@@ -28,13 +33,35 @@ export class StructGenerator {
     }
 
     public generate(): RustFile {
-        const rustStruct = this.generateStructForTypeDeclaration();
-        const fileContents = this.generateFileContents(rustStruct);
+        const properties = this.getEffectiveProperties();
+        const rustStruct = this.generateStructForTypeDeclaration(properties);
+        const fileContents = this.generateFileContents(rustStruct, properties);
         return new RustFile({
             filename: this.getFilename(),
             directory: this.getFileDirectory(),
             fileContents
         });
+    }
+
+    private get typeId(): string {
+        return this.typeDeclaration.name.typeId;
+    }
+
+    private get structName(): string {
+        return this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
+    }
+
+    /**
+     * Returns the effective properties for this struct, excluding any fields
+     * consumed by the parent discriminant (e.g. websocket server message types
+     * where the parent enum uses `#[serde(tag = "type")]` which consumes the
+     * `type` field for dispatch).
+     */
+    private getEffectiveProperties(): FernIr.ObjectProperty[] {
+        if (this.context.websocketServerMessageTypeIds.has(this.typeId)) {
+            return this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type");
+        }
+        return this.objectTypeDeclaration.properties;
     }
 
     private getFilename(): string {
@@ -45,7 +72,7 @@ export class StructGenerator {
         return RelativeFilePath.of("src");
     }
 
-    private generateFileContents(rustStruct: rust.Struct): string {
+    private generateFileContents(rustStruct: rust.Struct, properties: FernIr.ObjectProperty[]): string {
         const writer = rust.writer();
 
         // Add use statements
@@ -55,31 +82,35 @@ export class StructGenerator {
         // Write the struct
         rustStruct.write(writer);
 
+        // Write builder code
+        const inheritedFields = collectBuilderFieldsFromExtends(
+            this.objectTypeDeclaration.extends,
+            this.context
+        );
+        const propertyFields = collectBuilderFieldsFromProperties(properties, this.context, this.typeId);
+        writeBuilderCode(writer, this.structName, [...inheritedFields, ...propertyFields], {
+            hasExtraProperties: this.objectTypeDeclaration.extraProperties
+        });
+
         return writer.toString();
     }
 
-    private generateStructForTypeDeclaration(): rust.Struct {
+    private generateStructForTypeDeclaration(properties: FernIr.ObjectProperty[]): rust.Struct {
         const fields: rust.Field[] = [];
 
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
 
-        // Determine if this type is a WebSocket server message body type.
-        // If so, skip the `type` property because the parent enum uses
-        // #[serde(tag = "type")] which consumes that field for dispatch.
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-        const skipTypeField = typeId != null && this.context.websocketServerMessageTypeIds.has(typeId);
-
         // Add regular properties
-        const properties = skipTypeField
-            ? this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type")
-            : this.objectTypeDeclaration.properties;
-        fields.push(
-            ...properties.map((property) => this.generateRustFieldForProperty(property))
-        );
+        fields.push(...properties.map((property) => this.generateRustFieldForProperty(property)));
+
+        // Add extra properties field if the object allows additional properties
+        if (this.objectTypeDeclaration.extraProperties) {
+            fields.push(this.generateExtraPropertiesField());
+        }
 
         return rust.struct({
-            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
+            name: this.structName,
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
             fields,
@@ -97,6 +128,11 @@ export class StructGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
+        // Default - add if all fields support Default
+        if (this.canDeriveDefault()) {
+            derives.push("Default");
+        }
+
         // PartialEq - for equality comparisons
         if (this.needsPartialEq()) {
             derives.push("PartialEq");
@@ -109,19 +145,26 @@ export class StructGenerator {
 
         attributes.push(Attribute.derive(derives));
 
+        // Add #[serde(transparent)] for single-property structs used in undiscriminated unions.
+        // This makes the struct serialize/deserialize as the inner value directly,
+        // which is required for untagged enum variant matching.
+        if (this.isSinglePropertyUndiscriminatedUnionMember()) {
+            attributes.push(Attribute.serde.transparent());
+        }
+
         return attributes;
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty): rust.Field {
-        // Find the typeId for this struct to detect recursive fields
-        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
-
         // Check if this field creates a recursive reference
-        const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+        const isRecursive = isFieldRecursive(this.typeId, property.valueType, this.context.ir);
 
         // Generate the field type, wrapping in Box<T> if recursive
         const fieldType = generateFieldType(property, this.context, isRecursive);
-        const fieldAttributes = generateFieldAttributes(property, this.context);
+        const isTransparent = this.isSinglePropertyUndiscriminatedUnionMember();
+        // When struct is transparent, skip field-level serde attributes (rename, default, etc.)
+        // as they are incompatible with #[serde(transparent)]
+        const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
@@ -134,6 +177,24 @@ export class StructGenerator {
                       summary: property.docs
                   })
                 : undefined
+        });
+    }
+
+    /**
+     * Generates a catch-all field for extra/unknown properties using
+     * `#[serde(flatten)] pub extra: HashMap<String, serde_json::Value>`.
+     */
+    private generateExtraPropertiesField(): rust.Field {
+        return rust.field({
+            name: "extra",
+            type: rust.Type.reference(
+                rust.reference({ name: "std::collections::HashMap<String, serde_json::Value>" })
+            ),
+            visibility: PUBLIC,
+            attributes: [Attribute.serde.flatten()],
+            docs: rust.docComment({
+                summary: "Additional properties that are not part of the defined schema."
+            })
         });
     }
 
@@ -180,6 +241,10 @@ export class StructGenerator {
     }
 
     private needsDeriveHashAndEq(): boolean {
+        // HashMap<String, Value> does not implement Hash or Eq
+        if (this.objectTypeDeclaration.extraProperties) {
+            return false;
+        }
         // Check if all field types can support Hash and Eq derives
         const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.objectTypeDeclaration.properties, this.context);
         const isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
@@ -196,5 +261,90 @@ export class StructGenerator {
             );
         });
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
+    }
+
+    /**
+     * Check if this struct is a single-property wrapper used in an undiscriminated union.
+     * Such structs need #[serde(transparent)] so they serialize/deserialize as the
+     * inner value directly, enabling correct untagged enum variant matching.
+     */
+    private isSinglePropertyUndiscriminatedUnionMember(): boolean {
+        // Must have exactly one property and no extends (inheritance)
+        if (this.objectTypeDeclaration.properties.length !== 1 || this.objectTypeDeclaration.extends.length > 0) {
+            return false;
+        }
+        // Don't apply transparent if the single property is an enum type.
+        // Enums serialize as their variant string (e.g. "text.done"), so transparent
+        // would lose the enclosing object structure (e.g. {"type":"text.done"}).
+        const singleProperty = this.objectTypeDeclaration.properties[0]!;
+        if (singleProperty.valueType.type === "named") {
+            const referencedType = this.context.ir.types[singleProperty.valueType.typeId];
+            if (referencedType?.shape.type === "enum") {
+                return false;
+            }
+        }
+        // Check if this type is referenced by any undiscriminated union
+        return this.context.undiscriminatedUnionMemberTypeIds.has(this.typeDeclaration.name.typeId);
+    }
+
+    private canDeriveDefault(): boolean {
+        // Check if all properties support Default
+        const propertiesSupport = this.objectTypeDeclaration.properties.every((property) => {
+            return this.typeSupportsDefault(property.valueType, new Set());
+        });
+        // Check if all inherited types support Default
+        const extendsSupport = this.objectTypeDeclaration.extends.every((parentType) => {
+            return this.namedTypeSupportsDefault(parentType.typeId, new Set());
+        });
+        return propertiesSupport && extendsSupport;
+    }
+
+    private typeSupportsDefault(typeRef: FernIr.TypeReference, visited: Set<string>): boolean {
+        if (typeRef.type === "primitive") {
+            return true; // All Rust primitives implement Default
+        }
+        if (typeRef.type === "container") {
+            return typeRef.container._visit({
+                list: () => true,
+                map: () => true,
+                set: () => true,
+                optional: () => true,
+                nullable: () => true,
+                literal: () => false,
+                _other: () => false
+            });
+        }
+        if (typeRef.type === "named") {
+            return this.namedTypeSupportsDefault(typeRef.typeId, visited);
+        }
+        if (typeRef.type === "unknown") {
+            return true; // serde_json::Value implements Default
+        }
+        return false;
+    }
+
+    private namedTypeSupportsDefault(typeId: string, visited: Set<string>): boolean {
+        if (visited.has(typeId)) {
+            return false; // Prevent infinite recursion, be conservative
+        }
+        visited.add(typeId);
+        const typeDecl = this.context.ir.types[typeId];
+        if (!typeDecl) {
+            return false;
+        }
+        if (typeDecl.shape.type === "object") {
+            // Object supports Default if all its fields support Default
+            return typeDecl.shape.properties.every((prop) =>
+                this.typeSupportsDefault(prop.valueType, visited)
+            );
+        }
+        if (typeDecl.shape.type === "enum") {
+            return false; // Enums don't derive Default (no #[default] variant)
+        }
+        if (typeDecl.shape.type === "alias") {
+            return this.typeSupportsDefault(typeDecl.shape.aliasOf, visited);
+        }
+        // Unions don't derive Default
+        return false;
     }
 }

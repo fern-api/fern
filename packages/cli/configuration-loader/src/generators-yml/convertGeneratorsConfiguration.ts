@@ -43,12 +43,15 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    inferDefaultEnvironment: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    inferForwardCompatible: undefined,
+    coerceConstsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -169,6 +172,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        inferDefaultEnvironment: settings?.["infer-default-environment"],
         groupMultiApiEnvironments:
             settings != null && "group-multi-api-environments" in settings
                 ? settings["group-multi-api-environments"]
@@ -177,7 +181,9 @@ export function parseBaseApiDefinitionSettingsSchema(
             settings?.["remove-discriminants-from-schemas"]
         ),
         pathParameterOrder: settings?.["path-parameter-order"],
-        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
+        inferForwardCompatible: settings?.["infer-forward-compatible"],
+        coerceConstsTo: settings?.["coerce-consts-to"]
     };
 }
 
@@ -643,11 +649,17 @@ function getApiOverride({
     generator: generatorsYml.GeneratorInvocationSchema;
 }): generatorsYml.GeneratorInvocation["apiOverride"] {
     // Generator-level overrides take priority
-    if (generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null) {
+    if (
+        generator.api?.specs != null ||
+        generator.api?.auth != null ||
+        generator.api?.["auth-schemes"] != null ||
+        generator.api?.headers != null
+    ) {
         return {
             specs: generator.api?.specs,
             auth: generator.api?.auth,
-            "auth-schemes": generator.api?.["auth-schemes"]
+            "auth-schemes": generator.api?.["auth-schemes"],
+            headers: generator.api?.headers
         };
     }
 

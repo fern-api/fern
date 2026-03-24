@@ -6,15 +6,16 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
 	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -67,11 +68,10 @@ func VerifyRequestCount(
 func TestEndpointsHttpMethodsTestGetWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -90,11 +90,10 @@ func TestEndpointsHttpMethodsTestGetWithWireMock(
 func TestEndpointsHttpMethodsTestPostWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -116,11 +115,10 @@ func TestEndpointsHttpMethodsTestPostWithWireMock(
 func TestEndpointsHttpMethodsTestPutWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -143,11 +141,10 @@ func TestEndpointsHttpMethodsTestPutWithWireMock(
 func TestEndpointsHttpMethodsTestPatchWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -215,11 +212,10 @@ func TestEndpointsHttpMethodsTestPatchWithWireMock(
 func TestEndpointsHttpMethodsTestDeleteWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)

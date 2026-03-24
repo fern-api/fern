@@ -86,6 +86,12 @@ export class DynamicTypeMapper extends WithGeneration {
                 });
 
             case "undiscriminatedUnion":
+                if (this.settings.shouldGenerateUndiscriminatedUnions) {
+                    return this.csharp.classReference({
+                        origin: named.declaration,
+                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                    });
+                }
                 return this.OneOf.OneOf(
                     named.types.map((typeReference) => {
                         return this.convert({ typeReference });

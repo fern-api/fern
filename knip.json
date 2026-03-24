@@ -21,6 +21,7 @@
     "@fern-typescript/*",
     "@fern-fern/*",
     "vitest",
+    "@vitest/coverage-v8",
     "typescript",
     "@types/*",
     "ws",
@@ -43,7 +44,9 @@
     "yazl",
     "diff",
     "@open-rpc/meta-schema",
-    "readable-stream"
+    "readable-stream",
+    "zod-to-json-schema",
+    "@sentry/cli"
   ],
   "ignore": ["node_modules/**", "**/dist/**", "**/lib/**", "**/generated/**", "**/docker/**", "**/__test__/**"]
 }

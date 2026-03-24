@@ -1,0 +1,163 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates list example 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates map example 1`] = `
+"{
+    "key1": "val1"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as Set<> when includeSerdeLayer is true and items are enum (treated as primitive) 1`] = `"new Set(["RED", "BLUE"])"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is false 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is true but items are non-primitive 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles container literal key via getExampleAsPropertyName 1`] = `
+"{
+    "literal_key": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles named alias key via getExampleAsPropertyName 1`] = `
+"{
+    "alias_val": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles named undiscriminatedUnion key via getExampleAsPropertyName 1`] = `
+"{
+    "union_val": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > recursively resolves named alias key 1`] = `
+"{
+    "user-123": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > recursively resolves named undiscriminated union key 1`] = `
+"{
+    "some-key": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses boolean identifier for boolean key 1`] = `
+"{
+    true: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses computed property name for named enum key 1`] = `
+"{
+    ["ENUM_VALUE"]: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses literal container key as property name 1`] = `
+"{
+    "literal_key": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for double key 1`] = `
+"{
+    1.5: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for float key 1`] = `
+"{
+    3.14: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for integer key 1`] = `
+"{
+    1: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for long key 1`] = `
+"{
+    100: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for uint key 1`] = `
+"{
+    5: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for uint64 key 1`] = `
+"{
+    999: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for base64 key 1`] = `
+"{
+    "aGVsbG8=": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for bigInteger key 1`] = `
+"{
+    "9999999999999999999": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for date key 1`] = `
+"{
+    "2024-01-15": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for negative double key 1`] = `
+"{
+    "-1.5": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for negative float key 1`] = `
+"{
+    "-3.14": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for negative integer key 1`] = `
+"{
+    "-1": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for negative long key 1`] = `
+"{
+    "-100": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for uuid key 1`] = `
+"{
+    "550e8400-e29b-41d4-a716-446655440000": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown array 1`] = `
+"[
+    1,
+    2,
+    3
+]"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown object 1`] = `
+"{
+    "key": "value"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown string 1`] = `""just a string""`;

@@ -9,6 +9,7 @@ describe("UserClient", () => {
         const client = new SeedVersionClient({ maxRetries: 0, xApiVersion: "2.0.0", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", name: "name" };
+
         server.mockEndpoint().get("/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getUser("userId");

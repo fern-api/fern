@@ -1,5 +1,402 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.26.6
+  changelogEntry:
+    - summary: |
+        Make multi-variant enums forward-compatible by default with `__Unknown(String)` catch-all,
+        matching C#/TypeScript behavior. Single-variant enums (type discriminants used in
+        `#[serde(untagged)]` unions) remain strict to preserve correct variant dispatch.
+        Additionally, generate `#[serde(flatten)] pub extra: HashMap<String, serde_json::Value>`
+        on structs with `extraProperties` to capture unknown fields from the server.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 0.26.5
+  changelogEntry:
+    - summary: |
+        Remove `Default` impl from `ApiClientBuilder` to improve forward compatibility.
+        The `..Default::default()` spread pattern on builder types can silently swallow
+        new required fields added in future versions. Removing `Default` ensures that
+        consumers are guided by the compiler to handle any new fields explicitly.
+        Updated README WebSocket snippets to use explicit `ClientConfig` construction
+        instead of the `..Default::default()` spread.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 0.26.4
+  changelogEntry:
+    - summary: |
+        Add `Default` implementation for `ApiClientBuilder` and update README snippet generation
+        to use a simpler struct-based client initialization pattern with `ClientConfig { token: ..., ..Default::default() }`.
+      type: chore
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 0.26.3
+  changelogEntry:
+    - summary: |
+        Skip the `Sec-WebSocket-Protocol` header in WebSocket connections. This header is
+        reserved for RFC 6455 subprotocol negotiation and is handled internally by tungstenite.
+        Previously, including it as a regular HTTP header caused tungstenite to fail the
+        handshake when the server didn't echo it back.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.26.2
+  changelogEntry:
+    - summary: |
+        Include all optional fields as `Option<T>` parameters in convenience constructors.
+        Previously, `{variant}_with_{field}` constructors only accepted the promoted field and
+        defaulted all other optional fields to `None`. Now they accept all other optional fields
+        as `Option<T>` parameters, giving callers full control over all fields. For example,
+        `assistant_with_tool_calls` now accepts `(content: Option<Content>, ..., tool_calls: Vec<ToolCall>)`
+        instead of just `(tool_calls: Vec<ToolCall>)`.
+      type: chore
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.26.1
+  changelogEntry:
+    - summary: |
+        Fix convenience constructors for union variants whose optional fields have nested
+        optional/nullable IR wrappers (e.g. `optional<nullable<string>>` from OpenAPI).
+        Previously only one layer was unwrapped, leaving the parameter as `Option<T>` instead
+        of `T`, which caused `E0308 mismatched types` compilation errors. Now all
+        optional/nullable layers are stripped to produce the correct bare type.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.26.0
+  changelogEntry:
+    - summary: |
+        Generate convenience constructors for discriminated union variants with optional fields.
+        For each optional field in an inlined variant, a `{variant}_with_{field}` constructor is
+        generated that accepts the field as a required parameter (unwrapped from `Option<T>`) while
+        defaulting all other optional fields to `None`. For example, an `Assistant` variant with
+        optional `tool_calls` now gets an `assistant_with_tool_calls(tool_calls: Vec<ToolCall>)`
+        constructor.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.25.1
+  changelogEntry:
+    - summary: |
+        Stop generating empty HTTP client stubs for WebSocket-only subpackages. When an AsyncAPI
+        channel creates a subpackage with no HTTP endpoints (e.g., `realtime`, `tts`), the generator
+        no longer emits redundant empty client structs in `resources/`. The actual WebSocket
+        functionality remains in `src/api/websocket/` via the `WebSocketChannelGenerator`. This
+        removes confusing name collisions between the empty HTTP-based `RealtimeClient` in resources
+        and the functional WebSocket-based `RealtimeClient` in the websocket module.
+      type: fix
+    - summary: |
+        WebSocket connector now always auto-injects the Authorization header from the stored
+        client token, matching the TypeScript SDK experience where `client.realtime.connect()`
+        works without manually passing auth. Previously, channels with an explicit Authorization
+        header in the AsyncAPI spec required users to pass the token themselves.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.25.0
+  changelogEntry:
+    - summary: |
+        Improve undiscriminated union design with `snake_case` method names, better variant naming,
+        deduplicating type references, and more.
+      type: feat
+  createdAt: "2026-03-22"
+  irVersion: 65
+- version: 0.24.1
+  changelogEntry:
+    - summary: |
+        Fix `mod.rs` module declarations not being removed for types inlined into discriminated
+        union variants. The generator was deleting the struct files for inlined types but still
+        emitting `pub mod` and `pub use` declarations for them, causing `error[E0583]: file not
+        found for module` compilation errors in generated SDKs.
+      type: fix
+  createdAt: "2026-03-22"
+  irVersion: 65
+
+- version: 0.24.0
+  changelogEntry:
+    - summary: |
+        Improve discriminated union design with inlined variants and constructors. When an inner
+        type is only referenced by a single union variant, its fields are now inlined directly into
+        the enum variant instead of using a wrapper struct with `#[serde(flatten)]`. All enum
+        variants now include `#[non_exhaustive]` for forward compatibility, and constructor methods
+        are generated for every variant (required since `#[non_exhaustive]` prevents direct
+        construction outside the crate). Empty variants use struct syntax (`Variant {}`) instead
+        of unit syntax.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Generate builders for all struct types. The builder pattern is inspired by
+        other popular Rust SDKs (e.g. AWS), so that users now have the option between the
+        following:
+
+        1. The explicit constructor pattern (i.e. specify `None` values for optional fields).
+        2. The `..Default::default()` spread when a type has many optional fields.
+        3. The builder pattern when a type has many optional fields and cannot support the `..Default::default()` approach.
+      type: feat
+  createdAt: "2026-03-21"
+  irVersion: 65
+
+- version: 0.22.1
+  changelogEntry:
+    - summary: |
+        Fix double-pin compilation error in `SseStream` timeout implementation. The `deadline`
+        field was declared as `Pin<Box<tokio::time::Sleep>>` with a `#[pin]` attribute, causing
+        `pin_project` to produce `Pin<&mut Pin<Box<Sleep>>>` which lacks `reset()` and `poll()`
+        methods. Changed the field type to `tokio::time::Sleep` (unpinned, letting `pin_project`
+        handle pinning) so the projected type is `Pin<&mut Sleep>` which correctly exposes
+        the required methods.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Add per-event timeout to SSE stream methods. The `SseStream` now accepts a timeout
+        duration and yields `ApiError::StreamTimeout` if no event is received within that
+        period. The timeout is derived from `RequestOptions.timeout_seconds` (per-request)
+        or `ClientConfig.timeout` (client-level), preventing indefinite blocking when the
+        server stops sending events.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add forward-compatible enum support. When `forward-compatible: true` is set on an enum
+        type, the generated Rust enum includes a `#[non_exhaustive]` attribute, a hidden
+        `__Unknown(String)` variant for unrecognized values, and custom Serialize/Deserialize
+        implementations that gracefully handle unknown enum values from the server.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.20.4
+  changelogEntry:
+    - summary: |
+        Derive `Default` on request body types (inlined and query-parameter requests) when all
+        fields have types that implement `Default` in Rust, not only when all fields are `Option<T>`.
+        Previously, a request like `ChatRequest { stream: bool, ... }` would not get `Default`
+        because `bool` is not `Option`, even though `bool` implements `Default`. Now the generator
+        uses the same `canDeriveDefault()` logic already used for model structs.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets and wire tests generating `Some(Some(value))` for optional+nullable
+        fields. Since `Type.option()` now collapses `Option<Option<T>>` to `Option<T>`, the
+        literal mapper must also collapse nested optional/nullable wrapping to produce `Some(value)`
+        instead of `Some(Some(value))`.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.2
+  changelogEntry:
+    - summary: |
+        Fix inlined request type documentation to use the schema-level description from the
+        OpenAPI spec instead of a generic fallback. Previously, all inlined request types used
+        the same `Request type for API operation` docstring. Now, the actual schema description
+        is propagated and used when available.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+
+- version: 0.20.1
+  changelogEntry:
+    - summary: |
+        Fix unexpected_cfgs warnings for multipart and sse features by conditionally including
+        the execute_multipart_request and execute_sse_request methods in http_client.rs only when
+        the corresponding features are needed. Also fix unused Utc import in query_parameter_builder.rs
+        and unused SerdeError import in http_client.rs.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.20.0
+  changelogEntry:
+    - summary: |
+        Reduce dependency footprint by conditionally including dependencies based on IR usage.
+        Dependencies like chrono, uuid, num-bigint, ordered-float, and base64 are now only added
+        to Cargo.toml when the corresponding types are actually used in the API spec. Associated
+        as-is files (flexible_datetime.rs, base64_bytes.rs, bigint_string.rs) and their module
+        declarations are also conditionally included. Template files for query_parameter_builder.rs,
+        http_client.rs, and prelude.rs use template variables to omit unused code sections.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.19.11
+  changelogEntry:
+    - summary: |
+        Use `&str` instead of `&String` in generated method signatures, union getter methods,
+        and undiscriminated union accessor methods. `&str` is more idiomatic Rust and more
+        flexible, accepting both `&String` and string literals.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.19.10
+  changelogEntry:
+    - summary: |
+        Replace `unwrap_or_default()` with proper error propagation via `map_err(ApiError::Serialization)?`
+        when serializing request bodies with `serde_json::to_value`. Previously, serialization failures
+        were silently swallowed and replaced with a default JSON null value. Now they correctly return
+        an `ApiError::Serialization` error to the caller.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 62
+- version: 0.19.9
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant naming for container types with primitive inner types.
+        Previously, variants like `Vec<f64>` produced index-based names (e.g. `List1`). Now they
+        derive meaningful names from the inner type (e.g. `DoubleList`). Also applies to set, map,
+        optional, and nullable containers.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.8
+  changelogEntry:
+    - summary: |
+        Fixes an issue where redundant, duplicative `Option<T>` type references were generated.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.7
+  changelogEntry:
+    - summary: |
+        Add root-level service endpoint support on the main client struct. WebSocket
+        connectors now support implicit Bearer auth, auto-injecting the token from
+        ClientConfig when no explicit Authorization header is defined.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.6
+  changelogEntry:
+    - summary: |
+        Handle empty HTTP response bodies by returning an ApiError::Http instead of
+        attempting JSON deserialization. Normalize HTTP(S) URLs to WS(S) schemes for
+        WebSocket connections. Switch WebSocket server message enums to untagged serde
+        representation.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 62
+
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Fix unresolved import error when WebSocket channels exist in the API spec but
+        `enableWebsockets` is not enabled. The root client no longer emits
+        `use crate::api::websocket::...` imports when WebSocket generation is disabled,
+        preventing compilation failures on generated SDKs.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 62
+
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Handle bytes endpoints, query name collisions, and WireMock mapping fixes
+        for wire test generation. Bytes endpoints with query params now generate
+        individual parameter arguments instead of a struct. Query request type names
+        include subpackage prefixes when collisions exist. WireMock mappings strip
+        .000 milliseconds from datetime strings and add fallback mappings for bytes
+        endpoints. Allow-multiple query parameters are now correctly wrapped in list types.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 62
+
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of crashing the entire generation, making it easier to diagnose issues.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 62
+
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Add WebSocket connector pattern and README code snippets when `enableWebsockets: true`.
+        WebSocket channels are now accessible through the root client via connector structs
+        (e.g., `client.realtime.connect(...)`) matching Python and Java generator patterns.
+        Generated README includes a Websockets section with connect, send, receive, and close examples.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate module declarations and WebSocket type name collisions when multiple
+        subpackages (e.g., HTTP REST and AsyncAPI WebSocket) map to the same namespace. Deduplicates
+        `pub mod` declarations, client re-exports, and doc comments. WebSocket channel generators
+        now use collision-aware type names (e.g., `AuthResponse2` instead of `AuthResponse`) to
+        correctly reference disambiguated types in the trading namespace.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.2
+  changelogEntry:
+    - summary: |
+        Fix Rust module naming collision when a subpackage has children that share the same
+        directory name as the parent's client file. Previously, both `X.rs` and `X/mod.rs` could
+        be generated in the same directory, causing `rustfmt` errors like "file for module found
+        at both". Now the client code is inlined into the unified `mod.rs` when any children exist,
+        and child re-exports are only emitted for subpackages with services or endpoints.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords (e.g., `type`, `match`, `self`) when used as path parameter
+        names in generated client methods. Previously, reserved keywords like `type` were emitted
+        as-is, causing `rustfmt` and compilation failures. Now they are properly escaped with the
+        `r#` prefix (e.g., `r#type`).
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.0
   changelogEntry:
     - summary: |

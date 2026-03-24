@@ -29,5 +29,5 @@ export declare class Page<T, R = unknown> implements AsyncIterable<T> {
      */
     hasNextPage(): boolean;
     private iterMessages;
-    [Symbol.asyncIterator](): AsyncIterator<T, void, any>;
+    [Symbol.asyncIterator](): AsyncIterator<T, void, unknown>;
 }

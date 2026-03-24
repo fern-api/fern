@@ -15,6 +15,7 @@ describe("BigunionClient", () => {
             "archived-at": "2024-01-15T09:30:00Z",
             value: "value",
         };
+
         server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.bigunion.get("id");
@@ -38,6 +39,7 @@ describe("BigunionClient", () => {
             value: "value",
         };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .patch("")
@@ -77,6 +79,7 @@ describe("BigunionClient", () => {
             },
         ];
         const rawResponseBody = { string: true };
+
         server
             .mockEndpoint()
             .patch("/many")

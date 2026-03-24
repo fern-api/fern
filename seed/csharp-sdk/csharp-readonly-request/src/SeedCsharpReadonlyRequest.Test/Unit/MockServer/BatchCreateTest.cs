@@ -5,6 +5,7 @@ using SeedCsharpReadonlyRequest.Test.Utils;
 namespace SeedCsharpReadonlyRequest.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class BatchCreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

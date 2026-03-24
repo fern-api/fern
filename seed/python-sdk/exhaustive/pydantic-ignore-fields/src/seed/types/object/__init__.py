@@ -7,10 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        DocumentedUnknownType,
         DoubleOptional,
+        MapOfDocumentedUnknownType,
         NestedObjectWithOptionalField,
         NestedObjectWithRequiredField,
         ObjectWithDatetimeLikeString,
+        ObjectWithDocumentedUnknownType,
         ObjectWithMapOfMap,
         ObjectWithOptionalField,
         ObjectWithRequiredField,
@@ -24,12 +27,15 @@ if typing.TYPE_CHECKING:
         ObjectWithRequiredFieldError,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "DocumentedUnknownType": ".types",
     "DoubleOptional": ".types",
+    "MapOfDocumentedUnknownType": ".types",
     "NestedObjectWithOptionalField": ".types",
     "NestedObjectWithOptionalFieldError": ".errors",
     "NestedObjectWithRequiredField": ".types",
     "NestedObjectWithRequiredFieldError": ".errors",
     "ObjectWithDatetimeLikeString": ".types",
+    "ObjectWithDocumentedUnknownType": ".types",
     "ObjectWithMapOfMap": ".types",
     "ObjectWithOptionalField": ".types",
     "ObjectWithOptionalFieldError": ".errors",
@@ -62,12 +68,15 @@ def __dir__():
 
 
 __all__ = [
+    "DocumentedUnknownType",
     "DoubleOptional",
+    "MapOfDocumentedUnknownType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
     "NestedObjectWithRequiredFieldError",
     "ObjectWithDatetimeLikeString",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",

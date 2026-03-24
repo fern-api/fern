@@ -1,8 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
-import java.time.OffsetDateTime;
+import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
+import java.util.HashMap;
 
 public class Example25 {
     public static void main(String[] args) {
@@ -11,11 +11,14 @@ public class Example25 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .object()
-                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
-                        .datetimeLikeString("datetimeLikeString")
-                        .actualDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .build());
+        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
+            {
+                put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
+                    {
+                        put("key", "value");
+                    }
+                }));
+            }
+        });
     }
 }

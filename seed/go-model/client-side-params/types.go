@@ -5,8 +5,9 @@ package clientsideparams
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/client-side-params/fern/internal"
 	time "time"
+
+	internal "github.com/client-side-params/fern/internal"
 )
 
 type Resource struct {

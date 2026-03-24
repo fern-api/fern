@@ -242,6 +242,12 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`;
     }
 
+    public getHttpResponseClassName(): string {
+        return this.customConfig?.["client-class-name"]
+            ? `${this.customConfig["client-class-name"]}HttpResponse`
+            : `${this.getBaseNamePrefix()}HttpResponse`;
+    }
+
     public getEnvironmentClassReference(): java.ClassReference {
         return java.classReference({
             name: this.getEnvironmentClassName(),
@@ -374,15 +380,18 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             if (resultsProperty?.property?.valueType) {
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
-        } else if (pagination.type === "custom") {
-            return undefined;
-        } else {
-            // Handle uri, path, and any future pagination types that have a results property
-            const paginationAny = pagination as unknown as { results?: FernIr.ResponseProperty };
-            const resultsProperty = paginationAny.results;
+        } else if (pagination.type === "uri") {
+            const resultsProperty = pagination.results;
             if (resultsProperty?.property?.valueType) {
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
+        } else if (pagination.type === "path") {
+            const resultsProperty = pagination.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
+        } else if (pagination.type === "custom") {
+            return undefined;
         }
         return undefined;
     }

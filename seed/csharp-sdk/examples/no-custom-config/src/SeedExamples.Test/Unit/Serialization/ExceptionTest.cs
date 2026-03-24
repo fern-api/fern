@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
+using SeedExamples.Test_.Utils;
 
 namespace SeedExamples.Test_;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ExceptionTest
 {
     [NUnit.Framework.Test]
@@ -36,7 +37,7 @@ public class ExceptionTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "generic",
               "exceptionType": "Unavailable",
@@ -44,18 +45,6 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var actualObj = new SeedExamples.Exception(
-            new SeedExamples.Exception.Generic(
-                new ExceptionInfo
-                {
-                    ExceptionType = "Unavailable",
-                    ExceptionMessage = "This component is unavailable!",
-                    ExceptionStacktrace = "<logs>",
-                }
-            )
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<SeedExamples.Exception>(inputJson);
     }
 }

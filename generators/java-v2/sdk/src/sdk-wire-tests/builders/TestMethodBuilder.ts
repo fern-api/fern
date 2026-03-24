@@ -80,8 +80,16 @@ export class TestMethodBuilder {
             }
 
             const expectedRequestJson = testExample.request.body;
-            const expectedResponseJson = testExample.response.body;
+            const rawResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
+
+            // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
+            // the mock response body (served by MockWebServer) and the expected response assertion.
+            // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
+            // RFC 2822 dates would cause DateTimeParseException during deserialization.
+            const expectedResponseJson = rawResponseJson
+                ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                : rawResponseJson;
 
             const mockResponseBody = expectedResponseJson
                 ? JSON.stringify(expectedResponseJson)
@@ -212,36 +220,15 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
-                    // Convert RFC 2822 dates to ISO 8601 Z format in expected response.
-                    // The mock response can contain RFC 2822 dates (the SDK's Rfc2822DateTimeDeserializer handles them),
-                    // but after deserialization and re-serialization, Jackson outputs ISO 8601 with Z for UTC.
-                    const normalizedResponseJson = this.convertRfc2822DatesToIso8601(expectedResponseJson);
-                    const responseWasNormalized =
-                        JSON.stringify(normalizedResponseJson) !== JSON.stringify(expectedResponseJson);
-
-                    // Use the same resource file that was registered for mock setup, or inline for small payloads
-                    if (responseResourcePath && this.resourceWriter && this.currentTestClassName) {
-                        if (responseWasNormalized) {
-                            // Response had RFC 2822 dates that were converted — write a separate normalized resource
-                            const normalizedResourcePath = this.resourceWriter.registerResource(
-                                this.currentTestClassName,
-                                testMethodName,
-                                "expected_response",
-                                normalizedResponseJson
-                            );
-                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                            writer.writeLine(
-                                `String expectedResponseBody = TestResources.loadResource("${normalizedResourcePath}");`
-                            );
-                        } else {
-                            // No date conversion needed — reuse the original mock response resource
-                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                            writer.writeLine(
-                                `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
-                            );
-                        }
+                    // RFC 2822 dates are already converted to ISO 8601 upfront (before mock response registration),
+                    // so the response resource file and expected response use the same normalized data.
+                    if (responseResourcePath) {
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(
+                            `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
+                        );
                     } else {
-                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", normalizedResponseJson);
+                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
                     }
 
                     writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
@@ -302,10 +289,23 @@ export class TestMethodBuilder {
             return `[${value.join(", ")}]`;
         }
         if (typeof value === "object" && value !== null) {
-            // Java serializes objects as JSON strings
-            return JSON.stringify(value);
+            // Java's Map.toString() produces "{key1=value1, key2=value2}"
+            const entries = Object.entries(value);
+            return `{${entries.map(([k, v]) => `${k}=${v}`).join(", ")}}`;
+        }
+        if (typeof value === "string") {
+            return this.normalizeIso8601ForJava(value);
         }
         return String(value);
+    }
+
+    /**
+     * Normalizes ISO 8601 date strings to match Java's OffsetDateTime.toString() output.
+     * Java drops zero seconds (e.g. "2015-07-30T20:00:00Z" → "2015-07-30T20:00Z").
+     */
+    private normalizeIso8601ForJava(value: string): string {
+        // Match ISO 8601 with zero seconds: "2015-07-30T20:00:00Z" or "2015-07-30T20:00:00+00:00"
+        return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}):00(Z|[+-]\d{2}:\d{2})$/, "$1$2");
     }
 
     /**

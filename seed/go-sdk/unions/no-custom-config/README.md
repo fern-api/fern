@@ -30,8 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/unions/fern/client"
     context "context"
+
+    client "github.com/unions/fern/client"
 )
 
 func do() {

@@ -124,6 +124,18 @@ export class Attribute extends AstNode {
             new Attribute({
                 name: "serde",
                 args: [`tag = ${JSON.stringify(tag)}`, `content = ${JSON.stringify(content)}`]
+            }),
+
+        transparent: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["transparent"]
             })
     };
+
+    public static nonExhaustive(): Attribute {
+        return new Attribute({
+            name: "non_exhaustive"
+        });
+    }
 }

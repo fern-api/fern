@@ -5,6 +5,7 @@ package inferredauthimplicitnoexpiry
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/inferred-auth-implicit-no-expiry/fern/internal"
 )
 

@@ -285,7 +285,7 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         for (const header of headers) {
-            const value = values[header.name.name.originalName];
+            const value = values[header.name.wireValue];
             if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({

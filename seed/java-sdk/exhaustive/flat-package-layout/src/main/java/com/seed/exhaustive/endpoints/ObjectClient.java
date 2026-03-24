@@ -8,11 +8,13 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.types.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
+import com.seed.exhaustive.types.types.ObjectWithDocumentedUnknownType;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 import com.seed.exhaustive.types.types.ObjectWithUnknownField;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectClient {
     protected final ClientOptions clientOptions;
@@ -124,6 +126,29 @@ public class ObjectClient {
             ObjectWithUnknownField request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithUnknownField(request, requestOptions)
+                .body();
+    }
+
+    public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request) {
+        return this.rawClient.getAndReturnWithDocumentedUnknownType(request).body();
+    }
+
+    public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDocumentedUnknownType(request, requestOptions)
+                .body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+        return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(
+            Map<String, Object> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfDocumentedUnknownType(request, requestOptions)
                 .body();
     }
 

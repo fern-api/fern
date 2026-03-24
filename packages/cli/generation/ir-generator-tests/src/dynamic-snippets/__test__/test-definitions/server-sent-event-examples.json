@@ -236,6 +236,107 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_completions:EventEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "EventEvent",
+                    "camelCase": {
+                        "unsafeName": "eventEvent",
+                        "safeName": "eventEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event_event",
+                        "safeName": "event_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT_EVENT",
+                        "safeName": "EVENT_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EventEvent",
+                        "safeName": "EventEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_completions:ErrorEvent": {
             "type": "object",
             "declaration": {
@@ -369,6 +470,178 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_completions:StreamEventContextProtocol": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamEventContextProtocol",
+                    "camelCase": {
+                        "unsafeName": "streamEventContextProtocol",
+                        "safeName": "streamEventContextProtocol"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_event_context_protocol",
+                        "safeName": "stream_event_context_protocol"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL",
+                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEventContextProtocol",
+                        "safeName": "StreamEventContextProtocol"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "completion": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:CompletionEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "completion",
+                            "camelCase": {
+                                "unsafeName": "completion",
+                                "safeName": "completion"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completion",
+                                "safeName": "completion"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETION",
+                                "safeName": "COMPLETION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completion",
+                                "safeName": "Completion"
+                            }
+                        },
+                        "wireValue": "completion"
+                    },
+                    "properties": []
+                },
+                "error": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:ErrorEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "error",
+                            "camelCase": {
+                                "unsafeName": "error",
+                                "safeName": "error"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error",
+                                "safeName": "error"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR",
+                                "safeName": "ERROR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Error",
+                                "safeName": "Error"
+                            }
+                        },
+                        "wireValue": "error"
+                    },
+                    "properties": []
+                },
+                "notification": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:EventEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "notification",
+                            "camelCase": {
+                                "unsafeName": "notification",
+                                "safeName": "notification"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "notification",
+                                "safeName": "notification"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NOTIFICATION",
+                                "safeName": "NOTIFICATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Notification",
+                                "safeName": "Notification"
+                            }
+                        },
+                        "wireValue": "notification"
+                    },
+                    "properties": []
+                }
+            }
         },
         "type_completions:StreamEvent": {
             "type": "discriminatedUnion",
@@ -792,6 +1065,190 @@
                         "pascalCase": {
                             "unsafeName": "StreamEventsRequest",
                             "safeName": "StreamEventsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "completions",
+                                "camelCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMPLETIONS",
+                                    "safeName": "COMPLETIONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Completions",
+                                    "safeName": "Completions"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "query",
+                                    "camelCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "QUERY",
+                                        "safeName": "QUERY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Query",
+                                        "safeName": "Query"
+                                    }
+                                },
+                                "wireValue": "query"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_completions.streamEventsContextProtocol": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamEventsContextProtocol",
+                    "camelCase": {
+                        "unsafeName": "streamEventsContextProtocol",
+                        "safeName": "streamEventsContextProtocol"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_events_context_protocol",
+                        "safeName": "stream_events_context_protocol"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENTS_CONTEXT_PROTOCOL",
+                        "safeName": "STREAM_EVENTS_CONTEXT_PROTOCOL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEventsContextProtocol",
+                        "safeName": "StreamEventsContextProtocol"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream-events-context-protocol"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "StreamEventsContextProtocolRequest",
+                        "camelCase": {
+                            "unsafeName": "streamEventsContextProtocolRequest",
+                            "safeName": "streamEventsContextProtocolRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream_events_context_protocol_request",
+                            "safeName": "stream_events_context_protocol_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST",
+                            "safeName": "STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StreamEventsContextProtocolRequest",
+                            "safeName": "StreamEventsContextProtocolRequest"
                         }
                     },
                     "fernFilepath": {

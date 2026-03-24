@@ -2,3 +2,4 @@
 
 export { RealtimeNoAuthClient } from "./client/Client.js";
 export * from "./client/index.js";
+export { RealtimeNoAuthSocket } from "./client/Socket.js";

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -43,7 +42,7 @@ public final class GetMetadataRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("tag")
+    @JsonIgnore
     public Optional<List<String>> getTag() {
         return tag;
     }
@@ -53,7 +52,7 @@ public final class GetMetadataRequest {
         return xApiVersion;
     }
 
-    @JsonProperty("shallow")
+    @JsonIgnore
     public Optional<Boolean> getShallow() {
         return shallow;
     }

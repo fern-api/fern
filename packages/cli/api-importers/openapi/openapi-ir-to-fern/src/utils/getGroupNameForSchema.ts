@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import type { Schema, SdkGroupName } from "@fern-api/openapi-ir";
 
 export function getGroupNameForSchema(schema: Schema): SdkGroupName | undefined {
     switch (schema.type) {
@@ -12,11 +12,10 @@ export function getGroupNameForSchema(schema: Schema): SdkGroupName | undefined 
         case "optional":
         case "nullable":
         case "primitive":
+        case "unknown":
             return schema.groupName ?? undefined;
         case "oneOf":
             return schema.value.groupName ?? undefined;
-        case "unknown":
-            return undefined;
         default:
             assertNever(schema);
     }

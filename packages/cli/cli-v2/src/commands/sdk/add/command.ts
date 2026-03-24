@@ -9,6 +9,7 @@ import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -46,6 +47,12 @@ export class AddCommand {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
             });
+        }
+
+        const sdkChecker = new SdkChecker({ context });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
+        if (sdkCheckResult.errorCount > 0) {
+            throw CliError.exit();
         }
 
         const existingTargets = workspace.sdks?.targets ?? [];
@@ -201,7 +208,7 @@ export class AddCommand {
             newTarget.group = [group];
         }
 
-        editor.addTarget(language, newTarget);
+        await editor.addTarget(language, newTarget);
         await editor.save();
     }
 
@@ -245,7 +252,7 @@ export class AddCommand {
     }
 }
 
-export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addAddCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new AddCommand();
     command(
         cli,
@@ -273,10 +280,8 @@ export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void 
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

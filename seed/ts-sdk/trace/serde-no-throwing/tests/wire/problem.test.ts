@@ -59,6 +59,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { type: "success", value: "string" };
+
         server
             .mockEndpoint()
             .post("/problem-crud/create")
@@ -225,6 +226,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { problemVersion: 1 };
+
         server
             .mockEndpoint()
             .post("/problem-crud/update/problemId")
@@ -382,6 +384,7 @@ describe("ProblemClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .post("/problem-crud/default-starter-files")

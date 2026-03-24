@@ -10,6 +10,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { bar: "bar" };
+
         server
             .mockEndpoint()
             .post("/foo1")
@@ -32,6 +33,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo1")
@@ -53,6 +55,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo1")
@@ -74,6 +77,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo1")
@@ -95,6 +99,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { bar: "bar" };
+
         server
             .mockEndpoint()
             .post("/foo2")
@@ -117,6 +122,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo2")
@@ -138,6 +144,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo2")
@@ -159,6 +166,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo2")
@@ -180,6 +188,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo2")
@@ -201,6 +210,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { bar: "hello" };
+
         server
             .mockEndpoint()
             .post("/foo3")
@@ -223,6 +233,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { message: "Too much foo", code: 1 };
+
         server
             .mockEndpoint()
             .post("/foo3")
@@ -244,6 +255,7 @@ describe("SimpleClient", () => {
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { message: "Too little foo", code: 2 };
+
         server
             .mockEndpoint()
             .post("/foo3")

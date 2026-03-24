@@ -5,12 +5,13 @@ package service
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	http "net/http"
+
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
 	internal "github.com/file-upload/fern/internal"
 	option "github.com/file-upload/fern/option"
-	io "io"
-	http "net/http"
 )
 
 type RawClient struct {

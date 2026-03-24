@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -65,11 +66,10 @@ func VerifyRequestCount(
 func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -92,11 +92,10 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -123,11 +122,10 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -149,11 +147,10 @@ func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -177,11 +174,10 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -203,11 +199,10 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -231,11 +226,10 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -259,11 +253,10 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	t *testing.T,
 ) {
-	wiremockURL := os.Getenv("WIREMOCK_URL")
-	if wiremockURL == "" {
-		wiremockURL = "http://localhost:8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := wiremockURL
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)

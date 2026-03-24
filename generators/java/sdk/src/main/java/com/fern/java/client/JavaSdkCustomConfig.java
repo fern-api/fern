@@ -95,6 +95,26 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, expose an {@code addInterceptor(Interceptor)} method on the client builder that allows SDK users to add
+     * custom OkHttp interceptors (e.g., for PKCV client validation). The interceptors are applied to the OkHttpClient
+     * when building the client.
+     */
+    @Value.Default
+    @JsonProperty("custom-interceptors")
+    default Boolean customInterceptors() {
+        return false;
+    }
+
+    /**
+     * If true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests.
+     */
+    @Value.Default
+    @JsonProperty("omit-fern-headers")
+    default Boolean omitFernHeaders() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

@@ -4,11 +4,12 @@ package completions
 
 import (
 	context "context"
+	http "net/http"
+
 	sse "github.com/fern-api/sse-go"
 	core "github.com/fern-api/sse-go/core"
 	internal "github.com/fern-api/sse-go/internal"
 	option "github.com/fern-api/sse-go/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -61,6 +62,7 @@ func (c *Client) Stream(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
 			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      "[[DONE]]",
 			Format:          core.StreamFormatSSE,
@@ -98,6 +100,7 @@ func (c *Client) StreamWithoutTerminator(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
 			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      internal.DefaultSSETerminator,
 			Format:          core.StreamFormatSSE,

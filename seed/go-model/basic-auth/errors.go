@@ -5,6 +5,7 @@ package basicauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/basic-auth/fern/internal"
 )
 

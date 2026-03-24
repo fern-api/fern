@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>(...) -&gt; AsyncHttpResponse[Response]</code></summary>
+<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -19,9 +19,14 @@ from seed.environment import SeedAudiencesEnvironment
 client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
+
 client.folder_a.service.get_direct_thread(
-    ids="ids",
-    tags="tags",
+    ids=[
+        "ids"
+    ],
+    tags=[
+        "tags"
+    ],
 )
 
 ```
@@ -67,7 +72,7 @@ client.folder_a.service.get_direct_thread(
 </details>
 
 ## FolderD Service
-<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py">get_direct_thread</a>() -&gt; AsyncHttpResponse[Response]</code></summary>
+<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py">get_direct_thread</a>() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -86,6 +91,7 @@ from seed.environment import SeedAudiencesEnvironment
 client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
+
 client.folder_d.service.get_direct_thread()
 
 ```
@@ -115,7 +121,7 @@ client.folder_d.service.get_direct_thread()
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="src/seed/foo/client.py">find</a>(...) -&gt; AsyncHttpResponse[ImportingType]</code></summary>
+<details><summary><code>client.foo.<a href="src/seed/foo/client.py">find</a>(...) -> ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -134,6 +140,7 @@ from seed.environment import SeedAudiencesEnvironment
 client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
+
 client.foo.find(
     optional_string="optionalString",
     public_property="publicProperty",

@@ -10,7 +10,7 @@ import path from "path";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
-import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -1063,7 +1063,7 @@ async function expandFolderConfiguration({
     const folderName = path.basename(folderPath);
     const indexFrontmatterTitle =
         effectiveTitleSource === "frontmatter" && indexPage?.type === "page"
-            ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
+            ? (await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath })).title
             : undefined;
     const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
@@ -1276,7 +1276,7 @@ function parseApiReferenceLayoutItem(
             validateCollapsibleConfig({
                 context,
                 sectionTitle: item.section,
-                collapsed: undefined,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined
             });
@@ -1294,6 +1294,7 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
@@ -1641,6 +1642,8 @@ async function convertMetadata(
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
+        "og:dynamic": metadata.ogDynamic,
+        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
@@ -1710,7 +1713,7 @@ function validateCollapsibleConfig({
 }: {
     context: TaskContext;
     sectionTitle: string;
-    collapsed: boolean | undefined;
+    collapsed: boolean | "open-by-default" | undefined;
     collapsible: boolean | undefined;
     collapsedByDefault: boolean | undefined;
 }): void {

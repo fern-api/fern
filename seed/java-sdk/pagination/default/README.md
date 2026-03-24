@@ -62,6 +62,7 @@ import com.seed.pagination.resources.complex.types.SearchRequestQuery;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
 import com.seed.pagination.resources.complex.types.StartingAfterPaging;
+import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
@@ -78,9 +79,9 @@ public class Example {
                     SearchRequestQuery.of(
                         SingleFilterSearchRequest
                             .builder()
-                            .field("field")
-                            .operator(SingleFilterSearchRequestOperator.EQUALS)
-                            .value("value")
+                            .field(Optional.of("field"))
+                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                            .value(Optional.of("value"))
                             .build()
                     )
                 )
@@ -264,7 +265,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SearchHttpResponse response = client.complex().withRawResponse().search(...);
+SeedPaginationHttpResponse response = client.complex().withRawResponse().search(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

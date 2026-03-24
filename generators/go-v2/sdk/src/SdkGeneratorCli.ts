@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
@@ -72,22 +73,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 });
             } catch (e) {
-                context.logger.error("Failed to generate README.md");
-                if (e instanceof Error) {
-                    context.logger.debug(e.message);
-                    context.logger.debug(e.stack ?? "");
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.warn((error as Error)?.message);
-                context.logger.warn((error as Error)?.stack ?? "");
-            }
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await context.project.persist({ tidy: true });

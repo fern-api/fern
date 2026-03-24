@@ -9,7 +9,7 @@ pub enum MixedType {
 
     String(String),
 
-    List3(Vec<String>),
+    StringList(Vec<String>),
 }
 
 impl MixedType {
@@ -25,8 +25,8 @@ impl MixedType {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list3(&self) -> bool {
-        matches!(self, Self::List3(_))
+    pub fn is_string_list(&self) -> bool {
+        matches!(self, Self::StringList(_))
     }
 
     pub fn as_double(&self) -> Option<&f64> {
@@ -57,7 +57,7 @@ impl MixedType {
         }
     }
 
-    pub fn as_string(&self) -> Option<&String> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
             Self::String(value) => Some(value),
             _ => None,
@@ -71,16 +71,16 @@ impl MixedType {
         }
     }
 
-    pub fn as_list3(&self) -> Option<&Vec<String>> {
+    pub fn as_string_list(&self) -> Option<&Vec<String>> {
         match self {
-            Self::List3(value) => Some(value),
+            Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_list3(self) -> Option<Vec<String>> {
+    pub fn into_string_list(self) -> Option<Vec<String>> {
         match self {
-            Self::List3(value) => Some(value),
+            Self::StringList(value) => Some(value),
             _ => None,
         }
     }

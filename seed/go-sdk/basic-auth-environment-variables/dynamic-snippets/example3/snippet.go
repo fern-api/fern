@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/basic-auth-environment-variables/fern/client"
     option "github.com/basic-auth-environment-variables/fern/option"
-    context "context"
 )
 
 func do() {

@@ -103,5 +103,5 @@ paths:
                   format: binary
                   description: An optional file to attach.
       responses:
-        '201':
+        "201":
           description: Conversation created successfully.

@@ -9,43 +9,42 @@ pub enum MetadataUnion {
 }
 
 impl MetadataUnion {
-    pub fn is_optionalmetadata(&self) -> bool {
+    pub fn is_optional_metadata(&self) -> bool {
         matches!(self, Self::OptionalMetadata(_))
     }
 
-    pub fn is_namedmetadata(&self) -> bool {
+    pub fn is_named_metadata(&self) -> bool {
         matches!(self, Self::NamedMetadata(_))
     }
 
 
-    pub fn as_optionalmetadata(&self) -> Option<&OptionalMetadata> {
+    pub fn as_optional_metadata(&self) -> Option<&OptionalMetadata> {
         match self {
                     Self::OptionalMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_optionalmetadata(self) -> Option<OptionalMetadata> {
+    pub fn into_optional_metadata(self) -> Option<OptionalMetadata> {
         match self {
                     Self::OptionalMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_namedmetadata(&self) -> Option<&NamedMetadata> {
+    pub fn as_named_metadata(&self) -> Option<&NamedMetadata> {
         match self {
                     Self::NamedMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_namedmetadata(self) -> Option<NamedMetadata> {
+    pub fn into_named_metadata(self) -> Option<NamedMetadata> {
         match self {
                     Self::NamedMetadata(value) => Some(value),
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for MetadataUnion {

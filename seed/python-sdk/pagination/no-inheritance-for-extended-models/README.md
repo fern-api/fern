@@ -36,13 +36,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.complex_.search(
+
+client.complex_.search(
     index="index",
     pagination=StartingAfterPaging(
         per_page=1,
@@ -54,11 +55,6 @@ response = client.complex_.search(
         value="value",
     ),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ## Async Client
@@ -67,18 +63,18 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 from seed import AsyncSeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = AsyncSeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    response = await client.complex_.search(
+    await client.complex_.search(
         index="index",
         pagination=StartingAfterPaging(
             per_page=1,
@@ -90,12 +86,6 @@ async def main() -> None:
             value="value",
         ),
     )
-    async for item in response:
-        yield item
-
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
 
 
 asyncio.run(main())
@@ -122,13 +112,14 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.complex_.search(
+
+client.complex_.search(
     index="index",
     pagination=StartingAfterPaging(
         per_page=1,
@@ -140,11 +131,6 @@ response = client.complex_.search(
         value="value",
     ),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ```python
@@ -204,14 +190,9 @@ client.complex_.search(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPagination
 
-client = SeedPagination(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.complex_.search(..., request_options={
