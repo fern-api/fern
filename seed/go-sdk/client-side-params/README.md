@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/client-side-params/fern"
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"

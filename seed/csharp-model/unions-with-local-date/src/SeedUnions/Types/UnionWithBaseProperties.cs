@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -81,7 +81,7 @@ public record UnionWithBaseProperties
     public int AsInteger() =>
         IsInteger
             ? (int)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'integer'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record UnionWithBaseProperties
     public string AsString() =>
         IsString
             ? (string)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'string'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record UnionWithBaseProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'foo'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -198,12 +198,12 @@ public record UnionWithBaseProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithBaseProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithBaseProperties Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -289,7 +289,7 @@ public record UnionWithBaseProperties
 
         public override UnionWithBaseProperties ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/cross-package-type-names/fern"
     client "github.com/cross-package-type-names/fern/client"
 )

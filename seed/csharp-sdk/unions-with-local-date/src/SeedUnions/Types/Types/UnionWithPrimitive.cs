@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithPrimitive
     public int AsInteger() =>
         IsInteger
             ? (int)Value!
-            : throw new System.Exception("UnionWithPrimitive.Type is not 'integer'");
+            : throw new global::System.Exception("UnionWithPrimitive.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithPrimitive
     public string AsString() =>
         IsString
             ? (string)Value!
-            : throw new System.Exception("UnionWithPrimitive.Type is not 'string'");
+            : throw new global::System.Exception("UnionWithPrimitive.Type is not 'string'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -148,12 +148,12 @@ public record UnionWithPrimitive
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithPrimitive>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithPrimitive).IsAssignableFrom(typeToConvert);
 
         public override UnionWithPrimitive Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -213,7 +213,7 @@ public record UnionWithPrimitive
 
         public override UnionWithPrimitive ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

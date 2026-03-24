@@ -1,0 +1,380 @@
+using global::System.ComponentModel;
+using global::System.Net.WebSockets;
+using global::System.Runtime.CompilerServices;
+
+namespace SeedWebsocketMultiUrl.Core.WebSockets;
+
+/// <summary>
+/// A WebSocket client that handles connection management, message sending, and event handling.
+/// </summary>
+internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPropertyChanged
+{
+    private ConnectionStatus _status = ConnectionStatus.Disconnected;
+    private WebSocketConnection? _webSocket;
+    private readonly Uri _uri;
+    private readonly Func<Stream, global::System.Threading.Tasks.Task> _onTextMessage;
+
+    /// <summary>
+    /// Enable or disable automatic reconnection. Default: false.
+    /// </summary>
+    public bool IsReconnectionEnabled { get; set; }
+
+    /// <summary>
+    /// Time to wait before reconnecting if no message comes from the server.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the last reconnection attempt failed.
+    /// Set null to disable. Default: 1 minute.
+    /// </summary>
+    public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// Time to wait before reconnecting if the connection is lost with a transient error.
+    /// Set null to disable (reconnect immediately). Default: null.
+    /// </summary>
+    public TimeSpan? LostReconnectTimeout { get; set; }
+
+    /// <summary>
+    /// How often to check the WebSocket state for silent disconnections.
+    /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
+    /// See: https://github.com/dotnet/runtime/issues/110496
+    /// Set to null to disable. Default: 5 seconds.
+    /// </summary>
+    public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
+    /// Initializes a new instance of the WebSocketClient class.
+    /// </summary>
+    /// <param name="uri">The WebSocket URI to connect to.</param>
+    /// <param name="onTextMessage">Handler for incoming text messages.</param>
+    public WebSocketClient(Uri uri, Func<Stream, global::System.Threading.Tasks.Task> onTextMessage)
+    {
+        _uri = uri;
+        _onTextMessage = onTextMessage;
+    }
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Optional per-message deflate compression options (RFC 7692).
+    /// When set, enables WebSocket compression via
+    /// <see cref="ClientWebSocketOptions.DangerousDeflateOptions" />.
+    /// Compression is negotiated during the WebSocket handshake; if the server does not
+    /// support it, the connection proceeds without compression.
+    /// <para>
+    /// <b>Security warning:</b> Do not enable compression when transmitting data that
+    /// contains secrets. Compressed encrypted payloads are vulnerable to CRIME/BREACH
+    /// side-channel attacks.
+    /// See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">
+    /// ClientWebSocketOptions.DangerousDeflateOptions</see> for details.
+    /// </para>
+    /// </summary>
+    public WebSocketDeflateOptions? DeflateOptions { get; set; }
+#endif
+
+    /// <summary>
+    /// Optional HttpMessageInvoker for HTTP/2 WebSocket connections.
+    /// When set, enables multiplexing multiple WebSocket streams over a single TCP connection.
+    /// Requires .NET 7+.
+    /// </summary>
+    public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
+
+    /// <summary>
+    /// Time range for how long to wait while connecting.
+    /// Default: 5 seconds.
+    /// </summary>
+    public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// Gets the current connection status of the WebSocket.
+    /// </summary>
+    public ConnectionStatus Status
+    {
+        get => _status;
+        private set
+        {
+            if (_status != value)
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures the WebSocket is connected before sending.
+    /// </summary>
+    private void EnsureConnected()
+    {
+        this.Assert(
+            Status == ConnectionStatus.Connected,
+            $"Cannot send message when status is {Status}"
+        );
+    }
+
+    /// <summary>
+    /// Sends a text message instantly through the WebSocket connection.
+    /// </summary>
+    /// <param name="message">The text message to send.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
+    /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
+    public global::System.Threading.Tasks.Task SendInstant(
+        string message,
+        CancellationToken cancellationToken = default
+    )
+    {
+        EnsureConnected();
+        return _webSocket!.SendInstant(message, cancellationToken);
+    }
+
+    /// <summary>
+    /// Sends a binary message instantly through the WebSocket connection.
+    /// </summary>
+    /// <param name="message">The binary message to send as a Memory&lt;byte&gt;.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
+    /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
+    public global::System.Threading.Tasks.Task SendInstant(
+        Memory<byte> message,
+        CancellationToken cancellationToken = default
+    )
+    {
+        EnsureConnected();
+        return _webSocket!.SendInstant(message, cancellationToken);
+    }
+
+    /// <summary>
+    /// Sends a binary message instantly through the WebSocket connection.
+    /// </summary>
+    /// <param name="message">The binary message to send as an ArraySegment&lt;byte&gt;.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
+    /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
+    public global::System.Threading.Tasks.Task SendInstant(
+        ArraySegment<byte> message,
+        CancellationToken cancellationToken = default
+    )
+    {
+        EnsureConnected();
+        return _webSocket!.SendInstant(message, cancellationToken);
+    }
+
+    /// <summary>
+    /// Sends a binary message instantly through the WebSocket connection.
+    /// </summary>
+    /// <param name="message">The binary message to send as a byte array.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
+    /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
+    public global::System.Threading.Tasks.Task SendInstant(
+        byte[] message,
+        CancellationToken cancellationToken = default
+    )
+    {
+        EnsureConnected();
+        return _webSocket!.SendInstant(message, cancellationToken);
+    }
+
+    /// <summary>
+    /// Queues a text message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(string message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
+    /// Queues a binary message for sending on a background thread. Non-blocking.
+    /// </summary>
+    public bool Send(byte[] message)
+    {
+        EnsureConnected();
+        return _webSocket!.Send(message);
+    }
+
+    /// <summary>
+    /// Asynchronously disposes the WebSocketClient instance, closing any active connections and cleaning up resources.
+    /// </summary>
+    /// <returns>A ValueTask representing the asynchronous dispose operation.</returns>
+    public async ValueTask DisposeAsync()
+    {
+        if (_webSocket is not null)
+        {
+            if (_webSocket.IsRunning)
+            {
+                await CloseAsync().ConfigureAwait(false);
+            }
+
+            _webSocket.Dispose();
+            _webSocket = null;
+        }
+
+        DisposeEventsInternal();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Synchronously disposes the WebSocketClient instance, closing any active connections and cleaning up resources.
+    /// </summary>
+    public void Dispose()
+    {
+        if (_webSocket is not null)
+        {
+            if (_webSocket.IsRunning)
+            {
+                CloseAsync().Wait();
+            }
+
+            _webSocket.Dispose();
+        }
+
+        DisposeEventsInternal();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Disposes all internal events.
+    /// </summary>
+    private void DisposeEventsInternal()
+    {
+        ExceptionOccurred.Dispose();
+        Closed.Dispose();
+        Connected.Dispose();
+        Reconnecting.Dispose();
+    }
+
+    /// <summary>
+    /// Asynchronously closes the WebSocket connection with normal closure status.
+    /// </summary>
+    /// <returns>A task representing the asynchronous close operation.</returns>
+    public async global::System.Threading.Tasks.Task CloseAsync(
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (_webSocket is not null)
+        {
+            Status = ConnectionStatus.Disconnecting;
+            await _webSocket.StopOrFail(WebSocketCloseStatus.NormalClosure, "", cancellationToken);
+            Status = ConnectionStatus.Disconnected;
+        }
+    }
+
+    /// <summary>
+    /// Asynchronously establishes a WebSocket connection to the target URI.
+    /// </summary>
+    /// <returns>A task representing the asynchronous connect operation.</returns>
+    /// <exception cref="Exception">Thrown when the connection status is not Disconnected or when connection fails.</exception>
+    public async global::System.Threading.Tasks.Task ConnectAsync(
+        CancellationToken cancellationToken = default
+    )
+    {
+        this.Assert(
+            Status == ConnectionStatus.Disconnected,
+            $"Connection status is currently {Status}"
+        );
+
+        _webSocket?.Dispose();
+
+        Status = ConnectionStatus.Connecting;
+
+        _webSocket = new WebSocketConnection(_uri)
+        {
+#if NET6_0_OR_GREATER
+            DeflateOptions = DeflateOptions,
+#endif
+            HttpInvoker = HttpInvoker,
+            ConnectTimeout = ConnectTimeout,
+            SendTimeout = SendTimeout,
+            IsReconnectionEnabled = IsReconnectionEnabled,
+            ReconnectTimeout = ReconnectTimeout,
+            ErrorReconnectTimeout = ErrorReconnectTimeout,
+            LostReconnectTimeout = LostReconnectTimeout,
+            StateCheckInterval = StateCheckInterval,
+            Backoff = Backoff,
+            ExceptionOccurred = ExceptionOccurred.RaiseEvent,
+            TextMessageReceived = _onTextMessage,
+            BinaryMessageReceived = stream =>
+            {
+                stream.Dispose();
+                return global::System.Threading.Tasks.Task.CompletedTask;
+            },
+            DisconnectionHappened = async d =>
+            {
+                Status = ConnectionStatus.Disconnected;
+                await Closed
+                    .RaiseEvent(
+                        new Closed { Code = (int?)d.CloseStatus, Reason = d.CloseStatusDescription }
+                    )
+                    .ConfigureAwait(false);
+            },
+            ReconnectionHappened = async info =>
+            {
+                Status = ConnectionStatus.Connected;
+                await Reconnecting.RaiseEvent(info).ConfigureAwait(false);
+            },
+        };
+
+        try
+        {
+            await _webSocket.StartOrFail(cancellationToken).ConfigureAwait(false);
+            Status = ConnectionStatus.Connected;
+            await Connected.RaiseEvent(new Connected()).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            Status = ConnectionStatus.Disconnected;
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is successfully established.
+    /// </summary>
+    public readonly Event<Connected> Connected = new();
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is closed.
+    /// </summary>
+    public readonly Event<Closed> Closed = new();
+
+    /// <summary>
+    /// Event that is raised when an exception occurs during WebSocket operations.
+    /// </summary>
+    public readonly Event<Exception> ExceptionOccurred = new();
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public readonly Event<ReconnectionInfo> Reconnecting = new();
+
+    /// <summary>
+    /// Event that is raised when a property value changes.
+    /// Currently only raised for the Status property.
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>
+    /// Raises the PropertyChanged event.
+    /// </summary>
+    /// <param name="propertyName">The name of the property that changed. Automatically populated by the compiler.</param>
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}

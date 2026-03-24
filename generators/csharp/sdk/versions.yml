@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.54.1
+  changelogEntry:
+    - summary: |
+        Remove the generic `EnumSerializer<T>` template that used reflection
+        (`GetField`, `GetCustomAttributes`) at runtime. All enums already use
+        per-enum generated serializers with static dictionary lookups, so the
+        generic template was dead code. This cleanup removes the last
+        reflection-based enum serialization path, improving NativeAOT and
+        IL-trimming compatibility.
+      type: chore
+  createdAt: "2026-03-24"
+  irVersion: 65
+
+- version: 2.54.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-server` on AsyncAPI channels for multi-URL environments.
+        When a channel specifies a `baseUrl` (via `x-fern-server`) that maps to a
+        multi-URL environment in the IR, the C# generator now automatically derives
+        websocket environments from the IR's environment definitions. This eliminates
+        the need for the `temporary-websocket-environments` workaround in
+        `generators.yml`.
+      type: feat
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 2.53.0
+  changelogEntry:
+    - summary: |
+        Enforce `global::` prefix on all `System` namespace references in generated code.
+        This prevents CS0118/CS0426 compile errors when customer projects define a type or
+        namespace named `System` (e.g., root namespace `Foo.Net` with a class `System`).
+        All `using System.*` directives and inline `System.*` type references now use
+        `global::System.*`. A CI validation script in seed.yml enforces this going forward.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 2.52.0
   changelogEntry:
     - summary: |

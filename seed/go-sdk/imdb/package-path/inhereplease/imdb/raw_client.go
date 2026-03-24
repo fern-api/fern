@@ -4,11 +4,12 @@ package imdb
 
 import (
 	context "context"
+	http "net/http"
+
 	inhereplease "github.com/imdb/fern/inhereplease"
 	core "github.com/imdb/fern/inhereplease/core"
 	internal "github.com/imdb/fern/inhereplease/internal"
 	option "github.com/imdb/fern/inhereplease/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/multi-line-docs/fern"
     client "github.com/multi-line-docs/fern/client"
 )

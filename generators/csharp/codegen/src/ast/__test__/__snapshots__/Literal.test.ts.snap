@@ -12,7 +12,7 @@ new Person {
 
 exports[`Literal support > class literals > class with nested collection field 1`] = `
 "using MyApp.Models;
-using System.Collections.Generic;
+using global::System.Collections.Generic;
 
 new Team {
     TeamName = "Engineering",
@@ -50,8 +50,8 @@ new Person()"
 
 exports[`Literal support > complex combinations > class with various typed fields 1`] = `
 "using MyApp.Models;
-using System;
-using System.Collections.Generic;
+using global::System;
+using global::System.Collections.Generic;
 
 new ComplexModel {
     StringField = "text",
@@ -72,7 +72,7 @@ new ComplexModel {
 `;
 
 exports[`Literal support > complex combinations > dictionary with list values 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, IEnumerable<int>>(){
     ["evens"] = new List<int>(){
@@ -92,7 +92,7 @@ new Dictionary<string, IEnumerable<int>>(){
 `;
 
 exports[`Literal support > complex combinations > list of dictionaries 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<IDictionary<string, string>>(){
     new Dictionary<string, string>(){
@@ -108,7 +108,7 @@ new List<IDictionary<string, string>>(){
 `;
 
 exports[`Literal support > complex combinations > set of sets 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new HashSet<HashSet<int>>(){
     new HashSet<int>(){
@@ -126,20 +126,20 @@ new HashSet<HashSet<int>>(){
 `;
 
 exports[`Literal support > date and time literals > date 1`] = `
-"using System;
+"using global::System;
 
 DateOnly.Parse("2023-12-25")"
 `;
 
 exports[`Literal support > date and time literals > datetime 1`] = `
-"using System;
-using System.Globalization;
+"using global::System;
+using global::System.Globalization;
 
 DateTime.Parse("2023-12-25T10:30:00Z", null, DateTimeStyles.AdjustToUniversal)"
 `;
 
 exports[`Literal support > dictionary literals > dictionary with integer keys and string values 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<int, string>(){
     [1] = "first",
@@ -149,7 +149,7 @@ new Dictionary<int, string>(){
 `;
 
 exports[`Literal support > dictionary literals > dictionary with nop entries (filtered) 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, string>(){
     ["valid"] = "entry",
@@ -158,7 +158,7 @@ new Dictionary<string, string>(){
 `;
 
 exports[`Literal support > dictionary literals > dictionary with string keys and integer values 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, int>(){
     ["one"] = 1,
@@ -169,13 +169,13 @@ new Dictionary<string, int>(){
 `;
 
 exports[`Literal support > dictionary literals > empty dictionary 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, int>()"
 `;
 
 exports[`Literal support > dictionary literals > nested dictionary 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, IDictionary<string, int>>(){
     ["group1"] = new Dictionary<string, int>(){
@@ -187,13 +187,13 @@ new Dictionary<string, IDictionary<string, int>>(){
 `;
 
 exports[`Literal support > list literals > empty list 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<string>()"
 `;
 
 exports[`Literal support > list literals > list with integers 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<int>(){
     1,
@@ -204,7 +204,7 @@ new List<int>(){
 `;
 
 exports[`Literal support > list literals > list with nop values (filtered) 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<int>(){
     1,
@@ -214,7 +214,7 @@ new List<int>(){
 `;
 
 exports[`Literal support > list literals > list with strings 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<string>(){
     "apple",
@@ -225,7 +225,7 @@ new List<string>(){
 `;
 
 exports[`Literal support > list literals > nested list 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<IEnumerable<int>>(){
     new List<int>(){
@@ -277,13 +277,13 @@ MyClass.GetValue()"
 exports[`Literal support > reference literals > reference to variable 1`] = `"myVariable"`;
 
 exports[`Literal support > set literals > empty set 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new HashSet<string>()"
 `;
 
 exports[`Literal support > set literals > set with integers 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new HashSet<int>(){
     10,
@@ -294,7 +294,7 @@ new HashSet<int>(){
 `;
 
 exports[`Literal support > set literals > set with nop values (filtered) 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new HashSet<string>(){
     "alpha",
@@ -304,7 +304,7 @@ new HashSet<string>(){
 `;
 
 exports[`Literal support > set literals > set with strings 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new HashSet<string>(){
     "red",
@@ -315,7 +315,7 @@ new HashSet<string>(){
 `;
 
 exports[`Literal support > unknown literals > unknown - array with mixed types 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<object>()
 {
@@ -330,19 +330,19 @@ new List<object>()
 exports[`Literal support > unknown literals > unknown - boolean 1`] = `"true"`;
 
 exports[`Literal support > unknown literals > unknown - empty array 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<object>()"
 `;
 
 exports[`Literal support > unknown literals > unknown - empty object 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, object>()"
 `;
 
 exports[`Literal support > unknown literals > unknown - nested array 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new List<object>()
 {
@@ -363,7 +363,7 @@ new List<object>()
 `;
 
 exports[`Literal support > unknown literals > unknown - nested object 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, object>()
 {
@@ -386,7 +386,7 @@ exports[`Literal support > unknown literals > unknown - null 1`] = `"null"`;
 exports[`Literal support > unknown literals > unknown - number 1`] = `"42"`;
 
 exports[`Literal support > unknown literals > unknown - object with array property 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, object>()
 {
@@ -403,7 +403,7 @@ new Dictionary<string, object>()
 `;
 
 exports[`Literal support > unknown literals > unknown - object with primitive properties 1`] = `
-"using System.Collections.Generic;
+"using global::System.Collections.Generic;
 
 new Dictionary<string, object>()
 {

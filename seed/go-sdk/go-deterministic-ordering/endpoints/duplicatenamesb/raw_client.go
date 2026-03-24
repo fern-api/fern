@@ -4,12 +4,13 @@ package duplicatenamesb
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
 	types "github.com/go-deterministic-ordering/fern/types"
-	http "net/http"
 )
 
 type RawClient struct {

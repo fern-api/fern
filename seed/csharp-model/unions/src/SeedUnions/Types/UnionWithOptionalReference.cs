@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithOptionalReference
     public Foo? AsFoo() =>
         IsFoo
             ? (Foo?)Value!
-            : throw new System.Exception("UnionWithOptionalReference.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithOptionalReference.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="Bar?"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithOptionalReference
     public Bar? AsBar() =>
         IsBar
             ? (Bar?)Value!
-            : throw new System.Exception("UnionWithOptionalReference.Type is not 'bar'");
+            : throw new global::System.Exception("UnionWithOptionalReference.Type is not 'bar'");
 
     public T Match<T>(Func<Foo?, T> onFoo, Func<Bar?, T> onBar, Func<string, object?, T> onUnknown_)
     {
@@ -142,12 +142,12 @@ public record UnionWithOptionalReference
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithOptionalReference>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithOptionalReference).IsAssignableFrom(typeToConvert);
 
         public override UnionWithOptionalReference Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -206,7 +206,7 @@ public record UnionWithOptionalReference
 
         public override UnionWithOptionalReference ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

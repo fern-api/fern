@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/query-parameters-openapi/fern"
     client "github.com/query-parameters-openapi/fern/client"
     option "github.com/query-parameters-openapi/fern/option"

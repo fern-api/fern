@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/cross-package-type-names/fern/client"
     option "github.com/cross-package-type-names/fern/option"
 )

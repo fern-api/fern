@@ -3,11 +3,12 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/header-auth-environment-variable/fern/core"
 	internal "github.com/header-auth-environment-variable/fern/internal"
 	option "github.com/header-auth-environment-variable/fern/option"
 	service "github.com/header-auth-environment-variable/fern/service"
-	os "os"
 )
 
 type Client struct {

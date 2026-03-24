@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/file-download/fern/client"
     option "github.com/file-download/fern/option"
 )

@@ -4,11 +4,12 @@ package nullableoptional
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/nullable-optional/fern"
 	core "github.com/nullable-optional/fern/core"
 	internal "github.com/nullable-optional/fern/internal"
 	option "github.com/nullable-optional/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -5,6 +5,7 @@ package com.seed.trace.resources.playlist.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,12 +43,12 @@ public final class CreatePlaylistRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("datetime")
+    @JsonIgnore
     public OffsetDateTime getDatetime() {
         return datetime;
     }
 
-    @JsonProperty("optionalDatetime")
+    @JsonIgnore
     public Optional<OffsetDateTime> getOptionalDatetime() {
         return optionalDatetime;
     }

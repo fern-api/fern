@@ -4,11 +4,12 @@ package user
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/simple-api/fern"
 	core "github.com/simple-api/fern/core"
 	internal "github.com/simple-api/fern/internal"
 	option "github.com/simple-api/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
