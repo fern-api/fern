@@ -10,7 +10,7 @@ types:
 
   EventEvent:
     properties:
-      event: string
+      name: string
 
   ErrorEvent:
     properties:
@@ -24,7 +24,7 @@ types:
     union:
       completion: CompletionEvent
       error: ErrorEvent
-      event: EventEvent
+      notification: EventEvent
 
   StreamEvent:
     discriminant:
@@ -138,6 +138,9 @@ service:
               - event: error
                 data:
                   error: "something went wrong"
+              - event: notification
+                data:
+                  name: "update available"
         - name: "Bad request"
           request:
             query: ""
