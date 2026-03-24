@@ -58,9 +58,11 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
             resolveAliases: spec.settings?.resolveAliases,
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
+            inferDefaultEnvironment: spec.settings?.inferDefaultEnvironment,
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
-            pathParameterOrder: spec.settings?.pathParameterOrder
+            pathParameterOrder: spec.settings?.pathParameterOrder,
+            coerceConstsTo: spec.settings?.coerceConstsTo
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
@@ -74,7 +76,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             resolveAliases: this.resolveAliases,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
-            pathParameterOrder: this.pathParameterOrder
+            pathParameterOrder: this.pathParameterOrder,
+            coerceConstsTo: this.coerceConstsTo
         };
     }
 

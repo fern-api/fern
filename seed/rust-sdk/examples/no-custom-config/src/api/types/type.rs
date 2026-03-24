@@ -9,36 +9,36 @@ pub enum Type {
 }
 
 impl Type {
-    pub fn is_basictype(&self) -> bool {
+    pub fn is_basic_type(&self) -> bool {
         matches!(self, Self::BasicType(_))
     }
 
-    pub fn is_complextype(&self) -> bool {
+    pub fn is_complex_type(&self) -> bool {
         matches!(self, Self::ComplexType(_))
     }
 
-    pub fn as_basictype(&self) -> Option<&BasicType> {
+    pub fn as_basic_type(&self) -> Option<&BasicType> {
         match self {
             Self::BasicType(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_basictype(self) -> Option<BasicType> {
+    pub fn into_basic_type(self) -> Option<BasicType> {
         match self {
             Self::BasicType(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_complextype(&self) -> Option<&ComplexType> {
+    pub fn as_complex_type(&self) -> Option<&ComplexType> {
         match self {
             Self::ComplexType(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_complextype(self) -> Option<ComplexType> {
+    pub fn into_complex_type(self) -> Option<ComplexType> {
         match self {
             Self::ComplexType(value) => Some(value),
             _ => None,

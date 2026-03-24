@@ -9,6 +9,7 @@ describe("HttpMethodsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/http-methods/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.httpMethods.testGet("id");
@@ -34,6 +35,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .post("/http-methods")
@@ -84,6 +86,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .put("/http-methods/id")
@@ -148,6 +151,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .patch("/http-methods/id")
@@ -198,6 +202,7 @@ describe("HttpMethodsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .delete("/http-methods/id")

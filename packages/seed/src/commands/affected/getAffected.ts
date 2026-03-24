@@ -27,6 +27,13 @@ export interface AffectedResult {
 }
 
 /**
+ * Files that should never trigger seed tests, even if they live under
+ * a generator source path.  These are metadata / changelog files that
+ * do not affect generated code.
+ */
+const IGNORED_FILENAMES = ["versions.yml"];
+
+/**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
  * These are infrastructure-level changes that feed into IR generation
  * or affect how seed tests execute. Includes:
@@ -57,6 +64,20 @@ const GLOBAL_AFFECT_PATHS = [
  * Paths for test definitions. Changes here affect specific fixtures.
  */
 const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-openapi/fern/apis/"];
+
+/**
+ * Maps docker/seed/ Dockerfiles to the generator workspaces they affect.
+ * When a seed Dockerfile changes, the corresponding generators need to re-run
+ * all their fixtures to verify the updated Docker image works correctly.
+ */
+const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
+    "docker/seed/Dockerfile.java": ["java-sdk", "java-model", "java-spring"],
+    "docker/seed/Dockerfile.ts": ["ts-sdk", "ts-express"],
+    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2", "fastapi"],
+    "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
+    "docker/seed/Dockerfile.csharp": ["csharp-sdk", "csharp-model"],
+    "docker/seed/Dockerfile.php": ["php-sdk", "php-model"]
+};
 
 /**
  * Maps generator workspace names to their source code paths.
@@ -108,21 +129,18 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
             .filter((line) => line.length > 0);
     } catch (error) {
         console.error("git diff --merge-base failed, trying fallback:", error);
-        // Fallback: try without --merge-base (for cases where merge-base doesn't work)
-        try {
-            const output = execFileSync("git", ["diff", "--name-only", baseRef], {
-                cwd: repoRoot,
-                encoding: "utf-8",
-                timeout: 30000
-            });
-            return output
-                .trim()
-                .split("\n")
-                .filter((line) => line.length > 0);
-        } catch (innerError) {
-            console.error("Failed to get changed files from git.", innerError);
-            return [];
-        }
+        // Fallback: try without --merge-base (for cases where merge-base doesn't work,
+        // e.g. disconnected shallow commits). If this also fails, let the error propagate
+        // so the CLI exits non-zero and the workflow falls back to "run everything".
+        const output = execFileSync("git", ["diff", "--name-only", baseRef], {
+            cwd: repoRoot,
+            encoding: "utf-8",
+            timeout: 30000
+        });
+        return output
+            .trim()
+            .split("\n")
+            .filter((line) => line.length > 0);
     }
 }
 
@@ -197,6 +215,11 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
 
     // === GENERATOR DETECTION (git diff path matching) ===
     for (const file of changedFiles) {
+        // Skip metadata files that live under generator paths but don't affect codegen
+        const basename = file.split("/").pop() ?? "";
+        if (IGNORED_FILENAMES.includes(basename)) {
+            continue;
+        }
         for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
             if (!allGeneratorNames.includes(generatorName)) {
                 continue;
@@ -209,6 +232,40 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
                 }
             }
         }
+    }
+
+    // === DOCKER SEED DOCKERFILE DETECTION ===
+    // When a docker/seed/ Dockerfile changes, the generators that use that Docker
+    // image need to re-run all their fixtures to verify the updated image works.
+    for (const file of changedFiles) {
+        if (file.startsWith("docker/seed/")) {
+            if (file === "docker/seed/Dockerfile.dockerignore") {
+                // The shared .dockerignore affects all seed Docker builds
+                allGeneratorsAffected = true;
+                allFixturesAffected = true;
+                summary.push(`Seed Docker ignore changed: ${file} — affects all seed builds`);
+                break;
+            }
+            const generators = DOCKER_SEED_GENERATOR_PATHS[file];
+            if (generators != null) {
+                for (const gen of generators) {
+                    affectedGeneratorSet.add(gen);
+                }
+                summary.push(`Seed Dockerfile changed: ${file} — affects ${generators.join(", ")}`);
+            }
+        }
+    }
+
+    // If global changes detected from dockerignore, return early
+    if (allGeneratorsAffected && allFixturesAffected) {
+        return {
+            allGeneratorsAffected: true,
+            allFixturesAffected: true,
+            affectedGenerators: [],
+            generatorsWithAllFixtures: [],
+            affectedFixtures: [],
+            summary
+        };
     }
 
     // === SEED.YML DETECTION (always via git diff) ===

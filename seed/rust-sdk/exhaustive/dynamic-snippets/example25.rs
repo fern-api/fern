@@ -11,11 +11,11 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_datetime_like_string(
-            &ObjectWithDatetimeLikeString {
-                datetime_like_string: "datetimeLikeString".to_string(),
-                actual_datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-            },
+        .get_and_return_map_of_documented_unknown_type(
+            &MapOfDocumentedUnknownType(HashMap::from([(
+                "string".to_string(),
+                DocumentedUnknownType(serde_json::json!({"key":"value"})),
+            )])),
             None,
         )
         .await;

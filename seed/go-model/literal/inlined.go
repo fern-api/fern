@@ -4,8 +4,9 @@ package literal
 
 import (
     json "encoding/json"
-    internal "github.com/literal/fern/internal"
     fmt "fmt"
+
+    internal "github.com/literal/fern/internal"
 )
 
 

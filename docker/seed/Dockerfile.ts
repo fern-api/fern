@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:22.12-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache

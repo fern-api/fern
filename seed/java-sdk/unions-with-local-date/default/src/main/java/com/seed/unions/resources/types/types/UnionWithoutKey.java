@@ -67,6 +67,22 @@ public final class UnionWithoutKey {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnionWithoutKey && value.equals(((UnionWithoutKey) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -91,6 +107,7 @@ public final class UnionWithoutKey {
     @JsonIgnoreProperties("type")
     private static final class FooValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Foo value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -130,6 +147,7 @@ public final class UnionWithoutKey {
     @JsonIgnoreProperties("type")
     private static final class BarValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private Bar value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

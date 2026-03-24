@@ -1,4 +1,155 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        Sort generated Go imports following goimports conventions. Standard library
+        imports are now grouped separately from third-party imports with a blank line
+        separator between them, matching the canonical Go import style.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 61
+
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred auth. When an API definition includes an inferred auth
+        scheme, the generated Go SDK will automatically fetch tokens from the designated
+        token endpoint and inject `Authorization: Bearer <token>` headers on all
+        authenticated requests. Tokens are cached with automatic refresh based on
+        `expires_in` from the token response (defaults to 1 hour when omitted).
+
+        The generator produces `WithXxx()` client options for each credential parameter
+        defined on the token endpoint (e.g., `WithClientId`, `WithClientSecret`,
+        `WithXApiKey`), environment variable fallbacks when configured, and a
+        `core/token_provider.go` with thread-safe caching.
+
+        To use inferred auth, define an inferred auth scheme in your Fern API definition:
+
+        ```yaml
+        auth:
+          scheme: inferred
+          token-endpoint:
+            endpoint: auth.getToken
+            response-properties:
+              access-token: access_token
+              expires-in: expires_in
+        ```
+
+        Wire tests are also generated when `enableWireTests: true` is set in
+        custom config, validating automatic token fetch, caching, and custom
+        header passthrough.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.30.3
+  changelogEntry:
+    - summary: |
+        Use `any` instead of `interface{}` for unknown type schemas. Since Go 1.18+,
+        `any` is the idiomatic alias for `interface{}`. This is a purely cosmetic
+        modernization with no behavioral change.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 61
+
+- version: 1.30.2
+  changelogEntry:
+    - summary: |
+        Fix Basic Auth header not being sent when the username is an empty string.
+        Per RFC 7617, an empty user-id is valid in Basic Auth (e.g., `:password`).
+        The condition in `ToHeader()` now uses `||` instead of `&&`, so the
+        Authorization header is set whenever either the username or password is
+        non-empty.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 61
+
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering in generated requests.go and requests_test.go.
+        Go maps randomize iteration order, causing type ordering to vary across runs
+        when exportAllRequestsAtRoot is enabled. Map keys are now sorted before
+        iteration to ensure deterministic output.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 61
+
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 61
+- version: 1.29.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.2
+  changelogEntry:
+    - summary: |
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
+        `http.NewRequestWithContext` already sets the context on the request, so
+        the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
+        copy of the request with the same context.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Bump the default streaming buffer size from 64KB to 1MB and add a new
+        `WithMaxStreamBufSize` request option so SDK users can configure the
+        maximum buffer size for streaming responses at runtime. This controls
+        the maximum size of a single SSE event (in bytes) that the stream can
+        process. Also fixes a bug where `SseStreamReader` would return a
+        misleading `io.EOF` error instead of the underlying `bufio.ErrTooLong`
+        when a message exceeded the buffer limit.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.7
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
 - version: 1.28.5
   changelogEntry:
     - summary: |

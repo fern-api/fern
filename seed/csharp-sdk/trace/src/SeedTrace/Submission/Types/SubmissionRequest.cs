@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -106,7 +106,7 @@ public record SubmissionRequest
     public SeedTrace.InitializeProblemRequest AsInitializeProblemRequest() =>
         IsInitializeProblemRequest
             ? (SeedTrace.InitializeProblemRequest)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SubmissionRequest.Type is not 'initializeProblemRequest'"
             );
 
@@ -117,7 +117,7 @@ public record SubmissionRequest
     public object AsInitializeWorkspaceRequest() =>
         IsInitializeWorkspaceRequest
             ? Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SubmissionRequest.Type is not 'initializeWorkspaceRequest'"
             );
 
@@ -128,7 +128,7 @@ public record SubmissionRequest
     public SeedTrace.SubmitRequestV2 AsSubmitV2() =>
         IsSubmitV2
             ? (SeedTrace.SubmitRequestV2)Value!
-            : throw new System.Exception("SubmissionRequest.Type is not 'submitV2'");
+            : throw new global::System.Exception("SubmissionRequest.Type is not 'submitV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmitRequest"/> if <see cref="Type"/> is 'workspaceSubmit', otherwise throws an exception.
@@ -137,7 +137,7 @@ public record SubmissionRequest
     public SeedTrace.WorkspaceSubmitRequest AsWorkspaceSubmit() =>
         IsWorkspaceSubmit
             ? (SeedTrace.WorkspaceSubmitRequest)Value!
-            : throw new System.Exception("SubmissionRequest.Type is not 'workspaceSubmit'");
+            : throw new global::System.Exception("SubmissionRequest.Type is not 'workspaceSubmit'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.StopRequest"/> if <see cref="Type"/> is 'stop', otherwise throws an exception.
@@ -146,7 +146,7 @@ public record SubmissionRequest
     public SeedTrace.StopRequest AsStop() =>
         IsStop
             ? (SeedTrace.StopRequest)Value!
-            : throw new System.Exception("SubmissionRequest.Type is not 'stop'");
+            : throw new global::System.Exception("SubmissionRequest.Type is not 'stop'");
 
     public T Match<T>(
         Func<SeedTrace.InitializeProblemRequest, T> onInitializeProblemRequest,
@@ -289,12 +289,12 @@ public record SubmissionRequest
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionRequest>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionRequest).IsAssignableFrom(typeToConvert);
 
         public override SubmissionRequest Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -371,6 +371,27 @@ public record SubmissionRequest
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override SubmissionRequest ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new SubmissionRequest(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SubmissionRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

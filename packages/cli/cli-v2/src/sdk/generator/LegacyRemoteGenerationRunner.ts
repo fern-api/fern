@@ -1,6 +1,7 @@
 import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, basename, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -16,7 +17,6 @@ import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
 import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
-
 /**
  * Runs remote generation using the legacy remote-generation infrastructure.
  */
@@ -61,6 +61,9 @@ export namespace LegacyRemoteGenerationRunner {
 
         /** Path to .fernignore file */
         fernignorePath?: string;
+
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
 
         /** Version override for the generated SDK */
         version?: string;
@@ -123,10 +126,12 @@ export class LegacyRemoteGenerationRunner {
                 token: args.token,
                 mode: this.mapMode(args.target),
                 fernignorePath: args.fernignorePath,
+                skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,
                 dynamicIrOnly: false,
-                retryRateLimited: false
+                retryRateLimited: false,
+                requireEnvVars: true
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {
@@ -165,9 +170,13 @@ export class LegacyRemoteGenerationRunner {
                 })
             };
         } catch (error) {
+            if (taskContext.getResult() === TaskResult.Failure) {
+                // If the task already recorded a failure, the error is in task.logs.
+                return { success: false };
+            }
             return {
                 success: false,
-                error: error instanceof Error ? error.message : String(error)
+                error: extractErrorMessage(error)
             };
         }
     }

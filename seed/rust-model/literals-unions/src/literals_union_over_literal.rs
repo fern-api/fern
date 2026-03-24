@@ -13,12 +13,12 @@ impl UnionOverLiteral {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_literalstring(&self) -> bool {
+    pub fn is_literal_string(&self) -> bool {
         matches!(self, Self::LiteralString(_))
     }
 
 
-    pub fn as_string(&self) -> Option<&String> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
                     Self::String(value) => Some(value),
                     _ => None,
@@ -32,20 +32,19 @@ impl UnionOverLiteral {
                 }
     }
 
-    pub fn as_literalstring(&self) -> Option<&LiteralString> {
+    pub fn as_literal_string(&self) -> Option<&LiteralString> {
         match self {
                     Self::LiteralString(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_literalstring(self) -> Option<LiteralString> {
+    pub fn into_literal_string(self) -> Option<LiteralString> {
         match self {
                     Self::LiteralString(value) => Some(value),
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for UnionOverLiteral {

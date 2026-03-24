@@ -63,7 +63,14 @@ export const SdkCustomConfigSchema = z.object({
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
     wire_tests: WireTestsConfigSchema.optional(),
-    custom_readme_sections: z.array(CustomReadmeSectionSchema).optional()
+    custom_readme_sections: z.array(CustomReadmeSectionSchema).optional(),
+    /**
+     * When true, datetime values are serialized with millisecond precision
+     * (e.g., "2008-01-02T00:00:00.000Z" instead of "2008-01-02T00:00:00Z").
+     * This also affects WireMock stubs and wire test verification code to ensure
+     * all three components (SDK, stubs, tests) use the same datetime format.
+     */
+    datetime_milliseconds: z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

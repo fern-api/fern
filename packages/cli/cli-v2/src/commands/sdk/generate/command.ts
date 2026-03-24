@@ -16,7 +16,7 @@ import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import { ValidationError } from "../../../errors/ValidationError.js";
+import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -71,6 +71,9 @@ export declare namespace GenerateCommand {
 
         /** Path to .fernignore file */
         fernignore?: string;
+
+        /** Ignore the .fernignore file and generate all files */
+        "skip-fernignore": boolean;
     }
 }
 
@@ -81,7 +84,7 @@ export class GenerateCommand {
             return this.handleWithFlags(context, args);
         }
         if (!result.success) {
-            throw new ValidationError(result.issues);
+            throw new SourcedValidationError(result.issues);
         }
         return this.handleWithWorkspace(context, result.workspace, args);
     }
@@ -239,6 +242,10 @@ export class GenerateCommand {
             ? await context.getTokenOrPrompt()
             : undefined;
 
+        if (token != null) {
+            await context.verifyOrgAccess({ organization: workspace.sdks.org, token });
+        }
+
         const runtime = isLocal ? "local" : "remote";
 
         const taskGroup = new SdkTaskGroup({ context });
@@ -323,7 +330,8 @@ export class GenerateCommand {
                     outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
                     version: args["output-version"],
-                    fernignorePath: args.fernignore
+                    fernignorePath: args.fernignore,
+                    skipFernignore: args["skip-fernignore"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -363,6 +371,11 @@ export class GenerateCommand {
         if (targets.length > 1 && args.output != null) {
             throw new CliError({ message: "The --output flag can only be used when generating a single target" });
         }
+        if (args["skip-fernignore"] && args.fernignore != null) {
+            throw new CliError({
+                message: "The --skip-fernignore and --fernignore flags cannot be used together."
+            });
+        }
         const issues: ValidationIssue[] = [];
         if (args.local) {
             for (const target of targets) {
@@ -373,7 +386,7 @@ export class GenerateCommand {
             }
         }
         if (issues.length > 0) {
-            throw new ValidationError(issues);
+            throw new SourcedValidationError(issues);
         }
     }
 
@@ -583,7 +596,7 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new GenerateCommand();
     command(
         cli,
@@ -664,7 +677,12 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
-                }),
-        parentPath
+                })
+                .option("skip-fernignore", {
+                    type: "boolean",
+                    default: false,
+                    description:
+                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
     );
 }

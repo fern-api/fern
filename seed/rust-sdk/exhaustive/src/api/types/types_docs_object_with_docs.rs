@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ObjectWithDocs {
     /// Characters that could lead to broken generated SDKs:
     ///
@@ -66,5 +66,36 @@ pub struct ObjectWithDocs {
     /// - ** /: PHPDoc comment end
     /// - *: Can interfere with comment blocks
     /// - &: HTML entities
+    #[serde(default)]
     pub string: String,
+}
+
+impl ObjectWithDocs {
+    pub fn builder() -> ObjectWithDocsBuilder {
+        ObjectWithDocsBuilder::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct ObjectWithDocsBuilder {
+    string: Option<String>,
+}
+
+impl ObjectWithDocsBuilder {
+    pub fn string(mut self, value: impl Into<String>) -> Self {
+        self.string = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`ObjectWithDocs`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`string`](ObjectWithDocsBuilder::string)
+    pub fn build(self) -> Result<ObjectWithDocs, BuildError> {
+        Ok(ObjectWithDocs {
+            string: self
+                .string
+                .ok_or_else(|| BuildError::missing_field("string"))?,
+        })
+    }
 }

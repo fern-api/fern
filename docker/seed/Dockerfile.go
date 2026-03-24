@@ -11,13 +11,18 @@ FROM docker:28.4.0-dind-alpine3.22
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
 
-# Install Go
+# Install Go (multi-arch: supports both amd64 and arm64)
 ENV GO_VERSION=1.23.8
-RUN apk add --no-cache wget tar \
-    && wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
-    && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
-    && rm go${GO_VERSION}.linux-amd64.tar.gz \
-    && apk del wget tar
+RUN set -eux; \
+    ARCH="$(uname -m)"; \
+    case "${ARCH}" in \
+        aarch64|arm64) GOARCH="arm64" ;; \
+        x86_64|amd64) GOARCH="amd64" ;; \
+        *) echo "Unsupported arch: ${ARCH}"; exit 1 ;; \
+    esac; \
+    wget -q "https://go.dev/dl/go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
+    && tar -C /usr/local -xzf "go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
+    && rm "go${GO_VERSION}.linux-${GOARCH}.tar.gz"
 
 ENV PATH="/usr/local/go/bin:${PATH}" \
     GOPATH="/go" \

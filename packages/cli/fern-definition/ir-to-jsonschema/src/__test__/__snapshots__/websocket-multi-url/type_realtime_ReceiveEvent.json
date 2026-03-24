@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "data",
+    "timestamp"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

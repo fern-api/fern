@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -87,6 +88,22 @@ public final class SearchResult {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof SearchResult && value.equals(((SearchResult) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -124,6 +141,10 @@ public final class SearchResult {
   @JsonIgnoreProperties("type")
   private static final class UserValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private UserResponse value;
 
     @JsonCreator(
@@ -166,6 +187,10 @@ public final class SearchResult {
   @JsonIgnoreProperties("type")
   private static final class OrganizationValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Organization value;
 
     @JsonCreator(
@@ -208,6 +233,10 @@ public final class SearchResult {
   @JsonIgnoreProperties("type")
   private static final class DocumentValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private Document value;
 
     @JsonCreator(

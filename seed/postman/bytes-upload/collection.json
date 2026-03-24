@@ -79,6 +79,80 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Upload With Query Params",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/upload-content-with-query-params?model=nova-2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "upload-content-with-query-params"
+              ],
+              "query": [
+                {
+                  "key": "model",
+                  "description": "The model to use for processing",
+                  "value": "nova-2"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/upload-content-with-query-params?model=nova-2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "upload-content-with-query-params"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "description": "The model to use for processing",
+                      "value": "nova-2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

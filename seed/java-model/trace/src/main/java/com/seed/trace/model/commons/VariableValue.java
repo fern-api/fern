@@ -16,6 +16,7 @@ import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -202,6 +203,22 @@ public final class VariableValue {
       return Optional.of(((_UnknownValue) value).value);
     }
     return Optional.empty();
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof VariableValue && value.equals(((VariableValue) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
   }
 
   @JsonValue
@@ -460,6 +477,10 @@ public final class VariableValue {
   @JsonIgnoreProperties("type")
   private static final class MapValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private MapValue value;
 
     @JsonCreator(
@@ -541,6 +562,10 @@ public final class VariableValue {
   @JsonIgnoreProperties("type")
   private static final class BinaryTreeValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private BinaryTreeValue value;
 
     @JsonCreator(
@@ -583,6 +608,10 @@ public final class VariableValue {
   @JsonIgnoreProperties("type")
   private static final class SinglyLinkedListValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private SinglyLinkedListValue value;
 
     @JsonCreator(
@@ -625,6 +654,10 @@ public final class VariableValue {
   @JsonIgnoreProperties("type")
   private static final class DoublyLinkedListValueValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private DoublyLinkedListValue value;
 
     @JsonCreator(

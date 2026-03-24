@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -64,7 +64,7 @@ public record SubmissionTypeState
     public SeedTrace.TestSubmissionState AsTest() =>
         IsTest
             ? (SeedTrace.TestSubmissionState)Value!
-            : throw new System.Exception("SubmissionTypeState.Type is not 'test'");
+            : throw new global::System.Exception("SubmissionTypeState.Type is not 'test'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionState"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record SubmissionTypeState
     public SeedTrace.WorkspaceSubmissionState AsWorkspace() =>
         IsWorkspace
             ? (SeedTrace.WorkspaceSubmissionState)Value!
-            : throw new System.Exception("SubmissionTypeState.Type is not 'workspace'");
+            : throw new global::System.Exception("SubmissionTypeState.Type is not 'workspace'");
 
     public T Match<T>(
         Func<SeedTrace.TestSubmissionState, T> onTest,
@@ -148,12 +148,12 @@ public record SubmissionTypeState
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionTypeState>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionTypeState).IsAssignableFrom(typeToConvert);
 
         public override SubmissionTypeState Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -216,6 +216,27 @@ public record SubmissionTypeState
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override SubmissionTypeState ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new SubmissionTypeState(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SubmissionTypeState value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

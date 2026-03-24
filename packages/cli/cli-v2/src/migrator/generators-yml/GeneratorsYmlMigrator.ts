@@ -4,13 +4,13 @@ import {
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     generatorsYml
 } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertApiSpecs } from "../converters/convertApiSpecs.js";
 import { convertSdkTargetsFromRaw } from "../converters/convertSdkTargets.js";
 import type { DetectResult, MigratorWarning } from "../types/index.js";
-
 export declare namespace GeneratorsYmlMigrator {
     export interface Config {
         cwd: AbsoluteFilePath;
@@ -116,7 +116,7 @@ export class GeneratorsYmlMigrator {
                 absoluteFilePath
             };
         } catch (error) {
-            let message = error instanceof Error ? error.message : String(error);
+            let message = extractErrorMessage(error);
 
             // When the YAML error reason indicates a "bad indentation" or anchor issue and
             // the offending line contains a value starting with @, it is almost certainly an

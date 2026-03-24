@@ -21,6 +21,7 @@ describe("AuthClient", () => {
             expires_in: 1,
             scope: "scope",
         };
+
         server
             .mockEndpoint()
             .post("/token")

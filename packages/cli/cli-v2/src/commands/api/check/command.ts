@@ -91,7 +91,7 @@ export class CheckCommand {
     }
 }
 
-export function addCheckCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addCheckCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new CheckCommand();
     command(
         cli,
@@ -113,7 +113,6 @@ export function addCheckCommand(cli: Argv<GlobalArgs>, parentPath?: string): voi
                     type: "boolean",
                     description: "Output results as JSON to stdout",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

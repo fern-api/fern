@@ -3,7 +3,23 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { publishDocs } from "./publishDocs.js";
+import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
+
+const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
+    1 * 60 * 1000, // 1 minute
+    5 * 60 * 1000, // 5 minutes
+    5 * 60 * 1000 // 5 minutes
+];
+
+export interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
+}
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
@@ -14,8 +30,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     token,
     instanceUrl,
     preview,
+    previewId,
     disableTemplates,
-    skipUpload
+    skipUpload,
+    cliVersion,
+    ciSource
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -25,9 +44,12 @@ export async function runRemoteGenerationForDocsWorkspace({
     token: FernToken;
     instanceUrl: string | undefined;
     preview: boolean;
+    previewId: string | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
-}): Promise<void> {
+    cliVersion?: string;
+    ciSource?: CISource;
+}): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
     // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
@@ -83,34 +105,68 @@ export async function runRemoteGenerationForDocsWorkspace({
         `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
     );
 
+    let publishedUrl: string | undefined;
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         const publishStart = performance.now();
-        await publishDocs({
-            docsWorkspace,
-            customDomains,
-            domain: maybeInstance.url,
-            token,
-            organization,
-            context,
-            apiWorkspaces,
-            ossWorkspaces,
-            preview,
-            editThisPage: maybeInstance.editThisPage,
-            isPrivate: maybeInstance.private,
-            disableTemplates,
-            skipUpload,
-            withAiExamples:
-                docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
-            excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
-            targetAudiences: maybeInstance.audiences
-                ? Array.isArray(maybeInstance.audiences)
-                    ? maybeInstance.audiences
-                    : [maybeInstance.audiences]
-                : undefined,
-            docsUrl: maybeInstance.url
-        });
+        const attemptPublish = () =>
+            publishDocs({
+                docsWorkspace,
+                customDomains,
+                domain: maybeInstance.url,
+                token,
+                organization,
+                context,
+                apiWorkspaces,
+                ossWorkspaces,
+                preview,
+                previewId,
+                editThisPage: maybeInstance.editThisPage,
+                isPrivate: maybeInstance.private,
+                disableTemplates,
+                skipUpload,
+                withAiExamples:
+                    docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
+                excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
+                targetAudiences: maybeInstance.audiences
+                    ? Array.isArray(maybeInstance.audiences)
+                        ? maybeInstance.audiences
+                        : [maybeInstance.audiences]
+                    : undefined,
+                docsUrl: maybeInstance.url,
+                cliVersion,
+                ciSource
+            });
+
+        for (let attempt = 0; ; attempt++) {
+            try {
+                publishedUrl = await attemptPublish();
+                break;
+            } catch (error) {
+                if (
+                    !(error instanceof DocsPublishConflictError) ||
+                    attempt >= PUBLISH_CONFLICT_RETRY_DELAYS_MS.length
+                ) {
+                    if (error instanceof DocsPublishConflictError) {
+                        return context.failAndThrow(
+                            "Another docs publish is currently in progress. Please try again once the other publish is complete."
+                        );
+                    }
+                    throw error;
+                }
+                const delayMs =
+                    PUBLISH_CONFLICT_RETRY_DELAYS_MS[attempt] ??
+                    PUBLISH_CONFLICT_RETRY_DELAYS_MS[PUBLISH_CONFLICT_RETRY_DELAYS_MS.length - 1] ??
+                    60000;
+                const delayMinutes = delayMs / 60000;
+                context.logger.warn(
+                    `Another docs publish is in progress. Retrying in ${delayMinutes} minute${delayMinutes === 1 ? "" : "s"} (attempt ${attempt + 1}/${PUBLISH_CONFLICT_RETRY_DELAYS_MS.length})...`
+                );
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
+            }
+        }
+
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
-    return;
+    return publishedUrl;
 }

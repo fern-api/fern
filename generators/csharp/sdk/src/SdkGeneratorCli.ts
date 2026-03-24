@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
@@ -111,13 +112,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
         const modelsStartTime = Date.now();
-        const models = generateModels({ context });
+        const { files: models, literalTypeFiles } = generateModels({ context });
         context.logger.debug(`[TIMING] generateModels took ${Date.now() - modelsStartTime}ms`);
 
         await context.snippetGenerator.populateSnippetsCache();
 
         for (const file of models) {
             context.project.addSourceFiles(file);
+        }
+        for (const file of literalTypeFiles) {
+            context.project.addSourceRawFile(file);
         }
 
         context.project.addSourceFiles(generateVersion({ context }));
@@ -167,6 +171,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                         subpackage,
                         websocketChannel
                     });
+                    context.project.addSourceFiles(websocketApi.generateInterface());
                     context.project.addSourceFiles(websocketApi.generate());
                 }
             }
@@ -287,23 +292,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
@@ -333,6 +328,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
+        if (builder == null) {
+            context.logger.debug("No endpoint references found; skipping reference.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReference(builder);
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(

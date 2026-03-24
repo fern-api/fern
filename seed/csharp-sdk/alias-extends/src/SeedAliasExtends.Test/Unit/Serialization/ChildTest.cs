@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedAliasExtends;
 using SeedAliasExtends.Core;
+using SeedAliasExtends.Test.Utils;
 
 namespace SeedAliasExtends.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ChildTest
 {
     [NUnit.Framework.Test]
@@ -29,19 +30,12 @@ public class ChildTest
     [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "parent": "Property from the parent",
               "child": "Property from the child"
             }
             """;
-        var actualObj = new Child
-        {
-            Parent = "Property from the parent",
-            Child_ = "Property from the child",
-        };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<Child>(inputJson);
     }
 }

@@ -26,7 +26,10 @@ export const MANIFEST: CoreUtility.Manifest = {
     },
     dependsOn: [FetcherManifest],
     getFilesPatterns: () => {
-        return { patterns: "src/core/pagination/**" };
+        return {
+            patterns: "src/core/pagination/**",
+            ignore: ["src/core/pagination/CustomPager.ts", "src/core/pagination/index.ts"]
+        };
     }
 };
 

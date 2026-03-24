@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/go-optional-literal-alias/fern/internal"
 )
 

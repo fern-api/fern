@@ -20,6 +20,7 @@ describe("ServiceClient", () => {
         const client = new SeedAcceptClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { key: "value" };
+
         server.mockEndpoint().delete("/container/").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {

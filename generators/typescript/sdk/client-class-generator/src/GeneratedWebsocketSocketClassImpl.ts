@@ -120,7 +120,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                             description: "The current state of the connection; this is one of the readyState constants."
                         }
                     ],
-                    returnType: "number",
+                    returnType: `${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState`,
                     statements: [`return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState;`]
                 }
             ],
@@ -429,7 +429,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isAsync: true,
             returnType: `Promise<${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}>`,
             statements: [
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
+                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
                 `    return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
                 "}",
                 "return new Promise((resolve, reject) => {",
@@ -461,7 +461,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 '    throw new Error("Socket is not connected.");',
                 "}",
                 "",
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
+                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
                 '    throw new Error("Socket is not open.");',
                 "}"
             ],

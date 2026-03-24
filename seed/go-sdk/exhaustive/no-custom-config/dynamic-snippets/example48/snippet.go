@@ -1,9 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -15,7 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.NoEndingSlash(
+    request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
+        },
+    }
+    client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
+        request,
     )
 }

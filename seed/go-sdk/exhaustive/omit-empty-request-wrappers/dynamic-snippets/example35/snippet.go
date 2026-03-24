@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    bytes "bytes"
-    context "context"
 )
 
 func do() {
@@ -16,12 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := bytes.NewReader(
-        []byte(""),
-    )
-    client.Endpoints.Params.UploadWithPath(
+    request := "string"
+    client.Endpoints.Params.ModifyWithPath(
         context.TODO(),
-        "upload-path",
+        "param",
         request,
     )
 }

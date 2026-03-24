@@ -17,11 +17,17 @@ types:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponse:
     properties:
-      data: optional<list<trainsRoot.Booking>>
-      links: optional<GetBookingsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Booking>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetBookingsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination

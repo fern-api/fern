@@ -5,9 +5,9 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -63,7 +63,7 @@ public final class ListClientsRequest {
     /**
      * @return Comma-separated list of fields to include
      */
-    @JsonProperty("fields")
+    @JsonIgnore
     public Optional<String> getFields() {
         return fields;
     }
@@ -71,7 +71,7 @@ public final class ListClientsRequest {
     /**
      * @return Whether specified fields are included or excluded
      */
-    @JsonProperty("include_fields")
+    @JsonIgnore
     public Optional<Boolean> getIncludeFields() {
         return includeFields;
     }
@@ -79,7 +79,7 @@ public final class ListClientsRequest {
     /**
      * @return Page number (zero-based)
      */
-    @JsonProperty("page")
+    @JsonIgnore
     public Optional<Integer> getPage() {
         return page;
     }
@@ -87,7 +87,7 @@ public final class ListClientsRequest {
     /**
      * @return Number of results per page
      */
-    @JsonProperty("per_page")
+    @JsonIgnore
     public Optional<Integer> getPerPage() {
         return perPage;
     }
@@ -95,7 +95,7 @@ public final class ListClientsRequest {
     /**
      * @return Include total count in response
      */
-    @JsonProperty("include_totals")
+    @JsonIgnore
     public Optional<Boolean> getIncludeTotals() {
         return includeTotals;
     }
@@ -103,7 +103,7 @@ public final class ListClientsRequest {
     /**
      * @return Filter by global clients
      */
-    @JsonProperty("is_global")
+    @JsonIgnore
     public Optional<Boolean> getIsGlobal() {
         return isGlobal;
     }
@@ -111,7 +111,7 @@ public final class ListClientsRequest {
     /**
      * @return Filter by first party clients
      */
-    @JsonProperty("is_first_party")
+    @JsonIgnore
     public Optional<Boolean> getIsFirstParty() {
         return isFirstParty;
     }
@@ -119,7 +119,7 @@ public final class ListClientsRequest {
     /**
      * @return Filter by application type (spa, native, regular_web, non_interactive)
      */
-    @JsonProperty("app_type")
+    @JsonIgnore
     public Optional<List<String>> getAppType() {
         return appType;
     }

@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import okio.ByteString;
 
 /**
  * WebSocketListener with automatic reconnection, exponential backoff, and message queuing.
@@ -45,6 +46,8 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     private volatile long connectionEstablishedTime = 0L;
 
     private final ConcurrentLinkedQueue<String> messageQueue = new ConcurrentLinkedQueue<>();
+
+    private final ConcurrentLinkedQueue<ByteString> binaryMessageQueue = new ConcurrentLinkedQueue<>();
 
     private final ScheduledExecutorService reconnectExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -142,6 +145,7 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     public void disconnect() {
         shouldReconnect.set(false);
         messageQueue.clear();
+        binaryMessageQueue.clear();
         if (webSocket != null) {
             webSocket.close(1000, "Client disconnecting");
         }
@@ -188,6 +192,37 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     }
 
     /**
+     * Sends binary data or queues it if not connected.
+     *
+     * Thread-safe: Synchronized to prevent race conditions with flushMessageQueue().
+     *
+     * Behavior:
+     * - If connected: Attempts direct send, queues if buffer full
+     * - If disconnected: Queues data up to maxEnqueuedMessages limit
+     * - If queue full: Data is dropped
+     *
+     * @param data The binary data to send
+     * @return true if sent immediately, false if queued or dropped
+     */
+    public synchronized boolean sendBinary(ByteString data) {
+        WebSocket ws = webSocket;
+        if (ws != null) {
+            boolean sent = ws.send(data);
+            if (!sent && binaryMessageQueue.size() < maxEnqueuedMessages) {
+                binaryMessageQueue.offer(data);
+                return false;
+            }
+            return sent;
+        } else {
+            if (binaryMessageQueue.size() < maxEnqueuedMessages) {
+                binaryMessageQueue.offer(data);
+                return false;
+            }
+            return false;
+        }
+    }
+
+    /**
      * Gets the current WebSocket instance.
      * Thread-safe method to access the WebSocket connection.
      * @return the WebSocket or null if not connected
@@ -211,6 +246,11 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     @Override
     public void onMessage(WebSocket webSocket, String text) {
         onWebSocketMessage(webSocket, text);
+    }
+
+    @Override
+    public void onMessage(WebSocket webSocket, ByteString bytes) {
+        onWebSocketBinaryMessage(webSocket, bytes);
     }
 
     /**
@@ -301,6 +341,7 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      * 2. Attempts to send each message in order
      * 3. If any send fails, re-queues that message and all subsequent messages
      * 4. Preserves message ordering during re-queueing
+     * 5. Repeats for binary message queue
      */
     private synchronized void flushMessageQueue() {
         WebSocket ws = webSocket;
@@ -310,11 +351,23 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
             while ((message = messageQueue.poll()) != null) {
                 tempQueue.add(message);
             }
-            for (String msg : tempQueue) {
-                if (!ws.send(msg)) {
-                    messageQueue.offer(msg);
-                    for (int i = tempQueue.indexOf(msg) + 1; i < tempQueue.size(); i++) {
-                        messageQueue.offer(tempQueue.get(i));
+            for (int i = 0; i < tempQueue.size(); i++) {
+                if (!ws.send(tempQueue.get(i))) {
+                    for (int j = i; j < tempQueue.size(); j++) {
+                        messageQueue.offer(tempQueue.get(j));
+                    }
+                    break;
+                }
+            }
+            ArrayList<ByteString> tempBinaryQueue = new ArrayList<>();
+            ByteString binaryMsg;
+            while ((binaryMsg = binaryMessageQueue.poll()) != null) {
+                tempBinaryQueue.add(binaryMsg);
+            }
+            for (int i = 0; i < tempBinaryQueue.size(); i++) {
+                if (!ws.send(tempBinaryQueue.get(i))) {
+                    for (int j = i; j < tempBinaryQueue.size(); j++) {
+                        binaryMessageQueue.offer(tempBinaryQueue.get(j));
                     }
                     break;
                 }
@@ -325,6 +378,8 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     protected abstract void onWebSocketOpen(WebSocket webSocket, Response response);
 
     protected abstract void onWebSocketMessage(WebSocket webSocket, String text);
+
+    protected abstract void onWebSocketBinaryMessage(WebSocket webSocket, ByteString bytes);
 
     protected abstract void onWebSocketFailure(WebSocket webSocket, Throwable t, Response response);
 

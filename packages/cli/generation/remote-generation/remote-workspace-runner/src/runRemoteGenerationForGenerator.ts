@@ -1,9 +1,13 @@
-import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit
+} from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -35,8 +39,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -52,8 +58,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -68,7 +76,13 @@ export async function runRemoteGenerationForGenerator({
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
             { substituteAsEmpty: isPreview }
         );
 
@@ -121,7 +135,8 @@ export async function runRemoteGenerationForGenerator({
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
-            generatorConfig: generatorInvocation.config
+            generatorConfig: generatorInvocation.config,
+            originGitCommit: getOriginGitCommit()
         }
     });
 
@@ -223,9 +238,7 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
-            );
+            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -254,6 +267,7 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview,
         fernignorePath,
+        skipFernignore,
         retryRateLimited
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
@@ -304,7 +318,7 @@ export async function runRemoteGenerationForGenerator({
             });
         } catch (error) {
             interactiveTaskContext.logger.warn(
-                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+                `Failed to upload dynamic IR for SDK generation: ${extractErrorMessage(error)}`
             );
         }
     }
@@ -375,11 +389,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-/**
- * Uploads dynamic IR for SDK generation to enable dynamic snippets.
- * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
- * generates the dynamic IR, and uploads it.
- */
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,

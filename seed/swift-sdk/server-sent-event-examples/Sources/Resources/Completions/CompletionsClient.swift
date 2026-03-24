@@ -26,4 +26,14 @@ public final class CompletionsClient: Sendable {
             responseType: JSONValue.self
         )
     }
+
+    public func streamEventsContextProtocol(request: Requests.StreamEventsContextProtocolRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/stream-events-context-protocol",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
 }

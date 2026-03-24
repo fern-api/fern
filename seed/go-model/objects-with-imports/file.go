@@ -5,6 +5,7 @@ package objectswithimports
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/objects-with-imports/fern/internal"
 )
 

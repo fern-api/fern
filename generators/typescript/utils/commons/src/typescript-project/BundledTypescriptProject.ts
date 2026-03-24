@@ -146,7 +146,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath,
             isolatedModules: true,
             isolatedDeclarations: true,
             verbatimModuleSyntax: true

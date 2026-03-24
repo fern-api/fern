@@ -26,6 +26,9 @@ export class WebSocketChannelGenerator {
         moduleName: string;
         channel: FernIr.WebSocketChannel;
     }> {
+        if (!this.context.hasWebSocketChannels()) {
+            return [];
+        }
         const websocketChannels = this.context.ir.websocketChannels;
         if (!websocketChannels) {
             return [];
@@ -189,12 +192,7 @@ export class WebSocketChannelGenerator {
 
         const rawDeclarations: string[] = [];
 
-        // The IR message type IDs always use the full channel-derived prefix
-        // (e.g. "ListenV2Connected"), even when collision resolution shortens the
-        // Rust enum prefix (e.g. "V2"). Derive wirePrefix from the channel ID
-        // so we can strip it correctly.
-        const wirePrefix = this.deriveNameFromChannelId(channelId).pascalCase;
-        const serverEnum = this.generateServerMessageEnum(enumPrefix, jsonServerMessages, wirePrefix);
+        const serverEnum = this.generateServerMessageEnum(enumPrefix, jsonServerMessages);
         if (serverEnum) {
             rawDeclarations.push(serverEnum);
         }
@@ -258,8 +256,7 @@ export class WebSocketChannelGenerator {
      */
     private generateServerMessageEnum(
         enumPrefix: string,
-        jsonServerMessages: FernIr.WebSocketMessage[],
-        wirePrefix: string
+        jsonServerMessages: FernIr.WebSocketMessage[]
     ): string | undefined {
         if (jsonServerMessages.length === 0) {
             return undefined;
@@ -270,28 +267,16 @@ export class WebSocketChannelGenerator {
         const variants = jsonServerMessages
             .map((msg) => {
                 const variantName = this.getMessageVariantName(msg);
-                // The IR msg.type (from AsyncAPI operationId) includes the channel name
-                // as a prefix (e.g. "ListenV2Connected"), but the actual API sends just
-                // the short discriminant (e.g. "Connected"). Strip the wire prefix.
-                // wirePrefix comes from channel.displayName (the original channel name),
-                // which may differ from enumPrefix when collision resolution renames it.
-                let wireValue = msg.type;
-                if (wireValue.startsWith(wirePrefix)) {
-                    wireValue = wireValue.slice(wirePrefix.length);
-                } else if (wireValue.startsWith(enumPrefix)) {
-                    wireValue = wireValue.slice(enumPrefix.length);
-                }
                 const bodyType = this.getMessageBodyType(msg);
-                const renameAttr = `    #[serde(rename = "${wireValue}")]\n`;
                 if (bodyType) {
-                    return `${renameAttr}    ${variantName}(${bodyType}),`;
+                    return `    ${variantName}(${bodyType}),`;
                 }
-                return `${renameAttr}    ${variantName},`;
+                return `    ${variantName},`;
             })
             .join("\n");
 
         return `#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum ${enumName} {
 ${variants}
 }`;
@@ -350,6 +335,28 @@ ${methods.join("\n\n")}
      * Used by both generateConnectMethod() and generateConnectorStruct() to ensure
      * parameter signatures stay in sync.
      */
+    /**
+     * Returns true if the channel does not already have an explicit Authorization
+     * header in its IR definition.  When true, the connector will automatically
+     * inject a Bearer token from the stored ClientConfig token.
+     */
+    private needsImplicitAuth(channel: FernIr.WebSocketChannel): boolean {
+        const hasExplicitAuth = channel.headers.some(
+            (h) => h.name.wireValue.toLowerCase() === "authorization"
+        );
+        return !hasExplicitAuth;
+    }
+
+    /**
+     * Returns true if the header is `Sec-WebSocket-Protocol` (case-insensitive).
+     * This header is handled specially by tungstenite for RFC 6455 subprotocol
+     * negotiation and must NOT be inserted as a regular HTTP header, because
+     * tungstenite will fail the handshake if the server does not echo it back.
+     */
+    private isWebSocketProtocolHeader(header: FernIr.HttpHeader): boolean {
+        return header.name.wireValue.toLowerCase() === "sec-websocket-protocol";
+    }
+
     private buildConnectParams(channel: FernIr.WebSocketChannel): Array<{ name: string; type: string }> {
         const params: Array<{ name: string; type: string }> = [];
 
@@ -357,7 +364,17 @@ ${methods.join("\n\n")}
             params.push({ name: pathParam.name.snakeCase.safeName, type: "&str" });
         }
 
+        // If auth is required but no explicit Authorization header, add it
+        if (this.needsImplicitAuth(channel)) {
+            params.push({ name: "authorization", type: "&str" });
+        }
+
         for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — tungstenite handles subprotocol
+            // negotiation internally and fails if the server doesn't echo it.
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
             params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
         }
 
@@ -389,13 +406,23 @@ ${methods.join("\n\n")}
         const connectParams = this.buildConnectParams(channel);
         const params: string[] = ["url: &str", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
 
-        const headerInserts = channel.headers
-            .map((header) => {
-                const paramName = header.name.name.snakeCase.safeName;
-                const wireValue = header.name.wireValue;
-                return `        options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`;
-            })
-            .join("\n");
+        const headerLines: string[] = [];
+
+        // If auth is required but no explicit Authorization header, inject it
+        if (this.needsImplicitAuth(channel)) {
+            headerLines.push(`        options.headers.insert("Authorization".to_string(), authorization.to_string());`);
+        }
+
+        for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — see isWebSocketProtocolHeader().
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
+            const paramName = header.name.name.snakeCase.safeName;
+            const wireValue = header.name.wireValue;
+            headerLines.push(`        options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
+        }
+        const headerInserts = headerLines.join("\n");
 
         const queryLines: string[] = [];
         if (channel.queryParameters.length > 0) {
@@ -413,7 +440,7 @@ ${methods.join("\n\n")}
             }
         }
 
-        const needsMut = channel.headers.length > 0 || channel.queryParameters.length > 0;
+        const needsMut = this.needsImplicitAuth(channel) || channel.headers.length > 0 || channel.queryParameters.length > 0;
         const optionsBinding = needsMut ? "let mut options" : "let options";
 
         return `    pub async fn connect(${params.join(", ")}) -> Result<Self, ApiError> {
@@ -506,24 +533,51 @@ ${queryLines.join("\n")}
     private generateConnectorStruct(clientName: string, channel: FernIr.WebSocketChannel): string {
         const connectorName = this.getConnectorName(clientName);
 
-        // Reuse shared parameter list — same order and types as generateConnectMethod()
-        const connectParams = this.buildConnectParams(channel);
+        // The connector always auto-injects the Authorization header from the stored
+        // token so users never need to pass it manually — matching the TypeScript SDK
+        // experience where `client.realtime.connect()` "just works".
+        const connectParams = this.buildConnectParams(channel)
+            .filter((p) => p.name !== "authorization");
         const params: string[] = ["&self", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
-        const forwardArgs: string[] = ["&self.base_url", ...connectParams.map((p) => p.name)];
+
+        // Build the forward args for the underlying client::connect() call.
+        // Insert the auto-constructed Bearer token where the authorization param goes.
+        const allClientParams = this.buildConnectParams(channel);
+        const forwardArgs: string[] = ["&self.base_url"];
+        for (const p of allClientParams) {
+            if (p.name === "authorization") {
+                forwardArgs.push("&auth_header");
+            } else {
+                forwardArgs.push(p.name);
+            }
+        }
+
+        // Check if there is any authorization param to auto-inject
+        const hasAuthParam = allClientParams.some((p) => p.name === "authorization");
+
+        const structFields = `    base_url: String,\n    token: Option<String>,`;
+        const newParams = `base_url: String, token: Option<String>`;
+        const newBody = `Self { base_url, token }`;
+
+        const authSetup = hasAuthParam
+            ? `        let auth_header = self.token.as_ref()
+            .map(|t| format!("Bearer {}", t))
+            .unwrap_or_default();\n`
+            : "";
 
         return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
 /// Provides access to the WebSocket channel through the root client.
 pub struct ${connectorName} {
-    base_url: String,
+${structFields}
 }
 
 impl ${connectorName} {
-    pub fn new(base_url: String) -> Self {
-        Self { base_url }
+    pub fn new(${newParams}) -> Self {
+        ${newBody}
     }
 
     pub async fn connect(${params.join(", ")}) -> Result<${clientName}, ApiError> {
-        ${clientName}::connect(${forwardArgs.join(", ")}).await
+${authSetup}        ${clientName}::connect(${forwardArgs.join(", ")}).await
     }
 }`;
     }
