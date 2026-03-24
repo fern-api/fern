@@ -144,6 +144,18 @@ describe("processInParallelBatches", () => {
         expect(currentConcurrency).toBe(0);
     });
 
+    it("treats batchSize of 0 as 1 (prevents infinite loop)", async () => {
+        const items = [1, 2, 3];
+        const results = await processInParallelBatches(items, 0, async (item) => item * 2);
+        expect(results).toEqual([2, 4, 6]);
+    });
+
+    it("treats negative batchSize as 1 (prevents infinite loop)", async () => {
+        const items = [1, 2, 3];
+        const results = await processInParallelBatches(items, -5, async (item) => item * 2);
+        expect(results).toEqual([2, 4, 6]);
+    });
+
     it("works with async functions that return different types", async () => {
         const items = ["fern", "oak", "maple"];
         const results = await processInParallelBatches(items, 2, async (item) => ({

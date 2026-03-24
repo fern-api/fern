@@ -16,8 +16,9 @@ export async function processInParallelBatches<T, R>(
     fn: (item: T) => Promise<R>
 ): Promise<R[]> {
     const results: R[] = [];
-    for (let i = 0; i < items.length; i += batchSize) {
-        const batch = items.slice(i, i + batchSize);
+    const safeBatchSize = Math.max(1, batchSize);
+    for (let i = 0; i < items.length; i += safeBatchSize) {
+        const batch = items.slice(i, i + safeBatchSize);
         const batchResults = await Promise.all(batch.map(fn));
         results.push(...batchResults);
     }
