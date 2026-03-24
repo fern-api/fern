@@ -1,14 +1,48 @@
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules.js";
+import {
+    createDocsConfigFileAstVisitorForRules,
+    type RuleWithVisitor,
+    type SeverityOverride
+} from "./createDocsConfigFileAstVisitorForRules.js";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
+import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
+
+function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
+    switch (severity) {
+        case "error":
+            return "error";
+        case "warn":
+            return "warning";
+        default:
+            assertNever(severity);
+    }
+}
+
+function buildSeverityOverrides(
+    checkConfig: docsYml.RawSchemas.CheckConfig | undefined
+): Map<string, SeverityOverride> {
+    const severityOverrides = new Map<string, SeverityOverride>();
+    const rulesConfig = checkConfig?.rules;
+    if (rulesConfig == null) {
+        return severityOverrides;
+    }
+    if (rulesConfig.exampleValidation != null) {
+        severityOverrides.set(ValidOpenApiExamples.name, toSeverityOverride(rulesConfig.exampleValidation));
+    }
+    if (rulesConfig.brokenLinks != null) {
+        severityOverrides.set(ValidMarkdownLinks.name, toSeverityOverride(rulesConfig.brokenLinks));
+    }
+    return severityOverrides;
+}
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
@@ -27,7 +61,7 @@ export async function validateDocsWorkspace(
 // exported for testing
 export async function runRulesOnDocsWorkspace({
     workspace,
-    rules,
+    rules: selectedRules,
     context,
     apiWorkspaces,
     ossWorkspaces
@@ -39,6 +73,12 @@ export async function runRulesOnDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
+    const rules = [...selectedRules];
+    const severityOverrides = buildSeverityOverrides(workspace.config.check);
+    const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
+    if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
+        rules.push(ValidMarkdownLinks);
+    }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(
         `Initial memory usage: RSS=${(startMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(startMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
@@ -47,15 +87,21 @@ export async function runRulesOnDocsWorkspace({
     const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
-    const allRuleVisitors = await Promise.all(
-        rules.map((rule) => rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger }))
+    const allRulesWithVisitors = await Promise.all(
+        rules.map(
+            async (rule): Promise<RuleWithVisitor> => ({
+                ruleName: rule.name,
+                visitor: await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger })
+            })
+        )
     );
     const ruleCreationTime = performance.now() - ruleCreationStart;
     context.logger.debug(`Created ${rules.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms`);
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
-        allRuleVisitors,
+        allRulesWithVisitors,
+        severityOverrides,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
         }
