@@ -127,11 +127,13 @@ export async function runRemoteGenerationForDocsWorkspace({
                 withAiExamples:
                     docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
                 excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
-                targetAudiences: maybeInstance.audiences
-                    ? Array.isArray(maybeInstance.audiences)
-                        ? maybeInstance.audiences
-                        : [maybeInstance.audiences]
-                    : undefined,
+                targetAudiences: preview
+                    ? undefined
+                    : maybeInstance.audiences
+                      ? Array.isArray(maybeInstance.audiences)
+                          ? maybeInstance.audiences
+                          : [maybeInstance.audiences]
+                      : undefined,
                 docsUrl: maybeInstance.url,
                 cliVersion,
                 ciSource
