@@ -81,12 +81,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<CSharpFile> 
             // Skip model binding test for types with extra properties because
             // [JsonExtensionData] captures values as JsonElement with bare STJ,
             // which doesn't match the primitive values in the expected object.
-            if (
-                !(
-                    this.typeDeclaration.shape.type === "object" &&
-                    this.typeDeclaration.shape.extraProperties
-                )
-            ) {
+            if (!(this.typeDeclaration.shape.type === "object" && this.typeDeclaration.shape.extraProperties)) {
                 this.testClass.addTestMethod({
                     name: `TestModelBinding${testNumber}`,
                     body: this.csharp.codeblock((writer) => {
