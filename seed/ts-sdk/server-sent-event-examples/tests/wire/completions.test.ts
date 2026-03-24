@@ -107,7 +107,36 @@ describe("CompletionsClient", () => {
         }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
     });
 
-    test("streamEventsContextProtocol", async () => {
+    test("streamEventsContextProtocol (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: completion\ndata: {"content":"hello"}\n\nevent: error\ndata: {"error":"something went wrong"}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.completions.streamEventsContextProtocol({
+            query: "query",
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            { event: "completion", content: "hello" },
+            { event: "error", error: "something went wrong" },
+        ]);
+    });
+
+    test("streamEventsContextProtocol (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
