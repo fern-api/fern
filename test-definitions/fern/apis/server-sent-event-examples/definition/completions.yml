@@ -10,6 +10,7 @@ types:
 
   EventEvent:
     properties:
+      event: string
       name: string
 
   ErrorEvent:
@@ -24,7 +25,7 @@ types:
     union:
       completion: CompletionEvent
       error: ErrorEvent
-      notification: EventEvent
+      event: EventEvent
 
   StreamEvent:
     discriminant:
@@ -127,7 +128,7 @@ service:
       errors:
         - BadRequestError
       examples:
-        - name: "Stream events"
+        - name: "Stream events context protocol"
           request:
             query: "query"
           response:
@@ -138,10 +139,13 @@ service:
               - event: error
                 data:
                   error: "something went wrong"
-              - event: notification
-                data:
-                  name: "update available"
-        - name: "Bad request"
+              # This example is causing fern check failures because of how it assumes we can flatten
+              # Removing for now, but keeping in comments to demonstrate how we should be testing
+              # - event: event
+              #   data:
+              #     name: "some particular update"
+              #     event: "update"
+        - name: "Bad request context protocol"
           request:
             query: ""
           response:

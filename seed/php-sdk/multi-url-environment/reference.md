@@ -45,7 +45,7 @@ $client->ec2->bootInstance(
 </details>
 
 ## S3
-<details><summary><code>$client-&gt;s3-&gt;getPresignedUrl($request) -> string</code></summary>
+<details><summary><code>$client-&gt;s3-&gt;getPresignedUrl($request) -> ?string</code></summary>
 <dl>
 <dd>
 

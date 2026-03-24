@@ -1,11 +1,15 @@
 {
   "type": "object",
   "properties": {
+    "event": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     }
   },
   "required": [
+    "event",
     "name"
   ],
   "additionalProperties": false,

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;listResources($request) -> array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listResources($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +112,7 @@ $client->service->listResources(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getResource($resourceId, $request) -> Resource</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getResource($resourceId, $request) -> ?Resource</code></summary>
 <dl>
 <dd>
 
@@ -188,7 +188,7 @@ $client->service->getResource(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;searchResources($request) -> SearchResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;searchResources($request) -> ?SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -277,7 +277,7 @@ $client->service->searchResources(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listUsers($request) -> PaginatedUserResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listUsers($request) -> ?PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -398,7 +398,7 @@ $client->service->listUsers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getUserById($userId, $request) -> User</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getUserById($userId, $request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -474,7 +474,7 @@ $client->service->getUserById(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -548,7 +548,7 @@ $client->service->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;updateUser($userId, $request) -> User</code></summary>
+<details><summary><code>$client-&gt;service-&gt;updateUser($userId, $request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -687,7 +687,7 @@ $client->service->deleteUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listConnections($request) -> array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listConnections($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -763,7 +763,7 @@ $client->service->listConnections(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getConnection($connectionId, $request) -> Connection</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getConnection($connectionId, $request) -> ?Connection</code></summary>
 <dl>
 <dd>
 
@@ -830,7 +830,7 @@ $client->service->getConnection(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listClients($request) -> PaginatedClientResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listClients($request) -> ?PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -954,7 +954,7 @@ $client->service->listClients(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getClient($clientId, $request) -> Client</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getClient($clientId, $request) -> ?Client</code></summary>
 <dl>
 <dd>
 

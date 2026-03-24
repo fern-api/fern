@@ -76,11 +76,11 @@ class UnionClient
      *   |int
      *   |array<int>
      *   |array<array<int>>
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string|array|int $request, ?array $options = null): string|array|int
+    public function get(string|array|int $request, ?array $options = null): string|array|int|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -96,6 +96,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union('string', ['string'], 'integer', ['integer'], [['integer']])); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -119,14 +122,14 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<(
+     * @return ?array<(
      *    value-of<KeyType>
      *   |'default'
      * ), string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(?array $options = null): array
+    public function getMetadata(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -141,6 +144,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -169,11 +175,11 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateMetadata(array|NamedMetadata|null $request, ?array $options = null): bool
+    public function updateMetadata(array|NamedMetadata|null $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -189,6 +195,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
@@ -213,11 +222,11 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function call(Request $request, ?array $options = null): bool
+    public function call(Request $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -233,6 +242,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
@@ -265,11 +277,11 @@ class UnionClient
      *    string
      *   |array<string>
      *   |int
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function duplicateTypesUnion(string|array|int $request, ?array $options = null): string|array|int
+    public function duplicateTypesUnion(string|array|int $request, ?array $options = null): string|array|int|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -285,6 +297,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union('string', ['string'], 'integer')); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -314,11 +329,11 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function nestedUnions(string|array|int|bool $request, ?array $options = null): string
+    public function nestedUnions(string|array|int|bool $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -334,6 +349,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -358,11 +376,11 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testCamelCaseProperties(PaymentRequest $request, ?array $options = null): string
+    public function testCamelCaseProperties(PaymentRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -378,6 +396,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {

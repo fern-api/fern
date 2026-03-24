@@ -62,11 +62,11 @@ class OptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalBody(?array $request = null, ?array $options = null): string
+    public function sendOptionalBody(?array $request = null, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -82,6 +82,9 @@ class OptionalClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -106,11 +109,11 @@ class OptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalTypedBody(?SendOptionalBodyRequest $request = null, ?array $options = null): string
+    public function sendOptionalTypedBody(?SendOptionalBodyRequest $request = null, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -126,6 +129,9 @@ class OptionalClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -155,11 +161,11 @@ class OptionalClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DeployResponse
+     * @return ?DeployResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalNullableWithAllOptionalProperties(string $actionId, string $id, ?DeployParams $request = null, ?array $options = null): DeployResponse
+    public function sendOptionalNullableWithAllOptionalProperties(string $actionId, string $id, ?DeployParams $request = null, ?array $options = null): ?DeployResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -175,6 +181,9 @@ class OptionalClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return DeployResponse::fromJson($json);
             }
         } catch (JsonException $e) {

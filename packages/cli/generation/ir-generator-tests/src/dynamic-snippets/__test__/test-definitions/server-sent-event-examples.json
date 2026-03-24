@@ -307,6 +307,36 @@
                     "name": {
                         "wireValue": "name",
                         "name": {
+                            "originalName": "event",
+                            "camelCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT",
+                                "safeName": "EVENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Event",
+                                "safeName": "Event"
+                            }
+                        },
+                        "wireValue": "event"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
                             "originalName": "name",
                             "camelCase": {
                                 "unsafeName": "name",
@@ -614,30 +644,35 @@
                     },
                     "properties": []
                 },
-                "notification": {
+                "event": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:EventEvent",
                     "discriminantValue": {
                         "wireValue": "notification",
                         "name": {
-                            "originalName": "notification",
+                            "originalName": "event",
                             "camelCase": {
-                                "unsafeName": "notification",
-                                "safeName": "notification"
+                                "unsafeName": "event",
+                                "safeName": "event"
                             },
                             "snakeCase": {
-                                "unsafeName": "notification",
-                                "safeName": "notification"
+                                "unsafeName": "event",
+                                "safeName": "event"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "NOTIFICATION",
-                                "safeName": "NOTIFICATION"
+                                "unsafeName": "EVENT",
+                                "safeName": "EVENT"
                             },
                             "pascalCase": {
-                                "unsafeName": "Notification",
-                                "safeName": "Notification"
+                                "unsafeName": "Event",
+                                "safeName": "Event"
                             }
+<<<<<<< HEAD
                         }
+=======
+                        },
+                        "wireValue": "event"
+>>>>>>> origin/main
                     },
                     "properties": []
                 }

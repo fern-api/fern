@@ -244,6 +244,25 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     writer.writeLine("($request);");
                 }
 
+                // Handle nullable response from the token endpoint
+                writer.newLine();
+                writer.controlFlow("if", php.codeblock("$tokenResponse === null"));
+                writer.write("throw ");
+                writer.writeNodeStatement(
+                    php.instantiateClass({
+                        classReference: this.context.getBaseExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: php.codeblock(
+                                    '"Expected a token response, but received an empty response."'
+                                )
+                            }
+                        ]
+                    })
+                );
+                writer.endControlFlow();
+
                 writer.newLine();
                 writer.writeLine(`$this->accessToken = $tokenResponse${accessTokenProperty};`);
 
