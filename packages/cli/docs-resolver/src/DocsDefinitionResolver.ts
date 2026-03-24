@@ -117,8 +117,6 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
-    /** When true, ignores per-API-section audience filters so all endpoints are included (e.g. for preview). */
-    showAllAudiences?: boolean;
 }
 
 export class DocsDefinitionResolver {
@@ -131,7 +129,6 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
-    private showAllAudiences: boolean;
 
     constructor({
         domain,
@@ -142,8 +139,7 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences,
-        showAllAudiences = false
+        targetAudiences
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -154,7 +150,6 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
-        this.showAllAudiences = showAllAudiences;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1346,7 +1341,7 @@ export class DocsDefinitionResolver {
                 openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
-                    audiences: this.showAllAudiences ? { type: "all" } : item.audiences,
+                    audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
                     generateV1Examples: false,
                     logWarnings: false
@@ -1400,7 +1395,7 @@ export class DocsDefinitionResolver {
             );
             ir = generateIntermediateRepresentation({
                 workspace,
-                audiences: this.showAllAudiences ? { type: "all" } : item.audiences,
+                audiences: item.audiences,
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,

@@ -503,8 +503,7 @@ export async function publishDocs({
                 }
             }
         },
-        targetAudiences,
-        showAllAudiences: preview
+        targetAudiences
     });
 
     context.logger.info("Resolving docs definition...");
