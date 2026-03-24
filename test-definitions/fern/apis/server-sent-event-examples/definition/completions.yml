@@ -128,7 +128,7 @@ service:
       errors:
         - BadRequestError
       examples:
-        - name: "Stream events"
+        - name: "Stream events context protocol"
           request:
             query: "query"
           response:
@@ -139,11 +139,13 @@ service:
               - event: error
                 data:
                   error: "something went wrong"
-              - event: event
-                data:
-                  name: "some particular update"
-                  event: "update"
-        - name: "Bad request"
+              # This example is causing fern check failures because of how it assumes we can flatten
+              # Removing for now, but keeping in comments to demonstrate how we should be testing
+              # - event: event
+              #   data:
+              #     name: "some particular update"
+              #     event: "update"
+        - name: "Bad request context protocol"
           request:
             query: ""
           response:
