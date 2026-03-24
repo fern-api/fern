@@ -28,7 +28,7 @@ def test_completions_stream_events_context_protocol() -> None:
     test_id = "completions.stream_events_context_protocol.0"
     client = get_client(test_id)
     for _ in client.completions.stream_events_context_protocol(
-        query="",
+        query="query",
     ):
         pass
     verify_request_count(test_id, "POST", "/stream-events-context-protocol", None, 1)

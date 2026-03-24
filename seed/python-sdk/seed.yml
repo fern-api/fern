@@ -345,10 +345,12 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
-  server-sent-events:
+  server-sent-event-examples:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config

@@ -134,7 +134,7 @@ client = SeedServerSentEvents(
 )
 
 client.completions.stream_events_context_protocol(
-    query="",
+    query="query",
 )
 
 ```
