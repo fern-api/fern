@@ -55,7 +55,6 @@ public record Patient
                 return null;
             }
 
-            string _resourceType = default;
             string _name = default;
             IEnumerable<Script> _scripts = default;
             string _id = default;
@@ -76,7 +75,7 @@ public record Patient
                 switch (propertyName)
                 {
                     case "resource_type":
-                        _resourceType = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     case "name":
                         _name = JsonSerializer.Deserialize<string>(ref reader, options);
@@ -106,7 +105,6 @@ public record Patient
 
             return new Patient
             {
-                ResourceType = _resourceType,
                 Name = _name,
                 Scripts = _scripts,
                 Id = _id,

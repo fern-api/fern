@@ -114,6 +114,7 @@ public record Admin
                 AdminLevel = _adminLevel,
                 Id = _id,
                 Email = _email,
+                Password = default!,
                 Profile = _profile,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };

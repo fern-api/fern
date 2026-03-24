@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(FetchResponse.JsonConverter))]
 [Serializable]
-public record FetchResponse : IJsonOnDeserialized
+public record FetchResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("columns")]
     public Dictionary<string, Column>? Columns { get; set; }
 
@@ -39,9 +36,6 @@ public record FetchResponse : IJsonOnDeserialized
             Usage = value.Usage != null ? SeedApi.Usage.FromProto(value.Usage) : null,
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the FetchResponse type into its Protobuf-equivalent representation.
@@ -72,5 +66,100 @@ public record FetchResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<FetchResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(FetchResponse).IsAssignableFrom(typeToConvert);
+
+        public override FetchResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Dictionary<string, Column>? _columns = default;
+            string? _namespace = default;
+            Usage? _usage = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "columns":
+                        _columns = JsonSerializer.Deserialize<Dictionary<string, Column>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "namespace":
+                        _namespace = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "usage":
+                        _usage = JsonSerializer.Deserialize<Usage?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new FetchResponse
+            {
+                Columns = _columns,
+                Namespace = _namespace,
+                Usage = _usage,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            FetchResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Columns != null)
+            {
+                writer.WritePropertyName("columns");
+                JsonSerializer.Serialize(writer, value.Columns, options);
+            }
+            if (value.Namespace != null)
+            {
+                writer.WritePropertyName("namespace");
+                JsonSerializer.Serialize(writer, value.Namespace, options);
+            }
+            if (value.Usage != null)
+            {
+                writer.WritePropertyName("usage");
+                JsonSerializer.Serialize(writer, value.Usage, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

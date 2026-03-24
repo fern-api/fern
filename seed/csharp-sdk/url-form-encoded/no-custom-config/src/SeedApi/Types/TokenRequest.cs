@@ -4,13 +4,10 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(TokenRequest.JsonConverter))]
 [Serializable]
-public record TokenRequest : IJsonOnDeserialized
+public record TokenRequest
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// Client identifier
     /// </summary>
@@ -26,12 +23,85 @@ public record TokenRequest : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<TokenRequest>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(TokenRequest).IsAssignableFrom(typeToConvert);
+
+        public override TokenRequest? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _clientId = default;
+            string _clientSecret = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "client_id":
+                        _clientId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "client_secret":
+                        _clientSecret = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new TokenRequest
+            {
+                ClientId = _clientId,
+                ClientSecret = _clientSecret,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TokenRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("client_id");
+            JsonSerializer.Serialize(writer, value.ClientId, options);
+            writer.WritePropertyName("client_secret");
+            JsonSerializer.Serialize(writer, value.ClientSecret, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

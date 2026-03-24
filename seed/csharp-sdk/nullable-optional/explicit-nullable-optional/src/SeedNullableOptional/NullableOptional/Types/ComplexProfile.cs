@@ -7,13 +7,10 @@ namespace SeedNullableOptional;
 /// <summary>
 /// Test object with nullable enums, unions, and arrays
 /// </summary>
+[JsonConverter(typeof(ComplexProfile.JsonConverter))]
 [Serializable]
-public record ComplexProfile : IJsonOnDeserialized
+public record ComplexProfile
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
@@ -92,12 +89,277 @@ public record ComplexProfile : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ComplexProfile>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ComplexProfile).IsAssignableFrom(typeToConvert);
+
+        public override ComplexProfile? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _id = default;
+            UserRole? _nullableRole = default;
+            var _optionalRole = UserRole?.Undefined;
+            var _optionalNullableRole = Optional<UserRole?>.Undefined;
+            UserStatus? _nullableStatus = default;
+            var _optionalStatus = UserStatus?.Undefined;
+            var _optionalNullableStatus = Optional<UserStatus?>.Undefined;
+            NotificationMethod? _nullableNotification = default;
+            var _optionalNotification = NotificationMethod?.Undefined;
+            var _optionalNullableNotification = Optional<NotificationMethod?>.Undefined;
+            SearchResult? _nullableSearchResult = default;
+            var _optionalSearchResult = SearchResult?.Undefined;
+            IEnumerable<string>? _nullableArray = default;
+            var _optionalArray = IEnumerable<string>?.Undefined;
+            var _optionalNullableArray = Optional<IEnumerable<string>?>.Undefined;
+            IEnumerable<string?>? _nullableListOfNullables = default;
+            Dictionary<string, Address?>? _nullableMapOfNullables = default;
+            IEnumerable<NotificationMethod>? _nullableListOfUnions = default;
+            var _optionalMapOfEnums = Dictionary<string, UserRole>?.Undefined;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "id":
+                        _id = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "nullableRole":
+                        _nullableRole = JsonSerializer.Deserialize<UserRole?>(ref reader, options);
+                        break;
+                    case "optionalRole":
+                        _optionalRole = UserRole?.Of(
+                            JsonSerializer.Deserialize<UserRole>(ref reader, options)
+                        );
+                        break;
+                    case "optionalNullableRole":
+                        _optionalNullableRole = Optional<UserRole?>.Of(
+                            JsonSerializer.Deserialize<UserRole?>(ref reader, options)
+                        );
+                        break;
+                    case "nullableStatus":
+                        _nullableStatus = JsonSerializer.Deserialize<UserStatus?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalStatus":
+                        _optionalStatus = UserStatus?.Of(
+                            JsonSerializer.Deserialize<UserStatus>(ref reader, options)
+                        );
+                        break;
+                    case "optionalNullableStatus":
+                        _optionalNullableStatus = Optional<UserStatus?>.Of(
+                            JsonSerializer.Deserialize<UserStatus?>(ref reader, options)
+                        );
+                        break;
+                    case "nullableNotification":
+                        _nullableNotification = JsonSerializer.Deserialize<NotificationMethod?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalNotification":
+                        _optionalNotification = NotificationMethod?.Of(
+                            JsonSerializer.Deserialize<NotificationMethod>(ref reader, options)
+                        );
+                        break;
+                    case "optionalNullableNotification":
+                        _optionalNullableNotification = Optional<NotificationMethod?>.Of(
+                            JsonSerializer.Deserialize<NotificationMethod?>(ref reader, options)
+                        );
+                        break;
+                    case "nullableSearchResult":
+                        _nullableSearchResult = JsonSerializer.Deserialize<SearchResult?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalSearchResult":
+                        _optionalSearchResult = SearchResult?.Of(
+                            JsonSerializer.Deserialize<SearchResult>(ref reader, options)
+                        );
+                        break;
+                    case "nullableArray":
+                        _nullableArray = JsonSerializer.Deserialize<IEnumerable<string>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "optionalArray":
+                        _optionalArray = IEnumerable<string>?.Of(
+                            JsonSerializer.Deserialize<IEnumerable<string>>(ref reader, options)
+                        );
+                        break;
+                    case "optionalNullableArray":
+                        _optionalNullableArray = Optional<IEnumerable<string>?>.Of(
+                            JsonSerializer.Deserialize<IEnumerable<string>?>(ref reader, options)
+                        );
+                        break;
+                    case "nullableListOfNullables":
+                        _nullableListOfNullables =
+                            JsonSerializer.Deserialize<IEnumerable<string?>?>(ref reader, options);
+                        break;
+                    case "nullableMapOfNullables":
+                        _nullableMapOfNullables = JsonSerializer.Deserialize<Dictionary<
+                            string,
+                            Address?
+                        >?>(ref reader, options);
+                        break;
+                    case "nullableListOfUnions":
+                        _nullableListOfUnions =
+                            JsonSerializer.Deserialize<IEnumerable<NotificationMethod>?>(
+                                ref reader,
+                                options
+                            );
+                        break;
+                    case "optionalMapOfEnums":
+                        _optionalMapOfEnums = Dictionary<string, UserRole>?.Of(
+                            JsonSerializer.Deserialize<Dictionary<string, UserRole>>(
+                                ref reader,
+                                options
+                            )
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ComplexProfile
+            {
+                Id = _id,
+                NullableRole = _nullableRole,
+                OptionalRole = _optionalRole,
+                OptionalNullableRole = _optionalNullableRole,
+                NullableStatus = _nullableStatus,
+                OptionalStatus = _optionalStatus,
+                OptionalNullableStatus = _optionalNullableStatus,
+                NullableNotification = _nullableNotification,
+                OptionalNotification = _optionalNotification,
+                OptionalNullableNotification = _optionalNullableNotification,
+                NullableSearchResult = _nullableSearchResult,
+                OptionalSearchResult = _optionalSearchResult,
+                NullableArray = _nullableArray,
+                OptionalArray = _optionalArray,
+                OptionalNullableArray = _optionalNullableArray,
+                NullableListOfNullables = _nullableListOfNullables,
+                NullableMapOfNullables = _nullableMapOfNullables,
+                NullableListOfUnions = _nullableListOfUnions,
+                OptionalMapOfEnums = _optionalMapOfEnums,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ComplexProfile value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            JsonSerializer.Serialize(writer, value.Id, options);
+            writer.WritePropertyName("nullableRole");
+            JsonSerializer.Serialize(writer, value.NullableRole, options);
+            if (value.OptionalRole.IsDefined)
+            {
+                writer.WritePropertyName("optionalRole");
+                JsonSerializer.Serialize(writer, value.OptionalRole.Value, options);
+            }
+            if (value.OptionalNullableRole.IsDefined)
+            {
+                writer.WritePropertyName("optionalNullableRole");
+                JsonSerializer.Serialize(writer, value.OptionalNullableRole.Value, options);
+            }
+            writer.WritePropertyName("nullableStatus");
+            JsonSerializer.Serialize(writer, value.NullableStatus, options);
+            if (value.OptionalStatus.IsDefined)
+            {
+                writer.WritePropertyName("optionalStatus");
+                JsonSerializer.Serialize(writer, value.OptionalStatus.Value, options);
+            }
+            if (value.OptionalNullableStatus.IsDefined)
+            {
+                writer.WritePropertyName("optionalNullableStatus");
+                JsonSerializer.Serialize(writer, value.OptionalNullableStatus.Value, options);
+            }
+            writer.WritePropertyName("nullableNotification");
+            JsonSerializer.Serialize(writer, value.NullableNotification, options);
+            if (value.OptionalNotification.IsDefined)
+            {
+                writer.WritePropertyName("optionalNotification");
+                JsonSerializer.Serialize(writer, value.OptionalNotification.Value, options);
+            }
+            if (value.OptionalNullableNotification.IsDefined)
+            {
+                writer.WritePropertyName("optionalNullableNotification");
+                JsonSerializer.Serialize(writer, value.OptionalNullableNotification.Value, options);
+            }
+            writer.WritePropertyName("nullableSearchResult");
+            JsonSerializer.Serialize(writer, value.NullableSearchResult, options);
+            if (value.OptionalSearchResult.IsDefined)
+            {
+                writer.WritePropertyName("optionalSearchResult");
+                JsonSerializer.Serialize(writer, value.OptionalSearchResult.Value, options);
+            }
+            writer.WritePropertyName("nullableArray");
+            JsonSerializer.Serialize(writer, value.NullableArray, options);
+            if (value.OptionalArray.IsDefined)
+            {
+                writer.WritePropertyName("optionalArray");
+                JsonSerializer.Serialize(writer, value.OptionalArray.Value, options);
+            }
+            if (value.OptionalNullableArray.IsDefined)
+            {
+                writer.WritePropertyName("optionalNullableArray");
+                JsonSerializer.Serialize(writer, value.OptionalNullableArray.Value, options);
+            }
+            writer.WritePropertyName("nullableListOfNullables");
+            JsonSerializer.Serialize(writer, value.NullableListOfNullables, options);
+            writer.WritePropertyName("nullableMapOfNullables");
+            JsonSerializer.Serialize(writer, value.NullableMapOfNullables, options);
+            writer.WritePropertyName("nullableListOfUnions");
+            JsonSerializer.Serialize(writer, value.NullableListOfUnions, options);
+            if (value.OptionalMapOfEnums.IsDefined)
+            {
+                writer.WritePropertyName("optionalMapOfEnums");
+                JsonSerializer.Serialize(writer, value.OptionalMapOfEnums.Value, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

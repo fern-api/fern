@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(IndexedData.JsonConverter))]
 [Serializable]
-public record IndexedData : IJsonOnDeserialized
+public record IndexedData
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("indices")]
     public IEnumerable<uint> Indices { get; set; } = new List<uint>();
 
@@ -32,9 +29,6 @@ public record IndexedData : IJsonOnDeserialized
             Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the IndexedData type into its Protobuf-equivalent representation.
@@ -57,5 +51,87 @@ public record IndexedData : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<IndexedData>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(IndexedData).IsAssignableFrom(typeToConvert);
+
+        public override IndexedData? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<uint> _indices = default;
+            ReadOnlyMemory<float> _values = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "indices":
+                        _indices = JsonSerializer.Deserialize<IEnumerable<uint>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "values":
+                        _values = JsonSerializer.Deserialize<ReadOnlyMemory<float>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new IndexedData
+            {
+                Indices = _indices,
+                Values = _values,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            IndexedData value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("indices");
+            JsonSerializer.Serialize(writer, value.Indices, options);
+            writer.WritePropertyName("values");
+            JsonSerializer.Serialize(writer, value.Values, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

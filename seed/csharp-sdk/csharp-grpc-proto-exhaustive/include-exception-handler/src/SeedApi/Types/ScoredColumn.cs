@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(ScoredColumn.JsonConverter))]
 [Serializable]
-public record ScoredColumn : IJsonOnDeserialized
+public record ScoredColumn
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
@@ -46,9 +43,6 @@ public record ScoredColumn : IJsonOnDeserialized
         };
     }
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <summary>
     /// Maps the ScoredColumn type into its Protobuf-equivalent representation.
     /// </summary>
@@ -79,5 +73,120 @@ public record ScoredColumn : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ScoredColumn>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ScoredColumn).IsAssignableFrom(typeToConvert);
+
+        public override ScoredColumn? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _id = default;
+            float? _score = default;
+            IEnumerable<float>? _values = default;
+            Metadata? _metadata = default;
+            IndexedData? _indexedData = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "id":
+                        _id = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "score":
+                        _score = JsonSerializer.Deserialize<float?>(ref reader, options);
+                        break;
+                    case "values":
+                        _values = JsonSerializer.Deserialize<IEnumerable<float>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "metadata":
+                        _metadata = JsonSerializer.Deserialize<Metadata?>(ref reader, options);
+                        break;
+                    case "indexed_data":
+                        _indexedData = JsonSerializer.Deserialize<IndexedData?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ScoredColumn
+            {
+                Id = _id,
+                Score = _score,
+                Values = _values,
+                Metadata = _metadata,
+                IndexedData = _indexedData,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ScoredColumn value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            JsonSerializer.Serialize(writer, value.Id, options);
+            if (value.Score != null)
+            {
+                writer.WritePropertyName("score");
+                JsonSerializer.Serialize(writer, value.Score, options);
+            }
+            if (value.Values != null)
+            {
+                writer.WritePropertyName("values");
+                JsonSerializer.Serialize(writer, value.Values, options);
+            }
+            if (value.Metadata != null)
+            {
+                writer.WritePropertyName("metadata");
+                JsonSerializer.Serialize(writer, value.Metadata, options);
+            }
+            if (value.IndexedData != null)
+            {
+                writer.WritePropertyName("indexed_data");
+                JsonSerializer.Serialize(writer, value.IndexedData, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

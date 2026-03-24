@@ -5,13 +5,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
+[JsonConverter(typeof(VoidFunctionSignatureThatTakesActualResult.JsonConverter))]
 [Serializable]
-public record VoidFunctionSignatureThatTakesActualResult : IJsonOnDeserialized
+public record VoidFunctionSignatureThatTakesActualResult
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("parameters")]
     public IEnumerable<Parameter> Parameters { get; set; } = new List<Parameter>();
 
@@ -21,12 +18,91 @@ public record VoidFunctionSignatureThatTakesActualResult : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<VoidFunctionSignatureThatTakesActualResult>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(VoidFunctionSignatureThatTakesActualResult).IsAssignableFrom(typeToConvert);
+
+        public override VoidFunctionSignatureThatTakesActualResult? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<Parameter> _parameters = default;
+            VariableType _actualResultType = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "parameters":
+                        _parameters = JsonSerializer.Deserialize<IEnumerable<Parameter>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "actualResultType":
+                        _actualResultType = JsonSerializer.Deserialize<VariableType>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new VoidFunctionSignatureThatTakesActualResult
+            {
+                Parameters = _parameters,
+                ActualResultType = _actualResultType,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            VoidFunctionSignatureThatTakesActualResult value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("parameters");
+            JsonSerializer.Serialize(writer, value.Parameters, options);
+            writer.WritePropertyName("actualResultType");
+            JsonSerializer.Serialize(writer, value.ActualResultType, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(TestCaseNonHiddenGrade.JsonConverter))]
 [Serializable]
-public record TestCaseNonHiddenGrade : IJsonOnDeserialized
+public record TestCaseNonHiddenGrade
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("passed")]
     public required bool Passed { get; set; }
 
@@ -26,12 +23,108 @@ public record TestCaseNonHiddenGrade : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<TestCaseNonHiddenGrade>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(TestCaseNonHiddenGrade).IsAssignableFrom(typeToConvert);
+
+        public override TestCaseNonHiddenGrade? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            bool _passed = default;
+            VariableValue? _actualResult = default;
+            ExceptionV2? _exception = default;
+            string _stdout = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "passed":
+                        _passed = JsonSerializer.Deserialize<bool>(ref reader, options);
+                        break;
+                    case "actualResult":
+                        _actualResult = JsonSerializer.Deserialize<VariableValue?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "exception":
+                        _exception = JsonSerializer.Deserialize<ExceptionV2?>(ref reader, options);
+                        break;
+                    case "stdout":
+                        _stdout = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new TestCaseNonHiddenGrade
+            {
+                Passed = _passed,
+                ActualResult = _actualResult,
+                Exception = _exception,
+                Stdout = _stdout,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TestCaseNonHiddenGrade value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("passed");
+            JsonSerializer.Serialize(writer, value.Passed, options);
+            if (value.ActualResult != null)
+            {
+                writer.WritePropertyName("actualResult");
+                JsonSerializer.Serialize(writer, value.ActualResult, options);
+            }
+            if (value.Exception != null)
+            {
+                writer.WritePropertyName("exception");
+                JsonSerializer.Serialize(writer, value.Exception, options);
+            }
+            writer.WritePropertyName("stdout");
+            JsonSerializer.Serialize(writer, value.Stdout, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -103,6 +103,7 @@ public record User
             {
                 Id = _id,
                 Email = _email,
+                Password = default!,
                 Profile = _profile,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };

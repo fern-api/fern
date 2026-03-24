@@ -7,13 +7,10 @@ namespace SeedCsharpReadonlyRequest;
 /// <summary>
 /// Response from creating vendors
 /// </summary>
+[JsonConverter(typeof(CreateVendorResponse.JsonConverter))]
 [Serializable]
-public record CreateVendorResponse : IJsonOnDeserialized
+public record CreateVendorResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// Map of vendor ID to created vendor
     /// </summary>
@@ -23,12 +20,81 @@ public record CreateVendorResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<CreateVendorResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(CreateVendorResponse).IsAssignableFrom(typeToConvert);
+
+        public override CreateVendorResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Dictionary<string, Vendor> _vendors = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "vendors":
+                        _vendors = JsonSerializer.Deserialize<Dictionary<string, Vendor>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new CreateVendorResponse
+            {
+                Vendors = _vendors,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateVendorResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("vendors");
+            JsonSerializer.Serialize(writer, value.Vendors, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

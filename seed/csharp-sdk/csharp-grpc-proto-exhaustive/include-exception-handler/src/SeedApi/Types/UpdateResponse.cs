@@ -6,13 +6,10 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(UpdateResponse.JsonConverter))]
 [Serializable]
-public record UpdateResponse : IJsonOnDeserialized
+public record UpdateResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
@@ -74,9 +71,6 @@ public record UpdateResponse : IJsonOnDeserialized
             },
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the UpdateResponse type into its Protobuf-equivalent representation.
@@ -158,5 +152,123 @@ public record UpdateResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<UpdateResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UpdateResponse).IsAssignableFrom(typeToConvert);
+
+        public override UpdateResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            DateTime? _updatedAt = default;
+            IndexType? _indexType = default;
+            object? _details = default;
+            IEnumerable<IndexType>? _indexTypes = default;
+            UpdateResponseStatus? _status = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "updated_at":
+                        _updatedAt = JsonSerializer.Deserialize<DateTime?>(ref reader, options);
+                        break;
+                    case "index_type":
+                        _indexType = JsonSerializer.Deserialize<IndexType?>(ref reader, options);
+                        break;
+                    case "details":
+                        _details = JsonSerializer.Deserialize<object?>(ref reader, options);
+                        break;
+                    case "index_types":
+                        _indexTypes = JsonSerializer.Deserialize<IEnumerable<IndexType>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "status":
+                        _status = JsonSerializer.Deserialize<UpdateResponseStatus?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new UpdateResponse
+            {
+                UpdatedAt = _updatedAt,
+                IndexType = _indexType,
+                Details = _details,
+                IndexTypes = _indexTypes,
+                Status = _status,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UpdateResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.UpdatedAt != null)
+            {
+                writer.WritePropertyName("updated_at");
+                JsonSerializer.Serialize(writer, value.UpdatedAt, options);
+            }
+            if (value.IndexType != null)
+            {
+                writer.WritePropertyName("index_type");
+                JsonSerializer.Serialize(writer, value.IndexType, options);
+            }
+            if (value.Details != null)
+            {
+                writer.WritePropertyName("details");
+                JsonSerializer.Serialize(writer, value.Details, options);
+            }
+            if (value.IndexTypes != null)
+            {
+                writer.WritePropertyName("index_types");
+                JsonSerializer.Serialize(writer, value.IndexTypes, options);
+            }
+            if (value.Status != null)
+            {
+                writer.WritePropertyName("status");
+                JsonSerializer.Serialize(writer, value.Status, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

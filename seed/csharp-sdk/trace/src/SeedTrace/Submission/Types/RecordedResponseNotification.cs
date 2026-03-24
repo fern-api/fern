@@ -4,13 +4,10 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(RecordedResponseNotification.JsonConverter))]
 [Serializable]
-public record RecordedResponseNotification : IJsonOnDeserialized
+public record RecordedResponseNotification
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("submissionId")]
     public required string SubmissionId { get; set; }
 
@@ -23,12 +20,95 @@ public record RecordedResponseNotification : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<RecordedResponseNotification>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(RecordedResponseNotification).IsAssignableFrom(typeToConvert);
+
+        public override RecordedResponseNotification? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _submissionId = default;
+            int _traceResponsesSize = default;
+            string? _testCaseId = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "submissionId":
+                        _submissionId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "traceResponsesSize":
+                        _traceResponsesSize = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "testCaseId":
+                        _testCaseId = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new RecordedResponseNotification
+            {
+                SubmissionId = _submissionId,
+                TraceResponsesSize = _traceResponsesSize,
+                TestCaseId = _testCaseId,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            RecordedResponseNotification value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("submissionId");
+            JsonSerializer.Serialize(writer, value.SubmissionId, options);
+            writer.WritePropertyName("traceResponsesSize");
+            JsonSerializer.Serialize(writer, value.TraceResponsesSize, options);
+            if (value.TestCaseId != null)
+            {
+                writer.WritePropertyName("testCaseId");
+                JsonSerializer.Serialize(writer, value.TestCaseId, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

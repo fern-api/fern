@@ -254,8 +254,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
         // Declare local variables for each property
         for (const prop of propertyInfos) {
-            if (prop.isWriteOnly) {
-                // WriteOnly properties are not deserialized
+            if (prop.isWriteOnly || prop.isLiteral) {
+                // WriteOnly properties are not deserialized;
+                // Literal properties use their default initializer (= new())
                 continue;
             }
             if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
@@ -263,9 +264,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 writer.write(this.getLocalVarName(prop.propertyName));
                 writer.write(" = ");
                 // For Optional<T>, initialize as undefined
-                writer.write("Optional<");
-                this.writeOptionalInnerType(writer, prop);
-                writer.writeTextStatement(">.Undefined");
+                this.writeOptionalTypePrefix(writer, prop);
+                writer.writeTextStatement(".Undefined");
             } else {
                 writer.writeNode(prop.csharpType);
                 writer.write(` ${this.getLocalVarName(prop.propertyName)} = default`);
@@ -298,8 +298,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         writer.pushScope();
 
         for (const prop of propertyInfos) {
-            if (prop.isWriteOnly) {
+            if (prop.isWriteOnly || prop.isLiteral) {
                 // WriteOnly = don't deserialize, skip the value
+                // Literal = fixed value, skip (the default initializer handles it)
                 writer.writeLine(`case "${prop.wireValue}":`);
                 writer.indent();
                 writer.writeTextStatement("reader.Skip()");
@@ -313,9 +314,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
             if (prop.isOptional && this.context.generation.settings.enableExplicitNullableOptional) {
                 // Wrap in Optional<T>.Of(...)
-                writer.write(`${this.getLocalVarName(prop.propertyName)} = Optional<`);
-                this.writeOptionalInnerType(writer, prop);
-                writer.write(">.Of(");
+                writer.write(`${this.getLocalVarName(prop.propertyName)} = `);
+                this.writeOptionalTypePrefix(writer, prop);
+                writer.write(".Of(");
                 writer.write("JsonSerializer.Deserialize<");
                 this.writeOptionalInnerType(writer, prop);
                 writer.write(">(ref reader, options)");
@@ -360,7 +361,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         writer.writeLine();
         writer.pushScope();
         for (const prop of propertyInfos) {
+            if (prop.isLiteral) {
+                // Literal properties use their default initializer (= new()), skip
+                continue;
+            }
             if (prop.isWriteOnly) {
+                // WriteOnly properties are not deserialized but required members must be set
+                writer.writeLine(`${prop.propertyName} = default!,`);
                 continue;
             }
             writer.writeLine(`${prop.propertyName} = ${this.getLocalVarName(prop.propertyName)},`);
@@ -437,15 +444,23 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     /**
+     * Writes the full Optional<T> type prefix (e.g., "Optional<Metadata?>")
+     * Used for variable declarations and type references.
+     */
+    private writeOptionalTypePrefix(writer: Writer, prop: PropertyConverterInfo): void {
+        writer.writeNode(prop.csharpType);
+    }
+
+    /**
      * Writes the inner type of an Optional<T> property (the T part).
+     * For Optional<Metadata?>, this writes "Metadata?".
+     * For Optional<string>, this writes "string".
      */
     private writeOptionalInnerType(writer: Writer, prop: PropertyConverterInfo): void {
-        if (prop.isNullable) {
-            writer.writeNode(prop.csharpType.asNonOptional());
-            writer.write("?");
-        } else {
-            writer.writeNode(prop.csharpType.asNonOptional());
-        }
+        // asNonOptional() unwraps OptionalWrapper to get the inner type.
+        // For Optional<Metadata?>, this returns Nullable(Metadata) which writes as "Metadata?".
+        // For Optional<string>, this returns string.
+        writer.writeNode(prop.csharpType.asNonOptional());
     }
 
     /**

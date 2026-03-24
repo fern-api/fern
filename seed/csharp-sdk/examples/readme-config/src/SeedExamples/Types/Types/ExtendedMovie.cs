@@ -4,13 +4,10 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
+[JsonConverter(typeof(ExtendedMovie.JsonConverter))]
 [Serializable]
-public record ExtendedMovie : IJsonOnDeserialized
+public record ExtendedMovie
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("cast")]
     public IEnumerable<string> Cast { get; set; } = new List<string>();
 
@@ -50,12 +47,158 @@ public record ExtendedMovie : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ExtendedMovie>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ExtendedMovie).IsAssignableFrom(typeToConvert);
+
+        public override ExtendedMovie? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<string> _cast = default;
+            string _id = default;
+            string? _prequel = default;
+            string _title = default;
+            string _from = default;
+            double _rating = default;
+            string _tag = default;
+            string? _book = default;
+            Dictionary<string, object?> _metadata = default;
+            long _revenue = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "cast":
+                        _cast = JsonSerializer.Deserialize<IEnumerable<string>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "id":
+                        _id = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "prequel":
+                        _prequel = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "title":
+                        _title = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "from":
+                        _from = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "rating":
+                        _rating = JsonSerializer.Deserialize<double>(ref reader, options);
+                        break;
+                    case "type":
+                        reader.Skip();
+                        break;
+                    case "tag":
+                        _tag = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "book":
+                        _book = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "metadata":
+                        _metadata = JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "revenue":
+                        _revenue = JsonSerializer.Deserialize<long>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ExtendedMovie
+            {
+                Cast = _cast,
+                Id = _id,
+                Prequel = _prequel,
+                Title = _title,
+                From = _from,
+                Rating = _rating,
+                Tag = _tag,
+                Book = _book,
+                Metadata = _metadata,
+                Revenue = _revenue,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ExtendedMovie value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("cast");
+            JsonSerializer.Serialize(writer, value.Cast, options);
+            writer.WritePropertyName("id");
+            JsonSerializer.Serialize(writer, value.Id, options);
+            if (value.Prequel != null)
+            {
+                writer.WritePropertyName("prequel");
+                JsonSerializer.Serialize(writer, value.Prequel, options);
+            }
+            writer.WritePropertyName("title");
+            JsonSerializer.Serialize(writer, value.Title, options);
+            writer.WritePropertyName("from");
+            JsonSerializer.Serialize(writer, value.From, options);
+            writer.WritePropertyName("rating");
+            JsonSerializer.Serialize(writer, value.Rating, options);
+            writer.WritePropertyName("type");
+            JsonSerializer.Serialize(writer, value.Type, options);
+            writer.WritePropertyName("tag");
+            JsonSerializer.Serialize(writer, value.Tag, options);
+            if (value.Book != null)
+            {
+                writer.WritePropertyName("book");
+                JsonSerializer.Serialize(writer, value.Book, options);
+            }
+            writer.WritePropertyName("metadata");
+            JsonSerializer.Serialize(writer, value.Metadata, options);
+            writer.WritePropertyName("revenue");
+            JsonSerializer.Serialize(writer, value.Revenue, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

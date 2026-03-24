@@ -88,6 +88,7 @@ public record User
                 Id = _id,
                 Name = _name,
                 Email = _email,
+                Password = default!,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

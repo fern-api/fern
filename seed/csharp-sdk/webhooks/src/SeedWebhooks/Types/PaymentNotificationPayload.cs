@@ -4,13 +4,10 @@ using SeedWebhooks.Core;
 
 namespace SeedWebhooks;
 
+[JsonConverter(typeof(PaymentNotificationPayload.JsonConverter))]
 [Serializable]
-public record PaymentNotificationPayload : IJsonOnDeserialized
+public record PaymentNotificationPayload
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("paymentId")]
     public required string PaymentId { get; set; }
 
@@ -23,12 +20,92 @@ public record PaymentNotificationPayload : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<PaymentNotificationPayload>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(PaymentNotificationPayload).IsAssignableFrom(typeToConvert);
+
+        public override PaymentNotificationPayload? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _paymentId = default;
+            double _amount = default;
+            string _status = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "paymentId":
+                        _paymentId = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "amount":
+                        _amount = JsonSerializer.Deserialize<double>(ref reader, options);
+                        break;
+                    case "status":
+                        _status = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new PaymentNotificationPayload
+            {
+                PaymentId = _paymentId,
+                Amount = _amount,
+                Status = _status,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PaymentNotificationPayload value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("paymentId");
+            JsonSerializer.Serialize(writer, value.PaymentId, options);
+            writer.WritePropertyName("amount");
+            JsonSerializer.Serialize(writer, value.Amount, options);
+            writer.WritePropertyName("status");
+            JsonSerializer.Serialize(writer, value.Status, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -40,7 +40,6 @@ public record VariantC
                 return null;
             }
 
-            string _type = default;
             bool _valueC = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
@@ -57,7 +56,7 @@ public record VariantC
                 switch (propertyName)
                 {
                     case "type":
-                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     case "valueC":
                         _valueC = JsonSerializer.Deserialize<bool>(ref reader, options);
@@ -70,7 +69,6 @@ public record VariantC
 
             return new VariantC
             {
-                Type = _type,
                 ValueC = _valueC,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };

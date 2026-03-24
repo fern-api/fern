@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(ToolChoice.JsonConverter))]
 [Serializable]
-public record ToolChoice : IJsonOnDeserialized
+public record ToolChoice
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// Force the model to perform in a given mode.
     /// </summary>
@@ -46,9 +43,6 @@ public record ToolChoice : IJsonOnDeserialized
         };
     }
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <summary>
     /// Maps the ToolChoice type into its Protobuf-equivalent representation.
     /// </summary>
@@ -77,5 +71,87 @@ public record ToolChoice : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ToolChoice>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ToolChoice).IsAssignableFrom(typeToConvert);
+
+        public override ToolChoice? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            ToolMode? _mode = default;
+            string? _functionName = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "mode":
+                        _mode = JsonSerializer.Deserialize<ToolMode?>(ref reader, options);
+                        break;
+                    case "function_name":
+                        _functionName = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ToolChoice
+            {
+                Mode = _mode,
+                FunctionName = _functionName,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ToolChoice value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Mode != null)
+            {
+                writer.WritePropertyName("mode");
+                JsonSerializer.Serialize(writer, value.Mode, options);
+            }
+            if (value.FunctionName != null)
+            {
+                writer.WritePropertyName("function_name");
+                JsonSerializer.Serialize(writer, value.FunctionName, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

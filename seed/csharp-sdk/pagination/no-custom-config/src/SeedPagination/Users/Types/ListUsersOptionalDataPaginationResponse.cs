@@ -4,13 +4,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[JsonConverter(typeof(ListUsersOptionalDataPaginationResponse.JsonConverter))]
 [Serializable]
-public record ListUsersOptionalDataPaginationResponse : IJsonOnDeserialized
+public record ListUsersOptionalDataPaginationResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("hasNextPage")]
     public bool? HasNextPage { get; set; }
 
@@ -29,12 +26,108 @@ public record ListUsersOptionalDataPaginationResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ListUsersOptionalDataPaginationResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ListUsersOptionalDataPaginationResponse).IsAssignableFrom(typeToConvert);
+
+        public override ListUsersOptionalDataPaginationResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            bool? _hasNextPage = default;
+            Page? _page = default;
+            int _totalCount = default;
+            IEnumerable<User>? _data = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "hasNextPage":
+                        _hasNextPage = JsonSerializer.Deserialize<bool?>(ref reader, options);
+                        break;
+                    case "page":
+                        _page = JsonSerializer.Deserialize<Page?>(ref reader, options);
+                        break;
+                    case "total_count":
+                        _totalCount = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "data":
+                        _data = JsonSerializer.Deserialize<IEnumerable<User>?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ListUsersOptionalDataPaginationResponse
+            {
+                HasNextPage = _hasNextPage,
+                Page = _page,
+                TotalCount = _totalCount,
+                Data = _data,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ListUsersOptionalDataPaginationResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.HasNextPage != null)
+            {
+                writer.WritePropertyName("hasNextPage");
+                JsonSerializer.Serialize(writer, value.HasNextPage, options);
+            }
+            if (value.Page != null)
+            {
+                writer.WritePropertyName("page");
+                JsonSerializer.Serialize(writer, value.Page, options);
+            }
+            writer.WritePropertyName("total_count");
+            JsonSerializer.Serialize(writer, value.TotalCount, options);
+            if (value.Data != null)
+            {
+                writer.WritePropertyName("data");
+                JsonSerializer.Serialize(writer, value.Data, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

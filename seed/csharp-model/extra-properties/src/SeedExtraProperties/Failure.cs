@@ -37,7 +37,6 @@ public record Failure
                 return null;
             }
 
-            string _status = default;
             var extensionData = new Dictionary<string, object?>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -53,7 +52,7 @@ public record Failure
                 switch (propertyName)
                 {
                     case "status":
-                        _status = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     default:
                         if (reader.TokenType == JsonTokenType.Null)
@@ -71,11 +70,7 @@ public record Failure
                 }
             }
 
-            return new Failure
-            {
-                Status = _status,
-                AdditionalProperties = new AdditionalProperties(extensionData),
-            };
+            return new Failure { AdditionalProperties = new AdditionalProperties(extensionData) };
         }
 
         public override void Write(

@@ -49,7 +49,6 @@ public record PaginatedConversationResponse
             IEnumerable<Conversation> _conversations = default;
             CursorPages? _pages = default;
             int _totalCount = default;
-            string _type = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -77,7 +76,7 @@ public record PaginatedConversationResponse
                         _totalCount = JsonSerializer.Deserialize<int>(ref reader, options);
                         break;
                     case "type":
-                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
@@ -90,7 +89,6 @@ public record PaginatedConversationResponse
                 Conversations = _conversations,
                 Pages = _pages,
                 TotalCount = _totalCount,
-                Type = _type,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

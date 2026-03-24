@@ -4,13 +4,10 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[JsonConverter(typeof(FooExtended.JsonConverter))]
 [Serializable]
-public record FooExtended : IJsonOnDeserialized
+public record FooExtended
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("age")]
     public required int Age { get; set; }
 
@@ -20,12 +17,85 @@ public record FooExtended : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<FooExtended>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(FooExtended).IsAssignableFrom(typeToConvert);
+
+        public override FooExtended? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            int _age = default;
+            string _name = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "age":
+                        _age = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "name":
+                        _name = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new FooExtended
+            {
+                Age = _age,
+                Name = _name,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            FooExtended value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("age");
+            JsonSerializer.Serialize(writer, value.Age, options);
+            writer.WritePropertyName("name");
+            JsonSerializer.Serialize(writer, value.Name, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

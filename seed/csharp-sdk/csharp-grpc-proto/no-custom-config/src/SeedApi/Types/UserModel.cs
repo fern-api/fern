@@ -5,13 +5,10 @@ using ProtoUserV1 = User.V1;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(UserModel.JsonConverter))]
 [Serializable]
-public record UserModel : IJsonOnDeserialized
+public record UserModel
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
@@ -44,9 +41,6 @@ public record UserModel : IJsonOnDeserialized
             Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.
@@ -81,5 +75,117 @@ public record UserModel : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<UserModel>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UserModel).IsAssignableFrom(typeToConvert);
+
+        public override UserModel? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string? _username = default;
+            string? _email = default;
+            uint? _age = default;
+            float? _weight = default;
+            Metadata? _metadata = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "username":
+                        _username = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "email":
+                        _email = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "age":
+                        _age = JsonSerializer.Deserialize<uint?>(ref reader, options);
+                        break;
+                    case "weight":
+                        _weight = JsonSerializer.Deserialize<float?>(ref reader, options);
+                        break;
+                    case "metadata":
+                        _metadata = JsonSerializer.Deserialize<Metadata?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new UserModel
+            {
+                Username = _username,
+                Email = _email,
+                Age = _age,
+                Weight = _weight,
+                Metadata = _metadata,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UserModel value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Username != null)
+            {
+                writer.WritePropertyName("username");
+                JsonSerializer.Serialize(writer, value.Username, options);
+            }
+            if (value.Email != null)
+            {
+                writer.WritePropertyName("email");
+                JsonSerializer.Serialize(writer, value.Email, options);
+            }
+            if (value.Age != null)
+            {
+                writer.WritePropertyName("age");
+                JsonSerializer.Serialize(writer, value.Age, options);
+            }
+            if (value.Weight != null)
+            {
+                writer.WritePropertyName("weight");
+                JsonSerializer.Serialize(writer, value.Weight, options);
+            }
+            if (value.Metadata != null)
+            {
+                writer.WritePropertyName("metadata");
+                JsonSerializer.Serialize(writer, value.Metadata, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

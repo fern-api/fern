@@ -4,13 +4,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[JsonConverter(typeof(PaginatedConversationResponse.JsonConverter))]
 [Serializable]
-public record PaginatedConversationResponse : IJsonOnDeserialized
+public record PaginatedConversationResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("conversations")]
     public IEnumerable<Conversation> Conversations { get; set; } = new List<Conversation>();
 
@@ -26,12 +23,103 @@ public record PaginatedConversationResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<PaginatedConversationResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(PaginatedConversationResponse).IsAssignableFrom(typeToConvert);
+
+        public override PaginatedConversationResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<Conversation> _conversations = default;
+            CursorPages? _pages = default;
+            int _totalCount = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "conversations":
+                        _conversations = JsonSerializer.Deserialize<IEnumerable<Conversation>>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "pages":
+                        _pages = JsonSerializer.Deserialize<CursorPages?>(ref reader, options);
+                        break;
+                    case "total_count":
+                        _totalCount = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "type":
+                        reader.Skip();
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new PaginatedConversationResponse
+            {
+                Conversations = _conversations,
+                Pages = _pages,
+                TotalCount = _totalCount,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PaginatedConversationResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("conversations");
+            JsonSerializer.Serialize(writer, value.Conversations, options);
+            if (value.Pages != null)
+            {
+                writer.WritePropertyName("pages");
+                JsonSerializer.Serialize(writer, value.Pages, options);
+            }
+            writer.WritePropertyName("total_count");
+            JsonSerializer.Serialize(writer, value.TotalCount, options);
+            writer.WritePropertyName("type");
+            JsonSerializer.Serialize(writer, value.Type, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

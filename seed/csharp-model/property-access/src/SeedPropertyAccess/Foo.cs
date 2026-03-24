@@ -80,6 +80,7 @@ public record Foo
             {
                 Normal = _normal,
                 Read = _read,
+                Write = default!,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

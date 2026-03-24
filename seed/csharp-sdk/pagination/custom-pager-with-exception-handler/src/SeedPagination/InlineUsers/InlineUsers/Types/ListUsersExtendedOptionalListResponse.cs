@@ -5,13 +5,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
+[JsonConverter(typeof(ListUsersExtendedOptionalListResponse.JsonConverter))]
 [Serializable]
-public record ListUsersExtendedOptionalListResponse : IJsonOnDeserialized
+public record ListUsersExtendedOptionalListResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// The totall number of /users
     /// </summary>
@@ -27,12 +24,98 @@ public record ListUsersExtendedOptionalListResponse : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ListUsersExtendedOptionalListResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ListUsersExtendedOptionalListResponse).IsAssignableFrom(typeToConvert);
+
+        public override ListUsersExtendedOptionalListResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            int _totalCount = default;
+            UserOptionalListContainer _data = default;
+            string? _next = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "total_count":
+                        _totalCount = JsonSerializer.Deserialize<int>(ref reader, options);
+                        break;
+                    case "data":
+                        _data = JsonSerializer.Deserialize<UserOptionalListContainer>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "next":
+                        _next = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ListUsersExtendedOptionalListResponse
+            {
+                TotalCount = _totalCount,
+                Data = _data,
+                Next = _next,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ListUsersExtendedOptionalListResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("total_count");
+            JsonSerializer.Serialize(writer, value.TotalCount, options);
+            writer.WritePropertyName("data");
+            JsonSerializer.Serialize(writer, value.Data, options);
+            if (value.Next != null)
+            {
+                writer.WritePropertyName("next");
+                JsonSerializer.Serialize(writer, value.Next, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(QueryResponse.JsonConverter))]
 [Serializable]
-public record QueryResponse : IJsonOnDeserialized
+public record QueryResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("results")]
     public IEnumerable<QueryResult>? Results { get; set; }
 
@@ -40,9 +37,6 @@ public record QueryResponse : IJsonOnDeserialized
             Usage = value.Usage != null ? SeedApi.Usage.FromProto(value.Usage) : null,
         };
     }
-
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the QueryResponse type into its Protobuf-equivalent representation.
@@ -73,5 +67,113 @@ public record QueryResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<QueryResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(QueryResponse).IsAssignableFrom(typeToConvert);
+
+        public override QueryResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<QueryResult>? _results = default;
+            IEnumerable<ScoredColumn>? _matches = default;
+            string? _namespace = default;
+            Usage? _usage = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "results":
+                        _results = JsonSerializer.Deserialize<IEnumerable<QueryResult>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "matches":
+                        _matches = JsonSerializer.Deserialize<IEnumerable<ScoredColumn>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "namespace":
+                        _namespace = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "usage":
+                        _usage = JsonSerializer.Deserialize<Usage?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new QueryResponse
+            {
+                Results = _results,
+                Matches = _matches,
+                Namespace = _namespace,
+                Usage = _usage,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            QueryResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Results != null)
+            {
+                writer.WritePropertyName("results");
+                JsonSerializer.Serialize(writer, value.Results, options);
+            }
+            if (value.Matches != null)
+            {
+                writer.WritePropertyName("matches");
+                JsonSerializer.Serialize(writer, value.Matches, options);
+            }
+            if (value.Namespace != null)
+            {
+                writer.WritePropertyName("namespace");
+                JsonSerializer.Serialize(writer, value.Namespace, options);
+            }
+            if (value.Usage != null)
+            {
+                writer.WritePropertyName("usage");
+                JsonSerializer.Serialize(writer, value.Usage, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

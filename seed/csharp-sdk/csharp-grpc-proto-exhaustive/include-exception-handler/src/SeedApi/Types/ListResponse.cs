@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(ListResponse.JsonConverter))]
 [Serializable]
-public record ListResponse : IJsonOnDeserialized
+public record ListResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("columns")]
     public IEnumerable<ListElement>? Columns { get; set; }
 
@@ -42,9 +39,6 @@ public record ListResponse : IJsonOnDeserialized
         };
     }
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <summary>
     /// Maps the ListResponse type into its Protobuf-equivalent representation.
     /// </summary>
@@ -74,5 +68,110 @@ public record ListResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ListResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ListResponse).IsAssignableFrom(typeToConvert);
+
+        public override ListResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            IEnumerable<ListElement>? _columns = default;
+            Pagination? _pagination = default;
+            string? _namespace = default;
+            Usage? _usage = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "columns":
+                        _columns = JsonSerializer.Deserialize<IEnumerable<ListElement>?>(
+                            ref reader,
+                            options
+                        );
+                        break;
+                    case "pagination":
+                        _pagination = JsonSerializer.Deserialize<Pagination?>(ref reader, options);
+                        break;
+                    case "namespace":
+                        _namespace = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    case "usage":
+                        _usage = JsonSerializer.Deserialize<Usage?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ListResponse
+            {
+                Columns = _columns,
+                Pagination = _pagination,
+                Namespace = _namespace,
+                Usage = _usage,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ListResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Columns != null)
+            {
+                writer.WritePropertyName("columns");
+                JsonSerializer.Serialize(writer, value.Columns, options);
+            }
+            if (value.Pagination != null)
+            {
+                writer.WritePropertyName("pagination");
+                JsonSerializer.Serialize(writer, value.Pagination, options);
+            }
+            if (value.Namespace != null)
+            {
+                writer.WritePropertyName("namespace");
+                JsonSerializer.Serialize(writer, value.Namespace, options);
+            }
+            if (value.Usage != null)
+            {
+                writer.WritePropertyName("usage");
+                JsonSerializer.Serialize(writer, value.Usage, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

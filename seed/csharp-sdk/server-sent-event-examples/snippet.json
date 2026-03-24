@@ -48,6 +48,30 @@
                 "type": "csharp",
                 "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = \"\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
+        },
+        {
+            "example_identifier": "Stream events",
+            "id": {
+                "path": "/stream-events-context-protocol",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsContextProtocolAsync(\n    new StreamEventsContextProtocolRequest { Query = \"query\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Bad request",
+            "id": {
+                "path": "/stream-events-context-protocol",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsContextProtocolAsync(\n    new StreamEventsContextProtocolRequest { Query = \"\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
         }
     ]
 }

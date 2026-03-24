@@ -5,13 +5,10 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[JsonConverter(typeof(CreateResponse.JsonConverter))]
 [Serializable]
-public record CreateResponse : IJsonOnDeserialized
+public record CreateResponse
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     /// <summary>
     /// The created resource.
     /// </summary>
@@ -46,9 +43,6 @@ public record CreateResponse : IJsonOnDeserialized
         };
     }
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <summary>
     /// Maps the CreateResponse type into its Protobuf-equivalent representation.
     /// </summary>
@@ -74,5 +68,97 @@ public record CreateResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<CreateResponse>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(CreateResponse).IsAssignableFrom(typeToConvert);
+
+        public override CreateResponse? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            Column? _resource = default;
+            bool? _success = default;
+            string? _errorMessage = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "resource":
+                        _resource = JsonSerializer.Deserialize<Column?>(ref reader, options);
+                        break;
+                    case "success":
+                        _success = JsonSerializer.Deserialize<bool?>(ref reader, options);
+                        break;
+                    case "error_message":
+                        _errorMessage = JsonSerializer.Deserialize<string?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new CreateResponse
+            {
+                Resource = _resource,
+                Success = _success,
+                ErrorMessage = _errorMessage,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            if (value.Resource != null)
+            {
+                writer.WritePropertyName("resource");
+                JsonSerializer.Serialize(writer, value.Resource, options);
+            }
+            if (value.Success != null)
+            {
+                writer.WritePropertyName("success");
+                JsonSerializer.Serialize(writer, value.Success, options);
+            }
+            if (value.ErrorMessage != null)
+            {
+                writer.WritePropertyName("error_message");
+                JsonSerializer.Serialize(writer, value.ErrorMessage, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

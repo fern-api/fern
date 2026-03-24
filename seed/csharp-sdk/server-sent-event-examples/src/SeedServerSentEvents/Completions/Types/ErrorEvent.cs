@@ -4,13 +4,10 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
+[JsonConverter(typeof(ErrorEvent.JsonConverter))]
 [Serializable]
-public record ErrorEvent : IJsonOnDeserialized
+public record ErrorEvent
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonPropertyName("error")]
     public required string Error { get; set; }
 
@@ -20,12 +17,88 @@ public record ErrorEvent : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ErrorEvent>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ErrorEvent).IsAssignableFrom(typeToConvert);
+
+        public override ErrorEvent? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            string _error = default;
+            int? _code = default;
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "error":
+                        _error = JsonSerializer.Deserialize<string>(ref reader, options);
+                        break;
+                    case "code":
+                        _code = JsonSerializer.Deserialize<int?>(ref reader, options);
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ErrorEvent
+            {
+                Error = _error,
+                Code = _code,
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ErrorEvent value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("error");
+            JsonSerializer.Serialize(writer, value.Error, options);
+            if (value.Code != null)
+            {
+                writer.WritePropertyName("code");
+                JsonSerializer.Serialize(writer, value.Code, options);
+            }
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 }

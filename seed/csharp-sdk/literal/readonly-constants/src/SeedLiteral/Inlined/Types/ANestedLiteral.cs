@@ -4,13 +4,10 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[JsonConverter(typeof(ANestedLiteral.JsonConverter))]
 [Serializable]
-public record ANestedLiteral : IJsonOnDeserialized
+public record ANestedLiteral
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
-        new Dictionary<string, JsonElement>();
-
     [JsonRequired]
     [JsonPropertyName("myLiteral")]
     public ANestedLiteral.MyLiteralLiteral MyLiteral { get;
@@ -24,13 +21,77 @@ public record ANestedLiteral : IJsonOnDeserialized
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
-    void IJsonOnDeserialized.OnDeserialized() =>
-        AdditionalProperties.CopyFromExtensionData(_extensionData);
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<ANestedLiteral>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(ANestedLiteral).IsAssignableFrom(typeToConvert);
+
+        public override ANestedLiteral? Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            var extensionData = new Dictionary<string, JsonElement>();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject");
+            }
+
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            {
+                var propertyName = reader.GetString();
+                reader.Read();
+
+                switch (propertyName)
+                {
+                    case "myLiteral":
+                        reader.Skip();
+                        break;
+                    default:
+                        extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
+                        break;
+                }
+            }
+
+            return new ANestedLiteral
+            {
+                AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
+            };
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ANestedLiteral value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("myLiteral");
+            JsonSerializer.Serialize(writer, value.MyLiteral, options);
+            if (value.AdditionalProperties != null)
+            {
+                foreach (var kvp in value.AdditionalProperties)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    kvp.Value.WriteTo(writer);
+                }
+            }
+            writer.WriteEndObject();
+        }
     }
 
     [JsonConverter(typeof(MyLiteralLiteralConverter))]

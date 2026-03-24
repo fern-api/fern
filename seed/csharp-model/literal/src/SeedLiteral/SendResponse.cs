@@ -45,7 +45,6 @@ public record SendResponse
 
             string _message = default;
             int _status = default;
-            bool _success = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -67,7 +66,7 @@ public record SendResponse
                         _status = JsonSerializer.Deserialize<int>(ref reader, options);
                         break;
                     case "success":
-                        _success = JsonSerializer.Deserialize<bool>(ref reader, options);
+                        reader.Skip();
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
@@ -79,7 +78,6 @@ public record SendResponse
             {
                 Message = _message,
                 Status = _status,
-                Success = _success,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

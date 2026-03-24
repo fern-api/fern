@@ -52,7 +52,6 @@ public record Practitioner
                 return null;
             }
 
-            string _resourceType = default;
             string _name = default;
             string _id = default;
             IEnumerable<OneOf<Account, Patient, Practitioner, Script>> _relatedResources = default;
@@ -72,7 +71,7 @@ public record Practitioner
                 switch (propertyName)
                 {
                     case "resource_type":
-                        _resourceType = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     case "name":
                         _name = JsonSerializer.Deserialize<string>(ref reader, options);
@@ -96,7 +95,6 @@ public record Practitioner
 
             return new Practitioner
             {
-                ResourceType = _resourceType,
                 Name = _name,
                 Id = _id,
                 RelatedResources = _relatedResources,

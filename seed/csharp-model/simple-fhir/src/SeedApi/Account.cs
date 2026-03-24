@@ -58,7 +58,6 @@ public record Account
                 return null;
             }
 
-            string _resourceType = default;
             string _name = default;
             Patient? _patient = default;
             Practitioner? _practitioner = default;
@@ -80,7 +79,7 @@ public record Account
                 switch (propertyName)
                 {
                     case "resource_type":
-                        _resourceType = JsonSerializer.Deserialize<string>(ref reader, options);
+                        reader.Skip();
                         break;
                     case "name":
                         _name = JsonSerializer.Deserialize<string>(ref reader, options);
@@ -113,7 +112,6 @@ public record Account
 
             return new Account
             {
-                ResourceType = _resourceType,
                 Name = _name,
                 Patient = _patient,
                 Practitioner = _practitioner,

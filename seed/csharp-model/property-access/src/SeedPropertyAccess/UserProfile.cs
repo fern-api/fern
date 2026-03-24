@@ -94,6 +94,7 @@ public record UserProfile
             {
                 Name = _name,
                 Verification = _verification,
+                Ssn = default!,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }
