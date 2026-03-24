@@ -13,6 +13,7 @@ import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.SingleUnionType;
+import com.fern.ir.model.types.SingleUnionTypeProperties;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionMember;
@@ -987,35 +988,39 @@ public abstract class AbstractHttpResponseParserGenerator {
                                     sse.getPayload(), clientGeneratorContext.getTypeDeclarations());
 
                     if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.EVENT_LEVEL) {
-                        // Event-level discrimination: discriminator is at SSE envelope level
-                        String discriminatorProperty =
-                                discriminationInfo.getDiscriminatorProperty().orElse("event");
-                        if (terminator != null) {
-                            return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
-                                    bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
-                                    discriminatorProperty,
-                                    terminator);
-                        } else {
-                            return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
-                                    bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
-                                    discriminatorProperty);
+                        // Event-level discrimination: generate variant-specific parsing at code-gen time
+                        CodeBlock eventParserLambda = generateEventParserLambda(sse.getPayload(), bodyTypeName);
+                        if (eventParserLambda != null) {
+                            if (terminator != null) {
+                                return CodeBlock.of(
+                                        "$T.fromSseWithEventParser($T.class, new $T($L), $L, $S)",
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getStreamClassName(),
+                                        bodyTypeName,
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getResponseBodyReaderClassName(),
+                                        variables.getResponseName(),
+                                        eventParserLambda,
+                                        terminator);
+                            } else {
+                                return CodeBlock.of(
+                                        "$T.fromSseWithEventParser($T.class, new $T($L), $L)",
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getStreamClassName(),
+                                        bodyTypeName,
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getResponseBodyReaderClassName(),
+                                        variables.getResponseName(),
+                                        eventParserLambda);
+                            }
                         }
+                        throw new RuntimeException(
+                                "Failed to generate event parser lambda for SSE event-level discrimination. "
+                                        + "The discriminatorContext should always be available in the IR for protocol-discriminated unions.");
                     }
 
                     // Data-level discrimination or non-union: use standard SSE parsing
@@ -1058,6 +1063,119 @@ public abstract class AbstractHttpResponseParserGenerator {
         public Void _visitUnknown(Object unknownType) {
             return null;
         }
+    }
+
+    /**
+     * Generates a lambda expression that parses SSE events based on event type at code-gen time.
+     * This avoids runtime reflection by generating variant-specific deserialization code.
+     * Uses the union type's static factory methods to construct the correct variant.
+     *
+     * @param payloadType The SSE payload type reference
+     * @param bodyTypeName The TypeName for the union type
+     * @return A CodeBlock representing the lambda, or null if unable to generate
+     */
+    private CodeBlock generateEventParserLambda(
+            com.fern.ir.model.types.TypeReference payloadType, TypeName bodyTypeName) {
+        // Resolve to union type declaration
+        Optional<UnionTypeDeclaration> maybeUnion =
+                SseDiscriminationAnalyzer.resolveUnionType(payloadType, clientGeneratorContext.getTypeDeclarations());
+        if (maybeUnion.isEmpty()) {
+            return null;
+        }
+
+        UnionTypeDeclaration unionDecl = maybeUnion.get();
+        List<SingleUnionType> variants = unionDecl.getTypes();
+
+        // Build the lambda body using string-based CodeBlock construction to avoid
+        // JavaPoet's control flow statement nesting issues when embedding in a lambda.
+        StringBuilder sb = new StringBuilder();
+        sb.append("(eventType, data) -> {\n");
+        sb.append("  try {\n");
+
+        boolean first = true;
+        // Collect format args for CodeBlock.of()
+        List<Object> formatArgs = new ArrayList<>();
+
+        for (SingleUnionType variant : variants) {
+            String wireValue = variant.getDiscriminantValue().getWireValue();
+            String factoryMethodName = variant.getDiscriminantValue()
+                    .getName()
+                    .getCamelCase()
+                    .getSafeName();
+            TypeName variantTypeName = variant.getShape().visit(
+                    new SingleUnionTypeProperties.Visitor<TypeName>() {
+                        @Override
+                        public TypeName visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+                            return clientGeneratorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(
+                                            true,
+                                            com.fern.ir.model.types.TypeReference.named(
+                                                    NamedType.builder()
+                                                            .typeId(declaredTypeName.getTypeId())
+                                                            .fernFilepath(declaredTypeName.getFernFilepath())
+                                                            .name(declaredTypeName.getName())
+                                                            .build()));
+                        }
+
+                        @Override
+                        public TypeName visitSingleProperty(
+                                com.fern.ir.model.types.SingleUnionTypeProperty singleProperty) {
+                            return clientGeneratorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, singleProperty.getType());
+                        }
+
+                        @Override
+                        public TypeName visitNoProperties() {
+                            return null;
+                        }
+
+                        @Override
+                        public TypeName _visitUnknown(Object unknownType) {
+                            return null;
+                        }
+                    });
+
+            if (first) {
+                sb.append("    if (\"").append(wireValue).append("\".equals(eventType)) {\n");
+                first = false;
+            } else {
+                sb.append("    } else if (\"").append(wireValue).append("\".equals(eventType)) {\n");
+            }
+
+            if (variantTypeName != null) {
+                sb.append("      $T variantValue = $T.JSON_MAPPER.readValue(data, $T.class);\n");
+                formatArgs.add(variantTypeName);
+                formatArgs.add(clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName());
+                formatArgs.add(variantTypeName);
+                sb.append("      return $T.$L(variantValue);\n");
+                formatArgs.add(bodyTypeName);
+                formatArgs.add(factoryMethodName);
+            } else {
+                sb.append("      return $T.$L();\n");
+                formatArgs.add(bodyTypeName);
+                formatArgs.add(factoryMethodName);
+            }
+        }
+
+        if (!first) {
+            sb.append("    }\n");
+        }
+
+        // Default: try to parse as the union type directly for unknown event types
+        sb.append("    return $T.JSON_MAPPER.readValue(data, $T.class);\n");
+        formatArgs.add(clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName());
+        formatArgs.add(bodyTypeName);
+
+        sb.append("  } catch ($T e) {\n");
+        formatArgs.add(Exception.class);
+        sb.append("    throw new $T(\"Failed to parse SSE event: \" + eventType, e);\n");
+        formatArgs.add(RuntimeException.class);
+        sb.append("  }\n");
+        sb.append("}");
+
+        return CodeBlock.of(sb.toString(), formatArgs.toArray());
     }
 
     private SnippetAndResultType getNestedPropertySnippet(
