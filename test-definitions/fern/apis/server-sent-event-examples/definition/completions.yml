@@ -116,7 +116,7 @@ service:
       method: POST
       path: /stream-events-context-protocol
       request:
-        name: StreamEventsRequest
+        name: StreamEventsContextProtocolRequest
         body:
           properties:
             query: string
