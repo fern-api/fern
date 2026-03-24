@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-enum` for enums",
   "auth": {
     "requirement": "ALL",
@@ -30,67 +12,13 @@
     "type_transcripts:SpeechModel": {
       "docs": "The speech model to use for the transcription.",
       "name": {
-        "name": {
-          "originalName": "SpeechModel",
-          "camelCase": {
-            "unsafeName": "speechModel",
-            "safeName": "speechModel"
-          },
-          "snakeCase": {
-            "unsafeName": "speech_model",
-            "safeName": "speech_model"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SPEECH_MODEL",
-            "safeName": "SPEECH_MODEL"
-          },
-          "pascalCase": {
-            "unsafeName": "SpeechModel",
-            "safeName": "SpeechModel"
-          }
-        },
+        "name": "SpeechModel",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "transcripts",
-              "camelCase": {
-                "unsafeName": "transcripts",
-                "safeName": "transcripts"
-              },
-              "snakeCase": {
-                "unsafeName": "transcripts",
-                "safeName": "transcripts"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "TRANSCRIPTS",
-                "safeName": "TRANSCRIPTS"
-              },
-              "pascalCase": {
-                "unsafeName": "Transcripts",
-                "safeName": "Transcripts"
-              }
-            }
+            "transcripts"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "transcripts",
-            "camelCase": {
-              "unsafeName": "transcripts",
-              "safeName": "transcripts"
-            },
-            "snakeCase": {
-              "unsafeName": "transcripts",
-              "safeName": "transcripts"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TRANSCRIPTS",
-              "safeName": "TRANSCRIPTS"
-            },
-            "pascalCase": {
-              "unsafeName": "Transcripts",
-              "safeName": "Transcripts"
-            }
-          }
+          "file": "transcripts"
         },
         "typeId": "type_transcripts:SpeechModel"
       },
@@ -100,25 +28,7 @@
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost.",
             "name": {
               "wireValue": "nano",
-              "name": {
-                "originalName": "Nano",
-                "camelCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "snakeCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NANO",
-                  "safeName": "NANO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Nano",
-                  "safeName": "Nano"
-                }
-              }
+              "name": "Nano"
             }
           }
         ],
@@ -135,28 +45,7 @@
   "errors": {},
   "services": {},
   "constants": {
-    "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      }
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -278,66 +167,12 @@
     "subpackage_transcripts": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "transcripts",
-            "camelCase": {
-              "unsafeName": "transcripts",
-              "safeName": "transcripts"
-            },
-            "snakeCase": {
-              "unsafeName": "transcripts",
-              "safeName": "transcripts"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TRANSCRIPTS",
-              "safeName": "TRANSCRIPTS"
-            },
-            "pascalCase": {
-              "unsafeName": "Transcripts",
-              "safeName": "Transcripts"
-            }
-          }
+          "transcripts"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "transcripts",
-          "camelCase": {
-            "unsafeName": "transcripts",
-            "safeName": "transcripts"
-          },
-          "snakeCase": {
-            "unsafeName": "transcripts",
-            "safeName": "transcripts"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TRANSCRIPTS",
-            "safeName": "TRANSCRIPTS"
-          },
-          "pascalCase": {
-            "unsafeName": "Transcripts",
-            "safeName": "Transcripts"
-          }
-        }
+        "file": "transcripts"
       },
-      "name": {
-        "originalName": "transcripts",
-        "camelCase": {
-          "unsafeName": "transcripts",
-          "safeName": "transcripts"
-        },
-        "snakeCase": {
-          "unsafeName": "transcripts",
-          "safeName": "transcripts"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TRANSCRIPTS",
-          "safeName": "TRANSCRIPTS"
-        },
-        "pascalCase": {
-          "unsafeName": "Transcripts",
-          "safeName": "Transcripts"
-        }
-      },
+      "name": "transcripts",
       "types": [
         "type_transcripts:SpeechModel"
       ],

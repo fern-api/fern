@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Vectara REST API v2",
   "auth": {
     "requirement": "ALL",
@@ -29,25 +11,7 @@
       "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
       "name": {
         "wireValue": "Request-Timeout",
-        "name": {
-          "originalName": "requestTimeout",
-          "camelCase": {
-            "unsafeName": "requestTimeout",
-            "safeName": "requestTimeout"
-          },
-          "snakeCase": {
-            "unsafeName": "request_timeout",
-            "safeName": "request_timeout"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "REQUEST_TIMEOUT",
-            "safeName": "REQUEST_TIMEOUT"
-          },
-          "pascalCase": {
-            "unsafeName": "RequestTimeout",
-            "safeName": "RequestTimeout"
-          }
-        }
+        "name": "requestTimeout"
       },
       "valueType": {
         "container": {
@@ -73,25 +37,7 @@
       "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
       "name": {
         "wireValue": "Request-Timeout-Millis",
-        "name": {
-          "originalName": "requestTimeoutMillis",
-          "camelCase": {
-            "unsafeName": "requestTimeoutMillis",
-            "safeName": "requestTimeoutMillis"
-          },
-          "snakeCase": {
-            "unsafeName": "request_timeout_millis",
-            "safeName": "request_timeout_millis"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "REQUEST_TIMEOUT_MILLIS",
-            "safeName": "REQUEST_TIMEOUT_MILLIS"
-          },
-          "pascalCase": {
-            "unsafeName": "RequestTimeoutMillis",
-            "safeName": "RequestTimeoutMillis"
-          }
-        }
+        "name": "requestTimeoutMillis"
       },
       "valueType": {
         "container": {
@@ -119,25 +65,7 @@
     "type_:ChatFullResponse": {
       "docs": "Full response to a chat question when the result is not streamed.",
       "name": {
-        "name": {
-          "originalName": "ChatFullResponse",
-          "camelCase": {
-            "unsafeName": "chatFullResponse",
-            "safeName": "chatFullResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "chat_full_response",
-            "safeName": "chat_full_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CHAT_FULL_RESPONSE",
-            "safeName": "CHAT_FULL_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ChatFullResponse",
-            "safeName": "ChatFullResponse"
-          }
-        },
+        "name": "ChatFullResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -149,28 +77,7 @@
         "properties": [
           {
             "docs": "If the chat response was stored, the ID of the chat.",
-            "name": {
-              "wireValue": "chat_id",
-              "name": {
-                "originalName": "chat_id",
-                "camelCase": {
-                  "unsafeName": "chatID",
-                  "safeName": "chatID"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat_id",
-                  "safeName": "chat_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT_ID",
-                  "safeName": "CHAT_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ChatID",
-                  "safeName": "ChatID"
-                }
-              }
-            },
+            "name": "chat_id",
             "valueType": {
               "container": {
                 "optional": {
@@ -193,28 +100,7 @@
           },
           {
             "docs": "If the chat response was stored, the ID of the turn.",
-            "name": {
-              "wireValue": "turn_id",
-              "name": {
-                "originalName": "turn_id",
-                "camelCase": {
-                  "unsafeName": "turnID",
-                  "safeName": "turnID"
-                },
-                "snakeCase": {
-                  "unsafeName": "turn_id",
-                  "safeName": "turn_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TURN_ID",
-                  "safeName": "TURN_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "TurnID",
-                  "safeName": "TurnID"
-                }
-              }
-            },
+            "name": "turn_id",
             "valueType": {
               "container": {
                 "optional": {
@@ -237,28 +123,7 @@
           },
           {
             "docs": "The message from the chat model for the chat message.",
-            "name": {
-              "wireValue": "answer",
-              "name": {
-                "originalName": "answer",
-                "camelCase": {
-                  "unsafeName": "answer",
-                  "safeName": "answer"
-                },
-                "snakeCase": {
-                  "unsafeName": "answer",
-                  "safeName": "answer"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ANSWER",
-                  "safeName": "ANSWER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Answer",
-                  "safeName": "Answer"
-                }
-              }
-            },
+            "name": "answer",
             "valueType": {
               "container": {
                 "optional": {
@@ -294,25 +159,7 @@
     "type_:ChatStreamedResponse": {
       "docs": "An individual event when the response is streamed.",
       "name": {
-        "name": {
-          "originalName": "ChatStreamedResponse",
-          "camelCase": {
-            "unsafeName": "chatStreamedResponse",
-            "safeName": "chatStreamedResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "chat_streamed_response",
-            "safeName": "chat_streamed_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CHAT_STREAMED_RESPONSE",
-            "safeName": "CHAT_STREAMED_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ChatStreamedResponse",
-            "safeName": "ChatStreamedResponse"
-          }
-        },
+        "name": "ChatStreamedResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -324,28 +171,7 @@
         "properties": [
           {
             "docs": "The chunk of the response.",
-            "name": {
-              "wireValue": "chunk",
-              "name": {
-                "originalName": "chunk",
-                "camelCase": {
-                  "unsafeName": "chunk",
-                  "safeName": "chunk"
-                },
-                "snakeCase": {
-                  "unsafeName": "chunk",
-                  "safeName": "chunk"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHUNK",
-                  "safeName": "CHUNK"
-                },
-                "pascalCase": {
-                  "unsafeName": "Chunk",
-                  "safeName": "Chunk"
-                }
-              }
-            },
+            "name": "chunk",
             "valueType": {
               "container": {
                 "optional": {
@@ -404,25 +230,7 @@
         {
           "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
           "id": "endpoint_.chat_stream",
-          "name": {
-            "originalName": "chat_stream",
-            "camelCase": {
-              "unsafeName": "chatStream",
-              "safeName": "chatStream"
-            },
-            "snakeCase": {
-              "unsafeName": "chat_stream",
-              "safeName": "chat_stream"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CHAT_STREAM",
-              "safeName": "CHAT_STREAM"
-            },
-            "pascalCase": {
-              "unsafeName": "ChatStream",
-              "safeName": "ChatStream"
-            }
-          },
+          "name": "chat_stream",
           "displayName": "Start a chat",
           "auth": false,
           "idempotent": false,
@@ -440,52 +248,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "ChatRequestStreaming",
-              "camelCase": {
-                "unsafeName": "chatRequestStreaming",
-                "safeName": "chatRequestStreaming"
-              },
-              "snakeCase": {
-                "unsafeName": "chat_request_streaming",
-                "safeName": "chat_request_streaming"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT_REQUEST_STREAMING",
-                "safeName": "CHAT_REQUEST_STREAMING"
-              },
-              "pascalCase": {
-                "unsafeName": "ChatRequestStreaming",
-                "safeName": "ChatRequestStreaming"
-              }
-            },
+            "name": "ChatRequestStreaming",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The chat message or question.",
-                "name": {
-                  "wireValue": "query",
-                  "name": {
-                    "originalName": "query",
-                    "camelCase": {
-                      "unsafeName": "query",
-                      "safeName": "query"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "query",
-                      "safeName": "query"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "QUERY",
-                      "safeName": "QUERY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Query",
-                      "safeName": "Query"
-                    }
-                  }
-                },
+                "name": "query",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -502,28 +271,7 @@
               },
               {
                 "docs": "Indicates whether the response should be streamed or not.",
-                "name": {
-                  "wireValue": "stream_response",
-                  "name": {
-                    "originalName": "stream_response",
-                    "camelCase": {
-                      "unsafeName": "streamResponse",
-                      "safeName": "streamResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "stream_response",
-                      "safeName": "stream_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "STREAM_RESPONSE",
-                      "safeName": "STREAM_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "StreamResponse",
-                      "safeName": "StreamResponse"
-                    }
-                  }
-                },
+                "name": "stream_response",
                 "valueType": {
                   "container": {
                     "literal": {
@@ -546,92 +294,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ChatRequestStreaming",
-                "camelCase": {
-                  "unsafeName": "chatRequestStreaming",
-                  "safeName": "chatRequestStreaming"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat_request_streaming",
-                  "safeName": "chat_request_streaming"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT_REQUEST_STREAMING",
-                  "safeName": "CHAT_REQUEST_STREAMING"
-                },
-                "pascalCase": {
-                  "unsafeName": "ChatRequestStreaming",
-                  "safeName": "ChatRequestStreaming"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "ChatRequestStreaming",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "ChatStreamedResponse",
-                    "camelCase": {
-                      "unsafeName": "chatStreamedResponse",
-                      "safeName": "chatStreamedResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "chat_streamed_response",
-                      "safeName": "chat_streamed_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CHAT_STREAMED_RESPONSE",
-                      "safeName": "CHAT_STREAMED_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ChatStreamedResponse",
-                      "safeName": "ChatStreamedResponse"
-                    }
-                  },
+                  "name": "ChatStreamedResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -652,25 +328,7 @@
         {
           "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
           "id": "endpoint_.chat",
-          "name": {
-            "originalName": "chat",
-            "camelCase": {
-              "unsafeName": "chat",
-              "safeName": "chat"
-            },
-            "snakeCase": {
-              "unsafeName": "chat",
-              "safeName": "chat"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CHAT",
-              "safeName": "CHAT"
-            },
-            "pascalCase": {
-              "unsafeName": "Chat",
-              "safeName": "Chat"
-            }
-          },
+          "name": "chat",
           "displayName": "Start a chat",
           "auth": false,
           "idempotent": false,
@@ -688,52 +346,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "ChatRequest",
-              "camelCase": {
-                "unsafeName": "chatRequest",
-                "safeName": "chatRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "chat_request",
-                "safeName": "chat_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT_REQUEST",
-                "safeName": "CHAT_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "ChatRequest",
-                "safeName": "ChatRequest"
-              }
-            },
+            "name": "ChatRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The chat message or question.",
-                "name": {
-                  "wireValue": "query",
-                  "name": {
-                    "originalName": "query",
-                    "camelCase": {
-                      "unsafeName": "query",
-                      "safeName": "query"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "query",
-                      "safeName": "query"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "QUERY",
-                      "safeName": "QUERY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Query",
-                      "safeName": "Query"
-                    }
-                  }
-                },
+                "name": "query",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -750,28 +369,7 @@
               },
               {
                 "docs": "Indicates whether the response should be streamed or not.",
-                "name": {
-                  "wireValue": "stream_response",
-                  "name": {
-                    "originalName": "stream_response",
-                    "camelCase": {
-                      "unsafeName": "streamResponse",
-                      "safeName": "streamResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "stream_response",
-                      "safeName": "stream_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "STREAM_RESPONSE",
-                      "safeName": "STREAM_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "StreamResponse",
-                      "safeName": "StreamResponse"
-                    }
-                  }
-                },
+                "name": "stream_response",
                 "valueType": {
                   "container": {
                     "literal": {
@@ -794,92 +392,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ChatRequest",
-                "camelCase": {
-                  "unsafeName": "chatRequest",
-                  "safeName": "chatRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat_request",
-                  "safeName": "chat_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT_REQUEST",
-                  "safeName": "CHAT_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "ChatRequest",
-                  "safeName": "ChatRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "ChatRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ChatFullResponse",
-                    "camelCase": {
-                      "unsafeName": "chatFullResponse",
-                      "safeName": "chatFullResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "chat_full_response",
-                      "safeName": "chat_full_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CHAT_FULL_RESPONSE",
-                      "safeName": "CHAT_FULL_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ChatFullResponse",
-                      "safeName": "ChatFullResponse"
-                    }
-                  },
+                  "name": "ChatFullResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -903,28 +429,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "wireValue": "errorInstanceId",
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      }
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "environments": {
     "defaultEnvironment": "Default",
@@ -932,25 +437,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
-          },
+          "name": "Default",
           "url": "https://api.streamingtest.io"
         }
       ],
