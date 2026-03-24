@@ -115,9 +115,13 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.AdditionalPropertiesTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
-            AsIsFiles.Test.Json.JsonAccessAttributeTests,
-            AsIsFiles.Test.Json.OneOfSerializerTests
+            AsIsFiles.Test.Json.JsonAccessAttributeTests
         ];
+
+        // Only include OneOfSerializerTests when OneOf serialization is in use
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Test.Json.OneOfSerializerTests);
+        }
 
         return files;
     }
