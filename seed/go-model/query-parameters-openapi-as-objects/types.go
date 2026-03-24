@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/query-parameters-openapi-as-objects/fern/internal"
 )
 

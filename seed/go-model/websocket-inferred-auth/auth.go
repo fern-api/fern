@@ -5,6 +5,7 @@ package websocketauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/websocket-inferred-auth/fern/internal"
 )
 

@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/circular-references-advanced/fern/internal"
 )
 

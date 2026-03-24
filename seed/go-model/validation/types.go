@@ -5,6 +5,7 @@ package validation
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/validation/fern/internal"
 )
 

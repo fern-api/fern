@@ -5,6 +5,7 @@ package websocketbearerauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/websocket-bearer-auth/fern/internal"
 )
 

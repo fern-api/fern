@@ -5,6 +5,7 @@ package pathparameters
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/path-parameters/fern/internal"
 )
 

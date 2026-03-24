@@ -5,6 +5,7 @@ package literal
 import (
     json "encoding/json"
     fmt "fmt"
+
     internal "github.com/literal/fern/internal"
 )
 
