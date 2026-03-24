@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/required-nullable/fern"
     client "github.com/required-nullable/fern/client"
 )

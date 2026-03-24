@@ -4,6 +4,7 @@ package propertybasederror
 
 import (
 	context "context"
+
 	core "github.com/error-property/fern/core"
 	internal "github.com/error-property/fern/internal"
 	option "github.com/error-property/fern/option"

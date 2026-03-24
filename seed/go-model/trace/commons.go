@@ -5,6 +5,7 @@ package trace
 import (
     json "encoding/json"
     fmt "fmt"
+
     internal "github.com/trace/fern/internal"
 )
 

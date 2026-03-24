@@ -4,11 +4,12 @@ package primitive
 
 import (
 	context "context"
+	time "time"
+
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type Client struct {

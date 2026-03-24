@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     testPackageName "github.com/imdb/fern"
     client "github.com/imdb/fern/client"
     option "github.com/imdb/fern/option"

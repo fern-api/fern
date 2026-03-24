@@ -4,13 +4,14 @@ package pagination
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	endpoints "github.com/go-deterministic-ordering/fern/endpoints"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
 	types "github.com/go-deterministic-ordering/fern/types"
-	http "net/http"
 )
 
 type Client struct {

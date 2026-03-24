@@ -4,15 +4,16 @@ package inferred_auth_wire_test
 
 import (
 	context "context"
-	client "github.com/inferred-auth-explicit/fern/client"
-	option "github.com/inferred-auth-explicit/fern/option"
-	assert "github.com/stretchr/testify/assert"
-	require "github.com/stretchr/testify/require"
 	io "io"
 	http "net/http"
 	strings "strings"
 	sync "sync"
 	testing "testing"
+
+	client "github.com/inferred-auth-explicit/fern/client"
+	option "github.com/inferred-auth-explicit/fern/option"
+	assert "github.com/stretchr/testify/assert"
+	require "github.com/stretchr/testify/require"
 )
 
 // capturedRequest stores information about an intercepted HTTP request.

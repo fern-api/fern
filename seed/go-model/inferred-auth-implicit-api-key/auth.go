@@ -5,6 +5,7 @@ package inferredauthimplicitapikey
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/inferred-auth-implicit-api-key/fern/internal"
 )
 

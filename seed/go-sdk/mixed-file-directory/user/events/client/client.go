@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	core "github.com/mixed-file-directory/fern/core"
 	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"

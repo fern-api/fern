@@ -457,7 +457,6 @@ export class Generation {
      * - `ExceptionInterceptor`, `ExceptionHandler`: Exception processing
      *
      * ### Serialization:
-     * - `EnumSerializer`: Enum serialization
      * - `DateTimeSerializer`: DateTime handling
      * - `JsonUtils`: JSON utilities
      * - `OneOfSerializer`: Union type serialization
@@ -636,12 +635,6 @@ export class Generation {
         Constants: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Constants"),
-                namespace: this.namespaces.core
-            }),
-        /** JSON serializer for enum types */
-        EnumSerializer: () =>
-            this.csharp.classReference({
-                origin: this.model.staticExplicit("EnumSerializer"),
                 namespace: this.namespaces.core
             }),
         /** JSON serializer for DateTime types */

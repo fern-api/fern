@@ -334,6 +334,10 @@ fixtures:
         generate-literals: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
+  websocket-multi-url:
+    - customConfig:
+        experimental-enable-websockets: true
+      outputFolder: no-custom-config
   csharp-xml-entities:
     - customConfig: null
       outputFolder: no-custom-config

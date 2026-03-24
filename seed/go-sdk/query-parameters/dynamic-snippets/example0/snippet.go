@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     uuid "github.com/google/uuid"
     fern "github.com/query-parameters/fern"
     client "github.com/query-parameters/fern/client"
