@@ -5,10 +5,25 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
+
+import typing_extensions
 
 import pydantic
-import typing_extensions
 from pydantic.fields import FieldInfo as _FieldInfo
 
 _logger = logging.getLogger(__name__)
