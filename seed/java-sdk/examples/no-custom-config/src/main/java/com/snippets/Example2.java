@@ -1,6 +1,8 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.types.BasicType;
+import com.seed.examples.types.Type;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -9,6 +11,6 @@ public class Example2 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.echo("primitive");
+        client.createType(Type.of(BasicType.PRIMITIVE));
     }
 }

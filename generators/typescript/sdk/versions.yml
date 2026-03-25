@@ -2,18 +2,12 @@
 - version: 3.59.7
   changelogEntry:
     - summary: |
-        Fix `_Visitor` interface missing `globalThis.` qualification when union
-        member interfaces shadow built-in TypeScript types (e.g. `Date`, `Object`,
-        `File`). The `qualifyShadowedGlobalTypes` transform is now applied to
-        `_Visitor` callback parameter types, matching the existing behavior for
-        union member interface properties.
+        Extend `globalThis.` qualification for shadowed global types (e.g. `Date`) to
+        union visitor signatures and builder parameters, not just interface properties.
       type: fix
     - summary: |
-        Fix serialization schema for `Record` types with optional values producing
-        `Record<string, ValueType | undefined>` while the API type declares
-        `Record<string, ValueType>`. The schema converter now unwraps the optional
-        wrapper from map value types to match the API type, which uses
-        `typeNodeWithoutUndefined`.
+        Fix `Record` serialization schema for maps with optional value types to strip
+        the optional wrapper, matching the type converter's behavior.
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65

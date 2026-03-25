@@ -11,8 +11,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_cursor_pagination(
-            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+        .list_with_offset_pagination(
+            &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
