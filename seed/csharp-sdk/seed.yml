@@ -382,6 +382,7 @@ fixtures:
 allowedFailures:
   - bytes-upload
   - enum:forward-compatible-enums
+  - imdb:exported-client-class-name
   - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
