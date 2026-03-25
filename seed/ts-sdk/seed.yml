@@ -143,6 +143,12 @@ fixtures:
       customConfig:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
   undiscriminated-unions:
     - outputFolder: no-custom-config
       customConfig: null

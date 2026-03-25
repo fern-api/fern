@@ -2,19 +2,12 @@
 - version: 3.59.5
   changelogEntry:
     - summary: |
-        Fix `globalThis.` qualification for shadowed global types (e.g. `Date`) to also
-        apply to union visitor interface signatures and const builder/factory function
-        parameter types. Previously, only interface property types were qualified, so
-        visitor signatures like `datetime: (value: Date) => _Result` and builder parameters
-        like `datetime: (value: Date): Union.Datetime => {...}` would incorrectly resolve
-        `Date` to the union's `Date` variant instead of the built-in `globalThis.Date`.
+        Extend `globalThis.` qualification for shadowed global types (e.g. `Date`) to
+        union visitor signatures and builder parameters, not just interface properties.
       type: fix
     - summary: |
-        Fix `Record` serialization schema for maps with non-enum string keys and optional
-        value types. The type converter strips optional/nullable wrappers from map value
-        types (producing `Record<string, string>`), but the schema converter was preserving
-        them (generating `string().optional()`), causing a type mismatch. The schema
-        converter now also strips optional/nullable wrappers to match.
+        Fix `Record` serialization schema for maps with optional value types to strip
+        the optional wrapper, matching the type converter's behavior.
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
