@@ -169,7 +169,9 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: generatorInvocation.containerImage
+                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
+                : `${generatorInvocation.name}:${generatorInvocation.version}`,
             keepContainer: keepDocker
         });
 
