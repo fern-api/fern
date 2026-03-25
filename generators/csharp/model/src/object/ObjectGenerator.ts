@@ -309,9 +309,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
         // Declare local variables for each property
         for (const prop of propertyInfos) {
-            if (prop.isWriteOnly || prop.isLiteral) {
-                // WriteOnly properties are not deserialized;
-                // Literal properties use their default initializer (= new())
+            if (prop.isWriteOnly) {
+                // WriteOnly properties are not deserialized
                 continue;
             }
             if (prop.isOptionalWrapper) {
@@ -353,9 +352,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         writer.pushScope();
 
         for (const prop of propertyInfos) {
-            if (prop.isWriteOnly || prop.isLiteral) {
+            if (prop.isWriteOnly) {
                 // WriteOnly = don't deserialize, skip the value
-                // Literal = fixed value, skip (the default initializer handles it)
                 writer.writeLine(`case "${prop.wireValue}":`);
                 writer.indent();
                 writer.writeTextStatement("reader.Skip()");
@@ -416,10 +414,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         writer.writeLine();
         writer.pushScope();
         for (const prop of propertyInfos) {
-            if (prop.isLiteral) {
-                // Literal properties use their default initializer (= new()), skip
-                continue;
-            }
             if (prop.isWriteOnly) {
                 // WriteOnly properties are not deserialized but required members must be set
                 writer.writeLine(`${prop.propertyName} = default!,`);
