@@ -225,7 +225,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                 // Strip markdown formatting (headers, bold, italic, etc.)
                 firstLine = firstLine.replaceAll("^#+\\s*", "");
-                firstLine = firstLine.replaceAll("\\*+", "");
+                firstLine = firstLine.replaceAll("\\*\\*([^*]+)\\*\\*", "$1"); // bold
+                firstLine = firstLine.replaceAll("\\*([^*]+)\\*", "$1"); // italic
                 firstLine = firstLine.replaceAll("_([^_]+)_", "$1");
                 firstLine = firstLine.replaceAll("\\[([^\\]]+)\\]\\([^)]+\\)", "$1");
 
