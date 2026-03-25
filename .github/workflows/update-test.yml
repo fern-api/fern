@@ -2,10 +2,16 @@ name: Update Test
 
 on:
   workflow_dispatch:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: read
 
 # Cancel previous workflows on previous push
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.issue.number || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -18,13 +24,31 @@ env:
 
 jobs:
   update-test:
-    if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
+    if: |
+      github.repository == 'fern-api/fern' && (
+        (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main') ||
+        (github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-test'))
+      )
     runs-on: Test
     timeout-minutes: 90
     steps:
+      - name: Get PR head ref
+        id: pr-ref
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            core.setOutput('ref', pr.head.ref);
+
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
+          ref: ${{ steps.pr-ref.outputs.ref || github.ref }}
           lfs: true
 
       - name: Install
