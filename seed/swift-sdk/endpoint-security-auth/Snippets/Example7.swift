@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithAllAuth()
 }
 
 try await main()
