@@ -4,6 +4,7 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { askToLogin } from "@fern-api/login";
+import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import chalk from "chalk";
@@ -164,6 +165,22 @@ export async function generateDocsWorkspace({
             errorOnBrokenLinks: strictBrokenLinks,
             excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks)
         });
+
+        // Validate OpenAPI specs for issues that would cause runtime errors on the docs site
+        const ossWorkspacesForValidation = await filterOssWorkspaces(project);
+        for (const ossWorkspace of ossWorkspacesForValidation) {
+            const violations = await validateOSSWorkspace(ossWorkspace, context);
+            const errors = violations.filter((v) => v.severity === "fatal" || v.severity === "error");
+            if (errors.length > 0) {
+                for (const error of errors) {
+                    context.logger.error(`${error.relativeFilepath}: ${error.message}`);
+                }
+                context.failAndThrow(
+                    `OpenAPI spec validation failed with ${errors.length} error${errors.length !== 1 ? "s" : ""}. ` +
+                        "Fix the errors above before generating docs."
+                );
+            }
+        }
 
         context.logger.info("Validation complete, starting remote docs generation...");
 
