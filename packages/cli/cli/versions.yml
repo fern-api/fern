@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add IR Name compression (v66). `Name` fields in the IR can now be
+        represented as plain `originalName` strings instead of full objects,
+        reducing IR wire size by ~60-70%. Non-TS generators receive the
+        previous v65 format via automatic migration. A new `CaseConverter`
+        utility class is provided in `@fern-api/base-generator` for
+        generators to transparently handle both forms.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 66
+
 - version: 4.43.2
   changelogEntry:
     - summary: |
@@ -41,19 +54,6 @@
       type: fix
   createdAt: "2026-03-23"
   irVersion: 65
-
-- version: 4.43.0
-  changelogEntry:
-    - summary: |
-        Add IR Name compression (v66). `Name` fields in the IR can now be
-        represented as plain `originalName` strings instead of full objects,
-        reducing IR wire size by ~60-70%. Non-TS generators receive the
-        previous v65 format via automatic migration. A new `CaseConverter`
-        utility class is provided in `@fern-api/base-generator` for
-        generators to transparently handle both forms.
-      type: feat
-  createdAt: "2026-03-10"
-  irVersion: 66
 
 - version: 4.42.0
   changelogEntry:
