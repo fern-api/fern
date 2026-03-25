@@ -299,6 +299,33 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(param);
                     break;
                 }
+                case "basic": {
+                    const usernameParam = ruby.parameters.keyword({
+                        name: scheme.username.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.usernameEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(usernameParam);
+                    const passwordParam = ruby.parameters.keyword({
+                        name: scheme.password.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.passwordEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(passwordParam);
+                    break;
+                }
                 case "inferred": {
                     const inferredParams = this.getParametersForInferredAuth(scheme);
                     for (const inferredParam of inferredParams) {
@@ -422,6 +449,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     headers.push({
                         key: ruby.TypeLiteral.string(headerName),
                         value: ruby.TypeLiteral.string(headerValue)
+                    });
+                    break;
+                }
+                case "basic": {
+                    const usernameName = header.username.snakeCase.safeName;
+                    const passwordName = header.password.snakeCase.safeName;
+                    headers.push({
+                        key: ruby.TypeLiteral.string("Authorization"),
+                        value: ruby.TypeLiteral.string(
+                            `Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}`
+                        )
                     });
                     break;
                 }

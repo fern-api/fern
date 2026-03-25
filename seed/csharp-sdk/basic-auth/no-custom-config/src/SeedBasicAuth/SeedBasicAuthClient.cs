@@ -29,7 +29,10 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        clientOptionsWithAuth.Headers["Authorization"] =
+            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
+        _client = new RawClient(clientOptionsWithAuth);
         BasicAuth = new BasicAuthClient(_client);
     }
 

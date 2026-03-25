@@ -343,6 +343,16 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
+                // Add Basic Auth header if applicable
+                const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
+                if (basicAuthScheme != null && basicAuthScheme.type === "basic") {
+                    const usernameName = this.context.getParameterName(basicAuthScheme.username);
+                    const passwordName = this.context.getParameterName(basicAuthScheme.password);
+                    writer.writeLine(
+                        `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
+                    );
+                }
+
                 writer.writeLine();
 
                 writer.writeNodeStatement(
