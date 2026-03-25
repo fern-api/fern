@@ -91,41 +91,49 @@ export function validateOpenApiSpec({
     spec,
     errorCollector
 }: {
-    spec: {
-        tags?: Array<{ name: string; description?: string }>;
-        paths?: Record<string, Record<string, { description?: string; tags?: string[] }>>;
-        info?: { description?: string };
-    };
+    // biome-ignore lint/suspicious/noExplicitAny: Accept any OpenAPI document shape (v3, v3.1, etc.)
+    spec: Record<string, any>;
     errorCollector: ErrorCollector;
 }): void {
     // Validate top-level tags
-    if (spec.tags != null) {
-        validateTagNames({ tags: spec.tags, errorCollector });
+    if (Array.isArray(spec.tags)) {
+        const tags = spec.tags.filter(
+            (tag: unknown): tag is { name: string; description?: string } =>
+                typeof tag === "object" &&
+                tag != null &&
+                "name" in tag &&
+                typeof (tag as { name: string }).name === "string"
+        );
+        validateTagNames({ tags, errorCollector });
     }
 
     // Validate operation descriptions and inline tag references
-    if (spec.paths != null) {
+    const HTTP_METHODS = ["get", "post", "put", "delete", "patch", "options", "head", "trace"];
+    if (spec.paths != null && typeof spec.paths === "object") {
         const seenTags = new Set<string>();
-        for (const [path, pathItem] of Object.entries(spec.paths)) {
-            if (pathItem == null) {
+        for (const [path, pathItem] of Object.entries(spec.paths as Record<string, unknown>)) {
+            if (pathItem == null || typeof pathItem !== "object") {
                 continue;
             }
-            for (const [method, operation] of Object.entries(pathItem)) {
+            const pathObj = pathItem as Record<string, unknown>;
+            for (const method of HTTP_METHODS) {
+                const operation = pathObj[method];
                 if (operation == null || typeof operation !== "object") {
                     continue;
                 }
+                const op = operation as Record<string, unknown>;
                 // Validate operation description
-                if (operation.description != null) {
+                if (typeof op.description === "string") {
                     validateDescription({
-                        description: operation.description,
+                        description: op.description,
                         path: ["paths", path, method, "description"],
                         errorCollector
                     });
                 }
                 // Validate tags referenced in operations that may not be in top-level tags
-                if (operation.tags != null && spec.tags == null) {
-                    for (const tag of operation.tags) {
-                        if (!seenTags.has(tag) && NON_ASCII_REGEX.test(tag)) {
+                if (Array.isArray(op.tags) && !Array.isArray(spec.tags)) {
+                    for (const tag of op.tags) {
+                        if (typeof tag === "string" && !seenTags.has(tag) && NON_ASCII_REGEX.test(tag)) {
                             seenTags.add(tag);
                             const nonAsciiChars = [...tag].filter((c) => NON_ASCII_REGEX.test(c));
                             errorCollector.collect({
