@@ -5,7 +5,7 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
 
 import pydantic
 import typing_extensions
@@ -296,13 +296,28 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields beginning with `model_` to be used in the model
-        protected_namespaces = ()
+    if IS_PYDANTIC_V2:
+        model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
+            populate_by_name=True,
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces=(),
+        )
+
+        @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
+        def serialize_model(self) -> Any:  # type: ignore[name-defined]
+            serialized = self.dict()  # type: ignore[attr-defined]
+            data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
+            return data
+
+    else:
+
+        class Config:
+            populate_by_name = True
+            smart_union = True
+            allow_population_by_field_name = True
+            json_encoders = {dt.datetime: serialize_datetime}
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces = ()
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {
