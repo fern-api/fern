@@ -9,7 +9,7 @@
         via `theme.tabs.alignment`. Warn when sidebar placement is combined with
         center alignment since centering is only supported for header tabs.
       type: feat
-  createdAt: "2026-03-24"
+  createdAt: "2026-03-25"
   irVersion: 65
 
 - version: 4.43.4
