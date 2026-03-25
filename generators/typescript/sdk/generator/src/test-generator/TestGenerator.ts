@@ -117,7 +117,7 @@ export class TestGenerator {
                             preset: "ts-jest",
                             testEnvironment: "node",
                             moduleNameMapper: {
-                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                                "^(\\\\.{1,2}/.*)\\\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}"],
                             testPathIgnorePatterns: ["/tests/wire/"],
@@ -132,7 +132,7 @@ export class TestGenerator {
                             preset: "ts-jest",
                             testEnvironment: "node",
                             moduleNameMapper: {
-                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                                "^(\\\\.{1,2}/.*)\\\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}/wire"],
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, `<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`)},
@@ -155,7 +155,7 @@ export class TestGenerator {
                     preset: "ts-jest",
                     testEnvironment: "node",
                     moduleNameMapper: {
-                        "^(\\.{1,2}/.*)\\.js$": "$1"
+                        "^(\\\\.{1,2}/.*)\\\\.js$": "$1"
                     },
                     roots: ["<rootDir>/${this.relativeTestPath}"],
                     testPathIgnorePatterns: ["/tests/wire/"],
