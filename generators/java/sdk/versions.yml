@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.7
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.0.6
   changelogEntry:
     - summary: |
