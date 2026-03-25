@@ -330,6 +330,11 @@ export class ApiReferenceNodeConverter {
                 slug,
                 pkgAvailability
             );
+
+            // Fall back to tag description page when no explicit summary is provided.
+            // This ensures tag-description-pages works even when a layout with contents is specified.
+            const effectiveOverviewPageId = overviewPageId ?? this.createTagDescriptionPageId(subpackage);
+
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
@@ -342,7 +347,7 @@ export class ApiReferenceNodeConverter {
                 slug: slug.get(),
                 icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
-                overviewPageId,
+                overviewPageId: effectiveOverviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
                 availability: pkgAvailability,

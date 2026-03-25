@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.43.3
+  changelogEntry:
+    - summary: |
+        Fix `tag-description-pages` being ignored when a package specifies a
+        `layout` with `contents` in `docs.yml`. Previously, adding markdown
+        pages between endpoints via the layout field would disable the automatic
+        tag description summary page for that section. The tag description is
+        now used as a fallback when no explicit `summary` is set on the package.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.43.2
   changelogEntry:
     - summary: |
