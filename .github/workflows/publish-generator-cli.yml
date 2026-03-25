@@ -29,7 +29,7 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
       has_new_version: ${{ steps.get_version.outputs.has_new_version }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -74,7 +74,7 @@ jobs:
     if: needs.check-version.outputs.has_new_version == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -99,7 +99,7 @@ jobs:
     if: needs.check-version.outputs.has_new_version == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: 📥 Install Fern
         run: npm install -g fern-api

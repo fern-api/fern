@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch of fern repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
 
@@ -40,7 +40,7 @@ jobs:
           pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
 
       - name: Checkout main branch of docs repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: fern-api/docs
           ref: main
