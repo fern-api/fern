@@ -32,6 +32,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     reviewers: ReviewersSchema.optional(),
     replay: ReplayConfigSchema.optional(),
     ai: AiServicesSchema.optional(),
+    "container-registry": core.serialization.string().optional(),
     autorelease: core.serialization.boolean().optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
@@ -53,6 +54,7 @@ export declare namespace GeneratorsConfigurationSchema {
         reviewers?: ReviewersSchema.Raw | null;
         replay?: ReplayConfigSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
+        "container-registry"?: string | null;
         autorelease?: boolean | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;

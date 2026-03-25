@@ -98,7 +98,8 @@ export async function convertGeneratorsConfiguration({
                   }
                 : undefined,
         ai: rawGeneratorsConfiguration.ai,
-        replay: rawGeneratorsConfiguration.replay
+        replay: rawGeneratorsConfiguration.replay,
+        containerRegistry: rawGeneratorsConfiguration["container-registry"] ?? undefined
     };
 }
 

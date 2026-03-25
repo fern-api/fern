@@ -182,7 +182,8 @@ export class LegacyLocalGenerationRunner {
             absolutePathToPreview: undefined,
             inspect: false,
             ai: undefined,
-            skipFernignore: args.skipFernignore
+            skipFernignore: args.skipFernignore,
+            containerRegistry: fernWorkspace.generatorsConfiguration?.containerRegistry
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {

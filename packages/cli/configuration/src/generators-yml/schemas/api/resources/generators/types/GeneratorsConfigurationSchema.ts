@@ -28,6 +28,12 @@ export interface GeneratorsConfigurationSchema {
     replay?: GeneratorsYml.ReplayConfigSchema;
     ai?: GeneratorsYml.AiServicesSchema;
     /**
+     * The container registry URL to pull generator images from during local generation.
+     * When set, `fern generate --local` will pull images from this registry instead of Docker Hub.
+     * Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
+     */
+    "container-registry"?: string;
+    /**
      * If true, automatically release SDKs when changes are detected.
      * Can be overridden at the individual generator level.
      */

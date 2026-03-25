@@ -28,6 +28,7 @@ export interface GeneratorsConfiguration {
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     ai: generatorsYml.AiServicesSchema | undefined;
     replay: generatorsYml.ReplayConfigSchema | undefined;
+    containerRegistry: string | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
     absolutePathToConfiguration: AbsoluteFilePath;

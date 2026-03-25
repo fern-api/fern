@@ -154,7 +154,8 @@ export async function generateWorkspace({
                     noReplay,
                     validateWorkspace: true,
                     requireEnvVars,
-                    skipFernignore
+                    skipFernignore,
+                    containerRegistry: workspace.generatorsConfiguration?.containerRegistry
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({

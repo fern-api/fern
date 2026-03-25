@@ -79,7 +79,8 @@ export async function writeFilesToDiskAndRunGenerator({
     ai,
     autoVersioningCache,
     absolutePathToSpecRepo,
-    skipFernignore
+    skipFernignore,
+    containerRegistry
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -108,6 +109,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
+    containerRegistry?: string;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -167,7 +169,9 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: containerRegistry
+                ? `${containerRegistry}/${generatorInvocation.name}:${generatorInvocation.version}`
+                : `${generatorInvocation.name}:${generatorInvocation.version}`,
             keepContainer: keepDocker
         });
 

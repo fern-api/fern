@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add `container-registry` option to `generators.yml` for configuring a custom
+        container registry for `fern generate --local`. When set, Docker images are
+        pulled from the specified registry instead of Docker Hub. This is useful for
+        organizations that mirror generator images to internal registries.
+
+        ```yaml
+        container-registry: ghcr.io/myorg
+        ```
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.43.3
   changelogEntry:
     - summary: |
