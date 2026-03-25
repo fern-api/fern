@@ -188,7 +188,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
             // When running inside Docker, the CLI mounts the license file at /tmp/<filename>
             if (!Files.exists(licensePath)) {
-                Path tmpPath = Paths.get("/tmp", licensePath.getFileName().toString());
+                Path tmpPath = Paths.get("/tmp/LICENSE");
                 if (Files.exists(tmpPath)) {
                     licensePath = tmpPath;
                 }
