@@ -55,7 +55,7 @@ jobs:
     if: ${{ needs.get-all-test-matrices.outputs.seed-infrastructure-changed == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -114,12 +114,12 @@ jobs:
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
@@ -284,7 +284,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -315,7 +315,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -345,7 +345,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -376,7 +376,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -406,7 +406,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -436,7 +436,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -466,7 +466,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -496,7 +496,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -526,7 +526,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -556,7 +556,7 @@ jobs:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -587,7 +587,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -618,7 +618,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -648,7 +648,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -678,7 +678,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -708,7 +708,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -738,7 +738,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -768,7 +768,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -798,7 +798,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -828,7 +828,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -858,7 +858,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -1091,12 +1091,12 @@ jobs:
       rust-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures-count }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
@@ -1217,7 +1217,7 @@ jobs:
           fi
 
       - name: Download Seed Test Time Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           path: ${{ steps.artifacts-info.outputs.metrics_path }}
           pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}

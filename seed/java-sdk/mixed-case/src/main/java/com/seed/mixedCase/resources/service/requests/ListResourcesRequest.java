@@ -5,9 +5,9 @@ package com.seed.mixedCase.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.mixedCase.core.ObjectMappers;
@@ -31,12 +31,12 @@ public final class ListResourcesRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("page_limit")
+    @JsonIgnore
     public int getPageLimit() {
         return pageLimit;
     }
 
-    @JsonProperty("beforeDate")
+    @JsonIgnore
     public String getBeforeDate() {
         return beforeDate;
     }

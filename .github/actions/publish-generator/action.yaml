@@ -157,7 +157,7 @@ runs:
 
     - name: Setup for snippet package publishing
       if: steps.snippet-info.outputs.snippet_package != ''
-      uses: bufbuild/buf-setup-action@v1.34.0
+      uses: bufbuild/buf-setup-action@v1.50.0
       with:
         github_token: ${{ github.token }}
 
