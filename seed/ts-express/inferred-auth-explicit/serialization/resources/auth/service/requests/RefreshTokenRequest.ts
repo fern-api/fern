@@ -14,7 +14,7 @@ export const RefreshTokenRequest: core.serialization.Schema<
     audience: core.serialization.stringLiteral("https://api.example.com"),
     grantType: core.serialization.property("grant_type", core.serialization.stringLiteral("refresh_token")),
     scope: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace RefreshTokenRequest {
     export interface Raw {

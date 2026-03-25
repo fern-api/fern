@@ -10,7 +10,7 @@ export const UnionOverLiteral: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
     core.serialization.lazy(() => serializers.LiteralString),
-]);
+]) as any;
 
 export declare namespace UnionOverLiteral {
     export type Raw = string | serializers.LiteralString.Raw;

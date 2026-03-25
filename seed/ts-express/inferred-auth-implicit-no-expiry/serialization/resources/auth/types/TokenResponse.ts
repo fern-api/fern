@@ -10,7 +10,7 @@ export const TokenResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     accessToken: core.serialization.property("access_token", core.serialization.string()),
     refreshToken: core.serialization.property("refresh_token", core.serialization.string().optional()),
-});
+}) as any;
 
 export declare namespace TokenResponse {
     export interface Raw {

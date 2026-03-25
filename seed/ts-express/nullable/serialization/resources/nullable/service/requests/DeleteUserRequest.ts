@@ -9,7 +9,7 @@ export const DeleteUserRequest: core.serialization.Schema<
     SeedNullable.DeleteUserRequest
 > = core.serialization.object({
     username: core.serialization.string().optionalNullable(),
-});
+}) as any;
 
 export declare namespace DeleteUserRequest {
     export interface Raw {

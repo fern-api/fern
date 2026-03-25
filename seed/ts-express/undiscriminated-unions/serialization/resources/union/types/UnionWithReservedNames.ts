@@ -11,7 +11,7 @@ export const UnionWithReservedNames: core.serialization.Schema<
     core.serialization.stringLiteral("type"),
     core.serialization.stringLiteral("value"),
     core.serialization.string(),
-]);
+]) as any;
 
 export declare namespace UnionWithReservedNames {
     export type Raw = "type" | "value" | string;

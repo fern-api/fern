@@ -9,7 +9,7 @@ export const ObjectWithRequiredField: core.serialization.ObjectSchema<
     SeedExhaustive.types.ObjectWithRequiredField
 > = core.serialization.object({
     string: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace ObjectWithRequiredField {
     export interface Raw {

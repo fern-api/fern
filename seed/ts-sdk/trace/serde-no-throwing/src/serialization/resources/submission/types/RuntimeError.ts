@@ -7,7 +7,7 @@ import type * as serializers from "../../../index.js";
 export const RuntimeError: core.serialization.ObjectSchema<serializers.RuntimeError.Raw, SeedTrace.RuntimeError> =
     core.serialization.object({
         message: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace RuntimeError {
     export interface Raw {

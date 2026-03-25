@@ -42,7 +42,7 @@ export const DebugVariableValue: core.serialization.Schema<
     .transform<SeedTrace.DebugVariableValue>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace DebugVariableValue {
     export type Raw =

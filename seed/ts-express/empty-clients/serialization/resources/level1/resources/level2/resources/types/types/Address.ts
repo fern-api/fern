@@ -14,7 +14,7 @@ export const Address: core.serialization.ObjectSchema<
     state: core.serialization.string(),
     zip: core.serialization.string(),
     country: core.serialization.stringLiteral("USA"),
-});
+}) as any;
 
 export declare namespace Address {
     export interface Raw {

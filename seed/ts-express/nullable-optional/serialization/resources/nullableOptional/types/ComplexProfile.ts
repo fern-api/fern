@@ -36,7 +36,7 @@ export const ComplexProfile: core.serialization.ObjectSchema<
             core.serialization.lazy(() => serializers.UserRole),
         )
         .optional(),
-});
+}) as any;
 
 export declare namespace ComplexProfile {
     export interface Raw {

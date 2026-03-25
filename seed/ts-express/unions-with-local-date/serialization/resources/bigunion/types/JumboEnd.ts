@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const JumboEnd: core.serialization.ObjectSchema<serializers.JumboEnd.Raw, SeedUnions.JumboEnd> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace JumboEnd {
     export interface Raw {

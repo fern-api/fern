@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const WithDocs: core.serialization.ObjectSchema<serializers.WithDocs.Raw, SeedResponseProperty.WithDocs> =
     core.serialization.object({
         docs: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace WithDocs {
     export interface Raw {

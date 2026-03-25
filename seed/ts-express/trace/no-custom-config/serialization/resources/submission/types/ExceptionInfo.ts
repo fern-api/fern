@@ -9,7 +9,7 @@ export const ExceptionInfo: core.serialization.ObjectSchema<serializers.Exceptio
         exceptionType: core.serialization.string(),
         exceptionMessage: core.serialization.string(),
         exceptionStacktrace: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace ExceptionInfo {
     export interface Raw {

@@ -8,7 +8,7 @@ import { FileInfoV2 } from "./FileInfoV2.js";
 export const Files: core.serialization.ObjectSchema<serializers.v2.v3.Files.Raw, SeedTrace.v2.v3.Files> =
     core.serialization.object({
         files: core.serialization.list(FileInfoV2),
-    });
+    }) as any;
 
 export declare namespace Files {
     export interface Raw {

@@ -9,7 +9,7 @@ export const DeployParams: core.serialization.ObjectSchema<
     SeedObjectsWithImports.DeployParams
 > = core.serialization.object({
     updateDraft: core.serialization.boolean().optional(),
-});
+}) as any;
 
 export declare namespace DeployParams {
     export interface Raw {

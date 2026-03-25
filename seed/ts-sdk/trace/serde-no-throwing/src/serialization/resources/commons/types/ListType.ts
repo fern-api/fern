@@ -8,7 +8,7 @@ export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw,
     core.serialization.object({
         valueType: core.serialization.lazy(() => serializers.VariableType),
         isFixedLength: core.serialization.boolean().optional(),
-    });
+    }) as any;
 
 export declare namespace ListType {
     export interface Raw {

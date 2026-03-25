@@ -11,7 +11,7 @@ export const CursorPages: core.serialization.ObjectSchema<serializers.CursorPage
         perPage: core.serialization.property("per_page", core.serialization.number().optional()),
         totalPages: core.serialization.property("total_pages", core.serialization.number().optional()),
         type: core.serialization.stringLiteral("pages"),
-    });
+    }) as any;
 
 export declare namespace CursorPages {
     export interface Raw {

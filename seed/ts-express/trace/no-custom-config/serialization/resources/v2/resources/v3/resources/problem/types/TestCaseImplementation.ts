@@ -10,7 +10,7 @@ export const TestCaseImplementation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     description: core.serialization.lazyObject(() => serializers.v2.v3.TestCaseImplementationDescription),
     function: core.serialization.lazy(() => serializers.v2.v3.TestCaseFunction),
-});
+}) as any;
 
 export declare namespace TestCaseImplementation {
     export interface Raw {

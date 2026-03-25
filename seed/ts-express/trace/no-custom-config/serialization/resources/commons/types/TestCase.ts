@@ -8,7 +8,7 @@ export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw,
     core.serialization.object({
         id: core.serialization.string(),
         params: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
-    });
+    }) as any;
 
 export declare namespace TestCase {
     export interface Raw {

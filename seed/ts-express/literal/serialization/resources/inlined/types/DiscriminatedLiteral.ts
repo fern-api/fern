@@ -25,7 +25,7 @@ export const DiscriminatedLiteral: core.serialization.Schema<
     .transform<SeedLiteral.DiscriminatedLiteral>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace DiscriminatedLiteral {
     export type Raw =

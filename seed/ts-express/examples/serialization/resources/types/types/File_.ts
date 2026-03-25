@@ -8,7 +8,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedE
     core.serialization.object({
         name: core.serialization.string(),
         contents: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace File_ {
     export interface Raw {

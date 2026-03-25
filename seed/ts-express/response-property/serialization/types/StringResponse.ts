@@ -9,7 +9,7 @@ export const StringResponse: core.serialization.ObjectSchema<
     SeedResponseProperty.StringResponse
 > = core.serialization.object({
     data: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace StringResponse {
     export interface Raw {

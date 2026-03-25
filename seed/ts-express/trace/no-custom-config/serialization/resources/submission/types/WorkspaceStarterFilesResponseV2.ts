@@ -12,7 +12,7 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
-});
+}) as any;
 
 export declare namespace WorkspaceStarterFilesResponseV2 {
     export interface Raw {

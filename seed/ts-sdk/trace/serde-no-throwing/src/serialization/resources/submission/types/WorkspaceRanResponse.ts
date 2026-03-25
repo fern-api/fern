@@ -12,7 +12,7 @@ export const WorkspaceRanResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: SubmissionId,
     runDetails: WorkspaceRunDetails,
-});
+}) as any;
 
 export declare namespace WorkspaceRanResponse {
     export interface Raw {

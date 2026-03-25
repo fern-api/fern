@@ -15,7 +15,7 @@ export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.
         .transform<SeedTrace.TestCaseGrade>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace TestCaseGrade {
     export type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;

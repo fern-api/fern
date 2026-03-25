@@ -9,7 +9,7 @@ export const VibrantExcitement: core.serialization.ObjectSchema<
     SeedUnions.VibrantExcitement
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace VibrantExcitement {
     export interface Raw {

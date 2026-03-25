@@ -7,7 +7,7 @@ import type * as serializers from "../../../../index.js";
 export const Generateequest: core.serialization.Schema<serializers.Generateequest.Raw, SeedStreaming.Generateequest> =
     core.serialization.object({
         numEvents: core.serialization.property("num_events", core.serialization.number()),
-    });
+    }) as any;
 
 export declare namespace Generateequest {
     export interface Raw {

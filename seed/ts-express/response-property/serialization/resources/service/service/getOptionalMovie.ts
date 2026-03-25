@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import * as serializers from "../../../index";
 
 export const Request: core.serialization.Schema<serializers.service.getOptionalMovie.Request.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Request {
     export type Raw = string;
@@ -14,7 +14,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.service.getOptionalMovie.Response.Raw,
     SeedResponseProperty.Response | undefined
-> = core.serialization.lazyObject(() => serializers.Response).optional();
+> = core.serialization.lazyObject(() => serializers.Response).optional() as any;
 
 export declare namespace Response {
     export type Raw = serializers.Response.Raw | null | undefined;

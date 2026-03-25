@@ -15,7 +15,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
     basicTestCaseTemplate: core.serialization.lazyObject(() => serializers.v2.BasicTestCaseTemplate),
-});
+}) as any;
 
 export declare namespace BasicCustomFiles {
     export interface Raw {

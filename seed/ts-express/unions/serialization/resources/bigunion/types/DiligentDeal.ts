@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const DiligentDeal: core.serialization.ObjectSchema<serializers.DiligentDeal.Raw, SeedUnions.DiligentDeal> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace DiligentDeal {
     export interface Raw {

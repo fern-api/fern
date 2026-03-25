@@ -4,7 +4,8 @@ import type * as SeedValidation from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
 
-export const Word: core.serialization.Schema<serializers.Word.Raw, SeedValidation.Word> = core.serialization.string();
+export const Word: core.serialization.Schema<serializers.Word.Raw, SeedValidation.Word> =
+    core.serialization.string() as any;
 
 export declare namespace Word {
     export type Raw = string;

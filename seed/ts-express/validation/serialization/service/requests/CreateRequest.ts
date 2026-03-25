@@ -10,7 +10,7 @@ export const CreateRequest: core.serialization.Schema<serializers.CreateRequest.
         even: core.serialization.number(),
         name: core.serialization.string(),
         shape: core.serialization.lazy(() => serializers.Shape),
-    });
+    }) as any;
 
 export declare namespace CreateRequest {
     export interface Raw {

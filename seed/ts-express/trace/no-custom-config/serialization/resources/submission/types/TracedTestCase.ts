@@ -8,7 +8,7 @@ export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedT
     core.serialization.object({
         result: core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout),
         traceResponsesSize: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace TracedTestCase {
     export interface Raw {

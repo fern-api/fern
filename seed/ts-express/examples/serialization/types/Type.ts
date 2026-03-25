@@ -8,7 +8,7 @@ export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.
     core.serialization.undiscriminatedUnion([
         core.serialization.lazy(() => serializers.BasicType),
         core.serialization.lazy(() => serializers.ComplexType),
-    ]);
+    ]) as any;
 
 export declare namespace Type {
     export type Raw = serializers.BasicType.Raw | serializers.ComplexType.Raw;

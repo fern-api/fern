@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const FieldName: core.serialization.Schema<serializers.FieldName.Raw, SeedApi.FieldName> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace FieldName {
     export type Raw = string;

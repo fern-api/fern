@@ -16,7 +16,7 @@ export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<
     .transform<SeedTrace.PlaylistIdNotFoundErrorBody>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace PlaylistIdNotFoundErrorBody {
     export type Raw = PlaylistIdNotFoundErrorBody.PlaylistId;

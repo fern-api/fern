@@ -9,7 +9,7 @@ export const HarmoniousPlay: core.serialization.ObjectSchema<
     SeedUnions.HarmoniousPlay
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace HarmoniousPlay {
     export interface Raw {

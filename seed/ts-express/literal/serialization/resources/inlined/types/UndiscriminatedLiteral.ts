@@ -16,7 +16,7 @@ export const UndiscriminatedLiteral: core.serialization.Schema<
     core.serialization.booleanLiteral(true),
     core.serialization.booleanLiteral(false),
     core.serialization.boolean(),
-]);
+]) as any;
 
 export declare namespace UndiscriminatedLiteral {
     export type Raw =

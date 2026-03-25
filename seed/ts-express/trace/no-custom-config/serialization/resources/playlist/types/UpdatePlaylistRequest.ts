@@ -10,7 +10,7 @@ export const UpdatePlaylistRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     problems: core.serialization.list(core.serialization.lazy(() => serializers.ProblemId)),
-});
+}) as any;
 
 export declare namespace UpdatePlaylistRequest {
     export interface Raw {

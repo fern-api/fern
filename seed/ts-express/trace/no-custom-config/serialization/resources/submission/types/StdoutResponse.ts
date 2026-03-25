@@ -8,7 +8,7 @@ export const StdoutResponse: core.serialization.ObjectSchema<serializers.StdoutR
     core.serialization.object({
         submissionId: core.serialization.lazy(() => serializers.SubmissionId),
         stdout: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace StdoutResponse {
     export interface Raw {

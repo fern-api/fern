@@ -12,7 +12,7 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.v3.FunctionImplementation).optional(),
     ),
-});
+}) as any;
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     export interface Raw {

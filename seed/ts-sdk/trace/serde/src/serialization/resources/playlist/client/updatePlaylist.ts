@@ -9,7 +9,7 @@ import { UpdatePlaylistRequest } from "../types/UpdatePlaylistRequest.js";
 export const Request: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Request.Raw,
     SeedTrace.UpdatePlaylistRequest | undefined
-> = UpdatePlaylistRequest.optional();
+> = UpdatePlaylistRequest.optional() as any;
 
 export declare namespace Request {
     export type Raw = UpdatePlaylistRequest.Raw | null | undefined;
@@ -18,7 +18,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Response.Raw,
     SeedTrace.Playlist | undefined
-> = Playlist.optional();
+> = Playlist.optional() as any;
 
 export declare namespace Response {
     export type Raw = Playlist.Raw | null | undefined;

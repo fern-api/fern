@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const KeyType: core.serialization.Schema<serializers.KeyType.Raw, SeedUndiscriminatedUnions.KeyType> =
-    core.serialization.enum_(["name", "value"]);
+    core.serialization.enum_(["name", "value"]) as any;
 
 export declare namespace KeyType {
     export type Raw = "name" | "value";

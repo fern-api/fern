@@ -12,7 +12,7 @@ export const BinaryTreeNodeAndTreeValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     nodeId: NodeId,
     fullTree: BinaryTreeValue,
-});
+}) as any;
 
 export declare namespace BinaryTreeNodeAndTreeValue {
     export interface Raw {

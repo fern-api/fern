@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Imported: core.serialization.Schema<serializers.Imported.Raw, SeedCrossPackageTypeNames.Imported> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Imported {
     export type Raw = string;

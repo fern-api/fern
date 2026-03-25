@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
     core.serialization.object({
         submissionId: core.serialization.lazy(() => serializers.SubmissionId),
-    });
+    }) as any;
 
 export declare namespace StopRequest {
     export interface Raw {

@@ -9,7 +9,7 @@ export const UpdateFooRequest: core.serialization.Schema<serializers.UpdateFooRe
         nullableText: core.serialization.property("nullable_text", core.serialization.string().optionalNullable()),
         nullableNumber: core.serialization.property("nullable_number", core.serialization.number().optionalNullable()),
         nonNullableText: core.serialization.property("non_nullable_text", core.serialization.string().optional()),
-    });
+    }) as any;
 
 export declare namespace UpdateFooRequest {
     export interface Raw {

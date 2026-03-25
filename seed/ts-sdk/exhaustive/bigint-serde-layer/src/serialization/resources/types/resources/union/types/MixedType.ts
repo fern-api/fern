@@ -10,7 +10,7 @@ export const MixedType: core.serialization.Schema<serializers.types.MixedType.Ra
         core.serialization.boolean(),
         core.serialization.string(),
         core.serialization.list(core.serialization.string()),
-    ]);
+    ]) as any;
 
 export declare namespace MixedType {
     export type Raw = number | boolean | string | string[];

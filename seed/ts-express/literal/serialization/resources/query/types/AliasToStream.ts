@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const AliasToStream: core.serialization.Schema<serializers.AliasToStream.Raw, SeedLiteral.AliasToStream> =
-    core.serialization.booleanLiteral(false);
+    core.serialization.booleanLiteral(false) as any;
 
 export declare namespace AliasToStream {
     export type Raw = false;

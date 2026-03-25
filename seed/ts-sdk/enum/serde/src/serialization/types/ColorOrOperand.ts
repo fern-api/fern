@@ -7,7 +7,7 @@ import { Color } from "./Color.js";
 import { Operand } from "./Operand.js";
 
 export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
-    core.serialization.undiscriminatedUnion([Color, Operand]);
+    core.serialization.undiscriminatedUnion([Color, Operand]) as any;
 
 export declare namespace ColorOrOperand {
     export type Raw = Color.Raw | Operand.Raw;

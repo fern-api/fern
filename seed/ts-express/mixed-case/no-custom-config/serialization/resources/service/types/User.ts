@@ -15,7 +15,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMix
             "EXTRA_PROPERTIES",
             core.serialization.record(core.serialization.string(), core.serialization.string()),
         ),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

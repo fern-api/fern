@@ -10,7 +10,7 @@ export const RootType1FooMapValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     foo: core.serialization.string(),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace RootType1FooMapValue {
     export interface Raw {

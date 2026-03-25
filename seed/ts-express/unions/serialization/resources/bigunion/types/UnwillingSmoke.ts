@@ -9,7 +9,7 @@ export const UnwillingSmoke: core.serialization.ObjectSchema<
     SeedUnions.UnwillingSmoke
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace UnwillingSmoke {
     export interface Raw {

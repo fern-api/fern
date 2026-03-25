@@ -9,7 +9,7 @@ export const UsernameCursor: core.serialization.ObjectSchema<
     SeedPagination.UsernameCursor
 > = core.serialization.object({
     cursor: core.serialization.lazyObject(() => serializers.UsernamePage),
-});
+}) as any;
 
 export declare namespace UsernameCursor {
     export interface Raw {

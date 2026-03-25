@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const Organization: core.serialization.ObjectSchema<serializers.Organization.Raw, SeedMixedCase.Organization> =
     core.serialization.object({
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Organization {
     export interface Raw {

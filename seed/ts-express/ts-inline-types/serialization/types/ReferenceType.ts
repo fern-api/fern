@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const ReferenceType: core.serialization.ObjectSchema<serializers.ReferenceType.Raw, SeedObject.ReferenceType> =
     core.serialization.object({
         foo: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace ReferenceType {
     export interface Raw {

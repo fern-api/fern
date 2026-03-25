@@ -15,7 +15,7 @@ export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, See
         .transform<SeedExhaustive.types.Animal>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace Animal {
     export type Raw = Animal.Dog | Animal.Cat;

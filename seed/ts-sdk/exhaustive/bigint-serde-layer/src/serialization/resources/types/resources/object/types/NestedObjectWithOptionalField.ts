@@ -11,7 +11,7 @@ export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<
 > = core.serialization.object({
     string: core.serialization.string().optional(),
     nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField.optional()),
-});
+}) as any;
 
 export declare namespace NestedObjectWithOptionalField {
     export interface Raw {

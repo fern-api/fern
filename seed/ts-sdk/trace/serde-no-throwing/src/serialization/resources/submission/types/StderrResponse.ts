@@ -9,7 +9,7 @@ export const StderrResponse: core.serialization.ObjectSchema<serializers.StderrR
     core.serialization.object({
         submissionId: SubmissionId,
         stderr: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace StderrResponse {
     export interface Raw {

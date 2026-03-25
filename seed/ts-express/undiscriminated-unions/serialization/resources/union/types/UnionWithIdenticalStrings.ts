@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const UnionWithIdenticalStrings: core.serialization.Schema<
     serializers.UnionWithIdenticalStrings.Raw,
     SeedUndiscriminatedUnions.UnionWithIdenticalStrings
-> = core.serialization.undiscriminatedUnion([core.serialization.string()]);
+> = core.serialization.undiscriminatedUnion([core.serialization.string()]) as any;
 
 export declare namespace UnionWithIdenticalStrings {
     export type Raw = string;

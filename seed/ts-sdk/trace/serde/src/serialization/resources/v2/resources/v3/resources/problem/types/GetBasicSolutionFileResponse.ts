@@ -11,7 +11,7 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.GetBasicSolutionFileResponse
 > = core.serialization.object({
     solutionFileByLanguage: core.serialization.partialRecord(Language, FileInfoV2.optional()),
-});
+}) as any;
 
 export declare namespace GetBasicSolutionFileResponse {
     export interface Raw {

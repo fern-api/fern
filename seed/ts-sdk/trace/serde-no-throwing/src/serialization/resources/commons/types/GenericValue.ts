@@ -8,7 +8,7 @@ export const GenericValue: core.serialization.ObjectSchema<serializers.GenericVa
     core.serialization.object({
         stringifiedType: core.serialization.string().optional(),
         stringifiedValue: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace GenericValue {
     export interface Raw {

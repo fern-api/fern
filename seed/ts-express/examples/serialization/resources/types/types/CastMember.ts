@@ -9,7 +9,7 @@ export const CastMember: core.serialization.Schema<serializers.CastMember.Raw, S
         core.serialization.lazyObject(() => serializers.Actor),
         core.serialization.lazyObject(() => serializers.Actress),
         core.serialization.lazyObject(() => serializers.StuntDouble),
-    ]);
+    ]) as any;
 
 export declare namespace CastMember {
     export type Raw = serializers.Actor.Raw | serializers.Actress.Raw | serializers.StuntDouble.Raw;

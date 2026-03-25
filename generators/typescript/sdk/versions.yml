@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.7
+  changelogEntry:
+    - summary: |
+        Fix TS2322 type errors in generated serialization schemas for objects with
+        many properties. When an object type has ~15+ properties, TypeScript's type
+        checker could not resolve the complex `inferObjectSchemaFromPropertySchemas`
+        return type against the declared schema type annotation, exceeding the type
+        instantiation depth limit. The generated code now includes a type assertion
+        on the schema initializer to bypass this check while preserving the explicit
+        type annotation for consumers.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 3.59.6
   changelogEntry:
     - summary: |

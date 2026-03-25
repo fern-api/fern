@@ -12,7 +12,7 @@ export const RootType1InlineType1NestedInlineType1: core.serialization.ObjectSch
     bar: core.serialization.string(),
     myEnum: core.serialization.lazy(() => serializers.InlineEnum1),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace RootType1InlineType1NestedInlineType1 {
     export interface Raw {

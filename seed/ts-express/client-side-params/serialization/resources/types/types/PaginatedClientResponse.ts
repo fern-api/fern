@@ -13,7 +13,7 @@ export const PaginatedClientResponse: core.serialization.ObjectSchema<
     length: core.serialization.number(),
     total: core.serialization.number().optional(),
     clients: core.serialization.list(core.serialization.lazyObject(() => serializers.Client)),
-});
+}) as any;
 
 export declare namespace PaginatedClientResponse {
     export interface Raw {

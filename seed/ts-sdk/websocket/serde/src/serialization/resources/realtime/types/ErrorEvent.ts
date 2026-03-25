@@ -8,7 +8,7 @@ export const ErrorEvent: core.serialization.ObjectSchema<serializers.ErrorEvent.
     core.serialization.object({
         errorCode: core.serialization.number(),
         errorMessage: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace ErrorEvent {
     export interface Raw {

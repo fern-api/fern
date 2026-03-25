@@ -10,7 +10,7 @@ export const NextPage: core.serialization.ObjectSchema<
 > = core.serialization.object({
     page: core.serialization.number(),
     startingAfter: core.serialization.property("starting_after", core.serialization.string()),
-});
+}) as any;
 
 export declare namespace NextPage {
     export interface Raw {

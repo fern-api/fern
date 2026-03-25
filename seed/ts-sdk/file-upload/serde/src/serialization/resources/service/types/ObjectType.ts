@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ObjectType: core.serialization.Schema<serializers.ObjectType.Raw, SeedFileUpload.ObjectType> =
-    core.serialization.enum_(["FOO", "BAR"]);
+    core.serialization.enum_(["FOO", "BAR"]) as any;
 
 export declare namespace ObjectType {
     export type Raw = "FOO" | "BAR";

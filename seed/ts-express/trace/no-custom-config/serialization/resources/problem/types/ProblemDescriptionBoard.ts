@@ -22,7 +22,7 @@ export const ProblemDescriptionBoard: core.serialization.Schema<
     .transform<SeedTrace.ProblemDescriptionBoard>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace ProblemDescriptionBoard {
     export type Raw =

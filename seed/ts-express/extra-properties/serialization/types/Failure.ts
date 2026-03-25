@@ -9,7 +9,7 @@ export const Failure: core.serialization.ObjectSchema<serializers.Failure.Raw, S
         .object({
             status: core.serialization.stringLiteral("failure"),
         })
-        .passthrough();
+        .passthrough() as any;
 
 export declare namespace Failure {
     export interface Raw {

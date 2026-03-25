@@ -6,7 +6,7 @@ import type * as serializers from "../../../../../index.js";
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnListOfPrimitives.Request.Raw,
     string[]
-> = core.serialization.list(core.serialization.string());
+> = core.serialization.list(core.serialization.string()) as any;
 
 export declare namespace Request {
     export type Raw = string[];
@@ -15,7 +15,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnListOfPrimitives.Response.Raw,
     string[]
-> = core.serialization.list(core.serialization.string());
+> = core.serialization.list(core.serialization.string()) as any;
 
 export declare namespace Response {
     export type Raw = string[];

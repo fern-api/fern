@@ -4,14 +4,14 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnInt.Request.Raw, number> =
-    core.serialization.number();
+    core.serialization.number() as any;
 
 export declare namespace Request {
     export type Raw = number;
 }
 
 export const Response: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnInt.Response.Raw, number> =
-    core.serialization.number();
+    core.serialization.number() as any;
 
 export declare namespace Response {
     export type Raw = number;

@@ -11,7 +11,7 @@ export const UnexpectedLanguageError: core.serialization.ObjectSchema<
 > = core.serialization.object({
     expectedLanguage: Language,
     actualLanguage: Language,
-});
+}) as any;
 
 export declare namespace UnexpectedLanguageError {
     export interface Raw {

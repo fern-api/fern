@@ -19,7 +19,7 @@ export const UnionWithDiscriminant: core.serialization.Schema<
     .transform<SeedUnions.UnionWithDiscriminant>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithDiscriminant {
     export type Raw = UnionWithDiscriminant.Foo | UnionWithDiscriminant.Bar;

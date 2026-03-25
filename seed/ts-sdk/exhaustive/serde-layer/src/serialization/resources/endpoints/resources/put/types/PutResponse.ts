@@ -10,7 +10,7 @@ export const PutResponse: core.serialization.ObjectSchema<
     SeedExhaustive.endpoints.PutResponse
 > = core.serialization.object({
     errors: core.serialization.list(Error_).optional(),
-});
+}) as any;
 
 export declare namespace PutResponse {
     export interface Raw {

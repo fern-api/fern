@@ -17,7 +17,7 @@ export const TestCaseFunction: core.serialization.Schema<
     .transform<SeedTrace.v2.TestCaseFunction>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace TestCaseFunction {
     export type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;

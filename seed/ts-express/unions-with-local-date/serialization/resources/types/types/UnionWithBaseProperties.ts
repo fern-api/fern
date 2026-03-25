@@ -27,7 +27,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
     .transform<SeedUnions.UnionWithBaseProperties>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithBaseProperties {
     export type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String | UnionWithBaseProperties.Foo;

@@ -7,7 +7,7 @@ import type * as serializers from "../../../../../../../index";
 export const TestCaseTemplateId: core.serialization.Schema<
     serializers.v2.v3.TestCaseTemplateId.Raw,
     SeedTrace.v2.v3.TestCaseTemplateId
-> = core.serialization.string();
+> = core.serialization.string() as any;
 
 export declare namespace TestCaseTemplateId {
     export type Raw = string;

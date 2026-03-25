@@ -20,7 +20,7 @@ export const ProblemInfoV2: core.serialization.ObjectSchema<
     ),
     testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.TestCaseV2)),
     isPublic: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace ProblemInfoV2 {
     export interface Raw {

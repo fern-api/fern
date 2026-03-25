@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const OptionalUserId: core.serialization.Schema<
     serializers.OptionalUserId.Raw,
     SeedNullableOptional.OptionalUserId
-> = core.serialization.string().optional();
+> = core.serialization.string().optional() as any;
 
 export declare namespace OptionalUserId {
     export type Raw = string | null | undefined;

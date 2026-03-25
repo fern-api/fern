@@ -10,7 +10,7 @@ export const TestCaseWithActualResultImplementation: core.serialization.ObjectSc
 > = core.serialization.object({
     getActualResult: core.serialization.lazyObject(() => serializers.v2.v3.NonVoidFunctionDefinition),
     assertCorrectnessCheck: core.serialization.lazy(() => serializers.v2.v3.AssertCorrectnessCheck),
-});
+}) as any;
 
 export declare namespace TestCaseWithActualResultImplementation {
     export interface Raw {

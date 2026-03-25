@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const Language: core.serialization.Schema<serializers.Language.Raw, SeedTrace.Language> =
-    core.serialization.enum_(["JAVA", "JAVASCRIPT", "PYTHON"]);
+    core.serialization.enum_(["JAVA", "JAVASCRIPT", "PYTHON"]) as any;
 
 export declare namespace Language {
     export type Raw = "JAVA" | "JAVASCRIPT" | "PYTHON";

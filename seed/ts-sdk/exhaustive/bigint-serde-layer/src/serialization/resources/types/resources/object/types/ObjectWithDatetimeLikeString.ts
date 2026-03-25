@@ -10,7 +10,7 @@ export const ObjectWithDatetimeLikeString: core.serialization.ObjectSchema<
 > = core.serialization.object({
     datetimeLikeString: core.serialization.string(),
     actualDatetime: core.serialization.date(),
-});
+}) as any;
 
 export declare namespace ObjectWithDatetimeLikeString {
     export interface Raw {

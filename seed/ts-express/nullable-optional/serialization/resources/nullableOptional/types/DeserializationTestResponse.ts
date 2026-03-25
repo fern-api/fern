@@ -12,7 +12,7 @@ export const DeserializationTestResponse: core.serialization.ObjectSchema<
     processedAt: core.serialization.date(),
     nullCount: core.serialization.number(),
     presentFieldsCount: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace DeserializationTestResponse {
     export interface Raw {

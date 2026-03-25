@@ -8,7 +8,7 @@ import { Language } from "../../commons/types/Language.js";
 export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
     Partial<Record<SeedTrace.Language, number>>
-> = core.serialization.partialRecord(Language, core.serialization.number().optional());
+> = core.serialization.partialRecord(Language, core.serialization.number().optional()) as any;
 
 export declare namespace Response {
     export type Raw = Record<Language.Raw, number | null | undefined>;

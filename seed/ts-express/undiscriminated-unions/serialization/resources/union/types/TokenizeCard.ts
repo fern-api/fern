@@ -10,7 +10,7 @@ export const TokenizeCard: core.serialization.ObjectSchema<
 > = core.serialization.object({
     method: core.serialization.string(),
     cardNumber: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TokenizeCard {
     export interface Raw {

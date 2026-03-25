@@ -11,7 +11,7 @@ export const SearchRequest: core.serialization.Schema<
     query: core.serialization.string(),
     filters: core.serialization.record(core.serialization.string(), core.serialization.string().nullable()).optional(),
     includeTypes: core.serialization.list(core.serialization.string()).nullable(),
-});
+}) as any;
 
 export declare namespace SearchRequest {
     export interface Raw {

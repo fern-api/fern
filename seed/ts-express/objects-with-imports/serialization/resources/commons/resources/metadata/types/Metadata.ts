@@ -10,7 +10,7 @@ export const Metadata: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     data: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
-});
+}) as any;
 
 export declare namespace Metadata {
     export interface Raw {

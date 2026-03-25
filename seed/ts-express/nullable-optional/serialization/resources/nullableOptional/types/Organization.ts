@@ -12,7 +12,7 @@ export const Organization: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     domain: core.serialization.string().nullable(),
     employeeCount: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace Organization {
     export interface Raw {

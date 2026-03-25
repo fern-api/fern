@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const Sentence: core.serialization.Schema<serializers.Sentence.Raw, SeedValidation.Sentence> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Sentence {
     export type Raw = string;

@@ -12,7 +12,7 @@ export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
 > = core.serialization.object({
     signature: NonVoidFunctionSignature,
     code: FunctionImplementationForMultipleLanguages,
-});
+}) as any;
 
 export declare namespace NonVoidFunctionDefinition {
     export interface Raw {

@@ -8,7 +8,7 @@ import { MixedType } from "../../../../types/resources/union/types/MixedType.js"
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.Raw,
     Record<string, SeedExhaustive.types.MixedType>
-> = core.serialization.record(core.serialization.string(), MixedType);
+> = core.serialization.record(core.serialization.string(), MixedType) as any;
 
 export declare namespace Request {
     export type Raw = Record<string, MixedType.Raw>;
@@ -17,7 +17,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Response.Raw,
     Record<string, SeedExhaustive.types.MixedType>
-> = core.serialization.record(core.serialization.string(), MixedType);
+> = core.serialization.record(core.serialization.string(), MixedType) as any;
 
 export declare namespace Response {
     export type Raw = Record<string, MixedType.Raw>;

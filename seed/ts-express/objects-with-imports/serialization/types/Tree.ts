@@ -7,7 +7,7 @@ import * as serializers from "../index";
 export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedObjectsWithImports.Tree> =
     core.serialization.object({
         nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
-    });
+    }) as any;
 
 export declare namespace Tree {
     export interface Raw {

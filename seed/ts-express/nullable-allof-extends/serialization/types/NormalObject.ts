@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const NormalObject: core.serialization.ObjectSchema<serializers.NormalObject.Raw, SeedApi.NormalObject> =
     core.serialization.object({
         normalField: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace NormalObject {
     export interface Raw {

@@ -10,7 +10,7 @@ export const ListUsersTopLevelBodyCursorPaginationRequest: core.serialization.Sc
 > = core.serialization.object({
     cursor: core.serialization.string().optional(),
     filter: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace ListUsersTopLevelBodyCursorPaginationRequest {
     export interface Raw {

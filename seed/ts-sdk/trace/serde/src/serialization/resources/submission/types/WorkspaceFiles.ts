@@ -9,7 +9,7 @@ export const WorkspaceFiles: core.serialization.ObjectSchema<serializers.Workspa
     core.serialization.object({
         mainFile: FileInfo,
         readOnlyFiles: core.serialization.list(FileInfo),
-    });
+    }) as any;
 
 export declare namespace WorkspaceFiles {
     export interface Raw {

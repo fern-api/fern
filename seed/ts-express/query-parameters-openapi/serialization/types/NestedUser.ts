@@ -8,7 +8,7 @@ export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.
     core.serialization.object({
         name: core.serialization.string().optional(),
         user: core.serialization.lazyObject(() => serializers.User).optional(),
-    });
+    }) as any;
 
 export declare namespace NestedUser {
     export interface Raw {

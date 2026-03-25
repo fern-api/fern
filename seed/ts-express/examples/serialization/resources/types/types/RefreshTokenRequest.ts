@@ -9,7 +9,7 @@ export const RefreshTokenRequest: core.serialization.ObjectSchema<
     SeedExamples.RefreshTokenRequest
 > = core.serialization.object({
     ttl: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace RefreshTokenRequest {
     export interface Raw {

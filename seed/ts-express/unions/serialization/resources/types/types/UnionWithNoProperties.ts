@@ -15,7 +15,7 @@ export const UnionWithNoProperties: core.serialization.Schema<
     .transform<SeedUnions.UnionWithNoProperties>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithNoProperties {
     export type Raw = UnionWithNoProperties.Foo | UnionWithNoProperties.Empty;

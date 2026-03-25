@@ -15,7 +15,7 @@ export const EventInfo: core.serialization.Schema<serializers.commons.EventInfo.
         .transform<SeedExamples.commons.EventInfo>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace EventInfo {
     export type Raw = EventInfo.Metadata | EventInfo.Tag;

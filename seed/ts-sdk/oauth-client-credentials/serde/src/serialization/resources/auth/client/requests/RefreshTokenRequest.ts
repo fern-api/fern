@@ -12,7 +12,7 @@ export const RefreshTokenRequest: core.serialization.Schema<
     clientSecret: core.serialization.property("client_secret", core.serialization.string()),
     refreshToken: core.serialization.property("refresh_token", core.serialization.string()),
     scope: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace RefreshTokenRequest {
     export interface Raw {

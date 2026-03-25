@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.optional.sendOptionalNullableWithAllOptionalProperties.Request.Raw,
     (SeedObjectsWithImports.DeployParams | null) | undefined
-> = core.serialization.lazyObject(() => serializers.DeployParams).optionalNullable();
+> = core.serialization.lazyObject(() => serializers.DeployParams).optionalNullable() as any;
 
 export declare namespace Request {
     export type Raw = (serializers.DeployParams.Raw | null | undefined) | null | undefined;

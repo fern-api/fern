@@ -25,7 +25,7 @@ export const UnionWithDuplicatePrimitive: core.serialization.Schema<
     .transform<SeedUnions.UnionWithDuplicatePrimitive>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithDuplicatePrimitive {
     export type Raw =

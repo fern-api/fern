@@ -8,7 +8,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedApi
     id: core.serialization.string(),
     name: core.serialization.string(),
     email: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace User {
     export interface Raw {

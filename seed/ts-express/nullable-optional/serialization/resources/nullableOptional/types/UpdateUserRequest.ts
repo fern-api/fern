@@ -12,7 +12,7 @@ export const UpdateUserRequest: core.serialization.ObjectSchema<
     email: core.serialization.string().optionalNullable(),
     phone: core.serialization.string().optional(),
     address: core.serialization.lazyObject(() => serializers.Address).optionalNullable(),
-});
+}) as any;
 
 export declare namespace UpdateUserRequest {
     export interface Raw {

@@ -13,7 +13,7 @@ export const TestCaseTemplate: core.serialization.ObjectSchema<
     templateId: TestCaseTemplateId,
     name: core.serialization.string(),
     implementation: TestCaseImplementation,
-});
+}) as any;
 
 export declare namespace TestCaseTemplate {
     export interface Raw {

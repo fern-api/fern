@@ -19,7 +19,7 @@ export const ErrorCode: core.serialization.Schema<
     "BAD_GATEWAY",
     "SERVICE_UNAVAILABLE",
     "Unknown",
-]);
+]) as any;
 
 export declare namespace ErrorCode {
     export type Raw =

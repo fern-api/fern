@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedVersion.User> = core.serialization.object({
     id: core.serialization.lazy(() => serializers.UserId),
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace User {
     export interface Raw {

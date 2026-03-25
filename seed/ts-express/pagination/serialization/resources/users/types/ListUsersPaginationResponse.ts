@@ -12,7 +12,7 @@ export const ListUsersPaginationResponse: core.serialization.ObjectSchema<
     page: core.serialization.lazyObject(() => serializers.Page).optional(),
     totalCount: core.serialization.property("total_count", core.serialization.number()),
     data: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
-});
+}) as any;
 
 export declare namespace ListUsersPaginationResponse {
     export interface Raw {

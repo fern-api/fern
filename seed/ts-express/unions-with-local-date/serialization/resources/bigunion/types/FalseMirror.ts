@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const FalseMirror: core.serialization.ObjectSchema<serializers.FalseMirror.Raw, SeedUnions.FalseMirror> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace FalseMirror {
     export interface Raw {

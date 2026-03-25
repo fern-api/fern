@@ -9,7 +9,7 @@ export const UsernameContainer: core.serialization.ObjectSchema<
     SeedPagination.inlineUsers.UsernameContainer
 > = core.serialization.object({
     results: core.serialization.list(core.serialization.string()),
-});
+}) as any;
 
 export declare namespace UsernameContainer {
     export interface Raw {

@@ -16,7 +16,7 @@ export const JsonLikeWithNullAndUndefined: core.serialization.Schema<
     core.serialization.string().optionalNullable(),
     core.serialization.number().optionalNullable(),
     core.serialization.boolean().optionalNullable(),
-]);
+]) as any;
 
 export declare namespace JsonLikeWithNullAndUndefined {
     export type Raw =

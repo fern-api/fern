@@ -5,7 +5,7 @@ import * as core from "../../../../../../core";
 import type * as serializers from "../../../../../index";
 
 export const Tag: core.serialization.Schema<serializers.commons.Tag.Raw, SeedExamples.commons.Tag> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Tag {
     export type Raw = string;

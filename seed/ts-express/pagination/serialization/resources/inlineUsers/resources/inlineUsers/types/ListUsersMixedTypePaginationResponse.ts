@@ -10,7 +10,7 @@ export const ListUsersMixedTypePaginationResponse: core.serialization.ObjectSche
 > = core.serialization.object({
     next: core.serialization.string(),
     data: core.serialization.lazyObject(() => serializers.inlineUsers.Users),
-});
+}) as any;
 
 export declare namespace ListUsersMixedTypePaginationResponse {
     export interface Raw {

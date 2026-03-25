@@ -38,7 +38,7 @@ export const SpecialEnum: core.serialization.Schema<serializers.SpecialEnum.Raw,
         "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}",
         'transcript[transcriptType="final"]',
         "transcript[transcriptType='final']",
-    ]);
+    ]) as any;
 
 export declare namespace SpecialEnum {
     export type Raw =

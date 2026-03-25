@@ -11,7 +11,7 @@ export const GradedResponse: core.serialization.ObjectSchema<serializers.GradedR
             core.serialization.string(),
             core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout),
         ),
-    });
+    }) as any;
 
 export declare namespace GradedResponse {
     export interface Raw {

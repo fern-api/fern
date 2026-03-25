@@ -12,7 +12,7 @@ export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
     submission: core.serialization.string(),
     language: core.serialization.lazy(() => serializers.Language),
     submissionTypeState: core.serialization.lazy(() => serializers.SubmissionTypeState),
-});
+}) as any;
 
 export declare namespace GetSubmissionStateResponse {
     export interface Raw {

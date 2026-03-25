@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const PublicPayload: core.serialization.ObjectSchema<serializers.PublicPayload.Raw, SeedApi.PublicPayload> =
     core.serialization.object({
         message: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PublicPayload {
     export interface Raw {

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 
 export const Acai: core.serialization.ObjectSchema<serializers.Acai.Raw, SeedApi.Acai> = core.serialization
     .object({})
-    .extend(core.serialization.lazyObject(() => serializers.Berry));
+    .extend(core.serialization.lazyObject(() => serializers.Berry)) as any;
 
 export declare namespace Acai {
     export interface Raw extends serializers.Berry.Raw {}

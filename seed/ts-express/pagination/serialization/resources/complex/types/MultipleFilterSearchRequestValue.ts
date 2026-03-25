@@ -10,7 +10,7 @@ export const MultipleFilterSearchRequestValue: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.list(core.serialization.lazyObject(() => serializers.MultipleFilterSearchRequest)),
     core.serialization.list(core.serialization.lazyObject(() => serializers.SingleFilterSearchRequest)),
-]);
+]) as any;
 
 export declare namespace MultipleFilterSearchRequestValue {
     export type Raw = serializers.MultipleFilterSearchRequest.Raw[] | serializers.SingleFilterSearchRequest.Raw[];

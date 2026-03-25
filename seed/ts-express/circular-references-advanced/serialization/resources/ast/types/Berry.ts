@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 
 export const Berry: core.serialization.ObjectSchema<serializers.Berry.Raw, SeedApi.Berry> = core.serialization.object({
     animal: core.serialization.lazy(() => serializers.Animal),
-});
+}) as any;
 
 export declare namespace Berry {
     export interface Raw {

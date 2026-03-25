@@ -9,7 +9,7 @@ export const UserListContainer: core.serialization.ObjectSchema<
     SeedPagination.inlineUsers.UserListContainer
 > = core.serialization.object({
     users: core.serialization.list(core.serialization.lazyObject(() => serializers.inlineUsers.User)),
-});
+}) as any;
 
 export declare namespace UserListContainer {
     export interface Raw {

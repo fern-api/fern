@@ -9,7 +9,7 @@ export const ThankfulFactor: core.serialization.ObjectSchema<
     SeedUnions.ThankfulFactor
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace ThankfulFactor {
     export interface Raw {

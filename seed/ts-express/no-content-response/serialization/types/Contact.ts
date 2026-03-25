@@ -9,7 +9,7 @@ export const Contact: core.serialization.ObjectSchema<serializers.Contact.Raw, S
         id: core.serialization.string(),
         name: core.serialization.string(),
         email: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace Contact {
     export interface Raw {

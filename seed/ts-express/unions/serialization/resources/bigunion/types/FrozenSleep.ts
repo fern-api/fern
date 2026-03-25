@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const FrozenSleep: core.serialization.ObjectSchema<serializers.FrozenSleep.Raw, SeedUnions.FrozenSleep> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace FrozenSleep {
     export interface Raw {

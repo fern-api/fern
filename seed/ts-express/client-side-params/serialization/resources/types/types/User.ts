@@ -33,7 +33,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedCli
         blocked: core.serialization.boolean().optional(),
         givenName: core.serialization.property("given_name", core.serialization.string().optional()),
         familyName: core.serialization.property("family_name", core.serialization.string().optional()),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

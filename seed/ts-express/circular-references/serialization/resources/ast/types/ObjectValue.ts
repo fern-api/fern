@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const ObjectValue: core.serialization.ObjectSchema<serializers.ObjectValue.Raw, SeedApi.ObjectValue> =
-    core.serialization.object({});
+    core.serialization.object({}) as any;
 
 export declare namespace ObjectValue {
     export type Raw = {};

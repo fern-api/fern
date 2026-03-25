@@ -8,7 +8,7 @@ export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedExa
     {
         nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
     },
-);
+) as any;
 
 export declare namespace Tree {
     export interface Raw {

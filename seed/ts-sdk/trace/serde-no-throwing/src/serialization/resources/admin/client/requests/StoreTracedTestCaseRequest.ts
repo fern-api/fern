@@ -12,7 +12,7 @@ export const StoreTracedTestCaseRequest: core.serialization.Schema<
 > = core.serialization.object({
     result: TestCaseResultWithStdout,
     traceResponses: core.serialization.list(TraceResponse),
-});
+}) as any;
 
 export declare namespace StoreTracedTestCaseRequest {
     export interface Raw {

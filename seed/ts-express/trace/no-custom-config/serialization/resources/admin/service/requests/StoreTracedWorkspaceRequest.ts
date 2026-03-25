@@ -10,7 +10,7 @@ export const StoreTracedWorkspaceRequest: core.serialization.Schema<
 > = core.serialization.object({
     workspaceRunDetails: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
     traceResponses: core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponse)),
-});
+}) as any;
 
 export declare namespace StoreTracedWorkspaceRequest {
     export interface Raw {

@@ -9,7 +9,7 @@ export const DistinctFailure: core.serialization.ObjectSchema<
     SeedUnions.DistinctFailure
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace DistinctFailure {
     export interface Raw {

@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedAnyAuth.User> = core.serialization.object({
     id: core.serialization.string(),
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace User {
     export interface Raw {

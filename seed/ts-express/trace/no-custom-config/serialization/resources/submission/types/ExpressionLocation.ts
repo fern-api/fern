@@ -10,7 +10,7 @@ export const ExpressionLocation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     start: core.serialization.number(),
     offset: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace ExpressionLocation {
     export interface Raw {

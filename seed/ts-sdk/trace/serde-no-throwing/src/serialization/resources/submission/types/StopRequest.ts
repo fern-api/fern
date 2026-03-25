@@ -8,7 +8,7 @@ import { SubmissionId } from "./SubmissionId.js";
 export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
     core.serialization.object({
         submissionId: SubmissionId,
-    });
+    }) as any;
 
 export declare namespace StopRequest {
     export interface Raw {

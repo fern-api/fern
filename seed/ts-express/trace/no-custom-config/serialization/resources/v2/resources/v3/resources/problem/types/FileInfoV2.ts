@@ -10,7 +10,7 @@ export const FileInfoV2: core.serialization.ObjectSchema<serializers.v2.v3.FileI
         directory: core.serialization.string(),
         contents: core.serialization.string(),
         editable: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace FileInfoV2 {
     export interface Raw {

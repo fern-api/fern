@@ -8,7 +8,7 @@ export const StderrResponse: core.serialization.ObjectSchema<serializers.StderrR
     core.serialization.object({
         submissionId: core.serialization.lazy(() => serializers.SubmissionId),
         stderr: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace StderrResponse {
     export interface Raw {

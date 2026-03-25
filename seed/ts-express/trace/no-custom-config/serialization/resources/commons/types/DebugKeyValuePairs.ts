@@ -10,7 +10,7 @@ export const DebugKeyValuePairs: core.serialization.ObjectSchema<
 > = core.serialization.object({
     key: core.serialization.lazy(() => serializers.DebugVariableValue),
     value: core.serialization.lazy(() => serializers.DebugVariableValue),
-});
+}) as any;
 
 export declare namespace DebugKeyValuePairs {
     export interface Raw {

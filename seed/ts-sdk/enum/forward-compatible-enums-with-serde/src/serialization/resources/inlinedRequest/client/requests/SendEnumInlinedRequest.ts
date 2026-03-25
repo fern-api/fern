@@ -14,7 +14,7 @@ export const SendEnumInlinedRequest: core.serialization.Schema<
     maybeOperand: Operand.optional(),
     operandOrColor: ColorOrOperand,
     maybeOperandOrColor: ColorOrOperand.optional(),
-});
+}) as any;
 
 export declare namespace SendEnumInlinedRequest {
     export interface Raw {

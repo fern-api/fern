@@ -11,7 +11,7 @@ export const TestCaseTemplate: core.serialization.ObjectSchema<
     templateId: core.serialization.lazy(() => serializers.v2.TestCaseTemplateId),
     name: core.serialization.string(),
     implementation: core.serialization.lazyObject(() => serializers.v2.TestCaseImplementation),
-});
+}) as any;
 
 export declare namespace TestCaseTemplate {
     export interface Raw {

@@ -16,7 +16,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
         book: core.serialization.string().optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
         revenue: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace Movie {
     export interface Raw {

@@ -8,7 +8,7 @@ export const UserPage: core.serialization.ObjectSchema<serializers.UserPage.Raw,
     core.serialization.object({
         data: core.serialization.lazyObject(() => serializers.UserListContainer),
         next: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace UserPage {
     export interface Raw {

@@ -11,7 +11,7 @@ export const VoidFunctionSignatureThatTakesActualResult: core.serialization.Obje
 > = core.serialization.object({
     parameters: core.serialization.list(Parameter),
     actualResultType: core.serialization.lazy(() => serializers.VariableType),
-});
+}) as any;
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
     export interface Raw {

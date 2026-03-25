@@ -12,7 +12,7 @@ export const DoublyLinkedListNodeValue: core.serialization.ObjectSchema<
     val: core.serialization.number(),
     next: core.serialization.lazy(() => serializers.NodeId).optional(),
     prev: core.serialization.lazy(() => serializers.NodeId).optional(),
-});
+}) as any;
 
 export declare namespace DoublyLinkedListNodeValue {
     export interface Raw {

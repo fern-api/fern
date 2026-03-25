@@ -9,7 +9,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedO
         name: core.serialization.string(),
         contents: core.serialization.string(),
         info: core.serialization.lazy(() => serializers.FileInfo),
-    });
+    }) as any;
 
 export declare namespace File_ {
     export interface Raw {

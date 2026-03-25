@@ -12,7 +12,7 @@ export const SearchRequestNeighborRequired: core.serialization.Schema<
     core.serialization.lazyObject(() => serializers.NestedUser),
     core.serialization.string(),
     core.serialization.number(),
-]);
+]) as any;
 
 export declare namespace SearchRequestNeighborRequired {
     export type Raw = serializers.User.Raw | serializers.NestedUser.Raw | string | number;

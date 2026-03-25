@@ -10,7 +10,7 @@ export const TestCaseImplementationDescription: core.serialization.ObjectSchema<
     SeedTrace.v2.TestCaseImplementationDescription
 > = core.serialization.object({
     boards: core.serialization.list(TestCaseImplementationDescriptionBoard),
-});
+}) as any;
 
 export declare namespace TestCaseImplementationDescription {
     export interface Raw {

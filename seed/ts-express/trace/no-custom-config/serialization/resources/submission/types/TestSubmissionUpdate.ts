@@ -10,7 +10,7 @@ export const TestSubmissionUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     updateTime: core.serialization.date(),
     updateInfo: core.serialization.lazy(() => serializers.TestSubmissionUpdateInfo),
-});
+}) as any;
 
 export declare namespace TestSubmissionUpdate {
     export interface Raw {

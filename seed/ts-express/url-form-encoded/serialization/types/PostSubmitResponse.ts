@@ -10,7 +10,7 @@ export const PostSubmitResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     status: core.serialization.string().optional(),
     message: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace PostSubmitResponse {
     export interface Raw {

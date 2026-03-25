@@ -10,7 +10,7 @@ export const StreamResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     name: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace StreamResponse {
     export interface Raw {

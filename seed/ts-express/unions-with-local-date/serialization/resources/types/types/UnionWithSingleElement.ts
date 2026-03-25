@@ -14,7 +14,7 @@ export const UnionWithSingleElement: core.serialization.Schema<
     .transform<SeedUnions.UnionWithSingleElement>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithSingleElement {
     export type Raw = UnionWithSingleElement.Foo;

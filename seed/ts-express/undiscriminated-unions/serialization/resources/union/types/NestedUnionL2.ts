@@ -11,7 +11,7 @@ export const NestedUnionL2: core.serialization.Schema<
     core.serialization.boolean(),
     core.serialization.set(core.serialization.string()),
     core.serialization.list(core.serialization.string()),
-]);
+]) as any;
 
 export declare namespace NestedUnionL2 {
     export type Raw = boolean | string[] | string[];

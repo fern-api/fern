@@ -11,7 +11,7 @@ export const SearchResponse: core.serialization.ObjectSchema<
     results: core.serialization.list(core.serialization.lazyObject(() => serializers.Resource)),
     total: core.serialization.number().optional(),
     nextOffset: core.serialization.property("next_offset", core.serialization.number().optional()),
-});
+}) as any;
 
 export declare namespace SearchResponse {
     export interface Raw {

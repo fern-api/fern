@@ -13,7 +13,7 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
         core.serialization.lazy(() => serializers.v2.TestCaseId),
         core.serialization.lazy(() => serializers.TestCaseGrade),
     ),
-});
+}) as any;
 
 export declare namespace GradedResponseV2 {
     export interface Raw {

@@ -9,7 +9,7 @@ export const ProblemDescription: core.serialization.ObjectSchema<
     SeedTrace.ProblemDescription
 > = core.serialization.object({
     boards: core.serialization.list(core.serialization.lazy(() => serializers.ProblemDescriptionBoard)),
-});
+}) as any;
 
 export declare namespace ProblemDescription {
     export interface Raw {

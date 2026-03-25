@@ -11,7 +11,7 @@ export const PaymentNotificationPayload: core.serialization.ObjectSchema<
     paymentId: core.serialization.string(),
     amount: core.serialization.number(),
     status: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace PaymentNotificationPayload {
     export interface Raw {

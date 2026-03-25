@@ -8,7 +8,7 @@ export const Child: core.serialization.ObjectSchema<serializers.Child.Raw, SeedA
     .object({
         child: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(() => serializers.Parent));
+    .extend(core.serialization.lazyObject(() => serializers.Parent)) as any;
 
 export declare namespace Child {
     export interface Raw extends serializers.Parent.Raw {

@@ -10,7 +10,7 @@ export const CreatePaymentRequest: core.serialization.Schema<
 > = core.serialization.object({
     amount: core.serialization.number(),
     currency: core.serialization.lazy(() => serializers.Currency),
-});
+}) as any;
 
 export declare namespace CreatePaymentRequest {
     export interface Raw {

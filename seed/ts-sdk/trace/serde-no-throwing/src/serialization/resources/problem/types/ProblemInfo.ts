@@ -22,7 +22,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
         testcases: core.serialization.list(TestCaseWithExpectedResult),
         methodName: core.serialization.string(),
         supportsCustomTestCases: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace ProblemInfo {
     export interface Raw {

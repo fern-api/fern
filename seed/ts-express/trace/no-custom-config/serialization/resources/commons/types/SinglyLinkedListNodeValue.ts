@@ -11,7 +11,7 @@ export const SinglyLinkedListNodeValue: core.serialization.ObjectSchema<
     nodeId: core.serialization.lazy(() => serializers.NodeId),
     val: core.serialization.number(),
     next: core.serialization.lazy(() => serializers.NodeId).optional(),
-});
+}) as any;
 
 export declare namespace SinglyLinkedListNodeValue {
     export interface Raw {

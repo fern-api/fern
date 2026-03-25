@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const LiteralString: core.serialization.Schema<serializers.LiteralString.Raw, SeedLiteralsUnions.LiteralString> =
-    core.serialization.stringLiteral("literally");
+    core.serialization.stringLiteral("literally") as any;
 
 export declare namespace LiteralString {
     export type Raw = "literally";

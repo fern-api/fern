@@ -9,7 +9,7 @@ export const ImportingType: core.serialization.ObjectSchema<
     SeedCrossPackageTypeNames.ImportingType
 > = core.serialization.object({
     imported: core.serialization.lazy(() => serializers.Imported),
-});
+}) as any;
 
 export declare namespace ImportingType {
     export interface Raw {

@@ -12,7 +12,7 @@ export const InvalidRequestResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     request: SubmissionRequest,
     cause: InvalidRequestCause,
-});
+}) as any;
 
 export declare namespace InvalidRequestResponse {
     export interface Raw {

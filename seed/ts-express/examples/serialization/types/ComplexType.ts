@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const ComplexType: core.serialization.Schema<serializers.ComplexType.Raw, SeedExamples.ComplexType> =
-    core.serialization.enum_(["object", "union", "unknown"]);
+    core.serialization.enum_(["object", "union", "unknown"]) as any;
 
 export declare namespace ComplexType {
     export type Raw = "object" | "union" | "unknown";

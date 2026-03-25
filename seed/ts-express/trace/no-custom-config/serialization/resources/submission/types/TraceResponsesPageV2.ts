@@ -10,7 +10,7 @@ export const TraceResponsesPageV2: core.serialization.ObjectSchema<
 > = core.serialization.object({
     offset: core.serialization.number().optional(),
     traceResponses: core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2)),
-});
+}) as any;
 
 export declare namespace TraceResponsesPageV2 {
     export interface Raw {

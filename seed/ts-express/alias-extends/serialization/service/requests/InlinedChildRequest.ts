@@ -11,7 +11,7 @@ export const InlinedChildRequest: core.serialization.Schema<
     .object({
         child: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(() => serializers.AliasType));
+    .extend(core.serialization.lazyObject(() => serializers.AliasType)) as any;
 
 export declare namespace InlinedChildRequest {
     export interface Raw extends serializers.AliasType.Raw {

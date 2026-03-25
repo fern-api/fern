@@ -10,7 +10,7 @@ export const StackFrame: core.serialization.ObjectSchema<serializers.StackFrame.
         methodName: core.serialization.string(),
         lineNumber: core.serialization.number(),
         scopes: core.serialization.list(Scope),
-    });
+    }) as any;
 
 export declare namespace StackFrame {
     export interface Raw {

@@ -13,7 +13,7 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: SubmissionId,
     testCases: core.serialization.record(TestCaseId, TestCaseGrade),
-});
+}) as any;
 
 export declare namespace GradedResponseV2 {
     export interface Raw {

@@ -8,7 +8,7 @@ export const Response: core.serialization.ObjectSchema<serializers.Response.Raw,
     core.serialization.object({
         response: core.serialization.unknown(),
         identifiers: core.serialization.list(core.serialization.lazyObject(() => serializers.Identifier)),
-    });
+    }) as any;
 
 export declare namespace Response {
     export interface Raw {

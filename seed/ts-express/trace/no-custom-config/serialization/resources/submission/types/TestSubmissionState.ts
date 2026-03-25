@@ -12,7 +12,7 @@ export const TestSubmissionState: core.serialization.ObjectSchema<
     defaultTestCases: core.serialization.list(core.serialization.lazyObject(() => serializers.TestCase)),
     customTestCases: core.serialization.list(core.serialization.lazyObject(() => serializers.TestCase)),
     status: core.serialization.lazy(() => serializers.TestSubmissionStatus),
-});
+}) as any;
 
 export declare namespace TestSubmissionState {
     export interface Raw {

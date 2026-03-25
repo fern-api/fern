@@ -13,7 +13,7 @@ export const TestCaseNonHiddenGrade: core.serialization.ObjectSchema<
     actualResult: core.serialization.lazy(() => serializers.VariableValue).optional(),
     exception: ExceptionV2.optional(),
     stdout: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TestCaseNonHiddenGrade {
     export interface Raw {

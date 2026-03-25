@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import * as serializers from "../../../index";
 
 export const Request: core.serialization.Schema<serializers.bigunion.updateMany.Request.Raw, SeedUnions.BigUnion[]> =
-    core.serialization.list(core.serialization.lazy(() => serializers.BigUnion));
+    core.serialization.list(core.serialization.lazy(() => serializers.BigUnion)) as any;
 
 export declare namespace Request {
     export type Raw = serializers.BigUnion.Raw[];
@@ -14,7 +14,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.bigunion.updateMany.Response.Raw,
     Record<string, boolean>
-> = core.serialization.record(core.serialization.string(), core.serialization.boolean());
+> = core.serialization.record(core.serialization.string(), core.serialization.boolean()) as any;
 
 export declare namespace Response {
     export type Raw = Record<string, boolean>;

@@ -10,7 +10,7 @@ export const NamedMetadata: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     value: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
-});
+}) as any;
 
 export declare namespace NamedMetadata {
     export interface Raw {

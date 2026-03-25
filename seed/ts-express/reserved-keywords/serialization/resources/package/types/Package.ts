@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, SeedNurseryApi.Package> =
     core.serialization.object({
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Package {
     export interface Raw {

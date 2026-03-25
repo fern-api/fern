@@ -12,7 +12,7 @@ export const Identity: core.serialization.ObjectSchema<serializers.Identity.Raw,
         isSocial: core.serialization.property("is_social", core.serialization.boolean()),
         accessToken: core.serialization.property("access_token", core.serialization.string().optional()),
         expiresIn: core.serialization.property("expires_in", core.serialization.number().optional()),
-    });
+    }) as any;
 
 export declare namespace Identity {
     export interface Raw {

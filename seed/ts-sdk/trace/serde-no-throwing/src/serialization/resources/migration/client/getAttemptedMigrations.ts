@@ -8,7 +8,7 @@ import { Migration } from "../types/Migration.js";
 export const Response: core.serialization.Schema<
     serializers.migration.getAttemptedMigrations.Response.Raw,
     SeedTrace.Migration[]
-> = core.serialization.list(Migration);
+> = core.serialization.list(Migration) as any;
 
 export declare namespace Response {
     export type Raw = Migration.Raw[];

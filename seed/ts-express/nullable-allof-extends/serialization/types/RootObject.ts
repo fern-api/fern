@@ -8,7 +8,7 @@ export const RootObject: core.serialization.ObjectSchema<serializers.RootObject.
     core.serialization
         .object({})
         .extend(core.serialization.lazyObject(() => serializers.NormalObject))
-        .extend(core.serialization.lazyObject(() => serializers.NullableObject));
+        .extend(core.serialization.lazyObject(() => serializers.NullableObject)) as any;
 
 export declare namespace RootObject {
     export interface Raw extends serializers.NormalObject.Raw, serializers.NullableObject.Raw {}

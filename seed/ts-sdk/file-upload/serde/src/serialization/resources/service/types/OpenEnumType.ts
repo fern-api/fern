@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const OpenEnumType: core.serialization.Schema<serializers.OpenEnumType.Raw, SeedFileUpload.OpenEnumType> =
-    core.serialization.enum_(["OPTION_A", "OPTION_B", "OPTION_C"]);
+    core.serialization.enum_(["OPTION_A", "OPTION_B", "OPTION_C"]) as any;
 
 export declare namespace OpenEnumType {
     export type Raw = "OPTION_A" | "OPTION_B" | "OPTION_C";

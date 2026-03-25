@@ -6,7 +6,7 @@ import type * as serializers from "../../../../../../index.js";
 export const EmptyRealtimeSocketResponse: core.serialization.Schema<
     serializers.empty.EmptyRealtimeSocketResponse.Raw,
     never
-> = core.serialization.never();
+> = core.serialization.never() as any;
 
 export declare namespace EmptyRealtimeSocketResponse {
     export type Raw = never;

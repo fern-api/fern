@@ -8,7 +8,7 @@ export const Dog: core.serialization.ObjectSchema<serializers.types.Dog.Raw, See
     core.serialization.object({
         name: core.serialization.string(),
         likesToWoof: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace Dog {
     export interface Raw {

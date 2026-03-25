@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const PotableBad: core.serialization.ObjectSchema<serializers.PotableBad.Raw, SeedUnions.PotableBad> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PotableBad {
     export interface Raw {

@@ -10,7 +10,7 @@ export const ObjectWithDocumentedUnknownType: core.serialization.ObjectSchema<
     SeedExhaustive.types.ObjectWithDocumentedUnknownType
 > = core.serialization.object({
     documentedUnknownType: DocumentedUnknownType,
-});
+}) as any;
 
 export declare namespace ObjectWithDocumentedUnknownType {
     export interface Raw {

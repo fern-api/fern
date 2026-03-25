@@ -11,7 +11,7 @@ export const CreateMovieRequest: core.serialization.Schema<
     id: core.serialization.lazy(() => serializers.MovieId),
     movieTitle: core.serialization.property("movie_title", core.serialization.string()),
     movieRating: core.serialization.property("movie_rating", core.serialization.number()),
-});
+}) as any;
 
 export declare namespace CreateMovieRequest {
     export interface Raw {

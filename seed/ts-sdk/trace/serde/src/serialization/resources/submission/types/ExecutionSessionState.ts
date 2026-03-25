@@ -16,7 +16,7 @@ export const ExecutionSessionState: core.serialization.ObjectSchema<
     awsTaskId: core.serialization.string().optional(),
     language: Language,
     status: ExecutionSessionStatus,
-});
+}) as any;
 
 export declare namespace ExecutionSessionState {
     export interface Raw {

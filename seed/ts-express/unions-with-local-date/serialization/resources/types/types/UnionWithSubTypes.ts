@@ -15,7 +15,7 @@ export const UnionWithSubTypes: core.serialization.Schema<
     .transform<SeedUnions.UnionWithSubTypes>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithSubTypes {
     export type Raw = UnionWithSubTypes.Foo | UnionWithSubTypes.FooExtended;

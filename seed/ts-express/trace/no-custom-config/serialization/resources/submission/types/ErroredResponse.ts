@@ -10,7 +10,7 @@ export const ErroredResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     errorInfo: core.serialization.lazy(() => serializers.ErrorInfo),
-});
+}) as any;
 
 export declare namespace ErroredResponse {
     export interface Raw {

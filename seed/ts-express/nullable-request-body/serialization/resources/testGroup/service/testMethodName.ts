@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.testGroup.testMethodName.Request.Raw,
     SeedApi.PlainObject | null
-> = core.serialization.lazyObject(() => serializers.PlainObject).nullable();
+> = core.serialization.lazyObject(() => serializers.PlainObject).nullable() as any;
 
 export declare namespace Request {
     export type Raw = serializers.PlainObject.Raw | null | undefined;

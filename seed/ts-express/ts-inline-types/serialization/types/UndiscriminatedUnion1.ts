@@ -20,7 +20,7 @@ export const UndiscriminatedUnion1: core.serialization.Schema<
         core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineMapItem1),
     ),
     core.serialization.lazyObject(() => serializers.ReferenceType),
-]);
+]) as any;
 
 export declare namespace UndiscriminatedUnion1 {
     export type Raw =

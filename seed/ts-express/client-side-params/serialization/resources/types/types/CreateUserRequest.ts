@@ -23,7 +23,7 @@ export const CreateUserRequest: core.serialization.ObjectSchema<
         core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     ),
     connection: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

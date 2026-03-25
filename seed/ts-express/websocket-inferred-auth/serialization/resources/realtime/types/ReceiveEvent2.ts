@@ -11,7 +11,7 @@ export const ReceiveEvent2: core.serialization.ObjectSchema<
     gamma: core.serialization.string(),
     delta: core.serialization.number(),
     epsilon: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace ReceiveEvent2 {
     export interface Raw {

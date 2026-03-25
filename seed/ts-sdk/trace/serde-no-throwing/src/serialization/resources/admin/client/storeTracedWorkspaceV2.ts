@@ -8,7 +8,7 @@ import { TraceResponseV2 } from "../../submission/types/TraceResponseV2.js";
 export const Request: core.serialization.Schema<
     serializers.admin.storeTracedWorkspaceV2.Request.Raw,
     SeedTrace.TraceResponseV2[]
-> = core.serialization.list(TraceResponseV2);
+> = core.serialization.list(TraceResponseV2) as any;
 
 export declare namespace Request {
     export type Raw = TraceResponseV2.Raw[];

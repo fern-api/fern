@@ -8,7 +8,7 @@ export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, S
     core.serialization.object({
         foo: core.serialization.record(core.serialization.string(), core.serialization.string()),
         "3D": core.serialization.property("3d", core.serialization.number()),
-    });
+    }) as any;
 
 export declare namespace Record_ {
     export interface Raw {

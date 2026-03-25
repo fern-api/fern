@@ -13,7 +13,7 @@ export const PaginatedUserResponse: core.serialization.ObjectSchema<
     limit: core.serialization.number(),
     length: core.serialization.number(),
     total: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace PaginatedUserResponse {
     export interface Raw {

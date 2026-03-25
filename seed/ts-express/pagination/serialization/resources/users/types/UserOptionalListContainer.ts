@@ -9,7 +9,7 @@ export const UserOptionalListContainer: core.serialization.ObjectSchema<
     SeedPagination.UserOptionalListContainer
 > = core.serialization.object({
     users: core.serialization.list(core.serialization.lazyObject(() => serializers.User)).optional(),
-});
+}) as any;
 
 export declare namespace UserOptionalListContainer {
     export interface Raw {

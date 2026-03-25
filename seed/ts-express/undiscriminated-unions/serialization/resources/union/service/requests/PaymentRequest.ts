@@ -9,7 +9,7 @@ export const PaymentRequest: core.serialization.Schema<
     SeedUndiscriminatedUnions.PaymentRequest
 > = core.serialization.object({
     paymentMethod: core.serialization.lazy(() => serializers.PaymentMethodUnion),
-});
+}) as any;
 
 export declare namespace PaymentRequest {
     export interface Raw {

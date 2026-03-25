@@ -23,7 +23,7 @@ export const UpdateUserRequest: core.serialization.ObjectSchema<
     ),
     password: core.serialization.string().optional(),
     blocked: core.serialization.boolean().optional(),
-});
+}) as any;
 
 export declare namespace UpdateUserRequest {
     export interface Raw {

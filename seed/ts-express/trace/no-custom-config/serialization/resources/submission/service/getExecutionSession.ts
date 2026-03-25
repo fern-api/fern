@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.submission.getExecutionSession.Response.Raw,
     SeedTrace.ExecutionSessionResponse | undefined
-> = core.serialization.lazyObject(() => serializers.ExecutionSessionResponse).optional();
+> = core.serialization.lazyObject(() => serializers.ExecutionSessionResponse).optional() as any;
 
 export declare namespace Response {
     export type Raw = serializers.ExecutionSessionResponse.Raw | null | undefined;

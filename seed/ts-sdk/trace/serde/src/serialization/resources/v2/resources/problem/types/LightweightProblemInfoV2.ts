@@ -13,7 +13,7 @@ export const LightweightProblemInfoV2: core.serialization.ObjectSchema<
     problemName: core.serialization.string(),
     problemVersion: core.serialization.number(),
     variableTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
-});
+}) as any;
 
 export declare namespace LightweightProblemInfoV2 {
     export interface Raw {

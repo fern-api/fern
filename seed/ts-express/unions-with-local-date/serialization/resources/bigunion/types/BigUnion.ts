@@ -44,7 +44,7 @@ export const BigUnion: core.serialization.Schema<serializers.BigUnion.Raw, SeedU
     .transform<SeedUnions.BigUnion>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace BigUnion {
     export type Raw =

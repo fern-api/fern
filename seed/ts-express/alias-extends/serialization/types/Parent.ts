@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const Parent: core.serialization.ObjectSchema<serializers.Parent.Raw, SeedAliasExtends.Parent> =
     core.serialization.object({
         parent: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Parent {
     export interface Raw {

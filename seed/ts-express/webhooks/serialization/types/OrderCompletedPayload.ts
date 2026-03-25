@@ -11,7 +11,7 @@ export const OrderCompletedPayload: core.serialization.ObjectSchema<
     orderId: core.serialization.string(),
     total: core.serialization.number(),
     currency: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace OrderCompletedPayload {
     export interface Raw {

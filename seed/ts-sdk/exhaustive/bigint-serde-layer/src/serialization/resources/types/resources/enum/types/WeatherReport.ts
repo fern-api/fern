@@ -7,7 +7,7 @@ import type * as serializers from "../../../../../index.js";
 export const WeatherReport: core.serialization.Schema<
     serializers.types.WeatherReport.Raw,
     SeedExhaustive.types.WeatherReport
-> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
+> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]) as any;
 
 export declare namespace WeatherReport {
     export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";

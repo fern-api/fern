@@ -9,7 +9,7 @@ export const BadObjectRequestInfo: core.serialization.ObjectSchema<
     SeedExhaustive.BadObjectRequestInfo
 > = core.serialization.object({
     message: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace BadObjectRequestInfo {
     export interface Raw {

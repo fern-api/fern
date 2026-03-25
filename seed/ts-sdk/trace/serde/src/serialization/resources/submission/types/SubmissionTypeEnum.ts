@@ -7,7 +7,7 @@ import type * as serializers from "../../../index.js";
 export const SubmissionTypeEnum: core.serialization.Schema<
     serializers.SubmissionTypeEnum.Raw,
     SeedTrace.SubmissionTypeEnum
-> = core.serialization.enum_(["TEST"]);
+> = core.serialization.enum_(["TEST"]) as any;
 
 export declare namespace SubmissionTypeEnum {
     export type Raw = "TEST";

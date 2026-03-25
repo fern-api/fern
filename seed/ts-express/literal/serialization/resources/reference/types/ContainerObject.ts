@@ -9,7 +9,7 @@ export const ContainerObject: core.serialization.ObjectSchema<
     SeedLiteral.ContainerObject
 > = core.serialization.object({
     nestedObjects: core.serialization.list(core.serialization.lazyObject(() => serializers.NestedObjectWithLiterals)),
-});
+}) as any;
 
 export declare namespace ContainerObject {
     export interface Raw {

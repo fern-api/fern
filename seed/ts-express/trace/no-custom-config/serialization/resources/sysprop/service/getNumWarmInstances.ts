@@ -10,7 +10,7 @@ export const Response: core.serialization.Schema<
 > = core.serialization.partialRecord(
     core.serialization.lazy(() => serializers.Language),
     core.serialization.number().optional(),
-);
+) as any;
 
 export declare namespace Response {
     export type Raw = Record<serializers.Language.Raw, number | null | undefined>;

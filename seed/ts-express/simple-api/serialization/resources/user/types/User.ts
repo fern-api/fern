@@ -9,7 +9,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedSim
         id: core.serialization.string(),
         name: core.serialization.string(),
         email: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

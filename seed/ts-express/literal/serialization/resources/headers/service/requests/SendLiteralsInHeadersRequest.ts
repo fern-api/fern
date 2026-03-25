@@ -9,7 +9,7 @@ export const SendLiteralsInHeadersRequest: core.serialization.Schema<
     SeedLiteral.SendLiteralsInHeadersRequest
 > = core.serialization.object({
     query: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace SendLiteralsInHeadersRequest {
     export interface Raw {

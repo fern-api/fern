@@ -8,7 +8,7 @@ export const FirstItemType: core.serialization.ObjectSchema<serializers.FirstIte
     core.serialization.object({
         type: core.serialization.stringLiteral("firstItemType").optional(),
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace FirstItemType {
     export interface Raw {

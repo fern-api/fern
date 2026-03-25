@@ -5,7 +5,7 @@ import * as core from "../../core";
 import * as serializers from "../index";
 
 export const AliasSetInline: core.serialization.Schema<serializers.AliasSetInline.Raw, SeedObject.AliasSetInline> =
-    core.serialization.list(core.serialization.lazyObject(() => serializers.AliasInlineValue));
+    core.serialization.list(core.serialization.lazyObject(() => serializers.AliasInlineValue)) as any;
 
 export declare namespace AliasSetInline {
     export type Raw = serializers.AliasInlineValue.Raw[];

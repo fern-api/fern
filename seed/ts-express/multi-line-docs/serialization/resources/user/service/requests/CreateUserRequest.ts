@@ -10,7 +10,7 @@ export const CreateUserRequest: core.serialization.Schema<
 > = core.serialization.object({
     name: core.serialization.string(),
     age: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

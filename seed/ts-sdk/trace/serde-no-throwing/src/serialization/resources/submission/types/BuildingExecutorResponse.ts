@@ -12,7 +12,7 @@ export const BuildingExecutorResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: SubmissionId,
     status: ExecutionSessionStatus,
-});
+}) as any;
 
 export declare namespace BuildingExecutorResponse {
     export interface Raw {

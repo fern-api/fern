@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 
 export const Fig: core.serialization.ObjectSchema<serializers.Fig.Raw, SeedApi.Fig> = core.serialization.object({
     animal: core.serialization.lazy(() => serializers.Animal),
-});
+}) as any;
 
 export declare namespace Fig {
     export interface Raw {

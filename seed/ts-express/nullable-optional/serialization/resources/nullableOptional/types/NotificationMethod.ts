@@ -16,7 +16,7 @@ export const NotificationMethod: core.serialization.Schema<
     .transform<SeedNullableOptional.NotificationMethod>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace NotificationMethod {
     export type Raw = NotificationMethod.Email | NotificationMethod.Sms | NotificationMethod.Push;

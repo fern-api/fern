@@ -10,7 +10,7 @@ export const GradedTestCaseUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     testCaseId: core.serialization.lazy(() => serializers.v2.TestCaseId),
     grade: core.serialization.lazy(() => serializers.TestCaseGrade),
-});
+}) as any;
 
 export declare namespace GradedTestCaseUpdate {
     export interface Raw {

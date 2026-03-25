@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const NodesWrapper: core.serialization.ObjectSchema<serializers.NodesWrapper.Raw, SeedApi.NodesWrapper> =
     core.serialization.object({
         nodes: core.serialization.list(core.serialization.list(core.serialization.lazy(() => serializers.Node))),
-    });
+    }) as any;
 
 export declare namespace NodesWrapper {
     export interface Raw {

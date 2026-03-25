@@ -9,7 +9,7 @@ export const CreateOrganizationRequest: core.serialization.ObjectSchema<
     SeedMixedFileDirectory.CreateOrganizationRequest
 > = core.serialization.object({
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace CreateOrganizationRequest {
     export interface Raw {

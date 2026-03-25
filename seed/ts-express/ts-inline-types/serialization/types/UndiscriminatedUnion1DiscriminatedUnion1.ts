@@ -16,7 +16,7 @@ export const UndiscriminatedUnion1DiscriminatedUnion1: core.serialization.Schema
     .transform<SeedObject.UndiscriminatedUnion1DiscriminatedUnion1>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UndiscriminatedUnion1DiscriminatedUnion1 {
     export type Raw =

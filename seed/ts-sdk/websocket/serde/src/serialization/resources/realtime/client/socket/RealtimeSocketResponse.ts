@@ -28,7 +28,7 @@ export const RealtimeSocketResponse: core.serialization.Schema<
     TranscriptEvent,
     FlushedEvent,
     ErrorEvent,
-]);
+]) as any;
 
 export declare namespace RealtimeSocketResponse {
     export type Raw =

@@ -12,7 +12,7 @@ export const Resource: core.serialization.ObjectSchema<serializers.Resource.Raw,
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
-    });
+    }) as any;
 
 export declare namespace Resource {
     export interface Raw {

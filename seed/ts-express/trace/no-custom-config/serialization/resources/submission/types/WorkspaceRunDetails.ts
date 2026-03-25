@@ -11,7 +11,7 @@ export const WorkspaceRunDetails: core.serialization.ObjectSchema<
     exceptionV2: core.serialization.lazy(() => serializers.ExceptionV2).optional(),
     exception: core.serialization.lazyObject(() => serializers.ExceptionInfo).optional(),
     stdout: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace WorkspaceRunDetails {
     export interface Raw {

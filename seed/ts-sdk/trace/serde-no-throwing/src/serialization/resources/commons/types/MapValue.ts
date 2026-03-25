@@ -7,7 +7,7 @@ import * as serializers from "../../../index.js";
 export const MapValue: core.serialization.ObjectSchema<serializers.MapValue.Raw, SeedTrace.MapValue> =
     core.serialization.object({
         keyValuePairs: core.serialization.list(core.serialization.lazyObject(() => serializers.KeyValuePair)),
-    });
+    }) as any;
 
 export declare namespace MapValue {
     export interface Raw {

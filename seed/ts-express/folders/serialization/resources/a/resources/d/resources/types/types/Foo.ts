@@ -4,7 +4,8 @@ import type * as SeedApi from "../../../../../../../../api/index";
 import * as core from "../../../../../../../../core";
 import type * as serializers from "../../../../../../../index";
 
-export const Foo: core.serialization.Schema<serializers.a.d.Foo.Raw, SeedApi.a.d.Foo> = core.serialization.string();
+export const Foo: core.serialization.Schema<serializers.a.d.Foo.Raw, SeedApi.a.d.Foo> =
+    core.serialization.string() as any;
 
 export declare namespace Foo {
     export type Raw = string;

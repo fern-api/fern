@@ -12,7 +12,7 @@ export const GetDefaultStarterFilesRequest: core.serialization.Schema<
     inputParams: core.serialization.list(VariableTypeAndName),
     outputType: core.serialization.lazy(() => serializers.VariableType),
     methodName: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace GetDefaultStarterFilesRequest {
     export interface Raw {

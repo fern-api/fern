@@ -10,7 +10,7 @@ export const VoidFunctionDefinition: core.serialization.ObjectSchema<
 > = core.serialization.object({
     parameters: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.v3.Parameter)),
     code: core.serialization.lazyObject(() => serializers.v2.v3.FunctionImplementationForMultipleLanguages),
-});
+}) as any;
 
 export declare namespace VoidFunctionDefinition {
     export interface Raw {

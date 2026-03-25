@@ -11,7 +11,7 @@ export const ListUsersExtendedOptionalListResponse: core.serialization.ObjectSch
     .object({
         totalCount: core.serialization.property("total_count", core.serialization.number()),
     })
-    .extend(core.serialization.lazyObject(() => serializers.UserOptionalListPage));
+    .extend(core.serialization.lazyObject(() => serializers.UserOptionalListPage)) as any;
 
 export declare namespace ListUsersExtendedOptionalListResponse {
     export interface Raw extends serializers.UserOptionalListPage.Raw {

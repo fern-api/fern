@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const OptionalMetadata: core.serialization.Schema<
     serializers.OptionalMetadata.Raw,
     SeedUndiscriminatedUnions.OptionalMetadata
-> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional();
+> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional() as any;
 
 export declare namespace OptionalMetadata {
     export type Raw = Record<string, unknown> | null | undefined;

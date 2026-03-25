@@ -20,7 +20,7 @@ export const UnionWithTime: core.serialization.Schema<serializers.UnionWithTime.
         .transform<SeedUnions.UnionWithTime>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace UnionWithTime {
     export type Raw = UnionWithTime.Value | UnionWithTime.Date | UnionWithTime.Datetime;

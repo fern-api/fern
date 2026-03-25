@@ -11,7 +11,7 @@ export const UpdateTagsRequest: core.serialization.Schema<
     tags: core.serialization.list(core.serialization.string()).nullable(),
     categories: core.serialization.list(core.serialization.string()).optional(),
     labels: core.serialization.list(core.serialization.string()).optionalNullable(),
-});
+}) as any;
 
 export declare namespace UpdateTagsRequest {
     export interface Raw {

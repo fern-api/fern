@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const MistySnow: core.serialization.ObjectSchema<serializers.MistySnow.Raw, SeedUnions.MistySnow> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace MistySnow {
     export interface Raw {

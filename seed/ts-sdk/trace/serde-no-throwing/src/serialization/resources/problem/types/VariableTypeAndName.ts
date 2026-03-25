@@ -10,7 +10,7 @@ export const VariableTypeAndName: core.serialization.ObjectSchema<
 > = core.serialization.object({
     variableType: core.serialization.lazy(() => serializers.VariableType),
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace VariableTypeAndName {
     export interface Raw {

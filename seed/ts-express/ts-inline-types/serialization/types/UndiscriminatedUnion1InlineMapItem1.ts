@@ -10,7 +10,7 @@ export const UndiscriminatedUnion1InlineMapItem1: core.serialization.ObjectSchem
 > = core.serialization.object({
     foo: core.serialization.string(),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace UndiscriminatedUnion1InlineMapItem1 {
     export interface Raw {

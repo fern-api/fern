@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const Circle: core.serialization.ObjectSchema<serializers.Circle.Raw, SeedUnions.Circle> =
     core.serialization.object({
         radius: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace Circle {
     export interface Raw {

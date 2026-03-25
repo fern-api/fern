@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const TotalWork: core.serialization.ObjectSchema<serializers.TotalWork.Raw, SeedUnions.TotalWork> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace TotalWork {
     export interface Raw {

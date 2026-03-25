@@ -9,7 +9,7 @@ export const ExampleType: core.serialization.ObjectSchema<serializers.ExampleTyp
         .object({
             name: core.serialization.string(),
         })
-        .extend(core.serialization.lazyObject(() => serializers.Docs));
+        .extend(core.serialization.lazyObject(() => serializers.Docs)) as any;
 
 export declare namespace ExampleType {
     export interface Raw extends serializers.Docs.Raw {

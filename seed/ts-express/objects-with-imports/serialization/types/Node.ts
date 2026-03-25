@@ -9,7 +9,7 @@ export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedObj
         id: core.serialization.string(),
         label: core.serialization.string().optional(),
         metadata: core.serialization.lazyObject(() => serializers.commons.Metadata).optional(),
-    });
+    }) as any;
 
 export declare namespace Node {
     export interface Raw {

@@ -9,7 +9,7 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectS
     SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest
 > = core.serialization.object({
     template: core.serialization.lazyObject(() => serializers.v2.TestCaseTemplate),
-});
+}) as any;
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
     export interface Raw {

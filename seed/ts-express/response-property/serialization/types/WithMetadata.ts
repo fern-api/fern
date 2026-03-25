@@ -9,7 +9,7 @@ export const WithMetadata: core.serialization.ObjectSchema<
     SeedResponseProperty.WithMetadata
 > = core.serialization.object({
     metadata: core.serialization.record(core.serialization.string(), core.serialization.string()),
-});
+}) as any;
 
 export declare namespace WithMetadata {
     export interface Raw {

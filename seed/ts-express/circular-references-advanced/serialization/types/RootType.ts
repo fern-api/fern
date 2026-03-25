@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const RootType: core.serialization.ObjectSchema<serializers.RootType.Raw, SeedApi.RootType> =
     core.serialization.object({
         s: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace RootType {
     export interface Raw {

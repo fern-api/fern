@@ -7,7 +7,7 @@ import type * as serializers from "../../../../../index.js";
 export const DocumentedUnknownType: core.serialization.Schema<
     serializers.types.DocumentedUnknownType.Raw,
     SeedExhaustive.types.DocumentedUnknownType
-> = core.serialization.unknown();
+> = core.serialization.unknown() as any;
 
 export declare namespace DocumentedUnknownType {
     export type Raw = unknown;

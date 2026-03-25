@@ -12,7 +12,7 @@ export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     template: TestCaseTemplate.optional(),
     testCase: TestCaseV2,
-});
+}) as any;
 
 export declare namespace GetGeneratedTestCaseFileRequest {
     export interface Raw {

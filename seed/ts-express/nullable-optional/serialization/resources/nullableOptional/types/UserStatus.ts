@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const UserStatus: core.serialization.Schema<serializers.UserStatus.Raw, SeedNullableOptional.UserStatus> =
-    core.serialization.enum_(["active", "inactive", "suspended", "deleted"]);
+    core.serialization.enum_(["active", "inactive", "suspended", "deleted"]) as any;
 
 export declare namespace UserStatus {
     export type Raw = "active" | "inactive" | "suspended" | "deleted";

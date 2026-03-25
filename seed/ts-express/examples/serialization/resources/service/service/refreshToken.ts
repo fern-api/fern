@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.service.refreshToken.Request.Raw,
     SeedExamples.RefreshTokenRequest | undefined
-> = core.serialization.lazyObject(() => serializers.RefreshTokenRequest).optional();
+> = core.serialization.lazyObject(() => serializers.RefreshTokenRequest).optional() as any;
 
 export declare namespace Request {
     export type Raw = serializers.RefreshTokenRequest.Raw | null | undefined;

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 
 export const Cat: core.serialization.ObjectSchema<serializers.Cat.Raw, SeedApi.Cat> = core.serialization.object({
     fruit: core.serialization.lazy(() => serializers.Fruit),
-});
+}) as any;
 
 export declare namespace Cat {
     export interface Raw {

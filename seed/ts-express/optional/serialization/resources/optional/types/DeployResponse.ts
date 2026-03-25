@@ -9,7 +9,7 @@ export const DeployResponse: core.serialization.ObjectSchema<
     SeedObjectsWithImports.DeployResponse
 > = core.serialization.object({
     success: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace DeployResponse {
     export interface Raw {

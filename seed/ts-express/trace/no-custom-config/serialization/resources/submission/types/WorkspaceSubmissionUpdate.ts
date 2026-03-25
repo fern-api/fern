@@ -10,7 +10,7 @@ export const WorkspaceSubmissionUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     updateTime: core.serialization.date(),
     updateInfo: core.serialization.lazy(() => serializers.WorkspaceSubmissionUpdateInfo),
-});
+}) as any;
 
 export declare namespace WorkspaceSubmissionUpdate {
     export interface Raw {

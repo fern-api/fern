@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.organizations.searchOrganizations.Response.Raw,
     SeedPathParameters.Organization[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.Organization));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.Organization)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.Organization.Raw[];

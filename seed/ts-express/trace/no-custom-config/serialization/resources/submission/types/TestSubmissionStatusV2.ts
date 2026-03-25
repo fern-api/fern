@@ -12,7 +12,7 @@ export const TestSubmissionStatusV2: core.serialization.ObjectSchema<
     problemId: core.serialization.lazy(() => serializers.ProblemId),
     problemVersion: core.serialization.number(),
     problemInfo: core.serialization.lazyObject(() => serializers.v2.ProblemInfoV2),
-});
+}) as any;
 
 export declare namespace TestSubmissionStatusV2 {
     export interface Raw {

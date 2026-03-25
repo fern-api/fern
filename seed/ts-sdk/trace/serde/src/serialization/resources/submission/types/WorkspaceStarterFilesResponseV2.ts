@@ -11,7 +11,7 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
     SeedTrace.WorkspaceStarterFilesResponseV2
 > = core.serialization.object({
     filesByLanguage: core.serialization.partialRecord(Language, Files.optional()),
-});
+}) as any;
 
 export declare namespace WorkspaceStarterFilesResponseV2 {
     export interface Raw {

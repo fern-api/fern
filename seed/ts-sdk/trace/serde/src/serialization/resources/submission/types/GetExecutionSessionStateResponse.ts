@@ -12,7 +12,7 @@ export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
     states: core.serialization.record(core.serialization.string(), ExecutionSessionState),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
-});
+}) as any;
 
 export declare namespace GetExecutionSessionStateResponse {
     export interface Raw {

@@ -10,7 +10,7 @@ export const ResourceList: core.serialization.Schema<serializers.ResourceList.Ra
         core.serialization.lazyObject(() => serializers.Patient),
         core.serialization.lazyObject(() => serializers.Practitioner),
         core.serialization.lazyObject(() => serializers.Script),
-    ]);
+    ]) as any;
 
 export declare namespace ResourceList {
     export type Raw =

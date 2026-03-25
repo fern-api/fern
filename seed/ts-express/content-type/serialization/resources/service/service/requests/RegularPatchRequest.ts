@@ -10,7 +10,7 @@ export const RegularPatchRequest: core.serialization.Schema<
 > = core.serialization.object({
     field1: core.serialization.string().optional(),
     field2: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace RegularPatchRequest {
     export interface Raw {

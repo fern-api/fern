@@ -9,7 +9,7 @@ export const AttractiveScript: core.serialization.ObjectSchema<
     SeedUnions.AttractiveScript
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace AttractiveScript {
     export interface Raw {

@@ -37,7 +37,7 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
         .transform<SeedTrace.VariableValue>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace VariableValue {
     export type Raw =

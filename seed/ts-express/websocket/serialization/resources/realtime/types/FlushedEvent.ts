@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const FlushedEvent: core.serialization.ObjectSchema<serializers.FlushedEvent.Raw, SeedWebsocket.FlushedEvent> =
     core.serialization.object({
         type: core.serialization.stringLiteral("flushed"),
-    });
+    }) as any;
 
 export declare namespace FlushedEvent {
     export interface Raw {

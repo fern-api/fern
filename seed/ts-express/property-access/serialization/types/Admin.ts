@@ -9,7 +9,7 @@ export const Admin: core.serialization.ObjectSchema<serializers.Admin.Raw, SeedP
         .object({
             adminLevel: core.serialization.string(),
         })
-        .extend(core.serialization.lazyObject(() => serializers.User));
+        .extend(core.serialization.lazyObject(() => serializers.User)) as any;
 
 export declare namespace Admin {
     export interface Raw extends serializers.User.Raw {

@@ -10,7 +10,7 @@ export const Page: core.serialization.ObjectSchema<serializers.Page.Raw, SeedPag
         next: core.serialization.lazyObject(() => serializers.NextPage).optional(),
         perPage: core.serialization.property("per_page", core.serialization.number()),
         totalPage: core.serialization.property("total_page", core.serialization.number()),
-    });
+    }) as any;
 
 export declare namespace Page {
     export interface Raw {

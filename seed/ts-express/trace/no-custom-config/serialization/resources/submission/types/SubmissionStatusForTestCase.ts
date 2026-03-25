@@ -18,7 +18,7 @@ export const SubmissionStatusForTestCase: core.serialization.Schema<
     .transform<SeedTrace.SubmissionStatusForTestCase>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace SubmissionStatusForTestCase {
     export type Raw =

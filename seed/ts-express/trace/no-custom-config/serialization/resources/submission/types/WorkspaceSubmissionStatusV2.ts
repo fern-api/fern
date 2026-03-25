@@ -9,7 +9,7 @@ export const WorkspaceSubmissionStatusV2: core.serialization.ObjectSchema<
     SeedTrace.WorkspaceSubmissionStatusV2
 > = core.serialization.object({
     updates: core.serialization.list(core.serialization.lazyObject(() => serializers.WorkspaceSubmissionUpdate)),
-});
+}) as any;
 
 export declare namespace WorkspaceSubmissionStatusV2 {
     export interface Raw {

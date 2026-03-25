@@ -12,7 +12,7 @@ export const UnionWithDuplicateTypes: core.serialization.Schema<
     core.serialization.list(core.serialization.string()),
     core.serialization.number(),
     core.serialization.set(core.serialization.string()),
-]);
+]) as any;
 
 export declare namespace UnionWithDuplicateTypes {
     export type Raw = string | string[] | number | string[];

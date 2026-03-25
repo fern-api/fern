@@ -10,7 +10,7 @@ export const LightweightStackframeInformation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     numStackFrames: core.serialization.number(),
     topStackFrameMethodName: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace LightweightStackframeInformation {
     export interface Raw {

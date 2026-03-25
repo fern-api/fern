@@ -13,7 +13,7 @@ export const CreateUserRequest: core.serialization.Schema<
         "meta_data",
         core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     ),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

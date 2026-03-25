@@ -25,7 +25,7 @@ export const Error: core.serialization.Schema<
             }
         },
         untransform: ({ _visit, ...value }) => value as any,
-    });
+    }) as any;
 
 export declare namespace Error {
     export type Raw = Error.PlaylistIdNotFoundError | Error.UnauthorizedError;

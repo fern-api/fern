@@ -24,7 +24,7 @@ export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedE
     .transform<SeedExamples.Metadata>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Metadata {
     export type Raw = Metadata.Html | Metadata.Markdown;

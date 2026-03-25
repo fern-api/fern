@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const OptionalString: core.serialization.Schema<serializers.OptionalString.Raw, SeedAudiences.OptionalString> =
-    core.serialization.string().optional();
+    core.serialization.string().optional() as any;
 
 export declare namespace OptionalString {
     export type Raw = string | null | undefined;

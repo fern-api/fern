@@ -13,7 +13,7 @@ export const UpdateComplexProfileRequest: core.serialization.Schema<
     nullableNotification: core.serialization.lazy(() => serializers.NotificationMethod).optionalNullable(),
     nullableSearchResult: core.serialization.lazy(() => serializers.SearchResult).optionalNullable(),
     nullableArray: core.serialization.list(core.serialization.string()).optionalNullable(),
-});
+}) as any;
 
 export declare namespace UpdateComplexProfileRequest {
     export interface Raw {

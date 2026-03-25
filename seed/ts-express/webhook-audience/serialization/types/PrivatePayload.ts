@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const PrivatePayload: core.serialization.ObjectSchema<serializers.PrivatePayload.Raw, SeedApi.PrivatePayload> =
     core.serialization.object({
         secret: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PrivatePayload {
     export interface Raw {

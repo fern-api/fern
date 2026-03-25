@@ -10,7 +10,7 @@ export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
     SeedTrace.WorkspaceSubmissionState
 > = core.serialization.object({
     status: WorkspaceSubmissionStatus,
-});
+}) as any;
 
 export declare namespace WorkspaceSubmissionState {
     export interface Raw {

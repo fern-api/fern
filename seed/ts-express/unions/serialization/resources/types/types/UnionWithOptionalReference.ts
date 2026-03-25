@@ -19,7 +19,7 @@ export const UnionWithOptionalReference: core.serialization.Schema<
     .transform<SeedUnions.UnionWithOptionalReference>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithOptionalReference {
     export type Raw = UnionWithOptionalReference.Foo | UnionWithOptionalReference.Bar;

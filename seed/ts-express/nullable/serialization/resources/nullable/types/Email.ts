@@ -6,7 +6,7 @@ import type * as serializers from "../../../index";
 
 export const Email: core.serialization.Schema<serializers.Email.Raw, SeedNullable.Email> = core.serialization
     .string()
-    .nullable();
+    .nullable() as any;
 
 export declare namespace Email {
     export type Raw = string | null | undefined;

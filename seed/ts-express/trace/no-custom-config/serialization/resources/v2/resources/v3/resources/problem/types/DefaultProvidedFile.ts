@@ -10,7 +10,7 @@ export const DefaultProvidedFile: core.serialization.ObjectSchema<
 > = core.serialization.object({
     file: core.serialization.lazyObject(() => serializers.v2.v3.FileInfoV2),
     relatedTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
-});
+}) as any;
 
 export declare namespace DefaultProvidedFile {
     export interface Raw {

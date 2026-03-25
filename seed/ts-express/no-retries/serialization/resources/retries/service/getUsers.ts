@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import * as serializers from "../../../index";
 
 export const Response: core.serialization.Schema<serializers.retries.getUsers.Response.Raw, SeedNoRetries.User[]> =
-    core.serialization.list(core.serialization.lazyObject(() => serializers.User));
+    core.serialization.list(core.serialization.lazyObject(() => serializers.User)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.User.Raw[];

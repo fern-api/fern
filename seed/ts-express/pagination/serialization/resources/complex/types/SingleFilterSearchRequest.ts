@@ -11,7 +11,7 @@ export const SingleFilterSearchRequest: core.serialization.ObjectSchema<
     field: core.serialization.string().optional(),
     operator: core.serialization.lazy(() => serializers.SingleFilterSearchRequestOperator).optional(),
     value: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace SingleFilterSearchRequest {
     export interface Raw {

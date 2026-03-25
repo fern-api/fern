@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.nullableOptional.searchUsers.Response.Raw,
     SeedNullableOptional.UserResponse[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.UserResponse));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.UserResponse)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.UserResponse.Raw[];

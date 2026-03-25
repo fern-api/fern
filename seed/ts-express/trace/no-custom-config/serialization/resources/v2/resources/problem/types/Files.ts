@@ -7,7 +7,7 @@ import * as serializers from "../../../../../index";
 export const Files: core.serialization.ObjectSchema<serializers.v2.Files.Raw, SeedTrace.v2.Files> =
     core.serialization.object({
         files: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.FileInfoV2)),
-    });
+    }) as any;
 
 export declare namespace Files {
     export interface Raw {

@@ -9,7 +9,7 @@ export const NoAudiencePayload: core.serialization.ObjectSchema<
     SeedApi.NoAudiencePayload
 > = core.serialization.object({
     data: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace NoAudiencePayload {
     export interface Raw {

@@ -10,7 +10,7 @@ export const VariantA: core.serialization.ObjectSchema<
 > = core.serialization.object({
     type: core.serialization.stringLiteral("A"),
     valueA: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace VariantA {
     export interface Raw {

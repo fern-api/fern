@@ -10,7 +10,7 @@ export const FunctionImplementation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     impl: core.serialization.string(),
     imports: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace FunctionImplementation {
     export interface Raw {

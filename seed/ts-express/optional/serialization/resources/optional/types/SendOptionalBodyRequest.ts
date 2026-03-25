@@ -9,7 +9,7 @@ export const SendOptionalBodyRequest: core.serialization.ObjectSchema<
     SeedObjectsWithImports.SendOptionalBodyRequest
 > = core.serialization.object({
     message: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace SendOptionalBodyRequest {
     export interface Raw {

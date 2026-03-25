@@ -10,7 +10,7 @@ export const PostSubmitRequest: core.serialization.Schema<
 > = core.serialization.object({
     username: core.serialization.string(),
     email: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace PostSubmitRequest {
     export interface Raw {

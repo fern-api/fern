@@ -11,7 +11,7 @@ export const UserCreatedPayload: core.serialization.ObjectSchema<
     userId: core.serialization.string(),
     email: core.serialization.string(),
     createdAt: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace UserCreatedPayload {
     export interface Raw {

@@ -10,7 +10,7 @@ export const MetadataUnion: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazy(() => serializers.OptionalMetadata),
     core.serialization.lazyObject(() => serializers.NamedMetadata),
-]);
+]) as any;
 
 export declare namespace MetadataUnion {
     export type Raw = (serializers.OptionalMetadata.Raw | undefined) | serializers.NamedMetadata.Raw;

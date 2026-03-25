@@ -12,7 +12,7 @@ export const ExecutionSessionResponse: core.serialization.ObjectSchema<
     executionSessionUrl: core.serialization.string().optional(),
     language: core.serialization.lazy(() => serializers.Language),
     status: core.serialization.lazy(() => serializers.ExecutionSessionStatus),
-});
+}) as any;
 
 export declare namespace ExecutionSessionResponse {
     export interface Raw {

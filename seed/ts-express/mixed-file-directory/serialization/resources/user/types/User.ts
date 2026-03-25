@@ -9,7 +9,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMix
         id: core.serialization.lazy(() => serializers.Id),
         name: core.serialization.string(),
         age: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

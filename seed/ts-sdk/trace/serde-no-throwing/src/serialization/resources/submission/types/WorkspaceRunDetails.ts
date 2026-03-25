@@ -13,7 +13,7 @@ export const WorkspaceRunDetails: core.serialization.ObjectSchema<
     exceptionV2: ExceptionV2.optional(),
     exception: ExceptionInfo.optional(),
     stdout: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace WorkspaceRunDetails {
     export interface Raw {

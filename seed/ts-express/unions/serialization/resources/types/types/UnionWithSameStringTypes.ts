@@ -22,7 +22,7 @@ export const UnionWithSameStringTypes: core.serialization.Schema<
     .transform<SeedUnions.UnionWithSameStringTypes>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithSameStringTypes {
     export type Raw =

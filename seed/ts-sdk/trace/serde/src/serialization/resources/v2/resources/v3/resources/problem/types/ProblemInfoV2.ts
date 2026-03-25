@@ -25,7 +25,7 @@ export const ProblemInfoV2: core.serialization.ObjectSchema<
     customTestCaseTemplates: core.serialization.list(TestCaseTemplate),
     testcases: core.serialization.list(TestCaseV2),
     isPublic: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace ProblemInfoV2 {
     export interface Raw {

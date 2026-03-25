@@ -4,7 +4,8 @@ import type * as SeedTrace from "../../../../api/index";
 import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
-export const NodeId: core.serialization.Schema<serializers.NodeId.Raw, SeedTrace.NodeId> = core.serialization.string();
+export const NodeId: core.serialization.Schema<serializers.NodeId.Raw, SeedTrace.NodeId> =
+    core.serialization.string() as any;
 
 export declare namespace NodeId {
     export type Raw = string;

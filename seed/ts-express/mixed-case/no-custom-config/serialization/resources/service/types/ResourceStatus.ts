@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const ResourceStatus: core.serialization.Schema<serializers.ResourceStatus.Raw, SeedMixedCase.ResourceStatus> =
-    core.serialization.enum_(["ACTIVE", "INACTIVE"]);
+    core.serialization.enum_(["ACTIVE", "INACTIVE"]) as any;
 
 export declare namespace ResourceStatus {
     export type Raw = "ACTIVE" | "INACTIVE";

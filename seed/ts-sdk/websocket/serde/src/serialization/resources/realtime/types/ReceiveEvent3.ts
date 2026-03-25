@@ -9,7 +9,7 @@ export const ReceiveEvent3: core.serialization.ObjectSchema<
     SeedWebsocket.ReceiveEvent3
 > = core.serialization.object({
     receiveText3: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace ReceiveEvent3 {
     export interface Raw {

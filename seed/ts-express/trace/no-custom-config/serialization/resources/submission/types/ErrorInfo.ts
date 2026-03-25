@@ -13,7 +13,7 @@ export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, See
     .transform<SeedTrace.ErrorInfo>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace ErrorInfo {
     export type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;

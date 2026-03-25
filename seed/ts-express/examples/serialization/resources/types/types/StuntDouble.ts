@@ -8,7 +8,7 @@ export const StuntDouble: core.serialization.ObjectSchema<serializers.StuntDoubl
     core.serialization.object({
         name: core.serialization.string(),
         actorOrActressId: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace StuntDouble {
     export interface Raw {

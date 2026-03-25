@@ -10,7 +10,7 @@ export const ReceiveEvent: core.serialization.ObjectSchema<
 > = core.serialization.object({
     alpha: core.serialization.string(),
     beta: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace ReceiveEvent {
     export interface Raw {

@@ -8,7 +8,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedA
     id: core.serialization.lazy(() => serializers.MovieId),
     title: core.serialization.string(),
     rating: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace Movie {
     export interface Raw {

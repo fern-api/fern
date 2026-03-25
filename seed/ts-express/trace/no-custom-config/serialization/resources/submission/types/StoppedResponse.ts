@@ -9,7 +9,7 @@ export const StoppedResponse: core.serialization.ObjectSchema<
     SeedTrace.StoppedResponse
 > = core.serialization.object({
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
-});
+}) as any;
 
 export declare namespace StoppedResponse {
     export interface Raw {

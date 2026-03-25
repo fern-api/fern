@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const LeafNode: core.serialization.ObjectSchema<serializers.LeafNode.Raw, SeedApi.LeafNode> =
-    core.serialization.object({});
+    core.serialization.object({}) as any;
 
 export declare namespace LeafNode {
     export type Raw = {};

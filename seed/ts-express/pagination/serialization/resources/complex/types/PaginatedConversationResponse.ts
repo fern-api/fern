@@ -12,7 +12,7 @@ export const PaginatedConversationResponse: core.serialization.ObjectSchema<
     pages: core.serialization.lazyObject(() => serializers.CursorPages).optional(),
     totalCount: core.serialization.property("total_count", core.serialization.number()),
     type: core.serialization.stringLiteral("conversation.list"),
-});
+}) as any;
 
 export declare namespace PaginatedConversationResponse {
     export interface Raw {

@@ -14,7 +14,7 @@ export const ExecutionSessionResponse: core.serialization.ObjectSchema<
     executionSessionUrl: core.serialization.string().optional(),
     language: Language,
     status: ExecutionSessionStatus,
-});
+}) as any;
 
 export declare namespace ExecutionSessionResponse {
     export interface Raw {

@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const BasicType: core.serialization.Schema<serializers.BasicType.Raw, SeedExamples.BasicType> =
-    core.serialization.enum_(["primitive", "literal"]);
+    core.serialization.enum_(["primitive", "literal"]) as any;
 
 export declare namespace BasicType {
     export type Raw = "primitive" | "literal";

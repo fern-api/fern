@@ -12,7 +12,7 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.serialization.Obj
 > = core.serialization.object({
     additionalParameters: core.serialization.list(Parameter),
     code: FunctionImplementationForMultipleLanguages,
-});
+}) as any;
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
     export interface Raw {

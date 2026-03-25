@@ -18,7 +18,7 @@ export const PatchComplexRequest: core.serialization.Schema<
     bio: core.serialization.string().optionalNullable(),
     profileImageUrl: core.serialization.string().optionalNullable(),
     settings: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optionalNullable(),
-});
+}) as any;
 
 export declare namespace PatchComplexRequest {
     export interface Raw {

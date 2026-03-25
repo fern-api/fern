@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const LargeInteger: core.serialization.Schema<serializers.LargeInteger.Raw, SeedValidation.LargeInteger> =
-    core.serialization.number();
+    core.serialization.number() as any;
 
 export declare namespace LargeInteger {
     export type Raw = number;

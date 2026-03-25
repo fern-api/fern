@@ -15,7 +15,7 @@ export const UnionWithDuplicateTypes: core.serialization.Schema<
     .transform<SeedUnions.UnionWithDuplicateTypes>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithDuplicateTypes {
     export type Raw = UnionWithDuplicateTypes.Foo1 | UnionWithDuplicateTypes.Foo2;

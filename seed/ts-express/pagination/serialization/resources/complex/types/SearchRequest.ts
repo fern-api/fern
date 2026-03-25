@@ -10,7 +10,7 @@ export const SearchRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(() => serializers.StartingAfterPaging).optional(),
     query: core.serialization.lazy(() => serializers.SearchRequestQuery),
-});
+}) as any;
 
 export declare namespace SearchRequest {
     export interface Raw {

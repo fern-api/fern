@@ -8,7 +8,7 @@ export const SendEvent2: core.serialization.ObjectSchema<serializers.SendEvent2.
     core.serialization.object({
         sendText2: core.serialization.string(),
         sendParam2: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace SendEvent2 {
     export interface Raw {

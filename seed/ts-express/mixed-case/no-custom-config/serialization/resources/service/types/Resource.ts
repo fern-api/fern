@@ -15,7 +15,7 @@ export const Resource: core.serialization.Schema<serializers.Resource.Raw, SeedM
     .transform<SeedMixedCase.Resource>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Resource {
     export type Raw = Resource.User | Resource.Organization;

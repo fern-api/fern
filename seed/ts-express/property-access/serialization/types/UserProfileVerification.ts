@@ -9,7 +9,7 @@ export const UserProfileVerification: core.serialization.ObjectSchema<
     SeedPropertyAccess.UserProfileVerification
 > = core.serialization.object({
     verified: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace UserProfileVerification {
     export interface Raw {

@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const SingleFilterSearchRequestOperator: core.serialization.Schema<
     serializers.SingleFilterSearchRequestOperator.Raw,
     SeedPagination.SingleFilterSearchRequestOperator
-> = core.serialization.enum_(["=", "!=", "IN", "NIN", "<", ">", "~", "!~", "^", "$"]);
+> = core.serialization.enum_(["=", "!=", "IN", "NIN", "<", ">", "~", "!~", "^", "$"]) as any;
 
 export declare namespace SingleFilterSearchRequestOperator {
     export type Raw = "=" | "!=" | "IN" | "NIN" | "<" | ">" | "~" | "!~" | "^" | "$";

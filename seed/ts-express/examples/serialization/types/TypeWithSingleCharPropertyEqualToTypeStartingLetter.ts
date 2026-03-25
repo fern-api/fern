@@ -10,7 +10,7 @@ export const TypeWithSingleCharPropertyEqualToTypeStartingLetter: core.serializa
 > = core.serialization.object({
     t: core.serialization.string(),
     ty: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TypeWithSingleCharPropertyEqualToTypeStartingLetter {
     export interface Raw {

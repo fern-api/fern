@@ -9,7 +9,7 @@ export const PracticalPrinciple: core.serialization.ObjectSchema<
     SeedUnions.PracticalPrinciple
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace PracticalPrinciple {
     export interface Raw {

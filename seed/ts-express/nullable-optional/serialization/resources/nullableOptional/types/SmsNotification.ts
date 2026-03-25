@@ -11,7 +11,7 @@ export const SmsNotification: core.serialization.ObjectSchema<
     phoneNumber: core.serialization.string(),
     message: core.serialization.string(),
     shortCode: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace SmsNotification {
     export interface Raw {

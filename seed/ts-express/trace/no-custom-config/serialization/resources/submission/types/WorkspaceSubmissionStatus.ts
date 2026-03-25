@@ -22,7 +22,7 @@ export const WorkspaceSubmissionStatus: core.serialization.Schema<
     .transform<SeedTrace.WorkspaceSubmissionStatus>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace WorkspaceSubmissionStatus {
     export type Raw =

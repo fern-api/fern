@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const ActiveDiamond: core.serialization.ObjectSchema<serializers.ActiveDiamond.Raw, SeedUnions.ActiveDiamond> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace ActiveDiamond {
     export interface Raw {

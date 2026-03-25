@@ -8,7 +8,7 @@ export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, S
     core.serialization.object({
         keyType: core.serialization.lazy(() => serializers.VariableType),
         valueType: core.serialization.lazy(() => serializers.VariableType),
-    });
+    }) as any;
 
 export declare namespace MapType {
     export interface Raw {

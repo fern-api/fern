@@ -8,7 +8,7 @@ import { ExceptionInfo } from "./ExceptionInfo.js";
 export const InternalError: core.serialization.ObjectSchema<serializers.InternalError.Raw, SeedTrace.InternalError> =
     core.serialization.object({
         exceptionInfo: ExceptionInfo,
-    });
+    }) as any;
 
 export declare namespace InternalError {
     export interface Raw {

@@ -9,7 +9,7 @@ export const TriangularRepair: core.serialization.ObjectSchema<
     SeedUnions.TriangularRepair
 > = core.serialization.object({
     value: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TriangularRepair {
     export interface Raw {

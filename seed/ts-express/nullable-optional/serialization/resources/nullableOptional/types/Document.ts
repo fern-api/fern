@@ -11,7 +11,7 @@ export const Document: core.serialization.ObjectSchema<serializers.Document.Raw,
         content: core.serialization.string(),
         author: core.serialization.string().nullable(),
         tags: core.serialization.list(core.serialization.string()).optional(),
-    });
+    }) as any;
 
 export declare namespace Document {
     export interface Raw {

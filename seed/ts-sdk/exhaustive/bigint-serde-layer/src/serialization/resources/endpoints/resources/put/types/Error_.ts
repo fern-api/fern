@@ -14,7 +14,7 @@ export const Error_: core.serialization.ObjectSchema<
     code: ErrorCode,
     detail: core.serialization.string().optional(),
     field: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace Error_ {
     export interface Raw {

@@ -3,7 +3,8 @@
 import * as core from "../../core";
 import type * as serializers from "../index";
 
-export const Response: core.serialization.Schema<serializers.echo.Response.Raw, string> = core.serialization.string();
+export const Response: core.serialization.Schema<serializers.echo.Response.Raw, string> =
+    core.serialization.string() as any;
 
 export declare namespace Response {
     export type Raw = string;

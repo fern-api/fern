@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const NullableObject: core.serialization.ObjectSchema<serializers.NullableObject.Raw, SeedApi.NullableObject> =
     core.serialization.object({
         nullableField: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace NullableObject {
     export interface Raw {

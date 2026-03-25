@@ -10,7 +10,7 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectS
     SeedTrace.v2.v3.GetGeneratedTestCaseTemplateFileRequest
 > = core.serialization.object({
     template: TestCaseTemplate,
-});
+}) as any;
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
     export interface Raw {

@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const UserRole: core.serialization.Schema<serializers.UserRole.Raw, SeedNullableOptional.UserRole> =
-    core.serialization.enum_(["ADMIN", "USER", "GUEST", "MODERATOR"]);
+    core.serialization.enum_(["ADMIN", "USER", "GUEST", "MODERATOR"]) as any;
 
 export declare namespace UserRole {
     export type Raw = "ADMIN" | "USER" | "GUEST" | "MODERATOR";

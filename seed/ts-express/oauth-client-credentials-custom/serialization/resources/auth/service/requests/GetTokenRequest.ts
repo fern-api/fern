@@ -15,7 +15,7 @@ export const GetTokenRequest: core.serialization.Schema<
     audience: core.serialization.stringLiteral("https://api.example.com"),
     grantType: core.serialization.property("grant_type", core.serialization.stringLiteral("client_credentials")),
     scope: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace GetTokenRequest {
     export interface Raw {

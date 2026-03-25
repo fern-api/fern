@@ -20,7 +20,7 @@ export const ActualResult: core.serialization.Schema<serializers.ActualResult.Ra
         .transform<SeedTrace.ActualResult>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace ActualResult {
     export type Raw = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;

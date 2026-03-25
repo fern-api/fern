@@ -10,7 +10,7 @@ export const RunningResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     state: core.serialization.lazy(() => serializers.RunningSubmissionState),
-});
+}) as any;
 
 export declare namespace RunningResponse {
     export interface Raw {

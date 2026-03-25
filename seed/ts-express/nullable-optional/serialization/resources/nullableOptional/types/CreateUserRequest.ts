@@ -12,7 +12,7 @@ export const CreateUserRequest: core.serialization.ObjectSchema<
     email: core.serialization.string().nullable(),
     phone: core.serialization.string().optional(),
     address: core.serialization.lazyObject(() => serializers.Address).optionalNullable(),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

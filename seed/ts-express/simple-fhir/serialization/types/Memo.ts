@@ -7,7 +7,7 @@ import * as serializers from "../index";
 export const Memo: core.serialization.ObjectSchema<serializers.Memo.Raw, SeedApi.Memo> = core.serialization.object({
     description: core.serialization.string(),
     account: core.serialization.lazyObject(() => serializers.Account).optional(),
-});
+}) as any;
 
 export declare namespace Memo {
     export interface Raw {

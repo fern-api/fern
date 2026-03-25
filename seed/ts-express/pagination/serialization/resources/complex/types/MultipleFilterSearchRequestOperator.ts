@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const MultipleFilterSearchRequestOperator: core.serialization.Schema<
     serializers.MultipleFilterSearchRequestOperator.Raw,
     SeedPagination.MultipleFilterSearchRequestOperator
-> = core.serialization.enum_(["AND", "OR"]);
+> = core.serialization.enum_(["AND", "OR"]) as any;
 
 export declare namespace MultipleFilterSearchRequestOperator {
     export type Raw = "AND" | "OR";

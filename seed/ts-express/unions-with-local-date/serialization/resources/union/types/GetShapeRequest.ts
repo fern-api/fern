@@ -9,7 +9,7 @@ export const GetShapeRequest: core.serialization.ObjectSchema<
     SeedUnions.GetShapeRequest
 > = core.serialization.object({
     id: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace GetShapeRequest {
     export interface Raw {

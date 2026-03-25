@@ -19,7 +19,7 @@ export const BigEntity: core.serialization.ObjectSchema<serializers.BigEntity.Ra
         node: core.serialization.lazyObject(() => serializers.Node).optional(),
         directory: core.serialization.lazyObject(() => serializers.Directory).optional(),
         moment: core.serialization.lazyObject(() => serializers.Moment).optional(),
-    });
+    }) as any;
 
 export declare namespace BigEntity {
     export interface Raw {

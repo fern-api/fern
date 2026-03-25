@@ -8,7 +8,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNoR
     core.serialization.object({
         id: core.serialization.string(),
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

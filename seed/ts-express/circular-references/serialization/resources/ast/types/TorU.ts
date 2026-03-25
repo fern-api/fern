@@ -8,7 +8,7 @@ export const TorU: core.serialization.Schema<serializers.TorU.Raw, SeedApi.TorU>
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(() => serializers.T),
         core.serialization.lazyObject(() => serializers.U),
-    ]);
+    ]) as any;
 
 export declare namespace TorU {
     export type Raw = serializers.T.Raw | serializers.U.Raw;

@@ -14,7 +14,7 @@ export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw,
         .transform<SeedTrace.ExceptionV2>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace ExceptionV2 {
     export type Raw = ExceptionV2.Generic | ExceptionV2.Timeout;

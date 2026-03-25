@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const MigrationStatus: core.serialization.Schema<serializers.MigrationStatus.Raw, SeedTrace.MigrationStatus> =
-    core.serialization.enum_(["RUNNING", "FAILED", "FINISHED"]);
+    core.serialization.enum_(["RUNNING", "FAILED", "FINISHED"]) as any;
 
 export declare namespace MigrationStatus {
     export type Raw = "RUNNING" | "FAILED" | "FINISHED";

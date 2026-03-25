@@ -19,7 +19,7 @@ export const UnionWithNullableReference: core.serialization.Schema<
     .transform<SeedUnions.UnionWithNullableReference>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithNullableReference {
     export type Raw = UnionWithNullableReference.Foo | UnionWithNullableReference.Bar;

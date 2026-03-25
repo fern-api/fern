@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.contacts.create.Response.Raw,
     SeedApi.Contact | undefined
-> = core.serialization.lazyObject(() => serializers.Contact).optional();
+> = core.serialization.lazyObject(() => serializers.Contact).optional() as any;
 
 export declare namespace Response {
     export type Raw = serializers.Contact.Raw | null | undefined;

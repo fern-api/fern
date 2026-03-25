@@ -8,7 +8,7 @@ export const Event: core.serialization.ObjectSchema<serializers.user.Event.Raw, 
     core.serialization.object({
         id: core.serialization.lazy(() => serializers.Id),
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Event {
     export interface Raw {

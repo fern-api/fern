@@ -12,7 +12,7 @@ export const TokenResponse: core.serialization.ObjectSchema<
     tokenType: core.serialization.property("token_type", core.serialization.string()),
     expiresIn: core.serialization.property("expires_in", core.serialization.number()),
     scope: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace TokenResponse {
     export interface Raw {

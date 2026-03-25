@@ -10,7 +10,7 @@ export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
 > = core.serialization.object({
     problemId: core.serialization.lazy(() => serializers.ProblemId),
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
-});
+}) as any;
 
 export declare namespace CustomTestCasesUnsupported {
     export interface Raw {

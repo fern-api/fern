@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.ObjectSchema<serializers.Request.Raw, SeedUndiscriminatedUnions.Request> =
     core.serialization.object({
         union: core.serialization.lazy(() => serializers.MetadataUnion).optional(),
-    });
+    }) as any;
 
 export declare namespace Request {
     export interface Raw {

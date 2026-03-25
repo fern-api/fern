@@ -12,7 +12,7 @@ export const ErroredResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: SubmissionId,
     errorInfo: ErrorInfo,
-});
+}) as any;
 
 export declare namespace ErroredResponse {
     export interface Raw {

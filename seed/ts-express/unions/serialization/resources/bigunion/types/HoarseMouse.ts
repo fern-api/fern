@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const HoarseMouse: core.serialization.ObjectSchema<serializers.HoarseMouse.Raw, SeedUnions.HoarseMouse> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace HoarseMouse {
     export interface Raw {

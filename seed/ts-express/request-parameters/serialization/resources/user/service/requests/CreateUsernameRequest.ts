@@ -11,7 +11,7 @@ export const CreateUsernameRequest: core.serialization.Schema<
     username: core.serialization.string(),
     password: core.serialization.string(),
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace CreateUsernameRequest {
     export interface Raw {

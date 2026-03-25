@@ -26,7 +26,7 @@ export const UserProfile: core.serialization.ObjectSchema<
     optionalMap: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     optionalNullableString: core.serialization.string().optionalNullable(),
     optionalNullableObject: core.serialization.lazyObject(() => serializers.Address).optionalNullable(),
-});
+}) as any;
 
 export declare namespace UserProfile {
     export interface Raw {

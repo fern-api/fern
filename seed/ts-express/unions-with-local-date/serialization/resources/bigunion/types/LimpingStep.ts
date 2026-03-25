@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const LimpingStep: core.serialization.ObjectSchema<serializers.LimpingStep.Raw, SeedUnions.LimpingStep> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace LimpingStep {
     export interface Raw {

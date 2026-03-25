@@ -9,7 +9,7 @@ export const ANestedLiteral: core.serialization.ObjectSchema<
     SeedLiteral.ANestedLiteral
 > = core.serialization.object({
     myLiteral: core.serialization.stringLiteral("How super cool"),
-});
+}) as any;
 
 export declare namespace ANestedLiteral {
     export interface Raw {

@@ -17,7 +17,7 @@ export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, S
     .transform<SeedApi.FieldValue>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace FieldValue {
     export type Raw = FieldValue.PrimitiveValue | FieldValue.ObjectValue | FieldValue.ContainerValue;

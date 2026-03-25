@@ -13,7 +13,7 @@ export const RecordingResponseNotification: core.serialization.ObjectSchema<
     lineNumber: core.serialization.number(),
     lightweightStackInfo: core.serialization.lazyObject(() => serializers.LightweightStackframeInformation),
     tracedFile: core.serialization.lazyObject(() => serializers.TracedFile).optional(),
-});
+}) as any;
 
 export declare namespace RecordingResponseNotification {
     export interface Raw {

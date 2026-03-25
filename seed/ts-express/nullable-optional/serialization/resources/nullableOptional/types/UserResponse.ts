@@ -15,7 +15,7 @@ export const UserResponse: core.serialization.ObjectSchema<
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date().nullable(),
     address: core.serialization.lazyObject(() => serializers.Address).optional(),
-});
+}) as any;
 
 export declare namespace UserResponse {
     export interface Raw {

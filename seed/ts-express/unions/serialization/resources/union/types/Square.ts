@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const Square: core.serialization.ObjectSchema<serializers.Square.Raw, SeedUnions.Square> =
     core.serialization.object({
         length: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace Square {
     export interface Raw {

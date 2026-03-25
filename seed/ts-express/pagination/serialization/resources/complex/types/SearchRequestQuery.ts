@@ -10,7 +10,7 @@ export const SearchRequestQuery: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazyObject(() => serializers.SingleFilterSearchRequest),
     core.serialization.lazyObject(() => serializers.MultipleFilterSearchRequest),
-]);
+]) as any;
 
 export declare namespace SearchRequestQuery {
     export type Raw = serializers.SingleFilterSearchRequest.Raw | serializers.MultipleFilterSearchRequest.Raw;

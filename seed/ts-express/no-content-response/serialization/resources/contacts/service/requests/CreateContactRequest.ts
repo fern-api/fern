@@ -10,7 +10,7 @@ export const CreateContactRequest: core.serialization.Schema<
 > = core.serialization.object({
     name: core.serialization.string(),
     email: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace CreateContactRequest {
     export interface Raw {

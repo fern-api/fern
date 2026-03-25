@@ -10,7 +10,7 @@ export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     testCaseId: core.serialization.lazy(() => serializers.v2.TestCaseId),
     traceResponsesSize: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace RecordedTestCaseUpdate {
     export interface Raw {

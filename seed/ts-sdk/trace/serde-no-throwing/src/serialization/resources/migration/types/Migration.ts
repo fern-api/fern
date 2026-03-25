@@ -9,7 +9,7 @@ export const Migration: core.serialization.ObjectSchema<serializers.Migration.Ra
     core.serialization.object({
         name: core.serialization.string(),
         status: MigrationStatus,
-    });
+    }) as any;
 
 export declare namespace Migration {
     export interface Raw {

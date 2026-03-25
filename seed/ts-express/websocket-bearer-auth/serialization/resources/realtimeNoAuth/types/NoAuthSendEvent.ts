@@ -9,7 +9,7 @@ export const NoAuthSendEvent: core.serialization.ObjectSchema<
     SeedWebsocketBearerAuth.NoAuthSendEvent
 > = core.serialization.object({
     text: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace NoAuthSendEvent {
     export interface Raw {

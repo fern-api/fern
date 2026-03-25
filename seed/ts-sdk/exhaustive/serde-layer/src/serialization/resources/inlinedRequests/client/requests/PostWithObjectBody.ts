@@ -12,7 +12,7 @@ export const PostWithObjectBody: core.serialization.Schema<
     string: core.serialization.string(),
     integer: core.serialization.number(),
     nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField),
-});
+}) as any;
 
 export declare namespace PostWithObjectBody {
     export interface Raw {

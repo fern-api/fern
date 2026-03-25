@@ -10,7 +10,7 @@ export const SubmissionIdNotFound: core.serialization.ObjectSchema<
     SeedTrace.SubmissionIdNotFound
 > = core.serialization.object({
     missingSubmissionId: SubmissionId,
-});
+}) as any;
 
 export declare namespace SubmissionIdNotFound {
     export interface Raw {

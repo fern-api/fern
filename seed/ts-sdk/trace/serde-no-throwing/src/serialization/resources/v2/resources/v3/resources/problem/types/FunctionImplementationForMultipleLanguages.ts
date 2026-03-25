@@ -11,7 +11,7 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
     SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages
 > = core.serialization.object({
     codeByLanguage: core.serialization.partialRecord(Language, FunctionImplementation.optional()),
-});
+}) as any;
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     export interface Raw {

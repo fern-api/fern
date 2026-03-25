@@ -12,7 +12,7 @@ export const ObjectWithMapOfMap: core.serialization.ObjectSchema<
         core.serialization.string(),
         core.serialization.record(core.serialization.string(), core.serialization.string()),
     ),
-});
+}) as any;
 
 export declare namespace ObjectWithMapOfMap {
     export interface Raw {

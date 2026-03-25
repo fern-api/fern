@@ -8,7 +8,7 @@ import { NestedObjectWithRequiredField } from "../../../../types/resources/objec
 export const Request: core.serialization.Schema<
     serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
     SeedExhaustive.types.NestedObjectWithRequiredField[]
-> = core.serialization.list(NestedObjectWithRequiredField);
+> = core.serialization.list(NestedObjectWithRequiredField) as any;
 
 export declare namespace Request {
     export type Raw = NestedObjectWithRequiredField.Raw[];

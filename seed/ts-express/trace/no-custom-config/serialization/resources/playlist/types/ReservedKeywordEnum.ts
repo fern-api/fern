@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const ReservedKeywordEnum: core.serialization.Schema<
     serializers.ReservedKeywordEnum.Raw,
     SeedTrace.ReservedKeywordEnum
-> = core.serialization.enum_(["is", "as"]);
+> = core.serialization.enum_(["is", "as"]) as any;
 
 export declare namespace ReservedKeywordEnum {
     export type Raw = "is" | "as";

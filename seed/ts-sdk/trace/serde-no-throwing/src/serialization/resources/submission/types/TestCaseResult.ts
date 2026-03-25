@@ -10,7 +10,7 @@ export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCas
         expectedResult: core.serialization.lazy(() => serializers.VariableValue),
         actualResult: ActualResult,
         passed: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace TestCaseResult {
     export interface Raw {

@@ -20,7 +20,7 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
-});
+}) as any;
 
 export declare namespace GeneratedFiles {
     export interface Raw {

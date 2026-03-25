@@ -9,7 +9,7 @@ export const ExtendedMovie: core.serialization.ObjectSchema<serializers.Extended
         .object({
             cast: core.serialization.list(core.serialization.string()),
         })
-        .extend(core.serialization.lazyObject(() => serializers.Movie));
+        .extend(core.serialization.lazyObject(() => serializers.Movie)) as any;
 
 export declare namespace ExtendedMovie {
     export interface Raw extends serializers.Movie.Raw {

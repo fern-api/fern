@@ -13,7 +13,7 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
     generatedTestCaseFiles: core.serialization.partialRecord(Language, Files.optional()),
     generatedTemplateFiles: core.serialization.partialRecord(Language, Files.optional()),
     other: core.serialization.partialRecord(Language, Files.optional()),
-});
+}) as any;
 
 export declare namespace GeneratedFiles {
     export interface Raw {

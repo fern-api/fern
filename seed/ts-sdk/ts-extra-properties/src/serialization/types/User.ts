@@ -11,7 +11,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedApi
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date().optional()),
     })
-    .passthrough();
+    .passthrough() as any;
 
 export declare namespace User {
     export interface Raw {

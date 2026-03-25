@@ -10,7 +10,7 @@ export const UserOptionalListPage: core.serialization.ObjectSchema<
 > = core.serialization.object({
     data: core.serialization.lazyObject(() => serializers.UserOptionalListContainer),
     next: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace UserOptionalListPage {
     export interface Raw {

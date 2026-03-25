@@ -21,7 +21,7 @@ export const ObjectWithOptionalField: core.serialization.ObjectSchema<
     set: core.serialization.set(core.serialization.string()).optional(),
     map: core.serialization.record(core.serialization.number(), core.serialization.string()).optional(),
     bigint: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace ObjectWithOptionalField {
     export interface Raw {

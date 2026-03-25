@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix TS2322 type errors in generated serialization schemas for objects with
+        many properties by adding a type assertion on the schema initializer.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-25"
+  version: 0.19.11
+
+- changelogEntry:
+    - summary: |
         Fix npm publish authentication failing when the registry URL includes a port number.
         The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
         instead of `URL.host` (which preserves it).

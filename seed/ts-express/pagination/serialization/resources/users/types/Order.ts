@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const Order: core.serialization.Schema<serializers.Order.Raw, SeedPagination.Order> = core.serialization.enum_([
     "asc",
     "desc",
-]);
+]) as any;
 
 export declare namespace Order {
     export type Raw = "asc" | "desc";

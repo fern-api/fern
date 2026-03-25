@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const ShareId: core.serialization.Schema<serializers.ShareId.Raw, SeedTrace.ShareId> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace ShareId {
     export type Raw = string;

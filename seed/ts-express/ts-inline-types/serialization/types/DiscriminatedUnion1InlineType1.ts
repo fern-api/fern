@@ -11,7 +11,7 @@ export const DiscriminatedUnion1InlineType1: core.serialization.ObjectSchema<
     foo: core.serialization.string(),
     bar: core.serialization.lazyObject(() => serializers.DiscriminatedUnion1InlineType1InlineType1),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace DiscriminatedUnion1InlineType1 {
     export interface Raw {

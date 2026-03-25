@@ -16,7 +16,7 @@ export const Union: core.serialization.Schema<serializers.Union.Raw, SeedUnions.
     .transform<SeedUnions.Union>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Union {
     export type Raw = Union.Foo | Union.Bar;

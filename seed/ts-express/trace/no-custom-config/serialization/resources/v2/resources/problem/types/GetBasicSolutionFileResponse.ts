@@ -12,7 +12,7 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.FileInfoV2).optional(),
     ),
-});
+}) as any;
 
 export declare namespace GetBasicSolutionFileResponse {
     export interface Raw {

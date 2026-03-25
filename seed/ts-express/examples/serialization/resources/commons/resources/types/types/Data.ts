@@ -17,7 +17,7 @@ export const Data: core.serialization.Schema<serializers.commons.Data.Raw, SeedE
         .transform<SeedExamples.commons.Data>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace Data {
     export type Raw = Data.String | Data.Base64;

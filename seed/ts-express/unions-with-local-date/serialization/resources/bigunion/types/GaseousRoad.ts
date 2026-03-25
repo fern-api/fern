@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const GaseousRoad: core.serialization.ObjectSchema<serializers.GaseousRoad.Raw, SeedUnions.GaseousRoad> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace GaseousRoad {
     export interface Raw {

@@ -8,7 +8,7 @@ export const Actress: core.serialization.ObjectSchema<serializers.Actress.Raw, S
     core.serialization.object({
         name: core.serialization.string(),
         id: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Actress {
     export interface Raw {

@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const WithCursor: core.serialization.ObjectSchema<serializers.WithCursor.Raw, SeedPagination.WithCursor> =
     core.serialization.object({
         cursor: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace WithCursor {
     export interface Raw {

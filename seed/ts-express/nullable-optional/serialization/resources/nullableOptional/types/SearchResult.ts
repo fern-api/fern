@@ -14,7 +14,7 @@ export const SearchResult: core.serialization.Schema<serializers.SearchResult.Ra
         .transform<SeedNullableOptional.SearchResult>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace SearchResult {
     export type Raw = SearchResult.User | SearchResult.Organization | SearchResult.Document;

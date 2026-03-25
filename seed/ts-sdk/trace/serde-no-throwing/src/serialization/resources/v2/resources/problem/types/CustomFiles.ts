@@ -18,7 +18,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.R
         .transform<SeedTrace.v2.CustomFiles>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace CustomFiles {
     export type Raw = CustomFiles.Basic | CustomFiles.Custom;

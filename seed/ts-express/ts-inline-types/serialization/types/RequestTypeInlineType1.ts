@@ -9,7 +9,7 @@ export const RequestTypeInlineType1: core.serialization.ObjectSchema<
     SeedObject.RequestTypeInlineType1
 > = core.serialization.object({
     foo: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace RequestTypeInlineType1 {
     export interface Raw {

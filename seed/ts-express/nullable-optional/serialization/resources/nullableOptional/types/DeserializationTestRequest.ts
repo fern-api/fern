@@ -20,7 +20,7 @@ export const DeserializationTestRequest: core.serialization.ObjectSchema<
     nullableMap: core.serialization.record(core.serialization.string(), core.serialization.number()).nullable(),
     nullableObject: core.serialization.lazyObject(() => serializers.Address).nullable(),
     optionalObject: core.serialization.lazyObject(() => serializers.Organization).optional(),
-});
+}) as any;
 
 export declare namespace DeserializationTestRequest {
     export interface Raw {

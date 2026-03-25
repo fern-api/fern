@@ -9,7 +9,7 @@ export const WithCursor: core.serialization.ObjectSchema<
     SeedPagination.inlineUsers.WithCursor
 > = core.serialization.object({
     cursor: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace WithCursor {
     export interface Raw {

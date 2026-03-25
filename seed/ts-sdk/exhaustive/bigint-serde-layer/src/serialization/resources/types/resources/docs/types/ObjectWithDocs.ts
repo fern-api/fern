@@ -9,7 +9,7 @@ export const ObjectWithDocs: core.serialization.ObjectSchema<
     SeedExhaustive.types.ObjectWithDocs
 > = core.serialization.object({
     string: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace ObjectWithDocs {
     export interface Raw {

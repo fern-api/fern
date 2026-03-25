@@ -8,7 +8,7 @@ export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedU
     core.serialization.record(
         core.serialization.lazy(() => serializers.Key),
         core.serialization.string(),
-    );
+    ) as any;
 
 export declare namespace Metadata {
     export type Raw = Record<serializers.Key.Raw, string>;

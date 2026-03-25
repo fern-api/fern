@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const UndiscriminatedUnion1InlineEnum1: core.serialization.Schema<
     serializers.UndiscriminatedUnion1InlineEnum1.Raw,
     SeedObject.UndiscriminatedUnion1InlineEnum1
-> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
+> = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]) as any;
 
 export declare namespace UndiscriminatedUnion1InlineEnum1 {
     export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";

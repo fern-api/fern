@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const NormalSweet: core.serialization.ObjectSchema<serializers.NormalSweet.Raw, SeedUnions.NormalSweet> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace NormalSweet {
     export interface Raw {

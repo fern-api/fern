@@ -4,7 +4,7 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnLong.Request.Raw, bigint> =
-    core.serialization.bigint();
+    core.serialization.bigint() as any;
 
 export declare namespace Request {
     export type Raw = bigint | number;
@@ -13,7 +13,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.primitive.getAndReturnLong.Response.Raw,
     bigint
-> = core.serialization.bigint();
+> = core.serialization.bigint() as any;
 
 export declare namespace Response {
     export type Raw = bigint | number;

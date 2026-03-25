@@ -7,14 +7,14 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.optional.sendOptionalTypedBody.Request.Raw,
     SeedObjectsWithImports.SendOptionalBodyRequest | undefined
-> = core.serialization.lazyObject(() => serializers.SendOptionalBodyRequest).optional();
+> = core.serialization.lazyObject(() => serializers.SendOptionalBodyRequest).optional() as any;
 
 export declare namespace Request {
     export type Raw = serializers.SendOptionalBodyRequest.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<serializers.optional.sendOptionalTypedBody.Response.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Response {
     export type Raw = string;

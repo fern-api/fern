@@ -4,7 +4,8 @@ import type * as SeedMixedFileDirectory from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
 
-export const Id: core.serialization.Schema<serializers.Id.Raw, SeedMixedFileDirectory.Id> = core.serialization.string();
+export const Id: core.serialization.Schema<serializers.Id.Raw, SeedMixedFileDirectory.Id> =
+    core.serialization.string() as any;
 
 export declare namespace Id {
     export type Raw = string;

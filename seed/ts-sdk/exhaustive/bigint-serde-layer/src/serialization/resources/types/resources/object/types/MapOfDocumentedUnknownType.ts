@@ -8,7 +8,7 @@ import { DocumentedUnknownType } from "./DocumentedUnknownType.js";
 export const MapOfDocumentedUnknownType: core.serialization.Schema<
     serializers.types.MapOfDocumentedUnknownType.Raw,
     SeedExhaustive.types.MapOfDocumentedUnknownType
-> = core.serialization.record(core.serialization.string(), DocumentedUnknownType);
+> = core.serialization.record(core.serialization.string(), DocumentedUnknownType) as any;
 
 export declare namespace MapOfDocumentedUnknownType {
     export type Raw = Record<string, DocumentedUnknownType.Raw>;

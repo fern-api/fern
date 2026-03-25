@@ -18,20 +18,31 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
     }
 
     public writeSchemaToFile(context: Context): void {
+        const schemaTypeNode = this.getReferenceToSchemaType({
+            context,
+            rawShape: this.getReferenceToRawShape(context),
+            parsedShape: this.getReferenceToParsedShape(context)
+        });
+        const schemaExpression = this.buildSchema(context).toExpression();
+
+        // Wrap the initializer in a type assertion to prevent TypeScript from
+        // trying to verify the complex inferred return type of object() against
+        // the declared schema type. For objects with many properties, the
+        // inferObjectSchemaFromPropertySchemas<T> type can exceed TypeScript's
+        // type instantiation depth limit, causing TS2322 errors.
+        const assertedExpression = ts.factory.createAsExpression(
+            schemaExpression,
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+        );
+
         context.sourceFile.addVariableStatement({
             isExported: true,
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
                 {
                     name: this.typeName,
-                    type: getTextOfTsNode(
-                        this.getReferenceToSchemaType({
-                            context,
-                            rawShape: this.getReferenceToRawShape(context),
-                            parsedShape: this.getReferenceToParsedShape(context)
-                        })
-                    ),
-                    initializer: getTextOfTsNode(this.buildSchema(context).toExpression())
+                    type: getTextOfTsNode(schemaTypeNode),
+                    initializer: getTextOfTsNode(assertedExpression)
                 }
             ]
         });

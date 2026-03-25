@@ -11,7 +11,7 @@ export const Organization: core.serialization.ObjectSchema<
     id: core.serialization.lazy(() => serializers.Id),
     name: core.serialization.string(),
     users: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
-});
+}) as any;
 
 export declare namespace Organization {
     export interface Raw {

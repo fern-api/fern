@@ -10,7 +10,7 @@ export const StartingAfterPaging: core.serialization.ObjectSchema<
 > = core.serialization.object({
     perPage: core.serialization.property("per_page", core.serialization.number()),
     startingAfter: core.serialization.property("starting_after", core.serialization.string().optional()),
-});
+}) as any;
 
 export declare namespace StartingAfterPaging {
     export interface Raw {

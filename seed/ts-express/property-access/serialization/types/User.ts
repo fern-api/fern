@@ -10,7 +10,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedPro
         email: core.serialization.string(),
         password: core.serialization.string(),
         profile: core.serialization.lazyObject(() => serializers.UserProfile),
-    });
+    }) as any;
 
 export declare namespace User {
     export interface Raw {

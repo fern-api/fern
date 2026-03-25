@@ -12,7 +12,7 @@ export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
     language: core.serialization.lazy(() => serializers.Language),
     submissionFiles: core.serialization.list(core.serialization.lazyObject(() => serializers.SubmissionFileInfo)),
     userId: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace WorkspaceSubmitRequest {
     export interface Raw {

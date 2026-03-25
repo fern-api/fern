@@ -9,7 +9,7 @@ export const ListUsersBodyCursorPaginationRequest: core.serialization.Schema<
     SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(() => serializers.inlineUsers.WithCursor).optional(),
-});
+}) as any;
 
 export declare namespace ListUsersBodyCursorPaginationRequest {
     export interface Raw {

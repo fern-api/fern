@@ -11,7 +11,7 @@ export const TestCaseResultWithStdout: core.serialization.ObjectSchema<
 > = core.serialization.object({
     result: TestCaseResult,
     stdout: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TestCaseResultWithStdout {
     export interface Raw {

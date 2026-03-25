@@ -11,7 +11,7 @@ export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     testCaseId: TestCaseId,
     traceResponsesSize: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace RecordedTestCaseUpdate {
     export interface Raw {

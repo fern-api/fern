@@ -10,7 +10,7 @@ export const Organization: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     tags: core.serialization.list(core.serialization.string()),
-});
+}) as any;
 
 export declare namespace Organization {
     export interface Raw {

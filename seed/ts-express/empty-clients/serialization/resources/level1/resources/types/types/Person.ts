@@ -8,7 +8,7 @@ export const Person: core.serialization.ObjectSchema<serializers.level1.Person.R
     core.serialization.object({
         name: core.serialization.string(),
         address: core.serialization.lazyObject(() => serializers.level1.Address),
-    });
+    }) as any;
 
 export declare namespace Person {
     export interface Raw {

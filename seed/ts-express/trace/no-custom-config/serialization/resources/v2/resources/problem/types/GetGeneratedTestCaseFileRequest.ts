@@ -10,7 +10,7 @@ export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     template: core.serialization.lazyObject(() => serializers.v2.TestCaseTemplate).optional(),
     testCase: core.serialization.lazyObject(() => serializers.v2.TestCaseV2),
-});
+}) as any;
 
 export declare namespace GetGeneratedTestCaseFileRequest {
     export interface Raw {

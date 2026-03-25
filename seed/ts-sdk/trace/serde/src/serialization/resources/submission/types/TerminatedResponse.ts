@@ -7,7 +7,7 @@ import type * as serializers from "../../../index.js";
 export const TerminatedResponse: core.serialization.ObjectSchema<
     serializers.TerminatedResponse.Raw,
     SeedTrace.TerminatedResponse
-> = core.serialization.object({});
+> = core.serialization.object({}) as any;
 
 export declare namespace TerminatedResponse {
     export type Raw = {};

@@ -17,7 +17,7 @@ export const ContainerValue: core.serialization.Schema<serializers.ContainerValu
         .transform<SeedApi.ContainerValue>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace ContainerValue {
     export type Raw = ContainerValue.List | ContainerValue.Optional;

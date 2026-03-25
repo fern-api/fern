@@ -10,7 +10,7 @@ export const TestCaseResultWithStdout: core.serialization.ObjectSchema<
 > = core.serialization.object({
     result: core.serialization.lazyObject(() => serializers.TestCaseResult),
     stdout: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TestCaseResultWithStdout {
     export interface Raw {

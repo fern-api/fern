@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.homepage.setHomepageProblems.Request.Raw,
     SeedTrace.ProblemId[]
-> = core.serialization.list(core.serialization.lazy(() => serializers.ProblemId));
+> = core.serialization.list(core.serialization.lazy(() => serializers.ProblemId)) as any;
 
 export declare namespace Request {
     export type Raw = serializers.ProblemId.Raw[];

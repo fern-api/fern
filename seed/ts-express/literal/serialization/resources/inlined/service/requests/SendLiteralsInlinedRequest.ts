@@ -16,7 +16,7 @@ export const SendLiteralsInlinedRequest: core.serialization.Schema<
     aliasedContext: core.serialization.lazy(() => serializers.SomeAliasedLiteral),
     maybeContext: core.serialization.lazy(() => serializers.SomeAliasedLiteral).optional(),
     objectWithLiteral: core.serialization.lazyObject(() => serializers.ATopLevelLiteral),
-});
+}) as any;
 
 export declare namespace SendLiteralsInlinedRequest {
     export interface Raw {

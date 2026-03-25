@@ -11,7 +11,7 @@ export const ListUsersExtendedResponse: core.serialization.ObjectSchema<
     .object({
         totalCount: core.serialization.property("total_count", core.serialization.number()),
     })
-    .extend(core.serialization.lazyObject(() => serializers.UserPage));
+    .extend(core.serialization.lazyObject(() => serializers.UserPage)) as any;
 
 export declare namespace ListUsersExtendedResponse {
     export interface Raw extends serializers.UserPage.Raw {

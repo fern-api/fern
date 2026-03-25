@@ -4,7 +4,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const NotFoundError: core.serialization.Schema<serializers.NotFoundError.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace NotFoundError {
     export type Raw = string;

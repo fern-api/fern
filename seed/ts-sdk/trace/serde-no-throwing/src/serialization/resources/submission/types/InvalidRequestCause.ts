@@ -19,7 +19,7 @@ export const InvalidRequestCause: core.serialization.Schema<
     .transform<SeedTrace.InvalidRequestCause>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace InvalidRequestCause {
     export type Raw =

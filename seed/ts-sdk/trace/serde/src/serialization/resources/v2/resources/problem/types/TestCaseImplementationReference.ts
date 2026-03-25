@@ -19,7 +19,7 @@ export const TestCaseImplementationReference: core.serialization.Schema<
     .transform<SeedTrace.v2.TestCaseImplementationReference>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace TestCaseImplementationReference {
     export type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;

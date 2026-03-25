@@ -8,7 +8,7 @@ export const Entity: core.serialization.ObjectSchema<serializers.Entity.Raw, See
     core.serialization.object({
         type: core.serialization.lazy(() => serializers.Type),
         name: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Entity {
     export interface Raw {

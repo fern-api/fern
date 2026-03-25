@@ -8,7 +8,7 @@ export const Node: core.serialization.Schema<serializers.Node.Raw, SeedApi.Node>
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(() => serializers.BranchNode),
         core.serialization.lazyObject(() => serializers.LeafNode),
-    ]);
+    ]) as any;
 
 export declare namespace Node {
     export type Raw = serializers.BranchNode.Raw | serializers.LeafNode.Raw;

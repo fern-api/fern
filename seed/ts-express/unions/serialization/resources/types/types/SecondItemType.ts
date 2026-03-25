@@ -10,7 +10,7 @@ export const SecondItemType: core.serialization.ObjectSchema<
 > = core.serialization.object({
     type: core.serialization.stringLiteral("secondItemType").optional(),
     title: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace SecondItemType {
     export interface Raw {

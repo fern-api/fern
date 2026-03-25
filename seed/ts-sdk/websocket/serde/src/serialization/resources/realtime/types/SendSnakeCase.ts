@@ -10,7 +10,7 @@ export const SendSnakeCase: core.serialization.ObjectSchema<
 > = core.serialization.object({
     sendText: core.serialization.property("send_text", core.serialization.string()),
     sendParam: core.serialization.property("send_param", core.serialization.number()),
-});
+}) as any;
 
 export declare namespace SendSnakeCase {
     export interface Raw {

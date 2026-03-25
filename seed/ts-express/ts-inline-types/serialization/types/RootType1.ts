@@ -15,7 +15,7 @@ export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Ra
         fooList: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooListItem)),
         fooSet: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooSetItem)),
         ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-    });
+    }) as any;
 
 export declare namespace RootType1 {
     export interface Raw {

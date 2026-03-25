@@ -7,7 +7,7 @@ import * as serializers from "../../../../../index";
 export const Foo: core.serialization.ObjectSchema<serializers.folderB.Foo.Raw, SeedAudiences.folderB.Foo> =
     core.serialization.object({
         foo: core.serialization.lazyObject(() => serializers.folderC.FolderCFoo).optional(),
-    });
+    }) as any;
 
 export declare namespace Foo {
     export interface Raw {

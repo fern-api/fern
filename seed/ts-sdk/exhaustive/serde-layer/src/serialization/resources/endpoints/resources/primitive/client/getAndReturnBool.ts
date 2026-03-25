@@ -4,7 +4,7 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnBool.Request.Raw, boolean> =
-    core.serialization.boolean();
+    core.serialization.boolean() as any;
 
 export declare namespace Request {
     export type Raw = boolean;
@@ -13,7 +13,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.primitive.getAndReturnBool.Response.Raw,
     boolean
-> = core.serialization.boolean();
+> = core.serialization.boolean() as any;
 
 export declare namespace Response {
     export type Raw = boolean;

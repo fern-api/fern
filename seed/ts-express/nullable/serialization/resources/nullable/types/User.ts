@@ -20,7 +20,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNul
             .record(core.serialization.string(), core.serialization.unknown())
             .optionalNullable(),
     },
-);
+) as any;
 
 export declare namespace User {
     export interface Raw {

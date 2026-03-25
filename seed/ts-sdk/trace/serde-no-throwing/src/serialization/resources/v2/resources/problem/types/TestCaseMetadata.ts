@@ -12,7 +12,7 @@ export const TestCaseMetadata: core.serialization.ObjectSchema<
     id: TestCaseId,
     name: core.serialization.string(),
     hidden: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace TestCaseMetadata {
     export interface Raw {

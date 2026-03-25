@@ -10,7 +10,7 @@ export const PaymentMethodUnion: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazyObject(() => serializers.TokenizeCard),
     core.serialization.lazyObject(() => serializers.ConvertToken),
-]);
+]) as any;
 
 export declare namespace PaymentMethodUnion {
     export type Raw = serializers.TokenizeCard.Raw | serializers.ConvertToken.Raw;

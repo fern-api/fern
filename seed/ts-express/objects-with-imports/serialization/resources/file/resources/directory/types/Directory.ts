@@ -11,7 +11,7 @@ export const Directory: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     files: core.serialization.list(core.serialization.lazyObject(() => serializers.File_)).optional(),
     directories: core.serialization.list(core.serialization.lazyObject(() => serializers.file.Directory)).optional(),
-});
+}) as any;
 
 export declare namespace Directory {
     export interface Raw {

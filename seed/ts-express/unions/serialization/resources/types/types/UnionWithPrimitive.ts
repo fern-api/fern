@@ -19,7 +19,7 @@ export const UnionWithPrimitive: core.serialization.Schema<
     .transform<SeedUnions.UnionWithPrimitive>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithPrimitive {
     export type Raw = UnionWithPrimitive.Integer | UnionWithPrimitive.String;

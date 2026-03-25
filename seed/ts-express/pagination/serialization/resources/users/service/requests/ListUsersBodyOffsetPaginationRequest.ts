@@ -9,7 +9,7 @@ export const ListUsersBodyOffsetPaginationRequest: core.serialization.Schema<
     SeedPagination.ListUsersBodyOffsetPaginationRequest
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(() => serializers.WithPage).optional(),
-});
+}) as any;
 
 export declare namespace ListUsersBodyOffsetPaginationRequest {
     export interface Raw {

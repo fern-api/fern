@@ -14,7 +14,7 @@ export const JsonLike: core.serialization.Schema<serializers.JsonLike.Raw, SeedA
         core.serialization.string(),
         core.serialization.number(),
         core.serialization.boolean(),
-    ]);
+    ]) as any;
 
 export declare namespace JsonLike {
     export type Raw = serializers.JsonLike.Raw[] | Record<string, serializers.JsonLike.Raw> | string | number | boolean;

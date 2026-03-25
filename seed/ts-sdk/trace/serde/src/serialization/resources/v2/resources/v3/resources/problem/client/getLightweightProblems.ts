@@ -8,7 +8,7 @@ import { LightweightProblemInfoV2 } from "../types/LightweightProblemInfoV2.js";
 export const Response: core.serialization.Schema<
     serializers.v2.v3.problem.getLightweightProblems.Response.Raw,
     SeedTrace.v2.v3.LightweightProblemInfoV2[]
-> = core.serialization.list(LightweightProblemInfoV2);
+> = core.serialization.list(LightweightProblemInfoV2) as any;
 
 export declare namespace Response {
     export type Raw = LightweightProblemInfoV2.Raw[];

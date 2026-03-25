@@ -21,7 +21,7 @@ export const UnionWithLiteral: core.serialization.Schema<
     .transform<SeedUnions.UnionWithLiteral>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithLiteral {
     export type Raw = UnionWithLiteral.Fern;

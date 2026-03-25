@@ -7,7 +7,7 @@ import type * as serializers from "../index";
 export const SearchResponse: core.serialization.ObjectSchema<serializers.SearchResponse.Raw, SeedApi.SearchResponse> =
     core.serialization.object({
         results: core.serialization.list(core.serialization.string()).optional(),
-    });
+    }) as any;
 
 export declare namespace SearchResponse {
     export interface Raw {

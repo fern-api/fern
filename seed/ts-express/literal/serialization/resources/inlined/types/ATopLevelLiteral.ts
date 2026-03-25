@@ -9,7 +9,7 @@ export const ATopLevelLiteral: core.serialization.ObjectSchema<
     SeedLiteral.ATopLevelLiteral
 > = core.serialization.object({
     nestedLiteral: core.serialization.lazyObject(() => serializers.ANestedLiteral),
-});
+}) as any;
 
 export declare namespace ATopLevelLiteral {
     export interface Raw {

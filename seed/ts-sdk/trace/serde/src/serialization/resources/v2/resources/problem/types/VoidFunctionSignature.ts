@@ -10,7 +10,7 @@ export const VoidFunctionSignature: core.serialization.ObjectSchema<
     SeedTrace.v2.VoidFunctionSignature
 > = core.serialization.object({
     parameters: core.serialization.list(Parameter),
-});
+}) as any;
 
 export declare namespace VoidFunctionSignature {
     export interface Raw {

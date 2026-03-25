@@ -11,7 +11,7 @@ export const TestCaseImplementationDescription: core.serialization.ObjectSchema<
     boards: core.serialization.list(
         core.serialization.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard),
     ),
-});
+}) as any;
 
 export declare namespace TestCaseImplementationDescription {
     export interface Raw {

@@ -4,7 +4,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Response: core.serialization.Schema<serializers.service.withLiteralAndEnumTypes.Response.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Response {
     export type Raw = string;

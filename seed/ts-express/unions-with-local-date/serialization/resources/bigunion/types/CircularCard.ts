@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const CircularCard: core.serialization.ObjectSchema<serializers.CircularCard.Raw, SeedUnions.CircularCard> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace CircularCard {
     export interface Raw {

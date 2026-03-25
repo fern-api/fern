@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const DebugMapValue: core.serialization.ObjectSchema<serializers.DebugMapValue.Raw, SeedTrace.DebugMapValue> =
     core.serialization.object({
         keyValuePairs: core.serialization.list(core.serialization.lazyObject(() => serializers.DebugKeyValuePairs)),
-    });
+    }) as any;
 
 export declare namespace DebugMapValue {
     export interface Raw {

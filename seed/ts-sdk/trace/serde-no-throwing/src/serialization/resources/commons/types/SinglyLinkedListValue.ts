@@ -12,7 +12,7 @@ export const SinglyLinkedListValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     head: NodeId.optional(),
     nodes: core.serialization.record(NodeId, SinglyLinkedListNodeValue),
-});
+}) as any;
 
 export declare namespace SinglyLinkedListValue {
     export interface Raw {

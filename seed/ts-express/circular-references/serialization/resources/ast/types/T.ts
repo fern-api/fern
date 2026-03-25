@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 
 export const T: core.serialization.ObjectSchema<serializers.T.Raw, SeedApi.T> = core.serialization.object({
     child: core.serialization.lazy(() => serializers.TorU),
-});
+}) as any;
 
 export declare namespace T {
     export interface Raw {

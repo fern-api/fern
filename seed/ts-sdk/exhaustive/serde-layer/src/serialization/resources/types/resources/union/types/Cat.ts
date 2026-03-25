@@ -8,7 +8,7 @@ export const Cat: core.serialization.ObjectSchema<serializers.types.Cat.Raw, See
     core.serialization.object({
         name: core.serialization.string(),
         likesToMeow: core.serialization.boolean(),
-    });
+    }) as any;
 
 export declare namespace Cat {
     export interface Raw {

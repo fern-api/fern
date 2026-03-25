@@ -9,7 +9,7 @@ export const Moment: core.serialization.ObjectSchema<serializers.Moment.Raw, See
         id: core.serialization.string(),
         date: core.serialization.string(),
         datetime: core.serialization.date(),
-    });
+    }) as any;
 
 export declare namespace Moment {
     export interface Raw {

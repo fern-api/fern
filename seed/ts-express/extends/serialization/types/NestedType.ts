@@ -9,7 +9,7 @@ export const NestedType: core.serialization.ObjectSchema<serializers.NestedType.
         .object({
             name: core.serialization.string(),
         })
-        .extend(core.serialization.lazyObject(() => serializers.Json));
+        .extend(core.serialization.lazyObject(() => serializers.Json)) as any;
 
 export declare namespace NestedType {
     export interface Raw extends serializers.Json.Raw {

@@ -9,7 +9,7 @@ export const Response: core.serialization.ObjectSchema<
     SeedCrossPackageTypeNames.folderA.Response
 > = core.serialization.object({
     foo: core.serialization.lazyObject(() => serializers.folderB.Foo).optional(),
-});
+}) as any;
 
 export declare namespace Response {
     export interface Raw {

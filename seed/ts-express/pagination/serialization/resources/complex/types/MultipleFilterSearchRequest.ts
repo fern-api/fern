@@ -10,7 +10,7 @@ export const MultipleFilterSearchRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     operator: core.serialization.lazy(() => serializers.MultipleFilterSearchRequestOperator).optional(),
     value: core.serialization.lazy(() => serializers.MultipleFilterSearchRequestValue).optional(),
-});
+}) as any;
 
 export declare namespace MultipleFilterSearchRequest {
     export interface Raw {

@@ -15,7 +15,7 @@ export const UnionWithDuplicativeDiscriminants: core.serialization.Schema<
     .transform<SeedUnions.UnionWithDuplicativeDiscriminants>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithDuplicativeDiscriminants {
     export type Raw =

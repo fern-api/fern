@@ -10,7 +10,7 @@ export const CreateMovieRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     title: core.serialization.string(),
     rating: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace CreateMovieRequest {
     export interface Raw {

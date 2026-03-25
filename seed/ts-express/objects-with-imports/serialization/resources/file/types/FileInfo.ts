@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const FileInfo: core.serialization.Schema<serializers.FileInfo.Raw, SeedObjectsWithImports.FileInfo> =
-    core.serialization.enum_(["REGULAR", "DIRECTORY"]);
+    core.serialization.enum_(["REGULAR", "DIRECTORY"]) as any;
 
 export declare namespace FileInfo {
     export type Raw = "REGULAR" | "DIRECTORY";

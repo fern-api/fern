@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const SomeLiteral: core.serialization.Schema<serializers.SomeLiteral.Raw, SeedLiteral.SomeLiteral> =
-    core.serialization.stringLiteral("You're super wise");
+    core.serialization.stringLiteral("You're super wise") as any;
 
 export declare namespace SomeLiteral {
     export type Raw = "You're super wise";

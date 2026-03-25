@@ -15,7 +15,7 @@ export const BasicTestCaseTemplate: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     description: TestCaseImplementationDescription,
     expectedValueParameterId: ParameterId,
-});
+}) as any;
 
 export declare namespace BasicTestCaseTemplate {
     export interface Raw {

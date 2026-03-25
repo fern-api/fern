@@ -15,7 +15,7 @@ export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
     language: Language,
     submissionFiles: core.serialization.list(SubmissionFileInfo),
     userId: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace WorkspaceSubmitRequest {
     export interface Raw {

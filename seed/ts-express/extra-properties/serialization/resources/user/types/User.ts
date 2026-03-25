@@ -8,7 +8,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedExt
     .object({
         name: core.serialization.string(),
     })
-    .passthrough();
+    .passthrough() as any;
 
 export declare namespace User {
     export interface Raw {

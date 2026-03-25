@@ -8,7 +8,7 @@ import { ProblemId } from "../../commons/types/ProblemId.js";
 export const Response: core.serialization.Schema<
     serializers.homepage.getHomepageProblems.Response.Raw,
     SeedTrace.ProblemId[]
-> = core.serialization.list(ProblemId);
+> = core.serialization.list(ProblemId) as any;
 
 export declare namespace Response {
     export type Raw = ProblemId.Raw[];

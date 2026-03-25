@@ -9,7 +9,7 @@ export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedT
     core.serialization.object({
         result: TestCaseResultWithStdout,
         traceResponsesSize: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace TracedTestCase {
     export interface Raw {

@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ModelType: core.serialization.Schema<serializers.ModelType.Raw, SeedFileUpload.ModelType> =
-    core.serialization.stringLiteral("model_v1");
+    core.serialization.stringLiteral("model_v1") as any;
 
 export declare namespace ModelType {
     export type Raw = "model_v1";

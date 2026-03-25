@@ -10,7 +10,7 @@ export const MyObjectWithOptional: core.serialization.ObjectSchema<
 > = core.serialization.object({
     prop: core.serialization.string(),
     optionalProp: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace MyObjectWithOptional {
     export interface Raw {

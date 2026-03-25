@@ -12,7 +12,7 @@ export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
 > = core.serialization.object({
     problemId: ProblemId,
     submissionId: SubmissionId,
-});
+}) as any;
 
 export declare namespace CustomTestCasesUnsupported {
     export interface Raw {

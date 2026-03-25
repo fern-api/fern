@@ -8,7 +8,7 @@ export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscrimin
     core.serialization.undiscriminatedUnion([
         core.serialization.lazy(() => serializers.KeyType),
         core.serialization.stringLiteral("default"),
-    ]);
+    ]) as any;
 
 export declare namespace Key {
     export type Raw = serializers.KeyType.Raw | "default";

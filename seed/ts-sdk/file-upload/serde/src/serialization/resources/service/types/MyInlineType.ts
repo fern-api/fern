@@ -7,7 +7,7 @@ import type * as serializers from "../../../index.js";
 export const MyInlineType: core.serialization.ObjectSchema<serializers.MyInlineType.Raw, SeedFileUpload.MyInlineType> =
     core.serialization.object({
         bar: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace MyInlineType {
     export interface Raw {

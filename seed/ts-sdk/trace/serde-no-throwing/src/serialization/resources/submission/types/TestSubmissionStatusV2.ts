@@ -15,7 +15,7 @@ export const TestSubmissionStatusV2: core.serialization.ObjectSchema<
     problemId: ProblemId,
     problemVersion: core.serialization.number(),
     problemInfo: ProblemInfoV2,
-});
+}) as any;
 
 export declare namespace TestSubmissionStatusV2 {
     export interface Raw {

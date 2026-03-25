@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ProblemId: core.serialization.Schema<serializers.ProblemId.Raw, SeedTrace.ProblemId> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace ProblemId {
     export type Raw = string;

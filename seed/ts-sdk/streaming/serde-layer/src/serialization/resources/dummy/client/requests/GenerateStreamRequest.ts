@@ -9,7 +9,7 @@ export const GenerateStreamRequest: core.serialization.Schema<
     SeedStreaming.GenerateStreamRequest
 > = core.serialization.object({
     numEvents: core.serialization.property("num_events", core.serialization.number()),
-});
+}) as any;
 
 export declare namespace GenerateStreamRequest {
     export interface Raw {

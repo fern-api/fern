@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const DisloyalValue: core.serialization.ObjectSchema<serializers.DisloyalValue.Raw, SeedUnions.DisloyalValue> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace DisloyalValue {
     export interface Raw {

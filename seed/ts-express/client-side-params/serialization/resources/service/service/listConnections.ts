@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.service.listConnections.Response.Raw,
     SeedClientSideParams.Connection[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.Connection));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.Connection)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.Connection.Raw[];

@@ -12,7 +12,7 @@ export const CreateUserRequest: core.serialization.Schema<
     tags: core.serialization.list(core.serialization.string()).optional(),
     metadata: core.serialization.lazyObject(() => serializers.Metadata).optional(),
     avatar: core.serialization.string().optionalNullable(),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

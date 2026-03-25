@@ -6,7 +6,7 @@ import type * as serializers from "../../../../../index.js";
 export const Request: core.serialization.Schema<
     serializers.endpoints.primitive.getAndReturnDatetime.Request.Raw,
     Date
-> = core.serialization.date();
+> = core.serialization.date() as any;
 
 export declare namespace Request {
     export type Raw = string;
@@ -15,7 +15,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.primitive.getAndReturnDatetime.Response.Raw,
     Date
-> = core.serialization.date();
+> = core.serialization.date() as any;
 
 export declare namespace Response {
     export type Raw = string;

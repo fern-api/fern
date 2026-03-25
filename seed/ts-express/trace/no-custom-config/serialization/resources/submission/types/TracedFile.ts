@@ -8,7 +8,7 @@ export const TracedFile: core.serialization.ObjectSchema<serializers.TracedFile.
     core.serialization.object({
         filename: core.serialization.string(),
         directory: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace TracedFile {
     export interface Raw {

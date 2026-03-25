@@ -6,14 +6,14 @@ import type * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.optional.sendOptionalBody.Request.Raw,
     Record<string, unknown> | undefined
-> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional();
+> = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional() as any;
 
 export declare namespace Request {
     export type Raw = Record<string, unknown> | null | undefined;
 }
 
 export const Response: core.serialization.Schema<serializers.optional.sendOptionalBody.Response.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Response {
     export type Raw = string;

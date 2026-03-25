@@ -8,7 +8,7 @@ import { MyObject } from "./MyObject.js";
 export const MyCollectionAliasObject: core.serialization.Schema<
     serializers.MyCollectionAliasObject.Raw,
     SeedFileUpload.MyCollectionAliasObject
-> = core.serialization.list(MyObject);
+> = core.serialization.list(MyObject) as any;
 
 export declare namespace MyCollectionAliasObject {
     export type Raw = MyObject.Raw[];

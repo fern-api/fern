@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const CronJob: core.serialization.ObjectSchema<serializers.CronJob.Raw, SeedExamples.CronJob> =
     core.serialization.object({
         expression: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace CronJob {
     export interface Raw {

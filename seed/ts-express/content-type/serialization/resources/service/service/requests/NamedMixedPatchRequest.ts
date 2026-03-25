@@ -11,7 +11,7 @@ export const NamedMixedPatchRequest: core.serialization.Schema<
     appId: core.serialization.string().optional(),
     instructions: core.serialization.string().nullable(),
     active: core.serialization.boolean().nullable(),
-});
+}) as any;
 
 export declare namespace NamedMixedPatchRequest {
     export interface Raw {

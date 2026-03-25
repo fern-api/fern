@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const NullableUserId: core.serialization.Schema<
     serializers.NullableUserId.Raw,
     SeedNullableOptional.NullableUserId
-> = core.serialization.string().nullable();
+> = core.serialization.string().nullable() as any;
 
 export declare namespace NullableUserId {
     export type Raw = string | null | undefined;

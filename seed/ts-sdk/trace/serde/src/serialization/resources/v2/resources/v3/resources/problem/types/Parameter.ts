@@ -10,7 +10,7 @@ export const Parameter: core.serialization.ObjectSchema<serializers.v2.v3.Parame
         parameterId: ParameterId,
         name: core.serialization.string(),
         variableType: core.serialization.lazy(() => serializers.VariableType),
-    });
+    }) as any;
 
 export declare namespace Parameter {
     export interface Raw {

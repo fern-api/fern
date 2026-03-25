@@ -7,7 +7,7 @@ import type * as serializers from "../../../index.js";
 export const Status: core.serialization.Schema<serializers.Status.Raw, SeedEnum.Status> = core.serialization.enum_([
     "Known",
     "Unknown",
-]);
+]) as any;
 
 export declare namespace Status {
     export type Raw = "Known" | "Unknown";

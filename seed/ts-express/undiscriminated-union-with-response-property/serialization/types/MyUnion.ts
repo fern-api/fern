@@ -11,7 +11,7 @@ export const MyUnion: core.serialization.Schema<
     core.serialization.lazyObject(() => serializers.VariantA),
     core.serialization.lazyObject(() => serializers.VariantB),
     core.serialization.lazyObject(() => serializers.VariantC),
-]);
+]) as any;
 
 export declare namespace MyUnion {
     export type Raw = serializers.VariantA.Raw | serializers.VariantB.Raw | serializers.VariantC.Raw;

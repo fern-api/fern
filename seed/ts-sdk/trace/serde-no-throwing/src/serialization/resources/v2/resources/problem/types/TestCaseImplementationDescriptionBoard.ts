@@ -20,7 +20,7 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
     .transform<SeedTrace.v2.TestCaseImplementationDescriptionBoard>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace TestCaseImplementationDescriptionBoard {
     export type Raw = TestCaseImplementationDescriptionBoard.Html | TestCaseImplementationDescriptionBoard.ParamId;

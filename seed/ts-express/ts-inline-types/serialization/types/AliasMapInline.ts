@@ -8,7 +8,7 @@ export const AliasMapInline: core.serialization.Schema<serializers.AliasMapInlin
     core.serialization.record(
         core.serialization.string(),
         core.serialization.lazyObject(() => serializers.AliasInlineValue),
-    );
+    ) as any;
 
 export declare namespace AliasMapInline {
     export type Raw = Record<string, serializers.AliasInlineValue.Raw>;

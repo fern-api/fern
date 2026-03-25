@@ -9,7 +9,7 @@ export const UpdateProblemResponse: core.serialization.ObjectSchema<
     SeedTrace.UpdateProblemResponse
 > = core.serialization.object({
     problemVersion: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace UpdateProblemResponse {
     export interface Raw {

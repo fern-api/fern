@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const UserId: core.serialization.Schema<serializers.UserId.Raw, SeedUndiscriminatedUnions.UserId> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace UserId {
     export type Raw = string;

@@ -13,7 +13,7 @@ export const UnionWithoutKey: core.serialization.Schema<serializers.UnionWithout
         .transform<SeedUnions.UnionWithoutKey>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace UnionWithoutKey {
     export type Raw = UnionWithoutKey.Foo | UnionWithoutKey.Bar;

@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseType.Raw, SeedExamples.ResponseType> =
     core.serialization.object({
         type: core.serialization.lazy(() => serializers.Type),
-    });
+    }) as any;
 
 export declare namespace ResponseType {
     export interface Raw {

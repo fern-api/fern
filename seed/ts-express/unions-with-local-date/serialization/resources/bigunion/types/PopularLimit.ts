@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const PopularLimit: core.serialization.ObjectSchema<serializers.PopularLimit.Raw, SeedUnions.PopularLimit> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PopularLimit {
     export interface Raw {

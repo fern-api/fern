@@ -9,7 +9,7 @@ export const PropertyBasedErrorTestBody: core.serialization.ObjectSchema<
     SeedErrorProperty.PropertyBasedErrorTestBody
 > = core.serialization.object({
     message: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace PropertyBasedErrorTestBody {
     export interface Raw {

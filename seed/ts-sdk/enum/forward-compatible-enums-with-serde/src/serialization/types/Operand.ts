@@ -8,7 +8,7 @@ export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedEnu
     ">",
     "=",
     "less_than",
-]);
+]) as any;
 
 export declare namespace Operand {
     export type Raw = ">" | "=" | "less_than";

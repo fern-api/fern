@@ -7,7 +7,7 @@ import type * as serializers from "../../../../../index.js";
 export const Foo: core.serialization.ObjectSchema<serializers.folderC.Foo.Raw, SeedCrossPackageTypeNames.folderC.Foo> =
     core.serialization.object({
         barProperty: core.serialization.property("bar_property", core.serialization.string()),
-    });
+    }) as any;
 
 export declare namespace Foo {
     export interface Raw {

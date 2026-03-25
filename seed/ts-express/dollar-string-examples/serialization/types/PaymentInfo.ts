@@ -11,7 +11,7 @@ export const PaymentInfo: core.serialization.ObjectSchema<
     amount: core.serialization.string(),
     currency: core.serialization.string(),
     description: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace PaymentInfo {
     export interface Raw {

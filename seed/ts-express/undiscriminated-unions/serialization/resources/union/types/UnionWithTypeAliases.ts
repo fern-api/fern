@@ -11,7 +11,7 @@ export const UnionWithTypeAliases: core.serialization.Schema<
     core.serialization.string(),
     core.serialization.lazy(() => serializers.UserId),
     core.serialization.lazy(() => serializers.Name),
-]);
+]) as any;
 
 export declare namespace UnionWithTypeAliases {
     export type Raw = string | serializers.UserId.Raw | serializers.Name.Raw;

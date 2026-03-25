@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const Double: core.serialization.Schema<serializers.Double.Raw, SeedValidation.Double> =
-    core.serialization.number();
+    core.serialization.number() as any;
 
 export declare namespace Double {
     export type Raw = number;

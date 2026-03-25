@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const FooRequest: core.serialization.ObjectSchema<serializers.FooRequest.Raw, SeedErrors.FooRequest> =
     core.serialization.object({
         bar: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace FooRequest {
     export interface Raw {

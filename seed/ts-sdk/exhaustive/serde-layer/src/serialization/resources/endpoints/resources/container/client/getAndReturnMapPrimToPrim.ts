@@ -6,7 +6,7 @@ import type * as serializers from "../../../../../index.js";
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.Raw,
     Record<string, string>
-> = core.serialization.record(core.serialization.string(), core.serialization.string());
+> = core.serialization.record(core.serialization.string(), core.serialization.string()) as any;
 
 export declare namespace Request {
     export type Raw = Record<string, string>;
@@ -15,7 +15,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.Raw,
     Record<string, string>
-> = core.serialization.record(core.serialization.string(), core.serialization.string());
+> = core.serialization.record(core.serialization.string(), core.serialization.string()) as any;
 
 export declare namespace Response {
     export type Raw = Record<string, string>;

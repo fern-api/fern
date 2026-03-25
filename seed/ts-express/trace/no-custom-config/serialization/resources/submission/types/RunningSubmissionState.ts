@@ -13,7 +13,7 @@ export const RunningSubmissionState: core.serialization.Schema<
     "WRITING_SUBMISSION_TO_FILE",
     "COMPILING_SUBMISSION",
     "RUNNING_SUBMISSION",
-]);
+]) as any;
 
 export declare namespace RunningSubmissionState {
     export type Raw =

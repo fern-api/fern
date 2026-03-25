@@ -10,7 +10,7 @@ export const Person: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     address: core.serialization.lazyObject(() => serializers.level1.level2.Address),
-});
+}) as any;
 
 export declare namespace Person {
     export interface Raw {

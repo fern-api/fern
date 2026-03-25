@@ -7,7 +7,7 @@ import type * as serializers from "../index.js";
 export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Color> = core.serialization.enum_([
     "red",
     "blue",
-]);
+]) as any;
 
 export declare namespace Color {
     export type Raw = "red" | "blue";

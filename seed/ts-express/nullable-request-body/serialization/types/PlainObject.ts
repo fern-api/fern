@@ -8,7 +8,7 @@ export const PlainObject: core.serialization.ObjectSchema<serializers.PlainObjec
     core.serialization.object({
         id: core.serialization.string().optional(),
         name: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace PlainObject {
     export interface Raw {

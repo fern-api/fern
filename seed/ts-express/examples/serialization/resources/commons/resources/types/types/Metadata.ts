@@ -11,7 +11,7 @@ export const Metadata: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     data: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     jsonString: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace Metadata {
     export interface Raw {

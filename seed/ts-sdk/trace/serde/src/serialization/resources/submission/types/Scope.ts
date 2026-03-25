@@ -11,7 +11,7 @@ export const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, SeedT
             core.serialization.lazy(() => serializers.DebugVariableValue),
         ),
     },
-);
+) as any;
 
 export declare namespace Scope {
     export interface Raw {

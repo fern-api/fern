@@ -11,7 +11,7 @@ export const NonVoidFunctionSignature: core.serialization.ObjectSchema<
 > = core.serialization.object({
     parameters: core.serialization.list(Parameter),
     returnType: core.serialization.lazy(() => serializers.VariableType),
-});
+}) as any;
 
 export declare namespace NonVoidFunctionSignature {
     export interface Raw {

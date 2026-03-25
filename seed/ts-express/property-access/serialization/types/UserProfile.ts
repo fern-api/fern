@@ -9,7 +9,7 @@ export const UserProfile: core.serialization.ObjectSchema<serializers.UserProfil
         name: core.serialization.string(),
         verification: core.serialization.lazyObject(() => serializers.UserProfileVerification),
         ssn: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace UserProfile {
     export interface Raw {

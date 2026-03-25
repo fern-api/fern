@@ -11,7 +11,7 @@ export const EmailNotification: core.serialization.ObjectSchema<
     emailAddress: core.serialization.string(),
     subject: core.serialization.string(),
     htmlContent: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace EmailNotification {
     export interface Raw {

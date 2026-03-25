@@ -5,7 +5,7 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 
 export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedMultiLineDocs.Operand> =
-    core.serialization.enum_([">", "=", "less_than"]);
+    core.serialization.enum_([">", "=", "less_than"]) as any;
 
 export declare namespace Operand {
     export type Raw = ">" | "=" | "less_than";

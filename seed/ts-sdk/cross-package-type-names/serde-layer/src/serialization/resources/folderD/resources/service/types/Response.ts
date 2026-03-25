@@ -10,7 +10,7 @@ export const Response: core.serialization.ObjectSchema<
     SeedCrossPackageTypeNames.folderD.Response
 > = core.serialization.object({
     foo: Foo.optional(),
-});
+}) as any;
 
 export declare namespace Response {
     export interface Raw {

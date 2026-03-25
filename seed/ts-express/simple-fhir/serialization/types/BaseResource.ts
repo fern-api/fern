@@ -12,7 +12,7 @@ export const BaseResource: core.serialization.ObjectSchema<serializers.BaseResou
             core.serialization.list(core.serialization.lazy(() => serializers.ResourceList)),
         ),
         memo: core.serialization.lazyObject(() => serializers.Memo),
-    });
+    }) as any;
 
 export declare namespace BaseResource {
     export interface Raw {

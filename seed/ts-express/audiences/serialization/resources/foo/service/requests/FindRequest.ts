@@ -8,7 +8,7 @@ export const FindRequest: core.serialization.Schema<serializers.FindRequest.Raw,
     core.serialization.object({
         publicProperty: core.serialization.string().optional(),
         privateProperty: core.serialization.number().optional(),
-    });
+    }) as any;
 
 export declare namespace FindRequest {
     export interface Raw {

@@ -7,7 +7,7 @@ import type * as serializers from "../../../../../index.js";
 export const OptionalAlias: core.serialization.Schema<
     serializers.types.OptionalAlias.Raw,
     SeedExhaustive.types.OptionalAlias
-> = core.serialization.string().optional();
+> = core.serialization.string().optional() as any;
 
 export declare namespace OptionalAlias {
     export type Raw = string | null | undefined;

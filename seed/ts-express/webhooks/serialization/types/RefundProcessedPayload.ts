@@ -11,7 +11,7 @@ export const RefundProcessedPayload: core.serialization.ObjectSchema<
     refundId: core.serialization.string(),
     amount: core.serialization.number(),
     reason: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace RefundProcessedPayload {
     export interface Raw {

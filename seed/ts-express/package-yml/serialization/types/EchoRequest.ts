@@ -8,7 +8,7 @@ export const EchoRequest: core.serialization.ObjectSchema<serializers.EchoReques
     core.serialization.object({
         name: core.serialization.string(),
         size: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace EchoRequest {
     export interface Raw {

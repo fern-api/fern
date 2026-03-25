@@ -19,7 +19,7 @@ export const CreateProblemResponse: core.serialization.Schema<
     .transform<SeedTrace.CreateProblemResponse>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace CreateProblemResponse {
     export type Raw = CreateProblemResponse.Success | CreateProblemResponse.Error;

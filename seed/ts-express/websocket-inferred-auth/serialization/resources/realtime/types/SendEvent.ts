@@ -8,7 +8,7 @@ export const SendEvent: core.serialization.ObjectSchema<serializers.SendEvent.Ra
     core.serialization.object({
         sendText: core.serialization.string(),
         sendParam: core.serialization.number(),
-    });
+    }) as any;
 
 export declare namespace SendEvent {
     export interface Raw {

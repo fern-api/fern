@@ -11,7 +11,7 @@ export const CreateUsernameBodyOptionalProperties: core.serialization.ObjectSche
     username: core.serialization.string().optional(),
     password: core.serialization.string().optional(),
     name: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace CreateUsernameBodyOptionalProperties {
     export interface Raw {

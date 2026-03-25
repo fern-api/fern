@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const RotatingRatio: core.serialization.ObjectSchema<serializers.RotatingRatio.Raw, SeedUnions.RotatingRatio> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace RotatingRatio {
     export interface Raw {

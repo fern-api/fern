@@ -8,7 +8,7 @@ export const FilteredType: core.serialization.ObjectSchema<serializers.FilteredT
     core.serialization.object({
         publicProperty: core.serialization.property("public_property", core.serialization.string().optional()),
         privateProperty: core.serialization.property("private_property", core.serialization.number()),
-    });
+    }) as any;
 
 export declare namespace FilteredType {
     export interface Raw {

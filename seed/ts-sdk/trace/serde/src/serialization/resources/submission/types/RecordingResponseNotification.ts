@@ -16,7 +16,7 @@ export const RecordingResponseNotification: core.serialization.ObjectSchema<
     lineNumber: core.serialization.number(),
     lightweightStackInfo: LightweightStackframeInformation,
     tracedFile: TracedFile.optional(),
-});
+}) as any;
 
 export declare namespace RecordingResponseNotification {
     export interface Raw {

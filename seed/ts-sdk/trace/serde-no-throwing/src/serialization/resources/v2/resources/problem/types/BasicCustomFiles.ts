@@ -16,7 +16,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
     signature: NonVoidFunctionSignature,
     additionalFiles: core.serialization.partialRecord(Language, Files.optional()),
     basicTestCaseTemplate: BasicTestCaseTemplate,
-});
+}) as any;
 
 export declare namespace BasicCustomFiles {
     export interface Raw {

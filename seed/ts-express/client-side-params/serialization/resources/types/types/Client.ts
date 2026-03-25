@@ -65,7 +65,7 @@ export const Client: core.serialization.ObjectSchema<serializers.Client.Raw, See
             core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
         ),
         mobile: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
-    });
+    }) as any;
 
 export declare namespace Client {
     export interface Raw {

@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.user.getWithAnyAuth.Response.Raw,
     SeedEndpointSecurityAuth.User[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.User));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.User)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.User.Raw[];

@@ -9,7 +9,7 @@ export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFi
     core.serialization.object({
         solutionFile: FileInfo,
         readOnlyFiles: core.serialization.list(FileInfo),
-    });
+    }) as any;
 
 export declare namespace ProblemFiles {
     export interface Raw {

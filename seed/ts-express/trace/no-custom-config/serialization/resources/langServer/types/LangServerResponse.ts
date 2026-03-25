@@ -9,7 +9,7 @@ export const LangServerResponse: core.serialization.ObjectSchema<
     SeedTrace.LangServerResponse
 > = core.serialization.object({
     response: core.serialization.unknown(),
-});
+}) as any;
 
 export declare namespace LangServerResponse {
     export interface Raw {

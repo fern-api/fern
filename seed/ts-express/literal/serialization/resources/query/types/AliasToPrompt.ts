@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const AliasToPrompt: core.serialization.Schema<serializers.AliasToPrompt.Raw, SeedLiteral.AliasToPrompt> =
-    core.serialization.stringLiteral("You are a helpful assistant");
+    core.serialization.stringLiteral("You are a helpful assistant") as any;
 
 export declare namespace AliasToPrompt {
     export type Raw = "You are a helpful assistant";

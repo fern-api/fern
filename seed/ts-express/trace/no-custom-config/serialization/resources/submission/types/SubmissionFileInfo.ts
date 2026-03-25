@@ -11,7 +11,7 @@ export const SubmissionFileInfo: core.serialization.ObjectSchema<
     directory: core.serialization.string(),
     filename: core.serialization.string(),
     contents: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace SubmissionFileInfo {
     export interface Raw {

@@ -10,7 +10,7 @@ export const StackInformation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     numStackFrames: core.serialization.number(),
     topStackFrame: core.serialization.lazyObject(() => serializers.StackFrame).optional(),
-});
+}) as any;
 
 export declare namespace StackInformation {
     export interface Raw {

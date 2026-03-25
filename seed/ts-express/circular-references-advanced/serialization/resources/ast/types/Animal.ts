@@ -8,7 +8,7 @@ export const Animal: core.serialization.Schema<serializers.Animal.Raw, SeedApi.A
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(() => serializers.Cat),
         core.serialization.lazyObject(() => serializers.Dog),
-    ]);
+    ]) as any;
 
 export declare namespace Animal {
     export type Raw = serializers.Cat.Raw | serializers.Dog.Raw;

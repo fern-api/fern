@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const WithPage: core.serialization.ObjectSchema<serializers.WithPage.Raw, SeedPagination.WithPage> =
     core.serialization.object({
         page: core.serialization.number().optional(),
-    });
+    }) as any;
 
 export declare namespace WithPage {
     export interface Raw {

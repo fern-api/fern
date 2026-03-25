@@ -9,7 +9,7 @@ export const WorkspaceTracedUpdate: core.serialization.ObjectSchema<
     SeedTrace.WorkspaceTracedUpdate
 > = core.serialization.object({
     traceResponsesSize: core.serialization.number(),
-});
+}) as any;
 
 export declare namespace WorkspaceTracedUpdate {
     export interface Raw {

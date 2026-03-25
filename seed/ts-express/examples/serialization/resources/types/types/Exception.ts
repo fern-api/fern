@@ -13,7 +13,7 @@ export const Exception: core.serialization.Schema<serializers.Exception.Raw, See
         .transform<SeedExamples.Exception>({
             transform: (value) => value,
             untransform: (value) => value,
-        });
+        }) as any;
 
 export declare namespace Exception {
     export type Raw = Exception.Generic | Exception.Timeout;

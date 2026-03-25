@@ -14,7 +14,7 @@ export const CreateProblemError: core.serialization.Schema<
     .transform<SeedTrace.CreateProblemError>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace CreateProblemError {
     export type Raw = CreateProblemError.Generic;

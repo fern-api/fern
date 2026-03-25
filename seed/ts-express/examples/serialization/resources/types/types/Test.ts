@@ -16,7 +16,7 @@ export const Test: core.serialization.Schema<serializers.Test.Raw, SeedExamples.
     .transform<SeedExamples.Test>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Test {
     export type Raw = Test.And | Test.Or;

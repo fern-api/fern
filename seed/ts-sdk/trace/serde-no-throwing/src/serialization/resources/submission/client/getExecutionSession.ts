@@ -8,7 +8,7 @@ import { ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
 export const Response: core.serialization.Schema<
     serializers.submission.getExecutionSession.Response.Raw,
     SeedTrace.ExecutionSessionResponse | undefined
-> = ExecutionSessionResponse.optional();
+> = ExecutionSessionResponse.optional() as any;
 
 export declare namespace Response {
     export type Raw = ExecutionSessionResponse.Raw | null | undefined;

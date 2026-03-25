@@ -9,7 +9,7 @@ export const UnauthorizedRequestErrorBody: core.serialization.ObjectSchema<
     SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody
 > = core.serialization.object({
     message: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace UnauthorizedRequestErrorBody {
     export interface Raw {

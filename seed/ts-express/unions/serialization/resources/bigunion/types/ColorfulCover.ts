@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const ColorfulCover: core.serialization.ObjectSchema<serializers.ColorfulCover.Raw, SeedUnions.ColorfulCover> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace ColorfulCover {
     export interface Raw {

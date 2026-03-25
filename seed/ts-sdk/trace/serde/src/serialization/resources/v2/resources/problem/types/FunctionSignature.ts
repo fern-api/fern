@@ -19,7 +19,7 @@ export const FunctionSignature: core.serialization.Schema<
     .transform<SeedTrace.v2.FunctionSignature>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace FunctionSignature {
     export type Raw = FunctionSignature.Void | FunctionSignature.NonVoid | FunctionSignature.VoidThatTakesActualResult;

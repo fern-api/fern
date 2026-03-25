@@ -10,7 +10,7 @@ export const UndiscriminatedUnion1InlineType2: core.serialization.ObjectSchema<
 > = core.serialization.object({
     baz: core.serialization.string(),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace UndiscriminatedUnion1InlineType2 {
     export interface Raw {

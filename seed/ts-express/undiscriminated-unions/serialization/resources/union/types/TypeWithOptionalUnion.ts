@@ -9,7 +9,7 @@ export const TypeWithOptionalUnion: core.serialization.ObjectSchema<
     SeedUndiscriminatedUnions.TypeWithOptionalUnion
 > = core.serialization.object({
     myUnion: core.serialization.lazy(() => serializers.MyUnion).optional(),
-});
+}) as any;
 
 export declare namespace TypeWithOptionalUnion {
     export interface Raw {

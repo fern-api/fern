@@ -18,7 +18,7 @@ export const SubmitRequestV2: core.serialization.ObjectSchema<
     problemId: ProblemId,
     problemVersion: core.serialization.number().optional(),
     userId: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace SubmitRequestV2 {
     export interface Raw {

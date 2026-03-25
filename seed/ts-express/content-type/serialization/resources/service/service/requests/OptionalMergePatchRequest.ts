@@ -13,7 +13,7 @@ export const OptionalMergePatchRequest: core.serialization.Schema<
     optionalInteger: core.serialization.number().optional(),
     optionalBoolean: core.serialization.boolean().optional(),
     nullableString: core.serialization.string().nullable(),
-});
+}) as any;
 
 export declare namespace OptionalMergePatchRequest {
     export interface Raw {

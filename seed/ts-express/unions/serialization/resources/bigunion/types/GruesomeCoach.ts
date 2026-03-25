@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const GruesomeCoach: core.serialization.ObjectSchema<serializers.GruesomeCoach.Raw, SeedUnions.GruesomeCoach> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace GruesomeCoach {
     export interface Raw {

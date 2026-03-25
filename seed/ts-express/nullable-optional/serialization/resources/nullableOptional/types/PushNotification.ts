@@ -12,7 +12,7 @@ export const PushNotification: core.serialization.ObjectSchema<
     title: core.serialization.string(),
     body: core.serialization.string(),
     badge: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace PushNotification {
     export interface Raw {

@@ -9,7 +9,7 @@ export const Foo: core.serialization.ObjectSchema<serializers.Foo.Raw, SeedApi.F
     nullableBar: core.serialization.property("nullable_bar", core.serialization.string().optionalNullable()),
     nullableRequiredBar: core.serialization.property("nullable_required_bar", core.serialization.string().nullable()),
     requiredBar: core.serialization.property("required_bar", core.serialization.string()),
-});
+}) as any;
 
 export declare namespace Foo {
     export interface Raw {

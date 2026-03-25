@@ -17,7 +17,7 @@ export const AssertCorrectnessCheck: core.serialization.Schema<
     .transform<SeedTrace.v2.v3.AssertCorrectnessCheck>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace AssertCorrectnessCheck {
     export type Raw = AssertCorrectnessCheck.DeepEquality | AssertCorrectnessCheck.Custom;

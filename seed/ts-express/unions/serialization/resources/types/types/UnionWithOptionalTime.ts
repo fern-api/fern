@@ -19,7 +19,7 @@ export const UnionWithOptionalTime: core.serialization.Schema<
     .transform<SeedUnions.UnionWithOptionalTime>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UnionWithOptionalTime {
     export type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Datetime;

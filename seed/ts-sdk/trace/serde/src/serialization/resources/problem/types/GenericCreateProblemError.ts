@@ -11,7 +11,7 @@ export const GenericCreateProblemError: core.serialization.ObjectSchema<
     message: core.serialization.string(),
     type: core.serialization.string(),
     stacktrace: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace GenericCreateProblemError {
     export interface Raw {

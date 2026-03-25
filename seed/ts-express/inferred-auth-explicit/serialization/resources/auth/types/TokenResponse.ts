@@ -11,7 +11,7 @@ export const TokenResponse: core.serialization.ObjectSchema<
     accessToken: core.serialization.property("access_token", core.serialization.string()),
     expiresIn: core.serialization.property("expires_in", core.serialization.number()),
     refreshToken: core.serialization.property("refresh_token", core.serialization.string().optional()),
-});
+}) as any;
 
 export declare namespace TokenResponse {
     export interface Raw {

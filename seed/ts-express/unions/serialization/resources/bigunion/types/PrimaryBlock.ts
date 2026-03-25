@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const PrimaryBlock: core.serialization.ObjectSchema<serializers.PrimaryBlock.Raw, SeedUnions.PrimaryBlock> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PrimaryBlock {
     export interface Raw {

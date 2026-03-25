@@ -9,7 +9,7 @@ export const UnionListResponse: core.serialization.ObjectSchema<
     SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse
 > = core.serialization.object({
     data: core.serialization.list(core.serialization.lazy(() => serializers.MyUnion)),
-});
+}) as any;
 
 export declare namespace UnionListResponse {
     export interface Raw {

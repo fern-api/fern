@@ -9,7 +9,7 @@ export const ObjectWithUnknownField: core.serialization.ObjectSchema<
     SeedExhaustive.types.ObjectWithUnknownField
 > = core.serialization.object({
     unknown: core.serialization.unknown(),
-});
+}) as any;
 
 export declare namespace ObjectWithUnknownField {
     export interface Raw {

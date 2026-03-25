@@ -10,7 +10,7 @@ export const GetTokenRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     clientId: core.serialization.property("client_id", core.serialization.string()),
     clientSecret: core.serialization.property("client_secret", core.serialization.string()),
-});
+}) as any;
 
 export declare namespace GetTokenRequest {
     export interface Raw {

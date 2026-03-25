@@ -8,7 +8,7 @@ export const UsernamePage: core.serialization.ObjectSchema<serializers.UsernameP
     core.serialization.object({
         after: core.serialization.string().optional(),
         data: core.serialization.list(core.serialization.string()),
-    });
+    }) as any;
 
 export declare namespace UsernamePage {
     export interface Raw {

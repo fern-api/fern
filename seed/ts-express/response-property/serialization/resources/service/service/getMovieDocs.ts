@@ -4,7 +4,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const Request: core.serialization.Schema<serializers.service.getMovieDocs.Request.Raw, string> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace Request {
     export type Raw = string;

@@ -12,7 +12,7 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),
-});
+}) as any;
 
 export declare namespace GetDefaultStarterFilesResponse {
     export interface Raw {

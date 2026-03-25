@@ -24,7 +24,7 @@ export const CodeExecutionUpdate: core.serialization.Schema<
     .transform<SeedTrace.CodeExecutionUpdate>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace CodeExecutionUpdate {
     export type Raw =

@@ -5,7 +5,7 @@ import * as core from "../../../../../../../../core";
 import type * as serializers from "../../../../../../../index";
 
 export const ParameterId: core.serialization.Schema<serializers.v2.v3.ParameterId.Raw, SeedTrace.v2.v3.ParameterId> =
-    core.serialization.string();
+    core.serialization.string() as any;
 
 export declare namespace ParameterId {
     export type Raw = string;

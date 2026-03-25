@@ -9,7 +9,7 @@ export const SendResponse: core.serialization.ObjectSchema<serializers.SendRespo
         message: core.serialization.string(),
         status: core.serialization.number(),
         success: core.serialization.booleanLiteral(true),
-    });
+    }) as any;
 
 export declare namespace SendResponse {
     export interface Raw {

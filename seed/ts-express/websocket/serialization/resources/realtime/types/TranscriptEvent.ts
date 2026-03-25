@@ -10,7 +10,7 @@ export const TranscriptEvent: core.serialization.ObjectSchema<
 > = core.serialization.object({
     type: core.serialization.stringLiteral("transcript"),
     data: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace TranscriptEvent {
     export interface Raw {

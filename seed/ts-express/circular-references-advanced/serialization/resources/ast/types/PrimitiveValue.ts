@@ -5,7 +5,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const PrimitiveValue: core.serialization.Schema<serializers.PrimitiveValue.Raw, SeedApi.PrimitiveValue> =
-    core.serialization.enum_(["STRING", "NUMBER"]);
+    core.serialization.enum_(["STRING", "NUMBER"]) as any;
 
 export declare namespace PrimitiveValue {
     export type Raw = "STRING" | "NUMBER";

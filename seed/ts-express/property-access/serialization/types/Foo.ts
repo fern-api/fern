@@ -9,7 +9,7 @@ export const Foo: core.serialization.ObjectSchema<serializers.Foo.Raw, SeedPrope
         normal: core.serialization.string(),
         read: core.serialization.string(),
         write: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Foo {
     export interface Raw {

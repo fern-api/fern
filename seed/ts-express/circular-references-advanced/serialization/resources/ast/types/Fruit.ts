@@ -8,7 +8,7 @@ export const Fruit: core.serialization.Schema<serializers.Fruit.Raw, SeedApi.Fru
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(() => serializers.Acai),
         core.serialization.lazyObject(() => serializers.Fig),
-    ]);
+    ]) as any;
 
 export declare namespace Fruit {
     export type Raw = serializers.Acai.Raw | serializers.Fig.Raw;

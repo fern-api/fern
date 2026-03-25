@@ -4,7 +4,8 @@ import type * as SeedAlias from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
 
-export const TypeId: core.serialization.Schema<serializers.TypeId.Raw, SeedAlias.TypeId> = core.serialization.string();
+export const TypeId: core.serialization.Schema<serializers.TypeId.Raw, SeedAlias.TypeId> =
+    core.serialization.string() as any;
 
 export declare namespace TypeId {
     export type Raw = string;

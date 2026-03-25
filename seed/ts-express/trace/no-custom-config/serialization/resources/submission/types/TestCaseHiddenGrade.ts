@@ -9,7 +9,7 @@ export const TestCaseHiddenGrade: core.serialization.ObjectSchema<
     SeedTrace.TestCaseHiddenGrade
 > = core.serialization.object({
     passed: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace TestCaseHiddenGrade {
     export interface Raw {

@@ -10,7 +10,7 @@ export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
     SeedTrace.v2.DeepEqualityCorrectnessCheck
 > = core.serialization.object({
     expectedValueParameterId: ParameterId,
-});
+}) as any;
 
 export declare namespace DeepEqualityCorrectnessCheck {
     export interface Raw {

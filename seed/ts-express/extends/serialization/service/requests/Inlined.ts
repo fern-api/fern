@@ -8,7 +8,7 @@ export const Inlined: core.serialization.Schema<serializers.Inlined.Raw, SeedExt
     .object({
         unique: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(() => serializers.ExampleType));
+    .extend(core.serialization.lazyObject(() => serializers.ExampleType)) as any;
 
 export declare namespace Inlined {
     export interface Raw extends serializers.ExampleType.Raw {

@@ -32,7 +32,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     twentythree: core.serialization.string(),
     twentyfour: core.serialization.date().optional(),
     twentyfive: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace Type {
     export interface Raw {

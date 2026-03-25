@@ -9,7 +9,7 @@ export const Identifier: core.serialization.ObjectSchema<serializers.Identifier.
         type: core.serialization.lazy(() => serializers.Type),
         value: core.serialization.string(),
         label: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace Identifier {
     export interface Raw {

@@ -12,7 +12,7 @@ export const TestCaseWithActualResultImplementation: core.serialization.ObjectSc
 > = core.serialization.object({
     getActualResult: NonVoidFunctionDefinition,
     assertCorrectnessCheck: AssertCorrectnessCheck,
-});
+}) as any;
 
 export declare namespace TestCaseWithActualResultImplementation {
     export interface Raw {

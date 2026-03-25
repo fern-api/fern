@@ -14,7 +14,7 @@ export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
     submission: core.serialization.string(),
     language: Language,
     submissionTypeState: SubmissionTypeState,
-});
+}) as any;
 
 export declare namespace GetSubmissionStateResponse {
     export interface Raw {

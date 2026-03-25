@@ -15,7 +15,7 @@ export const TestSubmissionState: core.serialization.ObjectSchema<
     defaultTestCases: core.serialization.list(TestCase),
     customTestCases: core.serialization.list(TestCase),
     status: TestSubmissionStatus,
-});
+}) as any;
 
 export declare namespace TestSubmissionState {
     export interface Raw {

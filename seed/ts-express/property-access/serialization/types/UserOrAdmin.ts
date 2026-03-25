@@ -8,7 +8,7 @@ export const UserOrAdmin: core.serialization.Schema<serializers.UserOrAdmin.Raw,
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(() => serializers.User),
         core.serialization.lazyObject(() => serializers.Admin),
-    ]);
+    ]) as any;
 
 export declare namespace UserOrAdmin {
     export type Raw = serializers.User.Raw | serializers.Admin.Raw;

@@ -10,7 +10,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedVal
         even: core.serialization.number(),
         name: core.serialization.string(),
         shape: core.serialization.lazy(() => serializers.Shape),
-    });
+    }) as any;
 
 export declare namespace Type {
     export interface Raw {

@@ -11,7 +11,7 @@ export const NestedUnionRoot: core.serialization.Schema<
     core.serialization.string(),
     core.serialization.list(core.serialization.string()),
     core.serialization.lazy(() => serializers.NestedUnionL1),
-]);
+]) as any;
 
 export declare namespace NestedUnionRoot {
     export type Raw = string | string[] | serializers.NestedUnionL1.Raw;

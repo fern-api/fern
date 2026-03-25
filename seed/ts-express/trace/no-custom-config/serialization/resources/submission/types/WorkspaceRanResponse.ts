@@ -10,7 +10,7 @@ export const WorkspaceRanResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     runDetails: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
-});
+}) as any;
 
 export declare namespace WorkspaceRanResponse {
     export interface Raw {

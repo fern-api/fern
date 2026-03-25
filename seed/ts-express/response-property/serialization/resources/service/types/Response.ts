@@ -10,7 +10,7 @@ export const Response: core.serialization.ObjectSchema<serializers.Response.Raw,
             data: core.serialization.lazyObject(() => serializers.Movie),
         })
         .extend(core.serialization.lazyObject(() => serializers.WithMetadata))
-        .extend(core.serialization.lazyObject(() => serializers.WithDocs));
+        .extend(core.serialization.lazyObject(() => serializers.WithDocs)) as any;
 
 export declare namespace Response {
     export interface Raw extends serializers.WithMetadata.Raw, serializers.WithDocs.Raw {

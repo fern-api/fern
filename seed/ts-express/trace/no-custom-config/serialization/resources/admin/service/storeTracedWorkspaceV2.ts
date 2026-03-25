@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Request: core.serialization.Schema<
     serializers.admin.storeTracedWorkspaceV2.Request.Raw,
     SeedTrace.TraceResponseV2[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2)) as any;
 
 export declare namespace Request {
     export type Raw = serializers.TraceResponseV2.Raw[];

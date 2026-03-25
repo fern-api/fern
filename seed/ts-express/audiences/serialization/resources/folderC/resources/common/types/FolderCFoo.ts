@@ -9,7 +9,7 @@ export const FolderCFoo: core.serialization.ObjectSchema<
     SeedAudiences.folderC.FolderCFoo
 > = core.serialization.object({
     barProperty: core.serialization.property("bar_property", core.serialization.string()),
-});
+}) as any;
 
 export declare namespace FolderCFoo {
     export interface Raw {

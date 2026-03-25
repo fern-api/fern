@@ -24,7 +24,7 @@ export const UserOrAdminDiscriminated: core.serialization.Schema<
     .transform<SeedPropertyAccess.UserOrAdminDiscriminated>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace UserOrAdminDiscriminated {
     export type Raw = UserOrAdminDiscriminated.User | UserOrAdminDiscriminated.Admin | UserOrAdminDiscriminated.Empty;

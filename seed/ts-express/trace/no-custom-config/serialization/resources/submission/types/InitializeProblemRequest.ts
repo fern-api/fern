@@ -10,7 +10,7 @@ export const InitializeProblemRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     problemId: core.serialization.lazy(() => serializers.ProblemId),
     problemVersion: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace InitializeProblemRequest {
     export interface Raw {

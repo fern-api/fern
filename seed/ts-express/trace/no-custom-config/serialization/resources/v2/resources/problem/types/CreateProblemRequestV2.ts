@@ -17,7 +17,7 @@ export const CreateProblemRequestV2: core.serialization.ObjectSchema<
     testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.TestCaseV2)),
     supportedLanguages: core.serialization.set(core.serialization.lazy(() => serializers.Language)),
     isPublic: core.serialization.boolean(),
-});
+}) as any;
 
 export declare namespace CreateProblemRequestV2 {
     export interface Raw {

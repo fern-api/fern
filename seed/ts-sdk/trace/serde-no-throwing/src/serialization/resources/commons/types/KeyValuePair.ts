@@ -8,7 +8,7 @@ export const KeyValuePair: core.serialization.ObjectSchema<serializers.KeyValueP
     core.serialization.object({
         key: core.serialization.lazy(() => serializers.VariableValue),
         value: core.serialization.lazy(() => serializers.VariableValue),
-    });
+    }) as any;
 
 export declare namespace KeyValuePair {
     export interface Raw {

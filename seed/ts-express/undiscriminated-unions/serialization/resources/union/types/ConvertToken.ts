@@ -10,7 +10,7 @@ export const ConvertToken: core.serialization.ObjectSchema<
 > = core.serialization.object({
     method: core.serialization.string(),
     tokenId: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace ConvertToken {
     export interface Raw {

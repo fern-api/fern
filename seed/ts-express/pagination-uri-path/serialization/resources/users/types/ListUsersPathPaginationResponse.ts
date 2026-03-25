@@ -10,7 +10,7 @@ export const ListUsersPathPaginationResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     data: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
     next: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace ListUsersPathPaginationResponse {
     export interface Raw {

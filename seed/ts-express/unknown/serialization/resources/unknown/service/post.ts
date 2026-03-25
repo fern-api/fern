@@ -4,7 +4,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const Response: core.serialization.Schema<serializers.unknown.post.Response.Raw, unknown[]> =
-    core.serialization.list(core.serialization.unknown());
+    core.serialization.list(core.serialization.unknown()) as any;
 
 export declare namespace Response {
     export type Raw = unknown[];

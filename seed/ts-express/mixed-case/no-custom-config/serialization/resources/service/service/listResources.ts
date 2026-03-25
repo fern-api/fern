@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.service.listResources.Response.Raw,
     SeedMixedCase.Resource[]
-> = core.serialization.list(core.serialization.lazy(() => serializers.Resource));
+> = core.serialization.list(core.serialization.lazy(() => serializers.Resource)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.Resource.Raw[];

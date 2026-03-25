@@ -10,7 +10,7 @@ export const AliasInlineValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     foo: core.serialization.string(),
     bar: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace AliasInlineValue {
     export interface Raw {

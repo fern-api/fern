@@ -7,7 +7,7 @@ import * as serializers from "../../../../../index";
 export const Response: core.serialization.Schema<
     serializers.user.events.listEvents.Response.Raw,
     SeedMixedFileDirectory.user.Event[]
-> = core.serialization.list(core.serialization.lazyObject(() => serializers.user.Event));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.user.Event)) as any;
 
 export declare namespace Response {
     export type Raw = serializers.user.Event.Raw[];

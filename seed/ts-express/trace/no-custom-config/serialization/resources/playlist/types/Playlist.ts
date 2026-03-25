@@ -16,7 +16,7 @@ export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw,
                 core.serialization.lazy(() => serializers.UserId),
             ),
         })
-        .extend(core.serialization.lazyObject(() => serializers.PlaylistCreateRequest));
+        .extend(core.serialization.lazyObject(() => serializers.PlaylistCreateRequest)) as any;
 
 export declare namespace Playlist {
     export interface Raw extends serializers.PlaylistCreateRequest.Raw {

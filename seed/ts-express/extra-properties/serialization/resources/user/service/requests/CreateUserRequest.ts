@@ -11,7 +11,7 @@ export const CreateUserRequest: core.serialization.Schema<
     type: core.serialization.property("_type", core.serialization.stringLiteral("CreateUserRequest")),
     version: core.serialization.property("_version", core.serialization.stringLiteral("v1")),
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace CreateUserRequest {
     export interface Raw {

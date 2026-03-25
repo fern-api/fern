@@ -9,7 +9,7 @@ export const BootInstanceRequest: core.serialization.Schema<
     SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest
 > = core.serialization.object({
     size: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace BootInstanceRequest {
     export interface Raw {

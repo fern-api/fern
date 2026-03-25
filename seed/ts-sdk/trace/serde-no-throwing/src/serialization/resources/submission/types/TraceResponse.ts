@@ -15,7 +15,7 @@ export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceRes
         expressionLocation: ExpressionLocation.optional(),
         stack: StackInformation,
         stdout: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace TraceResponse {
     export interface Raw {

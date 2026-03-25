@@ -12,7 +12,7 @@ export const NestedUnionL1: core.serialization.Schema<
     core.serialization.set(core.serialization.string()),
     core.serialization.list(core.serialization.string()),
     core.serialization.lazy(() => serializers.NestedUnionL2),
-]);
+]) as any;
 
 export declare namespace NestedUnionL1 {
     export type Raw = number | string[] | string[] | serializers.NestedUnionL2.Raw;

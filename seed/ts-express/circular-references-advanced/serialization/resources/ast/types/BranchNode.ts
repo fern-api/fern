@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const BranchNode: core.serialization.ObjectSchema<serializers.BranchNode.Raw, SeedApi.BranchNode> =
     core.serialization.object({
         children: core.serialization.list(core.serialization.lazy(() => serializers.Node)),
-    });
+    }) as any;
 
 export declare namespace BranchNode {
     export interface Raw {

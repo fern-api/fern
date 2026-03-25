@@ -10,7 +10,7 @@ export const SearchResourcesRequest: core.serialization.Schema<
 > = core.serialization.object({
     query: core.serialization.string().optional(),
     filters: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
-});
+}) as any;
 
 export declare namespace SearchResourcesRequest {
     export interface Raw {

@@ -11,7 +11,7 @@ export const TraceResponsesPage: core.serialization.ObjectSchema<
 > = core.serialization.object({
     offset: core.serialization.number().optional(),
     traceResponses: core.serialization.list(TraceResponse),
-});
+}) as any;
 
 export declare namespace TraceResponsesPage {
     export interface Raw {

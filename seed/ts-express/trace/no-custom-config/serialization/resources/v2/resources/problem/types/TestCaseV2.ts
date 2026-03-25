@@ -13,7 +13,7 @@ export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.TestCase
             core.serialization.lazy(() => serializers.VariableValue),
         ),
         expects: core.serialization.lazyObject(() => serializers.v2.TestCaseExpects).optional(),
-    });
+    }) as any;
 
 export declare namespace TestCaseV2 {
     export interface Raw {

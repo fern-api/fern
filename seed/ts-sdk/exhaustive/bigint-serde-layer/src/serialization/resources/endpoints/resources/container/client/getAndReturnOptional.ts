@@ -8,7 +8,7 @@ import { ObjectWithRequiredField } from "../../../../types/resources/object/type
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Request.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = ObjectWithRequiredField.optional();
+> = ObjectWithRequiredField.optional() as any;
 
 export declare namespace Request {
     export type Raw = ObjectWithRequiredField.Raw | null | undefined;
@@ -17,7 +17,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Response.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = ObjectWithRequiredField.optional();
+> = ObjectWithRequiredField.optional() as any;
 
 export declare namespace Response {
     export type Raw = ObjectWithRequiredField.Raw | null | undefined;

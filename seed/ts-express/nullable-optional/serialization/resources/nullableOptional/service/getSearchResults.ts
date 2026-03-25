@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.nullableOptional.getSearchResults.Response.Raw,
     SeedNullableOptional.SearchResult[] | null
-> = core.serialization.list(core.serialization.lazy(() => serializers.SearchResult)).nullable();
+> = core.serialization.list(core.serialization.lazy(() => serializers.SearchResult)).nullable() as any;
 
 export declare namespace Response {
     export type Raw = serializers.SearchResult.Raw[] | null | undefined;

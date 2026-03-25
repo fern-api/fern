@@ -10,7 +10,7 @@ export const ListUsersTopLevelCursorPaginationResponse: core.serialization.Objec
 > = core.serialization.object({
     nextCursor: core.serialization.property("next_cursor", core.serialization.string().optional()),
     data: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
-});
+}) as any;
 
 export declare namespace ListUsersTopLevelCursorPaginationResponse {
     export interface Raw {

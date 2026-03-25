@@ -9,7 +9,7 @@ export const ExistingSubmissionExecuting: core.serialization.ObjectSchema<
     SeedTrace.ExistingSubmissionExecuting
 > = core.serialization.object({
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
-});
+}) as any;
 
 export declare namespace ExistingSubmissionExecuting {
     export interface Raw {

@@ -8,7 +8,7 @@ export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedValidat
     "SQUARE",
     "CIRCLE",
     "TRIANGLE",
-]);
+]) as any;
 
 export declare namespace Shape {
     export type Raw = "SQUARE" | "CIRCLE" | "TRIANGLE";

@@ -10,7 +10,7 @@ export const BinaryTreeNodeAndTreeValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     nodeId: core.serialization.lazy(() => serializers.NodeId),
     fullTree: core.serialization.lazyObject(() => serializers.BinaryTreeValue),
-});
+}) as any;
 
 export declare namespace BinaryTreeNodeAndTreeValue {
     export interface Raw {

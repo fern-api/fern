@@ -10,7 +10,7 @@ export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     methodName: core.serialization.string(),
     signature: core.serialization.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
-});
+}) as any;
 
 export declare namespace GetBasicSolutionFileRequest {
     export interface Raw {

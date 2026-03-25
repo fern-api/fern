@@ -17,7 +17,7 @@ export const Status: core.serialization.Schema<serializers.Status.Raw, SeedNulla
     .transform<SeedNullable.Status>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Status {
     export type Raw = Status.Active | Status.Archived | Status.SoftDeleted;

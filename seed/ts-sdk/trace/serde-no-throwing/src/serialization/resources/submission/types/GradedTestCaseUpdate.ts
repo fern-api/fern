@@ -12,7 +12,7 @@ export const GradedTestCaseUpdate: core.serialization.ObjectSchema<
 > = core.serialization.object({
     testCaseId: TestCaseId,
     grade: TestCaseGrade,
-});
+}) as any;
 
 export declare namespace GradedTestCaseUpdate {
     export interface Raw {

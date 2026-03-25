@@ -6,7 +6,7 @@ import type * as serializers from "../index";
 
 export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedLicense.Type> = core.serialization.object({
     name: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace Type {
     export interface Raw {

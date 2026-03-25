@@ -9,7 +9,7 @@ export const GetPresignedUrlRequest: core.serialization.Schema<
     SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest
 > = core.serialization.object({
     s3Key: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace GetPresignedUrlRequest {
     export interface Raw {

@@ -10,7 +10,7 @@ export const PatchProxyRequest: core.serialization.Schema<
 > = core.serialization.object({
     application: core.serialization.string().nullable(),
     requireAuth: core.serialization.property("require_auth", core.serialization.boolean().nullable()),
-});
+}) as any;
 
 export declare namespace PatchProxyRequest {
     export interface Raw {

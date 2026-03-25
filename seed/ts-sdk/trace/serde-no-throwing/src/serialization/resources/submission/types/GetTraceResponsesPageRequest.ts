@@ -9,7 +9,7 @@ export const GetTraceResponsesPageRequest: core.serialization.ObjectSchema<
     SeedTrace.GetTraceResponsesPageRequest
 > = core.serialization.object({
     offset: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace GetTraceResponsesPageRequest {
     export interface Raw {

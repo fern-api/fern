@@ -4,7 +4,7 @@ import * as core from "../../../../core";
 import type * as serializers from "../../../index";
 
 export const Response: core.serialization.Schema<serializers.union.updateMetadata.Response.Raw, boolean> =
-    core.serialization.boolean();
+    core.serialization.boolean() as any;
 
 export declare namespace Response {
     export type Raw = boolean;

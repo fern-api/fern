@@ -11,7 +11,7 @@ export const RecordedResponseNotification: core.serialization.ObjectSchema<
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     traceResponsesSize: core.serialization.number(),
     testCaseId: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace RecordedResponseNotification {
     export interface Raw {

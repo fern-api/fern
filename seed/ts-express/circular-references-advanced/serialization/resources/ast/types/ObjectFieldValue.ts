@@ -10,7 +10,7 @@ export const ObjectFieldValue: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.lazy(() => serializers.FieldName),
     value: core.serialization.lazy(() => serializers.FieldValue),
-});
+}) as any;
 
 export declare namespace ObjectFieldValue {
     export interface Raw {

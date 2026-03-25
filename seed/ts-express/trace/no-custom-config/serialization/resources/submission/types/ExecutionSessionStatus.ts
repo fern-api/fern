@@ -14,7 +14,7 @@ export const ExecutionSessionStatus: core.serialization.Schema<
     "RUNNING_CONTAINER",
     "LIVE_CONTAINER",
     "FAILED_TO_LAUNCH",
-]);
+]) as any;
 
 export declare namespace ExecutionSessionStatus {
     export type Raw =

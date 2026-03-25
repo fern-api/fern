@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const HastyPain: core.serialization.ObjectSchema<serializers.HastyPain.Raw, SeedUnions.HastyPain> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace HastyPain {
     export interface Raw {

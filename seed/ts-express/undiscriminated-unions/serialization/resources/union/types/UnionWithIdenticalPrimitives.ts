@@ -11,7 +11,7 @@ export const UnionWithIdenticalPrimitives: core.serialization.Schema<
     core.serialization.number(),
     core.serialization.number(),
     core.serialization.string(),
-]);
+]) as any;
 
 export declare namespace UnionWithIdenticalPrimitives {
     export type Raw = number | number | string;

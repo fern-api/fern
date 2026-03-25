@@ -8,7 +8,7 @@ export const PostRootRequest: core.serialization.Schema<serializers.PostRootRequ
     core.serialization.object({
         bar: core.serialization.lazyObject(() => serializers.RequestTypeInlineType1),
         foo: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace PostRootRequest {
     export interface Raw {

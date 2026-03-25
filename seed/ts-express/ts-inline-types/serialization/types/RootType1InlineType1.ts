@@ -11,7 +11,7 @@ export const RootType1InlineType1: core.serialization.ObjectSchema<
     foo: core.serialization.string(),
     bar: core.serialization.lazyObject(() => serializers.RootType1InlineType1NestedInlineType1),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
-});
+}) as any;
 
 export declare namespace RootType1InlineType1 {
     export interface Raw {

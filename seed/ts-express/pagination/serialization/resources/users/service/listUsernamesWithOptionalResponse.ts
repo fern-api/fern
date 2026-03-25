@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.users.listUsernamesWithOptionalResponse.Response.Raw,
     SeedPagination.UsernameCursor | undefined
-> = core.serialization.lazyObject(() => serializers.UsernameCursor).optional();
+> = core.serialization.lazyObject(() => serializers.UsernameCursor).optional() as any;
 
 export declare namespace Response {
     export type Raw = serializers.UsernameCursor.Raw | null | undefined;

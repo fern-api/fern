@@ -13,7 +13,7 @@ export const SendRequest: core.serialization.ObjectSchema<serializers.SendReques
         context: core.serialization.lazy(() => serializers.SomeLiteral),
         maybeContext: core.serialization.lazy(() => serializers.SomeLiteral).optional(),
         containerObject: core.serialization.lazyObject(() => serializers.ContainerObject),
-    });
+    }) as any;
 
 export declare namespace SendRequest {
     export interface Raw {

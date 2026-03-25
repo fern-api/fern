@@ -12,7 +12,7 @@ export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceRes
         expressionLocation: core.serialization.lazyObject(() => serializers.ExpressionLocation).optional(),
         stack: core.serialization.lazyObject(() => serializers.StackInformation),
         stdout: core.serialization.string().optional(),
-    });
+    }) as any;
 
 export declare namespace TraceResponse {
     export interface Raw {

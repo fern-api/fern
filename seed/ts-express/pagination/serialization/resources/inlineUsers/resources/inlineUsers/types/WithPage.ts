@@ -9,7 +9,7 @@ export const WithPage: core.serialization.ObjectSchema<
     SeedPagination.inlineUsers.WithPage
 > = core.serialization.object({
     page: core.serialization.number().optional(),
-});
+}) as any;
 
 export declare namespace WithPage {
     export interface Raw {

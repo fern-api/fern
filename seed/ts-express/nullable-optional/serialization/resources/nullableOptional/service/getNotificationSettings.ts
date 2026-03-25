@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.nullableOptional.getNotificationSettings.Response.Raw,
     SeedNullableOptional.NotificationMethod | null
-> = core.serialization.lazy(() => serializers.NotificationMethod).nullable();
+> = core.serialization.lazy(() => serializers.NotificationMethod).nullable() as any;
 
 export declare namespace Response {
     export type Raw = serializers.NotificationMethod.Raw | null | undefined;

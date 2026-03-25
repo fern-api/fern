@@ -9,7 +9,7 @@ export const TestCaseExpects: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.TestCaseExpects
 > = core.serialization.object({
     expectedStdout: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace TestCaseExpects {
     export interface Raw {

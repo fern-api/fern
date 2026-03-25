@@ -10,7 +10,7 @@ export const GetFunctionSignatureRequest: core.serialization.ObjectSchema<
     SeedTrace.v2.GetFunctionSignatureRequest
 > = core.serialization.object({
     functionSignature: FunctionSignature,
-});
+}) as any;
 
 export declare namespace GetFunctionSignatureRequest {
     export interface Raw {

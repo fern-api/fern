@@ -11,7 +11,7 @@ export const PaginatedResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     items: core.serialization.list(ObjectWithRequiredField),
     next: core.serialization.string().optional(),
-});
+}) as any;
 
 export declare namespace PaginatedResponse {
     export interface Raw {

@@ -13,7 +13,7 @@ export const Address: core.serialization.ObjectSchema<serializers.Address.Raw, S
         country: core.serialization.string().optionalNullable(),
         buildingId: core.serialization.lazy(() => serializers.NullableUserId),
         tenantId: core.serialization.lazy(() => serializers.OptionalUserId),
-    });
+    }) as any;
 
 export declare namespace Address {
     export interface Raw {

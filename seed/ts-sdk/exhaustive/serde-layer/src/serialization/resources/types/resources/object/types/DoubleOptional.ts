@@ -10,7 +10,7 @@ export const DoubleOptional: core.serialization.ObjectSchema<
     SeedExhaustive.types.DoubleOptional
 > = core.serialization.object({
     optionalAlias: OptionalAlias.optional(),
-});
+}) as any;
 
 export declare namespace DoubleOptional {
     export interface Raw {

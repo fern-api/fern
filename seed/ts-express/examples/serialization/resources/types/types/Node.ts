@@ -10,7 +10,7 @@ export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedExa
         nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
         trees: core.serialization.list(core.serialization.lazyObject(() => serializers.Tree)).optional(),
     },
-);
+) as any;
 
 export declare namespace Node {
     export interface Raw {

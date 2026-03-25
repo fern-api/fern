@@ -9,7 +9,7 @@ export const FooExtended: core.serialization.ObjectSchema<serializers.FooExtende
         .object({
             age: core.serialization.number(),
         })
-        .extend(core.serialization.lazyObject(() => serializers.Foo));
+        .extend(core.serialization.lazyObject(() => serializers.Foo)) as any;
 
 export declare namespace FooExtended {
     export interface Raw extends serializers.Foo.Raw {

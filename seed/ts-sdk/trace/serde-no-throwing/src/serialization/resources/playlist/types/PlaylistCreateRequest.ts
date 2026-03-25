@@ -11,7 +11,7 @@ export const PlaylistCreateRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     problems: core.serialization.list(ProblemId),
-});
+}) as any;
 
 export declare namespace PlaylistCreateRequest {
     export interface Raw {

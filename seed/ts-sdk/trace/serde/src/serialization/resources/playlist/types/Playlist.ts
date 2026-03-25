@@ -13,7 +13,7 @@ export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw,
             playlistId: core.serialization.property("playlist_id", PlaylistId),
             ownerId: core.serialization.property("owner-id", UserId),
         })
-        .extend(PlaylistCreateRequest);
+        .extend(PlaylistCreateRequest) as any;
 
 export declare namespace Playlist {
     export interface Raw extends PlaylistCreateRequest.Raw {

@@ -15,7 +15,7 @@ export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.
     .transform<SeedUnions.Shape>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace Shape {
     export type Raw = Shape.Circle | Shape.Square;

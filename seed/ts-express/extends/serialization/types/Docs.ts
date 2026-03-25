@@ -6,7 +6,7 @@ import type * as serializers from "../index";
 
 export const Docs: core.serialization.ObjectSchema<serializers.Docs.Raw, SeedExtends.Docs> = core.serialization.object({
     docs: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace Docs {
     export interface Raw {

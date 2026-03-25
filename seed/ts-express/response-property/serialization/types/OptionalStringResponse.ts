@@ -7,7 +7,7 @@ import * as serializers from "../index";
 export const OptionalStringResponse: core.serialization.Schema<
     serializers.OptionalStringResponse.Raw,
     SeedResponseProperty.OptionalStringResponse
-> = core.serialization.lazyObject(() => serializers.StringResponse).optional();
+> = core.serialization.lazyObject(() => serializers.StringResponse).optional() as any;
 
 export declare namespace OptionalStringResponse {
     export type Raw = serializers.StringResponse.Raw | null | undefined;

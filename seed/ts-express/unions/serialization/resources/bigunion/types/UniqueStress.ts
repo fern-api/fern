@@ -7,7 +7,7 @@ import type * as serializers from "../../../index";
 export const UniqueStress: core.serialization.ObjectSchema<serializers.UniqueStress.Raw, SeedUnions.UniqueStress> =
     core.serialization.object({
         value: core.serialization.string(),
-    });
+    }) as any;
 
 export declare namespace UniqueStress {
     export interface Raw {

@@ -20,7 +20,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
     outputType: core.serialization.lazy(() => serializers.VariableType),
     testcases: core.serialization.list(TestCaseWithExpectedResult),
     methodName: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace CreateProblemRequest {
     export interface Raw {

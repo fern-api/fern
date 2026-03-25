@@ -12,7 +12,7 @@ export const TestCaseImplementation: core.serialization.ObjectSchema<
 > = core.serialization.object({
     description: TestCaseImplementationDescription,
     function: TestCaseFunction,
-});
+}) as any;
 
 export declare namespace TestCaseImplementation {
     export interface Raw {

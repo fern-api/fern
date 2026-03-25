@@ -10,7 +10,7 @@ export const GetDiscriminatedUnionRequest: core.serialization.Schema<
 > = core.serialization.object({
     bar: core.serialization.lazy(() => serializers.DiscriminatedUnion1),
     foo: core.serialization.string(),
-});
+}) as any;
 
 export declare namespace GetDiscriminatedUnionRequest {
     export interface Raw {

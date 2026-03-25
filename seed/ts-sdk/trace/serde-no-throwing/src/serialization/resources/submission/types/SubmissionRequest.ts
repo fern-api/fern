@@ -22,7 +22,7 @@ export const SubmissionRequest: core.serialization.Schema<
     .transform<SeedTrace.SubmissionRequest>({
         transform: (value) => value,
         untransform: (value) => value,
-    });
+    }) as any;
 
 export declare namespace SubmissionRequest {
     export type Raw =

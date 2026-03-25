@@ -7,7 +7,7 @@ import * as serializers from "../../../../../index.js";
 export const Foo: core.serialization.ObjectSchema<serializers.folderB.Foo.Raw, SeedCrossPackageTypeNames.folderB.Foo> =
     core.serialization.object({
         foo: serializers.folderC.Foo.optional(),
-    });
+    }) as any;
 
 export declare namespace Foo {
     export interface Raw {

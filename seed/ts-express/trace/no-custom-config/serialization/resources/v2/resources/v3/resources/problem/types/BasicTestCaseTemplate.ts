@@ -12,7 +12,7 @@ export const BasicTestCaseTemplate: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     description: core.serialization.lazyObject(() => serializers.v2.v3.TestCaseImplementationDescription),
     expectedValueParameterId: core.serialization.lazy(() => serializers.v2.v3.ParameterId),
-});
+}) as any;
 
 export declare namespace BasicTestCaseTemplate {
     export interface Raw {
