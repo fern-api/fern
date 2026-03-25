@@ -7,7 +7,7 @@ exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > respects s
 exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > returns parsed expression when includeSerdeLayer is true 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: false, breadcrumbsPrefix: "", omitUndefined: false })"`;
 
 exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with multiple receive messages 1`] = `
-"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string | string> = z.undiscriminatedUnion([schema, schema]);
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string | string> = z.undiscriminatedUnion([schema, schema]) as any;
 
 export declare namespace WebsocketResponseSchema {
     export type Raw = string | string;
@@ -16,7 +16,7 @@ export declare namespace WebsocketResponseSchema {
 `;
 
 exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with no receive messages 1`] = `
-"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, never> = z.never;
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, never> = z.never as any;
 
 export declare namespace WebsocketResponseSchema {
     export type Raw = never;
@@ -25,7 +25,7 @@ export declare namespace WebsocketResponseSchema {
 `;
 
 exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with single receive message 1`] = `
-"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string> = z.undiscriminatedUnion([schema]);
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string> = z.undiscriminatedUnion([schema]) as any;
 
 export declare namespace WebsocketResponseSchema {
     export type Raw = string;
