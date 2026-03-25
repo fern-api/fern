@@ -978,10 +978,10 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         result.push("");
         result.push("<ItemGroup>");
         result.push('    <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0" />');
-        result.push('    <PackageReference Include="Google.Protobuf" Version="3.31.1" />');
-        result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
-        result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
-        result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.34.1" />');
+        result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />');
+        result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />');
+        result.push('    <PackageReference Include="Grpc.Tools" Version="2.78.0">');
         result.push(
             "        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>"
         );
