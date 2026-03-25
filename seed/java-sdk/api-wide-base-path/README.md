@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:api-wide-base-path:0.0.1'
+  implementation 'com.fern:api-wide-base-path'
 }
 ```
 

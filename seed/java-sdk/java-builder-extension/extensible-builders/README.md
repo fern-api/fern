@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-builder-extension:0.0.1'
+  implementation 'com.fern:java-builder-extension'
 }
 ```
 
@@ -102,11 +102,11 @@ BaseClient client = BaseClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.builderExtension.core.SeedBuilderExtensionApiException;
+import com.seed.builderExtension.core.BaseClientApiException;
 
 try{
     client.service().hello(...);
-} catch (SeedBuilderExtensionApiException e){
+} catch (BaseClientApiException e){
     // Do something with the API exception...
 }
 ```

@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:audiences:0.0.1'
+  implementation 'com.fern:audiences'
 }
 ```
 

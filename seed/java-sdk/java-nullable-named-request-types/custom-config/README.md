@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-nullable-named-request-types:0.0.1'
+  implementation 'com.fern:java-nullable-named-request-types'
 }
 ```
 
