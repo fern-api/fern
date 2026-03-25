@@ -398,6 +398,65 @@ func (b *Bar) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+type TypeWithOptionalMap struct {
+	Key          string             `json:"key" url:"key"`
+	ColumnValues map[string]*string `json:"columnValues" url:"columnValues"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithOptionalMap) GetKey() string {
+	if t == nil {
+		return ""
+	}
+	return t.Key
+}
+
+func (t *TypeWithOptionalMap) GetColumnValues() map[string]*string {
+	if t == nil {
+		return nil
+	}
+	return t.ColumnValues
+}
+
+func (t *TypeWithOptionalMap) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalMap) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TypeWithOptionalMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalMap) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
 type UnionWithSameStringTypes struct {
 	Type          string
 	CustomFormat  string
