@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersCursorPaginationRequest{
+    request := &fern.ListUsernamesRequest{
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.Users.ListWithCursorPagination(
+    client.Users.ListUsernames(
         context.TODO(),
         request,
     )

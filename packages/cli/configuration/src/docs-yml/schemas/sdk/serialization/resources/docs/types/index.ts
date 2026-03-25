@@ -119,6 +119,7 @@ export * from "./TabbedNavigationItemWithLayout.js";
 export * from "./TabbedNavigationItemWithVariants.js";
 export * from "./TabConfig.js";
 export * from "./TabId.js";
+export * from "./TabsAlignment.js";
 export * from "./TabsPlacement.js";
 export * from "./TabsThemeConfig.js";
 export * from "./TabVariant.js";

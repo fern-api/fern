@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.44.0
+- version: 4.45.0
   changelogEntry:
     - summary: |
         Add `og:dynamic:text-color` and `og:dynamic:background-color` metadata settings for dynamic
@@ -7,6 +7,19 @@
         dynamically generated OG images, fixing visibility issues on light backgrounds.
       type: feat
   createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Nest tabs configuration under `theme.tabs` as an object with `style`,
+        `alignment`, and `placement` properties. `theme.tabs: bubble` (string)
+        is still supported for backward compatibility. The `layout.tabs-placement`
+        field is preserved for backward compat. Tab alignment is only available
+        via `theme.tabs.alignment`. Warn when sidebar placement is combined with
+        center alignment since centering is only supported for header tabs.
+      type: feat
+  createdAt: "2026-03-25"
   irVersion: 65
 
 - version: 4.43.4
@@ -17,7 +30,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.43.3
   changelogEntry:
     - summary: |
@@ -39,7 +51,6 @@
       type: fix
   createdAt: "2026-03-23"
   irVersion: 65
-
 - version: 4.43.1
   changelogEntry:
     - summary: |
@@ -1215,7 +1226,6 @@
       type: feat
   createdAt: "2026-03-02"
   irVersion: 65
-
 - version: 4.0.1
   changelogEntry:
     - summary: |

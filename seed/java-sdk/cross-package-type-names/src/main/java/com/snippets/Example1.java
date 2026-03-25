@@ -8,6 +8,6 @@ public class Example1 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.folderA().service().getDirectThread();
+        client.folderD().service().getDirectThread();
     }
 }

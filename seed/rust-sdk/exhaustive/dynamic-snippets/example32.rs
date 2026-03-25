@@ -11,10 +11,10 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_query(
-            &GetWithQueryQueryRequest {
-                query: "query".to_string(),
-                number: 1,
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
             },
             None,
         )

@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->v2->problem->getLatestProblem(
+$client->v2->v3->problem->getLatestProblem(
     'problemId',
 );
