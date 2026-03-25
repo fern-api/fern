@@ -91,7 +91,7 @@ public record DefaultProvidedFile
             JsonSerializer.Serialize(writer, value.File, options);
             writer.WritePropertyName("relatedTypes");
             JsonSerializer.Serialize(writer, value.RelatedTypes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

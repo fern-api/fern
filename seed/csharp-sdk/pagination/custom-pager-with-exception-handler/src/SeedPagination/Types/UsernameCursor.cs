@@ -77,7 +77,7 @@ public record UsernameCursor
             writer.WriteStartObject();
             writer.WritePropertyName("cursor");
             JsonSerializer.Serialize(writer, value.Cursor, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

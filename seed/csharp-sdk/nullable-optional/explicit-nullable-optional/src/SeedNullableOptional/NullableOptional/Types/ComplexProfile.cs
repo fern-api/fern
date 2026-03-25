@@ -287,7 +287,7 @@ public record ComplexProfile
             JsonSerializer.Serialize(writer, value.Id, options);
             writer.WritePropertyName("nullableRole");
             JsonSerializer.Serialize(writer, value.NullableRole, options);
-            if (value.OptionalRole != null)
+            if (value.OptionalRole is not null)
             {
                 writer.WritePropertyName("optionalRole");
                 JsonSerializer.Serialize(writer, value.OptionalRole, options);
@@ -299,7 +299,7 @@ public record ComplexProfile
             }
             writer.WritePropertyName("nullableStatus");
             JsonSerializer.Serialize(writer, value.NullableStatus, options);
-            if (value.OptionalStatus != null)
+            if (value.OptionalStatus is not null)
             {
                 writer.WritePropertyName("optionalStatus");
                 JsonSerializer.Serialize(writer, value.OptionalStatus, options);
@@ -311,7 +311,7 @@ public record ComplexProfile
             }
             writer.WritePropertyName("nullableNotification");
             JsonSerializer.Serialize(writer, value.NullableNotification, options);
-            if (value.OptionalNotification != null)
+            if (value.OptionalNotification is not null)
             {
                 writer.WritePropertyName("optionalNotification");
                 JsonSerializer.Serialize(writer, value.OptionalNotification, options);
@@ -323,14 +323,14 @@ public record ComplexProfile
             }
             writer.WritePropertyName("nullableSearchResult");
             JsonSerializer.Serialize(writer, value.NullableSearchResult, options);
-            if (value.OptionalSearchResult != null)
+            if (value.OptionalSearchResult is not null)
             {
                 writer.WritePropertyName("optionalSearchResult");
                 JsonSerializer.Serialize(writer, value.OptionalSearchResult, options);
             }
             writer.WritePropertyName("nullableArray");
             JsonSerializer.Serialize(writer, value.NullableArray, options);
-            if (value.OptionalArray != null)
+            if (value.OptionalArray is not null)
             {
                 writer.WritePropertyName("optionalArray");
                 JsonSerializer.Serialize(writer, value.OptionalArray, options);
@@ -346,12 +346,12 @@ public record ComplexProfile
             JsonSerializer.Serialize(writer, value.NullableMapOfNullables, options);
             writer.WritePropertyName("nullableListOfUnions");
             JsonSerializer.Serialize(writer, value.NullableListOfUnions, options);
-            if (value.OptionalMapOfEnums != null)
+            if (value.OptionalMapOfEnums is not null)
             {
                 writer.WritePropertyName("optionalMapOfEnums");
                 JsonSerializer.Serialize(writer, value.OptionalMapOfEnums, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

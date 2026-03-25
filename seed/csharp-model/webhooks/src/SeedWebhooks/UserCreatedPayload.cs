@@ -97,7 +97,7 @@ public record UserCreatedPayload
             JsonSerializer.Serialize(writer, value.Email, options);
             writer.WritePropertyName("createdAt");
             JsonSerializer.Serialize(writer, value.CreatedAt, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -77,7 +77,7 @@ public record Circle
             writer.WriteStartObject();
             writer.WritePropertyName("radius");
             JsonSerializer.Serialize(writer, value.Radius, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

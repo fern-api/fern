@@ -103,17 +103,17 @@ public record DoublyLinkedListNodeValue
             JsonSerializer.Serialize(writer, value.NodeId, options);
             writer.WritePropertyName("val");
             JsonSerializer.Serialize(writer, value.Val, options);
-            if (value.Next != null)
+            if (value.Next is not null)
             {
                 writer.WritePropertyName("next");
                 JsonSerializer.Serialize(writer, value.Next, options);
             }
-            if (value.Prev != null)
+            if (value.Prev is not null)
             {
                 writer.WritePropertyName("prev");
                 JsonSerializer.Serialize(writer, value.Prev, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

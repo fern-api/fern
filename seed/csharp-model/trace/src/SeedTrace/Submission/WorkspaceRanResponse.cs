@@ -90,7 +90,7 @@ public record WorkspaceRanResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("runDetails");
             JsonSerializer.Serialize(writer, value.RunDetails, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -82,17 +82,17 @@ public record User
         public override void Write(Utf8JsonWriter writer, User value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.Name != null)
+            if (value.Name is not null)
             {
                 writer.WritePropertyName("name");
                 JsonSerializer.Serialize(writer, value.Name, options);
             }
-            if (value.Tags != null)
+            if (value.Tags is not null)
             {
                 writer.WritePropertyName("tags");
                 JsonSerializer.Serialize(writer, value.Tags, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

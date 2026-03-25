@@ -181,72 +181,72 @@ public record ObjectWithOptionalField
         )
         {
             writer.WriteStartObject();
-            if (value.String != null)
+            if (value.String is not null)
             {
                 writer.WritePropertyName("string");
                 JsonSerializer.Serialize(writer, value.String, options);
             }
-            if (value.Integer != null)
+            if (value.Integer is not null)
             {
                 writer.WritePropertyName("integer");
                 JsonSerializer.Serialize(writer, value.Integer, options);
             }
-            if (value.Long != null)
+            if (value.Long is not null)
             {
                 writer.WritePropertyName("long");
                 JsonSerializer.Serialize(writer, value.Long, options);
             }
-            if (value.Double != null)
+            if (value.Double is not null)
             {
                 writer.WritePropertyName("double");
                 JsonSerializer.Serialize(writer, value.Double, options);
             }
-            if (value.Bool != null)
+            if (value.Bool is not null)
             {
                 writer.WritePropertyName("bool");
                 JsonSerializer.Serialize(writer, value.Bool, options);
             }
-            if (value.Datetime != null)
+            if (value.Datetime is not null)
             {
                 writer.WritePropertyName("datetime");
                 JsonSerializer.Serialize(writer, value.Datetime, options);
             }
-            if (value.Date != null)
+            if (value.Date is not null)
             {
                 writer.WritePropertyName("date");
                 JsonSerializer.Serialize(writer, value.Date, options);
             }
-            if (value.Uuid != null)
+            if (value.Uuid is not null)
             {
                 writer.WritePropertyName("uuid");
                 JsonSerializer.Serialize(writer, value.Uuid, options);
             }
-            if (value.Base64 != null)
+            if (value.Base64 is not null)
             {
                 writer.WritePropertyName("base64");
                 JsonSerializer.Serialize(writer, value.Base64, options);
             }
-            if (value.List != null)
+            if (value.List is not null)
             {
                 writer.WritePropertyName("list");
                 JsonSerializer.Serialize(writer, value.List, options);
             }
-            if (value.Set != null)
+            if (value.Set is not null)
             {
                 writer.WritePropertyName("set");
                 JsonSerializer.Serialize(writer, value.Set, options);
             }
-            if (value.Map != null)
+            if (value.Map is not null)
             {
                 writer.WritePropertyName("map");
                 JsonSerializer.Serialize(writer, value.Map, options);
             }
-            if (value.Bigint != null)
+            if (value.Bigint is not null)
             {
                 writer.WritePropertyName("bigint");
                 JsonSerializer.Serialize(writer, value.Bigint, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

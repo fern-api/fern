@@ -173,14 +173,14 @@ public record SendRequest
             JsonSerializer.Serialize(writer, value.Ending, options);
             writer.WritePropertyName("context");
             JsonSerializer.Serialize(writer, value.Context, options);
-            if (value.MaybeContext != null)
+            if (value.MaybeContext is not null)
             {
                 writer.WritePropertyName("maybeContext");
                 JsonSerializer.Serialize(writer, value.MaybeContext, options);
             }
             writer.WritePropertyName("containerObject");
             JsonSerializer.Serialize(writer, value.ContainerObject, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

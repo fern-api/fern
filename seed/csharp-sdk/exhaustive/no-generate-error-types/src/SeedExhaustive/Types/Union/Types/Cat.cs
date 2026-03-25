@@ -84,7 +84,7 @@ public record Cat
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("likesToMeow");
             JsonSerializer.Serialize(writer, value.LikesToMeow, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

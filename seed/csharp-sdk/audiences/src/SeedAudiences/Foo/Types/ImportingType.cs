@@ -77,7 +77,7 @@ public record ImportingType
             writer.WriteStartObject();
             writer.WritePropertyName("imported");
             JsonSerializer.Serialize(writer, value.Imported, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

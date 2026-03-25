@@ -97,12 +97,12 @@ public record NamespaceSummary
         )
         {
             writer.WriteStartObject();
-            if (value.Count != null)
+            if (value.Count is not null)
             {
                 writer.WritePropertyName("count");
                 JsonSerializer.Serialize(writer, value.Count, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

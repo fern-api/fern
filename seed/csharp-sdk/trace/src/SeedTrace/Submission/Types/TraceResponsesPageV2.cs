@@ -90,14 +90,14 @@ public record TraceResponsesPageV2
         )
         {
             writer.WriteStartObject();
-            if (value.Offset != null)
+            if (value.Offset is not null)
             {
                 writer.WritePropertyName("offset");
                 JsonSerializer.Serialize(writer, value.Offset, options);
             }
             writer.WritePropertyName("traceResponses");
             JsonSerializer.Serialize(writer, value.TraceResponses, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

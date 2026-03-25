@@ -110,7 +110,7 @@ public record Playlist
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("problems");
             JsonSerializer.Serialize(writer, value.Problems, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

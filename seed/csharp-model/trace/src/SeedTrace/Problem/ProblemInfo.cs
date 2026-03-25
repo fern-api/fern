@@ -184,7 +184,7 @@ public record ProblemInfo
             JsonSerializer.Serialize(writer, value.MethodName, options);
             writer.WritePropertyName("supportsCustomTestCases");
             JsonSerializer.Serialize(writer, value.SupportsCustomTestCases, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

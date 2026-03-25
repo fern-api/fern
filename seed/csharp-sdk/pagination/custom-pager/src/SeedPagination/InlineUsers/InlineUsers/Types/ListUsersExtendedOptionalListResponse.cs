@@ -102,12 +102,12 @@ public record ListUsersExtendedOptionalListResponse
             JsonSerializer.Serialize(writer, value.TotalCount, options);
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, value.Data, options);
-            if (value.Next != null)
+            if (value.Next is not null)
             {
                 writer.WritePropertyName("next");
                 JsonSerializer.Serialize(writer, value.Next, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

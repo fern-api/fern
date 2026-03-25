@@ -100,7 +100,7 @@ public record StackFrame
             JsonSerializer.Serialize(writer, value.LineNumber, options);
             writer.WritePropertyName("scopes");
             JsonSerializer.Serialize(writer, value.Scopes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

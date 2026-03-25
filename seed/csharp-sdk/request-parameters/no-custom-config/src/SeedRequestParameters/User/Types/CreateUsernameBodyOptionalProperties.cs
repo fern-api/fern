@@ -91,22 +91,22 @@ public record CreateUsernameBodyOptionalProperties
         )
         {
             writer.WriteStartObject();
-            if (value.Username != null)
+            if (value.Username is not null)
             {
                 writer.WritePropertyName("username");
                 JsonSerializer.Serialize(writer, value.Username, options);
             }
-            if (value.Password != null)
+            if (value.Password is not null)
             {
                 writer.WritePropertyName("password");
                 JsonSerializer.Serialize(writer, value.Password, options);
             }
-            if (value.Name != null)
+            if (value.Name is not null)
             {
                 writer.WritePropertyName("name");
                 JsonSerializer.Serialize(writer, value.Name, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -81,7 +81,7 @@ public record DeepEqualityCorrectnessCheck
             writer.WriteStartObject();
             writer.WritePropertyName("expectedValueParameterId");
             JsonSerializer.Serialize(writer, value.ExpectedValueParameterId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

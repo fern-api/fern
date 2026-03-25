@@ -235,32 +235,32 @@ public record UpdateResponse
         )
         {
             writer.WriteStartObject();
-            if (value.UpdatedAt != null)
+            if (value.UpdatedAt is not null)
             {
                 writer.WritePropertyName("updated_at");
                 JsonSerializer.Serialize(writer, value.UpdatedAt, options);
             }
-            if (value.IndexType != null)
+            if (value.IndexType is not null)
             {
                 writer.WritePropertyName("index_type");
                 JsonSerializer.Serialize(writer, value.IndexType, options);
             }
-            if (value.Details != null)
+            if (value.Details is not null)
             {
                 writer.WritePropertyName("details");
                 JsonSerializer.Serialize(writer, value.Details, options);
             }
-            if (value.IndexTypes != null)
+            if (value.IndexTypes is not null)
             {
                 writer.WritePropertyName("index_types");
                 JsonSerializer.Serialize(writer, value.IndexTypes, options);
             }
-            if (value.Status != null)
+            if (value.Status is not null)
             {
                 writer.WritePropertyName("status");
                 JsonSerializer.Serialize(writer, value.Status, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

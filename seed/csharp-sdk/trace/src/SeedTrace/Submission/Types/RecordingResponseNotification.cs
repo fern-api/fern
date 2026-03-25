@@ -113,7 +113,7 @@ public record RecordingResponseNotification
             writer.WriteStartObject();
             writer.WritePropertyName("submissionId");
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
-            if (value.TestCaseId != null)
+            if (value.TestCaseId is not null)
             {
                 writer.WritePropertyName("testCaseId");
                 JsonSerializer.Serialize(writer, value.TestCaseId, options);
@@ -122,12 +122,12 @@ public record RecordingResponseNotification
             JsonSerializer.Serialize(writer, value.LineNumber, options);
             writer.WritePropertyName("lightweightStackInfo");
             JsonSerializer.Serialize(writer, value.LightweightStackInfo, options);
-            if (value.TracedFile != null)
+            if (value.TracedFile is not null)
             {
                 writer.WritePropertyName("tracedFile");
                 JsonSerializer.Serialize(writer, value.TracedFile, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

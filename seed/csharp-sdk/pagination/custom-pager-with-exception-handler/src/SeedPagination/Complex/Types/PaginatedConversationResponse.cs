@@ -104,7 +104,7 @@ public record PaginatedConversationResponse
             writer.WriteStartObject();
             writer.WritePropertyName("conversations");
             JsonSerializer.Serialize(writer, value.Conversations, options);
-            if (value.Pages != null)
+            if (value.Pages is not null)
             {
                 writer.WritePropertyName("pages");
                 JsonSerializer.Serialize(writer, value.Pages, options);
@@ -113,7 +113,7 @@ public record PaginatedConversationResponse
             JsonSerializer.Serialize(writer, value.TotalCount, options);
             writer.WritePropertyName("type");
             JsonSerializer.Serialize(writer, value.Type, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

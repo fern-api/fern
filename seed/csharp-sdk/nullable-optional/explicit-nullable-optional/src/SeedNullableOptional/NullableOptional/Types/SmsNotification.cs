@@ -96,12 +96,12 @@ public record SmsNotification
             JsonSerializer.Serialize(writer, value.PhoneNumber, options);
             writer.WritePropertyName("message");
             JsonSerializer.Serialize(writer, value.Message, options);
-            if (value.ShortCode != null)
+            if (value.ShortCode is not null)
             {
                 writer.WritePropertyName("shortCode");
                 JsonSerializer.Serialize(writer, value.ShortCode, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -90,7 +90,7 @@ public record Organization
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("tags");
             JsonSerializer.Serialize(writer, value.Tags, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

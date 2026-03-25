@@ -102,12 +102,12 @@ public record ListUsersPaginationResponse
         )
         {
             writer.WriteStartObject();
-            if (value.HasNextPage != null)
+            if (value.HasNextPage is not null)
             {
                 writer.WritePropertyName("hasNextPage");
                 JsonSerializer.Serialize(writer, value.HasNextPage, options);
             }
-            if (value.Page != null)
+            if (value.Page is not null)
             {
                 writer.WritePropertyName("page");
                 JsonSerializer.Serialize(writer, value.Page, options);
@@ -116,7 +116,7 @@ public record ListUsersPaginationResponse
             JsonSerializer.Serialize(writer, value.TotalCount, options);
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, value.Data, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

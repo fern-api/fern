@@ -113,7 +113,7 @@ public record User
             writer.WriteStartObject();
             writer.WritePropertyName("line1");
             JsonSerializer.Serialize(writer, value.Line1, options);
-            if (value.Line2 != null)
+            if (value.Line2 is not null)
             {
                 writer.WritePropertyName("line2");
                 JsonSerializer.Serialize(writer, value.Line2, options);
@@ -126,7 +126,7 @@ public record User
             JsonSerializer.Serialize(writer, value.Zip, options);
             writer.WritePropertyName("country");
             JsonSerializer.Serialize(writer, value.Country, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

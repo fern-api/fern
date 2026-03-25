@@ -112,14 +112,14 @@ public record User
         public override void Write(Utf8JsonWriter writer, User value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.Password != null)
+            if (value.Password is not null)
             {
                 writer.WritePropertyName("password");
                 JsonSerializer.Serialize(writer, value.Password, options);
             }
             writer.WritePropertyName("profile");
             JsonSerializer.Serialize(writer, value.Profile, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

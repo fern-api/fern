@@ -269,97 +269,97 @@ public record ComplexProfile
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
-            if (value.NullableRole != null)
+            if (value.NullableRole is not null)
             {
                 writer.WritePropertyName("nullableRole");
                 JsonSerializer.Serialize(writer, value.NullableRole, options);
             }
-            if (value.OptionalRole != null)
+            if (value.OptionalRole is not null)
             {
                 writer.WritePropertyName("optionalRole");
                 JsonSerializer.Serialize(writer, value.OptionalRole, options);
             }
-            if (value.OptionalNullableRole != null)
+            if (value.OptionalNullableRole is not null)
             {
                 writer.WritePropertyName("optionalNullableRole");
                 JsonSerializer.Serialize(writer, value.OptionalNullableRole, options);
             }
-            if (value.NullableStatus != null)
+            if (value.NullableStatus is not null)
             {
                 writer.WritePropertyName("nullableStatus");
                 JsonSerializer.Serialize(writer, value.NullableStatus, options);
             }
-            if (value.OptionalStatus != null)
+            if (value.OptionalStatus is not null)
             {
                 writer.WritePropertyName("optionalStatus");
                 JsonSerializer.Serialize(writer, value.OptionalStatus, options);
             }
-            if (value.OptionalNullableStatus != null)
+            if (value.OptionalNullableStatus is not null)
             {
                 writer.WritePropertyName("optionalNullableStatus");
                 JsonSerializer.Serialize(writer, value.OptionalNullableStatus, options);
             }
-            if (value.NullableNotification != null)
+            if (value.NullableNotification is not null)
             {
                 writer.WritePropertyName("nullableNotification");
                 JsonSerializer.Serialize(writer, value.NullableNotification, options);
             }
-            if (value.OptionalNotification != null)
+            if (value.OptionalNotification is not null)
             {
                 writer.WritePropertyName("optionalNotification");
                 JsonSerializer.Serialize(writer, value.OptionalNotification, options);
             }
-            if (value.OptionalNullableNotification != null)
+            if (value.OptionalNullableNotification is not null)
             {
                 writer.WritePropertyName("optionalNullableNotification");
                 JsonSerializer.Serialize(writer, value.OptionalNullableNotification, options);
             }
-            if (value.NullableSearchResult != null)
+            if (value.NullableSearchResult is not null)
             {
                 writer.WritePropertyName("nullableSearchResult");
                 JsonSerializer.Serialize(writer, value.NullableSearchResult, options);
             }
-            if (value.OptionalSearchResult != null)
+            if (value.OptionalSearchResult is not null)
             {
                 writer.WritePropertyName("optionalSearchResult");
                 JsonSerializer.Serialize(writer, value.OptionalSearchResult, options);
             }
-            if (value.NullableArray != null)
+            if (value.NullableArray is not null)
             {
                 writer.WritePropertyName("nullableArray");
                 JsonSerializer.Serialize(writer, value.NullableArray, options);
             }
-            if (value.OptionalArray != null)
+            if (value.OptionalArray is not null)
             {
                 writer.WritePropertyName("optionalArray");
                 JsonSerializer.Serialize(writer, value.OptionalArray, options);
             }
-            if (value.OptionalNullableArray != null)
+            if (value.OptionalNullableArray is not null)
             {
                 writer.WritePropertyName("optionalNullableArray");
                 JsonSerializer.Serialize(writer, value.OptionalNullableArray, options);
             }
-            if (value.NullableListOfNullables != null)
+            if (value.NullableListOfNullables is not null)
             {
                 writer.WritePropertyName("nullableListOfNullables");
                 JsonSerializer.Serialize(writer, value.NullableListOfNullables, options);
             }
-            if (value.NullableMapOfNullables != null)
+            if (value.NullableMapOfNullables is not null)
             {
                 writer.WritePropertyName("nullableMapOfNullables");
                 JsonSerializer.Serialize(writer, value.NullableMapOfNullables, options);
             }
-            if (value.NullableListOfUnions != null)
+            if (value.NullableListOfUnions is not null)
             {
                 writer.WritePropertyName("nullableListOfUnions");
                 JsonSerializer.Serialize(writer, value.NullableListOfUnions, options);
             }
-            if (value.OptionalMapOfEnums != null)
+            if (value.OptionalMapOfEnums is not null)
             {
                 writer.WritePropertyName("optionalMapOfEnums");
                 JsonSerializer.Serialize(writer, value.OptionalMapOfEnums, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

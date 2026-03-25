@@ -83,17 +83,17 @@ public record DocumentUploadResult
         )
         {
             writer.WriteStartObject();
-            if (value.FileId != null)
+            if (value.FileId is not null)
             {
                 writer.WritePropertyName("fileId");
                 JsonSerializer.Serialize(writer, value.FileId, options);
             }
-            if (value.Status != null)
+            if (value.Status is not null)
             {
                 writer.WritePropertyName("status");
                 JsonSerializer.Serialize(writer, value.Status, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -95,12 +95,12 @@ public record RefundProcessedPayload
             JsonSerializer.Serialize(writer, value.RefundId, options);
             writer.WritePropertyName("amount");
             JsonSerializer.Serialize(writer, value.Amount, options);
-            if (value.Reason != null)
+            if (value.Reason is not null)
             {
                 writer.WritePropertyName("reason");
                 JsonSerializer.Serialize(writer, value.Reason, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

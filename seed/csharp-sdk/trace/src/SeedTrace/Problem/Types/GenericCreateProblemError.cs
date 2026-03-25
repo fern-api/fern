@@ -97,7 +97,7 @@ public record GenericCreateProblemError
             JsonSerializer.Serialize(writer, value.Type, options);
             writer.WritePropertyName("stacktrace");
             JsonSerializer.Serialize(writer, value.Stacktrace, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

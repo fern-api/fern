@@ -61,7 +61,7 @@ public record B
         public override void Write(Utf8JsonWriter writer, B value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

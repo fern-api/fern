@@ -77,7 +77,7 @@ public record CompileError
             writer.WriteStartObject();
             writer.WritePropertyName("message");
             JsonSerializer.Serialize(writer, value.Message, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

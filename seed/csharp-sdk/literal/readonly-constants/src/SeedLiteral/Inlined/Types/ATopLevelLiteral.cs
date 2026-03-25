@@ -80,7 +80,7 @@ public record ATopLevelLiteral
             writer.WriteStartObject();
             writer.WritePropertyName("nestedLiteral");
             JsonSerializer.Serialize(writer, value.NestedLiteral, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

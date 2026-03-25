@@ -78,12 +78,12 @@ public record SearchResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Results != null)
+            if (value.Results is not null)
             {
                 writer.WritePropertyName("results");
                 JsonSerializer.Serialize(writer, value.Results, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

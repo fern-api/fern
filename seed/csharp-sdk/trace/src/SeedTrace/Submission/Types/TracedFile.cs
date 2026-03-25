@@ -87,7 +87,7 @@ public record TracedFile
             JsonSerializer.Serialize(writer, value.Filename, options);
             writer.WritePropertyName("directory");
             JsonSerializer.Serialize(writer, value.Directory, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

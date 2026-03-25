@@ -90,7 +90,7 @@ public record WorkspaceSubmissionUpdate
             JsonSerializer.Serialize(writer, value.UpdateTime, options);
             writer.WritePropertyName("updateInfo");
             JsonSerializer.Serialize(writer, value.UpdateInfo, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -161,27 +161,27 @@ public record QueryColumn
             writer.WriteStartObject();
             writer.WritePropertyName("values");
             JsonSerializer.Serialize(writer, value.Values, options);
-            if (value.TopK != null)
+            if (value.TopK is not null)
             {
                 writer.WritePropertyName("top_k");
                 JsonSerializer.Serialize(writer, value.TopK, options);
             }
-            if (value.Namespace != null)
+            if (value.Namespace is not null)
             {
                 writer.WritePropertyName("namespace");
                 JsonSerializer.Serialize(writer, value.Namespace, options);
             }
-            if (value.Filter != null)
+            if (value.Filter is not null)
             {
                 writer.WritePropertyName("filter");
                 JsonSerializer.Serialize(writer, value.Filter, options);
             }
-            if (value.IndexedData != null)
+            if (value.IndexedData is not null)
             {
                 writer.WritePropertyName("indexed_data");
                 JsonSerializer.Serialize(writer, value.IndexedData, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

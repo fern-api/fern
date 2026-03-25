@@ -107,7 +107,7 @@ public record ExecutionSessionResponse
             writer.WriteStartObject();
             writer.WritePropertyName("sessionId");
             JsonSerializer.Serialize(writer, value.SessionId, options);
-            if (value.ExecutionSessionUrl != null)
+            if (value.ExecutionSessionUrl is not null)
             {
                 writer.WritePropertyName("executionSessionUrl");
                 JsonSerializer.Serialize(writer, value.ExecutionSessionUrl, options);
@@ -116,7 +116,7 @@ public record ExecutionSessionResponse
             JsonSerializer.Serialize(writer, value.Language, options);
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

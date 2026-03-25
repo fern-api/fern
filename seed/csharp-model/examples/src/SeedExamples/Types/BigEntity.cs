@@ -183,72 +183,72 @@ public record BigEntity
         )
         {
             writer.WriteStartObject();
-            if (value.CastMember != null)
+            if (value.CastMember is not null)
             {
                 writer.WritePropertyName("castMember");
                 JsonSerializer.Serialize(writer, value.CastMember, options);
             }
-            if (value.ExtendedMovie != null)
+            if (value.ExtendedMovie is not null)
             {
                 writer.WritePropertyName("extendedMovie");
                 JsonSerializer.Serialize(writer, value.ExtendedMovie, options);
             }
-            if (value.Entity != null)
+            if (value.Entity is not null)
             {
                 writer.WritePropertyName("entity");
                 JsonSerializer.Serialize(writer, value.Entity, options);
             }
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.CommonMetadata != null)
+            if (value.CommonMetadata is not null)
             {
                 writer.WritePropertyName("commonMetadata");
                 JsonSerializer.Serialize(writer, value.CommonMetadata, options);
             }
-            if (value.EventInfo != null)
+            if (value.EventInfo is not null)
             {
                 writer.WritePropertyName("eventInfo");
                 JsonSerializer.Serialize(writer, value.EventInfo, options);
             }
-            if (value.Data != null)
+            if (value.Data is not null)
             {
                 writer.WritePropertyName("data");
                 JsonSerializer.Serialize(writer, value.Data, options);
             }
-            if (value.Migration != null)
+            if (value.Migration is not null)
             {
                 writer.WritePropertyName("migration");
                 JsonSerializer.Serialize(writer, value.Migration, options);
             }
-            if (value.Exception != null)
+            if (value.Exception is not null)
             {
                 writer.WritePropertyName("exception");
                 JsonSerializer.Serialize(writer, value.Exception, options);
             }
-            if (value.Test != null)
+            if (value.Test is not null)
             {
                 writer.WritePropertyName("test");
                 JsonSerializer.Serialize(writer, value.Test, options);
             }
-            if (value.Node != null)
+            if (value.Node is not null)
             {
                 writer.WritePropertyName("node");
                 JsonSerializer.Serialize(writer, value.Node, options);
             }
-            if (value.Directory != null)
+            if (value.Directory is not null)
             {
                 writer.WritePropertyName("directory");
                 JsonSerializer.Serialize(writer, value.Directory, options);
             }
-            if (value.Moment != null)
+            if (value.Moment is not null)
             {
                 writer.WritePropertyName("moment");
                 JsonSerializer.Serialize(writer, value.Moment, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

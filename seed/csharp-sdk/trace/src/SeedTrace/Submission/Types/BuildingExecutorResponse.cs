@@ -90,7 +90,7 @@ public record BuildingExecutorResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

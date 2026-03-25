@@ -102,7 +102,7 @@ public record ObjectWithDatetimeLikeString
             JsonSerializer.Serialize(writer, value.DatetimeLikeString, options);
             writer.WritePropertyName("actualDatetime");
             JsonSerializer.Serialize(writer, value.ActualDatetime, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

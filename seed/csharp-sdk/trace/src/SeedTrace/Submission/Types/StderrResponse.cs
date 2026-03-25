@@ -87,7 +87,7 @@ public record StderrResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("stderr");
             JsonSerializer.Serialize(writer, value.Stderr, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

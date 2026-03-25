@@ -81,7 +81,7 @@ public record NodesWrapper
             writer.WriteStartObject();
             writer.WritePropertyName("nodes");
             JsonSerializer.Serialize(writer, value.Nodes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -83,14 +83,14 @@ public record GenericValue
         )
         {
             writer.WriteStartObject();
-            if (value.StringifiedType != null)
+            if (value.StringifiedType is not null)
             {
                 writer.WritePropertyName("stringifiedType");
                 JsonSerializer.Serialize(writer, value.StringifiedType, options);
             }
             writer.WritePropertyName("stringifiedValue");
             JsonSerializer.Serialize(writer, value.StringifiedValue, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

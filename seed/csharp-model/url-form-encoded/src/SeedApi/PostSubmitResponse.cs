@@ -83,17 +83,17 @@ public record PostSubmitResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Status != null)
+            if (value.Status is not null)
             {
                 writer.WritePropertyName("status");
                 JsonSerializer.Serialize(writer, value.Status, options);
             }
-            if (value.Message != null)
+            if (value.Message is not null)
             {
                 writer.WritePropertyName("message");
                 JsonSerializer.Serialize(writer, value.Message, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

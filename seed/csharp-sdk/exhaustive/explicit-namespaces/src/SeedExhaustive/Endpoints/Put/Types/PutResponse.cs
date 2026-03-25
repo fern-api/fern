@@ -79,12 +79,12 @@ public record PutResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Errors != null)
+            if (value.Errors is not null)
             {
                 writer.WritePropertyName("errors");
                 JsonSerializer.Serialize(writer, value.Errors, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -149,27 +149,27 @@ public record DescribeResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Namespaces != null)
+            if (value.Namespaces is not null)
             {
                 writer.WritePropertyName("namespaces");
                 JsonSerializer.Serialize(writer, value.Namespaces, options);
             }
-            if (value.Dimension != null)
+            if (value.Dimension is not null)
             {
                 writer.WritePropertyName("dimension");
                 JsonSerializer.Serialize(writer, value.Dimension, options);
             }
-            if (value.Fullness != null)
+            if (value.Fullness is not null)
             {
                 writer.WritePropertyName("fullness");
                 JsonSerializer.Serialize(writer, value.Fullness, options);
             }
-            if (value.TotalCount != null)
+            if (value.TotalCount is not null)
             {
                 writer.WritePropertyName("total_count");
                 JsonSerializer.Serialize(writer, value.TotalCount, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

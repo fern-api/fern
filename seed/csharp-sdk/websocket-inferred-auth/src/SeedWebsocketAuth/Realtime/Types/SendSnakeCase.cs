@@ -87,7 +87,7 @@ public record SendSnakeCase
             JsonSerializer.Serialize(writer, value.SendText, options);
             writer.WritePropertyName("send_param");
             JsonSerializer.Serialize(writer, value.SendParam, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

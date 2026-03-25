@@ -80,7 +80,7 @@ public record InternalError
             writer.WriteStartObject();
             writer.WritePropertyName("exceptionInfo");
             JsonSerializer.Serialize(writer, value.ExceptionInfo, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

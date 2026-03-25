@@ -87,7 +87,7 @@ public record ConvertToken
             JsonSerializer.Serialize(writer, value.Method, options);
             writer.WritePropertyName("tokenId");
             JsonSerializer.Serialize(writer, value.TokenId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

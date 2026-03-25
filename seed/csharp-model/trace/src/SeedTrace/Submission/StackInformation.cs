@@ -88,12 +88,12 @@ public record StackInformation
             writer.WriteStartObject();
             writer.WritePropertyName("numStackFrames");
             JsonSerializer.Serialize(writer, value.NumStackFrames, options);
-            if (value.TopStackFrame != null)
+            if (value.TopStackFrame is not null)
             {
                 writer.WritePropertyName("topStackFrame");
                 JsonSerializer.Serialize(writer, value.TopStackFrame, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

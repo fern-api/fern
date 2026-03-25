@@ -86,17 +86,17 @@ public record RootObject
         )
         {
             writer.WriteStartObject();
-            if (value.NormalField != null)
+            if (value.NormalField is not null)
             {
                 writer.WritePropertyName("normalField");
                 JsonSerializer.Serialize(writer, value.NormalField, options);
             }
-            if (value.NullableField != null)
+            if (value.NullableField is not null)
             {
                 writer.WritePropertyName("nullableField");
                 JsonSerializer.Serialize(writer, value.NullableField, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

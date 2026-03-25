@@ -87,7 +87,7 @@ public record SendEvent2
             JsonSerializer.Serialize(writer, value.SendText2, options);
             writer.WritePropertyName("sendParam2");
             JsonSerializer.Serialize(writer, value.SendParam2, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

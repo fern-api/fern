@@ -147,17 +147,17 @@ public record Column
             JsonSerializer.Serialize(writer, value.Id, options);
             writer.WritePropertyName("values");
             JsonSerializer.Serialize(writer, value.Values, options);
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.IndexedData != null)
+            if (value.IndexedData is not null)
             {
                 writer.WritePropertyName("indexed_data");
                 JsonSerializer.Serialize(writer, value.IndexedData, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

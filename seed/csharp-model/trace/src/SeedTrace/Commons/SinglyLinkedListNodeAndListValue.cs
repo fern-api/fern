@@ -90,7 +90,7 @@ public record SinglyLinkedListNodeAndListValue
             JsonSerializer.Serialize(writer, value.NodeId, options);
             writer.WritePropertyName("fullList");
             JsonSerializer.Serialize(writer, value.FullList, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -77,7 +77,7 @@ public record FinishedResponse
             writer.WriteStartObject();
             writer.WritePropertyName("submissionId");
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

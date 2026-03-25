@@ -75,12 +75,12 @@ public record Request
         )
         {
             writer.WriteStartObject();
-            if (value.Union != null)
+            if (value.Union is not null)
             {
                 writer.WritePropertyName("union");
                 JsonSerializer.Serialize(writer, value.Union, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

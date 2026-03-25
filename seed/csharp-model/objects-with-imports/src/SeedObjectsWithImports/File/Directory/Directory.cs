@@ -101,17 +101,17 @@ public record Directory
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.Files != null)
+            if (value.Files is not null)
             {
                 writer.WritePropertyName("files");
                 JsonSerializer.Serialize(writer, value.Files, options);
             }
-            if (value.Directories != null)
+            if (value.Directories is not null)
             {
                 writer.WritePropertyName("directories");
                 JsonSerializer.Serialize(writer, value.Directories, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

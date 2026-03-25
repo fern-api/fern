@@ -90,7 +90,7 @@ public record BinaryTreeNodeAndTreeValue
             JsonSerializer.Serialize(writer, value.NodeId, options);
             writer.WritePropertyName("fullTree");
             JsonSerializer.Serialize(writer, value.FullTree, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

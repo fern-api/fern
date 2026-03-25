@@ -144,7 +144,7 @@ public record ObjectWithDocs
             writer.WriteStartObject();
             writer.WritePropertyName("string");
             JsonSerializer.Serialize(writer, value.String, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

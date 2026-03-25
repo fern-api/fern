@@ -93,7 +93,7 @@ public record TokenRequest
             JsonSerializer.Serialize(writer, value.ClientId, options);
             writer.WritePropertyName("client_secret");
             JsonSerializer.Serialize(writer, value.ClientSecret, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

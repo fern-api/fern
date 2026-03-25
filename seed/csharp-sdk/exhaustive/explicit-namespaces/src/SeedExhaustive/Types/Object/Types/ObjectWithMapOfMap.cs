@@ -81,7 +81,7 @@ public record ObjectWithMapOfMap
             writer.WriteStartObject();
             writer.WritePropertyName("map");
             JsonSerializer.Serialize(writer, value.Map, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -129,14 +129,14 @@ public record Admin
             writer.WriteStartObject();
             writer.WritePropertyName("adminLevel");
             JsonSerializer.Serialize(writer, value.AdminLevel, options);
-            if (value.Password != null)
+            if (value.Password is not null)
             {
                 writer.WritePropertyName("password");
                 JsonSerializer.Serialize(writer, value.Password, options);
             }
             writer.WritePropertyName("profile");
             JsonSerializer.Serialize(writer, value.Profile, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

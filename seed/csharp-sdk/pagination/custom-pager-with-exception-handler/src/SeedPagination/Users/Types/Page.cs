@@ -100,7 +100,7 @@ public record Page
             writer.WriteStartObject();
             writer.WritePropertyName("page");
             JsonSerializer.Serialize(writer, value.Page_, options);
-            if (value.Next != null)
+            if (value.Next is not null)
             {
                 writer.WritePropertyName("next");
                 JsonSerializer.Serialize(writer, value.Next, options);
@@ -109,7 +109,7 @@ public record Page
             JsonSerializer.Serialize(writer, value.PerPage, options);
             writer.WritePropertyName("total_page");
             JsonSerializer.Serialize(writer, value.TotalPage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

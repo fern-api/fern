@@ -90,7 +90,7 @@ public record ObjectFieldValue
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("value");
             JsonSerializer.Serialize(writer, value.Value, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -78,12 +78,12 @@ public record NormalObject
         )
         {
             writer.WriteStartObject();
-            if (value.NormalField != null)
+            if (value.NormalField is not null)
             {
                 writer.WritePropertyName("normalField");
                 JsonSerializer.Serialize(writer, value.NormalField, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

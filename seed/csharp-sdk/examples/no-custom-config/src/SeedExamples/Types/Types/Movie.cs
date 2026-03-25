@@ -155,7 +155,7 @@ public record Movie
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
-            if (value.Prequel != null)
+            if (value.Prequel is not null)
             {
                 writer.WritePropertyName("prequel");
                 JsonSerializer.Serialize(writer, value.Prequel, options);
@@ -170,7 +170,7 @@ public record Movie
             JsonSerializer.Serialize(writer, value.Type, options);
             writer.WritePropertyName("tag");
             JsonSerializer.Serialize(writer, value.Tag, options);
-            if (value.Book != null)
+            if (value.Book is not null)
             {
                 writer.WritePropertyName("book");
                 JsonSerializer.Serialize(writer, value.Book, options);
@@ -179,7 +179,7 @@ public record Movie
             JsonSerializer.Serialize(writer, value.Metadata, options);
             writer.WritePropertyName("revenue");
             JsonSerializer.Serialize(writer, value.Revenue, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

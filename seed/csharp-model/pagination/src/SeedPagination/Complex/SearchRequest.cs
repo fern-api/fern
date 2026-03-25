@@ -92,14 +92,14 @@ public record SearchRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Pagination != null)
+            if (value.Pagination is not null)
             {
                 writer.WritePropertyName("pagination");
                 JsonSerializer.Serialize(writer, value.Pagination, options);
             }
             writer.WritePropertyName("query");
             JsonSerializer.Serialize(writer, value.Query, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -85,12 +85,12 @@ public record StartingAfterPaging
             writer.WriteStartObject();
             writer.WritePropertyName("per_page");
             JsonSerializer.Serialize(writer, value.PerPage, options);
-            if (value.StartingAfter != null)
+            if (value.StartingAfter is not null)
             {
                 writer.WritePropertyName("starting_after");
                 JsonSerializer.Serialize(writer, value.StartingAfter, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

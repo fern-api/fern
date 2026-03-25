@@ -101,22 +101,22 @@ public record CreateUserRequest
             writer.WriteStartObject();
             writer.WritePropertyName("username");
             JsonSerializer.Serialize(writer, value.Username, options);
-            if (value.Email != null)
+            if (value.Email is not null)
             {
                 writer.WritePropertyName("email");
                 JsonSerializer.Serialize(writer, value.Email, options);
             }
-            if (value.Phone != null)
+            if (value.Phone is not null)
             {
                 writer.WritePropertyName("phone");
                 JsonSerializer.Serialize(writer, value.Phone, options);
             }
-            if (value.Address != null)
+            if (value.Address is not null)
             {
                 writer.WritePropertyName("address");
                 JsonSerializer.Serialize(writer, value.Address, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

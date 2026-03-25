@@ -74,12 +74,12 @@ public record Tree
         public override void Write(Utf8JsonWriter writer, Tree value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.Nodes != null)
+            if (value.Nodes is not null)
             {
                 writer.WritePropertyName("nodes");
                 JsonSerializer.Serialize(writer, value.Nodes, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

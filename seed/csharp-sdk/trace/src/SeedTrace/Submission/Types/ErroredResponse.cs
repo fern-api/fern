@@ -87,7 +87,7 @@ public record ErroredResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("errorInfo");
             JsonSerializer.Serialize(writer, value.ErrorInfo, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

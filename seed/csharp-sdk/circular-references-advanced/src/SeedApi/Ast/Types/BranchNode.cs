@@ -81,7 +81,7 @@ public record BranchNode
             writer.WriteStartObject();
             writer.WritePropertyName("children");
             JsonSerializer.Serialize(writer, value.Children, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

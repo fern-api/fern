@@ -116,17 +116,17 @@ public record QueryResult
         )
         {
             writer.WriteStartObject();
-            if (value.Matches != null)
+            if (value.Matches is not null)
             {
                 writer.WritePropertyName("matches");
                 JsonSerializer.Serialize(writer, value.Matches, options);
             }
-            if (value.Namespace != null)
+            if (value.Namespace is not null)
             {
                 writer.WritePropertyName("namespace");
                 JsonSerializer.Serialize(writer, value.Namespace, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

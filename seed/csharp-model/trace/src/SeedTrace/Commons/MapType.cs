@@ -87,7 +87,7 @@ public record MapType
             JsonSerializer.Serialize(writer, value.KeyType, options);
             writer.WritePropertyName("valueType");
             JsonSerializer.Serialize(writer, value.ValueType, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

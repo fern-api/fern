@@ -125,24 +125,24 @@ public record TraceResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("lineNumber");
             JsonSerializer.Serialize(writer, value.LineNumber, options);
-            if (value.ReturnValue != null)
+            if (value.ReturnValue is not null)
             {
                 writer.WritePropertyName("returnValue");
                 JsonSerializer.Serialize(writer, value.ReturnValue, options);
             }
-            if (value.ExpressionLocation != null)
+            if (value.ExpressionLocation is not null)
             {
                 writer.WritePropertyName("expressionLocation");
                 JsonSerializer.Serialize(writer, value.ExpressionLocation, options);
             }
             writer.WritePropertyName("stack");
             JsonSerializer.Serialize(writer, value.Stack, options);
-            if (value.Stdout != null)
+            if (value.Stdout is not null)
             {
                 writer.WritePropertyName("stdout");
                 JsonSerializer.Serialize(writer, value.Stdout, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -87,7 +87,7 @@ public record ANestedLiteral
             writer.WriteStartObject();
             writer.WritePropertyName("myLiteral");
             JsonSerializer.Serialize(writer, value.MyLiteral, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

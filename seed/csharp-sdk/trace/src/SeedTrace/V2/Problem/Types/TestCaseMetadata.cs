@@ -98,7 +98,7 @@ public record TestCaseMetadata
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("hidden");
             JsonSerializer.Serialize(writer, value.Hidden, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -73,12 +73,12 @@ public record Foo
         public override void Write(Utf8JsonWriter writer, Foo value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.Foo_ != null)
+            if (value.Foo_ is not null)
             {
                 writer.WritePropertyName("foo");
                 JsonSerializer.Serialize(writer, value.Foo_, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -77,7 +77,7 @@ public record UpdateProblemResponse
             writer.WriteStartObject();
             writer.WritePropertyName("problemVersion");
             JsonSerializer.Serialize(writer, value.ProblemVersion, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

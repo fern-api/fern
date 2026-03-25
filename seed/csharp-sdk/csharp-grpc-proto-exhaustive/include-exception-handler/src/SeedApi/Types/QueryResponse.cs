@@ -145,27 +145,27 @@ public record QueryResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Results != null)
+            if (value.Results is not null)
             {
                 writer.WritePropertyName("results");
                 JsonSerializer.Serialize(writer, value.Results, options);
             }
-            if (value.Matches != null)
+            if (value.Matches is not null)
             {
                 writer.WritePropertyName("matches");
                 JsonSerializer.Serialize(writer, value.Matches, options);
             }
-            if (value.Namespace != null)
+            if (value.Namespace is not null)
             {
                 writer.WritePropertyName("namespace");
                 JsonSerializer.Serialize(writer, value.Namespace, options);
             }
-            if (value.Usage != null)
+            if (value.Usage is not null)
             {
                 writer.WritePropertyName("usage");
                 JsonSerializer.Serialize(writer, value.Usage, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

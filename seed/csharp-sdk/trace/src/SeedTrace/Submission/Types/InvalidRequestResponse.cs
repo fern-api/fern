@@ -93,7 +93,7 @@ public record InvalidRequestResponse
             JsonSerializer.Serialize(writer, value.Request, options);
             writer.WritePropertyName("cause");
             JsonSerializer.Serialize(writer, value.Cause, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

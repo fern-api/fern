@@ -97,7 +97,7 @@ public record OrderCompletedPayload
             JsonSerializer.Serialize(writer, value.Total, options);
             writer.WritePropertyName("currency");
             JsonSerializer.Serialize(writer, value.Currency, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

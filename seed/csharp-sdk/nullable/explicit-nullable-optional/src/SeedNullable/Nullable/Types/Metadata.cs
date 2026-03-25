@@ -136,12 +136,12 @@ public record Metadata
             }
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.Values != null)
+            if (value.Values is not null)
             {
                 writer.WritePropertyName("values");
                 JsonSerializer.Serialize(writer, value.Values, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

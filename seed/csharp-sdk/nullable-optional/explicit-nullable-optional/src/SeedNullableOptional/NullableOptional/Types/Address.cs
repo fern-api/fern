@@ -137,7 +137,7 @@ public record Address
             JsonSerializer.Serialize(writer, value.Street, options);
             writer.WritePropertyName("city");
             JsonSerializer.Serialize(writer, value.City, options);
-            if (value.State != null)
+            if (value.State is not null)
             {
                 writer.WritePropertyName("state");
                 JsonSerializer.Serialize(writer, value.State, options);
@@ -151,12 +151,12 @@ public record Address
             }
             writer.WritePropertyName("buildingId");
             JsonSerializer.Serialize(writer, value.BuildingId, options);
-            if (value.TenantId != null)
+            if (value.TenantId is not null)
             {
                 writer.WritePropertyName("tenantId");
                 JsonSerializer.Serialize(writer, value.TenantId, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

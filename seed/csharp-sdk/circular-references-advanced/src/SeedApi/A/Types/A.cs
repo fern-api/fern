@@ -73,7 +73,7 @@ public record A
             writer.WriteStartObject();
             writer.WritePropertyName("s");
             JsonSerializer.Serialize(writer, value.S, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

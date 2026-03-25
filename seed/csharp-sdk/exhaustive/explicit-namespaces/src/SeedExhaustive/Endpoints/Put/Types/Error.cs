@@ -104,17 +104,17 @@ public record Error
             JsonSerializer.Serialize(writer, value.Category, options);
             writer.WritePropertyName("code");
             JsonSerializer.Serialize(writer, value.Code, options);
-            if (value.Detail != null)
+            if (value.Detail is not null)
             {
                 writer.WritePropertyName("detail");
                 JsonSerializer.Serialize(writer, value.Detail, options);
             }
-            if (value.Field != null)
+            if (value.Field is not null)
             {
                 writer.WritePropertyName("field");
                 JsonSerializer.Serialize(writer, value.Field, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -118,17 +118,17 @@ public record CheckResponse
         )
         {
             writer.WriteStartObject();
-            if (value.CreatedAt != null)
+            if (value.CreatedAt is not null)
             {
                 writer.WritePropertyName("created_at");
                 JsonSerializer.Serialize(writer, value.CreatedAt, options);
             }
-            if (value.UpdatedAt != null)
+            if (value.UpdatedAt is not null)
             {
                 writer.WritePropertyName("updated_at");
                 JsonSerializer.Serialize(writer, value.UpdatedAt, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

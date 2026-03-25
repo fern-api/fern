@@ -110,7 +110,7 @@ public record UpdateUserRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Username != null)
+            if (value.Username is not null)
             {
                 writer.WritePropertyName("username");
                 JsonSerializer.Serialize(writer, value.Username, options);
@@ -120,7 +120,7 @@ public record UpdateUserRequest
                 writer.WritePropertyName("email");
                 JsonSerializer.Serialize(writer, value.Email.Value, options);
             }
-            if (value.Phone != null)
+            if (value.Phone is not null)
             {
                 writer.WritePropertyName("phone");
                 JsonSerializer.Serialize(writer, value.Phone, options);
@@ -130,7 +130,7 @@ public record UpdateUserRequest
                 writer.WritePropertyName("address");
                 JsonSerializer.Serialize(writer, value.Address.Value, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -121,12 +121,12 @@ public record TimeZoneModel
             JsonSerializer.Serialize(writer, value.MathExpression, options);
             writer.WritePropertyName("validEntity");
             JsonSerializer.Serialize(writer, value.ValidEntity, options);
-            if (value.SpecialChars != null)
+            if (value.SpecialChars is not null)
             {
                 writer.WritePropertyName("specialChars");
                 JsonSerializer.Serialize(writer, value.SpecialChars, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

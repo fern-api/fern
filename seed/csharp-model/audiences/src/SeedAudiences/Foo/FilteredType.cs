@@ -83,14 +83,14 @@ public record FilteredType
         )
         {
             writer.WriteStartObject();
-            if (value.PublicProperty != null)
+            if (value.PublicProperty is not null)
             {
                 writer.WritePropertyName("public_property");
                 JsonSerializer.Serialize(writer, value.PublicProperty, options);
             }
             writer.WritePropertyName("private_property");
             JsonSerializer.Serialize(writer, value.PrivateProperty, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

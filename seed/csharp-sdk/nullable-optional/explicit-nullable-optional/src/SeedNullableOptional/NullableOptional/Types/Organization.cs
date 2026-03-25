@@ -107,12 +107,12 @@ public record Organization
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("domain");
             JsonSerializer.Serialize(writer, value.Domain, options);
-            if (value.EmployeeCount != null)
+            if (value.EmployeeCount is not null)
             {
                 writer.WritePropertyName("employeeCount");
                 JsonSerializer.Serialize(writer, value.EmployeeCount, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

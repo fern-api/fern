@@ -135,12 +135,12 @@ public record Account
             JsonSerializer.Serialize(writer, value.ResourceType, options);
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.Patient != null)
+            if (value.Patient is not null)
             {
                 writer.WritePropertyName("patient");
                 JsonSerializer.Serialize(writer, value.Patient, options);
             }
-            if (value.Practitioner != null)
+            if (value.Practitioner is not null)
             {
                 writer.WritePropertyName("practitioner");
                 JsonSerializer.Serialize(writer, value.Practitioner, options);
@@ -151,7 +151,7 @@ public record Account
             JsonSerializer.Serialize(writer, value.RelatedResources, options);
             writer.WritePropertyName("memo");
             JsonSerializer.Serialize(writer, value.Memo, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

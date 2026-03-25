@@ -97,7 +97,7 @@ public record Moment
             JsonSerializer.Serialize(writer, value.Date, options);
             writer.WritePropertyName("datetime");
             JsonSerializer.Serialize(writer, value.Datetime, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

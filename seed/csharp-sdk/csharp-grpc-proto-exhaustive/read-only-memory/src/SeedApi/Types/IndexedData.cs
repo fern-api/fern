@@ -123,7 +123,7 @@ public record IndexedData
             JsonSerializer.Serialize(writer, value.Indices, options);
             writer.WritePropertyName("values");
             JsonSerializer.Serialize(writer, value.Values, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

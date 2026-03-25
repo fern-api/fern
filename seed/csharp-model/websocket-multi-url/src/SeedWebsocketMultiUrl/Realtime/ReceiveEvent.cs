@@ -87,7 +87,7 @@ public record ReceiveEvent
             JsonSerializer.Serialize(writer, value.Data, options);
             writer.WritePropertyName("timestamp");
             JsonSerializer.Serialize(writer, value.Timestamp, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

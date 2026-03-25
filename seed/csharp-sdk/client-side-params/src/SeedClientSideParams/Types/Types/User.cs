@@ -252,17 +252,17 @@ public record User
             JsonSerializer.Serialize(writer, value.Email, options);
             writer.WritePropertyName("email_verified");
             JsonSerializer.Serialize(writer, value.EmailVerified, options);
-            if (value.Username != null)
+            if (value.Username is not null)
             {
                 writer.WritePropertyName("username");
                 JsonSerializer.Serialize(writer, value.Username, options);
             }
-            if (value.PhoneNumber != null)
+            if (value.PhoneNumber is not null)
             {
                 writer.WritePropertyName("phone_number");
                 JsonSerializer.Serialize(writer, value.PhoneNumber, options);
             }
-            if (value.PhoneVerified != null)
+            if (value.PhoneVerified is not null)
             {
                 writer.WritePropertyName("phone_verified");
                 JsonSerializer.Serialize(writer, value.PhoneVerified, options);
@@ -271,72 +271,72 @@ public record User
             JsonSerializer.Serialize(writer, value.CreatedAt, options);
             writer.WritePropertyName("updated_at");
             JsonSerializer.Serialize(writer, value.UpdatedAt, options);
-            if (value.Identities != null)
+            if (value.Identities is not null)
             {
                 writer.WritePropertyName("identities");
                 JsonSerializer.Serialize(writer, value.Identities, options);
             }
-            if (value.AppMetadata != null)
+            if (value.AppMetadata is not null)
             {
                 writer.WritePropertyName("app_metadata");
                 JsonSerializer.Serialize(writer, value.AppMetadata, options);
             }
-            if (value.UserMetadata != null)
+            if (value.UserMetadata is not null)
             {
                 writer.WritePropertyName("user_metadata");
                 JsonSerializer.Serialize(writer, value.UserMetadata, options);
             }
-            if (value.Picture != null)
+            if (value.Picture is not null)
             {
                 writer.WritePropertyName("picture");
                 JsonSerializer.Serialize(writer, value.Picture, options);
             }
-            if (value.Name != null)
+            if (value.Name is not null)
             {
                 writer.WritePropertyName("name");
                 JsonSerializer.Serialize(writer, value.Name, options);
             }
-            if (value.Nickname != null)
+            if (value.Nickname is not null)
             {
                 writer.WritePropertyName("nickname");
                 JsonSerializer.Serialize(writer, value.Nickname, options);
             }
-            if (value.Multifactor != null)
+            if (value.Multifactor is not null)
             {
                 writer.WritePropertyName("multifactor");
                 JsonSerializer.Serialize(writer, value.Multifactor, options);
             }
-            if (value.LastIp != null)
+            if (value.LastIp is not null)
             {
                 writer.WritePropertyName("last_ip");
                 JsonSerializer.Serialize(writer, value.LastIp, options);
             }
-            if (value.LastLogin != null)
+            if (value.LastLogin is not null)
             {
                 writer.WritePropertyName("last_login");
                 JsonSerializer.Serialize(writer, value.LastLogin, options);
             }
-            if (value.LoginsCount != null)
+            if (value.LoginsCount is not null)
             {
                 writer.WritePropertyName("logins_count");
                 JsonSerializer.Serialize(writer, value.LoginsCount, options);
             }
-            if (value.Blocked != null)
+            if (value.Blocked is not null)
             {
                 writer.WritePropertyName("blocked");
                 JsonSerializer.Serialize(writer, value.Blocked, options);
             }
-            if (value.GivenName != null)
+            if (value.GivenName is not null)
             {
                 writer.WritePropertyName("given_name");
                 JsonSerializer.Serialize(writer, value.GivenName, options);
             }
-            if (value.FamilyName != null)
+            if (value.FamilyName is not null)
             {
                 writer.WritePropertyName("family_name");
                 JsonSerializer.Serialize(writer, value.FamilyName, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

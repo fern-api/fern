@@ -100,12 +100,12 @@ public record CreateResponse
         )
         {
             writer.WriteStartObject();
-            if (value.User != null)
+            if (value.User is not null)
             {
                 writer.WritePropertyName("user");
                 JsonSerializer.Serialize(writer, value.User, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

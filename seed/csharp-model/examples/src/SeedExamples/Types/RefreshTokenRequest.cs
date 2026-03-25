@@ -77,7 +77,7 @@ public record RefreshTokenRequest
             writer.WriteStartObject();
             writer.WritePropertyName("ttl");
             JsonSerializer.Serialize(writer, value.Ttl, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -183,7 +183,7 @@ public record ProblemInfoV2
             JsonSerializer.Serialize(writer, value.Testcases, options);
             writer.WritePropertyName("isPublic");
             JsonSerializer.Serialize(writer, value.IsPublic, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

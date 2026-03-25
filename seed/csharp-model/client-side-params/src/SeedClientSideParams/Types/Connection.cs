@@ -188,39 +188,39 @@ public record Connection
             JsonSerializer.Serialize(writer, value.Id, options);
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.DisplayName != null)
+            if (value.DisplayName is not null)
             {
                 writer.WritePropertyName("display_name");
                 JsonSerializer.Serialize(writer, value.DisplayName, options);
             }
             writer.WritePropertyName("strategy");
             JsonSerializer.Serialize(writer, value.Strategy, options);
-            if (value.Options != null)
+            if (value.Options is not null)
             {
                 writer.WritePropertyName("options");
                 JsonSerializer.Serialize(writer, value.Options, options);
             }
-            if (value.EnabledClients != null)
+            if (value.EnabledClients is not null)
             {
                 writer.WritePropertyName("enabled_clients");
                 JsonSerializer.Serialize(writer, value.EnabledClients, options);
             }
-            if (value.Realms != null)
+            if (value.Realms is not null)
             {
                 writer.WritePropertyName("realms");
                 JsonSerializer.Serialize(writer, value.Realms, options);
             }
-            if (value.IsDomainConnection != null)
+            if (value.IsDomainConnection is not null)
             {
                 writer.WritePropertyName("is_domain_connection");
                 JsonSerializer.Serialize(writer, value.IsDomainConnection, options);
             }
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

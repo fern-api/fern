@@ -189,62 +189,62 @@ public record DeserializationTestRequest
             writer.WriteStartObject();
             writer.WritePropertyName("requiredString");
             JsonSerializer.Serialize(writer, value.RequiredString, options);
-            if (value.NullableString != null)
+            if (value.NullableString is not null)
             {
                 writer.WritePropertyName("nullableString");
                 JsonSerializer.Serialize(writer, value.NullableString, options);
             }
-            if (value.OptionalString != null)
+            if (value.OptionalString is not null)
             {
                 writer.WritePropertyName("optionalString");
                 JsonSerializer.Serialize(writer, value.OptionalString, options);
             }
-            if (value.OptionalNullableString != null)
+            if (value.OptionalNullableString is not null)
             {
                 writer.WritePropertyName("optionalNullableString");
                 JsonSerializer.Serialize(writer, value.OptionalNullableString, options);
             }
-            if (value.NullableEnum != null)
+            if (value.NullableEnum is not null)
             {
                 writer.WritePropertyName("nullableEnum");
                 JsonSerializer.Serialize(writer, value.NullableEnum, options);
             }
-            if (value.OptionalEnum != null)
+            if (value.OptionalEnum is not null)
             {
                 writer.WritePropertyName("optionalEnum");
                 JsonSerializer.Serialize(writer, value.OptionalEnum, options);
             }
-            if (value.NullableUnion != null)
+            if (value.NullableUnion is not null)
             {
                 writer.WritePropertyName("nullableUnion");
                 JsonSerializer.Serialize(writer, value.NullableUnion, options);
             }
-            if (value.OptionalUnion != null)
+            if (value.OptionalUnion is not null)
             {
                 writer.WritePropertyName("optionalUnion");
                 JsonSerializer.Serialize(writer, value.OptionalUnion, options);
             }
-            if (value.NullableList != null)
+            if (value.NullableList is not null)
             {
                 writer.WritePropertyName("nullableList");
                 JsonSerializer.Serialize(writer, value.NullableList, options);
             }
-            if (value.NullableMap != null)
+            if (value.NullableMap is not null)
             {
                 writer.WritePropertyName("nullableMap");
                 JsonSerializer.Serialize(writer, value.NullableMap, options);
             }
-            if (value.NullableObject != null)
+            if (value.NullableObject is not null)
             {
                 writer.WritePropertyName("nullableObject");
                 JsonSerializer.Serialize(writer, value.NullableObject, options);
             }
-            if (value.OptionalObject != null)
+            if (value.OptionalObject is not null)
             {
                 writer.WritePropertyName("optionalObject");
                 JsonSerializer.Serialize(writer, value.OptionalObject, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -87,7 +87,7 @@ public record ExpressionLocation
             JsonSerializer.Serialize(writer, value.Start, options);
             writer.WritePropertyName("offset");
             JsonSerializer.Serialize(writer, value.Offset, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -102,27 +102,27 @@ public record DocumentMetadata
         )
         {
             writer.WriteStartObject();
-            if (value.Author != null)
+            if (value.Author is not null)
             {
                 writer.WritePropertyName("author");
                 JsonSerializer.Serialize(writer, value.Author, options);
             }
-            if (value.Id != null)
+            if (value.Id is not null)
             {
                 writer.WritePropertyName("id");
                 JsonSerializer.Serialize(writer, value.Id, options);
             }
-            if (value.Tags != null)
+            if (value.Tags is not null)
             {
                 writer.WritePropertyName("tags");
                 JsonSerializer.Serialize(writer, value.Tags, options);
             }
-            if (value.Title != null)
+            if (value.Title is not null)
             {
                 writer.WritePropertyName("title");
                 JsonSerializer.Serialize(writer, value.Title, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

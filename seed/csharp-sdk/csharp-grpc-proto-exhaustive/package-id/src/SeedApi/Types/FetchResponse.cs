@@ -136,22 +136,22 @@ public record FetchResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Columns != null)
+            if (value.Columns is not null)
             {
                 writer.WritePropertyName("columns");
                 JsonSerializer.Serialize(writer, value.Columns, options);
             }
-            if (value.Namespace != null)
+            if (value.Namespace is not null)
             {
                 writer.WritePropertyName("namespace");
                 JsonSerializer.Serialize(writer, value.Namespace, options);
             }
-            if (value.Usage != null)
+            if (value.Usage is not null)
             {
                 writer.WritePropertyName("usage");
                 JsonSerializer.Serialize(writer, value.Usage, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

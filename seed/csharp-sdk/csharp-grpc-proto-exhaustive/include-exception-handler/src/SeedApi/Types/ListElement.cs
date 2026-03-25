@@ -97,12 +97,12 @@ public record ListElement
         )
         {
             writer.WriteStartObject();
-            if (value.Id != null)
+            if (value.Id is not null)
             {
                 writer.WritePropertyName("id");
                 JsonSerializer.Serialize(writer, value.Id, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

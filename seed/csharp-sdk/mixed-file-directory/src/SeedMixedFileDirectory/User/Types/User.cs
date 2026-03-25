@@ -93,7 +93,7 @@ public record User
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("age");
             JsonSerializer.Serialize(writer, value.Age, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

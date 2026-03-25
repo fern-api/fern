@@ -76,12 +76,12 @@ public record WithPage
         )
         {
             writer.WriteStartObject();
-            if (value.Page != null)
+            if (value.Page is not null)
             {
                 writer.WritePropertyName("page");
                 JsonSerializer.Serialize(writer, value.Page, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

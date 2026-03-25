@@ -87,17 +87,17 @@ public record NestedObjectWithOptionalField
         )
         {
             writer.WriteStartObject();
-            if (value.String != null)
+            if (value.String is not null)
             {
                 writer.WritePropertyName("string");
                 JsonSerializer.Serialize(writer, value.String, options);
             }
-            if (value.NestedObject != null)
+            if (value.NestedObject is not null)
             {
                 writer.WritePropertyName("NestedObject");
                 JsonSerializer.Serialize(writer, value.NestedObject, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

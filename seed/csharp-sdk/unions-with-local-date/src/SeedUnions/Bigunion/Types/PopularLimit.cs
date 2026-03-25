@@ -77,7 +77,7 @@ public record PopularLimit
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             JsonSerializer.Serialize(writer, value.Value, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

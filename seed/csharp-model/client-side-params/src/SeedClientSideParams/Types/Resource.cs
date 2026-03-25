@@ -122,7 +122,7 @@ public record Resource
             JsonSerializer.Serialize(writer, value.Id, options);
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.Description != null)
+            if (value.Description is not null)
             {
                 writer.WritePropertyName("description");
                 JsonSerializer.Serialize(writer, value.Description, options);
@@ -131,12 +131,12 @@ public record Resource
             JsonSerializer.Serialize(writer, value.CreatedAt, options);
             writer.WritePropertyName("updated_at");
             JsonSerializer.Serialize(writer, value.UpdatedAt, options);
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

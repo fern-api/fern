@@ -95,12 +95,12 @@ public record RecordedResponseNotification
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("traceResponsesSize");
             JsonSerializer.Serialize(writer, value.TraceResponsesSize, options);
-            if (value.TestCaseId != null)
+            if (value.TestCaseId is not null)
             {
                 writer.WritePropertyName("testCaseId");
                 JsonSerializer.Serialize(writer, value.TestCaseId, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

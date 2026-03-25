@@ -85,12 +85,12 @@ public record ErrorEvent
             writer.WriteStartObject();
             writer.WritePropertyName("error");
             JsonSerializer.Serialize(writer, value.Error, options);
-            if (value.Code != null)
+            if (value.Code is not null)
             {
                 writer.WritePropertyName("code");
                 JsonSerializer.Serialize(writer, value.Code, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

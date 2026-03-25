@@ -74,7 +74,7 @@ public record Foo
             writer.WriteStartObject();
             writer.WritePropertyName("bar_property");
             JsonSerializer.Serialize(writer, value.BarProperty, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

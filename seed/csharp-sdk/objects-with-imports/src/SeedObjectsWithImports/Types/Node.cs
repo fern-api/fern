@@ -90,17 +90,17 @@ public record Node
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
-            if (value.Label != null)
+            if (value.Label is not null)
             {
                 writer.WritePropertyName("label");
                 JsonSerializer.Serialize(writer, value.Label, options);
             }
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

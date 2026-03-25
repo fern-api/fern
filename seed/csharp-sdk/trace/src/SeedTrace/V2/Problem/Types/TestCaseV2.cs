@@ -120,12 +120,12 @@ public record TestCaseV2
             JsonSerializer.Serialize(writer, value.Implementation, options);
             writer.WritePropertyName("arguments");
             JsonSerializer.Serialize(writer, value.Arguments, options);
-            if (value.Expects != null)
+            if (value.Expects is not null)
             {
                 writer.WritePropertyName("expects");
                 JsonSerializer.Serialize(writer, value.Expects, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

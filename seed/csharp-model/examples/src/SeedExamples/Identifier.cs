@@ -101,7 +101,7 @@ public record Identifier
             JsonSerializer.Serialize(writer, value.Value, options);
             writer.WritePropertyName("label");
             JsonSerializer.Serialize(writer, value.Label, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -86,12 +86,12 @@ public record FunctionImplementation
             writer.WriteStartObject();
             writer.WritePropertyName("impl");
             JsonSerializer.Serialize(writer, value.Impl, options);
-            if (value.Imports != null)
+            if (value.Imports is not null)
             {
                 writer.WritePropertyName("imports");
                 JsonSerializer.Serialize(writer, value.Imports, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

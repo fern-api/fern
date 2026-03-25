@@ -94,22 +94,22 @@ public record SingleFilterSearchRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Field != null)
+            if (value.Field is not null)
             {
                 writer.WritePropertyName("field");
                 JsonSerializer.Serialize(writer, value.Field, options);
             }
-            if (value.Operator != null)
+            if (value.Operator is not null)
             {
                 writer.WritePropertyName("operator");
                 JsonSerializer.Serialize(writer, value.Operator, options);
             }
-            if (value.Value != null)
+            if (value.Value is not null)
             {
                 writer.WritePropertyName("value");
                 JsonSerializer.Serialize(writer, value.Value, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

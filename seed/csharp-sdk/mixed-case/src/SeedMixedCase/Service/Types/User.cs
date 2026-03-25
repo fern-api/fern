@@ -100,7 +100,7 @@ public record User
             JsonSerializer.Serialize(writer, value.MetadataTags, options);
             writer.WritePropertyName("EXTRA_PROPERTIES");
             JsonSerializer.Serialize(writer, value.ExtraProperties, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

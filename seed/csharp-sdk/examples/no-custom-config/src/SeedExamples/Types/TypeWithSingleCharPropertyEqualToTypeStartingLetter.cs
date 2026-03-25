@@ -90,7 +90,7 @@ public record TypeWithSingleCharPropertyEqualToTypeStartingLetter
             JsonSerializer.Serialize(writer, value.T, options);
             writer.WritePropertyName("ty");
             JsonSerializer.Serialize(writer, value.Ty, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

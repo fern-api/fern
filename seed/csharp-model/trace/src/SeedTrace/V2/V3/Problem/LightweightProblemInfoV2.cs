@@ -111,7 +111,7 @@ public record LightweightProblemInfoV2
             JsonSerializer.Serialize(writer, value.ProblemVersion, options);
             writer.WritePropertyName("variableTypes");
             JsonSerializer.Serialize(writer, value.VariableTypes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

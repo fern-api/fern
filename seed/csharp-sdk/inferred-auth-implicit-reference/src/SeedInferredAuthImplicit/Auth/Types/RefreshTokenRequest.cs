@@ -128,12 +128,12 @@ public record RefreshTokenRequest
             JsonSerializer.Serialize(writer, value.Audience, options);
             writer.WritePropertyName("grant_type");
             JsonSerializer.Serialize(writer, value.GrantType, options);
-            if (value.Scope != null)
+            if (value.Scope is not null)
             {
                 writer.WritePropertyName("scope");
                 JsonSerializer.Serialize(writer, value.Scope, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

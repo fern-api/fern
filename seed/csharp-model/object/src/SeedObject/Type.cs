@@ -303,7 +303,7 @@ public record Type
             JsonSerializer.Serialize(writer, value.Eleven, options);
             writer.WritePropertyName("twelve");
             JsonSerializer.Serialize(writer, value.Twelve, options);
-            if (value.Thirteen != null)
+            if (value.Thirteen is not null)
             {
                 writer.WritePropertyName("thirteen");
                 JsonSerializer.Serialize(writer, value.Thirteen, options);
@@ -328,17 +328,17 @@ public record Type
             JsonSerializer.Serialize(writer, value.Twentytwo, options);
             writer.WritePropertyName("twentythree");
             JsonSerializer.Serialize(writer, value.Twentythree, options);
-            if (value.Twentyfour != null)
+            if (value.Twentyfour is not null)
             {
                 writer.WritePropertyName("twentyfour");
                 JsonSerializer.Serialize(writer, value.Twentyfour, options);
             }
-            if (value.Twentyfive != null)
+            if (value.Twentyfive is not null)
             {
                 writer.WritePropertyName("twentyfive");
                 JsonSerializer.Serialize(writer, value.Twentyfive, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

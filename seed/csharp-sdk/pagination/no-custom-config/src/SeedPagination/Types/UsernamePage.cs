@@ -86,14 +86,14 @@ public record UsernamePage
         )
         {
             writer.WriteStartObject();
-            if (value.After != null)
+            if (value.After is not null)
             {
                 writer.WritePropertyName("after");
                 JsonSerializer.Serialize(writer, value.After, options);
             }
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, value.Data, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

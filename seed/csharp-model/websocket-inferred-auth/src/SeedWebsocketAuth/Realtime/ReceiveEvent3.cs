@@ -77,7 +77,7 @@ public record ReceiveEvent3
             writer.WriteStartObject();
             writer.WritePropertyName("receiveText3");
             JsonSerializer.Serialize(writer, value.ReceiveText3, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

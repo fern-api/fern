@@ -106,7 +106,7 @@ public record Type
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("shape");
             JsonSerializer.Serialize(writer, value.Shape, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

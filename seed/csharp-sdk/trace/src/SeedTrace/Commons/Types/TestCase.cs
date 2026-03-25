@@ -90,7 +90,7 @@ public record TestCase
             JsonSerializer.Serialize(writer, value.Id, options);
             writer.WritePropertyName("params");
             JsonSerializer.Serialize(writer, value.Params, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -87,7 +87,7 @@ public record StuntDouble
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("actorOrActressId");
             JsonSerializer.Serialize(writer, value.ActorOrActressId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

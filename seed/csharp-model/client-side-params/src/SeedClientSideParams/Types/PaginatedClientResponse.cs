@@ -134,14 +134,14 @@ public record PaginatedClientResponse
             JsonSerializer.Serialize(writer, value.Limit, options);
             writer.WritePropertyName("length");
             JsonSerializer.Serialize(writer, value.Length, options);
-            if (value.Total != null)
+            if (value.Total is not null)
             {
                 writer.WritePropertyName("total");
                 JsonSerializer.Serialize(writer, value.Total, options);
             }
             writer.WritePropertyName("clients");
             JsonSerializer.Serialize(writer, value.Clients, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

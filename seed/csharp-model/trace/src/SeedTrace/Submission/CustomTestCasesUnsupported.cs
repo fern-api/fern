@@ -87,7 +87,7 @@ public record CustomTestCasesUnsupported
             JsonSerializer.Serialize(writer, value.ProblemId, options);
             writer.WritePropertyName("submissionId");
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

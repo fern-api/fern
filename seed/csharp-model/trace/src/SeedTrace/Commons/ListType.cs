@@ -88,12 +88,12 @@ public record ListType
             writer.WriteStartObject();
             writer.WritePropertyName("valueType");
             JsonSerializer.Serialize(writer, value.ValueType, options);
-            if (value.IsFixedLength != null)
+            if (value.IsFixedLength is not null)
             {
                 writer.WritePropertyName("isFixedLength");
                 JsonSerializer.Serialize(writer, value.IsFixedLength, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

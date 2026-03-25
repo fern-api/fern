@@ -151,7 +151,7 @@ public record CreateProblemRequest
             JsonSerializer.Serialize(writer, value.Testcases, options);
             writer.WritePropertyName("methodName");
             JsonSerializer.Serialize(writer, value.MethodName, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

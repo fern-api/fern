@@ -474,9 +474,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             }
 
             if (prop.isWriteOnly) {
-                // WriteOnly properties are not deserialized and receive default! in Read.
-                // Must null-check to avoid writing null for reference types after round-trip.
-                writer.writeLine(`if (value.${prop.propertyName} != null)`);
+                // WriteOnly properties receive default! in Read (not deserialized).
+                // Guard matches WhenWritingNull: skip null reference types, always write non-null/value types.
+                writer.writeLine(`if (value.${prop.propertyName} is not null)`);
                 writer.pushScope();
                 writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
                 writer.write("JsonSerializer.Serialize(writer, value.");
@@ -498,7 +498,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             } else if (prop.csharpType.isOptional && !prop.isLiteral) {
                 // Standard nullable property (no explicit nullable/optional attributes):
                 // skip if null (equivalent to DefaultIgnoreCondition.WhenWritingNull)
-                writer.writeLine(`if (value.${prop.propertyName} != null)`);
+                writer.writeLine(`if (value.${prop.propertyName} is not null)`);
                 writer.pushScope();
                 writer.writeTextStatement(`writer.WritePropertyName("${prop.wireValue}")`);
                 writer.write("JsonSerializer.Serialize(writer, value.");
@@ -513,7 +513,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         }
 
         // Write additional properties / extension data
-        writer.writeLine("if (value.AdditionalProperties != null)");
+        writer.writeLine("if (value.AdditionalProperties is not null)");
         writer.pushScope();
         writer.writeLine("foreach (var kvp in value.AdditionalProperties)");
         writer.pushScope();

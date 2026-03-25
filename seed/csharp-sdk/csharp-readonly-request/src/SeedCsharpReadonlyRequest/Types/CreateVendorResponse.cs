@@ -86,7 +86,7 @@ public record CreateVendorResponse
             writer.WriteStartObject();
             writer.WritePropertyName("vendors");
             JsonSerializer.Serialize(writer, value.Vendors, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

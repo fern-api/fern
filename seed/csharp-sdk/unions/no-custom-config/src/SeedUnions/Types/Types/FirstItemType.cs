@@ -83,14 +83,14 @@ public record FirstItemType
         )
         {
             writer.WriteStartObject();
-            if (value.Type != null)
+            if (value.Type is not null)
             {
                 writer.WritePropertyName("type");
                 JsonSerializer.Serialize(writer, value.Type, options);
             }
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

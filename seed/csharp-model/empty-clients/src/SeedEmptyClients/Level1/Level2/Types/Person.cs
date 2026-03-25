@@ -88,7 +88,7 @@ public record Person
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("address");
             JsonSerializer.Serialize(writer, value.Address, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

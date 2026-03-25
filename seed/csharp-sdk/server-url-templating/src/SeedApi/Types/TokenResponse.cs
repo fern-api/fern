@@ -87,7 +87,7 @@ public record TokenResponse
             JsonSerializer.Serialize(writer, value.AccessToken, options);
             writer.WritePropertyName("expires_in");
             JsonSerializer.Serialize(writer, value.ExpiresIn, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

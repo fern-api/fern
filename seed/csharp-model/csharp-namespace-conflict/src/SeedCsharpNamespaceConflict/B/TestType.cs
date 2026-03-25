@@ -94,7 +94,7 @@ public record TestType
             JsonSerializer.Serialize(writer, value.A, options);
             writer.WritePropertyName("b");
             JsonSerializer.Serialize(writer, value.B, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

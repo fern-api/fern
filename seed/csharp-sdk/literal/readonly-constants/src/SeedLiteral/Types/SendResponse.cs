@@ -107,7 +107,7 @@ public record SendResponse
             JsonSerializer.Serialize(writer, value.Status, options);
             writer.WritePropertyName("success");
             JsonSerializer.Serialize(writer, value.Success, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

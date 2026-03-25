@@ -90,7 +90,7 @@ public record ProblemFiles
             JsonSerializer.Serialize(writer, value.SolutionFile, options);
             writer.WritePropertyName("readOnlyFiles");
             JsonSerializer.Serialize(writer, value.ReadOnlyFiles, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

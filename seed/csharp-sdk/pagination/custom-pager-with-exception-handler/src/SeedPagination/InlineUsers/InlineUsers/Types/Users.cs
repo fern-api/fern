@@ -81,7 +81,7 @@ public record Users
             writer.WriteStartObject();
             writer.WritePropertyName("users");
             JsonSerializer.Serialize(writer, value.Users_, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

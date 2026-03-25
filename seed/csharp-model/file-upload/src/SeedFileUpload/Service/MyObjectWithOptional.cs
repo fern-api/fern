@@ -85,12 +85,12 @@ public record MyObjectWithOptional
             writer.WriteStartObject();
             writer.WritePropertyName("prop");
             JsonSerializer.Serialize(writer, value.Prop, options);
-            if (value.OptionalProp != null)
+            if (value.OptionalProp is not null)
             {
                 writer.WritePropertyName("optionalProp");
                 JsonSerializer.Serialize(writer, value.OptionalProp, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -87,7 +87,7 @@ public record GradedTestCaseUpdate
             JsonSerializer.Serialize(writer, value.TestCaseId, options);
             writer.WritePropertyName("grade");
             JsonSerializer.Serialize(writer, value.Grade, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

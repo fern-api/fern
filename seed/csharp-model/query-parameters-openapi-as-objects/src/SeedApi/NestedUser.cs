@@ -83,17 +83,17 @@ public record NestedUser
         )
         {
             writer.WriteStartObject();
-            if (value.Name != null)
+            if (value.Name is not null)
             {
                 writer.WritePropertyName("name");
                 JsonSerializer.Serialize(writer, value.Name, options);
             }
-            if (value.User != null)
+            if (value.User is not null)
             {
                 writer.WritePropertyName("user");
                 JsonSerializer.Serialize(writer, value.User, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

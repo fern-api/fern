@@ -264,37 +264,37 @@ public record UserProfile
             JsonSerializer.Serialize(writer, value.NullableList, options);
             writer.WritePropertyName("nullableMap");
             JsonSerializer.Serialize(writer, value.NullableMap, options);
-            if (value.OptionalString != null)
+            if (value.OptionalString is not null)
             {
                 writer.WritePropertyName("optionalString");
                 JsonSerializer.Serialize(writer, value.OptionalString, options);
             }
-            if (value.OptionalInteger != null)
+            if (value.OptionalInteger is not null)
             {
                 writer.WritePropertyName("optionalInteger");
                 JsonSerializer.Serialize(writer, value.OptionalInteger, options);
             }
-            if (value.OptionalBoolean != null)
+            if (value.OptionalBoolean is not null)
             {
                 writer.WritePropertyName("optionalBoolean");
                 JsonSerializer.Serialize(writer, value.OptionalBoolean, options);
             }
-            if (value.OptionalDate != null)
+            if (value.OptionalDate is not null)
             {
                 writer.WritePropertyName("optionalDate");
                 JsonSerializer.Serialize(writer, value.OptionalDate, options);
             }
-            if (value.OptionalObject != null)
+            if (value.OptionalObject is not null)
             {
                 writer.WritePropertyName("optionalObject");
                 JsonSerializer.Serialize(writer, value.OptionalObject, options);
             }
-            if (value.OptionalList != null)
+            if (value.OptionalList is not null)
             {
                 writer.WritePropertyName("optionalList");
                 JsonSerializer.Serialize(writer, value.OptionalList, options);
             }
-            if (value.OptionalMap != null)
+            if (value.OptionalMap is not null)
             {
                 writer.WritePropertyName("optionalMap");
                 JsonSerializer.Serialize(writer, value.OptionalMap, options);
@@ -309,7 +309,7 @@ public record UserProfile
                 writer.WritePropertyName("optionalNullableObject");
                 JsonSerializer.Serialize(writer, value.OptionalNullableObject.Value, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

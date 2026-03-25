@@ -90,7 +90,7 @@ public record UnexpectedLanguageError
             JsonSerializer.Serialize(writer, value.ExpectedLanguage, options);
             writer.WritePropertyName("actualLanguage");
             JsonSerializer.Serialize(writer, value.ActualLanguage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

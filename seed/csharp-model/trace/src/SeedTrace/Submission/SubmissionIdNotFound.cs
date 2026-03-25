@@ -80,7 +80,7 @@ public record SubmissionIdNotFound
             writer.WriteStartObject();
             writer.WritePropertyName("missingSubmissionId");
             JsonSerializer.Serialize(writer, value.MissingSubmissionId, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

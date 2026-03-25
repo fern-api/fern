@@ -95,7 +95,7 @@ public record TestCaseImplementation
             JsonSerializer.Serialize(writer, value.Description, options);
             writer.WritePropertyName("function");
             JsonSerializer.Serialize(writer, value.Function, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

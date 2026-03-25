@@ -104,19 +104,19 @@ public record TestCaseNonHiddenGrade
             writer.WriteStartObject();
             writer.WritePropertyName("passed");
             JsonSerializer.Serialize(writer, value.Passed, options);
-            if (value.ActualResult != null)
+            if (value.ActualResult is not null)
             {
                 writer.WritePropertyName("actualResult");
                 JsonSerializer.Serialize(writer, value.ActualResult, options);
             }
-            if (value.Exception != null)
+            if (value.Exception is not null)
             {
                 writer.WritePropertyName("exception");
                 JsonSerializer.Serialize(writer, value.Exception, options);
             }
             writer.WritePropertyName("stdout");
             JsonSerializer.Serialize(writer, value.Stdout, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

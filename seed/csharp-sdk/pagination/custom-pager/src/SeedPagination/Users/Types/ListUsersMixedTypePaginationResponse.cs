@@ -87,7 +87,7 @@ public record ListUsersMixedTypePaginationResponse
             JsonSerializer.Serialize(writer, value.Next, options);
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, value.Data, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

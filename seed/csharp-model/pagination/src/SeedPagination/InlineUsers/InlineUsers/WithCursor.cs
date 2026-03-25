@@ -76,12 +76,12 @@ public record WithCursor
         )
         {
             writer.WriteStartObject();
-            if (value.Cursor != null)
+            if (value.Cursor is not null)
             {
                 writer.WritePropertyName("cursor");
                 JsonSerializer.Serialize(writer, value.Cursor, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

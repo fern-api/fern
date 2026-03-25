@@ -97,7 +97,7 @@ public record SubmissionFileInfo
             JsonSerializer.Serialize(writer, value.Filename, options);
             writer.WritePropertyName("contents");
             JsonSerializer.Serialize(writer, value.Contents, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

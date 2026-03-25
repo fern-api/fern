@@ -77,7 +77,7 @@ public record CompletionEvent
             writer.WriteStartObject();
             writer.WritePropertyName("content");
             JsonSerializer.Serialize(writer, value.Content, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

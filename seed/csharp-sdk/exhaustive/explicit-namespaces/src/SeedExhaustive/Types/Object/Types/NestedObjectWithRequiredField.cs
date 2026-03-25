@@ -91,7 +91,7 @@ public record NestedObjectWithRequiredField
             JsonSerializer.Serialize(writer, value.String, options);
             writer.WritePropertyName("NestedObject");
             JsonSerializer.Serialize(writer, value.NestedObject, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

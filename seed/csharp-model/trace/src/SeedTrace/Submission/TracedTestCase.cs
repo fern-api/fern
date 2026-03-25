@@ -90,7 +90,7 @@ public record TracedTestCase
             JsonSerializer.Serialize(writer, value.Result, options);
             writer.WritePropertyName("traceResponsesSize");
             JsonSerializer.Serialize(writer, value.TraceResponsesSize, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

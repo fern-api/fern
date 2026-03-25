@@ -201,7 +201,7 @@ public record DeserializationTestRequest
             JsonSerializer.Serialize(writer, value.RequiredString, options);
             writer.WritePropertyName("nullableString");
             JsonSerializer.Serialize(writer, value.NullableString, options);
-            if (value.OptionalString != null)
+            if (value.OptionalString is not null)
             {
                 writer.WritePropertyName("optionalString");
                 JsonSerializer.Serialize(writer, value.OptionalString, options);
@@ -213,14 +213,14 @@ public record DeserializationTestRequest
             }
             writer.WritePropertyName("nullableEnum");
             JsonSerializer.Serialize(writer, value.NullableEnum, options);
-            if (value.OptionalEnum != null)
+            if (value.OptionalEnum is not null)
             {
                 writer.WritePropertyName("optionalEnum");
                 JsonSerializer.Serialize(writer, value.OptionalEnum, options);
             }
             writer.WritePropertyName("nullableUnion");
             JsonSerializer.Serialize(writer, value.NullableUnion, options);
-            if (value.OptionalUnion != null)
+            if (value.OptionalUnion is not null)
             {
                 writer.WritePropertyName("optionalUnion");
                 JsonSerializer.Serialize(writer, value.OptionalUnion, options);
@@ -231,12 +231,12 @@ public record DeserializationTestRequest
             JsonSerializer.Serialize(writer, value.NullableMap, options);
             writer.WritePropertyName("nullableObject");
             JsonSerializer.Serialize(writer, value.NullableObject, options);
-            if (value.OptionalObject != null)
+            if (value.OptionalObject is not null)
             {
                 writer.WritePropertyName("optionalObject");
                 JsonSerializer.Serialize(writer, value.OptionalObject, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

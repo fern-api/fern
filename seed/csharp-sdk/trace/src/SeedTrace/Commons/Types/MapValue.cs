@@ -80,7 +80,7 @@ public record MapValue
             writer.WriteStartObject();
             writer.WritePropertyName("keyValuePairs");
             JsonSerializer.Serialize(writer, value.KeyValuePairs, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -108,12 +108,12 @@ public record WorkspaceSubmitRequest
             JsonSerializer.Serialize(writer, value.Language, options);
             writer.WritePropertyName("submissionFiles");
             JsonSerializer.Serialize(writer, value.SubmissionFiles, options);
-            if (value.UserId != null)
+            if (value.UserId is not null)
             {
                 writer.WritePropertyName("userId");
                 JsonSerializer.Serialize(writer, value.UserId, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

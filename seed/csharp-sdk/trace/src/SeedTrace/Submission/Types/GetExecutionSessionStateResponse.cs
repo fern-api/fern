@@ -102,14 +102,14 @@ public record GetExecutionSessionStateResponse
             writer.WriteStartObject();
             writer.WritePropertyName("states");
             JsonSerializer.Serialize(writer, value.States, options);
-            if (value.NumWarmingInstances != null)
+            if (value.NumWarmingInstances is not null)
             {
                 writer.WritePropertyName("numWarmingInstances");
                 JsonSerializer.Serialize(writer, value.NumWarmingInstances, options);
             }
             writer.WritePropertyName("warmingSessionIds");
             JsonSerializer.Serialize(writer, value.WarmingSessionIds, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

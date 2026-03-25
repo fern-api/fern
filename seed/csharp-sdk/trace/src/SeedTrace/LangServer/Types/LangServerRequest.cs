@@ -77,7 +77,7 @@ public record LangServerRequest
             writer.WriteStartObject();
             writer.WritePropertyName("request");
             JsonSerializer.Serialize(writer, value.Request, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

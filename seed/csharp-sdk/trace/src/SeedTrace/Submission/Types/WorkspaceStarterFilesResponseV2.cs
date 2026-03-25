@@ -80,7 +80,7 @@ public record WorkspaceStarterFilesResponseV2
             writer.WriteStartObject();
             writer.WritePropertyName("filesByLanguage");
             JsonSerializer.Serialize(writer, value.FilesByLanguage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

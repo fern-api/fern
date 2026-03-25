@@ -83,14 +83,14 @@ public record ListUsersTopLevelCursorPaginationResponse
         )
         {
             writer.WriteStartObject();
-            if (value.NextCursor != null)
+            if (value.NextCursor is not null)
             {
                 writer.WritePropertyName("next_cursor");
                 JsonSerializer.Serialize(writer, value.NextCursor, options);
             }
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, value.Data, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

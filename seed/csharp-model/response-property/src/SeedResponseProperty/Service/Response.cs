@@ -100,7 +100,7 @@ public record Response
             JsonSerializer.Serialize(writer, value.Metadata, options);
             writer.WritePropertyName("docs");
             JsonSerializer.Serialize(writer, value.Docs, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

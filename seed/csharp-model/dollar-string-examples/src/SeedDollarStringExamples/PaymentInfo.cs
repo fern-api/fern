@@ -95,12 +95,12 @@ public record PaymentInfo
             JsonSerializer.Serialize(writer, value.Amount, options);
             writer.WritePropertyName("currency");
             JsonSerializer.Serialize(writer, value.Currency, options);
-            if (value.Description != null)
+            if (value.Description is not null)
             {
                 writer.WritePropertyName("description");
                 JsonSerializer.Serialize(writer, value.Description, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

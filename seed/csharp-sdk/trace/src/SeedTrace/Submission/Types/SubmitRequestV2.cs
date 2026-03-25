@@ -126,17 +126,17 @@ public record SubmitRequestV2
             JsonSerializer.Serialize(writer, value.SubmissionFiles, options);
             writer.WritePropertyName("problemId");
             JsonSerializer.Serialize(writer, value.ProblemId, options);
-            if (value.ProblemVersion != null)
+            if (value.ProblemVersion is not null)
             {
                 writer.WritePropertyName("problemVersion");
                 JsonSerializer.Serialize(writer, value.ProblemVersion, options);
             }
-            if (value.UserId != null)
+            if (value.UserId is not null)
             {
                 writer.WritePropertyName("userId");
                 JsonSerializer.Serialize(writer, value.UserId, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

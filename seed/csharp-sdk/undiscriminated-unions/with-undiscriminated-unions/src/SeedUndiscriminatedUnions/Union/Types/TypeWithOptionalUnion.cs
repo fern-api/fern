@@ -75,12 +75,12 @@ public record TypeWithOptionalUnion
         )
         {
             writer.WriteStartObject();
-            if (value.MyUnion != null)
+            if (value.MyUnion is not null)
             {
                 writer.WritePropertyName("myUnion");
                 JsonSerializer.Serialize(writer, value.MyUnion, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

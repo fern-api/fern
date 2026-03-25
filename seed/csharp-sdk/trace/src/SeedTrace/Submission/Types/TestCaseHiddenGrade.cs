@@ -77,7 +77,7 @@ public record TestCaseHiddenGrade
             writer.WriteStartObject();
             writer.WritePropertyName("passed");
             JsonSerializer.Serialize(writer, value.Passed, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

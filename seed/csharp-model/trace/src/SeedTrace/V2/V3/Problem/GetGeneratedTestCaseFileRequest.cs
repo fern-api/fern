@@ -87,14 +87,14 @@ public record GetGeneratedTestCaseFileRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Template != null)
+            if (value.Template is not null)
             {
                 writer.WritePropertyName("template");
                 JsonSerializer.Serialize(writer, value.Template, options);
             }
             writer.WritePropertyName("testCase");
             JsonSerializer.Serialize(writer, value.TestCase, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

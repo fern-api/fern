@@ -87,7 +87,7 @@ public record ReceiveEvent
             JsonSerializer.Serialize(writer, value.Alpha, options);
             writer.WritePropertyName("beta");
             JsonSerializer.Serialize(writer, value.Beta, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

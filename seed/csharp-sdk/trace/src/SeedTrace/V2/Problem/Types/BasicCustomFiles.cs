@@ -118,7 +118,7 @@ public record BasicCustomFiles
             JsonSerializer.Serialize(writer, value.AdditionalFiles, options);
             writer.WritePropertyName("basicTestCaseTemplate");
             JsonSerializer.Serialize(writer, value.BasicTestCaseTemplate, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

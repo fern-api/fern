@@ -95,7 +95,7 @@ public record NonVoidFunctionDefinition
             JsonSerializer.Serialize(writer, value.Signature, options);
             writer.WritePropertyName("code");
             JsonSerializer.Serialize(writer, value.Code, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

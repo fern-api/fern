@@ -97,7 +97,7 @@ public record ReceiveEvent2
             JsonSerializer.Serialize(writer, value.Delta, options);
             writer.WritePropertyName("epsilon");
             JsonSerializer.Serialize(writer, value.Epsilon, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

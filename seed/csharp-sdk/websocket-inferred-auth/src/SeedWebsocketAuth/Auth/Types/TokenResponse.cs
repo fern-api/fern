@@ -88,12 +88,12 @@ public record TokenResponse
             writer.WriteStartObject();
             writer.WritePropertyName("access_token");
             JsonSerializer.Serialize(writer, value.AccessToken, options);
-            if (value.RefreshToken != null)
+            if (value.RefreshToken is not null)
             {
                 writer.WritePropertyName("refresh_token");
                 JsonSerializer.Serialize(writer, value.RefreshToken, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

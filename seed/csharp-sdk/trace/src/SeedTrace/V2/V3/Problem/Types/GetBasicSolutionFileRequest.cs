@@ -91,7 +91,7 @@ public record GetBasicSolutionFileRequest
             JsonSerializer.Serialize(writer, value.MethodName, options);
             writer.WritePropertyName("signature");
             JsonSerializer.Serialize(writer, value.Signature, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

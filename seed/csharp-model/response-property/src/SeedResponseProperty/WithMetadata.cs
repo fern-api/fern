@@ -80,7 +80,7 @@ public record WithMetadata
             writer.WriteStartObject();
             writer.WritePropertyName("metadata");
             JsonSerializer.Serialize(writer, value.Metadata, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

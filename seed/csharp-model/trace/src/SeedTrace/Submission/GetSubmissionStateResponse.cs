@@ -102,7 +102,7 @@ public record GetSubmissionStateResponse
         )
         {
             writer.WriteStartObject();
-            if (value.TimeSubmitted != null)
+            if (value.TimeSubmitted is not null)
             {
                 writer.WritePropertyName("timeSubmitted");
                 JsonSerializer.Serialize(writer, value.TimeSubmitted, options);
@@ -113,7 +113,7 @@ public record GetSubmissionStateResponse
             JsonSerializer.Serialize(writer, value.Language, options);
             writer.WritePropertyName("submissionTypeState");
             JsonSerializer.Serialize(writer, value.SubmissionTypeState, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

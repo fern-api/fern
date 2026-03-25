@@ -96,17 +96,17 @@ public record SearchResponse
             writer.WriteStartObject();
             writer.WritePropertyName("results");
             JsonSerializer.Serialize(writer, value.Results, options);
-            if (value.Total != null)
+            if (value.Total is not null)
             {
                 writer.WritePropertyName("total");
                 JsonSerializer.Serialize(writer, value.Total, options);
             }
-            if (value.NextOffset != null)
+            if (value.NextOffset is not null)
             {
                 writer.WritePropertyName("next_offset");
                 JsonSerializer.Serialize(writer, value.NextOffset, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

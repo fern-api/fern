@@ -87,7 +87,7 @@ public record NestedUser
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("NestedUser");
             JsonSerializer.Serialize(writer, value.NestedUser_, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -83,17 +83,17 @@ public record TokenResponse
         )
         {
             writer.WriteStartObject();
-            if (value.AccessToken != null)
+            if (value.AccessToken is not null)
             {
                 writer.WritePropertyName("access_token");
                 JsonSerializer.Serialize(writer, value.AccessToken, options);
             }
-            if (value.ExpiresIn != null)
+            if (value.ExpiresIn is not null)
             {
                 writer.WritePropertyName("expires_in");
                 JsonSerializer.Serialize(writer, value.ExpiresIn, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

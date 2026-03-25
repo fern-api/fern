@@ -90,7 +90,7 @@ public record Record
             JsonSerializer.Serialize(writer, value.Foo, options);
             writer.WritePropertyName("3d");
             JsonSerializer.Serialize(writer, value._3D, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

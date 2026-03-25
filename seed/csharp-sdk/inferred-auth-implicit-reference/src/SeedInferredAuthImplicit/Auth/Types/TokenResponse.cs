@@ -98,12 +98,12 @@ public record TokenResponse
             JsonSerializer.Serialize(writer, value.AccessToken, options);
             writer.WritePropertyName("expires_in");
             JsonSerializer.Serialize(writer, value.ExpiresIn, options);
-            if (value.RefreshToken != null)
+            if (value.RefreshToken is not null)
             {
                 writer.WritePropertyName("refresh_token");
                 JsonSerializer.Serialize(writer, value.RefreshToken, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -82,7 +82,7 @@ public record UserProfileVerification
         )
         {
             writer.WriteStartObject();
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

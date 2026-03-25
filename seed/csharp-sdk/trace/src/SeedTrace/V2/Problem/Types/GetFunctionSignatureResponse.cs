@@ -81,7 +81,7 @@ public record GetFunctionSignatureResponse
             writer.WriteStartObject();
             writer.WritePropertyName("functionByLanguage");
             JsonSerializer.Serialize(writer, value.FunctionByLanguage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

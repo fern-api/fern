@@ -90,7 +90,7 @@ public record LightweightStackframeInformation
             JsonSerializer.Serialize(writer, value.NumStackFrames, options);
             writer.WritePropertyName("topStackFrameMethodName");
             JsonSerializer.Serialize(writer, value.TopStackFrameMethodName, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -86,14 +86,14 @@ public record SinglyLinkedListValue
         )
         {
             writer.WriteStartObject();
-            if (value.Head != null)
+            if (value.Head is not null)
             {
                 writer.WritePropertyName("head");
                 JsonSerializer.Serialize(writer, value.Head, options);
             }
             writer.WritePropertyName("nodes");
             JsonSerializer.Serialize(writer, value.Nodes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

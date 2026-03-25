@@ -135,22 +135,22 @@ public record CreateResponse
         )
         {
             writer.WriteStartObject();
-            if (value.Resource != null)
+            if (value.Resource is not null)
             {
                 writer.WritePropertyName("resource");
                 JsonSerializer.Serialize(writer, value.Resource, options);
             }
-            if (value.Success != null)
+            if (value.Success is not null)
             {
                 writer.WritePropertyName("success");
                 JsonSerializer.Serialize(writer, value.Success, options);
             }
-            if (value.ErrorMessage != null)
+            if (value.ErrorMessage is not null)
             {
                 writer.WritePropertyName("error_message");
                 JsonSerializer.Serialize(writer, value.ErrorMessage, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

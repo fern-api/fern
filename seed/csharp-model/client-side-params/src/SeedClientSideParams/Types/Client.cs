@@ -437,149 +437,149 @@ public record Client
             writer.WriteStartObject();
             writer.WritePropertyName("client_id");
             JsonSerializer.Serialize(writer, value.ClientId, options);
-            if (value.Tenant != null)
+            if (value.Tenant is not null)
             {
                 writer.WritePropertyName("tenant");
                 JsonSerializer.Serialize(writer, value.Tenant, options);
             }
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.Description != null)
+            if (value.Description is not null)
             {
                 writer.WritePropertyName("description");
                 JsonSerializer.Serialize(writer, value.Description, options);
             }
-            if (value.Global != null)
+            if (value.Global is not null)
             {
                 writer.WritePropertyName("global");
                 JsonSerializer.Serialize(writer, value.Global, options);
             }
-            if (value.ClientSecret != null)
+            if (value.ClientSecret is not null)
             {
                 writer.WritePropertyName("client_secret");
                 JsonSerializer.Serialize(writer, value.ClientSecret, options);
             }
-            if (value.AppType != null)
+            if (value.AppType is not null)
             {
                 writer.WritePropertyName("app_type");
                 JsonSerializer.Serialize(writer, value.AppType, options);
             }
-            if (value.LogoUri != null)
+            if (value.LogoUri is not null)
             {
                 writer.WritePropertyName("logo_uri");
                 JsonSerializer.Serialize(writer, value.LogoUri, options);
             }
-            if (value.IsFirstParty != null)
+            if (value.IsFirstParty is not null)
             {
                 writer.WritePropertyName("is_first_party");
                 JsonSerializer.Serialize(writer, value.IsFirstParty, options);
             }
-            if (value.OidcConformant != null)
+            if (value.OidcConformant is not null)
             {
                 writer.WritePropertyName("oidc_conformant");
                 JsonSerializer.Serialize(writer, value.OidcConformant, options);
             }
-            if (value.Callbacks != null)
+            if (value.Callbacks is not null)
             {
                 writer.WritePropertyName("callbacks");
                 JsonSerializer.Serialize(writer, value.Callbacks, options);
             }
-            if (value.AllowedOrigins != null)
+            if (value.AllowedOrigins is not null)
             {
                 writer.WritePropertyName("allowed_origins");
                 JsonSerializer.Serialize(writer, value.AllowedOrigins, options);
             }
-            if (value.WebOrigins != null)
+            if (value.WebOrigins is not null)
             {
                 writer.WritePropertyName("web_origins");
                 JsonSerializer.Serialize(writer, value.WebOrigins, options);
             }
-            if (value.GrantTypes != null)
+            if (value.GrantTypes is not null)
             {
                 writer.WritePropertyName("grant_types");
                 JsonSerializer.Serialize(writer, value.GrantTypes, options);
             }
-            if (value.JwtConfiguration != null)
+            if (value.JwtConfiguration is not null)
             {
                 writer.WritePropertyName("jwt_configuration");
                 JsonSerializer.Serialize(writer, value.JwtConfiguration, options);
             }
-            if (value.SigningKeys != null)
+            if (value.SigningKeys is not null)
             {
                 writer.WritePropertyName("signing_keys");
                 JsonSerializer.Serialize(writer, value.SigningKeys, options);
             }
-            if (value.EncryptionKey != null)
+            if (value.EncryptionKey is not null)
             {
                 writer.WritePropertyName("encryption_key");
                 JsonSerializer.Serialize(writer, value.EncryptionKey, options);
             }
-            if (value.Sso != null)
+            if (value.Sso is not null)
             {
                 writer.WritePropertyName("sso");
                 JsonSerializer.Serialize(writer, value.Sso, options);
             }
-            if (value.SsoDisabled != null)
+            if (value.SsoDisabled is not null)
             {
                 writer.WritePropertyName("sso_disabled");
                 JsonSerializer.Serialize(writer, value.SsoDisabled, options);
             }
-            if (value.CrossOriginAuth != null)
+            if (value.CrossOriginAuth is not null)
             {
                 writer.WritePropertyName("cross_origin_auth");
                 JsonSerializer.Serialize(writer, value.CrossOriginAuth, options);
             }
-            if (value.CrossOriginLoc != null)
+            if (value.CrossOriginLoc is not null)
             {
                 writer.WritePropertyName("cross_origin_loc");
                 JsonSerializer.Serialize(writer, value.CrossOriginLoc, options);
             }
-            if (value.CustomLoginPageOn != null)
+            if (value.CustomLoginPageOn is not null)
             {
                 writer.WritePropertyName("custom_login_page_on");
                 JsonSerializer.Serialize(writer, value.CustomLoginPageOn, options);
             }
-            if (value.CustomLoginPage != null)
+            if (value.CustomLoginPage is not null)
             {
                 writer.WritePropertyName("custom_login_page");
                 JsonSerializer.Serialize(writer, value.CustomLoginPage, options);
             }
-            if (value.CustomLoginPagePreview != null)
+            if (value.CustomLoginPagePreview is not null)
             {
                 writer.WritePropertyName("custom_login_page_preview");
                 JsonSerializer.Serialize(writer, value.CustomLoginPagePreview, options);
             }
-            if (value.FormTemplate != null)
+            if (value.FormTemplate is not null)
             {
                 writer.WritePropertyName("form_template");
                 JsonSerializer.Serialize(writer, value.FormTemplate, options);
             }
-            if (value.IsHerokuApp != null)
+            if (value.IsHerokuApp is not null)
             {
                 writer.WritePropertyName("is_heroku_app");
                 JsonSerializer.Serialize(writer, value.IsHerokuApp, options);
             }
-            if (value.Addons != null)
+            if (value.Addons is not null)
             {
                 writer.WritePropertyName("addons");
                 JsonSerializer.Serialize(writer, value.Addons, options);
             }
-            if (value.TokenEndpointAuthMethod != null)
+            if (value.TokenEndpointAuthMethod is not null)
             {
                 writer.WritePropertyName("token_endpoint_auth_method");
                 JsonSerializer.Serialize(writer, value.TokenEndpointAuthMethod, options);
             }
-            if (value.ClientMetadata != null)
+            if (value.ClientMetadata is not null)
             {
                 writer.WritePropertyName("client_metadata");
                 JsonSerializer.Serialize(writer, value.ClientMetadata, options);
             }
-            if (value.Mobile != null)
+            if (value.Mobile is not null)
             {
                 writer.WritePropertyName("mobile");
                 JsonSerializer.Serialize(writer, value.Mobile, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

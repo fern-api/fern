@@ -103,17 +103,17 @@ public record BinaryTreeNodeValue
             JsonSerializer.Serialize(writer, value.NodeId, options);
             writer.WritePropertyName("val");
             JsonSerializer.Serialize(writer, value.Val, options);
-            if (value.Right != null)
+            if (value.Right is not null)
             {
                 writer.WritePropertyName("right");
                 JsonSerializer.Serialize(writer, value.Right, options);
             }
-            if (value.Left != null)
+            if (value.Left is not null)
             {
                 writer.WritePropertyName("left");
                 JsonSerializer.Serialize(writer, value.Left, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

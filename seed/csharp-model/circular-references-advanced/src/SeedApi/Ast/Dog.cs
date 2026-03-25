@@ -74,7 +74,7 @@ public record Dog
             writer.WriteStartObject();
             writer.WritePropertyName("fruit");
             JsonSerializer.Serialize(writer, value.Fruit, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

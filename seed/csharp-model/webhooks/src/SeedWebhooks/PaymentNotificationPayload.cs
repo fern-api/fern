@@ -97,7 +97,7 @@ public record PaymentNotificationPayload
             JsonSerializer.Serialize(writer, value.Amount, options);
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

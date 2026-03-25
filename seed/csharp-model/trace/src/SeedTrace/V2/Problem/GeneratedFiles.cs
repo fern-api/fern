@@ -107,7 +107,7 @@ public record GeneratedFiles
             JsonSerializer.Serialize(writer, value.GeneratedTemplateFiles, options);
             writer.WritePropertyName("other");
             JsonSerializer.Serialize(writer, value.Other, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -94,7 +94,7 @@ public record VoidFunctionSignatureThatTakesActualResult
             JsonSerializer.Serialize(writer, value.Parameters, options);
             writer.WritePropertyName("actualResultType");
             JsonSerializer.Serialize(writer, value.ActualResultType, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

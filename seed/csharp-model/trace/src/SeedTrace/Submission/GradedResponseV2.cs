@@ -91,7 +91,7 @@ public record GradedResponseV2
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("testCases");
             JsonSerializer.Serialize(writer, value.TestCases, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -81,12 +81,12 @@ public record Memo
             writer.WriteStartObject();
             writer.WritePropertyName("description");
             JsonSerializer.Serialize(writer, value.Description, options);
-            if (value.Account != null)
+            if (value.Account is not null)
             {
                 writer.WritePropertyName("account");
                 JsonSerializer.Serialize(writer, value.Account, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

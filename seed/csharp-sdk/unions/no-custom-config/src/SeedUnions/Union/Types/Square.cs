@@ -77,7 +77,7 @@ public record Square
             writer.WriteStartObject();
             writer.WritePropertyName("length");
             JsonSerializer.Serialize(writer, value.Length, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

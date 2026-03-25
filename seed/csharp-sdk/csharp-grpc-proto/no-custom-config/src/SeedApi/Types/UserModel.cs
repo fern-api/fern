@@ -152,32 +152,32 @@ public record UserModel
         )
         {
             writer.WriteStartObject();
-            if (value.Username != null)
+            if (value.Username is not null)
             {
                 writer.WritePropertyName("username");
                 JsonSerializer.Serialize(writer, value.Username, options);
             }
-            if (value.Email != null)
+            if (value.Email is not null)
             {
                 writer.WritePropertyName("email");
                 JsonSerializer.Serialize(writer, value.Email, options);
             }
-            if (value.Age != null)
+            if (value.Age is not null)
             {
                 writer.WritePropertyName("age");
                 JsonSerializer.Serialize(writer, value.Age, options);
             }
-            if (value.Weight != null)
+            if (value.Weight is not null)
             {
                 writer.WritePropertyName("weight");
                 JsonSerializer.Serialize(writer, value.Weight, options);
             }
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

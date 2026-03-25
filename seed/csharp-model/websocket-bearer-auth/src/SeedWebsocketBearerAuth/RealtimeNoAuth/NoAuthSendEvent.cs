@@ -77,7 +77,7 @@ public record NoAuthSendEvent
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             JsonSerializer.Serialize(writer, value.Text, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

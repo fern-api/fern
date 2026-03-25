@@ -77,7 +77,7 @@ public record WorkspaceTracedUpdate
             writer.WriteStartObject();
             writer.WritePropertyName("traceResponsesSize");
             JsonSerializer.Serialize(writer, value.TraceResponsesSize, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

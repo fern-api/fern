@@ -101,7 +101,7 @@ public record TestCaseTemplate
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("implementation");
             JsonSerializer.Serialize(writer, value.Implementation, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -87,7 +87,7 @@ public record Actress
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

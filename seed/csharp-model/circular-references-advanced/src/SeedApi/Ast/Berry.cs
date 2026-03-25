@@ -78,7 +78,7 @@ public record Berry
             writer.WriteStartObject();
             writer.WritePropertyName("animal");
             JsonSerializer.Serialize(writer, value.Animal, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -90,7 +90,7 @@ public record Response
             JsonSerializer.Serialize(writer, value.Response_, options);
             writer.WritePropertyName("identifiers");
             JsonSerializer.Serialize(writer, value.Identifiers, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

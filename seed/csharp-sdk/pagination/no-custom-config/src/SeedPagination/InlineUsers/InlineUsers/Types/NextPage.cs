@@ -88,7 +88,7 @@ public record NextPage
             JsonSerializer.Serialize(writer, value.Page, options);
             writer.WritePropertyName("starting_after");
             JsonSerializer.Serialize(writer, value.StartingAfter, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -143,34 +143,34 @@ public record User
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("id");
             JsonSerializer.Serialize(writer, value.Id, options);
-            if (value.Tags != null)
+            if (value.Tags is not null)
             {
                 writer.WritePropertyName("tags");
                 JsonSerializer.Serialize(writer, value.Tags, options);
             }
-            if (value.Metadata != null)
+            if (value.Metadata is not null)
             {
                 writer.WritePropertyName("metadata");
                 JsonSerializer.Serialize(writer, value.Metadata, options);
             }
-            if (value.Email != null)
+            if (value.Email is not null)
             {
                 writer.WritePropertyName("email");
                 JsonSerializer.Serialize(writer, value.Email, options);
             }
             writer.WritePropertyName("favorite-number");
             JsonSerializer.Serialize(writer, value.FavoriteNumber, options);
-            if (value.Numbers != null)
+            if (value.Numbers is not null)
             {
                 writer.WritePropertyName("numbers");
                 JsonSerializer.Serialize(writer, value.Numbers, options);
             }
-            if (value.Strings != null)
+            if (value.Strings is not null)
             {
                 writer.WritePropertyName("strings");
                 JsonSerializer.Serialize(writer, value.Strings, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

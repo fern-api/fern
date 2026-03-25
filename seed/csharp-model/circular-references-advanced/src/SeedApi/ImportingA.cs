@@ -75,12 +75,12 @@ public record ImportingA
         )
         {
             writer.WriteStartObject();
-            if (value.A != null)
+            if (value.A is not null)
             {
                 writer.WritePropertyName("a");
                 JsonSerializer.Serialize(writer, value.A, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

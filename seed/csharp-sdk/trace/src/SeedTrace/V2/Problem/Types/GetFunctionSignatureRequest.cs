@@ -81,7 +81,7 @@ public record GetFunctionSignatureRequest
             writer.WriteStartObject();
             writer.WritePropertyName("functionSignature");
             JsonSerializer.Serialize(writer, value.FunctionSignature, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

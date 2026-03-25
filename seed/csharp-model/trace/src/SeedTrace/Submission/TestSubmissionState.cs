@@ -116,7 +116,7 @@ public record TestSubmissionState
             JsonSerializer.Serialize(writer, value.CustomTestCases, options);
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

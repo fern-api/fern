@@ -133,17 +133,17 @@ public record ToolChoice
         )
         {
             writer.WriteStartObject();
-            if (value.Mode != null)
+            if (value.Mode is not null)
             {
                 writer.WritePropertyName("mode");
                 JsonSerializer.Serialize(writer, value.Mode, options);
             }
-            if (value.FunctionName != null)
+            if (value.FunctionName is not null)
             {
                 writer.WritePropertyName("function_name");
                 JsonSerializer.Serialize(writer, value.FunctionName, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

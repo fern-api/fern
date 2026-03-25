@@ -87,7 +87,7 @@ public record SendEvent
             JsonSerializer.Serialize(writer, value.Text, options);
             writer.WritePropertyName("priority");
             JsonSerializer.Serialize(writer, value.Priority, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

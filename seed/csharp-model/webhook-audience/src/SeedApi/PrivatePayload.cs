@@ -77,7 +77,7 @@ public record PrivatePayload
             writer.WriteStartObject();
             writer.WritePropertyName("secret");
             JsonSerializer.Serialize(writer, value.Secret, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

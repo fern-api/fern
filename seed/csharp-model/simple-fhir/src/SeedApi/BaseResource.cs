@@ -102,7 +102,7 @@ public record BaseResource
             JsonSerializer.Serialize(writer, value.RelatedResources, options);
             writer.WritePropertyName("memo");
             JsonSerializer.Serialize(writer, value.Memo, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

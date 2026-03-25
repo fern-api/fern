@@ -97,19 +97,19 @@ public record WorkspaceRunDetails
         )
         {
             writer.WriteStartObject();
-            if (value.ExceptionV2 != null)
+            if (value.ExceptionV2 is not null)
             {
                 writer.WritePropertyName("exceptionV2");
                 JsonSerializer.Serialize(writer, value.ExceptionV2, options);
             }
-            if (value.Exception != null)
+            if (value.Exception is not null)
             {
                 writer.WritePropertyName("exception");
                 JsonSerializer.Serialize(writer, value.Exception, options);
             }
             writer.WritePropertyName("stdout");
             JsonSerializer.Serialize(writer, value.Stdout, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

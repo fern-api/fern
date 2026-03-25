@@ -103,7 +103,7 @@ public record Foo
         public override void Write(Utf8JsonWriter writer, Foo value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (value.Bar != null)
+            if (value.Bar is not null)
             {
                 writer.WritePropertyName("bar");
                 JsonSerializer.Serialize(writer, value.Bar, options);
@@ -117,7 +117,7 @@ public record Foo
             JsonSerializer.Serialize(writer, value.NullableRequiredBar, options);
             writer.WritePropertyName("required_bar");
             JsonSerializer.Serialize(writer, value.RequiredBar, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

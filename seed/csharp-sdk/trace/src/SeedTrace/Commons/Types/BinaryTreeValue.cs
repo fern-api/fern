@@ -86,14 +86,14 @@ public record BinaryTreeValue
         )
         {
             writer.WriteStartObject();
-            if (value.Root != null)
+            if (value.Root is not null)
             {
                 writer.WritePropertyName("root");
                 JsonSerializer.Serialize(writer, value.Root, options);
             }
             writer.WritePropertyName("nodes");
             JsonSerializer.Serialize(writer, value.Nodes, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

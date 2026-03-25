@@ -92,7 +92,7 @@ public record TestCaseWithActualResultImplementation
             JsonSerializer.Serialize(writer, value.GetActualResult, options);
             writer.WritePropertyName("assertCorrectnessCheck");
             JsonSerializer.Serialize(writer, value.AssertCorrectnessCheck, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -103,7 +103,7 @@ public record TestCaseResult
             JsonSerializer.Serialize(writer, value.ActualResult, options);
             writer.WritePropertyName("passed");
             JsonSerializer.Serialize(writer, value.Passed, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

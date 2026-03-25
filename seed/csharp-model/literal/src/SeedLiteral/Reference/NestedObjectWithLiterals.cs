@@ -97,7 +97,7 @@ public record NestedObjectWithLiterals
             JsonSerializer.Serialize(writer, value.Literal2, options);
             writer.WritePropertyName("strProp");
             JsonSerializer.Serialize(writer, value.StrProp, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

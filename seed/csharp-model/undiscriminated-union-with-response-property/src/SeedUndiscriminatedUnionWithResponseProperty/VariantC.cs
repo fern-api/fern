@@ -87,7 +87,7 @@ public record VariantC
             JsonSerializer.Serialize(writer, value.Type, options);
             writer.WritePropertyName("valueC");
             JsonSerializer.Serialize(writer, value.ValueC, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

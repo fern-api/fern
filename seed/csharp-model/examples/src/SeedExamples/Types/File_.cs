@@ -87,7 +87,7 @@ public record File_
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("contents");
             JsonSerializer.Serialize(writer, value.Contents, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -83,17 +83,17 @@ public record PlainObject
         )
         {
             writer.WriteStartObject();
-            if (value.Id != null)
+            if (value.Id is not null)
             {
                 writer.WritePropertyName("id");
                 JsonSerializer.Serialize(writer, value.Id, options);
             }
-            if (value.Name != null)
+            if (value.Name is not null)
             {
                 writer.WritePropertyName("name");
                 JsonSerializer.Serialize(writer, value.Name, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

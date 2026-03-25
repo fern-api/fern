@@ -87,7 +87,7 @@ public record TestCaseResultWithStdout
             JsonSerializer.Serialize(writer, value.Result, options);
             writer.WritePropertyName("stdout");
             JsonSerializer.Serialize(writer, value.Stdout, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -100,7 +100,7 @@ public record ExceptionInfo
             JsonSerializer.Serialize(writer, value.ExceptionMessage, options);
             writer.WritePropertyName("exceptionStacktrace");
             JsonSerializer.Serialize(writer, value.ExceptionStacktrace, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

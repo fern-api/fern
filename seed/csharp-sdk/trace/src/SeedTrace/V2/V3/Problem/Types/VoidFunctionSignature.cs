@@ -81,7 +81,7 @@ public record VoidFunctionSignature
             writer.WriteStartObject();
             writer.WritePropertyName("parameters");
             JsonSerializer.Serialize(writer, value.Parameters, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

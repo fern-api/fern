@@ -128,34 +128,34 @@ public record Address
             writer.WriteStartObject();
             writer.WritePropertyName("street");
             JsonSerializer.Serialize(writer, value.Street, options);
-            if (value.City != null)
+            if (value.City is not null)
             {
                 writer.WritePropertyName("city");
                 JsonSerializer.Serialize(writer, value.City, options);
             }
-            if (value.State != null)
+            if (value.State is not null)
             {
                 writer.WritePropertyName("state");
                 JsonSerializer.Serialize(writer, value.State, options);
             }
             writer.WritePropertyName("zipCode");
             JsonSerializer.Serialize(writer, value.ZipCode, options);
-            if (value.Country != null)
+            if (value.Country is not null)
             {
                 writer.WritePropertyName("country");
                 JsonSerializer.Serialize(writer, value.Country, options);
             }
-            if (value.BuildingId != null)
+            if (value.BuildingId is not null)
             {
                 writer.WritePropertyName("buildingId");
                 JsonSerializer.Serialize(writer, value.BuildingId, options);
             }
-            if (value.TenantId != null)
+            if (value.TenantId is not null)
             {
                 writer.WritePropertyName("tenantId");
                 JsonSerializer.Serialize(writer, value.TenantId, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

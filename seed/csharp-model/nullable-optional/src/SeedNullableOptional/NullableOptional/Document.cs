@@ -116,17 +116,17 @@ public record Document
             JsonSerializer.Serialize(writer, value.Title, options);
             writer.WritePropertyName("content");
             JsonSerializer.Serialize(writer, value.Content, options);
-            if (value.Author != null)
+            if (value.Author is not null)
             {
                 writer.WritePropertyName("author");
                 JsonSerializer.Serialize(writer, value.Author, options);
             }
-            if (value.Tags != null)
+            if (value.Tags is not null)
             {
                 writer.WritePropertyName("tags");
                 JsonSerializer.Serialize(writer, value.Tags, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

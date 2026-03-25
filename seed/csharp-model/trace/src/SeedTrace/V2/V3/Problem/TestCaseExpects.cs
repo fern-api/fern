@@ -76,12 +76,12 @@ public record TestCaseExpects
         )
         {
             writer.WriteStartObject();
-            if (value.ExpectedStdout != null)
+            if (value.ExpectedStdout is not null)
             {
                 writer.WritePropertyName("expectedStdout");
                 JsonSerializer.Serialize(writer, value.ExpectedStdout, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

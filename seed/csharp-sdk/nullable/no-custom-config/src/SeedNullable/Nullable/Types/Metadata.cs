@@ -122,24 +122,24 @@ public record Metadata
             JsonSerializer.Serialize(writer, value.CreatedAt, options);
             writer.WritePropertyName("updatedAt");
             JsonSerializer.Serialize(writer, value.UpdatedAt, options);
-            if (value.Avatar != null)
+            if (value.Avatar is not null)
             {
                 writer.WritePropertyName("avatar");
                 JsonSerializer.Serialize(writer, value.Avatar, options);
             }
-            if (value.Activated != null)
+            if (value.Activated is not null)
             {
                 writer.WritePropertyName("activated");
                 JsonSerializer.Serialize(writer, value.Activated, options);
             }
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.Values != null)
+            if (value.Values is not null)
             {
                 writer.WritePropertyName("values");
                 JsonSerializer.Serialize(writer, value.Values, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

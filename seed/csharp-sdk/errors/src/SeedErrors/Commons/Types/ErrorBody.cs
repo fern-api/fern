@@ -87,7 +87,7 @@ public record ErrorBody
             JsonSerializer.Serialize(writer, value.Message, options);
             writer.WritePropertyName("code");
             JsonSerializer.Serialize(writer, value.Code, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

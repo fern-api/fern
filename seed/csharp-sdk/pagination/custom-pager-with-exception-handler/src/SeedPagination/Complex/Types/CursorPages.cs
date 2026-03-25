@@ -110,29 +110,29 @@ public record CursorPages
         )
         {
             writer.WriteStartObject();
-            if (value.Next != null)
+            if (value.Next is not null)
             {
                 writer.WritePropertyName("next");
                 JsonSerializer.Serialize(writer, value.Next, options);
             }
-            if (value.Page != null)
+            if (value.Page is not null)
             {
                 writer.WritePropertyName("page");
                 JsonSerializer.Serialize(writer, value.Page, options);
             }
-            if (value.PerPage != null)
+            if (value.PerPage is not null)
             {
                 writer.WritePropertyName("per_page");
                 JsonSerializer.Serialize(writer, value.PerPage, options);
             }
-            if (value.TotalPages != null)
+            if (value.TotalPages is not null)
             {
                 writer.WritePropertyName("total_pages");
                 JsonSerializer.Serialize(writer, value.TotalPages, options);
             }
             writer.WritePropertyName("type");
             JsonSerializer.Serialize(writer, value.Type, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

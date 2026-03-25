@@ -84,7 +84,7 @@ public record ObjectWithDocumentedUnknownType
             writer.WriteStartObject();
             writer.WritePropertyName("documentedUnknownType");
             JsonSerializer.Serialize(writer, value.DocumentedUnknownType, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -95,12 +95,12 @@ public record EmailNotification
             JsonSerializer.Serialize(writer, value.EmailAddress, options);
             writer.WritePropertyName("subject");
             JsonSerializer.Serialize(writer, value.Subject, options);
-            if (value.HtmlContent != null)
+            if (value.HtmlContent is not null)
             {
                 writer.WritePropertyName("htmlContent");
                 JsonSerializer.Serialize(writer, value.HtmlContent, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

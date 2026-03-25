@@ -77,7 +77,7 @@ public record FlushedEvent
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             JsonSerializer.Serialize(writer, value.Type, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

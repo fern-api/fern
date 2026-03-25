@@ -75,12 +75,12 @@ public record DeployParams
         )
         {
             writer.WriteStartObject();
-            if (value.UpdateDraft != null)
+            if (value.UpdateDraft is not null)
             {
                 writer.WritePropertyName("updateDraft");
                 JsonSerializer.Serialize(writer, value.UpdateDraft, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

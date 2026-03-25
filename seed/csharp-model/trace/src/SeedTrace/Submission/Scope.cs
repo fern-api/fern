@@ -80,7 +80,7 @@ public record Scope
             writer.WriteStartObject();
             writer.WritePropertyName("variables");
             JsonSerializer.Serialize(writer, value.Variables, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -145,52 +145,52 @@ public record UpdateUserRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Email != null)
+            if (value.Email is not null)
             {
                 writer.WritePropertyName("email");
                 JsonSerializer.Serialize(writer, value.Email, options);
             }
-            if (value.EmailVerified != null)
+            if (value.EmailVerified is not null)
             {
                 writer.WritePropertyName("email_verified");
                 JsonSerializer.Serialize(writer, value.EmailVerified, options);
             }
-            if (value.Username != null)
+            if (value.Username is not null)
             {
                 writer.WritePropertyName("username");
                 JsonSerializer.Serialize(writer, value.Username, options);
             }
-            if (value.PhoneNumber != null)
+            if (value.PhoneNumber is not null)
             {
                 writer.WritePropertyName("phone_number");
                 JsonSerializer.Serialize(writer, value.PhoneNumber, options);
             }
-            if (value.PhoneVerified != null)
+            if (value.PhoneVerified is not null)
             {
                 writer.WritePropertyName("phone_verified");
                 JsonSerializer.Serialize(writer, value.PhoneVerified, options);
             }
-            if (value.UserMetadata != null)
+            if (value.UserMetadata is not null)
             {
                 writer.WritePropertyName("user_metadata");
                 JsonSerializer.Serialize(writer, value.UserMetadata, options);
             }
-            if (value.AppMetadata != null)
+            if (value.AppMetadata is not null)
             {
                 writer.WritePropertyName("app_metadata");
                 JsonSerializer.Serialize(writer, value.AppMetadata, options);
             }
-            if (value.Password != null)
+            if (value.Password is not null)
             {
                 writer.WritePropertyName("password");
                 JsonSerializer.Serialize(writer, value.Password, options);
             }
-            if (value.Blocked != null)
+            if (value.Blocked is not null)
             {
                 writer.WritePropertyName("blocked");
                 JsonSerializer.Serialize(writer, value.Blocked, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

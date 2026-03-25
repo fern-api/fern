@@ -87,7 +87,7 @@ public record ReceiveSnakeCase
             JsonSerializer.Serialize(writer, value.ReceiveText, options);
             writer.WritePropertyName("receive_int");
             JsonSerializer.Serialize(writer, value.ReceiveInt, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

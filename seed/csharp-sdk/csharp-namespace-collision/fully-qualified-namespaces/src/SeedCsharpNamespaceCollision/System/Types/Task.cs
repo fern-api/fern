@@ -93,7 +93,7 @@ public record Task
             JsonSerializer.Serialize(writer, value.User, options);
             writer.WritePropertyName("owner");
             JsonSerializer.Serialize(writer, value.Owner, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

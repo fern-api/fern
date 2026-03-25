@@ -81,7 +81,7 @@ public record FunctionImplementationForMultipleLanguages
             writer.WriteStartObject();
             writer.WritePropertyName("codeByLanguage");
             JsonSerializer.Serialize(writer, value.CodeByLanguage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

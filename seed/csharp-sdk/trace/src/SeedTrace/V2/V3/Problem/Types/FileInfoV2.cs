@@ -108,7 +108,7 @@ public record FileInfoV2
             JsonSerializer.Serialize(writer, value.Contents, options);
             writer.WritePropertyName("editable");
             JsonSerializer.Serialize(writer, value.Editable, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

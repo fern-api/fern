@@ -101,7 +101,7 @@ public record Parameter
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("variableType");
             JsonSerializer.Serialize(writer, value.VariableType, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

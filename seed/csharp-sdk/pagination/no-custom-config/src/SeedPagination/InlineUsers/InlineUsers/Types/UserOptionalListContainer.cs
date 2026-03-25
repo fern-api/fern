@@ -79,12 +79,12 @@ public record UserOptionalListContainer
         )
         {
             writer.WriteStartObject();
-            if (value.Users != null)
+            if (value.Users is not null)
             {
                 writer.WritePropertyName("users");
                 JsonSerializer.Serialize(writer, value.Users, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

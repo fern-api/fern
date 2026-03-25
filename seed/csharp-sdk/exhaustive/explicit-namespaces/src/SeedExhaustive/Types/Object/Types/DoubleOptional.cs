@@ -76,12 +76,12 @@ public record DoubleOptional
         )
         {
             writer.WriteStartObject();
-            if (value.OptionalAlias != null)
+            if (value.OptionalAlias is not null)
             {
                 writer.WritePropertyName("optionalAlias");
                 JsonSerializer.Serialize(writer, value.OptionalAlias, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

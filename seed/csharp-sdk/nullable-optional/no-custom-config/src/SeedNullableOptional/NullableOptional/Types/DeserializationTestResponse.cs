@@ -113,7 +113,7 @@ public record DeserializationTestResponse
             JsonSerializer.Serialize(writer, value.NullCount, options);
             writer.WritePropertyName("presentFieldsCount");
             JsonSerializer.Serialize(writer, value.PresentFieldsCount, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

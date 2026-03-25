@@ -87,7 +87,7 @@ public record CreateMovieRequest
             JsonSerializer.Serialize(writer, value.Title, options);
             writer.WritePropertyName("rating");
             JsonSerializer.Serialize(writer, value.Rating, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

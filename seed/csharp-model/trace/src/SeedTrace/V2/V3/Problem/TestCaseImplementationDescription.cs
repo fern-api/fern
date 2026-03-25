@@ -81,7 +81,7 @@ public record TestCaseImplementationDescription
             writer.WriteStartObject();
             writer.WritePropertyName("boards");
             JsonSerializer.Serialize(writer, value.Boards, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

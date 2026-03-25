@@ -81,7 +81,7 @@ public record GetBasicSolutionFileResponse
             writer.WriteStartObject();
             writer.WritePropertyName("solutionFileByLanguage");
             JsonSerializer.Serialize(writer, value.SolutionFileByLanguage, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -105,12 +105,12 @@ public record PushNotification
             JsonSerializer.Serialize(writer, value.Title, options);
             writer.WritePropertyName("body");
             JsonSerializer.Serialize(writer, value.Body, options);
-            if (value.Badge != null)
+            if (value.Badge is not null)
             {
                 writer.WritePropertyName("badge");
                 JsonSerializer.Serialize(writer, value.Badge, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

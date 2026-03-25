@@ -90,12 +90,12 @@ public record Foo
             writer.WriteStartObject();
             writer.WritePropertyName("normal");
             JsonSerializer.Serialize(writer, value.Normal, options);
-            if (value.Write != null)
+            if (value.Write is not null)
             {
                 writer.WritePropertyName("write");
                 JsonSerializer.Serialize(writer, value.Write, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

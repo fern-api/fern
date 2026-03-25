@@ -85,12 +85,12 @@ public record StreamedCompletion
             writer.WriteStartObject();
             writer.WritePropertyName("delta");
             JsonSerializer.Serialize(writer, value.Delta, options);
-            if (value.Tokens != null)
+            if (value.Tokens is not null)
             {
                 writer.WritePropertyName("tokens");
                 JsonSerializer.Serialize(writer, value.Tokens, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

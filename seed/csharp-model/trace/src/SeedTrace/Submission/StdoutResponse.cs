@@ -87,7 +87,7 @@ public record StdoutResponse
             JsonSerializer.Serialize(writer, value.SubmissionId, options);
             writer.WritePropertyName("stdout");
             JsonSerializer.Serialize(writer, value.Stdout, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

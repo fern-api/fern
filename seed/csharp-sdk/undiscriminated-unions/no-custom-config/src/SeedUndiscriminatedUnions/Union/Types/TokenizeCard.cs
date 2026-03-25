@@ -87,7 +87,7 @@ public record TokenizeCard
             JsonSerializer.Serialize(writer, value.Method, options);
             writer.WritePropertyName("cardNumber");
             JsonSerializer.Serialize(writer, value.CardNumber, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

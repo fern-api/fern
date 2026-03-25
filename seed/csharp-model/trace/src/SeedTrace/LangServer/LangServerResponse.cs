@@ -77,7 +77,7 @@ public record LangServerResponse
             writer.WriteStartObject();
             writer.WritePropertyName("response");
             JsonSerializer.Serialize(writer, value.Response, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

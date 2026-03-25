@@ -81,7 +81,7 @@ public record GetDefaultStarterFilesResponse
             writer.WriteStartObject();
             writer.WritePropertyName("files");
             JsonSerializer.Serialize(writer, value.Files, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

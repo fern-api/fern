@@ -85,12 +85,12 @@ public record InitializeProblemRequest
             writer.WriteStartObject();
             writer.WritePropertyName("problemId");
             JsonSerializer.Serialize(writer, value.ProblemId, options);
-            if (value.ProblemVersion != null)
+            if (value.ProblemVersion is not null)
             {
                 writer.WritePropertyName("problemVersion");
                 JsonSerializer.Serialize(writer, value.ProblemVersion, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

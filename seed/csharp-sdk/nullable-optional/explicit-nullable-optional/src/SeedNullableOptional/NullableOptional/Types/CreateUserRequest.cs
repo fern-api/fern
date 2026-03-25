@@ -108,7 +108,7 @@ public record CreateUserRequest
             JsonSerializer.Serialize(writer, value.Username, options);
             writer.WritePropertyName("email");
             JsonSerializer.Serialize(writer, value.Email, options);
-            if (value.Phone != null)
+            if (value.Phone is not null)
             {
                 writer.WritePropertyName("phone");
                 JsonSerializer.Serialize(writer, value.Phone, options);
@@ -118,7 +118,7 @@ public record CreateUserRequest
                 writer.WritePropertyName("address");
                 JsonSerializer.Serialize(writer, value.Address.Value, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -124,7 +124,7 @@ public record ExecutionSessionState
         )
         {
             writer.WriteStartObject();
-            if (value.LastTimeContacted != null)
+            if (value.LastTimeContacted is not null)
             {
                 writer.WritePropertyName("lastTimeContacted");
                 JsonSerializer.Serialize(writer, value.LastTimeContacted, options);
@@ -133,7 +133,7 @@ public record ExecutionSessionState
             JsonSerializer.Serialize(writer, value.SessionId, options);
             writer.WritePropertyName("isWarmInstance");
             JsonSerializer.Serialize(writer, value.IsWarmInstance, options);
-            if (value.AwsTaskId != null)
+            if (value.AwsTaskId is not null)
             {
                 writer.WritePropertyName("awsTaskId");
                 JsonSerializer.Serialize(writer, value.AwsTaskId, options);
@@ -142,7 +142,7 @@ public record ExecutionSessionState
             JsonSerializer.Serialize(writer, value.Language, options);
             writer.WritePropertyName("status");
             JsonSerializer.Serialize(writer, value.Status, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

@@ -97,17 +97,17 @@ public record MultipleFilterSearchRequest
         )
         {
             writer.WriteStartObject();
-            if (value.Operator != null)
+            if (value.Operator is not null)
             {
                 writer.WritePropertyName("operator");
                 JsonSerializer.Serialize(writer, value.Operator, options);
             }
-            if (value.Value != null)
+            if (value.Value is not null)
             {
                 writer.WritePropertyName("value");
                 JsonSerializer.Serialize(writer, value.Value, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

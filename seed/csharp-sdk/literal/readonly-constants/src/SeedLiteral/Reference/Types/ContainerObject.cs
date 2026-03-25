@@ -80,7 +80,7 @@ public record ContainerObject
             writer.WriteStartObject();
             writer.WritePropertyName("nestedObjects");
             JsonSerializer.Serialize(writer, value.NestedObjects, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

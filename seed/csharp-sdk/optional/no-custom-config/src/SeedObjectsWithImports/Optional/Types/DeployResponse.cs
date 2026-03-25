@@ -77,7 +77,7 @@ public record DeployResponse
             writer.WriteStartObject();
             writer.WritePropertyName("success");
             JsonSerializer.Serialize(writer, value.Success, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

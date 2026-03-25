@@ -95,17 +95,17 @@ public record Node
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             JsonSerializer.Serialize(writer, value.Name, options);
-            if (value.Nodes != null)
+            if (value.Nodes is not null)
             {
                 writer.WritePropertyName("nodes");
                 JsonSerializer.Serialize(writer, value.Nodes, options);
             }
-            if (value.Trees != null)
+            if (value.Trees is not null)
             {
                 writer.WritePropertyName("trees");
                 JsonSerializer.Serialize(writer, value.Trees, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

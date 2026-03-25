@@ -97,12 +97,12 @@ public record Usage
         )
         {
             writer.WriteStartObject();
-            if (value.Units != null)
+            if (value.Units is not null)
             {
                 writer.WritePropertyName("units");
                 JsonSerializer.Serialize(writer, value.Units, options);
             }
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

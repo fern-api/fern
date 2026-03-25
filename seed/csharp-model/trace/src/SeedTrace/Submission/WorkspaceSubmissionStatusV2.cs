@@ -80,7 +80,7 @@ public record WorkspaceSubmissionStatusV2
             writer.WriteStartObject();
             writer.WritePropertyName("updates");
             JsonSerializer.Serialize(writer, value.Updates, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {

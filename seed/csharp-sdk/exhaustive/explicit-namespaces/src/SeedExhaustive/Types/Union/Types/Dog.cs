@@ -84,7 +84,7 @@ public record Dog
             JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName("likesToWoof");
             JsonSerializer.Serialize(writer, value.LikesToWoof, options);
-            if (value.AdditionalProperties != null)
+            if (value.AdditionalProperties is not null)
             {
                 foreach (var kvp in value.AdditionalProperties)
                 {
