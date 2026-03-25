@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.8.4
+  changelogEntry:
+    - summary: |
+        Upgrade test infrastructure NuGet packages in generated C# SDK test projects.
+        These are test-only dependencies and do not affect the shipped SDK.
+
+        - Microsoft.NET.Test.Sdk: 17.13.0 → 18.3.0
+        - NUnit: 4.3.2 → 4.5.1
+        - NUnit3TestAdapter: 5.0.0 → 6.2.0
+        - NUnit.Analyzers: 4.6.0 → 4.12.0
+        - coverlet.collector: 6.0.4 → 8.0.1
+        - WireMock.Net: 1.7.4 → 1.25.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 0.8.3
   changelogEntry:
     - summary: |

@@ -48,7 +48,7 @@ function getFileWithMetadata(file_1) {
         }
         if ("path" in file) {
             const fs = yield import("fs");
-            if (!fs || !fs.createReadStream) {
+            if (!(fs === null || fs === void 0 ? void 0 : fs.createReadStream)) {
                 throw new Error("File path uploads are not supported in this environment.");
             }
             const data = fs.createReadStream(file.path);
@@ -89,9 +89,10 @@ function isFileLike(value) {
 }
 function tryGetFileSizeFromPath(path) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
             const fs = yield import("fs");
-            if (!fs || !fs.promises || !fs.promises.stat) {
+            if (!((_a = fs === null || fs === void 0 ? void 0 : fs.promises) === null || _a === void 0 ? void 0 : _a.stat)) {
                 return undefined;
             }
             const fileStat = yield fs.promises.stat(path);
