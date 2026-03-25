@@ -189,11 +189,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsername(GetUsersRequest $request, ?array $options = null): User
+    public function getUsername(GetUsersRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -233,7 +233,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return User::fromJson($json);
             }

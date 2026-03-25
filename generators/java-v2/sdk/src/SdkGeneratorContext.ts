@@ -239,7 +239,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getApiExceptionClassName(): string {
-        return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`;
+        return (
+            this.customConfig?.["base-api-exception-class-name"] ??
+            `${this.customConfig?.["client-class-name"] ?? this.getBaseNamePrefix()}ApiException`
+        );
     }
 
     public getHttpResponseClassName(): string {

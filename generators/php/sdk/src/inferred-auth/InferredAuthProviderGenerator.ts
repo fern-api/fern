@@ -246,6 +246,25 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                     writer.writeLine("($values);");
                 }
 
+                // Handle nullable response from the token endpoint
+                writer.newLine();
+                writer.controlFlow("if", php.codeblock("$tokenResponse === null"));
+                writer.write("throw ");
+                writer.writeNodeStatement(
+                    php.instantiateClass({
+                        classReference: this.context.getBaseExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: php.codeblock(
+                                    '"Expected a token response, but received an empty response."'
+                                )
+                            }
+                        ]
+                    })
+                );
+                writer.endControlFlow();
+
                 // Get the access token from the response
                 if (authenticatedRequestHeaders.length > 0) {
                     const firstHeader = authenticatedRequestHeaders[0];

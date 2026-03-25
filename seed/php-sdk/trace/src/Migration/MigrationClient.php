@@ -61,11 +61,11 @@ class MigrationClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Migration>
+     * @return ?array<Migration>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array
+    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -84,7 +84,7 @@ class MigrationClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [Migration::class]); // @phpstan-ignore-line
             }
