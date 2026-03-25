@@ -179,14 +179,22 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     /**
      * Reads a license file and extracts the license name. For standard licenses (Apache, MIT, etc.), returns the SPDX
-     * identifier. For custom licenses, returns the first line of the file as the license name.
+     * identifier. For custom licenses, returns the first non-empty line of the file as the license name,
+     * with markdown formatting stripped.
      */
     private String extractLicenseFromFile(String filename) {
         try {
             Path licensePath = Paths.get(filename);
 
+            // When running inside Docker, the CLI mounts the license file at /tmp/<filename>
             if (!Files.exists(licensePath)) {
-                // Return a descriptive name if file not found
+                Path tmpPath = Paths.get("/tmp", licensePath.getFileName().toString());
+                if (Files.exists(tmpPath)) {
+                    licensePath = tmpPath;
+                }
+            }
+
+            if (!Files.exists(licensePath)) {
                 return "Custom License (" + licensePath.getFileName().toString() + ")";
             }
 
@@ -215,6 +223,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                         .findFirst()
                         .orElse("Custom License");
 
+                // Strip markdown formatting (headers, bold, italic, etc.)
+                firstLine = firstLine.replaceAll("^#+\\s*", "");
+                firstLine = firstLine.replaceAll("\\*+", "");
+                firstLine = firstLine.replaceAll("_+", " ");
+                firstLine = firstLine.replaceAll("\\[([^\\]]+)\\]\\([^)]+\\)", "$1");
+
                 firstLine = firstLine.trim().replaceAll("[.:;]+$", "").replaceAll("\\s+", " ");
 
                 firstLine = firstLine.replace("'", "\\'");
@@ -222,7 +236,6 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 return firstLine;
             }
         } catch (IOException e) {
-            // Return a descriptive name instead of null
             return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
         }
     }
