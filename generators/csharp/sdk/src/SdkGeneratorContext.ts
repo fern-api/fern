@@ -143,7 +143,6 @@ export class SdkGeneratorContext extends GeneratorContext {
         // JSON stuff
         files.push(
             ...[
-                AsIsFiles.Json.CollectionItemSerializer,
                 AsIsFiles.Json.DateOnlyConverter,
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
@@ -154,8 +153,9 @@ export class SdkGeneratorContext extends GeneratorContext {
             ]
         );
 
-        // When use-undiscriminated-unions is false, include OneOfSerializer for OneOf type serialization
+        // When use-undiscriminated-unions is false, include OneOf serialization support
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.CollectionItemSerializer);
             files.push(AsIsFiles.Json.OneOfSerializer);
         }
 
