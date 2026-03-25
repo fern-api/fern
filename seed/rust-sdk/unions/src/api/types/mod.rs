@@ -1,6 +1,7 @@
 pub mod bigunion_big_union;
 pub mod types_bar;
 pub mod types_foo;
+pub mod types_type_with_optional_map;
 pub mod types_union;
 pub mod types_union_with_base_properties;
 pub mod types_union_with_discriminant;
@@ -27,6 +28,7 @@ pub mod union_with_name;
 pub use bigunion_big_union::BigUnion;
 pub use types_bar::Bar;
 pub use types_foo::Foo;
+pub use types_type_with_optional_map::TypeWithOptionalMap;
 pub use types_union::Union;
 pub use types_union_with_base_properties::UnionWithBaseProperties;
 pub use types_union_with_discriminant::UnionWithDiscriminant;

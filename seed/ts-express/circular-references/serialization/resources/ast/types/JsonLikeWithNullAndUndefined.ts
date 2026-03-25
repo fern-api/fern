@@ -11,7 +11,7 @@ export const JsonLikeWithNullAndUndefined: core.serialization.Schema<
     core.serialization.list(core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined).optionalNullable()),
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined).optionalNullable(),
+        core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined),
     ),
     core.serialization.string().optionalNullable(),
     core.serialization.number().optionalNullable(),

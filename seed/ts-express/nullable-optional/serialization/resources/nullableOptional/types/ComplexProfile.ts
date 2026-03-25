@@ -25,7 +25,10 @@ export const ComplexProfile: core.serialization.ObjectSchema<
     optionalNullableArray: core.serialization.list(core.serialization.string()).optionalNullable(),
     nullableListOfNullables: core.serialization.list(core.serialization.string().nullable()).nullable(),
     nullableMapOfNullables: core.serialization
-        .record(core.serialization.string(), core.serialization.lazyObject(() => serializers.Address).nullable())
+        .record(
+            core.serialization.string(),
+            core.serialization.lazyObject(() => serializers.Address),
+        )
         .nullable(),
     nullableListOfUnions: core.serialization
         .list(core.serialization.lazy(() => serializers.NotificationMethod))
