@@ -12,7 +12,7 @@ public partial class ContactsClient : IContactsClient
         _client = client;
     }
 
-    private async Task<WithRawResponse<Contact>> CreateAsyncCore(
+    private async Task<WithRawResponse<Contact?>> CreateAsyncCore(
         CreateContactRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,8 +45,8 @@ public partial class ContactsClient : IContactsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<Contact>(responseBody)!;
-                return new WithRawResponse<Contact>()
+                var responseData = JsonUtils.Deserialize<Contact?>(responseBody)!;
+                return new WithRawResponse<Contact?>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -153,13 +153,13 @@ public partial class ContactsClient : IContactsClient
     /// <example><code>
     /// await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
     /// </code></example>
-    public WithRawResponseTask<Contact> CreateAsync(
+    public WithRawResponseTask<Contact?> CreateAsync(
         CreateContactRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<Contact>(
+        return new WithRawResponseTask<Contact?>(
             CreateAsyncCore(request, options, cancellationToken)
         );
     }
