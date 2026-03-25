@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 // Define the function locally to avoid import issues - tests the same logic
 function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
@@ -7,6 +7,8 @@ function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): Relative
     // that cause S3 signature mismatches when paths contain parent directory references
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
+
+type PostFn = (url: string, data: unknown, config: unknown) => Promise<unknown>;
 
 // Replicate unlockDeploy locally with an injectable post function for testing
 async function unlockDeploy({
@@ -20,7 +22,7 @@ async function unlockDeploy({
     token: string;
     domain: string;
     basepath?: string;
-    postFn: (url: string, data: unknown, config: unknown) => Promise<unknown>;
+    postFn: PostFn;
 }): Promise<void> {
     try {
         await postFn(
@@ -34,10 +36,10 @@ async function unlockDeploy({
 }
 
 describe("unlockDeploy", () => {
-    let mockPost: ReturnType<typeof vi.fn>;
+    let mockPost: Mock<PostFn>;
 
     beforeEach(() => {
-        mockPost = vi.fn();
+        mockPost = vi.fn<PostFn>();
     });
 
     it("should POST to the correct unlock endpoint with domain and token", async () => {
