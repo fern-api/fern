@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Fetch Dependabot alerts
         id: fetch-alerts
@@ -368,7 +368,7 @@ jobs:
       pull-requests: write
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
@@ -416,7 +416,7 @@ jobs:
           grype docker:java-sdk:grype-scan -o json > grype-report.json
 
       - name: Upload grype scan results
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: grype-scan-results-java-sdk
           path: grype-report.json

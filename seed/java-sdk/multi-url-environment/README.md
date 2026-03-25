@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:multi-url-environment'
+  implementation 'com.fern:multi-url-environment:0.0.1'
 }
 ```
 

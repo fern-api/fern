@@ -57,11 +57,11 @@ class UrlsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withMixedCase(?array $options = null): string
+    public function withMixedCase(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,7 +77,7 @@ class UrlsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -102,11 +102,11 @@ class UrlsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function noEndingSlash(?array $options = null): string
+    public function noEndingSlash(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -122,7 +122,7 @@ class UrlsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -147,11 +147,11 @@ class UrlsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withEndingSlash(?array $options = null): string
+    public function withEndingSlash(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -167,7 +167,7 @@ class UrlsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -192,11 +192,11 @@ class UrlsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withUnderscores(?array $options = null): string
+    public function withUnderscores(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -212,7 +212,7 @@ class UrlsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }

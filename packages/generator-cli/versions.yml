@@ -2,6 +2,15 @@
 
 - changelogEntry:
     - summary: |
+        Include version number in the Gradle installation snippet for Java SDKs
+        in generated README.md files. Previously only the Maven snippet included
+        the version.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.12
+
+- changelogEntry:
+    - summary: |
         Clean PRs with local conflict resolution. Replay PRs are now always
         linear from HEAD with clean code (no conflict markers committed).
         When customizations conflict with new generated code, the PR body

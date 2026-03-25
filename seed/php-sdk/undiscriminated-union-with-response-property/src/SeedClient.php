@@ -71,11 +71,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UnionResponse
+     * @return ?UnionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUnion(?array $options = null): UnionResponse
+    public function getUnion(?array $options = null): ?UnionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -91,7 +91,7 @@ class SeedClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return UnionResponse::fromJson($json);
             }
@@ -116,11 +116,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UnionListResponse
+     * @return ?UnionListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUnions(?array $options = null): UnionListResponse
+    public function listUnions(?array $options = null): ?UnionListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -136,7 +136,7 @@ class SeedClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return UnionListResponse::fromJson($json);
             }

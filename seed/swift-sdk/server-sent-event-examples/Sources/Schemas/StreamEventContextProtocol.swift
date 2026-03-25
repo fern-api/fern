@@ -3,7 +3,7 @@ import Foundation
 public enum StreamEventContextProtocol: Codable, Hashable, Sendable {
     case completion(CompletionEvent)
     case error(ErrorEvent)
-    case notification(EventEvent)
+    case event(EventEvent)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -13,8 +13,8 @@ public enum StreamEventContextProtocol: Codable, Hashable, Sendable {
             self = .completion(try CompletionEvent(from: decoder))
         case "error":
             self = .error(try ErrorEvent(from: decoder))
-        case "notification":
-            self = .notification(try EventEvent(from: decoder))
+        case "event":
+            self = .event(try EventEvent(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -34,8 +34,8 @@ public enum StreamEventContextProtocol: Codable, Hashable, Sendable {
         case .error(let data):
             try container.encode("error", forKey: .event)
             try data.encode(to: encoder)
-        case .notification(let data):
-            try container.encode("notification", forKey: .event)
+        case .event(let data):
+            try container.encode("event", forKey: .event)
             try data.encode(to: encoder)
         }
     }

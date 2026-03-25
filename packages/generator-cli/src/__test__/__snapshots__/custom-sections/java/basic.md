@@ -20,7 +20,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'imdb:imdb-java-sdk'
+  implementation 'imdb:imdb-java-sdk:2.0.0'
 }
 ```
 

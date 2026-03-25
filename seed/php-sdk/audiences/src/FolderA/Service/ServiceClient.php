@@ -59,11 +59,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDirectThread(GetDirectThreadRequest $request, ?array $options = null): Response
+    public function getDirectThread(GetDirectThreadRequest $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -83,7 +83,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Response::fromJson($json);
             }

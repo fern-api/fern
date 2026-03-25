@@ -62,11 +62,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return File
+     * @return ?File
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): File
+    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): ?File
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -85,7 +85,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return File::fromJson($json);
             }

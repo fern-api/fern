@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:client-side-params'
+  implementation 'com.fern:client-side-params:0.0.1'
 }
 ```
 

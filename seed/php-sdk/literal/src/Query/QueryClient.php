@@ -59,11 +59,11 @@ class QueryClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return SendResponse
+     * @return ?SendResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
+    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -98,7 +98,7 @@ class QueryClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return SendResponse::fromJson($json);
             }

@@ -208,7 +208,7 @@ jobs:
 
       - name: Checkout PR branch
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.parse.outputs.pr-ref }}
           fetch-tags: false

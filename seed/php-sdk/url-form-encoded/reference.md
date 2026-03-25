@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;submitFormData($request) -> PostSubmitResponse</code></summary>
+<details><summary><code>$client-&gt;submitFormData($request) -> ?PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ $client->submitFormData(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;getToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
