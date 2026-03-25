@@ -144,7 +144,20 @@ export class GraphQLConverter {
                 } finally {
                     this.processingTypes.delete(typeName);
                 }
-            } else if (type instanceof GraphQLObjectType || type instanceof GraphQLInterfaceType) {
+            } else if (type instanceof GraphQLInterfaceType) {
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: this.getNamespacedTypeName(typeName),
+                        shape: this.convertInterfaceTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
+            } else if (type instanceof GraphQLObjectType) {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
@@ -452,9 +465,58 @@ export class GraphQLConverter {
         };
     }
 
-    private convertObjectTypeDefinition(
-        type: GraphQLObjectType | GraphQLInterfaceType
-    ): FdrAPI.api.v1.register.TypeShape {
+    private convertObjectTypeDefinition(type: GraphQLObjectType): FdrAPI.api.v1.register.TypeShape {
+        const fields = type.getFields();
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
+
+        for (const [fieldName, field] of Object.entries(fields)) {
+            properties.push({
+                key: FdrAPI.PropertyKey(fieldName),
+                valueType: this.convertOutputType(field.type),
+                description: field.description ?? undefined,
+                availability: undefined,
+                propertyAccess: undefined
+            });
+        }
+
+        const interfaces = type.getInterfaces();
+        const extendsIds = interfaces.map((iface) => this.getNamespacedTypeId(iface.name));
+
+        return {
+            type: "object",
+            extends: extendsIds,
+            properties,
+            extraProperties: undefined
+        };
+    }
+
+    private convertInterfaceTypeDefinition(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
+        if (!this.schema) {
+            return this.convertInterfaceAsObject(type);
+        }
+
+        const implementations = this.schema.getPossibleTypes(type);
+        if (implementations.length === 0) {
+            return this.convertInterfaceAsObject(type);
+        }
+
+        return {
+            type: "undiscriminatedUnion",
+            variants: implementations.map((impl) => ({
+                typeName: impl.name,
+                displayName: impl.name,
+                type: {
+                    type: "id",
+                    value: this.getNamespacedTypeId(impl.name),
+                    default: undefined
+                },
+                description: impl.description ?? undefined,
+                availability: undefined
+            }))
+        };
+    }
+
+    private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
         const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
 

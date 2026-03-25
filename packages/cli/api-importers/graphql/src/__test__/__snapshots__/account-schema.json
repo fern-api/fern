@@ -1063,7 +1063,9 @@
       "name": "Checkout",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
@@ -2641,18 +2643,25 @@
     "Node": {
       "name": "Node",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
+        "type": "undiscriminatedUnion",
+        "variants": [
           {
-            "key": "id",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+            "typeName": "Checkout",
+            "displayName": "Checkout",
+            "type": {
+              "type": "id",
+              "value": "Checkout"
             },
-            "description": "The ID of the object."
+            "description": "A container for all information needed to charge a Merchant for products on a one-time or recurring basis."
+          },
+          {
+            "typeName": "Subscription",
+            "displayName": "Subscription",
+            "type": {
+              "type": "id",
+              "value": "Subscription"
+            },
+            "description": "A one-time or recurring charge for a Product created as a result of a Merchant completing a Checkout."
           }
         ]
       },
@@ -3387,7 +3396,9 @@
       "name": "Subscription",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
