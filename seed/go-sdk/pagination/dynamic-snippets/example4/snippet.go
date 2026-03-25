@@ -18,7 +18,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &inlineusers.ListUsersCursorPaginationRequest{
+    request := &inlineusers.ListUsersOffsetPaginationRequest{
         Page: fern.Int(
             1,
         ),
@@ -30,7 +30,7 @@ func do() {
             "starting_after",
         ),
     }
-    client.InlineUsers.InlineUsers.ListWithCursorPagination(
+    client.InlineUsers.InlineUsers.ListWithOffsetPagination(
         context.TODO(),
         request,
     )

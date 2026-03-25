@@ -10,12 +10,9 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_cursor_pagination(
-            &UsersListWithCursorPaginationQueryRequest {
+        .list_usernames(
+            &UsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
-                page: None,
-                per_page: None,
-                order: None,
             },
             None,
         )
