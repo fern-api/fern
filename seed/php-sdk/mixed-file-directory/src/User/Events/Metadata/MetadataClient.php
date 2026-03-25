@@ -61,11 +61,11 @@ class MetadataClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Metadata
+     * @return ?Metadata
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
+    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): ?Metadata
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -83,6 +83,9 @@ class MetadataClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Metadata::fromJson($json);
             }
         } catch (JsonException $e) {

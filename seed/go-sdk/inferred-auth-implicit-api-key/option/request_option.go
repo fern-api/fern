@@ -86,5 +86,12 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+  }
+}
+
+// WithApiKey sets the apiKey auth request parameter.
+func WithApiKey(apiKey string) *core.ApiKeyOption {
+	return &core.ApiKeyOption{
+		ApiKey: apiKey,
 	}
 }

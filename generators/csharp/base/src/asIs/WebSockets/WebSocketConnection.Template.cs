@@ -170,6 +170,22 @@ internal partial class WebSocketConnection
     public TimeSpan? LostReconnectTimeout { get; set; }
 
     /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// How often to check the WebSocket state for silent disconnections.
     /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
     /// See: https://github.com/dotnet/runtime/issues/110496
@@ -466,6 +482,13 @@ internal partial class WebSocketConnection
 
             if (info.CancelReconnection) return;
 
+            if (Backoff != null)
+            {
+                // Let the backoff strategy control retry timing
+                _ = ReconnectSynchronized(ReconnectionType.Error, false, e);
+                return;
+            }
+
             if (ErrorReconnectTimeout == null) return;
 
             var timeout = ErrorReconnectTimeout.Value;
@@ -527,6 +550,8 @@ internal partial class WebSocketConnection
         var monitorTask = MonitorState(client, receiveCts);
 
         Exception causedException = null;
+        var closedByServer = false;
+        var cancelReconnect = false;
         try
         {
             // define buffer here and reuse, to avoid more allocation
@@ -577,7 +602,9 @@ internal partial class WebSocketConnection
                                 true
                             );
 
-                            return;
+                            closedByServer = true;
+                            cancelReconnect = info.CancelReconnection;
+                            break;
                         }
                     }
                 }
@@ -630,7 +657,12 @@ internal partial class WebSocketConnection
             }
         }
 
-        _ = ReconnectSynchronized(ReconnectionType.Lost, false, causedException);
+        if (!cancelReconnect)
+        {
+            _ = ReconnectSynchronized(
+                closedByServer ? ReconnectionType.ByServer : ReconnectionType.Lost,
+                false, causedException);
+        }
     }
 
     public global::System.Threading.Tasks.Task Reconnect() => ReconnectInternal(false);
@@ -691,10 +723,50 @@ internal partial class WebSocketConnection
             return;
         }
 
+        // Consult backoff strategy for delay
+        if (Backoff != null)
+        {
+            var delay = Backoff.GetNextDelay();
+            if (delay == null)
+            {
+                // Max attempts exhausted
+                _logger.LogWarning(
+                    "Reconnection attempts exhausted after {Attempts} tries",
+                    Backoff.MaxAttempts);
+                IsStarted = false;
+                _reconnecting = false;
+                var info = DisconnectionInfo.Create(
+                    DisconnectionType.Exit, null, causedException);
+                await OnDisconnectionHappened(info).ConfigureAwait(false);
+                return;
+            }
+
+            _logger.LogInformation(
+                "Reconnecting in {Delay}ms (attempt {Attempt})",
+                delay.Value.TotalMilliseconds,
+                Backoff.MaxAttempts.HasValue
+                    ? $"{Backoff.AttemptsMade}/{Backoff.MaxAttempts}"
+                    : $"{Backoff.AttemptsMade}");
+
+            try
+            {
+                await global::System.Threading.Tasks.Task.Delay(
+                    delay.Value, _cancellationTotal?.Token ?? CancellationToken.None)
+                    .ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                _reconnecting = false;
+                return;
+            }
+        }
+
         _cancellation = new CancellationTokenSource();
         await StartClient(Url, _cancellation.Token, failFast).ConfigureAwait(false);
         if (IsRunning)
         {
+            // Reset backoff on successful reconnection
+            Backoff?.Reset();
             await OnReconnectionHappened(ReconnectionInfo.Create(type)).ConfigureAwait(false);
         }
         _reconnecting = false;

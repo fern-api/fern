@@ -214,6 +214,27 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 **When working with external data (API responses, JSON parsing), validate and narrow with type guards—never assert the shape blindly.**
 
+#### Exhaustive Checks
+
+**Always handle all cases when switching on discriminated unions.** Every `switch` statement on a discriminated union's type field must include a `case` for every variant. The `default` case must call `assertNever` from `@fern-api/core-utils` to ensure compile-time exhaustiveness—if a new variant is added to the union, any unhandled switch will fail to compile.
+
+```typescript
+import { assertNever } from "@fern-api/core-utils";
+
+switch (shape.type) {
+    case "circle":
+        return handleCircle(shape);
+    case "square":
+        return handleSquare(shape);
+    default:
+        assertNever(shape);
+}
+```
+
+**Never leave a `default` case that silently ignores unknown variants.** The whole point of `assertNever` is to turn missed cases into compile-time errors rather than silent runtime bugs. If you find yourself wanting to skip a variant, handle it explicitly (even if the handler is a no-op with a comment explaining why).
+
+**This applies to all discriminated union patterns in the codebase**, including IR types, generator configuration unions, OpenAPI schema variants, and any other tagged union. Use `assertNeverNoThrow` from `@fern-api/core-utils` only when you intentionally want to ignore unexpected variants without throwing (e.g., forward-compatible parsing), and add a comment explaining why.
+
 Here are additional TypeScript rules beyond type safety:
 
 #### Async/Await & Promises

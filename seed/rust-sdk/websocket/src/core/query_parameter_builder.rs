@@ -1,4 +1,3 @@
-use chrono::{DateTime, TimeZone, Utc};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
@@ -45,13 +44,6 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a big integer parameter (accept both required/optional)
-    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
 
     /// Add multiple integer parameters with the same key (for allow-multiple query params)
     /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
@@ -114,44 +106,6 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a datetime parameter (any DateTime timezone)
-    pub fn datetime<Tz: TimeZone>(
-        mut self,
-        key: &str,
-        value: impl Into<Option<DateTime<Tz>>>,
-    ) -> Self
-    where
-        Tz::Offset: std::fmt::Display,
-    {
-        if let Some(v) = value.into() {
-            self.params.push((
-                key.to_string(),
-                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
-        }
-        self
-    }
-
-    /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
-    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
-    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
-        if let Some(v) = value.into() {
-            // Convert NaiveDate to DateTime<Utc> at start of day
-            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((
-                key.to_string(),
-                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
-            ));
-        }
-        self
-    }
 
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
@@ -312,7 +266,6 @@ fn tokenize_query(input: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::{NaiveDate, TimeZone, Utc};
 
     // ===========================
     // QueryBuilder tests
@@ -329,15 +282,14 @@ mod tests {
         let result = QueryBuilder::new()
             .string("name", Some("alice".to_string()))
             .build();
-        assert_eq!(
-            result,
-            Some(vec![("name".to_string(), "alice".to_string())])
-        );
+        assert_eq!(result, Some(vec![("name".to_string(), "alice".to_string())]));
     }
 
     #[test]
     fn test_string_param_none_skipped() {
-        let result = QueryBuilder::new().string("name", None::<String>).build();
+        let result = QueryBuilder::new()
+            .string("name", None::<String>)
+            .build();
         assert!(result.is_none());
     }
 
@@ -371,49 +323,12 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_uuid_param() {
-        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
-        let result = QueryBuilder::new().uuid("id", Some(id)).build();
-        assert_eq!(
-            result,
-            Some(vec![(
-                "id".to_string(),
-                "550e8400-e29b-41d4-a716-446655440000".to_string()
-            )])
-        );
-    }
 
-    #[test]
-    fn test_datetime_param_formats_rfc3339() {
-        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
-        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
-        assert_eq!(
-            result,
-            Some(vec![(
-                "since".to_string(),
-                "2024-01-15T09:30:00Z".to_string()
-            )])
-        );
-    }
-
-    #[test]
-    fn test_date_param_converts_to_midnight_utc() {
-        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
-        let result = QueryBuilder::new().date("on", Some(date)).build();
-        assert_eq!(
-            result,
-            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
-        );
-    }
 
     #[test]
     fn test_string_array_multiple_entries() {
         let result = QueryBuilder::new()
-            .string_array(
-                "tag",
-                vec!["a".to_string(), "b".to_string(), "c".to_string()],
-            )
+            .string_array("tag", vec!["a".to_string(), "b".to_string(), "c".to_string()])
             .build();
         assert_eq!(
             result,
@@ -489,14 +404,21 @@ mod tests {
 
     #[test]
     fn test_serialize_numeric_no_quotes() {
-        let result = QueryBuilder::new().serialize("count", Some(42)).build();
-        assert_eq!(result, Some(vec![("count".to_string(), "42".to_string())]));
+        let result = QueryBuilder::new()
+            .serialize("count", Some(42))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("count".to_string(), "42".to_string())])
+        );
     }
 
     #[test]
     fn test_serialize_array_skips_null() {
         let values: Vec<Option<&str>> = vec![Some("a"), None, Some("b")];
-        let result = QueryBuilder::new().serialize_array("items", values).build();
+        let result = QueryBuilder::new()
+            .serialize_array("items", values)
+            .build();
         assert_eq!(
             result,
             Some(vec![
@@ -523,15 +445,6 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_big_int_param() {
-        let big = num_bigint::BigInt::from(999_999_999_999i64);
-        let result = QueryBuilder::new().big_int("value", Some(big)).build();
-        assert_eq!(
-            result,
-            Some(vec![("value".to_string(), "999999999999".to_string())])
-        );
-    }
 
     // ===========================
     // parse_structured_query tests

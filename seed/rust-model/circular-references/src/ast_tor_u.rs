@@ -45,7 +45,6 @@ impl TorU {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for TorU {

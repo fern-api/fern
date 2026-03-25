@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	fern "github.com/extends/fern"
 	core "github.com/extends/fern/core"
 	internal "github.com/extends/fern/internal"

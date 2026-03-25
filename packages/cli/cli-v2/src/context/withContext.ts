@@ -40,6 +40,9 @@ export function withContext<T extends GlobalArgs>(
             context.finish();
             await exitGracefully(0);
         } catch (error) {
+            if (shouldReportToSentry(error)) {
+                await context.telemetry.captureException(error);
+            }
             await context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
                 status: "error",
@@ -109,6 +112,35 @@ function handleError(context: Context, error: unknown): void {
     }
 
     process.stderr.write(`${chalk.red(String(error))}\n`);
+}
+
+/**
+ * Determines whether an error should be reported to Sentry.
+ *
+ * Only unexpected/internal errors are reported. User-facing errors
+ * (validation, auth, CLI usage) are not bugs and should not be tracked.
+ *
+ * TODO: FernCliError is currently excluded because it loses context --
+ * it's a blank marker error thrown by failAndThrow() after logging.
+ * Many FernCliError instances originate from shared packages and represent
+ * server-side failures (e.g. API registration, protobuf upload) that
+ * *should* be reported. A refactoring is needed to make FernCliError
+ * carry its original cause/code so we can distinguish reportable
+ * server failures from user config errors.
+ */
+function shouldReportToSentry(error: unknown): boolean {
+    if (error instanceof CliError) {
+        return error.code === "INTERNAL_ERROR";
+    }
+    if (
+        error instanceof ValidationError ||
+        error instanceof SourcedValidationError ||
+        error instanceof KeyringUnavailableError ||
+        error instanceof FernCliError
+    ) {
+        return false;
+    }
+    return true;
 }
 
 function extractErrorCode(error: unknown): CliError.Code {

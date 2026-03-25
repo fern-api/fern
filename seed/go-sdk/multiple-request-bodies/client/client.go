@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	io "io"
+
 	fern "github.com/multiple-request-bodies/fern"
 	core "github.com/multiple-request-bodies/fern/core"
 	internal "github.com/multiple-request-bodies/fern/internal"
 	option "github.com/multiple-request-bodies/fern/option"
-	io "io"
 )
 
 type Client struct {

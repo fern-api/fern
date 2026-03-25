@@ -430,7 +430,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\nusing System.Text;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.UploadWithPathAsync(\n    \"upload-path\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
+                "client": "using SeedExhaustive;\nusing global::System.Text;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.UploadWithPathAsync(\n    \"upload-path\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
             }
         },
         {

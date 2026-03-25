@@ -5,6 +5,7 @@ package httphead
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/http-head/fern/internal"
 )
 

@@ -44,6 +44,13 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
+        // Skip generating HTTP client stubs for subpackages that only have a WebSocket
+        // channel and no HTTP service. The actual WebSocket functionality is handled by
+        // the WebSocketChannelGenerator which generates files in src/api/websocket/.
+        if (this.context.isWebSocketOnlySubpackage(this.subpackage)) {
+            return null;
+        }
+
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
         // If this subpackage has any children at all and is in a nested directory,
@@ -929,7 +936,8 @@ export class SubClientGenerator {
             let paramType = param.type.toString();
 
             if (param.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
 
             if (param.optional) {
@@ -943,7 +951,8 @@ export class SubClientGenerator {
         if (requestBodyParam) {
             let paramType = requestBodyParam.type.toString();
             if (requestBodyParam.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -1505,10 +1514,10 @@ export class SubClientGenerator {
         if (requestBodyParam && endpoint.requestBody) {
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
-                return "Some(serde_json::to_value(&request.body).unwrap_or_default())";
+                return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
             }
             // For other cases, serialize the whole request
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+            return "Some(serde_json::to_value(request).map_err(ApiError::Serialization)?)";
         }
         return "None";
     }

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedPropertyAccess.Core;
 
 namespace SeedPropertyAccess;
@@ -87,7 +87,7 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.User AsUser() =>
         IsUser
             ? (SeedPropertyAccess.User)Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'user'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedPropertyAccess.Admin"/> if <see cref="Type"/> is 'admin', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.Admin AsAdmin() =>
         IsAdmin
             ? (SeedPropertyAccess.Admin)Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'admin'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'admin'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
@@ -105,7 +105,7 @@ public record UserOrAdminDiscriminated
     public object AsEmpty() =>
         IsEmpty
             ? Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedPropertyAccess.User, T> onUser,
@@ -207,12 +207,12 @@ public record UserOrAdminDiscriminated
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UserOrAdminDiscriminated>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UserOrAdminDiscriminated).IsAssignableFrom(typeToConvert);
 
         public override UserOrAdminDiscriminated Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -303,7 +303,7 @@ public record UserOrAdminDiscriminated
 
         public override UserOrAdminDiscriminated ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

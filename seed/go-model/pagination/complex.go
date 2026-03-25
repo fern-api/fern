@@ -5,6 +5,7 @@ package pagination
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/pagination/fern/internal"
 )
 

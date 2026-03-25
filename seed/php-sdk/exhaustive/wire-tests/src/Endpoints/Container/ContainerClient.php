@@ -61,11 +61,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string>
+     * @return ?array<string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnListOfPrimitives(array $request, ?array $options = null): array
+    public function getAndReturnListOfPrimitives(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -81,6 +81,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -105,11 +108,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<ObjectWithRequiredField>
+     * @return ?array<ObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnListOfObjects(array $request, ?array $options = null): array
+    public function getAndReturnListOfObjects(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -125,6 +128,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -149,11 +155,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string>
+     * @return ?array<string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): array
+    public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -169,6 +175,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -193,11 +202,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<ObjectWithRequiredField>
+     * @return ?array<ObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnSetOfObjects(array $request, ?array $options = null): array
+    public function getAndReturnSetOfObjects(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -213,6 +222,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -237,11 +249,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, string>
+     * @return ?array<string, string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): array
+    public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -257,6 +269,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -281,11 +296,11 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, ObjectWithRequiredField>
+     * @return ?array<string, ObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): array
+    public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -301,6 +316,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -330,7 +348,7 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, (
+     * @return ?array<string, (
      *    float
      *   |bool
      *   |string
@@ -339,7 +357,7 @@ class ContainerClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnMapOfPrimToUndiscriminatedUnion(array $request, ?array $options = null): array
+    public function getAndReturnMapOfPrimToUndiscriminatedUnion(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -355,6 +373,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => new Union('float', 'bool', 'string', ['string'])]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

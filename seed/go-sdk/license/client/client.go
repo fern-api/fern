@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	core "github.com/license/fern/core"
 	internal "github.com/license/fern/internal"
 	option "github.com/license/fern/option"

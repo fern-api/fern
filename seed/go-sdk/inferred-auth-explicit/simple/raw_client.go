@@ -4,10 +4,11 @@ package simple
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/inferred-auth-explicit/fern/core"
 	internal "github.com/inferred-auth-explicit/fern/internal"
 	option "github.com/inferred-auth-explicit/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

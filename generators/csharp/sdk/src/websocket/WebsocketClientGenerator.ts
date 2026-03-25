@@ -327,6 +327,50 @@ export class WebSocketClientGenerator extends WithGeneration {
                     this.environments.filter((env) => env.environment === this.defaultEnvironment)[0]?.url ??
                     this.environments[0]?.url;
             }
+        } else if (
+            websocketChannel.baseUrl != null &&
+            context.ir.environments?.environments.type === "multipleBaseUrls"
+        ) {
+            // When x-fern-server is set on a channel, the IR's baseUrl field contains the
+            // base URL ID (e.g., "wss"). Derive websocket environments from the IR's
+            // multi-URL environment definitions, extracting the URL for this channel's
+            // base URL ID from each environment. This eliminates the need for the
+            // temporary-websocket-environments workaround in generators.yml.
+            const multiEnvs = context.ir.environments.environments;
+            const baseUrlId = websocketChannel.baseUrl;
+            for (const env of multiEnvs.environments) {
+                const url = env.urls[baseUrlId];
+                if (url != null) {
+                    const envName = env.name.pascalCase.safeName;
+                    this.environments.push({
+                        url,
+                        environment: envName,
+                        name: envName
+                    });
+                }
+            }
+
+            // Resolve the default environment from the IR
+            const defaultEnvId = context.ir.environments.defaultEnvironment;
+            if (defaultEnvId != null) {
+                const defaultEnv = multiEnvs.environments.find((env) => env.id === defaultEnvId);
+                if (defaultEnv != null) {
+                    const defaultUrl = defaultEnv.urls[baseUrlId];
+                    if (defaultUrl != null) {
+                        this.defaultEnvironment = defaultEnv.name.pascalCase.safeName;
+                    }
+                }
+            }
+
+            // Fall back to the first environment's name if no default was resolved
+            if (this.defaultEnvironment == null && this.environments.length > 0) {
+                this.defaultEnvironment = this.environments[0]?.environment;
+            }
+
+            if (!this.hasEnvironments && this.environments.length === 1) {
+                // If there's only one environment, use its URL directly as the BaseUrl
+                this.defaultEnvironment = this.environments[0]?.url;
+            }
         }
     }
     /** The default environment URL for WebSocket connections */
@@ -600,6 +644,19 @@ export class WebSocketClientGenerator extends WithGeneration {
             set: true
         });
 
+        optionsClass.addField({
+            origin: optionsClass.explicit("ReconnectBackoff"),
+            access: ast.Access.Public,
+            type: this.Types.Arbitrary("ReconnectStrategy?"),
+            summary:
+                "Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. " +
+                "Set to null to use fixed-interval reconnection (legacy behavior). " +
+                "Default: exponential backoff, 1s\u219260s, unlimited attempts, with jitter.",
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("new ReconnectStrategy()")
+        });
+
         return optionsClass;
     }
 
@@ -745,6 +802,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeTextStatement("_client.ReconnectTimeout = _options.ReconnectTimeout");
                 writer.writeTextStatement("_client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout");
                 writer.writeTextStatement("_client.LostReconnectTimeout = _options.LostReconnectTimeout");
+                writer.writeTextStatement("_client.Backoff = _options.ReconnectBackoff");
                 // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
@@ -1522,8 +1580,12 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`using var stream = new System.IO.MemoryStream(`);
-                writer.writeLine(`    System.Text.Encoding.UTF8.GetBytes(rawJson));`);
+                writer.write("using var stream = new ");
+                writer.writeNode(this.System.IO.MemoryStream);
+                writer.writeLine("(");
+                writer.write("    ");
+                writer.writeNode(this.System.Text.Encoding_UTF8);
+                writer.writeLine(".GetBytes(rawJson));");
                 writer.writeTextStatement(`await OnTextMessage(stream).ConfigureAwait(false)`);
             })
         });

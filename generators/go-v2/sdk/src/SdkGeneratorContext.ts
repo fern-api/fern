@@ -6,6 +6,7 @@ import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/g
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getInferredAuthScheme, getOAuthClientCredentialsScheme } from "./authUtils.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType.js";
 import { GoGeneratorAgent } from "./GoGeneratorAgent.js";
@@ -61,6 +62,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Stream);
         }
 
+        if (getOAuthClientCredentialsScheme(this.ir) != null || getInferredAuthScheme(this.ir) != null) {
+            files.push(AsIsFiles.TokenProvider);
+        }
+
         files.push(
             AsIsFiles.LogLevel,
             AsIsFiles.Logger,
@@ -68,7 +73,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             AsIsFiles.LogConfig,
             AsIsFiles.LoggingHttpClient
         );
-
         return files;
     }
 

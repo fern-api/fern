@@ -1,5 +1,6 @@
-using System.ComponentModel;
-using System.Text.Json;
+using global::System.ComponentModel;
+using global::System.Text;
+using global::System.Text.Json;
 using SeedWebsocket.Core;
 using SeedWebsocket.Core.WebSockets;
 
@@ -93,6 +94,7 @@ public partial class RealtimeApi
         _client.ReconnectTimeout = _options.ReconnectTimeout;
         _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
         _client.LostReconnectTimeout = _options.LostReconnectTimeout;
+        _client.Backoff = _options.ReconnectBackoff;
     }
 
     /// <summary>
@@ -224,7 +226,7 @@ public partial class RealtimeApi
     /// </summary>
     internal async Task InjectTestMessage(string rawJson)
     {
-        using var stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(rawJson));
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson));
         await OnTextMessage(stream).ConfigureAwait(false);
     }
 
@@ -341,5 +343,10 @@ public partial class RealtimeApi
         /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
         /// </summary>
         public TimeSpan? LostReconnectTimeout { get; set; }
+
+        /// <summary>
+        /// Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. Set to null to use fixed-interval reconnection (legacy behavior). Default: exponential backoff, 1s→60s, unlimited attempts, with jitter.
+        /// </summary>
+        public ReconnectStrategy? ReconnectBackoff { get; set; } = new ReconnectStrategy();
     }
 }

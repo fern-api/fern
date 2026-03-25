@@ -3,11 +3,12 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
 	service "github.com/bearer-token-environment-variable/fern/service"
-	os "os"
 )
 
 type Client struct {

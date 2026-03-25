@@ -38,6 +38,22 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     public TimeSpan? LostReconnectTimeout { get; set; }
 
     /// <summary>
+    /// How often to check the WebSocket state for silent disconnections.
+    /// Addresses ReceiveAsync hang when TCP closes without WebSocket notification.
+    /// See: https://github.com/dotnet/runtime/issues/110496
+    /// Set to null to disable. Default: 5 seconds.
+    /// </summary>
+    public TimeSpan? StateCheckInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Strategy for reconnection backoff delays.
+    /// Controls interval growth, jitter, and max attempts.
+    /// Set to null to use fixed-interval reconnection (legacy behavior).
+    /// Default: exponential backoff, 1s → 60s, unlimited attempts, with jitter.
+    /// </summary>
+    public ReconnectStrategy? Backoff { get; set; } = new ReconnectStrategy();
+
+    /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
@@ -78,6 +94,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Default: 5 seconds.
     /// </summary>
     public TimeSpan ConnectTimeout { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Maximum time to wait for a single SendAsync call to complete.
+    /// Prevents indefinite hangs when the remote peer dies without closing the connection.
+    /// See: https://github.com/dotnet/runtime/issues/125257
+    /// Default: 30 seconds.
+    /// </summary>
+    public TimeSpan SendTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Gets the current connection status of the WebSocket.
@@ -276,10 +300,13 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
 #endif
             HttpInvoker = HttpInvoker,
             ConnectTimeout = ConnectTimeout,
+            SendTimeout = SendTimeout,
             IsReconnectionEnabled = IsReconnectionEnabled,
             ReconnectTimeout = ReconnectTimeout,
             ErrorReconnectTimeout = ErrorReconnectTimeout,
             LostReconnectTimeout = LostReconnectTimeout,
+            StateCheckInterval = StateCheckInterval,
+            Backoff = Backoff,
             ExceptionOccurred = ExceptionOccurred.RaiseEvent,
             TextMessageReceived = _onTextMessage,
             BinaryMessageReceived = stream =>

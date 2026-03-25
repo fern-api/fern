@@ -22,5 +22,6 @@ export enum AsIsFiles {
     Logger = "core/logger.go_",
     ConsoleLogger = "core/console_logger.go_",
     LogConfig = "core/log_config.go_",
-    LoggingHttpClient = "core/logging_http_client.go_"
+    LoggingHttpClient = "core/logging_http_client.go_",
+    TokenProvider = "core/token_provider.go_"
 }

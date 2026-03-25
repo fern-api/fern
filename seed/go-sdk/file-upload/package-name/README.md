@@ -30,10 +30,11 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/file-upload-go/client"
-    upload "github.com/fern-api/file-upload-go"
-    strings "strings"
     context "context"
+    strings "strings"
+
+    upload "github.com/fern-api/file-upload-go"
+    client "github.com/fern-api/file-upload-go/client"
 )
 
 func do() {

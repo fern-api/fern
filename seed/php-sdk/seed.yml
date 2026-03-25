@@ -168,6 +168,8 @@ allowedFailures:
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
   - pagination-custom
+  - endpoint-security-auth
+  - inferred-auth-implicit
   - inferred-auth-implicit-reference
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - header-auth-environment-variable

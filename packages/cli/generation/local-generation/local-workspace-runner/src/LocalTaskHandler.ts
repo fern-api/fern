@@ -36,6 +36,7 @@ export declare namespace LocalTaskHandler {
         autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
         absolutePathToSpecRepo: AbsoluteFilePath | undefined;
+        skipFernignore?: boolean;
     }
 }
 
@@ -53,6 +54,7 @@ export class LocalTaskHandler {
     private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
     private absolutePathToSpecRepo: AbsoluteFilePath | undefined;
+    private skipFernignore: boolean;
 
     constructor({
         context,
@@ -67,7 +69,8 @@ export class LocalTaskHandler {
         isWhitelabel,
         autoVersioningCache,
         generatorLanguage,
-        absolutePathToSpecRepo
+        absolutePathToSpecRepo,
+        skipFernignore
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -82,6 +85,7 @@ export class LocalTaskHandler {
         this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
         this.absolutePathToSpecRepo = absolutePathToSpecRepo;
+        this.skipFernignore = skipFernignore ?? false;
     }
 
     public async copyGeneratedFiles(): Promise<{
@@ -91,7 +95,7 @@ export class LocalTaskHandler {
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
     }> {
-        const isFernIgnorePresent = await this.isFernIgnorePresent();
+        const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
         // Read prior changelog BEFORE copy operations overwrite the output directory

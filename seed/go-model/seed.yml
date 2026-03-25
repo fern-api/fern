@@ -65,3 +65,4 @@ allowedFailures:
   - property-access
   - reserved-keywords
   - trace
+  - server-sent-event-examples

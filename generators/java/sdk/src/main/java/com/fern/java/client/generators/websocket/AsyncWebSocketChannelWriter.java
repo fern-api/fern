@@ -16,8 +16,6 @@
 
 package com.fern.java.client.generators.websocket;
 
-import com.fern.ir.model.http.HttpPath;
-import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.ir.Subpackage;
@@ -148,27 +146,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
-        builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
-
-        HttpPath path = websocketChannel.getPath();
-        builder.addStatement("pathBuilder.append($S)", path.getHead());
-
-        for (HttpPathPart part : path.getParts()) {
-            String pathParamId = part.getPathParameter();
-            if (pathParamId != null && !pathParamId.isEmpty()) {
-                // Find the matching path parameter
-                PathParameter matchingParam = websocketChannel.getPathParameters().stream()
-                        .filter(p -> p.getName().getOriginalName().equals(pathParamId))
-                        .findFirst()
-                        .orElseThrow();
-                String paramFieldName = matchingParam.getName().getCamelCase().getSafeName();
-                builder.addStatement("pathBuilder.append($L)", paramFieldName);
-            }
-            builder.addStatement("pathBuilder.append($S)", part.getTail());
-        }
-
-        // Build HttpUrl with query parameters
-        builder.addStatement("String fullPath = pathBuilder.toString()");
+        appendPathBuildingCode(builder);
         builder.beginControlFlow("if (baseUrl.endsWith(\"/\") && fullPath.startsWith(\"/\"))");
         builder.addStatement("fullPath = fullPath.substring(1)");
         builder.endControlFlow();
@@ -374,8 +352,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
                 .addParameter(messageType, "message")
                 .addJavadoc(
-                        "Sends a $L message to the server asynchronously.\n",
-                        message.getType().get())
+                        "Sends $L message to the server asynchronously.\n",
+                        articleFor(message.getType().get()))
                 .addJavadoc("@param message the message to send\n")
                 .addJavadoc("@return a CompletableFuture that completes when the message is sent\n");
 
@@ -420,14 +398,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addStatement("assertSocketIsOpen()")
                 .addStatement("String json = $N.writeValueAsString(body)", objectMapperField)
                 .addComment("Use reconnecting listener's send method which handles queuing")
-                .addStatement("boolean sent = $N.send(json)", reconnectingListenerField)
-                .beginControlFlow("if (sent)")
+                .addStatement("$N.send(json)", reconnectingListenerField)
                 .addStatement("future.complete(null)")
-                .endControlFlow()
-                .beginControlFlow("else")
-                .addComment("Message was queued for later delivery when reconnected")
-                .addStatement("future.complete(null)")
-                .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IllegalStateException.class)
                 .addStatement("future.completeExceptionally(e)")

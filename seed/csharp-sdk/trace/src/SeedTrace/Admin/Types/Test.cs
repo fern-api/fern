@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -62,13 +62,14 @@ public record Test
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'and'.</exception>
     public bool AsAnd() =>
-        IsAnd ? (bool)Value! : throw new System.Exception("Test.Type is not 'and'");
+        IsAnd ? (bool)Value! : throw new global::System.Exception("Test.Type is not 'and'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'or', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'or'.</exception>
-    public bool AsOr() => IsOr ? (bool)Value! : throw new System.Exception("Test.Type is not 'or'");
+    public bool AsOr() =>
+        IsOr ? (bool)Value! : throw new global::System.Exception("Test.Type is not 'or'");
 
     public T Match<T>(Func<bool, T> onAnd, Func<bool, T> onOr, Func<string, object?, T> onUnknown_)
     {
@@ -133,12 +134,12 @@ public record Test
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Test>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Test).IsAssignableFrom(typeToConvert);
 
         public override Test Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -193,7 +194,7 @@ public record Test
 
         public override Test ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

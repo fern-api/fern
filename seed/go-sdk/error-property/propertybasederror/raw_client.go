@@ -4,11 +4,12 @@ package propertybasederror
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/error-property/fern"
 	core "github.com/error-property/fern/core"
 	internal "github.com/error-property/fern/internal"
 	option "github.com/error-property/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

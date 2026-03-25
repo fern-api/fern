@@ -202,16 +202,7 @@ internal static class QueryStringBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool NeedsEncoding(ReadOnlySpan<char> value)
     {
-#if NET8_0_OR_GREATER
         return value.ContainsAnyExcept(UnreservedChars);
-#else
-        foreach (var c in value)
-        {
-            if (!IsUnreserved(c))
-                return true;
-        }
-        return false;
-#endif
     }
 
     private static int EncodeSlow(ReadOnlySpan<char> input, Span<char> output)
@@ -230,11 +221,7 @@ internal static class QueryStringBuilder
                 output[position++] = '2';
                 output[position++] = '0';
             }
-#if NET7_0_OR_GREATER
             else if (char.IsAscii(c))
-#else
-            else if (c <= 127)
-#endif
             {
                 position += EncodeAscii((byte)c, output.Slice(position));
             }
@@ -315,8 +302,6 @@ internal static class QueryStringBuilder
     {
 #if NET8_0_OR_GREATER
         return UnreservedChars.Contains(c);
-#elif NET7_0_OR_GREATER
-        return char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or '~';
 #else
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')

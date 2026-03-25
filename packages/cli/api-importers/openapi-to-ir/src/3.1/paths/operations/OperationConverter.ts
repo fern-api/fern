@@ -1,10 +1,14 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    ContainerType,
     FernIr,
     HttpEndpoint,
     HttpEndpointSource,
     HttpPath,
     HttpResponse,
+    HttpResponseBody,
+    JsonResponse,
+    TypeReference,
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
@@ -300,6 +304,7 @@ export class OperationConverter extends AbstractOperationConverter {
         // TODO: Our existing Parser will only parse the first successful response.
         // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
+        let hasNoContentResponse = false;
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             const isWildcardStatusCode = /^[45]XX$/i.test(statusCode);
             let statusCodeNum: number;
@@ -348,6 +353,11 @@ export class OperationConverter extends AbstractOperationConverter {
                     streamingExtension
                 });
                 const converted = responseBodyConverter.convert();
+                if (converted == null) {
+                    // A 2xx response with no body (e.g., 204 No Content with content: {})
+                    hasNoContentResponse = true;
+                    continue;
+                }
                 if (converted != null) {
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
@@ -465,6 +475,27 @@ export class OperationConverter extends AbstractOperationConverter {
                         docs: undefined
                     }
                 ];
+            }
+        }
+
+        // If there's both a successful response with a body and a no-content response (e.g., 204),
+        // wrap the response body type in optional so generators produce nullable return types.
+        if (hasNoContentResponse && hasSuccessfulResponse && convertedResponseBody?.response?.body != null) {
+            const body = convertedResponseBody.response.body;
+            if (body.type === "json" && body.value.type === "response") {
+                const innerType = body.value.responseBodyType;
+                // Only wrap if not already optional
+                if (innerType.type !== "container" || innerType.container.type !== "optional") {
+                    convertedResponseBody.response = {
+                        ...convertedResponseBody.response,
+                        body: HttpResponseBody.json(
+                            JsonResponse.response({
+                                ...body.value,
+                                responseBodyType: TypeReference.container(ContainerType.optional(innerType))
+                            })
+                        )
+                    };
+                }
             }
         }
 

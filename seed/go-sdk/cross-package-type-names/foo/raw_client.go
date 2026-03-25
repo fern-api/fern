@@ -4,11 +4,12 @@ package foo
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/cross-package-type-names/fern"
 	core "github.com/cross-package-type-names/fern/core"
 	internal "github.com/cross-package-type-names/fern/internal"
 	option "github.com/cross-package-type-names/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

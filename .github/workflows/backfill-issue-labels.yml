@@ -1,0 +1,186 @@
+name: Backfill Issue Labels
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (log labels without applying)"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  issues: write
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  backfill:
+    name: Backfill labels on existing issues
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const dryRun = "${{ inputs.dry_run }}" === "true";
+            console.log(`Dry run: ${dryRun}`);
+
+            const componentMap = {
+              "CLI": "component:cli",
+              "Fern CLI": "component:cli",
+              "SDKs": "component:sdks",
+              "SDK Generator": "component:sdks",
+              "Docs": "component:docs",
+              "Fern Docs": "component:docs",
+              "Dashboard": "component:dashboard",
+              "Fern Editor": "component:dashboard",
+              "Other": "component:other",
+            };
+
+            const priorityMap = {
+              "P0 - Critical (Blocking work)": "priority:p0-critical",
+              "P1 - High (Strongly needed)": "priority:p1-high",
+              "P2 - Medium (Would be helpful)": "priority:p2-medium",
+              "P3 - Low (Nice to have)": "priority:p3-low",
+            };
+
+            const langMap = {
+              "TypeScript": "lang:typescript",
+              "Python": "lang:python",
+              "Java": "lang:java",
+              "Go": "lang:go",
+              "C#": "lang:csharp",
+              "PHP": "lang:php",
+              "Ruby": "lang:ruby",
+              "Swift": "lang:swift",
+              "Rust": "lang:rust",
+            };
+
+            const colorMap = {
+              "component:": "0075ca",
+              "priority:p0": "b60205",
+              "priority:p1": "d93f0b",
+              "priority:p2": "fbca04",
+              "priority:p3": "0e8a16",
+              "lang:": "5319e7",
+            };
+
+            // Fetch all existing labels
+            const existingLabelsResp = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+            const existingLabelNames = new Set(existingLabelsResp.data.map(l => l.name));
+
+            async function ensureLabel(label) {
+              if (!existingLabelNames.has(label)) {
+                let color = "ededed";
+                for (const [prefix, c] of Object.entries(colorMap)) {
+                  if (label.startsWith(prefix)) {
+                    color = c;
+                    break;
+                  }
+                }
+                if (!dryRun) {
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: label,
+                    color: color,
+                  });
+                }
+                existingLabelNames.add(label);
+                console.log(`${dryRun ? "[DRY RUN] Would create" : "Created"} label: ${label}`);
+              }
+            }
+
+            // Paginate through all open issues
+            let page = 1;
+            let totalProcessed = 0;
+            let totalLabeled = 0;
+
+            while (true) {
+              const issues = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                per_page: 100,
+                page: page,
+              });
+
+              if (issues.data.length === 0) break;
+
+              for (const issue of issues.data) {
+                // Skip pull requests (they show up in the issues API)
+                if (issue.pull_request) continue;
+
+                const body = issue.body || "";
+                const labelsToAdd = [];
+                const currentLabels = issue.labels.map(l => typeof l === "string" ? l : l.name);
+
+                // Component
+                const componentSection = body.match(/### Which Fern component\?\s*\n\n(.+)/);
+                if (componentSection) {
+                  const component = componentSection[1].trim();
+                  if (componentMap[component]) {
+                    const label = componentMap[component];
+                    if (!currentLabels.includes(label)) {
+                      labelsToAdd.push(label);
+                    }
+                  }
+                }
+
+                // Priority
+                const prioritySection = body.match(/### How (?:urgent|important) is this\?\s*\n\n(.+)/);
+                if (prioritySection) {
+                  const priority = prioritySection[1].trim();
+                  if (priorityMap[priority]) {
+                    const label = priorityMap[priority];
+                    if (!currentLabels.includes(label)) {
+                      labelsToAdd.push(label);
+                    }
+                  }
+                }
+
+                // SDK languages
+                const langSection = body.match(/### Which SDK language\(s\)\?\s*\n\n([\s\S]*?)(?=\n###|\n*$)/);
+                if (langSection) {
+                  const langText = langSection[1].trim();
+                  if (langText && langText !== "_No response_") {
+                    for (const [lang, label] of Object.entries(langMap)) {
+                      if (langText.includes(lang) && !currentLabels.includes(label)) {
+                        labelsToAdd.push(label);
+                      }
+                    }
+                  }
+                }
+
+                if (labelsToAdd.length > 0) {
+                  for (const label of labelsToAdd) {
+                    await ensureLabel(label);
+                  }
+
+                  if (!dryRun) {
+                    await github.rest.issues.addLabels({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      labels: labelsToAdd,
+                    });
+                  }
+                  console.log(`${dryRun ? "[DRY RUN] Would apply" : "Applied"} to #${issue.number}: ${labelsToAdd.join(", ")}`);
+                  totalLabeled++;
+                }
+
+                totalProcessed++;
+              }
+
+              page++;
+            }
+
+            console.log(`\nDone! Processed ${totalProcessed} open issues, ${dryRun ? "would label" : "labeled"} ${totalLabeled}.`);

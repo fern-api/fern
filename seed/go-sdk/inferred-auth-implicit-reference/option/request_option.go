@@ -86,5 +86,19 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+  }
+}
+
+// WithClientId sets the clientId auth request parameter.
+func WithClientId(clientId string) *core.ClientIdOption {
+	return &core.ClientIdOption{
+		ClientId: clientId,
+	}
+}
+
+// WithClientSecret sets the clientSecret auth request parameter.
+func WithClientSecret(clientSecret string) *core.ClientSecretOption {
+	return &core.ClientSecretOption{
+		ClientSecret: clientSecret,
 	}
 }

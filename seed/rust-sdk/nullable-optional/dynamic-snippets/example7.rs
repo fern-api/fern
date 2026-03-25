@@ -12,16 +12,16 @@ async fn main() {
         .update_complex_profile(
             &"profileId".to_string(),
             &UpdateComplexProfileRequest {
-                nullable_role: Some(Some(UserRole::Admin)),
-                nullable_status: Some(Some(UserStatus::Active)),
-                nullable_notification: Some(Some(NotificationMethod::Email {
+                nullable_role: Some(UserRole::Admin),
+                nullable_status: Some(UserStatus::Active),
+                nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
                     },
-                })),
-                nullable_search_result: Some(Some(SearchResult::User {
+                }),
+                nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
                         username: "username".to_string(),
@@ -36,16 +36,16 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
                         }),
                     },
-                })),
-                nullable_array: Some(Some(vec![
+                }),
+                nullable_array: Some(vec![
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
-                ])),
+                ]),
             },
             None,
         )

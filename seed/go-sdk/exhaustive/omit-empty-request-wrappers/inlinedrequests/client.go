@@ -4,6 +4,7 @@ package inlinedrequests
 
 import (
 	context "context"
+
 	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
