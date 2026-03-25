@@ -35,7 +35,7 @@ RUN echo '{ \
     "oxfmt": "0.35.0", \
     "oxlint": "1.50.0", \
     "oxlint-tsgolint": "0.14.2", \
-    "typescript": "5.9.3", \
+    "typescript": "~5.9.3", \
     "url-join": "4.0.1" \
   } \
 }' > package.json
