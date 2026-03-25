@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout repo
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         ref: ${{ inputs.checkout-ref }}
 
@@ -37,7 +37,7 @@ runs:
     # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
     # they are subfoldered into folders that match *.patch pattern and cause errors downstream
     - name: Download patches
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v7
       with:
         path: ./artifacts
         merge-multiple: true
