@@ -169,31 +169,7 @@
                 "extends": [],
                 "properties": [
                     {
-<<<<<<< HEAD
-                        "name": "name",
-=======
-                        "name": {
-                            "name": {
-                                "originalName": "event",
-                                "camelCase": {
-                                    "unsafeName": "event",
-                                    "safeName": "event"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "event",
-                                    "safeName": "event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EVENT",
-                                    "safeName": "EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Event",
-                                    "safeName": "Event"
-                                }
-                            },
-                            "wireValue": "event"
-                        },
+                        "name": "event",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -214,29 +190,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
-                            "wireValue": "name"
-                        },
->>>>>>> origin/main
+                        "name": "name",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -413,32 +367,7 @@
                         "docs": null
                     },
                     {
-<<<<<<< HEAD
-                        "discriminantValue": "notification",
-=======
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "event",
-                                "camelCase": {
-                                    "unsafeName": "event",
-                                    "safeName": "event"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "event",
-                                    "safeName": "event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EVENT",
-                                    "safeName": "EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Event",
-                                    "safeName": "Event"
-                                }
-                            },
-                            "wireValue": "event"
-                        },
->>>>>>> origin/main
+                        "discriminantValue": "event",
                         "shape": {
                             "_type": "samePropertiesAsObject",
                             "name": "EventEvent",
@@ -1962,31 +1891,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-<<<<<<< HEAD
-                                "id": "Stream events",
-                                "name": "Stream events",
-=======
                                 "id": "Stream events context protocol",
-                                "name": {
-                                    "originalName": "Stream events context protocol",
-                                    "camelCase": {
-                                        "unsafeName": "streamEventsContextProtocol",
-                                        "safeName": "streamEventsContextProtocol"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "stream_events_context_protocol",
-                                        "safeName": "stream_events_context_protocol"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STREAM_EVENTS_CONTEXT_PROTOCOL",
-                                        "safeName": "STREAM_EVENTS_CONTEXT_PROTOCOL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "StreamEventsContextProtocol",
-                                        "safeName": "StreamEventsContextProtocol"
-                                    }
-                                },
->>>>>>> origin/main
+                                "name": "Stream events context protocol",
                                 "url": "/stream-events-context-protocol",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -2163,79 +2069,6 @@
                                                         "error": "something went wrong"
                                                     }
                                                 }
-<<<<<<< HEAD
-                                            },
-                                            {
-                                                "event": "notification",
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "typeId": "type_completions:StreamEventContextProtocol",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "name": "StreamEventContextProtocol",
-                                                            "displayName": null
-                                                        },
-                                                        "shape": {
-                                                            "type": "union",
-                                                            "discriminant": "event",
-                                                            "singleUnionType": {
-                                                                "wireDiscriminantValue": "notification",
-                                                                "shape": {
-                                                                    "type": "samePropertiesAsObject",
-                                                                    "typeId": "type_completions:EventEvent",
-                                                                    "object": {
-                                                                        "properties": [
-                                                                            {
-                                                                                "name": "name",
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "update available"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "update available"
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "typeId": "type_completions:EventEvent",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [
-                                                                                            "completions"
-                                                                                        ],
-                                                                                        "packagePath": [],
-                                                                                        "file": "completions"
-                                                                                    },
-                                                                                    "name": "EventEvent",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "propertyAccess": null
-                                                                            }
-                                                                        ],
-                                                                        "extraProperties": null
-                                                                    }
-                                                                }
-                                                            },
-                                                            "baseProperties": [],
-                                                            "extendProperties": []
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "event": "notification",
-                                                        "name": "update available"
-                                                    }
-                                                }
-=======
->>>>>>> origin/main
                                             }
                                         ]
                                     }
@@ -2246,31 +2079,8 @@
                         },
                         {
                             "example": {
-<<<<<<< HEAD
-                                "id": "Bad request",
-                                "name": "Bad request",
-=======
                                 "id": "Bad request context protocol",
-                                "name": {
-                                    "originalName": "Bad request context protocol",
-                                    "camelCase": {
-                                        "unsafeName": "badRequestContextProtocol",
-                                        "safeName": "badRequestContextProtocol"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "bad_request_context_protocol",
-                                        "safeName": "bad_request_context_protocol"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "BAD_REQUEST_CONTEXT_PROTOCOL",
-                                        "safeName": "BAD_REQUEST_CONTEXT_PROTOCOL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "BadRequestContextProtocol",
-                                        "safeName": "BadRequestContextProtocol"
-                                    }
-                                },
->>>>>>> origin/main
+                                "name": "Bad request context protocol",
                                 "url": "/stream-events-context-protocol",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -2868,7 +2678,7 @@
                 "properties": [
                     {
                         "name": {
-                            "wireValue": "name",
+                            "wireValue": "event",
                             "name": {
                                 "originalName": "event",
                                 "camelCase": {
@@ -2887,8 +2697,7 @@
                                     "unsafeName": "Event",
                                     "safeName": "Event"
                                 }
-                            },
-                            "wireValue": "event"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2899,6 +2708,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "name",
                             "name": {
                                 "originalName": "name",
                                 "camelCase": {
@@ -3211,7 +3021,7 @@
                         "type": "samePropertiesAsObject",
                         "typeId": "type_completions:EventEvent",
                         "discriminantValue": {
-                            "wireValue": "notification",
+                            "wireValue": "event",
                             "name": {
                                 "originalName": "event",
                                 "camelCase": {
@@ -3230,12 +3040,7 @@
                                     "unsafeName": "Event",
                                     "safeName": "Event"
                                 }
-<<<<<<< HEAD
                             }
-=======
-                            },
-                            "wireValue": "event"
->>>>>>> origin/main
                         },
                         "properties": []
                     }

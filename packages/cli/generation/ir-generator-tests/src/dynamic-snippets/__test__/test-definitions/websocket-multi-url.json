@@ -70,10 +70,7 @@
             "properties": [
                 {
                     "name": {
-<<<<<<< HEAD
                         "wireValue": "text",
-=======
->>>>>>> origin/main
                         "name": {
                             "originalName": "text",
                             "camelCase": {
@@ -92,12 +89,7 @@
                                 "unsafeName": "Text",
                                 "safeName": "Text"
                             }
-<<<<<<< HEAD
                         }
-=======
-                        },
-                        "wireValue": "text"
->>>>>>> origin/main
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -108,10 +100,7 @@
                 },
                 {
                     "name": {
-<<<<<<< HEAD
                         "wireValue": "priority",
-=======
->>>>>>> origin/main
                         "name": {
                             "originalName": "priority",
                             "camelCase": {
@@ -130,12 +119,7 @@
                                 "unsafeName": "Priority",
                                 "safeName": "Priority"
                             }
-<<<<<<< HEAD
                         }
-=======
-                        },
-                        "wireValue": "priority"
->>>>>>> origin/main
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -217,10 +201,7 @@
             "properties": [
                 {
                     "name": {
-<<<<<<< HEAD
                         "wireValue": "data",
-=======
->>>>>>> origin/main
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -239,12 +220,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-<<<<<<< HEAD
                         }
-=======
-                        },
-                        "wireValue": "data"
->>>>>>> origin/main
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -255,10 +231,7 @@
                 },
                 {
                     "name": {
-<<<<<<< HEAD
                         "wireValue": "timestamp",
-=======
->>>>>>> origin/main
                         "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -277,12 +250,7 @@
                                 "unsafeName": "Timestamp",
                                 "safeName": "Timestamp"
                             }
-<<<<<<< HEAD
                         }
-=======
-                        },
-                        "wireValue": "timestamp"
->>>>>>> origin/main
                     },
                     "typeReference": {
                         "type": "primitive",

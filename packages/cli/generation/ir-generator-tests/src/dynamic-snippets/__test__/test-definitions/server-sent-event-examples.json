@@ -305,7 +305,7 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "name",
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -324,8 +324,7 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
-                        },
-                        "wireValue": "event"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -336,6 +335,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -648,7 +648,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:EventEvent",
                     "discriminantValue": {
-                        "wireValue": "notification",
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -667,12 +667,7 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
-<<<<<<< HEAD
                         }
-=======
-                        },
-                        "wireValue": "event"
->>>>>>> origin/main
                     },
                     "properties": []
                 }
