@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.54.5
+  changelogEntry:
+    - summary: |
+        Upgrade BCL/runtime NuGet package versions in generated C# SDKs.
+        All packages remain within the 9.x line for net8.0 compatibility.
+
+        - Portable.System.DateTimeOnly: 8.0.2 → 9.0.1
+        - System.Text.Json: 8.0.5 → 9.0.9 (legacy TFM conditional)
+        - Microsoft.Extensions.Logging.Abstractions: 8.0.2 → 9.0.13 (WebSocket)
+        - System.Threading.Channels: 8.0.0 → 9.0.13 (WebSocket)
+        - System.Net.ServerSentEvents: 9.0.9 → 9.0.14 (SSE)
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 2.54.4
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 2.54.3
+  changelogEntry:
+    - summary: |
+        Fix C# dynamic snippets using the internal client class name (`client-class-name`)
+        instead of the exported client class name (`exported-client-class-name`). When both
+        config options are set (e.g., `client-class-name: BasePayrocClient` and
+        `exported-client-class-name: PayrocClient`), generated snippets now correctly use
+        `PayrocClient` in user-facing code.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
 - version: 2.54.2
   changelogEntry:
     - summary: |
@@ -8,7 +43,6 @@
       type: fix
   createdAt: "2026-03-24"
   irVersion: 65
-
 - version: 2.54.1
   changelogEntry:
     - summary: |

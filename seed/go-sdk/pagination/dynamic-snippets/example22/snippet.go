@@ -17,7 +17,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOffsetStepPaginationRequest{
+    request := &fern.ListWithOffsetPaginationHasNextPageRequest{
         Page: fern.Int(
             1,
         ),
@@ -26,7 +26,7 @@ func do() {
         ),
         Order: fern.OrderAsc.Ptr(),
     }
-    client.Users.ListWithOffsetStepPagination(
+    client.Users.ListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )
