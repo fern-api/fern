@@ -8,5 +8,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.echo(&"primitive".to_string(), None).await;
+    client
+        .create_type(&Type::BasicType(BasicType::Primitive), None)
+        .await;
 }
