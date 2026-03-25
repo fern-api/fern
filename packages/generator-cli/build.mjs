@@ -72,9 +72,7 @@ async function main() {
                 },
                 files: ["**"],
                 dependencies: Object.fromEntries(
-                    Object.entries(packageJson.dependencies).filter(
-                        ([, v]) => !String(v).startsWith("workspace:")
-                    )
+                    Object.entries(packageJson.dependencies).filter(([, v]) => !String(v).startsWith("workspace:"))
                 ),
                 license: packageJson.license
             },
