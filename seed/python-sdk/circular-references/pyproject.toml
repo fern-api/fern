@@ -1,17 +1,13 @@
 [project]
-name = "fern_websocket-multi-url"
-dynamic = ["version"]
+name = "fern_circular-references"
 
 [tool.poetry]
-name = "fern_websocket-multi-url"
+name = "fern_circular-references"
 version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = []
-keywords = [
-    "fern",
-    "test"
-]
+keywords = []
 
 classifiers = [
     "Intended Audience :: Developers",
@@ -20,9 +16,6 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: 3.15",
     "Operating System :: OS Independent",
     "Operating System :: POSIX",
     "Operating System :: MacOS",
@@ -32,31 +25,23 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed/websocket_multi_url", from = "src"}
+    { include = "seed", from = "src"}
 ]
 
-[tool.poetry.urls]
-Documentation = 'https://buildwithfern.com/learn'
-Homepage = 'https://buildwithfern.com/'
-Repository = 'https://github.com/websocket-multi-url/fern'
+[project.urls]
+Repository = 'https://github.com/circular-references/fern'
 
 [tool.poetry.dependencies]
 python = "^3.10"
-<<<<<<<< HEAD:seed/pydantic/websocket-multi-url/pyproject.toml
-========
 httpx = ">=0.21.2"
->>>>>>>> main:seed/python-sdk/circular-references-advanced/pyproject.toml
 pydantic = ">= 1.9.2"
-pydantic-core = ">=2.18.2"
+pydantic-core = "^2.18.2"
+typing_extensions = ">= 4.0.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
 pytest = "^8.2.0"
 pytest-asyncio = "^1.0.0"
-<<<<<<<< HEAD:seed/pydantic/websocket-multi-url/pyproject.toml
-pytest-xdist = "^3.6.1"
-========
->>>>>>>> main:seed/python-sdk/circular-references-advanced/pyproject.toml
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
 ruff = "==0.11.5"
