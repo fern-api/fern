@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Upgrade generated SDK dependencies: typescript ~5.7.2 -> ~5.9.3,
-        @types/node ^18.19.70 -> ^22.19.15, @biomejs/biome 2.4.3 -> 2.4.9,
+        @biomejs/biome 2.4.3 -> 2.4.9,
         prettier 3.7.4 -> 3.8.1, webpack ^5.97.1 -> ^5.105.4, ts-loader ^9.5.1 -> ^9.5.4,
         ws ^8.16.0 -> ^8.20.0, @types/ws ^8.5.10 -> ^8.18.1, msw 2.11.2 -> 2.12.14,
         readable-stream ^4.5.2 -> ^4.7.0, @types/readable-stream ^4.0.18 -> ^4.0.23,
