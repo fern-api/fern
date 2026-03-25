@@ -147,6 +147,7 @@ export class LegacyFernWorkspaceAdapter {
             whitelabel: undefined,
             ai: undefined,
             replay: undefined,
+            containerRegistry: undefined,
             rawConfiguration: {}
         };
     }
