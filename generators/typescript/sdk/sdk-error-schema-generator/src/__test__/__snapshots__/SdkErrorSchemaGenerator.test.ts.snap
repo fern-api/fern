@@ -11,7 +11,7 @@ exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > deserializes named erro
 exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > deserializes primitive error body with serde layer 1`] = `"ErrorSchema.parseOrThrow(rawBody)"`;
 
 exports[`GeneratedSdkErrorSchemaImpl > writeToFile > writes schema for container error type 1`] = `
-"export const BatchError: Schema<ErrorSchema.Raw, string> = typeRefSchema;
+"export const BatchError: Schema<ErrorSchema.Raw, string> = typeRefSchema as any;
 
 export declare namespace BatchError {
     export type Raw = string;
@@ -20,7 +20,7 @@ export declare namespace BatchError {
 `;
 
 exports[`GeneratedSdkErrorSchemaImpl > writeToFile > writes schema for primitive error type 1`] = `
-"export const BadRequestError: Schema<ErrorSchema.Raw, string> = typeRefSchema;
+"export const BadRequestError: Schema<ErrorSchema.Raw, string> = typeRefSchema as any;
 
 export declare namespace BadRequestError {
     export type Raw = string;

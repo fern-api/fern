@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`GeneratedAliasTypeSchemaImpl > writeToFile > generates raw type alias pointing to raw type reference 1`] = `
-"export const MyAlias: Schema<serializers.Raw, MyAlias> = stringSchema();
+"export const MyAlias: Schema<serializers.Raw, MyAlias> = stringSchema() as any;
 
 export declare namespace MyAlias {
     export type Raw = string;
@@ -10,7 +10,7 @@ export declare namespace MyAlias {
 `;
 
 exports[`GeneratedAliasTypeSchemaImpl > writeToFile > generates schema for alias of named object type 1`] = `
-"export const UserAlias: ObjectSchema<serializers.Raw, UserAlias> = stringSchema();
+"export const UserAlias: ObjectSchema<serializers.Raw, UserAlias> = stringSchema() as any;
 
 export declare namespace UserAlias {
     export type Raw = string;
@@ -19,7 +19,7 @@ export declare namespace UserAlias {
 `;
 
 exports[`GeneratedAliasTypeSchemaImpl > writeToFile > generates schema for alias of non-object named type (uses Schema) 1`] = `
-"export const StatusAlias: Schema<serializers.Raw, StatusAlias> = stringSchema();
+"export const StatusAlias: Schema<serializers.Raw, StatusAlias> = stringSchema() as any;
 
 export declare namespace StatusAlias {
     export type Raw = string;
@@ -28,7 +28,7 @@ export declare namespace StatusAlias {
 `;
 
 exports[`GeneratedAliasTypeSchemaImpl > writeToFile > generates schema for branded alias with transform 1`] = `
-"export const BrandedId: Schema<serializers.Raw, BrandedId> = stringSchema().transform();
+"export const BrandedId: Schema<serializers.Raw, BrandedId> = stringSchema().transform() as any;
 
 export declare namespace BrandedId {
     export type Raw = string;
@@ -37,7 +37,7 @@ export declare namespace BrandedId {
 `;
 
 exports[`GeneratedAliasTypeSchemaImpl > writeToFile > generates schema for simple string alias 1`] = `
-"export const UserId: Schema<serializers.Raw, UserId> = stringSchema();
+"export const UserId: Schema<serializers.Raw, UserId> = stringSchema() as any;
 
 export declare namespace UserId {
     export type Raw = string;
@@ -46,7 +46,7 @@ export declare namespace UserId {
 `;
 
 exports[`GeneratedEnumTypeSchemaImpl > writeToFile > generates raw type declaration with wire values as string literals 1`] = `
-"export const Color: Schema<serializers.Raw, Color> = enum_(["RED", "BLUE", "GREEN"]);
+"export const Color: Schema<serializers.Raw, Color> = enum_(["RED", "BLUE", "GREEN"]) as any;
 
 export declare namespace Color {
     export type Raw = "RED" | "BLUE" | "GREEN";
@@ -55,7 +55,7 @@ export declare namespace Color {
 `;
 
 exports[`GeneratedEnumTypeSchemaImpl > writeToFile > generates schema for basic enum 1`] = `
-"export const Status: Schema<serializers.Raw, Status> = enum_(["active", "inactive", "pending"]);
+"export const Status: Schema<serializers.Raw, Status> = enum_(["active", "inactive", "pending"]) as any;
 
 export declare namespace Status {
     export type Raw = "active" | "inactive" | "pending";
@@ -64,7 +64,7 @@ export declare namespace Status {
 `;
 
 exports[`GeneratedEnumTypeSchemaImpl > writeToFile > generates schema for single-value enum 1`] = `
-"export const Direction: Schema<serializers.Raw, Direction> = enum_(["north"]);
+"export const Direction: Schema<serializers.Raw, Direction> = enum_(["north"]) as any;
 
 export declare namespace Direction {
     export type Raw = "north";
@@ -73,7 +73,7 @@ export declare namespace Direction {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates raw type with extends references 1`] = `
-"export const Child: ObjectSchema<serializers.Raw, Child> = object({}).extend().extend();
+"export const Child: ObjectSchema<serializers.Raw, Child> = object({}).extend().extend() as any;
 
 export declare namespace Child {
     export interface Raw extends RawNamedType, RawNamedType {
@@ -83,7 +83,7 @@ export declare namespace Child {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates raw type with index signature for extraProperties 1`] = `
-"export const Dynamic: ObjectSchema<serializers.Raw, Dynamic> = object({}).passthrough();
+"export const Dynamic: ObjectSchema<serializers.Raw, Dynamic> = object({}).passthrough() as any;
 
 export declare namespace Dynamic {
     export interface Raw {
@@ -94,7 +94,7 @@ export declare namespace Dynamic {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates raw type with optional properties (hasQuestionToken) 1`] = `
-"export const Partial: ObjectSchema<serializers.Raw, Partial> = object({});
+"export const Partial: ObjectSchema<serializers.Raw, Partial> = object({}) as any;
 
 export declare namespace Partial {
     export interface Raw {
@@ -106,7 +106,7 @@ export declare namespace Partial {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates schema for object with extends 1`] = `
-"export const Admin: ObjectSchema<serializers.Raw, Admin> = object({}).extend();
+"export const Admin: ObjectSchema<serializers.Raw, Admin> = object({}).extend() as any;
 
 export declare namespace Admin {
     export interface Raw extends RawNamedType {
@@ -117,7 +117,7 @@ export declare namespace Admin {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates schema for object with extends and extraProperties 1`] = `
-"export const ExtendedConfig: ObjectSchema<serializers.Raw, ExtendedConfig> = object({}).extend().passthrough();
+"export const ExtendedConfig: ObjectSchema<serializers.Raw, ExtendedConfig> = object({}).extend().passthrough() as any;
 
 export declare namespace ExtendedConfig {
     export interface Raw extends RawNamedType {
@@ -129,7 +129,7 @@ export declare namespace ExtendedConfig {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates schema for object with extraProperties (passthrough) 1`] = `
-"export const Config: ObjectSchema<serializers.Raw, Config> = object({}).passthrough();
+"export const Config: ObjectSchema<serializers.Raw, Config> = object({}).passthrough() as any;
 
 export declare namespace Config {
     export interface Raw {
@@ -141,7 +141,7 @@ export declare namespace Config {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates schema for object with no properties 1`] = `
-"export const Empty: ObjectSchema<serializers.Raw, Empty> = object({});
+"export const Empty: ObjectSchema<serializers.Raw, Empty> = object({}) as any;
 
 export declare namespace Empty {
     export interface Raw {
@@ -151,7 +151,7 @@ export declare namespace Empty {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > generates schema for object with properties 1`] = `
-"export const User: ObjectSchema<serializers.Raw, User> = object({});
+"export const User: ObjectSchema<serializers.Raw, User> = object({}) as any;
 
 export declare namespace User {
     export interface Raw {
@@ -163,7 +163,7 @@ export declare namespace User {
 `;
 
 exports[`GeneratedObjectTypeSchemaImpl > writeToFile > uses objectWithoutOptionalProperties when noOptionalProperties is true 1`] = `
-"export const StrictUser: ObjectSchema<serializers.Raw, StrictUser> = objectWithoutOptionalProperties({});
+"export const StrictUser: ObjectSchema<serializers.Raw, StrictUser> = objectWithoutOptionalProperties({}) as any;
 
 export declare namespace StrictUser {
     export interface Raw {
@@ -174,7 +174,7 @@ export declare namespace StrictUser {
 `;
 
 exports[`GeneratedUndiscriminatedUnionTypeSchemaImpl > writeToFile > generates raw type alias as union of raw member types 1`] = `
-"export const MixedValue: Schema<serializers.Raw, MixedValue> = undiscriminatedUnion([...]);
+"export const MixedValue: Schema<serializers.Raw, MixedValue> = undiscriminatedUnion([...]) as any;
 
 export declare namespace MixedValue {
     export type Raw = string | string | string;
@@ -183,7 +183,7 @@ export declare namespace MixedValue {
 `;
 
 exports[`GeneratedUndiscriminatedUnionTypeSchemaImpl > writeToFile > generates schema for single-member union 1`] = `
-"export const SingleValue: Schema<serializers.Raw, SingleValue> = undiscriminatedUnion([...]);
+"export const SingleValue: Schema<serializers.Raw, SingleValue> = undiscriminatedUnion([...]) as any;
 
 export declare namespace SingleValue {
     export type Raw = string;
@@ -192,7 +192,7 @@ export declare namespace SingleValue {
 `;
 
 exports[`GeneratedUndiscriminatedUnionTypeSchemaImpl > writeToFile > generates schema for union with named type members 1`] = `
-"export const Response: Schema<serializers.Raw, Response> = undiscriminatedUnion([...]);
+"export const Response: Schema<serializers.Raw, Response> = undiscriminatedUnion([...]) as any;
 
 export declare namespace Response {
     export type Raw = string | string;
@@ -201,7 +201,7 @@ export declare namespace Response {
 `;
 
 exports[`GeneratedUndiscriminatedUnionTypeSchemaImpl > writeToFile > generates schema for union with primitive members 1`] = `
-"export const Value: Schema<serializers.Raw, Value> = undiscriminatedUnion([...]);
+"export const Value: Schema<serializers.Raw, Value> = undiscriminatedUnion([...]) as any;
 
 export declare namespace Value {
     export type Raw = string | string;
@@ -232,7 +232,7 @@ exports[`GeneratedUnionTypeSchemaImpl > generateRawTypeDeclaration > generates r
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeSchemaToFile > calls writeSchemaToFile which delegates to generatedUnionSchema 1`] = `
-"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Event {
     export type Raw = Event.Click;
@@ -245,7 +245,7 @@ export declare namespace Event {
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for mixed union type variants 1`] = `
-"export const Response: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Response: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Response {
     export type Raw = Response.Empty | Response.Data | Response.Error;
@@ -267,7 +267,7 @@ export declare namespace Response {
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for noProperties union types 1`] = `
-"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Event {
     export type Raw = Event.Click | Event.Hover;
@@ -284,7 +284,7 @@ export declare namespace Event {
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for samePropertiesAsObject union type 1`] = `
-"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Shape {
     export type Raw = Shape.Circle;
@@ -297,7 +297,7 @@ export declare namespace Shape {
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for singleProperty union type 1`] = `
-"export const Container: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Container: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Container {
     export type Raw = Container.String;
@@ -312,7 +312,7 @@ export declare namespace Container {
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output with base properties 1`] = `
 "const _Base = object({});
-export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Event {
     export type Raw = Event.Click;
@@ -329,7 +329,7 @@ export declare namespace Event {
 `;
 
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output with includeUtilsOnUnionMembers 1`] = `
-"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+"export const Shape: Schema<serializers.Raw, ParsedUnion> = union({}).transform() as any;
 
 export declare namespace Shape {
     export type Raw = Shape.Circle;
@@ -342,7 +342,7 @@ export declare namespace Shape {
 `;
 
 exports[`TypeSchemaGenerator > passes noOptionalProperties to generated schemas 1`] = `
-"export const User: ObjectSchema<serializers.Raw, User> = objectWithoutOptionalProperties({});
+"export const User: ObjectSchema<serializers.Raw, User> = objectWithoutOptionalProperties({}) as any;
 
 export declare namespace User {
     export interface Raw {

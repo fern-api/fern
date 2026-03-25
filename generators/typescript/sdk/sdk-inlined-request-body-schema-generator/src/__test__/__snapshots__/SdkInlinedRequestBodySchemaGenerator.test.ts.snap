@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > getReferenceToParsedShape > returns Omit type when there are non-body keys 1`] = `
-"export const OmitRequest: Schema<InlinedRequestSchema.Raw, Omit<RequestWrapper, "queryParam" | "headerParam">> = object({});
+"export const OmitRequest: Schema<InlinedRequestSchema.Raw, Omit<RequestWrapper, "queryParam" | "headerParam">> = object({}) as any;
 
 export declare namespace OmitRequest {
     export interface Raw {
@@ -12,7 +12,7 @@ export declare namespace OmitRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > getReferenceToParsedShape > returns RequestWrapper type when no non-body keys 1`] = `
-"export const SimpleRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({});
+"export const SimpleRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}) as any;
 
 export declare namespace SimpleRequest {
     export interface Raw {
@@ -24,7 +24,7 @@ export declare namespace SimpleRequest {
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > serializeRequest > serializes with serde layer using jsonOrThrow 1`] = `"InlinedRequestSchema.jsonOrThrow(request)"`;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > filters out literal properties from schema 1`] = `
-"export const LiteralFilteredRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({});
+"export const LiteralFilteredRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}) as any;
 
 export declare namespace LiteralFilteredRequest {
     export interface Raw {
@@ -35,7 +35,7 @@ export declare namespace LiteralFilteredRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > generates raw type with optional properties 1`] = `
-"export const PartialRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({});
+"export const PartialRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}) as any;
 
 export declare namespace PartialRequest {
     export interface Raw {
@@ -47,7 +47,7 @@ export declare namespace PartialRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > generates schema for empty inlined body 1`] = `
-"export const EmptyRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({});
+"export const EmptyRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}) as any;
 
 export declare namespace EmptyRequest {
     export interface Raw {
@@ -57,7 +57,7 @@ export declare namespace EmptyRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > generates schema for inlined body with extends 1`] = `
-"export const ExtendedRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}).extend();
+"export const ExtendedRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}).extend() as any;
 
 export declare namespace ExtendedRequest {
     export interface Raw extends RawNamedType {
@@ -68,7 +68,7 @@ export declare namespace ExtendedRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > generates schema for inlined body with multiple extends 1`] = `
-"export const MixedRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}).extend().extend();
+"export const MixedRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}).extend().extend() as any;
 
 export declare namespace MixedRequest {
     export interface Raw extends RawNamedType, RawNamedType {
@@ -78,7 +78,7 @@ export declare namespace MixedRequest {
 `;
 
 exports[`GeneratedSdkInlinedRequestBodySchemaImpl > writeToFile > generates schema for inlined body with properties 1`] = `
-"export const CreateRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({});
+"export const CreateRequest: Schema<InlinedRequestSchema.Raw, RequestWrapper> = object({}) as any;
 
 export declare namespace CreateRequest {
     export interface Raw {
