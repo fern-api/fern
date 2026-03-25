@@ -184,7 +184,7 @@ export async function parseDocsConfiguration({
         backgroundImage,
         colors: convertColorsConfiguration(colors, context),
         typography,
-        layout: convertLayoutConfig(layout, tabsObj?.alignment),
+        layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
         theme: resolvedTheme,
         analyticsConfig: {
@@ -454,9 +454,10 @@ function convertSettingsConfig(
 
 function convertLayoutConfig(
     layout: docsYml.RawSchemas.LayoutConfig | undefined,
-    themeTabsAlignment: string | undefined
+    themeTabsAlignment: string | undefined,
+    themeTabsPlacement: string | undefined
 ): docsYml.ParsedDocsConfiguration["layout"] {
-    if (layout == null && themeTabsAlignment == null) {
+    if (layout == null && themeTabsAlignment == null && themeTabsPlacement == null) {
         return undefined;
     }
 
@@ -464,9 +465,18 @@ function convertLayoutConfig(
     // Cast needed until the fern-platform companion PR merges and the SDK is updated.
     const resolvedTabsAlignment = themeTabsAlignment === "center" ? "CENTER" : "LEFT";
 
+    // tabsPlacement: theme.tabs.placement overrides layout.tabs-placement.
+    const resolvedTabsPlacement =
+        themeTabsPlacement === "header"
+            ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+            : themeTabsPlacement === "sidebar"
+              ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar
+              : undefined;
+
     if (layout == null) {
-        // No layout section, but theme.tabs.alignment is set — return minimal layout with just tabsAlignment.
+        // No layout section, but theme.tabs properties are set — return minimal layout.
         return {
+            ...(resolvedTabsPlacement != null ? { tabsPlacement: resolvedTabsPlacement } : {}),
             tabsAlignment: resolvedTabsAlignment
         } as unknown as docsYml.ParsedDocsConfiguration["layout"];
     }
@@ -489,9 +499,10 @@ function convertLayoutConfig(
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
+            resolvedTabsPlacement ??
+            (layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
-                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar),
         contentAlignment:
             layout.contentAlignment === "left"
                 ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
