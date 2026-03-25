@@ -11,12 +11,9 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_cursor_pagination(
-            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+        .list_usernames(
+            &InlineUsersInlineUsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
-                page: None,
-                per_page: None,
-                order: None,
             },
             None,
         )

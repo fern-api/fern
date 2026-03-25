@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 
 public class Example25 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example25 {
                 .build();
 
         client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listUsernames(ListUsernamesRequest.builder()
                         .startingAfter("starting_after")
                         .build());
     }
