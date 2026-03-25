@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithPathAndQuery(
+$client->endpoints->params->getWithInlinePathAndQuery(
     'param',
-    new GetWithPathAndQuery([
+    new GetWithInlinePathAndQuery([
         'query' => 'query',
     ]),
 );

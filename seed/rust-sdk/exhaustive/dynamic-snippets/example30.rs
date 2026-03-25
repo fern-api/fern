@@ -11,6 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path(&"param".to_string(), None)
+        .get_with_inline_path(&"param".to_string(), None)
         .await;
 }
