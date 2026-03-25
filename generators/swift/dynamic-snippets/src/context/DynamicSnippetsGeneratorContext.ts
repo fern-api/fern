@@ -22,11 +22,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public constructor({
         ir,
         config,
-        options
+        options,
+        sharedNameRegistry
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
+        sharedNameRegistry?: NameRegistry;
     }) {
         super({ ir: ir, config, options });
         this.ir = ir;
@@ -34,8 +36,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             config.customConfig != null ? (config.customConfig as BaseSwiftCustomConfigSchema) : undefined;
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
-        this.nameRegistry = NameRegistry.create();
-        this.registerSourceSymbols(this.nameRegistry, ir);
+        if (sharedNameRegistry != null) {
+            this.nameRegistry = sharedNameRegistry;
+        } else {
+            this.nameRegistry = NameRegistry.create();
+            this.registerSourceSymbols(this.nameRegistry, ir);
+        }
     }
 
     private registerSourceSymbols(nameRegistry: NameRegistry, ir: FernIr.dynamic.DynamicIntermediateRepresentation) {
@@ -213,7 +219,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return new DynamicSnippetsGeneratorContext({
             ir: this.ir,
             config: this.config,
-            options: this.options
+            options: this.options,
+            sharedNameRegistry: this.nameRegistry
         });
     }
 }

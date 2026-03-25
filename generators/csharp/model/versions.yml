@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.8.2
+  changelogEntry:
+    - summary: |
+        Replace `Activator.CreateInstance<TConverterType>()` with `new TConverterType()`
+        in `CollectionItemSerializer`. The `new()` generic constraint allows compile-time
+        instantiation, removing the reflection-based call that is not AOT-safe.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 65
+
 - version: 0.8.1
   changelogEntry:
     - summary: |
