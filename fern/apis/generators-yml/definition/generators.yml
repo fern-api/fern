@@ -612,6 +612,34 @@ types:
     properties:
       proto: ProtobufDefinitionSchema
 
+  GeneratorImageSchema:
+    audiences:
+      - generators-yml
+    discriminated: false
+    docs: |
+      The Docker image to use for this generator. Can be a simple string (image name)
+      or an object with `name` and `registry` fields for pulling from a custom registry.
+    union:
+      - string
+      - GeneratorImageObjectSchema
+
+  GeneratorImageObjectSchema:
+    audiences:
+      - generators-yml
+    docs: |
+      Explicit Docker image configuration with a custom container registry.
+    properties:
+      name:
+        type: string
+        docs: |
+          The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
+      registry:
+        type: optional<string>
+        docs: |
+          The container registry URL to pull the image from during local generation.
+          When set, `fern generate --local` will pull from this registry instead of Docker Hub.
+          Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
+
   Language:
     enum:
       - java

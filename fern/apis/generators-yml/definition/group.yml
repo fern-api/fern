@@ -19,7 +19,17 @@ types:
 
   GeneratorInvocationSchema:
     properties:
-      name: string
+      name:
+        type: optional<string>
+        docs: |
+          The generator name (e.g., `fernapi/fern-typescript-sdk`).
+          Required unless `image` is specified.
+      image:
+        type: optional<generators.GeneratorImageSchema>
+        docs: |
+          The Docker image to use for this generator. Can be a simple string or an object
+          with `name` and `registry` fields for pulling from a custom container registry.
+          When specified as an object, the `name` top-level property is not required.
       version: string
       output: optional<GeneratorOutputSchema>
       github: optional<GithubConfigurationSchema>
