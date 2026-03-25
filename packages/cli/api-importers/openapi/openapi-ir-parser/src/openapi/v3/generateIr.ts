@@ -67,6 +67,9 @@ export function generateIr({
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
+    // Validate tag names for non-ASCII characters and descriptions for frontmatter delimiters
+    validateOpenApiSpecForDocsCompat({ openApi, taskContext });
+
     // Reset title collision tracker for this document processing
     resetTitleCollisionTracker();
 
@@ -599,6 +602,63 @@ function getAllParentSchemaIds({
 
 function distinct<T>(array: T[]): T[] {
     return [...new Set(array)];
+}
+
+const NON_ASCII_REGEX = new RegExp("[^\\x00-\\x7F]");
+const FRONTMATTER_DELIMITER_REGEX = /(?:^|\n)\s*---\s*(?:\n|$)/;
+
+/**
+ * Validates the OpenAPI spec for docs compatibility issues:
+ * - Tag names with non-ASCII characters (emojis) that break HTTP headers
+ * - Endpoint descriptions with --- frontmatter delimiters that break YAML parsing
+ */
+function validateOpenApiSpecForDocsCompat({
+    openApi,
+    taskContext
+}: {
+    openApi: OpenAPIV3.Document;
+    taskContext: TaskContext;
+}): void {
+    // Validate top-level tags
+    for (const tag of openApi.tags ?? []) {
+        if (NON_ASCII_REGEX.test(tag.name)) {
+            const nonAsciiChars = [...tag.name].filter((c) => NON_ASCII_REGEX.test(c));
+            taskContext.logger.error(
+                `Tag name "${tag.name}" contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
+                    `Non-ASCII characters in tag names will be included in URL paths and HTTP headers, ` +
+                    `which only support ASCII characters. This will cause runtime errors (ERR_INVALID_CHAR). ` +
+                    `Remove non-ASCII characters from the tag name.`
+            );
+        }
+    }
+
+    // Validate operation descriptions
+    for (const [path, pathItem] of Object.entries(openApi.paths ?? {})) {
+        if (pathItem == null) {
+            continue;
+        }
+        for (const method of ["get", "post", "put", "delete", "patch", "options", "head", "trace"] as const) {
+            const operation = pathItem[method];
+            if (operation?.description != null && FRONTMATTER_DELIMITER_REGEX.test(operation.description)) {
+                taskContext.logger.error(
+                    `Description at paths.${path}.${method} contains "---" frontmatter delimiters which will cause ` +
+                        `YAML parsing failures in the generated docs site. Remove the "---" delimiters from the description.`
+                );
+            }
+            // Also validate tags used on operations if no top-level tags defined
+            if (operation?.tags != null && (openApi.tags == null || openApi.tags.length === 0)) {
+                for (const tag of operation.tags) {
+                    if (NON_ASCII_REGEX.test(tag)) {
+                        const nonAsciiChars = [...tag].filter((c) => NON_ASCII_REGEX.test(c));
+                        taskContext.logger.error(
+                            `Tag name "${tag}" at paths.${path}.${method} contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
+                                `Remove non-ASCII characters from the tag name.`
+                        );
+                    }
+                }
+            }
+        }
+    }
 }
 
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
