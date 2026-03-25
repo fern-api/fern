@@ -208,7 +208,8 @@ export class SdkConfigConverter {
             return target.lang;
         }
         if (target.image != null) {
-            return getLanguageFromImage({ image: target.image });
+            const imageName = typeof target.image === "string" ? target.image : target.image.name;
+            return getLanguageFromImage({ image: imageName });
         }
         const lang: Language = name as Language;
         if (LANGUAGES.includes(lang)) {

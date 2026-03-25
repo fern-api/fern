@@ -40,7 +40,9 @@ export interface RawGithubConfig {
  * Raw generator invocation that uses RawOutputConfig instead of the strict schema.
  */
 export interface RawGeneratorInvocation
-    extends Omit<Partial<generatorsYml.GeneratorInvocationSchema>, "output" | "github"> {
+    extends Omit<Partial<generatorsYml.BaseGeneratorInvocationSchema>, "output" | "github"> {
+    name?: string;
+    image?: generatorsYml.GeneratorImageObjectSchema;
     output?: RawOutputConfig;
     github?: RawGithubConfig;
 }
@@ -166,11 +168,12 @@ interface ConvertGeneratorResult {
 function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGeneratorResult | undefined {
     const { generator, groupName, languageCounts, apiName, warnings } = options;
 
-    const language = getLanguageFromGeneratorName(generator.name);
+    const generatorName = "image" in generator ? generator.image.name : generator.name;
+    const language = getLanguageFromGeneratorName(generatorName);
     if (language == null) {
         warnings.push({
             type: "unsupported",
-            message: `Unknown generator: ${generator.name}`,
+            message: `Unknown generator: ${generatorName}`,
             suggestion: "Manually add this generator to your fern.yml"
         });
         return undefined;
