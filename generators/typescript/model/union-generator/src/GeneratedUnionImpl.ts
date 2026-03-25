@@ -376,12 +376,22 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      **********/
 
     private generateModule(context: Context): ModuleDeclarationStructure {
-        const statements = [...this.getSingleUnionTypeInterfaces(context)];
+        // Collect interface names that shadow global TypeScript types.
+        // These interfaces are inside a namespace so they don't actually conflict at the
+        // top level, but property type references within sibling interfaces and the _Visitor
+        // interface would resolve to the local interface instead of the global type (e.g.,
+        // `value: Date` resolving to the union's `Date` variant instead of `globalThis.Date`).
+        const interfaceNames = new Set(
+            this.getAllSingleUnionTypesForAlias().map((singleUnionType) => singleUnionType.getTypeName())
+        );
+        const shadowedGlobalTypes = GLOBAL_TS_TYPES.filter((t) => interfaceNames.has(t));
+
+        const statements = [...this.getSingleUnionTypeInterfaces(context, shadowedGlobalTypes)];
         if (this.includeUtilsOnUnionMembers) {
             statements.push(this.getUtilsInterface(context));
         }
         if (this.includeUtilsOnUnionMembers || this.includeConstBuilders) {
-            statements.push(this.getVisitorInterface(context));
+            statements.push(this.getVisitorInterface(context, shadowedGlobalTypes));
         }
         if (this.hasBaseInterface()) {
             const baseInterface = this.getBaseInterface(context);
@@ -425,19 +435,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return module;
     }
 
-    private getSingleUnionTypeInterfaces(context: Context): StatementStructures[] {
+    private getSingleUnionTypeInterfaces(
+        context: Context,
+        shadowedGlobalTypes: string[]
+    ): StatementStructures[] {
         const statements: StatementStructures[] = [];
         const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
         );
-
-        // Collect interface names that shadow global TypeScript types.
-        // These interfaces are inside a namespace so they don't actually conflict at the
-        // top level, but property type references within sibling interfaces would resolve
-        // to the local interface instead of the global type (e.g., `value: Date` resolving
-        // to the union's `Date` variant instead of `globalThis.Date`).
-        const interfaceNames = new Set(interfaces.map((i) => i.name));
-        const shadowedGlobalTypes = GLOBAL_TS_TYPES.filter((t) => interfaceNames.has(t));
 
         for (const interface_ of interfaces) {
             const hasBaseInterfaces = this.hasBaseInterfaces(context);
@@ -668,7 +673,10 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         );
     }
 
-    private getVisitorInterface(context: Context): InterfaceDeclarationStructure {
+    private getVisitorInterface(
+        context: Context,
+        shadowedGlobalTypes: string[]
+    ): InterfaceDeclarationStructure {
         return {
             kind: StructureKind.Interface,
             name: GeneratedUnionImpl.VISITOR_INTERFACE_NAME,
@@ -678,10 +686,15 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }
             ],
             properties: this.getAllSingleUnionTypesIncludingUnknown().map<OptionalKind<PropertySignatureStructure>>(
-                (singleUnionType) => ({
-                    name: getPropertyKey(singleUnionType.getVisitorKey()),
-                    type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
-                })
+                (singleUnionType) =>
+                    qualifyShadowedGlobalTypes(
+                        {
+                            kind: StructureKind.PropertySignature,
+                            name: getPropertyKey(singleUnionType.getVisitorKey()),
+                            type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
+                        },
+                        shadowedGlobalTypes
+                    )
             ),
             isExported: true
         };

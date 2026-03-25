@@ -98,9 +98,15 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         { keyType, valueType }: FernIr.MapType,
         params: ConvertTypeReferenceParams
     ): Zurg.Schema {
+        // Unwrap optional from value type to match the API type, which uses
+        // typeNodeWithoutUndefined and strips `| undefined` from map values.
+        const effectiveValueType =
+            valueType.type === "container" && valueType.container.type === "optional"
+                ? valueType.container.optional
+                : valueType;
         return this.zurg.record({
             keySchema: this.convert({ ...params, typeReference: keyType }),
-            valueSchema: this.convert({ ...params, typeReference: valueType })
+            valueSchema: this.convert({ ...params, typeReference: effectiveValueType })
         });
     }
 
