@@ -853,10 +853,27 @@ types:
       - default
       - minimal
 
-  TabsThemeConfig:
+  TabsAlignment:
+    enum:
+      - left
+      - center
+
+  TabsThemeStyle:
     enum:
       - default
       - bubble
+
+  TabsThemeObjectConfig:
+    properties:
+      style: optional<TabsThemeStyle>
+      alignment: optional<TabsAlignment>
+      placement: optional<TabsPlacement>
+
+  TabsThemeConfig:
+    discriminated: false
+    union:
+      - TabsThemeStyle
+      - TabsThemeObjectConfig
 
   BodyThemeConfig:
     enum:

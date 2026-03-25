@@ -11,7 +11,7 @@ public class Example1
             }
         );
 
-        await client.Service.GetMovieAsync(
+        await client.Service.GetMovieDocsAsync(
             "string"
         );
     }

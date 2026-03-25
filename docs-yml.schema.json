@@ -5439,11 +5439,64 @@
         "canvas"
       ]
     },
-    "docs.TabsThemeConfig": {
+    "docs.TabsThemeStyle": {
       "type": "string",
       "enum": [
         "default",
         "bubble"
+      ]
+    },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center"
+      ]
+    },
+    "docs.TabsThemeObjectConfig": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alignment": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.TabsThemeConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabsThemeStyle"
+        },
+        {
+          "$ref": "#/definitions/docs.TabsThemeObjectConfig"
+        }
       ]
     },
     "docs.PageActionsThemeConfig": {
