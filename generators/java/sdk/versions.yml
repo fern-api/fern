@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.6
+  changelogEntry:
+    - summary: |
+        Fix custom license not being resolved in `build.gradle` when using
+        local generation (`--local`). The license file is mounted at `/tmp/LICENSE`
+        inside Docker, but the generator was looking for it at a relative path that
+        did not exist. The generator now checks `/tmp/<filename>` as a fallback.
+        Additionally, markdown formatting (headers, bold, etc.) is now stripped
+        from the first line of the license file when used as the license name.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.0.5
   changelogEntry:
     - summary: |
@@ -9,7 +22,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.0.4
   changelogEntry:
     - summary: |

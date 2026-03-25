@@ -82,17 +82,21 @@ export class ModelGeneratorContext extends GeneratorContext {
         // JSON stuff
         files.push(
             ...[
-                AsIsFiles.Json.CollectionItemSerializer,
                 AsIsFiles.Json.DateOnlyConverter,
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
                 AsIsFiles.Json.Nullable,
-                AsIsFiles.Json.OneOfSerializer,
                 AsIsFiles.Json.Optional,
                 AsIsFiles.Json.OptionalAttribute
             ]
         );
+
+        // When use-undiscriminated-unions is false, include OneOf serialization support
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.CollectionItemSerializer);
+            files.push(AsIsFiles.Json.OneOfSerializer);
+        }
 
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.StringEnum);
@@ -111,9 +115,13 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.AdditionalPropertiesTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
-            AsIsFiles.Test.Json.JsonAccessAttributeTests,
-            AsIsFiles.Test.Json.OneOfSerializerTests
+            AsIsFiles.Test.Json.JsonAccessAttributeTests
         ];
+
+        // Only include OneOfSerializerTests when OneOf serialization is in use
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Test.Json.OneOfSerializerTests);
+        }
 
         return files;
     }
