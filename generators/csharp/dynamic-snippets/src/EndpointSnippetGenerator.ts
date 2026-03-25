@@ -115,7 +115,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         // before we add the method, we're going to make the class aware of the root client namespace
         // which can help when finding out if we're going to have an ambiguous type of some kind.
-        class_.addNamespaceReference(this.Types.RootClient.namespace);
+        class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
             name: "Do",
@@ -823,7 +823,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.Types.RootClient,
+            classReference: this.Types.RootClientForSnippets,
             arguments_,
             forceUseConstructor: true,
             multiline: true
