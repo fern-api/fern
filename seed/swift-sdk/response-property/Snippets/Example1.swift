@@ -4,7 +4,7 @@ import ResponseProperty
 private func main() async throws {
     let client = ResponsePropertyClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.getMovie(request: "string")
+    _ = try await client.service.getMovieDocs(request: "string")
 }
 
 try await main()

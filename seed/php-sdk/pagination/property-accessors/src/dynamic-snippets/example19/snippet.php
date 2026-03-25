@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsersCursorPaginationRequest;
+use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
 use Seed\Users\Types\Order;
 
 $client = new SeedClient(
@@ -12,8 +12,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listWithCursorPagination(
-    new ListUsersCursorPaginationRequest([
+$client->users->listWithDoubleOffsetPagination(
+    new ListUsersDoubleOffsetPaginationRequest([
         'page' => 1.1,
         'perPage' => 1.1,
         'order' => Order::Asc->value,

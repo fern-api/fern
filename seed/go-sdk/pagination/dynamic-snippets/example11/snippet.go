@@ -18,12 +18,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &inlineusers.ListUsersCursorPaginationRequest{
+    request := &inlineusers.ListUsernamesRequest{
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.InlineUsers.InlineUsers.ListWithCursorPagination(
+    client.InlineUsers.InlineUsers.ListUsernames(
         context.TODO(),
         request,
     )
