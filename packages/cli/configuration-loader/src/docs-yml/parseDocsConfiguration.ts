@@ -184,7 +184,7 @@ export async function parseDocsConfiguration({
         backgroundImage,
         colors: convertColorsConfiguration(colors, context),
         typography,
-        layout: convertLayoutConfig(layout),
+        layout: convertLayoutConfig(layout, tabsObj?.alignment),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
         theme: resolvedTheme,
         analyticsConfig: {
@@ -453,7 +453,8 @@ function convertSettingsConfig(
 }
 
 function convertLayoutConfig(
-    layout: docsYml.RawSchemas.LayoutConfig | undefined
+    layout: docsYml.RawSchemas.LayoutConfig | undefined,
+    themeTabsAlignment: string | undefined
 ): docsYml.ParsedDocsConfiguration["layout"] {
     if (layout == null) {
         return undefined;
@@ -491,9 +492,9 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
-        // tabsAlignment is resolved from theme.tabs.alignment, not layout
+        // tabsAlignment is resolved from theme.tabs.alignment, not layout.
         // Cast needed until the fern-platform companion PR merges and the SDK is updated.
-        tabsAlignment: "LEFT"
+        tabsAlignment: themeTabsAlignment === "center" ? "CENTER" : "LEFT"
     } as docsYml.ParsedDocsConfiguration["layout"];
 }
 
