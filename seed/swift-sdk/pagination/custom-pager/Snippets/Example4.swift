@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
+    _ = try await client.inlineUsers.inlineUsers.listWithOffsetPagination(
         page: 1,
         perPage: 1,
         order: .asc,

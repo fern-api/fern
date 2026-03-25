@@ -65,17 +65,17 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@biomejs/biome": "2.4.3",
+        "@biomejs/biome": "2.4.9",
         "@types/node": "^18.19.70",
         "msw": "2.11.2",
         "oxfmt": "0.35.0",
-        "ts-loader": "^9.5.1",
-        "typescript": "~5.7.2",
+        "ts-loader": "^9.5.4",
+        "typescript": "~5.9.3",
         "vitest": "^3.2.4",
-        "webpack": "^5.97.1"
+        "webpack": "^5.105.4"
     },
     "engines": {
         "node": ">=18.0.0"
     },
-    "packageManager": "pnpm@10.20.0"
+    "packageManager": "pnpm@10.33.0"
 }

@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer discarding response body examples when the 2xx
+        response has `examples` but no `schema`. The synthetic empty-object
+        fallback now preserves `examples` and `example` from the original
+        media type object, so example names, response bodies, and ordering
+        are correctly carried through to the IR.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Nest tabs configuration under `theme.tabs` as an object with `style`,
+        `alignment`, and `placement` properties. `theme.tabs: bubble` (string)
+        is still supported for backward compatibility. The `layout.tabs-placement`
+        field is preserved for backward compat. Tab alignment is only available
+        via `theme.tabs.alignment`. Warn when sidebar placement is combined with
+        center alignment since centering is only supported for header tabs.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.43.4
   changelogEntry:
     - summary: |
@@ -7,7 +32,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.43.3
   changelogEntry:
     - summary: |
@@ -29,7 +53,6 @@
       type: fix
   createdAt: "2026-03-23"
   irVersion: 65
-
 - version: 4.43.1
   changelogEntry:
     - summary: |
@@ -1207,7 +1230,6 @@
       type: feat
   createdAt: "2026-03-02"
   irVersion: 65
-
 - version: 4.0.1
   changelogEntry:
     - summary: |

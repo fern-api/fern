@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -16,10 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Endpoints.Params.ModifyWithPath(
+    request := &fern.ModifyResourceAtInlinedPath{
+        Param: "param",
+        Body: "string",
+    }
+    client.Endpoints.Params.ModifyWithInlinePath(
         context.TODO(),
-        "param",
         request,
     )
 }
