@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.7
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints to use deserialized
+        (camelCase) property names in test expectations instead of raw wire format
+        (snake_case). Previously, the generated test assertions compared SDK output
+        against wire-format keys (e.g. `call_id`), but the SDK deserializes these
+        to camelCase (e.g. `callId`) when the serde layer is enabled. This caused
+        wire test failures for SSE endpoints with multi-word property names.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 3.59.6
   changelogEntry:
     - summary: |

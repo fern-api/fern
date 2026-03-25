@@ -1518,8 +1518,8 @@ describe("${serviceName}", () => {
             return undefined;
         }
 
-        // Determine the SSE protocol discriminant field, if any
-        let discriminantField: string | undefined;
+        // Determine the SSE protocol discriminant field name (using deserialized casing), if any
+        let discriminantName: string | undefined;
         const ssePayload =
             endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse"
                 ? endpoint.response.body.value.payload
@@ -1530,17 +1530,19 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.type === "union" &&
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
-                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                discriminantName = this.getName({ name: typeDeclaration.shape.discriminant.name, context });
             }
         }
 
-        const createRawJsonExample = this.createRawJsonExample.bind(this);
         const eventCodes = sseEvents.map((event) => {
-            if (discriminantField != null) {
-                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
-                return code`${literalOf(merged)}`;
+            const exampleExpr = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
+            if (discriminantName != null) {
+                return code`{ ${discriminantName}: ${literalOf(event.event)}, ...${getTextOfTsNode(exampleExpr)} }`;
             }
-            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+            return code`${getTextOfTsNode(exampleExpr)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
     }
