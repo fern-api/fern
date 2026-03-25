@@ -44,7 +44,7 @@ public record ANestedLiteral
                 return null;
             }
 
-            string _myLiteral = default;
+            ANestedLiteral.MyLiteralLiteral _myLiteral = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -60,7 +60,10 @@ public record ANestedLiteral
                 switch (propertyName)
                 {
                     case "myLiteral":
-                        _myLiteral = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _myLiteral = JsonSerializer.Deserialize<ANestedLiteral.MyLiteralLiteral>(
+                            ref reader,
+                            options
+                        );
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);

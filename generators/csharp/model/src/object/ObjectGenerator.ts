@@ -9,7 +9,13 @@ type ObjectProperty = FernIr.ObjectProperty;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 
-import { analyzeTypeReference, generateFields } from "../generateFields.js";
+import {
+    analyzeTypeReference,
+    computeNestedStructName,
+    extractInlineLiteral,
+    generateFields,
+    resolveNamedLiteralType
+} from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
@@ -123,15 +129,37 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     private collectPropertyInfos(
         properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[]
     ): PropertyConverterInfo[] {
+        const allPropertyPascalNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
         return properties.map((property) => {
             const typeInfo = analyzeTypeReference(property.valueType, this.context);
-            const csharpType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
+            let csharpType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
             const propertyName = this.getPropertyName({
                 className: this.classReference.name,
                 objectProperty: property.name
             });
             const isLiteral =
                 this.context.getLiteralInitializerFromTypeReference({ typeReference: property.valueType }) != null;
+
+            // When generateLiterals is enabled, literal properties use struct types (e.g., TypeLiteral)
+            // instead of the primitive string/bool that the type mapper returns.
+            // We need the actual declared type for correct deserialization in the converter.
+            if (isLiteral && this.context.generation.settings.generateLiterals) {
+                const namedLiteralRef = resolveNamedLiteralType(property.valueType, this.context);
+                if (namedLiteralRef != null) {
+                    csharpType = namedLiteralRef;
+                } else {
+                    const inlineLiteral = extractInlineLiteral(property.valueType);
+                    if (inlineLiteral != null) {
+                        const propertyPascalName = property.name.name.pascalCase.safeName;
+                        const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames);
+                        const nestedStructRef = this.csharp.classReference({
+                            name: structName,
+                            enclosingType: this.classReference
+                        });
+                        csharpType = nestedStructRef;
+                    }
+                }
+            }
 
             let isReadOnly = false;
             let isWriteOnly = false;

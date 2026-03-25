@@ -83,11 +83,11 @@ public record SendRequest
                 return null;
             }
 
-            string _prompt = default;
+            SendRequest.PromptLiteral _prompt = default;
             string _query = default;
-            bool _stream = default;
-            string _ending = default;
-            string _context = default;
+            SendRequest.StreamLiteral _stream = default;
+            SendRequest.EndingLiteral _ending = default;
+            SomeLiteral _context = default;
             string? _maybeContext = default;
             ContainerObject _containerObject = default;
             var extensionData = new Dictionary<string, JsonElement>();
@@ -105,19 +105,28 @@ public record SendRequest
                 switch (propertyName)
                 {
                     case "prompt":
-                        _prompt = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _prompt = JsonSerializer.Deserialize<SendRequest.PromptLiteral>(
+                            ref reader,
+                            options
+                        );
                         break;
                     case "query":
                         _query = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "stream":
-                        _stream = JsonSerializer.Deserialize<bool>(ref reader, options);
+                        _stream = JsonSerializer.Deserialize<SendRequest.StreamLiteral>(
+                            ref reader,
+                            options
+                        );
                         break;
                     case "ending":
-                        _ending = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _ending = JsonSerializer.Deserialize<SendRequest.EndingLiteral>(
+                            ref reader,
+                            options
+                        );
                         break;
                     case "context":
-                        _context = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _context = JsonSerializer.Deserialize<SomeLiteral>(ref reader, options);
                         break;
                     case "maybeContext":
                         _maybeContext = JsonSerializer.Deserialize<string?>(ref reader, options);

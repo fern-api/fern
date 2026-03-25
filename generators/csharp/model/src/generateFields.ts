@@ -276,7 +276,7 @@ export function generateField(
  * This handles both direct named references (e.g., `context: SomeLiteral`) and
  * named references that are aliases to literal containers.
  */
-function resolveNamedLiteralType(
+export function resolveNamedLiteralType(
     typeReference: TypeReference,
     context: ModelGeneratorContext
 ): ast.ClassReference | undefined {
@@ -303,7 +303,7 @@ function resolveNamedLiteralType(
  * Extracts the IR Literal from an inline literal type reference (container.literal).
  * Returns undefined if the type reference is not an inline literal.
  */
-function extractInlineLiteral(typeReference: TypeReference): Literal | undefined {
+export function extractInlineLiteral(typeReference: TypeReference): Literal | undefined {
     if (typeReference.type === "container" && typeReference.container.type === "literal") {
         return typeReference.container.literal;
     }
@@ -315,7 +315,7 @@ function extractInlineLiteral(typeReference: TypeReference): Literal | undefined
  * Naming convention: {PropertyNamePascalCase}Literal
  * If collision detected (another property has the same name), appends numeric suffix.
  */
-function computeNestedStructName(propertyPascalName: string, allPropertyPascalNames: Set<string>): string {
+export function computeNestedStructName(propertyPascalName: string, allPropertyPascalNames: Set<string>): string {
     const baseName = `${propertyPascalName}Literal`;
     if (!allPropertyPascalNames.has(baseName)) {
         return baseName;

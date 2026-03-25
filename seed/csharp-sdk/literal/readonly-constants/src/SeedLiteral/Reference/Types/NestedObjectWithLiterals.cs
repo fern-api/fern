@@ -57,8 +57,8 @@ public record NestedObjectWithLiterals
                 return null;
             }
 
-            string _literal1 = default;
-            string _literal2 = default;
+            NestedObjectWithLiterals.Literal1Literal _literal1 = default;
+            NestedObjectWithLiterals.Literal2Literal _literal2 = default;
             string _strProp = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
@@ -75,10 +75,18 @@ public record NestedObjectWithLiterals
                 switch (propertyName)
                 {
                     case "literal1":
-                        _literal1 = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _literal1 =
+                            JsonSerializer.Deserialize<NestedObjectWithLiterals.Literal1Literal>(
+                                ref reader,
+                                options
+                            );
                         break;
                     case "literal2":
-                        _literal2 = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _literal2 =
+                            JsonSerializer.Deserialize<NestedObjectWithLiterals.Literal2Literal>(
+                                ref reader,
+                                options
+                            );
                         break;
                     case "strProp":
                         _strProp = JsonSerializer.Deserialize<string>(ref reader, options);

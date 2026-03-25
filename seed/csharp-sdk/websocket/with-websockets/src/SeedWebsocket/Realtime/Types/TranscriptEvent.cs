@@ -47,7 +47,7 @@ public record TranscriptEvent
                 return null;
             }
 
-            string _type = default;
+            TranscriptEvent.TypeLiteral _type = default;
             string _data = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
@@ -64,7 +64,10 @@ public record TranscriptEvent
                 switch (propertyName)
                 {
                     case "type":
-                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
+                        _type = JsonSerializer.Deserialize<TranscriptEvent.TypeLiteral>(
+                            ref reader,
+                            options
+                        );
                         break;
                     case "data":
                         _data = JsonSerializer.Deserialize<string>(ref reader, options);
