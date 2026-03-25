@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-required-body-optional-headers:0.0.1'
+  implementation 'com.fern:java-required-body-optional-headers'
 }
 ```
 
