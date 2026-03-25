@@ -5,7 +5,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsharpTestGenerator.js";
-import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite.js";
+import { DynamicSnippetsTestRequest, DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite.js";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator.js";
 import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator.js";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator.js";
@@ -21,10 +21,7 @@ interface DynamicSnippetsGenerator {
         ir: dynamic.DynamicIntermediateRepresentation,
         config: FernGeneratorExec.GeneratorConfig
     ): {
-        generateTests(params: {
-            outputDir: AbsoluteFilePath;
-            requests: dynamic.EndpointSnippetRequest[];
-        }): Promise<void>;
+        generateTests(params: { outputDir: AbsoluteFilePath; requests: DynamicSnippetsTestRequest[] }): Promise<void>;
     };
 }
 
