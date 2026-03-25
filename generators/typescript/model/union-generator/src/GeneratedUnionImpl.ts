@@ -435,10 +435,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return module;
     }
 
-    private getSingleUnionTypeInterfaces(
-        context: Context,
-        shadowedGlobalTypes: string[]
-    ): StatementStructures[] {
+    private getSingleUnionTypeInterfaces(context: Context, shadowedGlobalTypes: string[]): StatementStructures[] {
         const statements: StatementStructures[] = [];
         const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
@@ -673,10 +670,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         );
     }
 
-    private getVisitorInterface(
-        context: Context,
-        shadowedGlobalTypes: string[]
-    ): InterfaceDeclarationStructure {
+    private getVisitorInterface(context: Context, shadowedGlobalTypes: string[]): InterfaceDeclarationStructure {
         return {
             kind: StructureKind.Interface,
             name: GeneratedUnionImpl.VISITOR_INTERFACE_NAME,
