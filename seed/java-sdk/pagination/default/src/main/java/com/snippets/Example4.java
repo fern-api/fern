@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
 
 public class Example4 {
@@ -13,7 +13,7 @@ public class Example4 {
 
         client.inlineUsers()
                 .inlineUsers()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
                         .page(1)
                         .perPage(1)
                         .order(Order.ASC)
