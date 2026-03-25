@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.45.0
+  changelogEntry:
+    - summary: |
+        Add validation for OpenAPI specs that contain non-ASCII characters
+        (e.g. emojis) in tag names or `---` frontmatter delimiters in endpoint
+        descriptions. Tag names with non-ASCII characters end up in URL paths
+        and HTTP headers which only support ASCII, causing ERR_INVALID_CHAR
+        errors at runtime. Descriptions with `---` delimiters are interpreted
+        as YAML frontmatter by the docs renderer, causing parsing failures and
+        500 errors on generated docs sites. Both `fern check` and docs
+        generation now surface these as errors so users can fix their specs
+        before publishing.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.44.1
   changelogEntry:
     - summary: |
@@ -23,7 +39,6 @@
       type: feat
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.43.4
   changelogEntry:
     - summary: |
