@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.User.GetWithBearer(
+    client.User.GetWithBasic(
         context.TODO(),
     )
 }
