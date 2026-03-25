@@ -103,7 +103,21 @@ function isGitLibraryInput(
 }
 
 const POLL_INTERVAL_MS = 3000;
-const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
+const POLL_TIMEOUT_MS = 8 * 60 * 1000; // 8 minutes
+
+/** Error codes from the backend that indicate a transient Lambda failure worth retrying. */
+const RETRYABLE_ERROR_CODES = new Set([
+    "LAMBDA_FUNCTION_ERROR",
+    "LAMBDA_NO_RESPONSE",
+    "LAMBDA_NO_IR",
+    "GENERATION_FAILED"
+]);
+
+/** Maximum number of times to retry the full generate→poll cycle on transient failures. */
+const MAX_JOB_RETRIES = 2;
+
+/** Delay before retrying a failed job (ms). */
+const JOB_RETRY_DELAY_MS = 5000;
 
 /**
  * Generate library documentation from source code.
@@ -230,7 +244,7 @@ async function generateSingleLibrary({
 
         interactiveTaskContext.logger.debug(`Starting generation for library '${name}' from ${gitInput.git}`);
 
-        const jobId = await startGeneration(client, interactiveTaskContext, {
+        const ir = await startAndPollWithRetry(client, interactiveTaskContext, {
             orgId,
             githubUrl: gitInput.git,
             language,
@@ -238,10 +252,6 @@ async function generateSingleLibrary({
             name,
             doxyfileContent
         });
-
-        await pollForCompletion(client, jobId, name, interactiveTaskContext);
-
-        const ir = await downloadIr(client, jobId, name, language, interactiveTaskContext);
 
         if (config.lang === "cpp") {
             const cppIr = ir as CppLibraryDocsIr;
@@ -273,17 +283,63 @@ async function generateSingleLibrary({
     });
 }
 
+interface GenerationOpts {
+    orgId: string;
+    githubUrl: string;
+    language: "PYTHON" | "CPP";
+    packagePath?: string;
+    name: string;
+    doxyfileContent?: string;
+}
+
+/**
+ * Run the full start → poll → download cycle, retrying automatically on
+ * transient Lambda failures (cold-start timeouts, infrastructure errors).
+ */
+async function startAndPollWithRetry(
+    client: LibraryDocsClient,
+    context: InteractiveTaskContext,
+    opts: GenerationOpts
+): Promise<unknown> {
+    let lastError: string | undefined;
+
+    for (let attempt = 0; attempt <= MAX_JOB_RETRIES; attempt++) {
+        if (attempt > 0) {
+            context.logger.info(
+                chalk.yellow(
+                    `Retrying generation for library '${opts.name}' (attempt ${attempt + 1}/${MAX_JOB_RETRIES + 1})...`
+                )
+            );
+            await new Promise((r) => setTimeout(r, JOB_RETRY_DELAY_MS));
+        }
+
+        const jobId = await startGeneration(client, context, opts);
+        const pollResult = await pollForCompletion(client, jobId, opts.name, context);
+
+        if (pollResult.ok) {
+            return downloadIr(client, jobId, opts.name, opts.language, context);
+        }
+
+        // Check whether the failure is retryable
+        lastError = pollResult.errorMessage;
+        if (!pollResult.retryable) {
+            return context.failAndThrow(lastError);
+        }
+
+        context.logger.warn(
+            chalk.yellow(`Generation attempt failed for '${opts.name}': ${lastError}`)
+        );
+    }
+
+    return context.failAndThrow(
+        `Generation failed for library '${opts.name}' after ${MAX_JOB_RETRIES + 1} attempts. Last error: ${lastError ?? "Unknown error"}`
+    );
+}
+
 async function startGeneration(
     client: LibraryDocsClient,
     context: InteractiveTaskContext,
-    opts: {
-        orgId: string;
-        githubUrl: string;
-        language: "PYTHON" | "CPP";
-        packagePath?: string;
-        name: string;
-        doxyfileContent?: string;
-    }
+    opts: GenerationOpts
 ): Promise<string> {
     try {
         const result = await client.startLibraryDocsGeneration({
@@ -307,13 +363,18 @@ async function startGeneration(
     }
 }
 
+type PollResult =
+    | { ok: true }
+    | { ok: false; retryable: boolean; errorMessage: string };
+
 async function pollForCompletion(
     client: LibraryDocsClient,
     jobId: string,
     libraryName: string,
     context: InteractiveTaskContext
-): Promise<void> {
+): Promise<PollResult> {
     const deadline = Date.now() + POLL_TIMEOUT_MS;
+    let pendingSince: number | undefined;
 
     while (Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
@@ -328,27 +389,51 @@ async function pollForCompletion(
         }
 
         switch (status.status) {
-            case "PENDING":
-                context.logger.debug(`Status: PENDING`);
+            case "PENDING": {
+                if (pendingSince == null) {
+                    pendingSince = Date.now();
+                }
+                const waitedMs = Date.now() - pendingSince;
+                if (waitedMs > 30_000 && waitedMs < 33_000 + POLL_INTERVAL_MS) {
+                    context.logger.info(
+                        chalk.dim("Parser is starting up — this may take a moment on first run...")
+                    );
+                }
+                context.logger.debug("Status: PENDING");
                 break;
+            }
             case "PARSING": {
+                pendingSince = undefined;
                 context.logger.debug(`Status: PARSING${status.progress ? ` — ${status.progress}` : ""}`);
                 break;
             }
             case "COMPLETED":
-                return;
-            case "FAILED":
-                return context.failAndThrow(
-                    `Generation failed for library '${libraryName}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`
-                );
+                return { ok: true };
+            case "FAILED": {
+                const errorCode = status.error?.code ?? "UNKNOWN";
+                const errorMessage =
+                    `Generation failed for library '${libraryName}': ` +
+                    `${status.error?.message ?? "Unknown error"} (${errorCode})`;
+                return {
+                    ok: false,
+                    retryable: RETRYABLE_ERROR_CODES.has(errorCode),
+                    errorMessage
+                };
+            }
             default:
-                return context.failAndThrow(
-                    `Unexpected generation status for library '${libraryName}': ${status.status}`
-                );
+                return {
+                    ok: false,
+                    retryable: false,
+                    errorMessage: `Unexpected generation status for library '${libraryName}': ${status.status}`
+                };
         }
     }
 
-    return context.failAndThrow(`Generation timed out for library '${libraryName}' after ${POLL_TIMEOUT_MS / 1000}s`);
+    return {
+        ok: false,
+        retryable: true,
+        errorMessage: `Generation timed out for library '${libraryName}' after ${POLL_TIMEOUT_MS / 1000}s`
+    };
 }
 
 async function downloadIr(
