@@ -469,17 +469,11 @@ export class InferredAuthWireTestGenerator {
             testEndpoint.hasRequestParam && testEndpoint.requestTypeName != null
                 ? this.buildRequestArg(testEndpoint)
                 : "";
-        const callArgs = requestArg
-            ? `context.Background(), ${requestArg}`
-            : "context.Background()";
+        const callArgs = requestArg ? `context.Background(), ${requestArg}` : "context.Background()";
         if (testEndpoint.hasResponseBody) {
-            writer.writeLine(
-                `\t_, ${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`
-            );
+            writer.writeLine(`\t_, ${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`);
         } else {
-            writer.writeLine(
-                `\t${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`
-            );
+            writer.writeLine(`\t${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`);
         }
         writer.writeLine(`\tif ${varName} != nil {`);
         writer.writeLine(
