@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.0
+  changelogEntry:
+    - summary: |
+        Add gRPC mock server test generation for C# SDK. Generates in-process
+        ASP.NET Core TestServer-backed mock servers with per-service stub classes
+        that extend the protobuf-generated ServiceBase. Each RPC method gets a
+        fluent `.OnMethodName(handler)` configuration method, request capture in
+        `List<TRequest>`, and `RpcException(Unimplemented)` for unregistered handlers.
+        Test fixtures follow the same `[TestFixture]` / `MockServerTest` pattern as
+        existing HTTP mock server tests.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 2.54.6
   changelogEntry:
     - summary: |

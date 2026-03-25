@@ -423,7 +423,8 @@ dotnet_diagnostic.IDE0005.severity = error
         const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
             testProjectName,
-            projectReferencePath: projectReferenceRelativePath
+            projectReferencePath: projectReferenceRelativePath,
+            grpc: this.context.hasGrpcEndpoints()
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);

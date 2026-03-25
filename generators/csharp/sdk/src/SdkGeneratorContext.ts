@@ -240,6 +240,10 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
         }
+        if (this.hasGrpcEndpoints()) {
+            files.push(AsIsFiles.Test.GrpcMockServer);
+            files.push(AsIsFiles.Test.GrpcMockServerBuilder);
+        }
 
         return files;
     }

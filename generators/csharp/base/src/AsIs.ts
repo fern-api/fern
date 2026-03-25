@@ -91,6 +91,8 @@ export const AsIsFiles = {
             QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",
             IdempotentHeadersTests: "test/RawClientTests/IdempotentHeadersTests.Template.cs"
         },
+        GrpcMockServer: "test/GrpcMockServer.Template.cs",
+        GrpcMockServerBuilder: "test/GrpcMockServerBuilder.Template.cs",
         Utils: {
             AdditionalPropertiesComparer: "test/Utils/AdditionalPropertiesComparer.Template.cs",
             JsonAssert: "test/Utils/JsonAssert.Template.cs",
