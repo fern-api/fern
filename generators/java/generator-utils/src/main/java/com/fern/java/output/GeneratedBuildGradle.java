@@ -179,8 +179,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     /**
      * Reads a license file and extracts the license name. For standard licenses (Apache, MIT, etc.), returns the SPDX
-     * identifier. For custom licenses, returns the first non-empty line of the file as the license name,
-     * with markdown formatting stripped.
+     * identifier. For custom licenses, returns the first non-empty line of the file as the license name, with markdown
+     * formatting stripped.
      */
     private String extractLicenseFromFile(String filename) {
         try {
