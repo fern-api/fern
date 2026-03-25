@@ -423,8 +423,8 @@ function isValidGeneratorConfig(config: unknown): config is generatorsYml.Genera
     return (
         typeof config === "object" &&
         config != null &&
-        "name" in config &&
-        typeof (config as { name: unknown }).name === "string"
+        (("name" in config && typeof (config as { name: unknown }).name === "string") ||
+            ("image" in config && typeof (config as { image: unknown }).image === "object"))
     );
 }
 
