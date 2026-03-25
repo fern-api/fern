@@ -623,10 +623,9 @@ types:
         docs: |
           The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
       registry:
-        type: optional<string>
+        type: string
         docs: |
           The container registry URL to pull the image from during local generation.
-          When set, `fern generate --local` will pull from this registry instead of Docker Hub.
           Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
 
   Language:
