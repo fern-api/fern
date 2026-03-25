@@ -587,6 +587,29 @@ async function convertGroup({
     };
 }
 
+function getGeneratorNameAndImage(
+    generator: generatorsYml.GeneratorInvocationSchema,
+    context: TaskContext
+): {
+    normalizedName: string;
+    containerImage: string | undefined;
+} {
+    if ("image" in generator) {
+        // CustomGeneratorInvocationSchema — use exact image name, no Docker Hub normalization
+        return {
+            normalizedName: generator.image.name,
+            containerImage: `${generator.image.registry}/${generator.image.name}`
+        };
+    }
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    return {
+        normalizedName,
+        containerImage: undefined
+    };
+}
+
 async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
@@ -606,13 +629,11 @@ async function convertGenerator({
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Warn and correct incorrect "fern-api/" org prefix in generators.yml
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
-    // Normalize the generator name by adding the default Docker org prefix if not present
-    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
         name: normalizedName,
+        containerImage,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({
