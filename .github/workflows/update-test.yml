@@ -32,6 +32,17 @@ jobs:
     runs-on: Test
     timeout-minutes: 90
     steps:
+      - name: Check commenter permissions
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PERMISSION=$(gh api "repos/${{ github.repository }}/collaborators/${{ github.actor }}/permission" --jq '.permission')
+          if [[ "$PERMISSION" != "admin" && "$PERMISSION" != "write" ]]; then
+            echo "::error::User ${{ github.actor }} does not have write access (has '$PERMISSION'). Only collaborators with write access can trigger /update-test."
+            exit 1
+          fi
+
       - name: Get PR head ref
         id: pr-ref
         if: github.event_name == 'issue_comment'
