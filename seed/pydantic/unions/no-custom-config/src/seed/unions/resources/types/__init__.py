@@ -7,6 +7,7 @@ from .first_item_type import FirstItemType
 from .foo import Foo
 from .foo_extended import FooExtended
 from .second_item_type import SecondItemType
+from .type_with_optional_map import TypeWithOptionalMap
 from .union import Union, Union_Bar, Union_Foo
 from .union_with_base_properties import (
     UnionWithBaseProperties,
@@ -75,6 +76,7 @@ __all__ = [
     "Foo",
     "FooExtended",
     "SecondItemType",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
