@@ -468,7 +468,7 @@ function convertLayoutConfig(
         // No layout section, but theme.tabs.alignment is set — return minimal layout with just tabsAlignment.
         return {
             tabsAlignment: resolvedTabsAlignment
-        } as docsYml.ParsedDocsConfiguration["layout"];
+        } as unknown as docsYml.ParsedDocsConfiguration["layout"];
     }
 
     return {
@@ -504,7 +504,7 @@ function convertLayoutConfig(
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
         tabsAlignment: resolvedTabsAlignment
-    } as docsYml.ParsedDocsConfiguration["layout"];
+    } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
