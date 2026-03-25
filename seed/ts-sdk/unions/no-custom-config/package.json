@@ -1,10 +1,10 @@
 {
-    "name": "@fern/webhook-audience",
+    "name": "@fern/unions",
     "version": "0.0.1",
     "private": false,
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/webhook-audience/fern.git"
+        "url": "git+https://github.com/unions/fern.git"
     },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
@@ -21,6 +21,28 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./bigunion": {
+            "import": {
+                "types": "./dist/esm/api/resources/bigunion/exports.d.mts",
+                "default": "./dist/esm/api/resources/bigunion/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/bigunion/exports.d.ts",
+                "default": "./dist/cjs/api/resources/bigunion/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/bigunion/exports.js"
+        },
+        "./union": {
+            "import": {
+                "types": "./dist/esm/api/resources/union/exports.d.mts",
+                "default": "./dist/esm/api/resources/union/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/union/exports.d.ts",
+                "default": "./dist/cjs/api/resources/union/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/union/exports.js"
         },
         "./package.json": "./package.json"
     },
