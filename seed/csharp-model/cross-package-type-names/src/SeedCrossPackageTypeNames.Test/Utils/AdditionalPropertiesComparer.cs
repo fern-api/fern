@@ -1,4 +1,3 @@
-using global::System.Collections;
 using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 using SeedCrossPackageTypeNames;
@@ -173,55 +172,48 @@ public static class AdditionalPropertiesComparerExtensions
     /// Modifies the EqualConstraint to handle cross-type comparisons involving JsonElement.
     /// When UsingPropertiesComparer() walks object properties and encounters a property typed as
     /// 'object', the expected side may be a Dictionary&lt;object, object?&gt; while the actual
-    /// (deserialized) side is a JsonElement. This comparer bridges that gap by serializing both
-    /// sides to JsonElement and comparing their JSON representations.
+    /// (deserialized) side is a JsonElement. These typed predicates bridge that gap by serializing
+    /// the non-JsonElement side and comparing JSON representations.
+    ///
+    /// Uses typed Func&lt;TExpected, TActual, bool&gt; predicates instead of a non-generic
+    /// IComparer/IEqualityComparer so that NUnit's CanCompare type check ensures these only
+    /// fire when one side is a JsonElement, letting UsingPropertiesComparer() handle all
+    /// same-type comparisons normally.
     /// </summary>
     /// <param name="constraint">The EqualConstraint to modify.</param>
     /// <returns>The same constraint instance for method chaining.</returns>
     public static EqualConstraint UsingJsonSerializationComparer(this EqualConstraint constraint)
     {
-        return constraint.Using(new JsonSerializationFallbackComparer());
+        // Handle: expected is non-JsonElement, actual is JsonElement
+        constraint.Using<JsonElement, object>(
+            (actualJsonElement, expectedObj) =>
+            {
+                try
+                {
+                    var expectedElement = JsonUtils.SerializeToElement(expectedObj);
+                    return JsonElementsAreEqualPublic(expectedElement, actualJsonElement);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        );
+        // Handle reverse: expected is JsonElement, actual is non-JsonElement
+        constraint.Using<object, JsonElement>(
+            (actualObj, expectedJsonElement) =>
+            {
+                try
+                {
+                    var actualElement = JsonUtils.SerializeToElement(actualObj);
+                    return JsonElementsAreEqualPublic(expectedJsonElement, actualElement);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        );
+        return constraint;
     }
-}
-
-/// <summary>
-/// A non-generic IEqualityComparer that handles cross-type comparisons by serializing both
-/// to JsonElement. This is needed because NUnit 4.4+ correctly treats "types not supported"
-/// as a comparison failure in UsingPropertiesComparer(), which means properties typed as
-/// 'object' that deserialize to JsonElement can no longer be compared with Dictionary instances
-/// using the default typed comparers.
-/// </summary>
-public class JsonSerializationFallbackComparer : IEqualityComparer
-{
-    public new bool Equals(object? x, object? y)
-    {
-        if (x is null && y is null)
-            return true;
-        if (x is null || y is null)
-            return false;
-
-        // Only intervene for cross-type comparisons
-        if (x.GetType() == y.GetType())
-            return object.Equals(x, y);
-
-        // At least one side should be a JsonElement for us to handle this
-        if (x is not JsonElement && y is not JsonElement)
-            return object.Equals(x, y);
-
-        try
-        {
-            var xElement = x is JsonElement xje ? xje : JsonUtils.SerializeToElement(x);
-            var yElement = y is JsonElement yje ? yje : JsonUtils.SerializeToElement(y);
-            return AdditionalPropertiesComparerExtensions.JsonElementsAreEqualPublic(
-                xElement,
-                yElement
-            );
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public int GetHashCode(object obj) => obj?.GetHashCode() ?? 0;
 }
