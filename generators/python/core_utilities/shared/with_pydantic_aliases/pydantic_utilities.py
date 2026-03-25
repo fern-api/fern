@@ -320,9 +320,16 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
         def serialize_model(self) -> Any:  # type: ignore[name-defined]
+            def _serialize_recursive(obj: Any) -> Any:
+                if isinstance(obj, dt.datetime):
+                    return serialize_datetime(obj)
+                elif isinstance(obj, dict):
+                    return {k: _serialize_recursive(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [_serialize_recursive(item) for item in obj]
+                return obj
             serialized = self.model_dump()  # type: ignore[attr-defined]
-            data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
-            return data
+            return _serialize_recursive(serialized)
 
     else:
 
