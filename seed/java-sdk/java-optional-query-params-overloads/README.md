@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-optional-query-params-overloads:0.0.1'
+  implementation 'com.fern:java-optional-query-params-overloads'
 }
 ```
 
