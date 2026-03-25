@@ -4,34 +4,34 @@ info:
   description: >
     Test fixture for SSE handling via OpenAPI 3.2's itemSchema.
 
-    Endpoints 1-6 test the named-envelope-schema pattern used by real customers:
-    named $ref'd schemas for each event type, discriminator with mapping, and
-    x-fern-discriminator-context. These vary across two dimensions:
-      B: Field name collision (event field in both envelope and data payload)
-      C: x-fern-discriminator-context (protocol, data, absent)
+    Endpoints 1-2 test context=protocol with the full range of data types that
+    protocol-level discrimination enables: heartbeat (no data), string literal,
+    number literal, and object. These vary on field collision (B dimension).
+
+    Endpoints 3-6 test context=data (explicit and absent) where the discriminant
+    lives inside the data payload. All event variants use object-typed data with
+    the discriminant field inside the payload, since context=data requires the
+    data field to be an object. These vary on collision (B) and context (C).
 
     Endpoint 7 tests the OAS 3.2 spec-native pattern: inline oneOf variants
     extending a base Event schema, using const on event fields and
     contentSchema/contentMediaType on data fields. No discriminator object.
-
-    All endpoints share the same four event types: heartbeat (no data),
-    string literal data, number literal data, and object data.
   version: "0.1.0"
 
 paths:
   # ==========================================================================
-  # Endpoints 1-6: Named envelope schema pattern (B x C matrix)
+  # Endpoints 1-2: context=protocol (full data type range)
   # ==========================================================================
-  /stream/discriminated-no-collision-protocol:
+  /stream/protocol-no-collision:
     post:
-      operationId: streamDiscriminatedNoCollisionProtocol
-      summary: Named envelopes with protocol context and no field collision
+      operationId: streamProtocolNoCollision
+      summary: Protocol context with no field collision and mixed data types
       description: >
         B1-C1.
-        Uses discriminator with mapping, x-fern-discriminator-context set to protocol,
-        and data fields reference schemas via $ref. The envelope's event field does not
-        collide with any field in the data payloads. This is the standard happy-path
-        pattern for SSE with typed event discrimination.
+        Uses discriminator with mapping, x-fern-discriminator-context set to protocol.
+        Because the discriminant is at the protocol level, the data field can be any
+        type or absent entirely. Demonstrates heartbeat (no data), string literal,
+        number literal, and object data payloads.
       requestBody:
         required: true
         content:
@@ -40,31 +40,31 @@ paths:
               $ref: "#/components/schemas/StreamRequest"
       responses:
         "200":
-          description: SSE stream with discriminated event types
+          description: SSE stream with protocol-level discrimination and mixed data types
           content:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
+                  - $ref: "#/components/schemas/ProtocolHeartbeat"
+                  - $ref: "#/components/schemas/ProtocolStringEvent"
+                  - $ref: "#/components/schemas/ProtocolNumberEvent"
+                  - $ref: "#/components/schemas/ProtocolObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeObjectEvent"
+                    heartbeat: "#/components/schemas/ProtocolHeartbeat"
+                    string_data: "#/components/schemas/ProtocolStringEvent"
+                    number_data: "#/components/schemas/ProtocolNumberEvent"
+                    object_data: "#/components/schemas/ProtocolObjectEvent"
 
-  /stream/discriminated-collision-protocol:
+  /stream/protocol-collision:
     post:
-      operationId: streamDiscriminatedCollisionProtocol
-      summary: Named envelopes with protocol context and event field collision
+      operationId: streamProtocolCollision
+      summary: Protocol context with event field collision and mixed data types
       description: >
         B2-C1.
-        The object data payload (ObjectPayloadWithEventField) contains its own "event"
+        Same as endpoint 1, but the object data payload contains its own "event"
         property, which collides with the SSE envelope's "event" discriminator field.
         Tests whether generators correctly separate the protocol-level discriminant from
         the data-level field when context=protocol is specified.
@@ -76,34 +76,38 @@ paths:
               $ref: "#/components/schemas/StreamRequest"
       responses:
         "200":
-          description: SSE stream where one data payload has a colliding "event" field
+          description: SSE stream with protocol context and event field collision
           content:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                  - $ref: "#/components/schemas/ProtocolHeartbeat"
+                  - $ref: "#/components/schemas/ProtocolStringEvent"
+                  - $ref: "#/components/schemas/ProtocolNumberEvent"
+                  - $ref: "#/components/schemas/ProtocolCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                    heartbeat: "#/components/schemas/ProtocolHeartbeat"
+                    string_data: "#/components/schemas/ProtocolStringEvent"
+                    number_data: "#/components/schemas/ProtocolNumberEvent"
+                    object_data: "#/components/schemas/ProtocolCollisionObjectEvent"
 
-  /stream/discriminated-no-collision-data-context:
+  # ==========================================================================
+  # Endpoints 3-6: context=data and context=absent (B x C matrix)
+  # All events have object-typed data with discriminant inside the payload
+  # ==========================================================================
+  /stream/data-context-no-collision:
     post:
-      operationId: streamDiscriminatedNoCollisionDataContext
-      summary: Named envelopes with explicit data context and no collision
+      operationId: streamDataContextNoCollision
+      summary: Explicit data context with no field collision
       description: >
         B1-C2.
         x-fern-discriminator-context is explicitly set to "data" (the default value).
-        The discriminant should be flattened into the data payload rather than treated
-        as a protocol-level SSE envelope field. Verifies that explicitly setting the
-        default produces the same behavior as the implicit default.
+        The discriminant lives inside each event's data payload. All event variants
+        use object-typed data since the discriminant must be a field within the data.
+        Uses create/update/delete event types with distinct payload shapes.
       requestBody:
         required: true
         content:
@@ -117,29 +121,27 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
+                  - $ref: "#/components/schemas/DataContextCreateEvent"
+                  - $ref: "#/components/schemas/DataContextUpdateEvent"
+                  - $ref: "#/components/schemas/DataContextDeleteEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeObjectEvent"
+                    create: "#/components/schemas/DataContextCreateEvent"
+                    update: "#/components/schemas/DataContextUpdateEvent"
+                    delete: "#/components/schemas/DataContextDeleteEvent"
 
-  /stream/discriminated-collision-data-context:
+  /stream/data-context-collision:
     post:
-      operationId: streamDiscriminatedCollisionDataContext
-      summary: Named envelopes with explicit data context and event field collision
+      operationId: streamDataContextCollision
+      summary: Explicit data context with event field collision
       description: >
         B2-C2.
-        Combines explicit context=data with a data payload that has its own "event" field.
-        Since context=data means the discriminant is flattened into the data, the collision
-        between the envelope's event field and the payload's event field should surface
-        directly in the generated types.
+        Combines explicit context=data with a data payload that has its own "event"
+        property (in addition to the discriminant "event" field that context=data
+        flattens into the payload). Tests how generators handle the collision when
+        the discriminant is explicitly within the data.
       requestBody:
         required: true
         content:
@@ -153,28 +155,26 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionCreateEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionUpdateEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionDeleteEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                    create: "#/components/schemas/DataContextCollisionCreateEvent"
+                    update: "#/components/schemas/DataContextCollisionUpdateEvent"
+                    delete: "#/components/schemas/DataContextCollisionDeleteEvent"
 
-  /stream/discriminated-no-collision-no-context:
+  /stream/no-context-no-collision:
     post:
-      operationId: streamDiscriminatedNoCollisionNoContext
-      summary: Named envelopes with no context extension and no collision
+      operationId: streamNoContextNoCollision
+      summary: No context extension with no collision
       description: >
         B1-C3.
         The x-fern-discriminator-context extension is omitted entirely. Tests whether
         Fern correctly infers the default behavior (context=data) when the extension
-        is absent. No field collision, so the default should work without issues.
+        is absent. Uses object-typed data payloads appropriate for data-level discrimination.
       requestBody:
         required: true
         content:
@@ -188,28 +188,25 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
+                  - $ref: "#/components/schemas/DataContextCreateEvent"
+                  - $ref: "#/components/schemas/DataContextUpdateEvent"
+                  - $ref: "#/components/schemas/DataContextDeleteEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeObjectEvent"
+                    create: "#/components/schemas/DataContextCreateEvent"
+                    update: "#/components/schemas/DataContextUpdateEvent"
+                    delete: "#/components/schemas/DataContextDeleteEvent"
 
-  /stream/discriminated-collision-no-context:
+  /stream/no-context-collision:
     post:
-      operationId: streamDiscriminatedCollisionNoContext
-      summary: Named envelopes with event field collision and no context hint
+      operationId: streamNoContextCollision
+      summary: No context extension with event field collision
       description: >
         B2-C3.
         Combines the collision scenario (data payload has its own "event" field) with
-        the absence of x-fern-discriminator-context. This is the worst case for
-        inference — the generator has no hint that the discriminant is protocol-level,
-        yet the field collision makes flattening into data incorrect.
+        the absence of x-fern-discriminator-context. The generator has no hint about
+        where the discriminant lives, and the field collision makes flattening ambiguous.
       requestBody:
         required: true
         content:
@@ -223,17 +220,15 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
-                  - $ref: "#/components/schemas/EnvelopeStringEvent"
-                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
-                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionCreateEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionUpdateEvent"
+                  - $ref: "#/components/schemas/DataContextCollisionDeleteEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
-                    string_data: "#/components/schemas/EnvelopeStringEvent"
-                    number_data: "#/components/schemas/EnvelopeNumberEvent"
-                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
+                    create: "#/components/schemas/DataContextCollisionCreateEvent"
+                    update: "#/components/schemas/DataContextCollisionUpdateEvent"
+                    delete: "#/components/schemas/DataContextCollisionDeleteEvent"
 
   # ==========================================================================
   # Endpoint 7: OAS 3.2 spec-native pattern
@@ -325,6 +320,88 @@ components:
           type: string
           format: date-time
 
+    CreatePayload:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    UpdatePayload:
+      type: object
+      required:
+        - id
+        - fields
+      properties:
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+
+    DeletePayload:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    CollisionCreatePayload:
+      type: object
+      required:
+        - id
+        - name
+        - event
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        event:
+          type: string
+          description: >
+            An event type field inside the data payload that collides with
+            the SSE envelope's event field used for discrimination.
+
+    CollisionUpdatePayload:
+      type: object
+      required:
+        - id
+        - fields
+        - event
+      properties:
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+        event:
+          type: string
+          description: >
+            An event type field inside the data payload that collides with
+            the SSE envelope's event field used for discrimination.
+
+    CollisionDeletePayload:
+      type: object
+      required:
+        - id
+        - event
+      properties:
+        id:
+          type: string
+        event:
+          type: string
+          description: >
+            An event type field inside the data payload that collides with
+            the SSE envelope's event field used for discrimination.
+
     ObjectPayloadWithEventField:
       type: object
       required:
@@ -343,9 +420,10 @@ components:
             the SSE envelope's event field used for discrimination.
 
     # ==========================================================================
-    # Named envelope schemas (used by endpoints 1-6)
+    # Protocol-context envelope schemas (used by endpoints 1-2)
+    # Discriminant at protocol level, data can be any type or absent
     # ==========================================================================
-    EnvelopeHeartbeat:
+    ProtocolHeartbeat:
       type: object
       required:
         - event
@@ -355,7 +433,7 @@ components:
           enum:
             - heartbeat
 
-    EnvelopeStringEvent:
+    ProtocolStringEvent:
       type: object
       required:
         - event
@@ -368,7 +446,7 @@ components:
         data:
           type: string
 
-    EnvelopeNumberEvent:
+    ProtocolNumberEvent:
       type: object
       required:
         - event
@@ -381,7 +459,7 @@ components:
         data:
           type: number
 
-    EnvelopeObjectEvent:
+    ProtocolObjectEvent:
       type: object
       required:
         - event
@@ -394,7 +472,7 @@ components:
         data:
           $ref: "#/components/schemas/StatusPayload"
 
-    EnvelopeCollisionObjectEvent:
+    ProtocolCollisionObjectEvent:
       type: object
       required:
         - event
@@ -406,3 +484,85 @@ components:
             - object_data
         data:
           $ref: "#/components/schemas/ObjectPayloadWithEventField"
+
+    # ==========================================================================
+    # Data-context envelope schemas (used by endpoints 3-6)
+    # Discriminant inside data payload, all data must be object-typed
+    # ==========================================================================
+    DataContextCreateEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - create
+        data:
+          $ref: "#/components/schemas/CreatePayload"
+
+    DataContextUpdateEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - update
+        data:
+          $ref: "#/components/schemas/UpdatePayload"
+
+    DataContextDeleteEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - delete
+        data:
+          $ref: "#/components/schemas/DeletePayload"
+
+    DataContextCollisionCreateEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - create
+        data:
+          $ref: "#/components/schemas/CollisionCreatePayload"
+
+    DataContextCollisionUpdateEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - update
+        data:
+          $ref: "#/components/schemas/CollisionUpdatePayload"
+
+    DataContextCollisionDeleteEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - delete
+        data:
+          $ref: "#/components/schemas/CollisionDeletePayload"
