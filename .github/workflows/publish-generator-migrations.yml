@@ -35,7 +35,7 @@ jobs:
       should_publish: ${{ steps.determine_version.outputs.should_publish }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 10
 
@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -91,12 +91,11 @@ jobs:
           pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Setup Node for npm publish
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
           scope: "@fern-api"
-          package-manager-cache: false
 
       - name: Build and publish generator-migrations
         env:

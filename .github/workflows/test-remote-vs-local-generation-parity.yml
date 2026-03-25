@@ -81,7 +81,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.branch || github.ref }}
 
@@ -98,14 +98,14 @@ jobs:
         run: pnpm seed:build
 
       - name: Upload Seed CLI
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: seed-cli
           path: packages/seed/dist/
           retention-days: 1
 
       - name: Upload Fern CLI
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: fern-cli
           path: packages/cli/cli/dist/prod/
@@ -128,7 +128,7 @@ jobs:
         generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.branch || github.ref }}
 
@@ -136,13 +136,13 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download Seed CLI
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           name: seed-cli
           path: packages/seed/dist/
 
       - name: Download Fern CLI
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           name: fern-cli
           path: packages/cli/cli/dist/prod/
@@ -151,7 +151,7 @@ jobs:
         run: chmod +x packages/cli/cli/dist/prod/cli.cjs packages/seed/dist/cli.cjs
 
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 30
           max_attempts: 5
