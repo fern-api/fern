@@ -25,6 +25,7 @@ export async function visitGeneratorsYamlAst(
         "async-api": noop,
         "api-settings": noop,
         ai: noop,
+        "container-registry": noop,
         autorelease: noop,
         replay: noop,
         groups: async (groups) => {
