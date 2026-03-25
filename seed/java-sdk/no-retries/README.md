@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:no-retries'
+  implementation 'com.fern:no-retries:0.0.1'
 }
 ```
 
