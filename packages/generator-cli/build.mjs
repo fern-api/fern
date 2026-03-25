@@ -37,7 +37,7 @@ async function main() {
     await tsup.build({
         ...commonConfig,
         entry: ["src/api.ts"],
-        noExternal: ["@fern-api/github", "@fern-api/fs-utils"],
+        noExternal: ["@fern-api/github", "@fern-api/fs-utils", "@fern-api/core-utils"],
         external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise"],
         clean: false
     });
@@ -71,7 +71,9 @@ async function main() {
                     "generator-cli": "bin/cli"
                 },
                 files: ["**"],
-                dependencies: packageJson.dependencies,
+                dependencies: Object.fromEntries(
+                    Object.entries(packageJson.dependencies).filter(([, v]) => !String(v).startsWith("workspace:"))
+                ),
                 license: packageJson.license
             },
             undefined,
