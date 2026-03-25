@@ -11,9 +11,7 @@ export const Metadata: core.serialization.ObjectSchema<serializers.Metadata.Raw,
         avatar: core.serialization.string().nullable(),
         activated: core.serialization.boolean().optionalNullable(),
         status: core.serialization.lazy(() => serializers.Status),
-        values: core.serialization
-            .record(core.serialization.string(), core.serialization.string().optionalNullable())
-            .optional(),
+        values: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     });
 
 export declare namespace Metadata {

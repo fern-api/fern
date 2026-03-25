@@ -12,7 +12,7 @@ public class Example7
             }
         );
 
-        await client.User.GetWithBearerAsync();
+        await client.User.GetWithAllAuthAsync();
     }
 
 }

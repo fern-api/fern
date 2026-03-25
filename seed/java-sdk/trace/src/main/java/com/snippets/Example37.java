@@ -9,6 +9,6 @@ public class Example37 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.v2().problem().getProblemVersion("problemId", 1);
+        client.v2().v3().problem().getProblemVersion("problemId", 1);
     }
 }

@@ -8,5 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_api_key(None).await;
 }
