@@ -53,6 +53,7 @@ public record CursorPages
             int? _page = default;
             int? _perPage = default;
             int? _totalPages = default;
+            string _type = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -83,7 +84,7 @@ public record CursorPages
                         _totalPages = JsonSerializer.Deserialize<int?>(ref reader, options);
                         break;
                     case "type":
-                        reader.Skip();
+                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
@@ -97,6 +98,7 @@ public record CursorPages
                 Page = _page,
                 PerPage = _perPage,
                 TotalPages = _totalPages,
+                Type = _type,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

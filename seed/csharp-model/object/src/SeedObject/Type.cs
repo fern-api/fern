@@ -130,6 +130,7 @@ public record Type
             IEnumerable<IEnumerable<int>> _fifteen = default;
             IEnumerable<Dictionary<string, int>> _sixteen = default;
             IEnumerable<string> _seventeen = default;
+            string _eighteen = default;
             Name _nineteen = default;
             uint _twenty = default;
             ulong _twentyone = default;
@@ -215,7 +216,7 @@ public record Type
                         );
                         break;
                     case "eighteen":
-                        reader.Skip();
+                        _eighteen = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "nineteen":
                         _nineteen = JsonSerializer.Deserialize<Name>(ref reader, options);
@@ -263,6 +264,7 @@ public record Type
                 Fifteen = _fifteen,
                 Sixteen = _sixteen,
                 Seventeen = _seventeen,
+                Eighteen = _eighteen,
                 Nineteen = _nineteen,
                 Twenty = _twenty,
                 Twentyone = _twentyone,

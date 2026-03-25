@@ -83,7 +83,11 @@ public record SendRequest
                 return null;
             }
 
+            string _prompt = default;
             string _query = default;
+            bool _stream = default;
+            string _ending = default;
+            string _context = default;
             string? _maybeContext = default;
             ContainerObject _containerObject = default;
             var extensionData = new Dictionary<string, JsonElement>();
@@ -101,19 +105,19 @@ public record SendRequest
                 switch (propertyName)
                 {
                     case "prompt":
-                        reader.Skip();
+                        _prompt = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "query":
                         _query = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "stream":
-                        reader.Skip();
+                        _stream = JsonSerializer.Deserialize<bool>(ref reader, options);
                         break;
                     case "ending":
-                        reader.Skip();
+                        _ending = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "context":
-                        reader.Skip();
+                        _context = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "maybeContext":
                         _maybeContext = JsonSerializer.Deserialize<string?>(ref reader, options);
@@ -132,7 +136,11 @@ public record SendRequest
 
             return new SendRequest
             {
+                Prompt = _prompt,
                 Query = _query,
+                Stream = _stream,
+                Ending = _ending,
+                Context = _context,
                 MaybeContext = _maybeContext,
                 ContainerObject = _containerObject,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),

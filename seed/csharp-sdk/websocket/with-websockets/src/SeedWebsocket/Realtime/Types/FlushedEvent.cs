@@ -44,6 +44,7 @@ public record FlushedEvent
                 return null;
             }
 
+            string _type = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -59,7 +60,7 @@ public record FlushedEvent
                 switch (propertyName)
                 {
                     case "type":
-                        reader.Skip();
+                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
@@ -69,6 +70,7 @@ public record FlushedEvent
 
             return new FlushedEvent
             {
+                Type = _type,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }

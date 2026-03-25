@@ -72,6 +72,7 @@ public record Movie
             string _title = default;
             string _from = default;
             double _rating = default;
+            string _type = default;
             string _tag = default;
             string? _book = default;
             Dictionary<string, object?> _metadata = default;
@@ -106,7 +107,7 @@ public record Movie
                         _rating = JsonSerializer.Deserialize<double>(ref reader, options);
                         break;
                     case "type":
-                        reader.Skip();
+                        _type = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "tag":
                         _tag = JsonSerializer.Deserialize<string>(ref reader, options);
@@ -136,6 +137,7 @@ public record Movie
                 Title = _title,
                 From = _from,
                 Rating = _rating,
+                Type = _type,
                 Tag = _tag,
                 Book = _book,
                 Metadata = _metadata,

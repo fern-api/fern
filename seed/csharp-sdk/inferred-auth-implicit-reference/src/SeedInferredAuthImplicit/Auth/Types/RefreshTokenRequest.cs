@@ -58,6 +58,8 @@ public record RefreshTokenRequest
             string _clientId = default;
             string _clientSecret = default;
             string _refreshToken = default;
+            string _audience = default;
+            string _grantType = default;
             string? _scope = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
@@ -83,10 +85,10 @@ public record RefreshTokenRequest
                         _refreshToken = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "audience":
-                        reader.Skip();
+                        _audience = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "grant_type":
-                        reader.Skip();
+                        _grantType = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "scope":
                         _scope = JsonSerializer.Deserialize<string?>(ref reader, options);
@@ -102,6 +104,8 @@ public record RefreshTokenRequest
                 ClientId = _clientId,
                 ClientSecret = _clientSecret,
                 RefreshToken = _refreshToken,
+                Audience = _audience,
+                GrantType = _grantType,
                 Scope = _scope,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };

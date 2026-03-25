@@ -52,6 +52,7 @@ public record Script
                 return null;
             }
 
+            string _resourceType = default;
             string _name = default;
             string _id = default;
             IEnumerable<OneOf<Account, Patient, Practitioner, Script>> _relatedResources = default;
@@ -71,7 +72,7 @@ public record Script
                 switch (propertyName)
                 {
                     case "resource_type":
-                        reader.Skip();
+                        _resourceType = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "name":
                         _name = JsonSerializer.Deserialize<string>(ref reader, options);
@@ -95,6 +96,7 @@ public record Script
 
             return new Script
             {
+                ResourceType = _resourceType,
                 Name = _name,
                 Id = _id,
                 RelatedResources = _relatedResources,

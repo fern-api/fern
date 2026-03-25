@@ -57,6 +57,7 @@ public record User
             string _city = default;
             string _state = default;
             string _zip = default;
+            string _country = default;
             var extensionData = new Dictionary<string, JsonElement>();
 
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -87,7 +88,7 @@ public record User
                         _zip = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     case "country":
-                        reader.Skip();
+                        _country = JsonSerializer.Deserialize<string>(ref reader, options);
                         break;
                     default:
                         extensionData[propertyName!] = JsonElement.ParseValue(ref reader);
@@ -102,6 +103,7 @@ public record User
                 City = _city,
                 State = _state,
                 Zip = _zip,
+                Country = _country,
                 AdditionalProperties = new ReadOnlyAdditionalProperties(extensionData),
             };
         }
