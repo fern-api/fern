@@ -18,7 +18,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'io.intercom:intercom-java'
+  implementation 'io.intercom:intercom-java:3.0.0'
 }
 ```
 
