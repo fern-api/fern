@@ -7,7 +7,7 @@ export function createFdrService({
     headers
 }: {
     environment?: string;
-    token: string;
+    token: (() => string) | string;
     headers?: Record<string, string>;
 }): FdrClient {
     const overrideEnvironment = process.env.FERN_FDR_ORIGIN ?? process.env.OVERRIDE_FDR_ORIGIN;
