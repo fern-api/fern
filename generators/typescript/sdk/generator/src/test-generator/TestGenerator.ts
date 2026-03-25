@@ -117,7 +117,7 @@ export class TestGenerator {
                             preset: "ts-jest",
                             testEnvironment: "node",
                             moduleNameMapper: {
-                                "^(\\\\.{1,2}/.*)\\\\.js$": "$1",
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}"],
                             testPathIgnorePatterns: ["/tests/wire/"],
@@ -132,7 +132,7 @@ export class TestGenerator {
                             preset: "ts-jest",
                             testEnvironment: "node",
                             moduleNameMapper: {
-                                "^(\\\\.{1,2}/.*)\\\\.js$": "$1",
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}/wire"],
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, `<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`)},
@@ -155,7 +155,7 @@ export class TestGenerator {
                     preset: "ts-jest",
                     testEnvironment: "node",
                     moduleNameMapper: {
-                        "^(\\\\.{1,2}/.*)\\\\.js$": "$1"
+                        "^(\\.{1,2}/.*)\\.js$": "$1"
                     },
                     roots: ["<rootDir>/${this.relativeTestPath}"],
                     testPathIgnorePatterns: ["/tests/wire/"],
@@ -255,7 +255,11 @@ export class TestGenerator {
                 break;
         }
         if (this.generateWireTests) {
-            this.dependencyManager.addDependency("msw", "2.12.14", {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
+            this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
         }

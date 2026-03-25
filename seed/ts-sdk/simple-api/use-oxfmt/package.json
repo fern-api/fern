@@ -67,7 +67,7 @@
     "devDependencies": {
         "@biomejs/biome": "2.4.9",
         "@types/node": "^18.19.70",
-        "msw": "2.12.14",
+        "msw": "2.11.2",
         "oxfmt": "0.35.0",
         "ts-loader": "^9.5.4",
         "typescript": "~5.9.3",

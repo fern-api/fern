@@ -240,7 +240,7 @@
         "@types/jest": "^29.5.14",
         "ts-jest": "^29.3.4",
         "jest-environment-jsdom": "^29.7.0",
-        "msw": "2.12.14",
+        "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.9.3",
         "@biomejs/biome": "2.4.9"
