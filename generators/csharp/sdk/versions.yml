@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.54.5
+- version: 2.54.6
   changelogEntry:
     - summary: |
         Upgrade gRPC/Protobuf NuGet packages in generated C# SDKs.
@@ -9,6 +9,21 @@
         - Grpc.Net.Client: 2.63.0 → 2.76.0
         - Grpc.Net.ClientFactory: 2.63.0 → 2.76.0
         - Grpc.Tools: 2.64.0 → 2.78.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 2.54.5
+  changelogEntry:
+    - summary: |
+        Upgrade BCL/runtime NuGet package versions in generated C# SDKs.
+        All packages remain within the 9.x line for net8.0 compatibility.
+
+        - Portable.System.DateTimeOnly: 8.0.2 → 9.0.1
+        - System.Text.Json: 8.0.5 → 9.0.9 (legacy TFM conditional)
+        - Microsoft.Extensions.Logging.Abstractions: 8.0.2 → 9.0.13 (WebSocket)
+        - System.Threading.Channels: 8.0.0 → 9.0.13 (WebSocket)
+        - System.Net.ServerSentEvents: 9.0.9 → 9.0.14 (SSE)
       type: chore
   createdAt: "2026-03-25"
   irVersion: 65
@@ -33,7 +48,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 2.54.2
   changelogEntry:
     - summary: |
