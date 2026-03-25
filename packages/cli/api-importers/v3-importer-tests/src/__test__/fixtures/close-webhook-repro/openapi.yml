@@ -33,8 +33,6 @@ paths:
           description: Webhook created successfully
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/Webhook"
               examples:
                 basic:
                   summary: Basic webhook subscription

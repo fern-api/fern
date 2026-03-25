@@ -896,31 +896,7 @@
               "value": {
                 "docs": "Webhook created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Webhook",
-                    "camelCase": {
-                      "unsafeName": "webhook",
-                      "safeName": "webhook"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "webhook",
-                      "safeName": "webhook"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "WEBHOOK",
-                      "safeName": "WEBHOOK"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Webhook",
-                      "safeName": "Webhook"
-                    }
-                  },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:Webhook",
-                  "type": "named"
+                  "type": "unknown"
                 },
                 "type": "response"
               },
@@ -1026,12 +1002,13 @@
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {
       "service_": [
-        "type_:CreateWebhookEventsItem",
-        "type_:WebhookEventsItem",
-        "type_:Webhook"
+        "type_:CreateWebhookEventsItem"
       ]
     },
-    "sharedTypes": []
+    "sharedTypes": [
+      "type_:WebhookEventsItem",
+      "type_:Webhook"
+    ]
   },
   "webhookGroups": {},
   "websocketChannels": {},
