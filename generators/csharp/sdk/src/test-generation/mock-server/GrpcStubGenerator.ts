@@ -63,7 +63,8 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
             access: ast.Access.Public,
             parentClassReference: this.csharp.classReference({
                 name: `${this.grpcServiceName}.${this.grpcServiceName}Base`,
-                namespace: this.grpcNamespace
+                namespace: this.grpcNamespace,
+                fullyQualified: true
             })
         });
 
@@ -124,7 +125,7 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
         const { protoRequestType, protoResponseType } = this.getProtoTypes(endpoint);
 
         writer.writeLine(
-            `public override Task<${protoResponseType}> ${methodName}(${protoRequestType} request, ServerCallContext context)`
+            `public override Task<${protoResponseType}> ${methodName}(${protoRequestType} request, Grpc.Core.ServerCallContext context)`
         );
         writer.pushScope();
         writer.writeLine(`${methodName}Requests.Add(request);`);
@@ -132,13 +133,21 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
         writer.pushScope();
         writer.writeLine(`return Task.FromResult(${handlerFieldName}(request));`);
         writer.popScope();
-        writer.writeLine('throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));');
+        writer.writeLine(
+            'throw new Grpc.Core.RpcException(new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured"));'
+        );
         writer.popScope();
         writer.newLine();
     }
 
     /**
      * Resolves the proto request and response types for a given endpoint.
+     *
+     * For gRPC endpoints, the proto request type is derived from:
+     * 1. Referenced request bodies: resolve directly via TypeReference -> proto source
+     * 2. Inlined request bodies: use the SDK wrapper request type name, which matches
+     *    the proto message name (e.g., SDK's UploadRequest.ToProto() returns Proto.UploadRequest)
+     * 3. No request body: defaults to google.protobuf.Empty
      */
     private getProtoTypes(endpoint: HttpEndpoint): { protoRequestType: string; protoResponseType: string } {
         let protoRequestType = "Google.Protobuf.WellKnownTypes.Empty";
@@ -152,17 +161,29 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
                     protoRequestType = protoRef;
                 }
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
-                // For inlined request bodies, the `extends` field contains the DeclaredTypeName
-                // of the proto message type that this request wraps
+                // Inlined request bodies for gRPC endpoints are SDK wrapper types whose
+                // properties mirror the proto message fields. The SDK generates a
+                // ToProto() method on the wrapper that returns the corresponding proto
+                // message type with the same name in the proto namespace.
+                //
+                // First try to resolve via `extends` (if the wrapper extends a named type
+                // with proto source). If `extends` is empty (the common case for gRPC
+                // inlined request bodies), derive the proto type from the wrapper's own
+                // name in the proto namespace.
                 const extendsTypes = endpoint.requestBody.extends;
-                if (extendsTypes.length > 0) {
-                    const firstExtend = extendsTypes[0];
-                    if (firstExtend != null) {
-                        const protoRef = this.resolveProtoTypeById(firstExtend.typeId);
-                        if (protoRef != null) {
-                            protoRequestType = protoRef;
-                        }
+                let resolved = false;
+                for (const ext of extendsTypes) {
+                    const protoRef = this.resolveProtoTypeById(ext.typeId);
+                    if (protoRef != null) {
+                        protoRequestType = protoRef;
+                        resolved = true;
+                        break;
                     }
+                }
+                if (!resolved) {
+                    // Use the inlined request body's name, which matches the proto message name
+                    const requestName = endpoint.requestBody.name.originalName;
+                    protoRequestType = `${this.grpcNamespace}.${requestName}`;
                 }
             }
         }

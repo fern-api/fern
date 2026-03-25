@@ -42,7 +42,7 @@ public class CheckTest
             }
         );
 
-        var response = await await client.DataService.CheckAsync();
+        var response = await client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);
     }
 
@@ -81,7 +81,7 @@ public class CheckTest
             }
         );
 
-        var response = await await client.DataService.CheckAsync();
+        var response = await client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -177,7 +177,7 @@ public class QueryTest
             }
         );
 
-        var response = await await client.DataService.QueryAsync(
+        var response = await client.DataService.QueryAsync(
             new SeedApi.QueryRequest
             {
                 Namespace = "namespace",
@@ -291,9 +291,7 @@ public class QueryTest
             }
         );
 
-        var response = await await client.DataService.QueryAsync(
-            new SeedApi.QueryRequest { TopK = 1 }
-        );
+        var response = await client.DataService.QueryAsync(new SeedApi.QueryRequest { TopK = 1 });
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

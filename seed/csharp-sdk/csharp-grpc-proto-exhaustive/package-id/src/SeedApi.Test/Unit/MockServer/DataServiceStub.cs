@@ -1,8 +1,6 @@
-using Data.V1.Grpc;
-
 namespace SeedApi.Test.Unit.MockServer;
 
-public class DataServiceStub : DataService.DataServiceBase
+public class DataServiceStub : Data.V1.Grpc.DataService.DataServiceBase
 {
     private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.CheckResponse>? _checkHandler;
 
@@ -18,7 +16,7 @@ public class DataServiceStub : DataService.DataServiceBase
 
     public override Task<Data.V1.Grpc.CheckResponse> Check(
         Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Grpc.Core.ServerCallContext context
     )
     {
         CheckRequests.Add(request);
@@ -26,15 +24,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_checkHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.CreateResponse>? _createHandler;
+    private Func<Data.V1.Grpc.CreateRequest, Data.V1.Grpc.CreateResponse>? _createHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> CreateRequests { get; } = new();
+    public List<Data.V1.Grpc.CreateRequest> CreateRequests { get; } = new();
 
     public DataServiceStub OnCreate(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.CreateResponse> handler
+        Func<Data.V1.Grpc.CreateRequest, Data.V1.Grpc.CreateResponse> handler
     )
     {
         _createHandler = handler;
@@ -42,8 +42,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.CreateResponse> Create(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.CreateRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         CreateRequests.Add(request);
@@ -51,15 +51,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_createHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.DeleteResponse>? _deleteHandler;
+    private Func<Data.V1.Grpc.DeleteRequest, Data.V1.Grpc.DeleteResponse>? _deleteHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> DeleteRequests { get; } = new();
+    public List<Data.V1.Grpc.DeleteRequest> DeleteRequests { get; } = new();
 
     public DataServiceStub OnDelete(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.DeleteResponse> handler
+        Func<Data.V1.Grpc.DeleteRequest, Data.V1.Grpc.DeleteResponse> handler
     )
     {
         _deleteHandler = handler;
@@ -67,8 +69,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.DeleteResponse> Delete(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.DeleteRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         DeleteRequests.Add(request);
@@ -76,18 +78,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_deleteHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<
-        Google.Protobuf.WellKnownTypes.Empty,
-        Data.V1.Grpc.DescribeResponse
-    >? _describeHandler;
+    private Func<Data.V1.Grpc.DescribeRequest, Data.V1.Grpc.DescribeResponse>? _describeHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> DescribeRequests { get; } = new();
+    public List<Data.V1.Grpc.DescribeRequest> DescribeRequests { get; } = new();
 
     public DataServiceStub OnDescribe(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.DescribeResponse> handler
+        Func<Data.V1.Grpc.DescribeRequest, Data.V1.Grpc.DescribeResponse> handler
     )
     {
         _describeHandler = handler;
@@ -95,8 +96,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.DescribeResponse> Describe(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.DescribeRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         DescribeRequests.Add(request);
@@ -104,15 +105,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_describeHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.QueryResponse>? _queryHandler;
+    private Func<Data.V1.Grpc.QueryRequest, Data.V1.Grpc.QueryResponse>? _queryHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> QueryRequests { get; } = new();
+    public List<Data.V1.Grpc.QueryRequest> QueryRequests { get; } = new();
 
     public DataServiceStub OnQuery(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.QueryResponse> handler
+        Func<Data.V1.Grpc.QueryRequest, Data.V1.Grpc.QueryResponse> handler
     )
     {
         _queryHandler = handler;
@@ -120,8 +123,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.QueryResponse> Query(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.QueryRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         QueryRequests.Add(request);
@@ -129,15 +132,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_queryHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.UploadResponse>? _uploadHandler;
+    private Func<Data.V1.Grpc.UploadRequest, Data.V1.Grpc.UploadResponse>? _uploadHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> UploadRequests { get; } = new();
+    public List<Data.V1.Grpc.UploadRequest> UploadRequests { get; } = new();
 
     public DataServiceStub OnUpload(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.UploadResponse> handler
+        Func<Data.V1.Grpc.UploadRequest, Data.V1.Grpc.UploadResponse> handler
     )
     {
         _uploadHandler = handler;
@@ -145,8 +150,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.UploadResponse> Upload(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.UploadRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         UploadRequests.Add(request);
@@ -154,7 +159,9 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_uploadHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
     private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.FetchResponse>? _fetchHandler;
@@ -171,7 +178,7 @@ public class DataServiceStub : DataService.DataServiceBase
 
     public override Task<Data.V1.Grpc.FetchResponse> Fetch(
         Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Grpc.Core.ServerCallContext context
     )
     {
         FetchRequests.Add(request);
@@ -179,7 +186,9 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_fetchHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
     private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.ListResponse>? _listHandler;
@@ -196,7 +205,7 @@ public class DataServiceStub : DataService.DataServiceBase
 
     public override Task<Data.V1.Grpc.ListResponse> List(
         Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Grpc.Core.ServerCallContext context
     )
     {
         ListRequests.Add(request);
@@ -204,15 +213,17 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_listHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.UpdateResponse>? _updateHandler;
+    private Func<Data.V1.Grpc.UpdateRequest, Data.V1.Grpc.UpdateResponse>? _updateHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> UpdateRequests { get; } = new();
+    public List<Data.V1.Grpc.UpdateRequest> UpdateRequests { get; } = new();
 
     public DataServiceStub OnUpdate(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.UpdateResponse> handler
+        Func<Data.V1.Grpc.UpdateRequest, Data.V1.Grpc.UpdateResponse> handler
     )
     {
         _updateHandler = handler;
@@ -220,8 +231,8 @@ public class DataServiceStub : DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.UpdateResponse> Update(
-        Google.Protobuf.WellKnownTypes.Empty request,
-        ServerCallContext context
+        Data.V1.Grpc.UpdateRequest request,
+        Grpc.Core.ServerCallContext context
     )
     {
         UpdateRequests.Add(request);
@@ -229,6 +240,8 @@ public class DataServiceStub : DataService.DataServiceBase
         {
             return Task.FromResult(_updateHandler(request));
         }
-        throw new RpcException(new Status(StatusCode.Unimplemented, "Method not configured"));
+        throw new Grpc.Core.RpcException(
+            new Grpc.Core.Status(Grpc.Core.StatusCode.Unimplemented, "Method not configured")
+        );
     }
 }

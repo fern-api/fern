@@ -63,7 +63,7 @@ public class CreateTest
             }
         );
 
-        var response = await await client.DataService.CreateAsync(
+        var response = await client.DataService.CreateAsync(
             new SeedApi.CreateRequest
             {
                 Name = "name",
@@ -133,7 +133,7 @@ public class CreateTest
             }
         );
 
-        var response = await await client.DataService.CreateAsync(
+        var response = await client.DataService.CreateAsync(
             new SeedApi.CreateRequest { Name = "name" }
         );
         JsonAssert.AreEqual(response, mockResponse);

@@ -182,7 +182,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
         // Call the method and assert
         if (isSupportedResponse) {
-            writer.write("var response = await ");
+            writer.write("var response = ");
             writer.writeNodeStatement(endpointSnippet);
             writer.writeNodeStatement(
                 this.csharp.invokeMethod({

@@ -50,7 +50,7 @@ public class DescribeTest
             }
         );
 
-        var response = await await client.DataService.DescribeAsync(
+        var response = await client.DataService.DescribeAsync(
             new SeedApi.DescribeRequest
             {
                 Filter = new Dictionary<string, MetadataValue>() { { "filter", 1.1 } },
@@ -105,7 +105,7 @@ public class DescribeTest
             }
         );
 
-        var response = await await client.DataService.DescribeAsync(new SeedApi.DescribeRequest());
+        var response = await client.DataService.DescribeAsync(new SeedApi.DescribeRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

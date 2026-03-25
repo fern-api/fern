@@ -51,7 +51,7 @@ public class UpdateTest
             }
         );
 
-        var response = await await client.DataService.UpdateAsync(
+        var response = await client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest
             {
                 Id = "id",
@@ -129,7 +129,7 @@ public class UpdateTest
             }
         );
 
-        var response = await await client.DataService.UpdateAsync(
+        var response = await client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest { Id = "id" }
         );
         JsonAssert.AreEqual(response, mockResponse);

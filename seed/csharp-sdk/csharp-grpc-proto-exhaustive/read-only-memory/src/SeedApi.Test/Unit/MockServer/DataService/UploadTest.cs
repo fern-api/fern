@@ -42,7 +42,7 @@ public class UploadTest
             }
         );
 
-        var response = await await client.DataService.UploadAsync(
+        var response = await client.DataService.UploadAsync(
             new SeedApi.UploadRequest
             {
                 Columns = new List<SeedApi.Column>()
@@ -110,7 +110,7 @@ public class UploadTest
             }
         );
 
-        var response = await await client.DataService.UploadAsync(
+        var response = await client.DataService.UploadAsync(
             new SeedApi.UploadRequest
             {
                 Columns = new List<SeedApi.Column>()

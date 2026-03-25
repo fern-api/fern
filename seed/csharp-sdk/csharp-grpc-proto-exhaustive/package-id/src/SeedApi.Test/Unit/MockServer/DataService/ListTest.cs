@@ -55,7 +55,7 @@ public class ListTest
             }
         );
 
-        var response = await await client.DataService.ListAsync(
+        var response = await client.DataService.ListAsync(
             new SeedApi.ListRequest
             {
                 Prefix = "prefix",
@@ -112,7 +112,7 @@ public class ListTest
             }
         );
 
-        var response = await await client.DataService.ListAsync(new SeedApi.ListRequest());
+        var response = await client.DataService.ListAsync(new SeedApi.ListRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

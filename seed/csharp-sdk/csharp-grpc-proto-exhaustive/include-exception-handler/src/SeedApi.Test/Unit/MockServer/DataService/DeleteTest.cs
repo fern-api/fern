@@ -40,7 +40,7 @@ public class DeleteTest
             }
         );
 
-        var response = await await client.DataService.DeleteAsync(
+        var response = await client.DataService.DeleteAsync(
             new SeedApi.DeleteRequest
             {
                 Ids = new List<string>() { "ids", "ids" },
@@ -84,7 +84,7 @@ public class DeleteTest
             }
         );
 
-        var response = await await client.DataService.DeleteAsync(new SeedApi.DeleteRequest());
+        var response = await client.DataService.DeleteAsync(new SeedApi.DeleteRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

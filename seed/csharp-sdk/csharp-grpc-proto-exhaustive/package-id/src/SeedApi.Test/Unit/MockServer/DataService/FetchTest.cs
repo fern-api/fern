@@ -66,7 +66,7 @@ public class FetchTest
             }
         );
 
-        var response = await await client.DataService.FetchAsync(
+        var response = await client.DataService.FetchAsync(
             new SeedApi.FetchRequest { Ids = ["ids"], Namespace = "namespace" }
         );
         JsonAssert.AreEqual(response, mockResponse);
@@ -128,7 +128,7 @@ public class FetchTest
             }
         );
 
-        var response = await await client.DataService.FetchAsync(new SeedApi.FetchRequest());
+        var response = await client.DataService.FetchAsync(new SeedApi.FetchRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

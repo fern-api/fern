@@ -1,6 +1,7 @@
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,15 +30,7 @@ public sealed class GrpcMockServerBuilder
         where TService : class
     {
         _serviceRegistrations.Add(services => services.AddSingleton(implementation));
-        _endpointRegistrations.Add(endpoints =>
-        {
-            // Use reflection to call MapGrpcService<TService> since the concrete
-            // service type is only known at runtime.
-            var method = typeof(GrpcEndpointRouteBuilderExtensions)
-                .GetMethod(nameof(GrpcEndpointRouteBuilderExtensions.MapGrpcService))!
-                .MakeGenericMethod(typeof(TService));
-            method.Invoke(null, new object[] { endpoints });
-        });
+        _endpointRegistrations.Add(endpoints => endpoints.MapGrpcService<TService>());
         return this;
     }
 
