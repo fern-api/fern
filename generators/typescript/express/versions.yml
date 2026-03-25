@@ -1,6 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade generated project dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-25"
+  version: 0.19.11
+
+- changelogEntry:
+    - summary: |
         Fix npm publish authentication failing when the registry URL includes a port number.
         The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
         instead of `URL.host` (which preserves it).

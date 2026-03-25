@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Schema-less Response Examples API
+  version: 1.0.0
+  description: Reproduces issue where 2xx responses have examples but no schema
+
+paths:
+  /plants/:
+    post:
+      summary: Create a Plant
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlant"
+            examples:
+              basic:
+                summary: Basic plant
+                value:
+                  name: "Monstera Deliciosa"
+                  species: "Monstera"
+              rare:
+                summary: Rare tropical plant
+                value:
+                  name: "Pink Princess Philodendron"
+                  species: "Philodendron"
+      responses:
+        "201":
+          description: Plant created successfully
+          content:
+            application/json:
+              examples:
+                basic:
+                  summary: Basic plant
+                  value:
+                    id: "plant_001"
+                    name: "Monstera Deliciosa"
+                    species: "Monstera"
+                    status: "healthy"
+                rare:
+                  summary: Rare tropical plant
+                  value:
+                    id: "plant_002"
+                    name: "Pink Princess Philodendron"
+                    species: "Philodendron"
+                    status: "healthy"
+        "400":
+          description: Bad request
+
+components:
+  schemas:
+    CreatePlant:
+      type: object
+      required:
+        - name
+        - species
+      properties:
+        name:
+          type: string
+        species:
+          type: string
