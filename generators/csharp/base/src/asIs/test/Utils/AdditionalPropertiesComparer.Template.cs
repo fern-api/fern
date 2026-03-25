@@ -185,28 +185,27 @@ public static class AdditionalPropertiesComparerExtensions
 }
 
 /// <summary>
-/// A non-generic IComparer that handles cross-type comparisons by serializing both sides
-/// to JsonElement. This is needed because NUnit 4.4+ correctly treats "types not supported"
+/// A non-generic IEqualityComparer that handles cross-type comparisons by serializing both
+/// sides to JsonElement. This is needed because NUnit 4.4+ correctly treats "types not supported"
 /// as a comparison failure in UsingPropertiesComparer(), which means properties typed as
 /// 'object' that deserialize to JsonElement can no longer be compared with Dictionary instances
 /// using the default typed comparers.
 /// </summary>
-public class JsonSerializationFallbackComparer : IComparer
+public class JsonSerializationFallbackComparer : IEqualityComparer
 {
-    public int Compare(object? x, object? y)
+    public new bool Equals(object? x, object? y)
     {
         if (x is null && y is null)
-            return 0;
+            return true;
         if (x is null || y is null)
-            return -1;
+            return false;
 
-        // Only intervene for cross-type comparisons
+        // Only intervene when at least one side is a JsonElement and types differ
         if (x.GetType() == y.GetType())
-            return Comparer.Default.Compare(x, y);
+            return object.Equals(x, y);
 
-        // At least one side should be a JsonElement for us to handle this
         if (x is not JsonElement && y is not JsonElement)
-            return Comparer.Default.Compare(x, y);
+            return object.Equals(x, y);
 
         try
         {
@@ -215,13 +214,13 @@ public class JsonSerializationFallbackComparer : IComparer
             return AdditionalPropertiesComparerExtensions.JsonElementsAreEqualPublic(
                 xElement,
                 yElement
-            )
-                ? 0
-                : -1;
+            );
         }
         catch
         {
-            return -1;
+            return false;
         }
     }
+
+    public int GetHashCode(object obj) => obj?.GetHashCode() ?? 0;
 }
