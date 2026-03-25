@@ -68,18 +68,6 @@ public final class TestMethodNameTestGroupRequest {
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("query_param_object")
-    private Optional<PlainObject> _getQueryParamObject() {
-        return queryParamObject;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("query_param_integer")
-    private Optional<Integer> _getQueryParamInteger() {
-        return queryParamInteger;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("body")
     private Optional<PlainObject> _getBody() {
         return body;

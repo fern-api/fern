@@ -99,11 +99,11 @@ class SyspropClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<value-of<Language>, int>
+     * @return ?array<value-of<Language>, int>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getNumWarmInstances(?array $options = null): array
+    public function getNumWarmInstances(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -119,7 +119,7 @@ class SyspropClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, ['string' => 'integer']); // @phpstan-ignore-line
             }

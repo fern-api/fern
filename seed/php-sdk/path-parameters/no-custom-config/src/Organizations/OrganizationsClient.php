@@ -62,11 +62,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Organization
+     * @return ?Organization
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): Organization
+    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): ?Organization
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -82,7 +82,7 @@ class OrganizationsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Organization::fromJson($json);
             }
@@ -110,11 +110,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, ?array $options = null): User
+    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -130,7 +130,7 @@ class OrganizationsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return User::fromJson($json);
             }
@@ -158,11 +158,11 @@ class OrganizationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Organization>
+     * @return ?array<Organization>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): array
+    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -183,7 +183,7 @@ class OrganizationsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [Organization::class]); // @phpstan-ignore-line
             }

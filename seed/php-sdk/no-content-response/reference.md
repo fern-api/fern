@@ -66,7 +66,7 @@ $client->contacts->create(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;contacts-&gt;get($id) -> Contact</code></summary>
+<details><summary><code>$client-&gt;contacts-&gt;get($id) -> ?Contact</code></summary>
 <dl>
 <dd>
 

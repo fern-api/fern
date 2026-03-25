@@ -64,11 +64,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Movie
+     * @return ?Movie
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $movieId, ?array $options = null): Movie
+    public function getMovie(string $movieId, ?array $options = null): ?Movie
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -84,7 +84,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Movie::fromJson($json);
             }
@@ -110,11 +110,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createMovie(Movie $request, ?array $options = null): string
+    public function createMovie(Movie $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -131,7 +131,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -157,11 +157,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Metadata
+     * @return ?Metadata
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetMetadataRequest $request, ?array $options = null): Metadata
+    public function getMetadata(GetMetadataRequest $request, ?array $options = null): ?Metadata
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -188,7 +188,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Metadata::fromJson($json);
             }
@@ -214,11 +214,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createBigEntity(BigEntity $request, ?array $options = null): Response
+    public function createBigEntity(BigEntity $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -235,7 +235,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Response::fromJson($json);
             }

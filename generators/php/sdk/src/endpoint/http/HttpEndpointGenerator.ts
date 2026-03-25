@@ -712,24 +712,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent());
                     writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
-                    if (return_.isOptional()) {
-                        writer.writeTextStatement("return null");
-                    } else {
-                        writer.write("throw ");
-                        writer.writeNodeStatement(
-                            php.instantiateClass({
-                                classReference: this.context.getBaseExceptionClassReference(),
-                                arguments_: [
-                                    {
-                                        name: "message",
-                                        assignment: php.codeblock(
-                                            '"Expected a JSON response body, but received an empty response."'
-                                        )
-                                    }
-                                ]
-                            })
-                        );
-                    }
+                    writer.writeTextStatement("return null");
                     writer.endControlFlow();
                     writer.write("return ");
                     writer.writeNode(this.decodeJsonResponse(return_));

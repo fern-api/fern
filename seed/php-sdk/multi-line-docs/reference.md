@@ -60,7 +60,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 

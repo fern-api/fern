@@ -61,11 +61,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Resource
+     * @return ?Resource
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, ?array $options = null): Resource
+    public function getResource(string $resourceId, ?array $options = null): ?Resource
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -81,7 +81,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return Resource::fromJson($json);
             }
@@ -107,11 +107,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<Resource>
+     * @return ?array<Resource>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): array
+    public function listResources(ListResourcesRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -131,7 +131,7 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
             }

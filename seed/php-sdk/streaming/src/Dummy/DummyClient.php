@@ -97,11 +97,11 @@ class DummyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return StreamResponse
+     * @return ?StreamResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function generate(Generateequest $request, ?array $options = null): StreamResponse
+    public function generate(Generateequest $request, ?array $options = null): ?StreamResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -118,7 +118,7 @@ class DummyClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return StreamResponse::fromJson($json);
             }
