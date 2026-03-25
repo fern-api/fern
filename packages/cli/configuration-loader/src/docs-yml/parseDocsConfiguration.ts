@@ -456,8 +456,19 @@ function convertLayoutConfig(
     layout: docsYml.RawSchemas.LayoutConfig | undefined,
     themeTabsAlignment: string | undefined
 ): docsYml.ParsedDocsConfiguration["layout"] {
-    if (layout == null) {
+    if (layout == null && themeTabsAlignment == null) {
         return undefined;
+    }
+
+    // tabsAlignment is resolved from theme.tabs.alignment, not layout.
+    // Cast needed until the fern-platform companion PR merges and the SDK is updated.
+    const resolvedTabsAlignment = themeTabsAlignment === "center" ? "CENTER" : "LEFT";
+
+    if (layout == null) {
+        // No layout section, but theme.tabs.alignment is set — return minimal layout with just tabsAlignment.
+        return {
+            tabsAlignment: resolvedTabsAlignment
+        } as docsYml.ParsedDocsConfiguration["layout"];
     }
 
     return {
@@ -492,9 +503,7 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
-        // tabsAlignment is resolved from theme.tabs.alignment, not layout.
-        // Cast needed until the fern-platform companion PR merges and the SDK is updated.
-        tabsAlignment: themeTabsAlignment === "center" ? "CENTER" : "LEFT"
+        tabsAlignment: resolvedTabsAlignment
     } as docsYml.ParsedDocsConfiguration["layout"];
 }
 
