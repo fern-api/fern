@@ -326,9 +326,7 @@ async function startAndPollWithRetry(
             return context.failAndThrow(lastError);
         }
 
-        context.logger.warn(
-            chalk.yellow(`Generation attempt failed for '${opts.name}': ${lastError}`)
-        );
+        context.logger.warn(chalk.yellow(`Generation attempt failed for '${opts.name}': ${lastError}`));
     }
 
     return context.failAndThrow(
@@ -363,9 +361,7 @@ async function startGeneration(
     }
 }
 
-type PollResult =
-    | { ok: true }
-    | { ok: false; retryable: boolean; errorMessage: string };
+type PollResult = { ok: true } | { ok: false; retryable: boolean; errorMessage: string };
 
 async function pollForCompletion(
     client: LibraryDocsClient,
@@ -395,9 +391,7 @@ async function pollForCompletion(
                 }
                 const waitedMs = Date.now() - pendingSince;
                 if (waitedMs > 30_000 && waitedMs < 33_000 + POLL_INTERVAL_MS) {
-                    context.logger.info(
-                        chalk.dim("Parser is starting up — this may take a moment on first run...")
-                    );
+                    context.logger.info(chalk.dim("Parser is starting up — this may take a moment on first run..."));
                 }
                 context.logger.debug("Status: PENDING");
                 break;
