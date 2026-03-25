@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer discarding response body examples when the 2xx
+        response has `examples` but no `schema`. The synthetic empty-object
+        fallback now preserves `examples` and `example` from the original
+        media type object, so example names, response bodies, and ordering
+        are correctly carried through to the IR.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.44.0
   changelogEntry:
     - summary: |
