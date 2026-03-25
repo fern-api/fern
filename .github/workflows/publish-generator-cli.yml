@@ -89,17 +89,10 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
-      - name: Setup Node for npm publish
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
-          scope: "@fern-api"
-
       - name: Publish generator-cli
         run: |
           cd packages/generator-cli/dist
-          pnpm publish --access public --tag latest --no-git-checks
+          npm publish --provenance --access public --tag latest
 
   publish-sdks:
     needs: check-version
