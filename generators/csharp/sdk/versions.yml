@@ -2,12 +2,13 @@
 - version: 2.54.2
   changelogEntry:
     - summary: |
-        Upgrade gRPC/Protobuf NuGet packages in generated C# SDKs:
-        Google.Protobuf 3.31.1 → 3.34.1,
-        Grpc.Net.Client 2.63.0 → 2.76.0,
-        Grpc.Net.ClientFactory 2.63.0 → 2.76.0,
-        Grpc.Tools 2.64.0 → 2.78.0.
+        Upgrade gRPC/Protobuf NuGet packages in generated C# SDKs.
         These only affect proto-based SDK generation.
+
+        - Google.Protobuf: 3.31.1 → 3.34.1
+        - Grpc.Net.Client: 2.63.0 → 2.76.0
+        - Grpc.Net.ClientFactory: 2.63.0 → 2.76.0
+        - Grpc.Tools: 2.64.0 → 2.78.0
       type: chore
   createdAt: "2026-03-25"
   irVersion: 65
