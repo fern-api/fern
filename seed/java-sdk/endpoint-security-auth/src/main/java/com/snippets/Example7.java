@@ -9,6 +9,6 @@ public class Example7 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.user().getWithBearer();
+        client.user().getWithAllAuth();
     }
 }

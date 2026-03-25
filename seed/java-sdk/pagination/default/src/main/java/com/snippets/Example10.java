@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequestForOptionalData;
 import java.util.UUID;
 
 public class Example10 {
@@ -13,7 +13,7 @@ public class Example10 {
 
         client.inlineUsers()
                 .inlineUsers()
-                .listWithExtendedResults(ListUsersExtendedRequest.builder()
+                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
                         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .build());
     }

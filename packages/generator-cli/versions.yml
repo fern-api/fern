@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Update generator-cli to trigger new publish after changing to oidc auth for publish action.
+      type: chore
+  createdAt: "2026-03-25"
+  version: 0.6.14
 
 - changelogEntry:
     - summary: |
