@@ -3,24 +3,31 @@ info:
   title: server-sent-events-openapi
   description: >
     Test fixture for SSE handling via OpenAPI 3.2's itemSchema.
-    Each endpoint exercises a specific combination of dimensions:
-      A: Discriminator style (discriminated with mapping, undiscriminated with const)
+
+    Endpoints 1-6 test the named-envelope-schema pattern used by real customers:
+    named $ref'd schemas for each event type, discriminator with mapping, and
+    x-fern-discriminator-context. These vary across two dimensions:
       B: Field name collision (event field in both envelope and data payload)
       C: x-fern-discriminator-context (protocol, data, absent)
+
+    Endpoint 7 tests the OAS 3.2 spec-native pattern: inline oneOf variants
+    extending a base Event schema, using const on event fields and
+    contentSchema/contentMediaType on data fields. No discriminator object.
+
     All endpoints share the same four event types: heartbeat (no data),
-    string literal data, number literal data, and object data. Collision variants
-    use ObjectPayloadWithEventField (which has its own "event" property) instead of
-    StatusPayload. Endpoint 9 repeats the base case using contentSchema/contentMediaType
-    instead of direct typing.
+    string literal data, number literal data, and object data.
   version: "0.1.0"
 
 paths:
+  # ==========================================================================
+  # Endpoints 1-6: Named envelope schema pattern (B x C matrix)
+  # ==========================================================================
   /stream/discriminated-no-collision-protocol:
     post:
       operationId: streamDiscriminatedNoCollisionProtocol
-      summary: Discriminated SSE with protocol context and no field collision
+      summary: Named envelopes with protocol context and no field collision
       description: >
-        Dimensions: A1-B1-C1.
+        B1-C1.
         Uses discriminator with mapping, x-fern-discriminator-context set to protocol,
         and data fields reference schemas via $ref. The envelope's event field does not
         collide with any field in the data payloads. This is the standard happy-path
@@ -38,25 +45,25 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeObjectEvent"
 
   /stream/discriminated-collision-protocol:
     post:
       operationId: streamDiscriminatedCollisionProtocol
-      summary: Discriminated SSE with protocol context and event field collision
+      summary: Named envelopes with protocol context and event field collision
       description: >
-        Dimensions: A1-B2-C1.
+        B2-C1.
         The object data payload (ObjectPayloadWithEventField) contains its own "event"
         property, which collides with the SSE envelope's "event" discriminator field.
         Tests whether generators correctly separate the protocol-level discriminant from
@@ -74,25 +81,25 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
 
   /stream/discriminated-no-collision-data-context:
     post:
       operationId: streamDiscriminatedNoCollisionDataContext
-      summary: Discriminated SSE with explicit data context and no collision
+      summary: Named envelopes with explicit data context and no collision
       description: >
-        Dimensions: A1-B1-C2.
+        B1-C2.
         x-fern-discriminator-context is explicitly set to "data" (the default value).
         The discriminant should be flattened into the data payload rather than treated
         as a protocol-level SSE envelope field. Verifies that explicitly setting the
@@ -110,25 +117,25 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeObjectEvent"
 
   /stream/discriminated-collision-data-context:
     post:
       operationId: streamDiscriminatedCollisionDataContext
-      summary: Discriminated SSE with explicit data context and event field collision
+      summary: Named envelopes with explicit data context and event field collision
       description: >
-        Dimensions: A1-B2-C2.
+        B2-C2.
         Combines explicit context=data with a data payload that has its own "event" field.
         Since context=data means the discriminant is flattened into the data, the collision
         between the envelope's event field and the payload's event field should surface
@@ -146,25 +153,25 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
 
   /stream/discriminated-no-collision-no-context:
     post:
       operationId: streamDiscriminatedNoCollisionNoContext
-      summary: Discriminated SSE with no context extension and no collision
+      summary: Named envelopes with no context extension and no collision
       description: >
-        Dimensions: A1-B1-C3.
+        B1-C3.
         The x-fern-discriminator-context extension is omitted entirely. Tests whether
         Fern correctly infers the default behavior (context=data) when the extension
         is absent. No field collision, so the default should work without issues.
@@ -181,24 +188,24 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeObjectEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeObjectEvent"
 
   /stream/discriminated-collision-no-context:
     post:
       operationId: streamDiscriminatedCollisionNoContext
-      summary: Discriminated SSE with event field collision and no context hint
+      summary: Named envelopes with event field collision and no context hint
       description: >
-        Dimensions: A1-B2-C3.
+        B2-C3.
         Combines the collision scenario (data payload has its own "event" field) with
         the absence of x-fern-discriminator-context. This is the worst case for
         inference — the generator has no hint that the discriminant is protocol-level,
@@ -216,27 +223,31 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                  - $ref: "#/components/schemas/EnvelopeHeartbeat"
+                  - $ref: "#/components/schemas/EnvelopeStringEvent"
+                  - $ref: "#/components/schemas/EnvelopeNumberEvent"
+                  - $ref: "#/components/schemas/EnvelopeCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
-                    string_data: "#/components/schemas/DiscriminatedStringEvent"
-                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
-                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
+                    heartbeat: "#/components/schemas/EnvelopeHeartbeat"
+                    string_data: "#/components/schemas/EnvelopeStringEvent"
+                    number_data: "#/components/schemas/EnvelopeNumberEvent"
+                    object_data: "#/components/schemas/EnvelopeCollisionObjectEvent"
 
-  /stream/undiscriminated-no-collision:
+  # ==========================================================================
+  # Endpoint 7: OAS 3.2 spec-native pattern
+  # ==========================================================================
+  /stream/oas-spec-native:
     post:
-      operationId: streamUndiscriminatedNoCollision
-      summary: Undiscriminated oneOf SSE using const on event field, no collision
+      operationId: streamOasSpecNative
+      summary: OAS 3.2 spec-native SSE pattern with inline variants and contentSchema
       description: >
-        Dimensions: A2-B1.
-        Uses the OAS 3.2 native pattern — oneOf with const constraints on the event
-        property instead of a discriminator object. No x-fern-discriminator-context
-        since there is no discriminator to attach it to.
+        Follows the pattern from the OAS 3.2 specification's own SSE example.
+        The itemSchema extends a base Event schema via $ref and uses inline oneOf
+        variants with const on the event field to distinguish event types. Data fields
+        use contentSchema/contentMediaType for structured payloads. No discriminator
+        object is used — event type resolution relies on const matching.
       requestBody:
         required: true
         content:
@@ -245,77 +256,33 @@ paths:
               $ref: "#/components/schemas/StreamRequest"
       responses:
         "200":
-          description: SSE stream with undiscriminated event types
+          description: SSE stream following the OAS 3.2 spec example pattern
           content:
             text/event-stream:
               itemSchema:
+                $ref: "#/components/schemas/Event"
+                required: [event]
                 oneOf:
-                  - $ref: "#/components/schemas/UndiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/UndiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/UndiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/UndiscriminatedObjectEvent"
-
-  /stream/undiscriminated-collision:
-    post:
-      operationId: streamUndiscriminatedCollision
-      summary: Undiscriminated oneOf SSE with event field collision
-      description: >
-        Dimensions: A2-B2.
-        Undiscriminated oneOf with const constraints, but the object data payload
-        contains its own "event" field. With no discriminator object and no context
-        extension, the generator must handle the collision purely from schema structure.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StreamRequest"
-      responses:
-        "200":
-          description: SSE stream with undiscriminated types and field collision
-          content:
-            text/event-stream:
-              itemSchema:
-                oneOf:
-                  - $ref: "#/components/schemas/UndiscriminatedHeartbeat"
-                  - $ref: "#/components/schemas/UndiscriminatedStringEvent"
-                  - $ref: "#/components/schemas/UndiscriminatedNumberEvent"
-                  - $ref: "#/components/schemas/UndiscriminatedCollisionObjectEvent"
-
-  /stream/discriminated-content-schema:
-    post:
-      operationId: streamDiscriminatedContentSchema
-      summary: Discriminated SSE using contentSchema and contentMediaType on data
-      description: >
-        Variant of endpoint 1 (A1-B1-C1) using the OAS 3.2 recommended pattern where
-        data is typed as a string with contentMediaType and contentSchema pointing to
-        the actual payload schema. This is the spec-compliant way to describe
-        JSON-encoded SSE data fields, independent of the main test matrix.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StreamRequest"
-      responses:
-        "200":
-          description: SSE stream using contentSchema for data field typing
-          content:
-            text/event-stream:
-              itemSchema:
-                oneOf:
-                  - $ref: "#/components/schemas/ContentSchemaHeartbeat"
-                  - $ref: "#/components/schemas/ContentSchemaStringEvent"
-                  - $ref: "#/components/schemas/ContentSchemaNumberEvent"
-                  - $ref: "#/components/schemas/ContentSchemaObjectEvent"
-                discriminator:
-                  propertyName: event
-                  x-fern-discriminator-context: protocol
-                  mapping:
-                    heartbeat: "#/components/schemas/ContentSchemaHeartbeat"
-                    string_data: "#/components/schemas/ContentSchemaStringEvent"
-                    number_data: "#/components/schemas/ContentSchemaNumberEvent"
-                    object_data: "#/components/schemas/ContentSchemaObjectEvent"
+                  - properties:
+                      event:
+                        const: heartbeat
+                  - properties:
+                      event:
+                        const: string_data
+                      data:
+                        type: string
+                  - properties:
+                      event:
+                        const: number_data
+                      data:
+                        format: int64
+                  - properties:
+                      event:
+                        const: object_data
+                      data:
+                        contentMediaType: application/json
+                        contentSchema:
+                          $ref: "#/components/schemas/StatusPayload"
 
 components:
   schemas:
@@ -325,6 +292,27 @@ components:
         query:
           type: string
 
+    # ==========================================================================
+    # Base SSE event schema (used by endpoint 7, per OAS 3.2 spec pattern)
+    # ==========================================================================
+    Event:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: string
+        event:
+          type: string
+        id:
+          type: string
+        retry:
+          type: integer
+          minimum: 0
+
+    # ==========================================================================
+    # Data payloads
+    # ==========================================================================
     StatusPayload:
       type: object
       required:
@@ -355,10 +343,9 @@ components:
             the SSE envelope's event field used for discrimination.
 
     # ==========================================================================
-    # Discriminated envelope schemas (used by endpoints 1-6)
-    # Uses enum on event field, direct typing on data
+    # Named envelope schemas (used by endpoints 1-6)
     # ==========================================================================
-    DiscriminatedHeartbeat:
+    EnvelopeHeartbeat:
       type: object
       required:
         - event
@@ -368,7 +355,7 @@ components:
           enum:
             - heartbeat
 
-    DiscriminatedStringEvent:
+    EnvelopeStringEvent:
       type: object
       required:
         - event
@@ -381,7 +368,7 @@ components:
         data:
           type: string
 
-    DiscriminatedNumberEvent:
+    EnvelopeNumberEvent:
       type: object
       required:
         - event
@@ -394,7 +381,7 @@ components:
         data:
           type: number
 
-    DiscriminatedObjectEvent:
+    EnvelopeObjectEvent:
       type: object
       required:
         - event
@@ -407,7 +394,7 @@ components:
         data:
           $ref: "#/components/schemas/StatusPayload"
 
-    DiscriminatedCollisionObjectEvent:
+    EnvelopeCollisionObjectEvent:
       type: object
       required:
         - event
@@ -419,123 +406,3 @@ components:
             - object_data
         data:
           $ref: "#/components/schemas/ObjectPayloadWithEventField"
-
-    # ==========================================================================
-    # Undiscriminated envelope schemas (used by endpoints 7-8)
-    # Uses const on event field instead of enum, no discriminator object
-    # ==========================================================================
-    UndiscriminatedHeartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          const: heartbeat
-
-    UndiscriminatedStringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: string_data
-        data:
-          type: string
-
-    UndiscriminatedNumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: number_data
-        data:
-          type: number
-
-    UndiscriminatedObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: object_data
-        data:
-          $ref: "#/components/schemas/StatusPayload"
-
-    UndiscriminatedCollisionObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: object_data
-        data:
-          $ref: "#/components/schemas/ObjectPayloadWithEventField"
-
-    # ==========================================================================
-    # ContentSchema envelope schemas (used by endpoint 9)
-    # Uses contentSchema/contentMediaType instead of direct typing on data
-    # ==========================================================================
-    ContentSchemaHeartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    ContentSchemaStringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    ContentSchemaNumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: string
-          contentMediaType: text/plain
-          contentSchema:
-            type: number
-
-    ContentSchemaObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - object_data
-        data:
-          type: string
-          contentMediaType: application/json
-          contentSchema:
-            $ref: "#/components/schemas/StatusPayload"
