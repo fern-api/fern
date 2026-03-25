@@ -53,7 +53,7 @@ $client->dummy->generateStream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;dummy-&gt;generate($request) -> StreamResponse</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generate($request) -> ?StreamResponse</code></summary>
 <dl>
 <dd>
 

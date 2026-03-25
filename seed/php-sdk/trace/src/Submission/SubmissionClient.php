@@ -63,11 +63,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ExecutionSessionResponse
+     * @return ?ExecutionSessionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
+    public function createExecutionSession(string $language, ?array $options = null): ?ExecutionSessionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -82,6 +82,9 @@ class SubmissionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ExecutionSessionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -194,11 +197,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return GetExecutionSessionStateResponse
+     * @return ?GetExecutionSessionStateResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
+    public function getExecutionSessionsState(?array $options = null): ?GetExecutionSessionStateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -213,6 +216,9 @@ class SubmissionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return GetExecutionSessionStateResponse::fromJson($json);
             }
         } catch (JsonException $e) {

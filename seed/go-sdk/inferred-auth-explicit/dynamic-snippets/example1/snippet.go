@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/inferred-auth-explicit/fern"
     client "github.com/inferred-auth-explicit/fern/client"
     option "github.com/inferred-auth-explicit/fern/option"

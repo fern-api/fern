@@ -31,8 +31,9 @@ package example
 
 import (
     context "context"
-    client "github.com/file-upload/fern/client"
     strings "strings"
+
+    client "github.com/file-upload/fern/client"
 )
 
 func do() {

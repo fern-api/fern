@@ -3,11 +3,12 @@
 package client
 
 import (
+	os "os"
+
 	basicauth "github.com/basic-auth-environment-variables/fern/basicauth"
 	core "github.com/basic-auth-environment-variables/fern/core"
 	internal "github.com/basic-auth-environment-variables/fern/internal"
 	option "github.com/basic-auth-environment-variables/fern/option"
-	os "os"
 )
 
 type Client struct {

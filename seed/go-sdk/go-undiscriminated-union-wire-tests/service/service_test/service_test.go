@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/go-undiscriminated-union-wire-tests/fern"
 	client "github.com/go-undiscriminated-union-wire-tests/fern/client"
 	option "github.com/go-undiscriminated-union-wire-tests/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(

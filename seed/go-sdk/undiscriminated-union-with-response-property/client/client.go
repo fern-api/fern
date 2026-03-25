@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	fern "github.com/undiscriminated-union-with-response-property/fern"
 	core "github.com/undiscriminated-union-with-response-property/fern/core"
 	internal "github.com/undiscriminated-union-with-response-property/fern/internal"

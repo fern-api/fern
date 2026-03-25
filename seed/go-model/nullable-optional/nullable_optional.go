@@ -5,8 +5,9 @@ package nullableoptional
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/nullable-optional/fern/internal"
 	time "time"
+
+	internal "github.com/nullable-optional/fern/internal"
 )
 
 // An alias for a nullable user ID

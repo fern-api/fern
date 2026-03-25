@@ -8,11 +8,9 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
@@ -51,7 +49,7 @@ public final class FilterByRoleRequest {
         return role;
     }
 
-    @JsonProperty("status")
+    @JsonIgnore
     public Optional<UserStatus> getStatus() {
         return status;
     }
@@ -61,18 +59,6 @@ public final class FilterByRoleRequest {
         if (secondaryRole == null) {
             return Optional.empty();
         }
-        return secondaryRole;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("role")
-    private UserRole _getRole() {
-        return role;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("secondaryRole")
-    private Optional<UserRole> _getSecondaryRole() {
         return secondaryRole;
     }
 

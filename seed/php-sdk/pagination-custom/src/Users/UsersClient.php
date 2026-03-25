@@ -79,11 +79,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameCursor
+     * @return ?UsernameCursor
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): UsernameCursor
+    private function _listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -103,6 +103,9 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UsernameCursor::fromJson($json);
             }
         } catch (JsonException $e) {

@@ -249,7 +249,7 @@ $client->service->withFormEncodedContainers($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;optionalArgs($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalArgs($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -278,7 +278,7 @@ $client->service->optionalArgs(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withInlineType($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withInlineType($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -291,7 +291,7 @@ $client->service->optionalArgs(
 <dd>
 
 ```php
-$client->service->withInlineType($request): string;
+$client->service->withInlineType($request): ?string;
 ```
 </dd>
 </dl>
@@ -303,7 +303,7 @@ $client->service->withInlineType($request): string;
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withJsonProperty($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withJsonProperty($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -316,7 +316,7 @@ $client->service->withInlineType($request): string;
 <dd>
 
 ```php
-$client->service->withJsonProperty($request): string;
+$client->service->withJsonProperty($request): ?string;
 ```
 </dd>
 </dl>
@@ -353,7 +353,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -366,7 +366,7 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->withLiteralAndEnumTypes($request): string;
+$client->service->withLiteralAndEnumTypes($request): ?string;
 ```
 </dd>
 </dl>

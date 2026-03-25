@@ -4,11 +4,12 @@ package completions
 
 import (
 	context "context"
+	http "net/http"
+
 	sse "github.com/fern-api/sse-go"
 	core "github.com/fern-api/sse-go/core"
 	internal "github.com/fern-api/sse-go/internal"
 	option "github.com/fern-api/sse-go/option"
-	http "net/http"
 )
 
 type Client struct {

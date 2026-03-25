@@ -4,11 +4,12 @@ package inlined
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/literal/fern"
 	core "github.com/literal/fern/core"
 	internal "github.com/literal/fern/internal"
 	option "github.com/literal/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

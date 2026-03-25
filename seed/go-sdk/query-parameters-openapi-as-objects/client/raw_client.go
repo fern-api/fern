@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/query-parameters-openapi-as-objects/fern"
 	core "github.com/query-parameters-openapi-as-objects/fern/core"
 	internal "github.com/query-parameters-openapi-as-objects/fern/internal"
 	option "github.com/query-parameters-openapi-as-objects/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/oauth-client-credentials-nested-root/fern"
     auth "github.com/oauth-client-credentials-nested-root/fern/auth"
     client "github.com/oauth-client-credentials-nested-root/fern/client"

@@ -5,13 +5,14 @@ package client
 import (
 	context "context"
 	errors "errors"
+	os "os"
+
 	fern "github.com/any-auth/fern"
 	auth "github.com/any-auth/fern/auth"
 	core "github.com/any-auth/fern/core"
 	internal "github.com/any-auth/fern/internal"
 	option "github.com/any-auth/fern/option"
 	user "github.com/any-auth/fern/user"
-	os "os"
 )
 
 type Client struct {

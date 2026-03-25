@@ -5,9 +5,9 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -58,7 +58,7 @@ public final class ListResourcesRequest {
     /**
      * @return Zero-indexed page number
      */
-    @JsonProperty("page")
+    @JsonIgnore
     public int getPage() {
         return page;
     }
@@ -66,7 +66,7 @@ public final class ListResourcesRequest {
     /**
      * @return Number of items per page
      */
-    @JsonProperty("per_page")
+    @JsonIgnore
     public Optional<Integer> getPerPage() {
         return perPage;
     }
@@ -74,7 +74,7 @@ public final class ListResourcesRequest {
     /**
      * @return Sort field
      */
-    @JsonProperty("sort")
+    @JsonIgnore
     public Optional<String> getSort() {
         return sort;
     }
@@ -82,7 +82,7 @@ public final class ListResourcesRequest {
     /**
      * @return Sort order (asc or desc)
      */
-    @JsonProperty("order")
+    @JsonIgnore
     public Optional<String> getOrder() {
         return order;
     }
@@ -90,7 +90,7 @@ public final class ListResourcesRequest {
     /**
      * @return Whether to include total count
      */
-    @JsonProperty("include_totals")
+    @JsonIgnore
     public Optional<Boolean> getIncludeTotals() {
         return includeTotals;
     }
@@ -98,7 +98,7 @@ public final class ListResourcesRequest {
     /**
      * @return Comma-separated list of fields to include
      */
-    @JsonProperty("fields")
+    @JsonIgnore
     public Optional<String> getFields() {
         return fields;
     }
@@ -106,7 +106,7 @@ public final class ListResourcesRequest {
     /**
      * @return Search query
      */
-    @JsonProperty("search")
+    @JsonIgnore
     public Optional<String> getSearch() {
         return search;
     }
