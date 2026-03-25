@@ -70,13 +70,13 @@
         "oxfmt": "0.35.0",
         "oxlint": "1.50.0",
         "oxlint-tsgolint": "0.14.2",
-        "ts-loader": "^9.5.1",
-        "typescript": "~5.7.2",
+        "ts-loader": "^9.5.4",
+        "typescript": "~5.9.3",
         "vitest": "^3.2.4",
-        "webpack": "^5.97.1"
+        "webpack": "^5.105.4"
     },
     "engines": {
         "node": ">=18.0.0"
     },
-    "packageManager": "pnpm@10.20.0"
+    "packageManager": "pnpm@10.33.0"
 }

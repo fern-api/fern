@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.8
+  changelogEntry:
+    - summary: |
+        Upgrade generated SDK dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - webpack ^5.97.1 -> ^5.105.4
+        - ts-loader ^9.5.1 -> ^9.5.4
+        - ws ^8.16.0 -> ^8.20.0
+        - @types/ws ^8.5.10 -> ^8.18.1
+        - readable-stream ^4.5.2 -> ^4.7.0
+        - @types/readable-stream ^4.0.18 -> ^4.0.23
+        - form-data-encoder ^4.0.2 -> ^4.1.0
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 3.59.7
   changelogEntry:
     - summary: |
@@ -11,7 +31,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 3.59.6
   changelogEntry:
     - summary: |
