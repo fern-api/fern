@@ -5,9 +5,9 @@ package com.seed.httpHead.resources.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.httpHead.core.ObjectMappers;
@@ -27,7 +27,7 @@ public final class ListUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("limit")
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
