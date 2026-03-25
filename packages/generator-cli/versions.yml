@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix publish by bundling @fern-api/core-utils into the API build and
+        filtering workspace protocol dependencies from the dist package.json.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.13
+
+- changelogEntry:
+    - summary: |
         Include version number in the Gradle installation snippet for Java SDKs
         in generated README.md files. Previously only the Maven snippet included
         the version.
