@@ -96,9 +96,9 @@ class UsersClient
                 $request->setStartingAfter($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
         );
     }
 
@@ -123,9 +123,9 @@ class UsersClient
                 $request->setCursor($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersMixedTypePaginationResponse $response) => $response?->getNext() ?? null,
+            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getNext() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersMixedTypePaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getData() ?? [],
         );
     }
 
@@ -150,9 +150,9 @@ class UsersClient
                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
         );
     }
 
@@ -181,9 +181,9 @@ class UsersClient
                 $request->setCursor($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->getNextCursor() ?? null,
+            getNextCursor: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getNextCursor() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getData() ?? [],
         );
     }
 
@@ -211,7 +211,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -241,7 +241,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -271,7 +271,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -302,7 +302,7 @@ class UsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getLimit() ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -333,9 +333,9 @@ class UsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getLimit() ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
-            hasNextPage: fn (ListUsersPaginationResponse $response) => $response?->getHasNextPage(),
+            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->getHasNextPage(),
         );
     }
 
@@ -360,9 +360,9 @@ class UsersClient
                 $request->setCursor($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedResponse $response) => $response?->getNext() ?? null,
+            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->getNext() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedResponse $response) => $response?->getData()?->getUsers() ?? [],
+            getItems: fn (?ListUsersExtendedResponse $response) => $response?->getData()?->getUsers() ?? [],
         );
     }
 
@@ -387,9 +387,9 @@ class UsersClient
                 $request->setCursor($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedOptionalListResponse $response) => $response?->getNext() ?? null,
+            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getNext() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedOptionalListResponse $response) => $response?->getData()?->getUsers() ?? [],
+            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getData()?->getUsers() ?? [],
         );
     }
 
@@ -414,9 +414,9 @@ class UsersClient
                 $request->setStartingAfter($cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
         );
     }
 
@@ -471,7 +471,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameContainer $response) => $response?->getResults() ?? [],
+            getItems: fn (?UsernameContainer $response) => $response?->getResults() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -501,7 +501,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersOptionalDataPaginationResponse $response) => $response?->getData() ?? [],
+            getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->getData() ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -517,11 +517,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -551,7 +551,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -577,11 +577,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersMixedTypePaginationResponse
+     * @return ?ListUsersMixedTypePaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
+    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ?ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -602,7 +602,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersMixedTypePaginationResponse::fromJson($json);
             }
@@ -628,11 +628,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -649,7 +649,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -679,11 +679,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersTopLevelCursorPaginationResponse
+     * @return ?ListUsersTopLevelCursorPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ListUsersTopLevelCursorPaginationResponse
+    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersTopLevelCursorPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -700,7 +700,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersTopLevelCursorPaginationResponse::fromJson($json);
             }
@@ -726,11 +726,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -760,7 +760,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -786,11 +786,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -820,7 +820,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -846,11 +846,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -867,7 +867,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -893,11 +893,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -924,7 +924,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -950,11 +950,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -981,7 +981,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersPaginationResponse::fromJson($json);
             }
@@ -1007,11 +1007,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedResponse
+     * @return ?ListUsersExtendedResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
+    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ?ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1032,7 +1032,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersExtendedResponse::fromJson($json);
             }
@@ -1058,11 +1058,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedOptionalListResponse
+     * @return ?ListUsersExtendedOptionalListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
+    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ?ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1083,7 +1083,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersExtendedOptionalListResponse::fromJson($json);
             }
@@ -1109,11 +1109,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameCursor
+     * @return ?UsernameCursor
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
+    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1134,7 +1134,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return UsernameCursor::fromJson($json);
             }
@@ -1211,11 +1211,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameContainer
+     * @return ?UsernameContainer
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
+    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): ?UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1236,7 +1236,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return UsernameContainer::fromJson($json);
             }
@@ -1262,11 +1262,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersOptionalDataPaginationResponse
+     * @return ?ListUsersOptionalDataPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ListUsersOptionalDataPaginationResponse
+    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ?ListUsersOptionalDataPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1287,7 +1287,7 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ListUsersOptionalDataPaginationResponse::fromJson($json);
             }

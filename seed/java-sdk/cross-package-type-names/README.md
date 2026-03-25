@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:cross-package-type-names'
+  implementation 'com.fern:cross-package-type-names:0.0.1'
 }
 ```
 

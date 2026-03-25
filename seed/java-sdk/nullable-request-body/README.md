@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:nullable-request-body'
+  implementation 'com.fern:nullable-request-body:0.0.1'
 }
 ```
 

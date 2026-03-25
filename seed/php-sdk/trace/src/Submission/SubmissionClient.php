@@ -63,11 +63,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ExecutionSessionResponse
+     * @return ?ExecutionSessionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
+    public function createExecutionSession(string $language, ?array $options = null): ?ExecutionSessionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -83,7 +83,7 @@ class SubmissionClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return ExecutionSessionResponse::fromJson($json);
             }
@@ -197,11 +197,11 @@ class SubmissionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return GetExecutionSessionStateResponse
+     * @return ?GetExecutionSessionStateResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
+    public function getExecutionSessionsState(?array $options = null): ?GetExecutionSessionStateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -217,7 +217,7 @@ class SubmissionClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return GetExecutionSessionStateResponse::fromJson($json);
             }

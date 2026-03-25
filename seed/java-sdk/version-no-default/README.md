@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:version-no-default'
+  implementation 'com.fern:version-no-default:0.0.1'
 }
 ```
 
