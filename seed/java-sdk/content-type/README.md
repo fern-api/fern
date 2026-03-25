@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:content-type'
+  implementation 'com.fern:content-type:0.0.1'
 }
 ```
 

@@ -589,7 +589,7 @@ export class ReadmeGenerator {
         await writer.writeLine();
         await writer.writeLine("```groovy");
         await writer.writeLine("dependencies {");
-        await writer.writeLine(`  implementation '${maven.group}:${maven.artifact}'`);
+        await writer.writeLine(`  implementation '${maven.group}:${maven.artifact}:${maven.version}'`);
         await writer.writeLine("}");
         await writer.writeLine("```");
         await writer.writeLine();

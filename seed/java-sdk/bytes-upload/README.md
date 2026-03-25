@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:bytes-upload'
+  implementation 'com.fern:bytes-upload:0.0.1'
 }
 ```
 
