@@ -27,7 +27,7 @@ jobs:
     if: |
       github.repository == 'fern-api/fern' && (
         (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main') ||
-        (github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, '(aside) /update-test'))
+        (github.event_name == 'issue_comment' && github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-test') || startsWith(github.event.comment.body, '(aside) /update-test')))
       )
     runs-on: Test
     timeout-minutes: 90
