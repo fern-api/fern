@@ -7,9 +7,11 @@ info:
       A: Discriminator style (discriminated with mapping, undiscriminated with const)
       B: Field name collision (event field in both envelope and data payload)
       C: x-fern-discriminator-context (protocol, data, absent)
-    All discriminated endpoints share the same four event types: heartbeat (no data),
-    string literal data, number literal data, and object data. Endpoint 9 repeats the
-    base case using contentSchema/contentMediaType instead of direct $ref typing.
+    All endpoints share the same four event types: heartbeat (no data),
+    string literal data, number literal data, and object data. Collision variants
+    use ObjectPayloadWithEventField (which has its own "event" property) instead of
+    StatusPayload. Endpoint 9 repeats the base case using contentSchema/contentMediaType
+    instead of direct typing.
   version: "0.1.0"
 
 paths:
@@ -36,18 +38,18 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint1Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint1StringEvent"
-                  - $ref: "#/components/schemas/Endpoint1NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint1ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint1Heartbeat"
-                    string_data: "#/components/schemas/Endpoint1StringEvent"
-                    number_data: "#/components/schemas/Endpoint1NumberEvent"
-                    object_data: "#/components/schemas/Endpoint1ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
 
   /stream/discriminated-collision-protocol:
     post:
@@ -72,18 +74,18 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint2Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint2StringEvent"
-                  - $ref: "#/components/schemas/Endpoint2NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint2ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint2Heartbeat"
-                    string_data: "#/components/schemas/Endpoint2StringEvent"
-                    number_data: "#/components/schemas/Endpoint2NumberEvent"
-                    object_data: "#/components/schemas/Endpoint2ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
 
   /stream/discriminated-no-collision-data-context:
     post:
@@ -108,18 +110,18 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint3Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint3StringEvent"
-                  - $ref: "#/components/schemas/Endpoint3NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint3ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint3Heartbeat"
-                    string_data: "#/components/schemas/Endpoint3StringEvent"
-                    number_data: "#/components/schemas/Endpoint3NumberEvent"
-                    object_data: "#/components/schemas/Endpoint3ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
 
   /stream/discriminated-collision-data-context:
     post:
@@ -144,18 +146,18 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint4Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint4StringEvent"
-                  - $ref: "#/components/schemas/Endpoint4NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint4ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: data
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint4Heartbeat"
-                    string_data: "#/components/schemas/Endpoint4StringEvent"
-                    number_data: "#/components/schemas/Endpoint4NumberEvent"
-                    object_data: "#/components/schemas/Endpoint4ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
 
   /stream/discriminated-no-collision-no-context:
     post:
@@ -179,17 +181,17 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint5Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint5StringEvent"
-                  - $ref: "#/components/schemas/Endpoint5NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint5ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedObjectEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint5Heartbeat"
-                    string_data: "#/components/schemas/Endpoint5StringEvent"
-                    number_data: "#/components/schemas/Endpoint5NumberEvent"
-                    object_data: "#/components/schemas/Endpoint5ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedObjectEvent"
 
   /stream/discriminated-collision-no-context:
     post:
@@ -214,17 +216,17 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint6Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint6StringEvent"
-                  - $ref: "#/components/schemas/Endpoint6NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint6ObjectEvent"
+                  - $ref: "#/components/schemas/DiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/DiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/DiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/DiscriminatedCollisionObjectEvent"
                 discriminator:
                   propertyName: event
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint6Heartbeat"
-                    string_data: "#/components/schemas/Endpoint6StringEvent"
-                    number_data: "#/components/schemas/Endpoint6NumberEvent"
-                    object_data: "#/components/schemas/Endpoint6ObjectEvent"
+                    heartbeat: "#/components/schemas/DiscriminatedHeartbeat"
+                    string_data: "#/components/schemas/DiscriminatedStringEvent"
+                    number_data: "#/components/schemas/DiscriminatedNumberEvent"
+                    object_data: "#/components/schemas/DiscriminatedCollisionObjectEvent"
 
   /stream/undiscriminated-no-collision:
     post:
@@ -248,10 +250,10 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint7Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint7StringEvent"
-                  - $ref: "#/components/schemas/Endpoint7NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint7ObjectEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/UndiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedObjectEvent"
 
   /stream/undiscriminated-collision:
     post:
@@ -275,10 +277,10 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint8Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint8StringEvent"
-                  - $ref: "#/components/schemas/Endpoint8NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint8ObjectEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedHeartbeat"
+                  - $ref: "#/components/schemas/UndiscriminatedStringEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedNumberEvent"
+                  - $ref: "#/components/schemas/UndiscriminatedCollisionObjectEvent"
 
   /stream/discriminated-content-schema:
     post:
@@ -302,18 +304,18 @@ paths:
             text/event-stream:
               itemSchema:
                 oneOf:
-                  - $ref: "#/components/schemas/Endpoint9Heartbeat"
-                  - $ref: "#/components/schemas/Endpoint9StringEvent"
-                  - $ref: "#/components/schemas/Endpoint9NumberEvent"
-                  - $ref: "#/components/schemas/Endpoint9ObjectEvent"
+                  - $ref: "#/components/schemas/ContentSchemaHeartbeat"
+                  - $ref: "#/components/schemas/ContentSchemaStringEvent"
+                  - $ref: "#/components/schemas/ContentSchemaNumberEvent"
+                  - $ref: "#/components/schemas/ContentSchemaObjectEvent"
                 discriminator:
                   propertyName: event
                   x-fern-discriminator-context: protocol
                   mapping:
-                    heartbeat: "#/components/schemas/Endpoint9Heartbeat"
-                    string_data: "#/components/schemas/Endpoint9StringEvent"
-                    number_data: "#/components/schemas/Endpoint9NumberEvent"
-                    object_data: "#/components/schemas/Endpoint9ObjectEvent"
+                    heartbeat: "#/components/schemas/ContentSchemaHeartbeat"
+                    string_data: "#/components/schemas/ContentSchemaStringEvent"
+                    number_data: "#/components/schemas/ContentSchemaNumberEvent"
+                    object_data: "#/components/schemas/ContentSchemaObjectEvent"
 
 components:
   schemas:
@@ -353,9 +355,10 @@ components:
             the SSE envelope's event field used for discrimination.
 
     # ==========================================================================
-    # Endpoint 1: A1-B1-C1 (discriminated, no collision, protocol)
+    # Discriminated envelope schemas (used by endpoints 1-6)
+    # Uses enum on event field, direct typing on data
     # ==========================================================================
-    Endpoint1Heartbeat:
+    DiscriminatedHeartbeat:
       type: object
       required:
         - event
@@ -365,7 +368,7 @@ components:
           enum:
             - heartbeat
 
-    Endpoint1StringEvent:
+    DiscriminatedStringEvent:
       type: object
       required:
         - event
@@ -378,7 +381,7 @@ components:
         data:
           type: string
 
-    Endpoint1NumberEvent:
+    DiscriminatedNumberEvent:
       type: object
       required:
         - event
@@ -391,7 +394,7 @@ components:
         data:
           type: number
 
-    Endpoint1ObjectEvent:
+    DiscriminatedObjectEvent:
       type: object
       required:
         - event
@@ -404,46 +407,7 @@ components:
         data:
           $ref: "#/components/schemas/StatusPayload"
 
-    # ==========================================================================
-    # Endpoint 2: A1-B2-C1 (discriminated, collision, protocol)
-    # ==========================================================================
-    Endpoint2Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    Endpoint2StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    Endpoint2NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: number
-
-    Endpoint2ObjectEvent:
+    DiscriminatedCollisionObjectEvent:
       type: object
       required:
         - event
@@ -457,217 +421,10 @@ components:
           $ref: "#/components/schemas/ObjectPayloadWithEventField"
 
     # ==========================================================================
-    # Endpoint 3: A1-B1-C2 (discriminated, no collision, data explicit)
+    # Undiscriminated envelope schemas (used by endpoints 7-8)
+    # Uses const on event field instead of enum, no discriminator object
     # ==========================================================================
-    Endpoint3Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    Endpoint3StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    Endpoint3NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: number
-
-    Endpoint3ObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - object_data
-        data:
-          $ref: "#/components/schemas/StatusPayload"
-
-    # ==========================================================================
-    # Endpoint 4: A1-B2-C2 (discriminated, collision, data explicit)
-    # ==========================================================================
-    Endpoint4Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    Endpoint4StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    Endpoint4NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: number
-
-    Endpoint4ObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - object_data
-        data:
-          $ref: "#/components/schemas/ObjectPayloadWithEventField"
-
-    # ==========================================================================
-    # Endpoint 5: A1-B1-C3 (discriminated, no collision, no context)
-    # ==========================================================================
-    Endpoint5Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    Endpoint5StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    Endpoint5NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: number
-
-    Endpoint5ObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - object_data
-        data:
-          $ref: "#/components/schemas/StatusPayload"
-
-    # ==========================================================================
-    # Endpoint 6: A1-B2-C3 (discriminated, collision, no context)
-    # ==========================================================================
-    Endpoint6Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          enum:
-            - heartbeat
-
-    Endpoint6StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - string_data
-        data:
-          type: string
-
-    Endpoint6NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - number_data
-        data:
-          type: number
-
-    Endpoint6ObjectEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          enum:
-            - object_data
-        data:
-          $ref: "#/components/schemas/ObjectPayloadWithEventField"
-
-    # ==========================================================================
-    # Endpoint 7: A2-B1 (undiscriminated, no collision)
-    # ==========================================================================
-    Endpoint7Heartbeat:
+    UndiscriminatedHeartbeat:
       type: object
       required:
         - event
@@ -676,7 +433,7 @@ components:
           type: string
           const: heartbeat
 
-    Endpoint7StringEvent:
+    UndiscriminatedStringEvent:
       type: object
       required:
         - event
@@ -688,7 +445,7 @@ components:
         data:
           type: string
 
-    Endpoint7NumberEvent:
+    UndiscriminatedNumberEvent:
       type: object
       required:
         - event
@@ -700,7 +457,7 @@ components:
         data:
           type: number
 
-    Endpoint7ObjectEvent:
+    UndiscriminatedObjectEvent:
       type: object
       required:
         - event
@@ -712,43 +469,7 @@ components:
         data:
           $ref: "#/components/schemas/StatusPayload"
 
-    # ==========================================================================
-    # Endpoint 8: A2-B2 (undiscriminated, collision)
-    # ==========================================================================
-    Endpoint8Heartbeat:
-      type: object
-      required:
-        - event
-      properties:
-        event:
-          type: string
-          const: heartbeat
-
-    Endpoint8StringEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: string_data
-        data:
-          type: string
-
-    Endpoint8NumberEvent:
-      type: object
-      required:
-        - event
-        - data
-      properties:
-        event:
-          type: string
-          const: number_data
-        data:
-          type: number
-
-    Endpoint8ObjectEvent:
+    UndiscriminatedCollisionObjectEvent:
       type: object
       required:
         - event
@@ -761,9 +482,10 @@ components:
           $ref: "#/components/schemas/ObjectPayloadWithEventField"
 
     # ==========================================================================
-    # Endpoint 9: contentSchema variant of endpoint 1
+    # ContentSchema envelope schemas (used by endpoint 9)
+    # Uses contentSchema/contentMediaType instead of direct typing on data
     # ==========================================================================
-    Endpoint9Heartbeat:
+    ContentSchemaHeartbeat:
       type: object
       required:
         - event
@@ -773,7 +495,7 @@ components:
           enum:
             - heartbeat
 
-    Endpoint9StringEvent:
+    ContentSchemaStringEvent:
       type: object
       required:
         - event
@@ -786,7 +508,7 @@ components:
         data:
           type: string
 
-    Endpoint9NumberEvent:
+    ContentSchemaNumberEvent:
       type: object
       required:
         - event
@@ -802,7 +524,7 @@ components:
           contentSchema:
             type: number
 
-    Endpoint9ObjectEvent:
+    ContentSchemaObjectEvent:
       type: object
       required:
         - event
