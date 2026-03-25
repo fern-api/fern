@@ -493,6 +493,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+  server-sent-events-openapi:
+    - outputFolder: no-custom-config
+      customConfig: null
+
 scripts:
   - image: fernapi/ts-seed
     commands:
