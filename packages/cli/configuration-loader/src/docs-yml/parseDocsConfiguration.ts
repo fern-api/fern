@@ -184,7 +184,7 @@ export async function parseDocsConfiguration({
         backgroundImage,
         colors: convertColorsConfiguration(colors, context),
         typography,
-        layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
+        layout: convertLayoutConfig(layout, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
         theme: resolvedTheme,
         analyticsConfig: {
@@ -454,16 +454,11 @@ function convertSettingsConfig(
 
 function convertLayoutConfig(
     layout: docsYml.RawSchemas.LayoutConfig | undefined,
-    themeTabsAlignment: string | undefined,
     themeTabsPlacement: string | undefined
 ): docsYml.ParsedDocsConfiguration["layout"] {
-    if (layout == null && themeTabsAlignment == null && themeTabsPlacement == null) {
+    if (layout == null && themeTabsPlacement == null) {
         return undefined;
     }
-
-    // tabsAlignment is resolved from theme.tabs.alignment, not layout.
-    // Cast needed until the fern-platform companion PR merges and the SDK is updated.
-    const resolvedTabsAlignment = themeTabsAlignment === "center" ? "CENTER" : "LEFT";
 
     // tabsPlacement: theme.tabs.placement overrides layout.tabs-placement.
     const resolvedTabsPlacement =
@@ -474,11 +469,10 @@ function convertLayoutConfig(
               : undefined;
 
     if (layout == null) {
-        // No layout section, but theme.tabs properties are set — return minimal layout.
+        // No layout section, but theme.tabs.placement is set — return minimal layout.
         return {
-            ...(resolvedTabsPlacement != null ? { tabsPlacement: resolvedTabsPlacement } : {}),
-            tabsAlignment: resolvedTabsAlignment
-        } as unknown as docsYml.ParsedDocsConfiguration["layout"];
+            ...(resolvedTabsPlacement != null ? { tabsPlacement: resolvedTabsPlacement } : {})
+        };
     }
 
     return {
@@ -513,9 +507,8 @@ function convertLayoutConfig(
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false,
-        tabsAlignment: resolvedTabsAlignment
-    } as unknown as docsYml.ParsedDocsConfiguration["layout"];
+        hideFeedback: layout.hideFeedback ?? false
+    };
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
