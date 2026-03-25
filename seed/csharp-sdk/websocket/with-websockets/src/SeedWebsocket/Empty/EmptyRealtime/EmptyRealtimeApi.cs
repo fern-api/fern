@@ -1,5 +1,6 @@
-using System.ComponentModel;
-using System.Text.Json;
+using global::System.ComponentModel;
+using global::System.Text;
+using global::System.Text.Json;
 using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket.Empty;
@@ -107,7 +108,7 @@ public partial class EmptyRealtimeApi
     /// </summary>
     internal async Task InjectTestMessage(string rawJson)
     {
-        using var stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(rawJson));
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson));
         await OnTextMessage(stream).ConfigureAwait(false);
     }
 

@@ -1,0 +1,199 @@
+name: Auto-label Issues
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  label:
+    name: Apply labels from issue form
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || "";
+            const labelsToAdd = [];
+
+            // All possible managed labels by category (for stale label removal)
+            const allComponentLabels = [
+              "component:cli", "component:sdks", "component:docs",
+              "component:dashboard", "component:other",
+            ];
+            const allPriorityLabels = [
+              "priority:p0-critical", "priority:p1-high",
+              "priority:p2-medium", "priority:p3-low",
+            ];
+            const allLangLabels = [
+              "lang:typescript", "lang:python", "lang:java", "lang:go",
+              "lang:csharp", "lang:php", "lang:ruby", "lang:swift", "lang:rust",
+            ];
+
+            // --- Component labels ---
+            const componentSection = body.match(/### Which Fern component\?\s*\n\n(.+)/);
+            if (componentSection) {
+              const component = componentSection[1].trim();
+              const componentMap = {
+                "CLI": "component:cli",
+                "SDKs": "component:sdks",
+                "Docs": "component:docs",
+                "Dashboard": "component:dashboard",
+                "Other": "component:other",
+              };
+              if (componentMap[component]) {
+                labelsToAdd.push(componentMap[component]);
+              }
+            }
+
+            // --- Priority labels ---
+            const prioritySection = body.match(/### How (?:urgent|important) is this\?\s*\n\n(.+)/);
+            if (prioritySection) {
+              const priority = prioritySection[1].trim();
+              const priorityMap = {
+                "P0 - Critical (Blocking work)": "priority:p0-critical",
+                "P1 - High (Strongly needed)": "priority:p1-high",
+                "P2 - Medium (Would be helpful)": "priority:p2-medium",
+                "P3 - Low (Nice to have)": "priority:p3-low",
+              };
+              if (priorityMap[priority]) {
+                labelsToAdd.push(priorityMap[priority]);
+              }
+            }
+
+            // --- SDK language labels ---
+            const selectedLangs = [];
+            const langSection = body.match(/### Which SDK language\(s\)\?\s*\n\n([\s\S]*?)(?=\n###|\n*$)/);
+            if (langSection) {
+              const langText = langSection[1].trim();
+              if (langText && langText !== "_No response_") {
+                const langMap = {
+                  "TypeScript": "lang:typescript",
+                  "Python": "lang:python",
+                  "Java": "lang:java",
+                  "Go": "lang:go",
+                  "C#": "lang:csharp",
+                  "PHP": "lang:php",
+                  "Ruby": "lang:ruby",
+                  "Swift": "lang:swift",
+                  "Rust": "lang:rust",
+                };
+                for (const [lang, label] of Object.entries(langMap)) {
+                  if (langText.includes(lang)) {
+                    labelsToAdd.push(label);
+                    selectedLangs.push(label);
+                  }
+                }
+              }
+            }
+
+            // --- Remove stale labels on edits ---
+            const currentLabels = issue.labels.map(l => l.name);
+            const labelsToRemove = [];
+
+            // Remove old component label if a new one was selected
+            if (labelsToAdd.some(l => l.startsWith("component:"))) {
+              for (const cl of allComponentLabels) {
+                if (currentLabels.includes(cl) && !labelsToAdd.includes(cl)) {
+                  labelsToRemove.push(cl);
+                }
+              }
+            }
+
+            // Remove old priority label if a new one was selected
+            if (labelsToAdd.some(l => l.startsWith("priority:"))) {
+              for (const pl of allPriorityLabels) {
+                if (currentLabels.includes(pl) && !labelsToAdd.includes(pl)) {
+                  labelsToRemove.push(pl);
+                }
+              }
+            }
+
+            // Remove old lang labels that are no longer selected
+            if (langSection) {
+              for (const ll of allLangLabels) {
+                if (currentLabels.includes(ll) && !selectedLangs.includes(ll)) {
+                  labelsToRemove.push(ll);
+                }
+              }
+            }
+
+            // Remove stale labels
+            for (const label of labelsToRemove) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  name: label,
+                });
+                console.log(`Removed stale label: ${label}`);
+              } catch (e) {
+                console.log(`Could not remove label ${label}: ${e.message}`);
+              }
+            }
+
+            // Filter out labels already on the issue
+            const newLabels = labelsToAdd.filter(l => !currentLabels.includes(l));
+
+            if (newLabels.length === 0 && labelsToRemove.length === 0) {
+              console.log("No label changes needed.");
+              return;
+            }
+
+            if (newLabels.length > 0) {
+              // Ensure labels exist (create if missing)
+              const existingLabels = await github.rest.issues.listLabelsForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+              });
+              const existingLabelNames = existingLabels.data.map(l => l.name);
+
+              const colorMap = {
+                "component:": "0075ca",
+                "priority:p0": "b60205",
+                "priority:p1": "d93f0b",
+                "priority:p2": "fbca04",
+                "priority:p3": "0e8a16",
+                "lang:": "5319e7",
+              };
+
+              for (const label of newLabels) {
+                if (!existingLabelNames.includes(label)) {
+                  let color = "ededed";
+                  for (const [prefix, c] of Object.entries(colorMap)) {
+                    if (label.startsWith(prefix)) {
+                      color = c;
+                      break;
+                    }
+                  }
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: label,
+                    color: color,
+                  });
+                  console.log(`Created label: ${label}`);
+                }
+              }
+
+              // Apply new labels
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: newLabels,
+              });
+              console.log(`Applied labels: ${newLabels.join(", ")}`);
+            }
+
+            if (labelsToRemove.length > 0) {
+              console.log(`Removed stale labels: ${labelsToRemove.join(", ")}`);
+            }

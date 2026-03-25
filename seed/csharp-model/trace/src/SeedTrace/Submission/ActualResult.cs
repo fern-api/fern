@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,7 @@ public record ActualResult
     public SeedTrace.VariableValue AsValue() =>
         IsValue
             ? (SeedTrace.VariableValue)Value!
-            : throw new System.Exception("ActualResult.Type is not 'value'");
+            : throw new global::System.Exception("ActualResult.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'exception', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ActualResult
     public SeedTrace.ExceptionInfo AsException() =>
         IsException
             ? (SeedTrace.ExceptionInfo)Value!
-            : throw new System.Exception("ActualResult.Type is not 'exception'");
+            : throw new global::System.Exception("ActualResult.Type is not 'exception'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionV2"/> if <see cref="Type"/> is 'exceptionV2', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ActualResult
     public SeedTrace.ExceptionV2 AsExceptionV2() =>
         IsExceptionV2
             ? (SeedTrace.ExceptionV2)Value!
-            : throw new System.Exception("ActualResult.Type is not 'exceptionV2'");
+            : throw new global::System.Exception("ActualResult.Type is not 'exceptionV2'");
 
     public T Match<T>(
         Func<SeedTrace.VariableValue, T> onValue,
@@ -191,12 +191,12 @@ public record ActualResult
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ActualResult>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ActualResult).IsAssignableFrom(typeToConvert);
 
         public override ActualResult Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -268,7 +268,7 @@ public record ActualResult
 
         public override ActualResult ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

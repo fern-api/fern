@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     sse "github.com/fern-api/sse-examples-go"
     client "github.com/fern-api/sse-examples-go/client"
 )

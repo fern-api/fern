@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedNullable.Core;
 
 namespace SeedNullable;
@@ -76,7 +76,7 @@ public record Status
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'active'.</exception>
     public object AsActive() =>
-        IsActive ? Value! : throw new System.Exception("Status.Type is not 'active'");
+        IsActive ? Value! : throw new global::System.Exception("Status.Type is not 'active'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'archived', otherwise throws an exception.
@@ -85,7 +85,7 @@ public record Status
     public DateTime? AsArchived() =>
         IsArchived
             ? (DateTime?)Value!
-            : throw new System.Exception("Status.Type is not 'archived'");
+            : throw new global::System.Exception("Status.Type is not 'archived'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'soft-deleted', otherwise throws an exception.
@@ -94,7 +94,7 @@ public record Status
     public DateTime? AsSoftDeleted() =>
         IsSoftDeleted
             ? (DateTime?)Value!
-            : throw new System.Exception("Status.Type is not 'soft-deleted'");
+            : throw new global::System.Exception("Status.Type is not 'soft-deleted'");
 
     public T Match<T>(
         Func<object, T> onActive,
@@ -187,12 +187,12 @@ public record Status
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Status>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Status).IsAssignableFrom(typeToConvert);
 
         public override Status Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -253,7 +253,7 @@ public record Status
 
         public override Status ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -5,8 +5,9 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/unions/fern/internal"
 	time "time"
+
+	internal "github.com/unions/fern/internal"
 )
 
 // This is a simple union.

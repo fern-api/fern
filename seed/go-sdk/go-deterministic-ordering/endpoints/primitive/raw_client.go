@@ -4,12 +4,13 @@ package primitive
 
 import (
 	context "context"
+	http "net/http"
+	time "time"
+
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
 	uuid "github.com/google/uuid"
-	http "net/http"
-	time "time"
 )
 
 type RawClient struct {

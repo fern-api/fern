@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseResultWithStdout AsGraded() =>
         IsGraded
             ? (SeedTrace.TestCaseResultWithStdout)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'graded'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'graded'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
@@ -87,7 +89,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseGrade AsGradedV2() =>
         IsGradedV2
             ? (SeedTrace.TestCaseGrade)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'gradedV2'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -96,7 +100,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TracedTestCase AsTraced() =>
         IsTraced
             ? (SeedTrace.TracedTestCase)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'traced'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'traced'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.TestCaseResultWithStdout, T> onGraded,
@@ -197,12 +203,12 @@ public record SubmissionStatusForTestCase
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusForTestCase>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionStatusForTestCase).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusForTestCase Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -275,7 +281,7 @@ public record SubmissionStatusForTestCase
 
         public override SubmissionStatusForTestCase ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

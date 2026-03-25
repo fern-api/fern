@@ -65,11 +65,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return CreateProblemResponse
+     * @return ?CreateProblemResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createProblem(CreateProblemRequest $request, ?array $options = null): CreateProblemResponse
+    public function createProblem(CreateProblemRequest $request, ?array $options = null): ?CreateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -85,6 +85,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return CreateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -112,11 +115,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UpdateProblemResponse
+     * @return ?UpdateProblemResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
+    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): ?UpdateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -132,6 +135,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UpdateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -199,11 +205,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return GetDefaultStarterFilesResponse
+     * @return ?GetDefaultStarterFilesResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse
+    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): ?GetDefaultStarterFilesResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -219,6 +225,9 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return GetDefaultStarterFilesResponse::fromJson($json);
             }
         } catch (JsonException $e) {

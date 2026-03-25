@@ -313,6 +313,12 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  server-sent-event-examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: with-wire-tests
+    - customConfig: null
+      outputFolder: no-custom-config
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true

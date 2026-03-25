@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/undiscriminated-union-with-response-property/fern"
 	core "github.com/undiscriminated-union-with-response-property/fern/core"
 	internal "github.com/undiscriminated-union-with-response-property/fern/internal"
 	option "github.com/undiscriminated-union-with-response-property/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

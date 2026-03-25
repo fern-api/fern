@@ -20,9 +20,16 @@ export class EnumGenerator {
     }
 
     private isForwardCompatible(): boolean {
-        // The forwardCompatible field exists in the IR wire format but may not be typed
-        // in the current IR SDK version. Access it safely via type assertion.
-        return (this.enumTypeDeclaration as unknown as Record<string, unknown>).forwardCompatible === true;
+        // Single-variant enums are type discriminants used in #[serde(untagged)] unions.
+        // Making them forward-compatible would cause the first variant to greedily match
+        // every message, breaking dispatch. Only multi-variant enums get __Unknown.
+        if (this.enumTypeDeclaration.values.length <= 1) {
+            return false;
+        }
+        // All other enums are forward-compatible by default in Rust. This matches C# and
+        // TypeScript behavior where unknown enum values never cause deserialization failures.
+        const irFlag = (this.enumTypeDeclaration as unknown as Record<string, unknown>).forwardCompatible;
+        return irFlag !== false;
     }
 
     public generate(): RustFile {

@@ -1,15 +1,17 @@
 name: "🐛 Bug Report"
 description: "Uh-oh! Something not working?"
 type: "bug"
+labels: ["bug"]
 body:
   - type: dropdown
     id: product
     attributes:
       label: "Which Fern component?"
       options:
-        - "SDK Generator"
-        - "Fern CLI"
-        - "Fern Docs"
+        - "CLI"
+        - "SDKs"
+        - "Docs"
+        - "Dashboard"
         - "Other"
     validations:
       required: true
@@ -25,6 +27,25 @@ body:
         - "P3 - Low (Nice to have)"
     validations:
       required: true
+
+  - type: dropdown
+    id: sdk-language
+    attributes:
+      label: "Which SDK language(s)?"
+      description: "Only if you selected 'SDKs' above. Skip this field otherwise."
+      multiple: true
+      options:
+        - "TypeScript"
+        - "Python"
+        - "Java"
+        - "Go"
+        - "C#"
+        - "PHP"
+        - "Ruby"
+        - "Swift"
+        - "Rust"
+    validations:
+      required: false
 
   - type: textarea
     id: issue-description

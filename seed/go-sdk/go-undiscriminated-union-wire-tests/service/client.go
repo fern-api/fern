@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	fern "github.com/go-undiscriminated-union-wire-tests/fern"
 	core "github.com/go-undiscriminated-union-wire-tests/fern/core"
 	internal "github.com/go-undiscriminated-union-wire-tests/fern/internal"

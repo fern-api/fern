@@ -59,11 +59,11 @@ class HeadersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return SendResponse
+     * @return ?SendResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
+    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -83,6 +83,9 @@ class HeadersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return SendResponse::fromJson($json);
             }
         } catch (JsonException $e) {

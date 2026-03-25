@@ -5,9 +5,9 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,7 +42,7 @@ public final class ListConnectionsRequest {
     /**
      * @return Filter by strategy type (e.g., auth0, google-oauth2, samlp)
      */
-    @JsonProperty("strategy")
+    @JsonIgnore
     public Optional<String> getStrategy() {
         return strategy;
     }
@@ -50,7 +50,7 @@ public final class ListConnectionsRequest {
     /**
      * @return Filter by connection name
      */
-    @JsonProperty("name")
+    @JsonIgnore
     public Optional<String> getName() {
         return name;
     }
@@ -58,7 +58,7 @@ public final class ListConnectionsRequest {
     /**
      * @return Comma-separated list of fields to include
      */
-    @JsonProperty("fields")
+    @JsonIgnore
     public Optional<String> getFields() {
         return fields;
     }

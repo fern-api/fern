@@ -1,5 +1,5 @@
-using System.Net.WebSockets;
-using System.Text;
+using global::System.Net.WebSockets;
+using global::System.Text;
 using NUnit.Framework;
 using <%= namespace%>.Core.WebSockets;
 

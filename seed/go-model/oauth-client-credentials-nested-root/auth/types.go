@@ -5,6 +5,7 @@ package auth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
 )
 

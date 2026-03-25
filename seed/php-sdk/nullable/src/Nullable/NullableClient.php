@@ -62,11 +62,11 @@ class NullableClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): array
+    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -98,6 +98,9 @@ class NullableClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -122,11 +125,11 @@ class NullableClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): User
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -142,6 +145,9 @@ class NullableClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -166,11 +172,11 @@ class NullableClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): bool
+    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -186,6 +192,9 @@ class NullableClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {

@@ -643,24 +643,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         writer.newLine();
         writer.newLine();
 
-        // Create client config and root client (same pattern as pagination snippets)
+        // Create client using ClientConfig with token auth (matching the standard SDK pattern)
         const rootClientName = this.context.getClientName();
-        const configStatement = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("error")
-        });
-        configStatement.write(writer);
+        writer.write(`let client = ${rootClientName}::new(ClientConfig {`);
         writer.newLine();
-        const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${rootClientName}::new(config)`),
-            method: "expect",
-            args: [Expression.stringLiteral("Failed to build client")]
-        });
-        const clientStatement = Statement.let({
-            name: "client",
-            value: clientBuild
-        });
-        clientStatement.write(writer);
+        writer.indent();
+        writer.write(`token: Some("your-api-key".to_string()),`);
+        writer.newLine();
+        writer.write(`..Default::default()`);
+        writer.dedent();
+        writer.newLine();
+        writer.write(`})`);
+        writer.newLine();
+        writer.write(`.expect("Failed to create client");`);
         writer.newLine();
         writer.newLine();
 

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -64,14 +64,14 @@ public record Exception
     public SeedExamples.ExceptionInfo AsGeneric() =>
         IsGeneric
             ? (SeedExamples.ExceptionInfo)Value!
-            : throw new System.Exception("Exception.Type is not 'generic'");
+            : throw new global::System.Exception("Exception.Type is not 'generic'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
     public object AsTimeout() =>
-        IsTimeout ? Value! : throw new System.Exception("Exception.Type is not 'timeout'");
+        IsTimeout ? Value! : throw new global::System.Exception("Exception.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedExamples.ExceptionInfo, T> onGeneric,
@@ -142,12 +142,12 @@ public record Exception
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Exception>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Exception).IsAssignableFrom(typeToConvert);
 
         public override Exception Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -208,7 +208,7 @@ public record Exception
 
         public override Exception ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/undiscriminated-unions/fern/client"
     option "github.com/undiscriminated-unions/fern/option"
 )

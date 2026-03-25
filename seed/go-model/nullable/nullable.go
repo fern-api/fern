@@ -5,8 +5,9 @@ package nullable
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/nullable/fern/internal"
 	time "time"
+
+	internal "github.com/nullable/fern/internal"
 )
 
 type Email = *string

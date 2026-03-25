@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -120,7 +120,9 @@ public record SubmissionResponse
     public object AsServerInitialized() =>
         IsServerInitialized
             ? Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'serverInitialized'");
+            : throw new global::System.Exception(
+                "SubmissionResponse.Type is not 'serverInitialized'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'problemInitialized', otherwise throws an exception.
@@ -129,7 +131,9 @@ public record SubmissionResponse
     public string AsProblemInitialized() =>
         IsProblemInitialized
             ? (string)Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'problemInitialized'");
+            : throw new global::System.Exception(
+                "SubmissionResponse.Type is not 'problemInitialized'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
@@ -138,7 +142,9 @@ public record SubmissionResponse
     public object AsWorkspaceInitialized() =>
         IsWorkspaceInitialized
             ? Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'workspaceInitialized'");
+            : throw new global::System.Exception(
+                "SubmissionResponse.Type is not 'workspaceInitialized'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'serverErrored', otherwise throws an exception.
@@ -147,7 +153,7 @@ public record SubmissionResponse
     public SeedTrace.ExceptionInfo AsServerErrored() =>
         IsServerErrored
             ? (SeedTrace.ExceptionInfo)Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'serverErrored'");
+            : throw new global::System.Exception("SubmissionResponse.Type is not 'serverErrored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CodeExecutionUpdate"/> if <see cref="Type"/> is 'codeExecutionUpdate', otherwise throws an exception.
@@ -156,7 +162,9 @@ public record SubmissionResponse
     public SeedTrace.CodeExecutionUpdate AsCodeExecutionUpdate() =>
         IsCodeExecutionUpdate
             ? (SeedTrace.CodeExecutionUpdate)Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'codeExecutionUpdate'");
+            : throw new global::System.Exception(
+                "SubmissionResponse.Type is not 'codeExecutionUpdate'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TerminatedResponse"/> if <see cref="Type"/> is 'terminated', otherwise throws an exception.
@@ -165,7 +173,7 @@ public record SubmissionResponse
     public SeedTrace.TerminatedResponse AsTerminated() =>
         IsTerminated
             ? (SeedTrace.TerminatedResponse)Value!
-            : throw new System.Exception("SubmissionResponse.Type is not 'terminated'");
+            : throw new global::System.Exception("SubmissionResponse.Type is not 'terminated'");
 
     public T Match<T>(
         Func<object, T> onServerInitialized,
@@ -328,12 +336,12 @@ public record SubmissionResponse
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionResponse>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionResponse).IsAssignableFrom(typeToConvert);
 
         public override SubmissionResponse Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -415,7 +423,7 @@ public record SubmissionResponse
 
         public override SubmissionResponse ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

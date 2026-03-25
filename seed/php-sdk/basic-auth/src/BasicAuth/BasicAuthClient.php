@@ -59,11 +59,11 @@ class BasicAuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBasicAuth(?array $options = null): bool
+    public function getWithBasicAuth(?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -78,6 +78,9 @@ class BasicAuthClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
@@ -104,11 +107,11 @@ class BasicAuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithBasicAuth(mixed $request, ?array $options = null): bool
+    public function postWithBasicAuth(mixed $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -124,6 +127,9 @@ class BasicAuthClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {

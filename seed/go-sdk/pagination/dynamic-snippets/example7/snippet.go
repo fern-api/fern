@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     inlineusers "github.com/pagination/fern/inlineusers"

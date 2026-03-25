@@ -5,6 +5,7 @@ package alias
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/alias/fern/internal"
 )
 

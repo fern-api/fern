@@ -5,9 +5,10 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	internal "github.com/exhaustive/fern/internal"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type ObjectWithOptionalField struct {

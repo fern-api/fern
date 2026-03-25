@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,7 @@ public record ProblemDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'html'");
+            : throw new global::System.Exception("ProblemDescriptionBoard.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.VariableValue"/> if <see cref="Type"/> is 'variable', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ProblemDescriptionBoard
     public SeedTrace.VariableValue AsVariable() =>
         IsVariable
             ? (SeedTrace.VariableValue)Value!
-            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'variable'");
+            : throw new global::System.Exception("ProblemDescriptionBoard.Type is not 'variable'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'testCaseId', otherwise throws an exception.
@@ -96,7 +96,9 @@ public record ProblemDescriptionBoard
     public string AsTestCaseId() =>
         IsTestCaseId
             ? (string)Value!
-            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'testCaseId'");
+            : throw new global::System.Exception(
+                "ProblemDescriptionBoard.Type is not 'testCaseId'"
+            );
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -196,12 +198,12 @@ public record ProblemDescriptionBoard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProblemDescriptionBoard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ProblemDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override ProblemDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -269,7 +271,7 @@ public record ProblemDescriptionBoard
 
         public override ProblemDescriptionBoard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

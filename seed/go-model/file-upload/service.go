@@ -5,6 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/file-upload/fern/internal"
 )
 
