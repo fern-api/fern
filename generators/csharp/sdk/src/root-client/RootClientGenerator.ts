@@ -453,8 +453,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         if (basicScheme != null && basicScheme.type === "basic") {
                             const usernameName = basicScheme.username.camelCase.safeName;
                             const passwordName = basicScheme.password.camelCase.safeName;
-                            const usernameAccess = unified ? `clientOptions.${this.toPascalCase(usernameName)}` : usernameName;
-                            const passwordAccess = unified ? `clientOptions.${this.toPascalCase(passwordName)}` : passwordName;
+                            const usernameAccess = unified
+                                ? `clientOptions.${this.toPascalCase(usernameName)}`
+                                : usernameName;
+                            const passwordAccess = unified
+                                ? `clientOptions.${this.toPascalCase(passwordName)}`
+                                : passwordName;
                             innerWriter.writeTextStatement(
                                 `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
                             );
