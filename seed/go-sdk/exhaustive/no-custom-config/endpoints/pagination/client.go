@@ -4,12 +4,13 @@ package pagination
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	http "net/http"
 )
 
 type Client struct {

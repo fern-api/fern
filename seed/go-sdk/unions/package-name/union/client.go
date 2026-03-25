@@ -4,6 +4,7 @@ package union
 
 import (
 	context "context"
+
 	unions "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
 	internal "github.com/fern-api/unions-go/internal"

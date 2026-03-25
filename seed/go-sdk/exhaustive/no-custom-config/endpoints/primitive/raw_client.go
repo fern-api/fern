@@ -4,12 +4,13 @@ package primitive
 
 import (
 	context "context"
+	http "net/http"
+	time "time"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	uuid "github.com/google/uuid"
-	http "net/http"
-	time "time"
 )
 
 type RawClient struct {

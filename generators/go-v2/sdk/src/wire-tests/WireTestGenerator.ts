@@ -7,6 +7,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { InferredAuthWireTestGenerator } from "./InferredAuthWireTestGenerator.js";
 import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
@@ -57,7 +58,10 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
 
-        for (const [serviceName, endpoints] of endpointsByService.entries()) {
+        const sortedServices = Array.from(endpointsByService.entries()).sort(([a], [b]) =>
+            a < b ? -1 : a > b ? 1 : 0
+        );
+        for (const [serviceName, endpoints] of sortedServices) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
@@ -87,6 +91,13 @@ export class WireTestGenerator {
         const oauthTestFile = oauthTestGenerator.generate();
         if (oauthTestFile != null) {
             this.context.project.addGoFiles(oauthTestFile);
+        }
+
+        // Generate inferred auth wire tests if the API uses inferred auth
+        const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
+        const inferredAuthTestFile = inferredAuthTestGenerator.generate();
+        if (inferredAuthTestFile != null) {
+            this.context.project.addGoFiles(inferredAuthTestFile);
         }
     }
 
@@ -170,7 +181,8 @@ export class WireTestGenerator {
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
         const serviceTestFileContent = go.codeblock((writer) => {
-            for (const [_, importPath] of imports.entries()) {
+            const sortedImports = Array.from(imports.entries()).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+            for (const [_, importPath] of sortedImports) {
                 // Manually add any imports that were used in the snippet (client/request types)
                 // but that may not be used in the rest of the generated test file and therefore would be missed
                 writer.addImport(importPath);

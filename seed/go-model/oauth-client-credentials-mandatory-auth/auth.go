@@ -5,6 +5,7 @@ package oauthclientcredentialsmandatoryauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/oauth-client-credentials-mandatory-auth/fern/internal"
 )
 

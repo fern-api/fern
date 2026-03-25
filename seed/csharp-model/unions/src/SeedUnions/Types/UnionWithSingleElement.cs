@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -50,7 +50,7 @@ public record UnionWithSingleElement
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithSingleElement.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithSingleElement.Type is not 'foo'");
 
     public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object?, T> onUnknown_)
     {
@@ -96,12 +96,12 @@ public record UnionWithSingleElement
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSingleElement>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithSingleElement).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSingleElement Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -159,7 +159,7 @@ public record UnionWithSingleElement
 
         public override UnionWithSingleElement ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

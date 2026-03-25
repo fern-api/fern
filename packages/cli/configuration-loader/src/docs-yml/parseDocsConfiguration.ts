@@ -10,7 +10,7 @@ import path from "path";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
-import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -1035,7 +1035,7 @@ async function expandFolderConfiguration({
     const folderName = path.basename(folderPath);
     const indexFrontmatterTitle =
         effectiveTitleSource === "frontmatter" && indexPage?.type === "page"
-            ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
+            ? (await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath })).title
             : undefined;
     const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });

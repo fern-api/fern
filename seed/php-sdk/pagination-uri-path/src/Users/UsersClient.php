@@ -58,11 +58,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersUriPaginationResponse
+     * @return ?ListUsersUriPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithUriPagination(?array $options = null): ListUsersUriPaginationResponse
+    public function listWithUriPagination(?array $options = null): ?ListUsersUriPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,6 +77,9 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersUriPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -100,11 +103,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPathPaginationResponse
+     * @return ?ListUsersPathPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithPathPagination(?array $options = null): ListUsersPathPaginationResponse
+    public function listWithPathPagination(?array $options = null): ?ListUsersPathPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -119,6 +122,9 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPathPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {

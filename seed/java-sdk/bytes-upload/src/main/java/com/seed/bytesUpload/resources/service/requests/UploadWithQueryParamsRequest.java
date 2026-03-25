@@ -5,6 +5,7 @@ package com.seed.bytesUpload.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,7 +41,7 @@ public final class UploadWithQueryParamsRequest {
     /**
      * @return The model to use for processing
      */
-    @JsonProperty("model")
+    @JsonIgnore
     public String getModel() {
         return model;
     }
@@ -48,7 +49,7 @@ public final class UploadWithQueryParamsRequest {
     /**
      * @return The language of the content
      */
-    @JsonProperty("language")
+    @JsonIgnore
     public Optional<String> getLanguage() {
         return language;
     }

@@ -4,6 +4,7 @@ package auth
 
 import (
 	context "context"
+
 	fern "github.com/oauth-client-credentials-custom/fern"
 	core "github.com/oauth-client-credentials-custom/fern/core"
 	internal "github.com/oauth-client-credentials-custom/fern/internal"

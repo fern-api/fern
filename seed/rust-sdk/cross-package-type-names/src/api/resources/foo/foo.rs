@@ -22,7 +22,7 @@ impl FooClient {
             .execute_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
                     .serialize("optionalString", Some(request.optional_string.clone()))
                     .build(),

@@ -36,6 +36,7 @@ type RequestOptions struct {
 	ClientSecret    string
 	Username        string
 	Password        string
+	ClientId        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -66,6 +67,11 @@ func (r *RequestOptions) ToHeader() http.Header {
 	}
 	if r.Username != "" || r.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
+	}
+	if r.tokenGetter != nil {
+		if token, err := r.tokenGetter(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -204,4 +210,13 @@ type BasicAuthOption struct {
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
 	opts.Password = b.Password
+}
+
+// ClientIdOption implements the RequestOption interface.
+type ClientIdOption struct {
+	ClientId string
+}
+
+func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientId = c.ClientId
 }

@@ -4,11 +4,12 @@ package retries
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/no-retries/fern"
 	core "github.com/no-retries/fern/core"
 	internal "github.com/no-retries/fern/internal"
 	option "github.com/no-retries/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

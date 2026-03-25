@@ -58,7 +58,7 @@ jobs:
       php: ${{ steps.set-output.outputs.php }}
       go: ${{ steps.set-output.outputs.go }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
           fetch-tags: false
@@ -153,7 +153,7 @@ jobs:
     outputs:
       sha: ${{ steps.sha.outputs.sha }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: sha
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
@@ -173,7 +173,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -222,7 +222,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -271,7 +271,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -320,7 +320,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -369,7 +369,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -418,7 +418,7 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 

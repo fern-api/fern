@@ -11,6 +11,7 @@ import {
     Type
 } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
 import { isOptionalType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -76,6 +77,10 @@ export class FileUploadRequestGenerator {
         // Generate impl block
         const implBlock = this.generateImplBlock();
         implBlock.write(writer);
+
+        // Generate builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
 
         return writer.toString();
     }

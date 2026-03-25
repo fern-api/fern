@@ -4,6 +4,7 @@ package optional
 
 import (
 	context "context"
+
 	fern "github.com/optional/fern"
 	core "github.com/optional/fern/core"
 	internal "github.com/optional/fern/internal"

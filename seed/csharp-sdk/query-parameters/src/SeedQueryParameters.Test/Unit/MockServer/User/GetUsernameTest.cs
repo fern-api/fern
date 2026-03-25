@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedQueryParameters;
 using SeedQueryParameters.Test.Unit.MockServer;

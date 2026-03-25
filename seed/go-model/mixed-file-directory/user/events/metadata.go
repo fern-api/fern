@@ -5,6 +5,7 @@ package events
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	fern "github.com/mixed-file-directory/fern"
 	internal "github.com/mixed-file-directory/fern/internal"
 )

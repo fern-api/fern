@@ -5,6 +5,7 @@ package extraproperties
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/extra-properties/fern/internal"
 )
 

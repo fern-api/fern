@@ -73,6 +73,7 @@ import { generateToken } from "./commands/token/token.js";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
 import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/validateMdx.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
@@ -144,6 +145,10 @@ async function runCli() {
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
         } else {
+            // TODO: This is intentionally broad for initial rollout.
+            // We likely capture more than intended; narrow reporting with
+            // explicit error classification once we collect real-world signal.
+            await cliContext.captureException(error);
             cliContext.failWithoutThrowing("Failed.", error);
         }
     }
@@ -743,6 +748,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("require-env-vars", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
+                .option("skip-fernignore", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -763,6 +780,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["skip-fernignore"] && argv.fernignore != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --skip-fernignore and --fernignore flags cannot be used together."
                 );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
@@ -808,10 +830,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
+                    skipFernignore: argv["skip-fernignore"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
                 });
             }
             if (argv.docs != null) {
@@ -865,10 +889,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
+                skipFernignore: argv["skip-fernignore"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
             });
         }
     );
@@ -1661,6 +1687,7 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     // This command is in beta and not yet ready for general use
     cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
+        addDocsMdCheckCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1892,6 +1919,49 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 cliContext,
                 errorOnBrokenLinks: argv.strict
             });
+        }
+    );
+}
+
+function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "check",
+        "Validate MDX syntax in your docs",
+        () => {
+            // No additional options for this command
+        },
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md check"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            if (project.docsWorkspaces == null) {
+                cliContext.failAndThrow("No docs workspace found");
+            }
+
+            const docsWorkspace = project.docsWorkspaces;
+            let hasErrors = false;
+            await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+                const { errors, totalFiles } = await validateMdxFiles({
+                    workspace: docsWorkspace,
+                    context
+                });
+
+                logMdxValidationResults({ errors, totalFiles, context });
+
+                if (errors.length > 0) {
+                    hasErrors = true;
+                }
+            });
+
+            if (hasErrors) {
+                cliContext.failAndThrow("MDX validation failed");
+            }
         }
     );
 }

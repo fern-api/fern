@@ -13,7 +13,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:examples'
+  implementation 'com.fern:examples:0.0.1'
 }
 ```
 

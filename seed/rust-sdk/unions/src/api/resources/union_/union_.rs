@@ -13,11 +13,7 @@ impl UnionClient {
         })
     }
 
-    pub async fn get(
-        &self,
-        id: &String,
-        options: Option<RequestOptions>,
-    ) -> Result<Shape, ApiError> {
+    pub async fn get(&self, id: &str, options: Option<RequestOptions>) -> Result<Shape, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/{}", id), None, None, options)
             .await
@@ -32,7 +28,7 @@ impl UnionClient {
             .execute_request(
                 Method::PATCH,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
