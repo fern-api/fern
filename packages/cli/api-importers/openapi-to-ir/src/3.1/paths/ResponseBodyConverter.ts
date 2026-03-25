@@ -180,11 +180,24 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         // the no-content case and making the return type optional.
         const statusCodeNum = parseInt(this.statusCode);
         if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300 && statusCodeNum !== 204) {
+            // Preserve examples from the original media type object when the response
+            // has no schema but does have examples (e.g., OpenAPI specs that define
+            // response examples without a corresponding schema).
+            const originalJsonMediaTypeObject = jsonContentTypes
+                .map((ct) => this.responseBody.content?.[ct])
+                .find((mto) => mto != null);
+
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
                     type: "object",
                     description: "Empty response body"
-                }
+                },
+                ...(originalJsonMediaTypeObject?.examples != null && {
+                    examples: originalJsonMediaTypeObject.examples
+                }),
+                ...(originalJsonMediaTypeObject?.example != null && {
+                    example: originalJsonMediaTypeObject.example
+                })
             };
 
             const convertedSchema = this.parseMediaTypeObject({

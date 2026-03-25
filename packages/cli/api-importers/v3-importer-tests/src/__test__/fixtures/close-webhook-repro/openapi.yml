@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Webhook API
+  version: 1.0.0
+  description: Reproduces Close.com webhook example issues
+
+paths:
+  /webhook/:
+    post:
+      summary: Create a Webhook
+      operationId: createWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWebhook"
+            examples:
+              basic:
+                summary: Basic webhook subscription
+                value:
+                  events:
+                    - name: "lead.created"
+                  url: "https://example.com/webhook"
+              withFilter:
+                summary: Webhook subscription with event filter
+                value:
+                  events:
+                    - name: "lead.status_change"
+                  url: "https://example.com/webhook-filtered"
+      responses:
+        "201":
+          description: Webhook created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+              examples:
+                basic:
+                  summary: Basic webhook subscription
+                  value:
+                    id: "wh_123"
+                    events:
+                      - name: "lead.created"
+                    url: "https://example.com/webhook"
+                    status: "active"
+                    created_by: "user_abc"
+                    date_created: "2024-01-01T00:00:00Z"
+                withFilter:
+                  summary: Webhook subscription with event filter
+                  value:
+                    id: "wh_456"
+                    events:
+                      - name: "lead.status_change"
+                    url: "https://example.com/webhook-filtered"
+                    status: "active"
+                    created_by: "user_abc"
+                    date_created: "2024-01-02T00:00:00Z"
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
+components:
+  schemas:
+    CreateWebhook:
+      type: object
+      required:
+        - events
+        - url
+      properties:
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+        url:
+          type: string
+          format: uri
+
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+        url:
+          type: string
+          format: uri
+        status:
+          type: string
+        created_by:
+          type: string
+        date_created:
+          type: string
+          format: date-time
