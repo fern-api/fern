@@ -224,7 +224,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
 
         this.generation.Types.ClientOptions;
-        this.generation.Types.RootClient;
+        this.generation.Types.RootClientForSnippets;
 
         // after generating the names for everything, freeze the class references
         this.csharp.freezeClassReferences();
