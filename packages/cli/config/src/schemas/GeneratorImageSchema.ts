@@ -6,7 +6,3 @@ export const GeneratorImageObjectSchema = z.object({
 });
 
 export type GeneratorImageObjectSchema = z.infer<typeof GeneratorImageObjectSchema>;
-
-export const GeneratorImageSchema = z.union([z.string(), GeneratorImageObjectSchema]);
-
-export type GeneratorImageSchema = z.infer<typeof GeneratorImageSchema>;

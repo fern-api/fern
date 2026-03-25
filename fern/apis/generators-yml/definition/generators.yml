@@ -612,17 +612,6 @@ types:
     properties:
       proto: ProtobufDefinitionSchema
 
-  GeneratorImageSchema:
-    audiences:
-      - generators-yml
-    discriminated: false
-    docs: |
-      The Docker image to use for this generator. Can be a simple string (image name)
-      or an object with `name` and `registry` fields for pulling from a custom registry.
-    union:
-      - string
-      - GeneratorImageObjectSchema
-
   GeneratorImageObjectSchema:
     audiences:
       - generators-yml

@@ -77,10 +77,9 @@ types:
       optionally from a custom container registry.
     properties:
       image:
-        type: generators.GeneratorImageSchema
+        type: generators.GeneratorImageObjectSchema
         docs: |
-          The Docker image to use for this generator. Can be a simple string or an object
-          with `name` and `registry` fields for pulling from a custom container registry.
+          The Docker image to use for this generator, with an optional custom container registry.
 
   GeneratorAPISettingsSchema:
     docs: |
