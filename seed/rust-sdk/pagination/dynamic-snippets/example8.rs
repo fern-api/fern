@@ -11,8 +11,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_offset_step_pagination(
-            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+        .list_with_offset_pagination_has_next_page(
+            &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),

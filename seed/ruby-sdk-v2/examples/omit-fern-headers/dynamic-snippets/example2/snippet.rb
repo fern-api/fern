@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.echo(request: "primitive")
+client.create_type(request: "primitive")

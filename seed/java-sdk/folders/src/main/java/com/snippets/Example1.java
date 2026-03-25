@@ -7,6 +7,6 @@ public class Example1 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.foo();
+        client.a().b().foo();
     }
 }

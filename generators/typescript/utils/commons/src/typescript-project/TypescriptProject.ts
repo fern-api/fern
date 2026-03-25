@@ -49,8 +49,8 @@ type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 
 /** Shared version constants for formatter / linter packages. */
 const TOOL_VERSIONS = {
-    BIOME: "2.4.3",
-    PRETTIER: "3.7.4",
+    BIOME: "2.4.9",
+    PRETTIER: "3.8.1",
     OXFMT: "0.35.0",
     OXLINT: "1.50.0",
     OXLINT_TSGOLINT: "0.14.2"
@@ -433,7 +433,7 @@ export abstract class TypescriptProject {
     protected getCommonDevDependencies(): Record<string, string> {
         const deps: Record<string, string> = {
             "@types/node": "^18.19.70",
-            typescript: "~5.7.2"
+            typescript: "~5.9.3"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
             deps["@biomejs/biome"] = TOOL_VERSIONS.BIOME;
