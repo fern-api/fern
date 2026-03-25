@@ -13,9 +13,9 @@ public class Example34
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
+        await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
+            new GetWithInlinePathAndQuery {
+                Param = "param",
                 Query = "query"
             }
         );
