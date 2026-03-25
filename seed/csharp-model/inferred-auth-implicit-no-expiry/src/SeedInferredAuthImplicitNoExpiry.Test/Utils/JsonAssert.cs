@@ -18,20 +18,20 @@ internal static class JsonAssert
     }
 
     /// <summary>
-    /// Asserts that re-serializing <paramref name="actual"/> with the given
-    /// <paramref name="options"/> produces JSON equivalent to <paramref name="expectedJson"/>.
-    /// The expected JSON is parsed as a raw <see cref="JsonElement"/> so the comparison
-    /// validates that a deserialize → serialize round-trip through <paramref name="options"/>
-    /// preserves the original payload.
-    /// Explicit null properties in the actual output are treated as equivalent to missing
-    /// properties in the expected JSON (ASP.NET Core model binding does not distinguish
-    /// between absent and null for nullable reference/collection types).
+    /// Asserts that the web-options round-trip of <paramref name="actual"/> produces
+    /// equivalent JSON to the web-options round-trip of <paramref name="expectedJson"/>.
+    /// Both sides are normalized through the same deserialize → serialize pipeline using
+    /// the provided <paramref name="options"/> so the comparison is fair even when certain
+    /// features (e.g. private <c>[JsonExtensionData]</c> fields) are invisible to the
+    /// given serializer options. Explicit null properties are also stripped so that
+    /// <c>{ "x": null }</c> compares equal to <c>{ }</c>.
     /// </summary>
     internal static void AreEqual(object actual, string expectedJson, JsonSerializerOptions options)
     {
         var actualType = actual.GetType();
         var actualElement = JsonSerializer.SerializeToElement(actual, actualType, options);
-        var expectedElement = JsonSerializer.Deserialize<JsonElement>(expectedJson);
+        var expectedDeserialized = JsonSerializer.Deserialize(expectedJson, actualType, options);
+        var expectedElement = JsonSerializer.SerializeToElement(expectedDeserialized!, actualType, options);
         var normalizedActual = StripNullProperties(actualElement);
         var normalizedExpected = StripNullProperties(expectedElement);
         Assert.That(normalizedActual, Is.EqualTo(normalizedExpected).UsingJsonElementComparer());
