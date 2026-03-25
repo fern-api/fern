@@ -1,3 +1,4 @@
+using global::System.Collections;
 using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 using SeedUnknownAsAny;
@@ -92,6 +93,9 @@ public static class AdditionalPropertiesComparerExtensions
         return constraint;
     }
 
+    internal static bool JsonElementsAreEqualPublic(JsonElement x, JsonElement y) =>
+        JsonElementsAreEqual(x, y);
+
     private static bool JsonElementsAreEqual(JsonElement x, JsonElement y)
     {
         if (x.ValueKind != y.ValueKind)
@@ -163,5 +167,61 @@ public static class AdditionalPropertiesComparerExtensions
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Modifies the EqualConstraint to handle cross-type comparisons involving JsonElement.
+    /// When UsingPropertiesComparer() walks object properties and encounters a property typed as
+    /// 'object', the expected side may be a Dictionary&lt;object, object?&gt; while the actual
+    /// (deserialized) side is a JsonElement. This comparer bridges that gap by serializing both
+    /// sides to JsonElement and comparing their JSON representations.
+    /// </summary>
+    /// <param name="constraint">The EqualConstraint to modify.</param>
+    /// <returns>The same constraint instance for method chaining.</returns>
+    public static EqualConstraint UsingJsonSerializationComparer(this EqualConstraint constraint)
+    {
+        return constraint.Using(new JsonSerializationFallbackComparer());
+    }
+}
+
+/// <summary>
+/// A non-generic IComparer that handles cross-type comparisons by serializing both sides
+/// to JsonElement. This is needed because NUnit 4.4+ correctly treats "types not supported"
+/// as a comparison failure in UsingPropertiesComparer(), which means properties typed as
+/// 'object' that deserialize to JsonElement can no longer be compared with Dictionary instances
+/// using the default typed comparers.
+/// </summary>
+public class JsonSerializationFallbackComparer : IComparer
+{
+    public int Compare(object? x, object? y)
+    {
+        if (x is null && y is null)
+            return 0;
+        if (x is null || y is null)
+            return -1;
+
+        // Only intervene for cross-type comparisons
+        if (x.GetType() == y.GetType())
+            return Comparer.Default.Compare(x, y);
+
+        // At least one side should be a JsonElement for us to handle this
+        if (x is not JsonElement && y is not JsonElement)
+            return Comparer.Default.Compare(x, y);
+
+        try
+        {
+            var xElement = x is JsonElement xje ? xje : JsonUtils.SerializeToElement(x);
+            var yElement = y is JsonElement yje ? yje : JsonUtils.SerializeToElement(y);
+            return AdditionalPropertiesComparerExtensions.JsonElementsAreEqualPublic(
+                xElement,
+                yElement
+            )
+                ? 0
+                : -1;
+        }
+        catch
+        {
+            return -1;
+        }
     }
 }
