@@ -2,8 +2,13 @@ import { dynamic as DynamicSnippets } from "@fern-api/ir-sdk";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
+export interface DynamicSnippetsTestRequest {
+    endpointId: string;
+    request: DynamicSnippets.EndpointSnippetRequest;
+}
+
 export interface DynamicSnippetsTestSuite {
     ir: DynamicSnippets.DynamicIntermediateRepresentation;
     config: FernGeneratorExec.GeneratorConfig;
-    requests: DynamicSnippets.EndpointSnippetRequest[];
+    requests: DynamicSnippetsTestRequest[];
 }

@@ -92,7 +92,7 @@ jobs:
       - name: Publish generator-cli
         run: |
           cd packages/generator-cli/dist
-          pnpm publish --access public --tag latest --no-git-checks
+          pnpm publish --provenance --access public --tag latest --no-git-checks
 
   publish-sdks:
     needs: check-version
