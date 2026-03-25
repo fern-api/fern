@@ -48,6 +48,6 @@ public class TypeTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedAlias.Type>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

@@ -46,7 +46,7 @@ public class ThankfulFactorTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -85,7 +85,7 @@ public class ThankfulFactorTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -124,6 +124,6 @@ public class ThankfulFactorTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<ThankfulFactor>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

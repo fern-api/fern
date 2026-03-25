@@ -46,6 +46,6 @@ public class ParentTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<Parent>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

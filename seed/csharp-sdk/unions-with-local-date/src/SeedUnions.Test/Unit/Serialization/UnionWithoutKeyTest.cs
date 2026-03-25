@@ -51,7 +51,7 @@ public class UnionWithoutKeyTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithoutKey>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -95,6 +95,6 @@ public class UnionWithoutKeyTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<UnionWithoutKey>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

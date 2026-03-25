@@ -48,7 +48,7 @@ public class FileTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedExamples.File>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -90,6 +90,6 @@ public class FileTest
             global::System.Text.Json.JsonSerializerDefaults.Web
         );
         var deserializedObject = JsonSerializer.Deserialize<SeedExamples.File>(json, options);
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

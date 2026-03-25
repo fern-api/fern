@@ -54,7 +54,7 @@ public class UnionWithSameStringTypesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -101,7 +101,7 @@ public class UnionWithSameStringTypesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -148,6 +148,6 @@ public class UnionWithSameStringTypesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

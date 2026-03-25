@@ -135,6 +135,6 @@ public class DirectoryTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

@@ -18,6 +18,17 @@ internal static class JsonAssert
     }
 
     /// <summary>
+    /// Asserts that the serialized JSON of an object equals the expected JSON string,
+    /// using the provided serializer options for re-serialization instead of the SDK serializer.
+    /// </summary>
+    internal static void AreEqual(object actual, string expectedJson, JsonSerializerOptions options)
+    {
+        var actualElement = JsonSerializer.SerializeToElement(actual, options);
+        var expectedElement = JsonSerializer.Deserialize<JsonElement>(expectedJson, options);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+    }
+
+    /// <summary>
     /// Asserts that the given JSON string survives a deserialization/serialization round-trip
     /// intact: deserializes to T then re-serializes and compares to the original JSON.
     /// </summary>

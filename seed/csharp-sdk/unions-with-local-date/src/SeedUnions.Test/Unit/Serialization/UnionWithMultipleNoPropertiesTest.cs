@@ -54,7 +54,7 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -98,7 +98,7 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -142,6 +142,6 @@ public class UnionWithMultipleNoPropertiesTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }

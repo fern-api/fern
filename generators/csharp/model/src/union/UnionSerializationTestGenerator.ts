@@ -97,7 +97,11 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
                         this.csharp.invokeMethod({
                             on: this.Types.JsonAssert,
                             method: "AreEqual",
-                            arguments_: [this.csharp.codeblock("deserializedObject!"), this.csharp.codeblock("json")]
+                            arguments_: [
+                                this.csharp.codeblock("deserializedObject!"),
+                                this.csharp.codeblock("json"),
+                                this.csharp.codeblock("options")
+                            ]
                         })
                     );
                 }),

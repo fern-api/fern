@@ -54,7 +54,7 @@ public class UnionWithDuplicatePrimitiveTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -101,7 +101,7 @@ public class UnionWithDuplicatePrimitiveTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -148,7 +148,7 @@ public class UnionWithDuplicatePrimitiveTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 
     [NUnit.Framework.Test]
@@ -195,6 +195,6 @@ public class UnionWithDuplicatePrimitiveTest
             json,
             options
         );
-        JsonAssert.AreEqual(deserializedObject!, json);
+        JsonAssert.AreEqual(deserializedObject!, json, options);
     }
 }
