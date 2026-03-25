@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.5
+  changelogEntry:
+    - summary: |
+        Fix generated README exception handling snippet using `{org}ApiException`
+        instead of `{clientClassName}ApiException` when `client-class-name` is
+        specified in the Java custom config. The README now uses the same exception
+        type name that is actually generated in the SDK.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.0.4
   changelogEntry:
     - summary: |
