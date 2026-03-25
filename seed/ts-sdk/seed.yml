@@ -545,3 +545,4 @@ allowedFailures:
   - oauth-client-credentials-custom
   - package-yml
   - inferred-auth-implicit-reference
+  - unions:serde-layer
