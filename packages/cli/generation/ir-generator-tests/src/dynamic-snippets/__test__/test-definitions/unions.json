@@ -9896,6 +9896,147 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_types:TypeWithOptionalMap": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TypeWithOptionalMap",
+                    "camelCase": {
+                        "unsafeName": "typeWithOptionalMap",
+                        "safeName": "typeWithOptionalMap"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type_with_optional_map",
+                        "safeName": "type_with_optional_map"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE_WITH_OPTIONAL_MAP",
+                        "safeName": "TYPE_WITH_OPTIONAL_MAP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TypeWithOptionalMap",
+                        "safeName": "TypeWithOptionalMap"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "key",
+                            "camelCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KEY",
+                                "safeName": "KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Key",
+                                "safeName": "Key"
+                            }
+                        },
+                        "wireValue": "key"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "columnValues",
+                            "camelCase": {
+                                "unsafeName": "columnValues",
+                                "safeName": "columnValues"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "column_values",
+                                "safeName": "column_values"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COLUMN_VALUES",
+                                "safeName": "COLUMN_VALUES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ColumnValues",
+                                "safeName": "ColumnValues"
+                            }
+                        },
+                        "wireValue": "columnValues"
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_types:UnionWithSameStringTypes": {
             "type": "discriminatedUnion",
             "declaration": {
