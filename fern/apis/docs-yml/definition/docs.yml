@@ -145,6 +145,12 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  IconLibrary:
+    enum:
+      - fontawesome
+      - lucide
+      - phosphor
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -249,6 +255,12 @@ types:
         docs: |
           Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.
           The component must have a default export.
+
+      icon-library:
+        type: optional<IconLibrary>
+        docs: |
+          Specifies the icon library to use for all icons in the documentation site.
+          Options: fontawesome (default), lucide, phosphor. Only one library can be set per project.
 
   TabId: string
 

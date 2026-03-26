@@ -370,6 +370,16 @@
           "type": "null"
         }
       ]
+    },
+    "icon-library": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.IconLibrary"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -5715,6 +5725,14 @@
             "$ref": "#/definitions/docs.JsConfigOptions"
           }
         }
+      ]
+    },
+    "docs.IconLibrary": {
+      "type": "string",
+      "enum": [
+        "fontawesome",
+        "lucide",
+        "phosphor"
       ]
     }
   }

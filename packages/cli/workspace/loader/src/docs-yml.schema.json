@@ -374,12 +374,7 @@
     "icon-library": {
       "oneOf": [
         {
-          "type": "string",
-          "enum": [
-            "fontawesome",
-            "lucide",
-            "phosphor"
-          ]
+          "$ref": "#/definitions/docs.IconLibrary"
         },
         {
           "type": "null"
@@ -5730,6 +5725,14 @@
             "$ref": "#/definitions/docs.JsConfigOptions"
           }
         }
+      ]
+    },
+    "docs.IconLibrary": {
+      "type": "string",
+      "enum": [
+        "fontawesome",
+        "lucide",
+        "phosphor"
       ]
     }
   }
