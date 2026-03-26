@@ -197,8 +197,12 @@ export async function publishDocs({
             void unlockDeploy({ fdrOrigin, token: token.value, domain, basepath: basePath });
         }
     };
-    const onSignal = () => {
-        doUnlock();
+    const onSignal = async () => {
+        if (deployLocked && !preview) {
+            deployLocked = false;
+            context.logger.debug("Unlocking docs deploy due to signal...");
+            await unlockDeploy({ fdrOrigin, token: token.value, domain, basepath: basePath });
+        }
         process.exit(1);
     };
     process.on("SIGINT", onSignal);
