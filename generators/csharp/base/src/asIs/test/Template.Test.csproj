@@ -34,6 +34,21 @@
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
     </ItemGroup>
 <% } %>
+<% if (it.protoServerItems && it.protoServerItems.length > 0) { %>
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+        <PackageReference Include="Grpc.Tools" Version="2.64.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+<% for (const item of it.protoServerItems) { %>
+        <%= item %>
+<% } %>
+    </ItemGroup>
+<% } %>
 
     <ItemGroup>
         <ProjectReference Include="<%= projectReferencePath%>" />

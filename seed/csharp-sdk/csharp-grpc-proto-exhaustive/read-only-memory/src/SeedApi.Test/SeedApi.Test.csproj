@@ -34,6 +34,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+    <PackageReference Include="Grpc.Tools" Version="2.64.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf
+      Include="..\..\proto\data\v1\data.proto"
+      GrpcServices="Server"
+      ProtoRoot="..\..\proto"
+    />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SeedApi\SeedApi.csproj" />
   </ItemGroup>
 

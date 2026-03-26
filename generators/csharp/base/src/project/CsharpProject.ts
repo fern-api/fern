@@ -29,6 +29,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+    private protobufSourceFilePaths: RelativeFilePath[] = [];
 
     public constructor({
         context,
@@ -374,6 +375,7 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(this.generation.constants.folders.protobuf)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
+        this.protobufSourceFilePaths = protobufSourceFilePaths;
         const csproj = new CsProj({
             name: this.name,
             license: this.context.config.license,
@@ -420,11 +422,31 @@ dotnet_diagnostic.IDE0005.severity = error
         const testCsProjTemplateContents = (
             await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
         ).toString();
+        // Compute protobuf server-side references for gRPC test projects.
+        // The SDK project only generates GrpcServices="Client"; the test project needs
+        // GrpcServices="Server" so that ServiceBase classes are available for stubs.
+        const protoServerItems: string[] = [];
+        if (this.context.hasGrpcEndpoints() && this.protobufSourceFilePaths.length > 0) {
+            const pathToProtobufDirectory = path.win32.normalize(
+                `../../${this.generation.constants.folders.protobuf}`
+            );
+            for (const protoFilePath of this.protobufSourceFilePaths) {
+                if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protoFilePath.startsWith(prefix))) {
+                    continue;
+                }
+                const windowsPath = path.win32.normalize(protoFilePath);
+                protoServerItems.push(
+                    `<Protobuf Include="${pathToProtobufDirectory}\\${windowsPath}" GrpcServices="Server" ProtoRoot="${pathToProtobufDirectory}" />`
+                );
+            }
+        }
+
         const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
             testProjectName,
             projectReferencePath: projectReferenceRelativePath,
-            grpc: this.context.hasGrpcEndpoints()
+            grpc: this.context.hasGrpcEndpoints(),
+            protoServerItems
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
