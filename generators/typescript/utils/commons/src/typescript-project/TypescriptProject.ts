@@ -192,7 +192,7 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(options?: { fixEsmImports?: boolean }): Promise<PersistedTypescriptProject> {
+    public async persist(options?: { fixEsmImports?: boolean; beforeFixImports?: () => Promise<void> }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
@@ -206,8 +206,15 @@ export abstract class TypescriptProject {
 
         await this.addFilesToVolume();
 
+        // Hook for writing additional files (e.g. core utilities) into the Volume
+        // after ts-morph source files, so they overwrite at overlapping paths
+        // (preserving the old semantic where core utilities take precedence).
+        if (options?.beforeFixImports) {
+            await options.beforeFixImports();
+        }
+
         // Fix ESM imports in-memory before writing to disk. Core utility files
-        // should already be in the Volume (via copyCoreUtilitiesToVolume) so their
+        // should already be in the Volume (via beforeFixImports hook) so their
         // imports are processed alongside generated source files — no post-persist
         // disk pass needed for core utilities.
         if (options?.fixEsmImports) {

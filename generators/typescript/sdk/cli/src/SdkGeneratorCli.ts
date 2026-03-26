@@ -257,14 +257,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         });
         const typescriptProject = await sdkGenerator.generate();
-        // Copy core utility files into the Volume before persist so they are
-        // processed in-memory by fixImportsInVolume alongside generated source
-        // files — no post-persist disk pass needed for core utilities.
-        if (!customConfig.useLegacyExports) {
-            await sdkGenerator.copyCoreUtilitiesToVolume(typescriptProject.volume);
-        }
         const persistedTypescriptProject = await typescriptProject.persist({
-            fixEsmImports: !customConfig.useLegacyExports
+            fixEsmImports: !customConfig.useLegacyExports,
+            // Copy core utility files into the Volume AFTER writeSrcToVolume
+            // so they overwrite ts-morph files at overlapping paths (preserving
+            // the old semantic), but BEFORE fixImportsInVolume so their imports
+            // are processed in-memory alongside generated source files.
+            beforeFixImports: customConfig.useLegacyExports
+                ? undefined
+                : async () => sdkGenerator.copyCoreUtilitiesToVolume(typescriptProject.volume)
         });
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
         // For legacy exports, core utilities are still copied to disk the traditional way.
