@@ -20,6 +20,8 @@ export declare namespace ExecutionEnvironment {
         context: TaskContext;
         inspect: boolean;
         runner: ContainerRunner | undefined;
+        /** Whether to mount /fern/output as tmpfs for faster I/O during local generation */
+        useTmpfs?: boolean;
     }
 }
 

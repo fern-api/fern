@@ -1,6 +1,7 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import crypto from "crypto";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
@@ -17,6 +18,15 @@ export declare namespace runContainer {
         runner?: ContainerRunner;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
+        /** tmpfs mounts to add to the container (e.g. ["/fern/output:rw,size=512m"]) */
+        tmpfsMounts?: string[];
+        /**
+         * Paths to copy back from the container after it exits.
+         * Each entry maps a container path to a host path.
+         * This is needed when using tmpfs mounts, since tmpfs overlays bind mounts
+         * and the host directory won't receive writes directly.
+         */
+        copyBackPaths?: Array<{ containerPath: string; hostPath: string }>;
     }
 
     export interface Result {
@@ -34,8 +44,18 @@ export async function runContainer({
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner,
-    signal
+    signal,
+    tmpfsMounts = [],
+    copyBackPaths = []
 }: runContainer.Args): Promise<void> {
+    // When tmpfs + copyBack is used, we cannot use --rm because we need the container
+    // to still exist after it exits so we can docker cp files out.
+    const needsCopyBack = tmpfsMounts.length > 0 && copyBackPaths.length > 0;
+    const effectiveRemoveAfterCompletion = needsCopyBack ? false : removeAfterCompletion;
+
+    // Generate a unique container name when we need to reference the container after it exits
+    const containerName = needsCopyBack ? `fern-gen-${crypto.randomUUID().slice(0, 8)}` : undefined;
+
     const tryRun = () =>
         tryRunContainer({
             logger,
@@ -44,19 +64,42 @@ export async function runContainer({
             binds,
             envVars,
             ports,
-            removeAfterCompletion,
+            removeAfterCompletion: effectiveRemoveAfterCompletion,
             writeLogsToFile,
             runner,
-            signal
+            signal,
+            tmpfsMounts,
+            containerName
         });
+    let containerId: string | undefined;
     try {
-        await tryRun();
+        containerId = await tryRun();
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
             await pullImage(imageName, runner, signal);
-            await tryRun();
+            containerId = await tryRun();
         } else {
             throw e;
+        }
+    }
+
+    // Copy back files from the container if needed (tmpfs output)
+    if (needsCopyBack && containerId != null) {
+        try {
+            for (const { containerPath, hostPath } of copyBackPaths) {
+                await copyFromContainer({
+                    logger,
+                    containerId,
+                    containerPath: `${containerPath}/.`,
+                    hostPath,
+                    runner
+                });
+            }
+        } finally {
+            // Clean up the container since we skipped --rm
+            if (removeAfterCompletion) {
+                await stopContainer({ logger, containerId, runner });
+            }
         }
     }
 }
@@ -99,7 +142,9 @@ async function tryRunContainer({
     removeAfterCompletion,
     writeLogsToFile,
     runner,
-    signal
+    signal,
+    tmpfsMounts = [],
+    containerName
 }: {
     logger: Logger;
     imageName: string;
@@ -111,7 +156,9 @@ async function tryRunContainer({
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
     signal?: AbortSignal;
-}): Promise<void> {
+    tmpfsMounts?: string[];
+    containerName?: string;
+}): Promise<string | undefined> {
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
@@ -120,9 +167,11 @@ async function tryRunContainer({
         "--user",
         "root",
         ...binds.flatMap((bind) => ["-v", bind]),
+        ...tmpfsMounts.flatMap((mount) => ["--tmpfs", mount]),
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
+        ...(containerName != null ? ["--name", containerName] : []),
         imageName,
         ...args
     ].filter(Boolean);
@@ -155,6 +204,8 @@ async function tryRunContainer({
     if (exitCode !== 0) {
         throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
     }
+
+    return containerName;
 }
 
 async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {

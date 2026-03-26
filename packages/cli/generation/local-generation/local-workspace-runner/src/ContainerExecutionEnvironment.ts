@@ -47,15 +47,19 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         sourceMounts,
         context,
         inspect,
-        runner
+        runner,
+        useTmpfs
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
 
-        const binds = [
-            `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,
-            `${irPath}:${CONTAINER_PATH_TO_IR}:ro`,
-            `${outputPath}:${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
-        ];
+        const binds = [`${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`, `${irPath}:${CONTAINER_PATH_TO_IR}:ro`];
+
+        // When tmpfs is enabled, the output directory is mounted as tmpfs inside the container
+        // for faster I/O. Files are copied back via docker cp after the container exits.
+        // When tmpfs is disabled, use the traditional bind mount.
+        if (!useTmpfs) {
+            binds.push(`${outputPath}:${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`);
+        }
 
         if (snippetPath) {
             binds.push(`${snippetPath}:${CONTAINER_PATH_TO_SNIPPET}`);
@@ -79,6 +83,15 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             ports[DEFAULT_NODE_DEBUG_PORT] = DEFAULT_NODE_DEBUG_PORT;
         }
 
+        const tmpfsMounts = useTmpfs ? [`${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}:rw,size=512m`] : [];
+        const copyBackPaths = useTmpfs
+            ? [{ containerPath: CONTAINER_CODEGEN_OUTPUT_DIRECTORY, hostPath: `${outputPath}` }]
+            : [];
+
+        if (useTmpfs) {
+            context.logger.debug("Using tmpfs mount for generator output directory");
+        }
+
         await runContainer({
             logger: context.logger,
             imageName: this.containerImage,
@@ -87,7 +100,9 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             envVars,
             ports,
             removeAfterCompletion: !this.keepContainer,
-            runner: this.runner ?? runner
+            runner: this.runner ?? runner,
+            tmpfsMounts,
+            copyBackPaths
         });
     }
 }

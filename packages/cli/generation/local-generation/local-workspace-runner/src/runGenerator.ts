@@ -79,7 +79,8 @@ export async function writeFilesToDiskAndRunGenerator({
     ai,
     autoVersioningCache,
     absolutePathToSpecRepo,
-    skipFernignore
+    skipFernignore,
+    useTmpfs
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -108,6 +109,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
+    useTmpfs?: boolean;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -240,7 +242,8 @@ export async function writeFilesToDiskAndRunGenerator({
         sourceMounts,
         context,
         inspect,
-        runner
+        runner,
+        useTmpfs
     });
 
     const taskHandler = new LocalTaskHandler({

@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add tmpfs mount for the generator output directory during local generation
+        (`fern generate --local`). The output directory (`/fern/output`) is now mounted
+        as tmpfs by default for faster I/O. Generated files are copied back to the host
+        via `docker cp` after the container exits. Use `--no-tmpfs` to disable this
+        behavior and fall back to the traditional bind mount.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.46.3
   changelogEntry:
     - summary: |

@@ -760,6 +760,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("tmpfs", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Mount the generator output directory as tmpfs for faster I/O during local generation (use --no-tmpfs to disable)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -835,7 +841,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     outputDir: argv.output,
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
+                    requireEnvVars: argv["require-env-vars"],
+                    useTmpfs: argv.tmpfs
                 });
             }
             if (argv.docs != null) {
@@ -894,7 +901,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 outputDir: argv.output,
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
+                requireEnvVars: argv["require-env-vars"],
+                useTmpfs: argv.tmpfs
             });
         }
     );
