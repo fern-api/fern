@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.19.12
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-26"
+
+- changelogEntry:
+    - summary: |
+        Upgrade generated project dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-25"
+  version: 0.19.11
+
 - changelogEntry:
     - summary: |
         Fix npm publish authentication failing when the registry URL includes a port number.

@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 1 types for API operations
-//! - **Model Types**: 24 types for data representation
+//! - **Model Types**: 25 types for data representation
 
 pub mod bigunion_big_union;
 pub mod types_union;
@@ -28,6 +28,7 @@ pub mod types_union_with_sub_types;
 pub mod types_union_with_duplicative_discriminants;
 pub mod types_foo;
 pub mod types_bar;
+pub mod types_type_with_optional_map;
 pub mod types_union_with_same_string_types;
 pub mod types_union_with_same_number_types;
 pub mod union_get_shape_request;
@@ -54,6 +55,7 @@ pub use types_union_with_sub_types::UnionWithSubTypes;
 pub use types_union_with_duplicative_discriminants::UnionWithDuplicativeDiscriminants;
 pub use types_foo::Foo;
 pub use types_bar::Bar;
+pub use types_type_with_optional_map::TypeWithOptionalMap;
 pub use types_union_with_same_string_types::UnionWithSameStringTypes;
 pub use types_union_with_same_number_types::UnionWithSameNumberTypes;
 pub use union_get_shape_request::GetShapeRequest;

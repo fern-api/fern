@@ -125,7 +125,7 @@ export class RealtimeNoAuthSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
+    protected sendBinary(payload: ArrayBuffer | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 
