@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.8
+  changelogEntry:
+    - summary: |
+        Eliminate Pydantic v2 deprecation warnings in `UniversalBaseModel`. Under Pydantic v2,
+        the class-based `Config` pattern with `smart_union` and `allow_population_by_field_name`
+        emits deprecation warnings. `UniversalBaseModel` now uses `model_config: ConfigDict` with
+        `populate_by_name=True`, `validate_by_name=True`, and `validate_by_alias=True` (for v2.11+
+        support) for v2, and a custom `@model_serializer` for datetime serialization instead of
+        the deprecated `json_encoders`. Pydantic v1 continues to use the original class-based Config.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 5.0.7
   changelogEntry:
     - summary: |

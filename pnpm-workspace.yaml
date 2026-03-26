@@ -13,10 +13,10 @@ packages:
 
 catalog:
   "@babel/core": ^7.29.0
-  "@babel/preset-env": ^7.29.0
+  "@babel/preset-env": ^7.29.2
   "@babel/preset-typescript": ^7.28.5
-  "@biomejs/biome": 2.4.4
-  "@blueprintjs/eslint-plugin": ^6.1.22
+  "@biomejs/biome": 2.4.9
+  "@blueprintjs/eslint-plugin": ^6.1.24
   "@blueprintjs/stylelint-plugin": ^4.1.14
   "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
@@ -73,19 +73,19 @@ catalog:
   "@types/json-schema": ^7.0.15
   "@types/jsonwebtoken": ^9.0.6
   "@types/latest-version": ^4.0.1
-  "@types/lodash": ^4.17.4
+  "@types/lodash": ^4.17.24
   "@types/lodash-es": ^4.17.12
   "@types/mdast": ^4.0.4
   "@types/mime-types": ^2.1.4
   "@types/minimatch": ^6.0.0
   "@types/node": 18.15.3
-  "@types/node-fetch": 2.6.9
+  "@types/node-fetch": 2.6.13
   "@types/number-to-words": 1.2.3
   "@types/object-hash": ^3.0.6
   "@types/pngjs": ^6.0.5
   "@types/prettier2": npm:@types/prettier@^2.7.3
   "@types/pretty-ms": ^5.0.1
-  "@types/qs": 6.9.15
+  "@types/qs": 6.15.0
   "@types/semver": ^7.5.8
   "@types/stream-json": ^1.7.7
   "@types/swagger2openapi": ^7.0.4
@@ -105,7 +105,7 @@ catalog:
   "@wasm-fmt/ruff_fmt": ^0.6.1
   ajv-formats: ^3.0.1
   ansi-escapes: ^5.0.0
-  axios: ^1.13.5
+  axios: ^1.13.6
   boxen: ^7.1.1
   chalk: ^5.3.0
   chardet: ^2.0.0
@@ -114,13 +114,13 @@ catalog:
   cors: ^2.8.5
   cross-env: ^10.1.0
   cspell: ^9.6.4
-  dayjs: ^1.11.11
+  dayjs: ^1.11.20
   decompress: ^4.2.1
-  dedent: ^1.5.1
-  diff: ^8.0.3
+  dedent: ^1.7.2
+  diff: ^8.0.4
   domhandler: ^5.0.3
   endent: ^2.1.0
-  es-toolkit: ^1.39.10
+  es-toolkit: ^1.45.1
   esbuild: ^0.27.3
   esbuild-plugin-polyfill-node: ^0.3.0
   eslint: ^9.26.0
@@ -128,12 +128,12 @@ catalog:
   esutils: ^2.0.3
   express: ^4.22.0
   fast-levenshtein: ^3.0.0
-  file-type: ^21.3.2
+  file-type: ^21.3.4
   find-up: ^6.3.0
   form-data: 4.0.4
-  fs-extra: ^11.1.1
+  fs-extra: ^11.3.4
   glob: ^11.1.0
-  graphql: ^16.8.1
+  graphql: ^16.13.2
   gray-matter: ^4.0.3
   hast-util-to-mdast: ^10.1.0
   heap-js: ^2.6.0
@@ -145,14 +145,14 @@ catalog:
   js-yaml-source-map: ^0.2.2
   json-schema: ^0.4.0
   json-stream-stringify: ^3.1.4
-  jsonpath-plus: 10.3.0
+  jsonpath-plus: 10.4.0
   jsonwebtoken: ^9.0.2
   jwks-rsa: ^3.1.0
   knip: ^5.84.1
   latest-version: ^9.0.0
   lodash: ^4.17.23
   lodash-es: ^4.17.21
-  mdast-util-from-markdown: ^2.0.2
+  mdast-util-from-markdown: ^2.0.3
   mdast-util-gfm: ^3.0.0
   mdast-util-math: ^3.0.0
   mdast-util-mdx: ^3.0.0
@@ -178,8 +178,8 @@ catalog:
   prettier: ^3.8.1
   prettier2: npm:prettier@^2.7.1
   pretty-ms: ^9.0.0
-  puppeteer: ^24.21.0
-  qs: ^6.14.2
+  puppeteer: ^24.40.0
+  qs: ^6.15.0
   rehype-katex: ^7.0.0
   rehype-parse: ^9.0.0
   remark-gfm: ^4.0.0
@@ -190,11 +190,11 @@ catalog:
   simple-git: ^3.32.3
   sort-package-json: 3.6.1
   stream-json: ^1.8.0
-  strip-ansi: ^7.1.0
+  strip-ansi: ^7.2.0
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.11
+  tar: ^7.5.13
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -205,7 +205,7 @@ catalog:
   tsdown: 0.20.1
   tsup: ^8.5.1
   tsx: ^4.21.0
-  turbo: ^2.8.10
+  turbo: ^2.8.20
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
   undici: ^6.24.0
@@ -214,11 +214,11 @@ catalog:
   url-join: ^4.0.1
   uuid: ^9.0.1
   validate-npm-package-name: ^5.0.1
-  "@vitest/coverage-v8": ^4.1.0
-  vitest: ^4.1.0
+  "@vitest/coverage-v8": 4.1.0
+  vitest: 4.1.0
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.17.1
+  ws: ^8.20.0
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
