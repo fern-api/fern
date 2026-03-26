@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/ObjectPayloadWithEventField"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ObjectPayloadWithEventField": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "event"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

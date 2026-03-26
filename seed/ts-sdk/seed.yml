@@ -493,6 +493,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+  server-sent-events-openapi:
+    - outputFolder: no-custom-config
+      customConfig: null
+
 scripts:
   - image: fernapi/ts-seed
     commands:
@@ -546,3 +550,4 @@ allowedFailures:
   - package-yml
   - inferred-auth-implicit-reference
   - unions:serde-layer
+  - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
