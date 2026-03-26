@@ -1531,10 +1531,9 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
                 // Use the deserialized discriminant name (camelCase when serde layer is enabled)
-                discriminantField =
-                    context.includeSerdeLayer && !context.retainOriginalCasing
-                        ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
-                        : typeDeclaration.shape.discriminant.wireValue;
+                discriminantField = context.includeSerdeLayer
+                    ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
+                    : typeDeclaration.shape.discriminant.wireValue;
             }
         }
 
