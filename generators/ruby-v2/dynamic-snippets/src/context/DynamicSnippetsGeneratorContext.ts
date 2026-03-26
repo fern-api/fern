@@ -10,10 +10,12 @@ import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper.js";
 
 /**
  * Normalizes a snake_case name to match RuboCop's `Naming/VariableNumber` `normalcase` style.
- * Removes underscores immediately before digit sequences (e.g., `account_last_4` -> `account_last4`).
+ * Removes underscores immediately before digit sequences when preceded by a letter
+ * (e.g., `account_last_4` -> `account_last4`), but preserves leading underscores and
+ * underscores after digits (e.g., `_3_d` stays `_3_d`).
  */
 function normalizeVariableNumber(name: string): string {
-    return name.replace(/_(\d)/g, "$1");
+    return name.replace(/([a-zA-Z])_(\d)/g, "$1$2");
 }
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
