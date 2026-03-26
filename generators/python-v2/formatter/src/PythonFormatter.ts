@@ -10,9 +10,13 @@ export class PythonFormatter extends AbstractFormatter {
         this.config = config;
     }
 
+    private async initialize(): Promise<void> {
+        await init();
+    }
+
     private ensureInitialized(): Promise<void> {
         if (this.initialized == null) {
-            this.initialized = init().then(() => undefined);
+            this.initialized = this.initialize();
         }
         return this.initialized;
     }
