@@ -1,6 +1,6 @@
 namespace SeedApi.Test.Unit.MockServer;
 
-public class DataServiceStub : Data.V1.Grpc.DataService.DataServiceBase
+public class DataServiceStub : global::Data.V1.Grpc.DataService.DataServiceBase
 {
     private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.CheckResponse>? _checkHandler;
 

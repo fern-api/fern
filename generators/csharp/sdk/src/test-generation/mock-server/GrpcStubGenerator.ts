@@ -64,7 +64,8 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
             parentClassReference: this.csharp.classReference({
                 name: `${this.grpcServiceName}.${this.grpcServiceName}Base`,
                 namespace: this.grpcNamespace,
-                fullyQualified: true
+                fullyQualified: true,
+                global: true
             })
         });
 
