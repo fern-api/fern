@@ -31,10 +31,11 @@ public sealed class GrpcMockServer : IAsyncDisposable
     public HttpClient HttpClient { get; }
 
     /// <inheritdoc />
-    public async ValueTask DisposeAsync()
+    public ValueTask DisposeAsync()
     {
         Channel.Dispose();
         HttpClient.Dispose();
         _server.Dispose();
+        return ValueTask.CompletedTask;
     }
 }
