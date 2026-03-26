@@ -343,7 +343,7 @@ export async function visitDocsConfigFileYamlAst({
         languages: noop,
         theme: noop,
         libraries: noop,
-        "icon-library": noop
+        iconLibrary: noop
     });
 }
 
