@@ -60,7 +60,7 @@
     <ItemGroup>
       <_ProtoMessageFiles
         Include="$(IntermediateOutputPath)**\*.cs"
-        Exclude="$(IntermediateOutputPath)**\*Grpc.cs"
+        Exclude="$(IntermediateOutputPath)**\*Grpc.cs;$(IntermediateOutputPath)**\*.g.cs"
       />
       <Compile Remove="@(_ProtoMessageFiles)" />
     </ItemGroup>

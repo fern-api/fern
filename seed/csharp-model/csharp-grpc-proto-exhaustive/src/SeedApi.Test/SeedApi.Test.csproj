@@ -29,6 +29,44 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+    <PackageReference Include="Grpc.Tools" Version="2.64.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf
+      Include="..\..\proto\data\v1\data.proto"
+      GrpcServices="Server"
+      ProtoRoot="..\..\proto"
+    />
+  </ItemGroup>
+
+  <!--
+      Grpc.Tools compiles .proto files and generates both message types (*. cs) and
+      gRPC service stubs (*Grpc.cs). The message types are already provided by the
+      SDK project reference, so including them here causes CS0029 type-identity
+      conflicts between the two assemblies. This target removes the duplicate
+      message-only files from compilation, keeping only the *Grpc.cs server stubs.
+    -->
+  <Target Name="ExcludeProtoMessageTypes" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <_ProtoMessageFiles
+        Include="$(IntermediateOutputPath)**\*.cs"
+        Exclude="$(IntermediateOutputPath)**\*Grpc.cs;$(IntermediateOutputPath)**\*.g.cs"
+      />
+      <Compile Remove="@(_ProtoMessageFiles)" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
     <ProjectReference Include="..\SeedApi\SeedApi.csproj" />
   </ItemGroup>
 
