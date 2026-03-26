@@ -192,7 +192,10 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(options?: { fixEsmImports?: boolean; beforeFixImports?: () => Promise<void> }): Promise<PersistedTypescriptProject> {
+    public async persist(options?: {
+        fixEsmImports?: boolean;
+        beforeFixImports?: () => Promise<void>;
+    }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
