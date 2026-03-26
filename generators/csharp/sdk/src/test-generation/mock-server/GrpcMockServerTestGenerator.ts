@@ -8,24 +8,23 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type ServiceId = FernIr.ServiceId;
 
 import { GrpcEndpointGenerator } from "../../endpoint/grpc/GrpcEndpointGenerator.js";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { GrpcStubGenerator } from "./GrpcStubGenerator.js";
 
 /**
  * Generates a test fixture class for a single gRPC endpoint.
- * Each test method:
- *   1. Creates a fresh stub and configures it with `.OnMethodName(handler)`
- *   2. Builds an in-process gRPC mock server via GrpcMockServerBuilder
- *   3. Instantiates the generated SDK client with the mock channel
- *   4. Calls the endpoint and asserts the response
+ * Inherits from BaseGrpcMockServerTest which handles all ceremony
+ * (stub creation, server building, client instantiation).
+ * Each test method only contains the unique test-specific code:
+ *   1. Configures the stub handler via the inherited Stub property
+ *   2. Calls the endpoint via the inherited Client property
+ *   3. Asserts the response matches the expected output
  */
 export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly classReference: ast.ClassReference;
     private readonly grpcEndpointGenerator: GrpcEndpointGenerator;
     private readonly grpcClientInfo: GrpcClientInfo;
     private readonly stubGenerator: GrpcStubGenerator;
-    private readonly rootClientGenerator: RootClientGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -39,7 +38,6 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
         this.grpcClientInfo = grpcClientInfo;
         this.stubGenerator = stubGenerator;
-        this.rootClientGenerator = new RootClientGenerator(context);
 
         this.classReference = this.csharp.classReference({
             origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
@@ -70,7 +68,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         const testClass = this.csharp.testClass({
             name: this.classReference.name,
             namespace: this.getTestNamespace(),
-            origin: this.classReference.origin
+            origin: this.classReference.origin,
+            parentClassReference: this.Types.BaseGrpcMockServerTest
         });
         this.exampleEndpointCalls.forEach((example, index) => {
             let jsonExampleResponse: unknown | undefined = undefined;
@@ -88,7 +87,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             const endpointSnippet = this.grpcEndpointGenerator.generateGrpcEndpointSnippet({
                 example,
                 endpoint: this.endpoint,
-                clientVariableName: "client",
+                clientVariableName: "Client",
                 serviceId: this.serviceId,
                 parseDatetimes: true,
                 getResult: true
@@ -161,39 +160,21 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.newLine();
         }
 
-        // Add using for Google.Protobuf (needed for JsonParser in stub handler)
-        writer.addNamespace("Google.Protobuf");
-
         const stubClassName = this.stubGenerator.getStubClassName();
-        const serviceBaseClassName = this.stubGenerator.getServiceBaseClassName();
-
-        // Instantiate and configure the stub
-        writer.write(`var stub = new ${stubClassName}()`);
-        writer.newLine();
-
         const methodName = this.endpoint.name.pascalCase.safeName;
         const protoResponseType = this.stubGenerator.getProtoResponseType(this.endpoint);
+
+        // Configure stub handler — uses inherited Stub property and ParseProtoJson helper
         if (canAssertResponse) {
-            writer.writeLine(`    .On${methodName}((request) =>`);
-            writer.writeLine("    {");
-            writer.writeLine(`        return JsonParser.Default.Parse<${protoResponseType}>(mockResponse);`);
-            writer.writeTextStatement("    })");
+            writer.writeTextStatement(
+                `${stubClassName}.On${methodName}(_ => ParseProtoJson<${protoResponseType}>(mockResponse))`
+            );
         } else {
-            writer.writeTextStatement(`    .On${methodName}((request) => new ${protoResponseType}())`);
+            writer.writeTextStatement(`${stubClassName}.On${methodName}(_ => new ${protoResponseType}())`);
         }
         writer.newLine();
 
-        // Build the mock server using GrpcMockServerBuilder
-        writer.writeLine("await using var mock = await GrpcMockServerBuilder.Configure()");
-        writer.writeLine(`    .WithService<${serviceBaseClassName}>(stub)`);
-        writer.writeTextStatement("    .BuildAsync()");
-        writer.newLine();
-
-        // Instantiate the generated client with the mock channel
-        this.writeClientInstantiation(writer);
-        writer.newLine();
-
-        // Call the method and assert
+        // Call the method and assert — uses inherited Client property
         if (canAssertResponse) {
             writer.write("var response = ");
             writer.writeNodeStatement(endpointSnippet);
@@ -230,36 +211,6 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             }
         }
         return undefined;
-    }
-
-    private writeClientInstantiation(writer: Writer): void {
-        writer.addNamespace("Grpc.Net.Client");
-        writer.write("var client = ");
-        writer.writeNodeStatement(
-            this.rootClientGenerator.generateExampleClientInstantiationSnippet({
-                includeEnvVarArguments: true,
-                asSnippet: false,
-                clientOptionsArgument: this.csharp.instantiateClass({
-                    classReference: this.Types.ClientOptions,
-                    arguments_: [
-                        {
-                            name: "BaseUrl",
-                            assignment: this.csharp.codeblock('"http://localhost"')
-                        },
-                        { name: "MaxRetries", assignment: this.csharp.codeblock("0") },
-                        {
-                            name: "GrpcOptions",
-                            assignment: this.csharp.codeblock((w) => {
-                                w.writeLine("new GrpcChannelOptions");
-                                w.writeLine("{");
-                                w.writeLine("    HttpClient = mock.HttpClient,");
-                                w.write("}");
-                            })
-                        }
-                    ]
-                })
-            })
-        );
     }
 
     private getDirectory(): RelativeFilePath {

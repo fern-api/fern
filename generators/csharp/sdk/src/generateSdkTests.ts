@@ -1,7 +1,8 @@
-import { CSharpFile } from "@fern-api/csharp-base";
+import { CSharpFile, GrpcClientInfo } from "@fern-api/csharp-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { BaseGrpcMockServerTestGenerator } from "./test-generation/mock-server/BaseGrpcMockServerTestGenerator.js";
 import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator.js";
 import { GrpcMockServerTestGenerator } from "./test-generation/mock-server/GrpcMockServerTestGenerator.js";
 import { GrpcStubGenerator } from "./test-generation/mock-server/GrpcStubGenerator.js";
@@ -124,10 +125,24 @@ function generateGrpcMockServerTests({ context }: { context: SdkGeneratorContext
     }
 
     // Generate stub files only for services that had at least one test
+    const activeStubGenerators: GrpcStubGenerator[] = [];
+    const activeGrpcClientInfos: GrpcClientInfo[] = [];
     for (const [serviceId, stubGenerator] of stubGeneratorsByService.entries()) {
         if (servicesWithTests.has(serviceId)) {
             files.push(stubGenerator.generate());
+            activeStubGenerators.push(stubGenerator);
+            const grpcClientInfo = context.getGrpcClientInfoForServiceId(serviceId);
+            if (grpcClientInfo != null) {
+                activeGrpcClientInfos.push(grpcClientInfo);
+            }
         }
+    }
+
+    // Generate the base class if at least one test was generated
+    if (activeStubGenerators.length > 0) {
+        files.push(
+            new BaseGrpcMockServerTestGenerator(context, activeStubGenerators, activeGrpcClientInfos).generate()
+        );
     }
 
     return files;

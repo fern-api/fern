@@ -1,14 +1,12 @@
-using Google.Protobuf;
-using Grpc.Net.Client;
 using NUnit.Framework;
-using SeedApi;
+using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class ListTest
+public class ListTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
@@ -33,28 +31,9 @@ public class ListTest
             }
             """;
 
-        var stub = new DataServiceStub().OnList(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.ListResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnList(_ => ParseProtoJson<Data.V1.Grpc.ListResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.ListAsync(
+        var response = await Client.DataService.ListAsync(
             new SeedApi.ListRequest
             {
                 Prefix = "prefix",
@@ -86,28 +65,9 @@ public class ListTest
             }
             """;
 
-        var stub = new DataServiceStub().OnList(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.ListResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnList(_ => ParseProtoJson<Data.V1.Grpc.ListResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.ListAsync(new SeedApi.ListRequest());
+        var response = await Client.DataService.ListAsync(new SeedApi.ListRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

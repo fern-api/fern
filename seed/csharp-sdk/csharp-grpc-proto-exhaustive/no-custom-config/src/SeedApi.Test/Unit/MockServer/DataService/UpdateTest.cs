@@ -1,14 +1,12 @@
-using Google.Protobuf;
-using Grpc.Net.Client;
 using NUnit.Framework;
-using SeedApi;
+using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class UpdateTest
+public class UpdateTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
@@ -27,28 +25,9 @@ public class UpdateTest
             }
             """;
 
-        var stub = new DataServiceStub().OnUpdate(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.UpdateResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnUpdate(_ => ParseProtoJson<Data.V1.Grpc.UpdateResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.UpdateAsync(
+        var response = await Client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest { Id = "id" }
         );
         JsonAssert.AreEqual(response, mockResponse);

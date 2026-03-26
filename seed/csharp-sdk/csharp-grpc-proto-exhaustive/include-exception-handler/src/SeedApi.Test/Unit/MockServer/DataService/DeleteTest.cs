@@ -1,14 +1,12 @@
-using Google.Protobuf;
-using Grpc.Net.Client;
 using NUnit.Framework;
-using SeedApi;
+using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class DeleteTest
+public class DeleteTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
@@ -17,28 +15,9 @@ public class DeleteTest
             {}
             """;
 
-        var stub = new DataServiceStub().OnDelete(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.DeleteResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnDelete(_ => ParseProtoJson<Data.V1.Grpc.DeleteResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.DeleteAsync(new SeedApi.DeleteRequest());
+        var response = await Client.DataService.DeleteAsync(new SeedApi.DeleteRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

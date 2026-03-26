@@ -1,14 +1,12 @@
-using Google.Protobuf;
-using Grpc.Net.Client;
 using NUnit.Framework;
-using SeedApi;
+using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class FetchTest
+public class FetchTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
@@ -44,28 +42,9 @@ public class FetchTest
             }
             """;
 
-        var stub = new DataServiceStub().OnFetch(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.FetchResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnFetch(_ => ParseProtoJson<Data.V1.Grpc.FetchResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.FetchAsync(
+        var response = await Client.DataService.FetchAsync(
             new SeedApi.FetchRequest { Ids = ["ids"], Namespace = "namespace" }
         );
         JsonAssert.AreEqual(response, mockResponse);
@@ -102,28 +81,9 @@ public class FetchTest
             }
             """;
 
-        var stub = new DataServiceStub().OnFetch(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.FetchResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnFetch(_ => ParseProtoJson<Data.V1.Grpc.FetchResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.FetchAsync(new SeedApi.FetchRequest());
+        var response = await Client.DataService.FetchAsync(new SeedApi.FetchRequest());
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

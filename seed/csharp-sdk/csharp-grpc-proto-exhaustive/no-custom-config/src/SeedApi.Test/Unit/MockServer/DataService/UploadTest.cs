@@ -1,14 +1,12 @@
-using Google.Protobuf;
-using Grpc.Net.Client;
 using NUnit.Framework;
-using SeedApi;
+using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class UploadTest
+public class UploadTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
@@ -19,28 +17,9 @@ public class UploadTest
             }
             """;
 
-        var stub = new DataServiceStub().OnUpload(
-            (request) =>
-            {
-                return JsonParser.Default.Parse<Data.V1.Grpc.UploadResponse>(mockResponse);
-            }
-        );
+        DataServiceStub.OnUpload(_ => ParseProtoJson<Data.V1.Grpc.UploadResponse>(mockResponse));
 
-        await using var mock = await GrpcMockServerBuilder
-            .Configure()
-            .WithService<Data.V1.Grpc.DataService.DataServiceBase>(stub)
-            .BuildAsync();
-
-        var client = new SeedApiClient(
-            clientOptions: new ClientOptions
-            {
-                BaseUrl = "http://localhost",
-                MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
-            }
-        );
-
-        var response = await client.DataService.UploadAsync(
+        var response = await Client.DataService.UploadAsync(
             new SeedApi.UploadRequest
             {
                 Columns = new List<SeedApi.Column>()

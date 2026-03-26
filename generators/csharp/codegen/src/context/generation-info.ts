@@ -685,6 +685,12 @@ export class Generation {
                 origin: this.model.staticExplicit("BaseMockServerTest"),
                 namespace: this.namespaces.mockServerTest
             }),
+        /** Base class for gRPC mock server tests */
+        BaseGrpcMockServerTest: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("BaseGrpcMockServerTest"),
+                namespace: this.namespaces.mockServerTest
+            }),
         /** Request options with idempotency key support */
         IdempotentRequestOptions: () =>
             this.csharp.classReference({
