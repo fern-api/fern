@@ -658,8 +658,11 @@ export class WireTestGenerator {
                 writer.newLine();
             }
 
-            // Call the method and capture response and error (error only if response body is nonexistent)
-            if (endpoint.response?.body != null) {
+            // Call the method and capture response and error
+            const isStreaming = endpoint.response?.body?.type === "streaming";
+            if (isStreaming) {
+                writer.write("stream, invocationErr := ");
+            } else if (endpoint.response?.body != null) {
                 writer.write("_, invocationErr := ");
             } else {
                 writer.write("invocationErr := ");
@@ -683,6 +686,42 @@ export class WireTestGenerator {
                     multiline: false
                 })
             );
+
+            // For streaming endpoints, consume the stream and assert we received events
+            if (isStreaming) {
+                writer.writeLine();
+                writer.write("eventCount := 0");
+                writer.writeLine();
+                writer.write("for {");
+                writer.writeLine();
+                writer.write("\t_, err := stream.Recv()");
+                writer.writeLine();
+                writer.write("\tif err != nil {");
+                writer.writeLine();
+                writer.write("\t\tbreak");
+                writer.writeLine();
+                writer.write("\t}");
+                writer.writeLine();
+                writer.write("\teventCount++");
+                writer.writeLine();
+                writer.write("}");
+                writer.writeLine();
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Greater",
+                            importPath: "github.com/stretchr/testify/require"
+                        }),
+                        arguments_: [
+                            go.codeblock("t"),
+                            go.codeblock("eventCount"),
+                            go.codeblock("0"),
+                            go.TypeInstantiation.string("Expected at least one event")
+                        ],
+                        multiline: false
+                    })
+                );
+            }
 
             writer.writeLine();
 

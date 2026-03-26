@@ -74,7 +74,7 @@ func TestStreamProtocolNoCollisionWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamProtocolNoCollision(
+	stream, invocationErr := client.StreamProtocolNoCollision(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -83,6 +83,15 @@ func TestStreamProtocolNoCollisionWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamProtocolNoCollisionWithWireMock", "POST", "/stream/protocol-no-collision", nil, 1)
 }
 
@@ -97,7 +106,7 @@ func TestStreamProtocolCollisionWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamProtocolCollision(
+	stream, invocationErr := client.StreamProtocolCollision(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -106,6 +115,15 @@ func TestStreamProtocolCollisionWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamProtocolCollisionWithWireMock", "POST", "/stream/protocol-collision", nil, 1)
 }
 
@@ -120,7 +138,7 @@ func TestStreamDataContextWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamDataContext(
+	stream, invocationErr := client.StreamDataContext(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -129,6 +147,15 @@ func TestStreamDataContextWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamDataContextWithWireMock", "POST", "/stream/data-context", nil, 1)
 }
 
@@ -143,7 +170,7 @@ func TestStreamNoContextWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamNoContext(
+	stream, invocationErr := client.StreamNoContext(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -152,6 +179,15 @@ func TestStreamNoContextWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamNoContextWithWireMock", "POST", "/stream/no-context", nil, 1)
 }
 
@@ -166,7 +202,7 @@ func TestStreamProtocolWithFlatSchemaWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamProtocolWithFlatSchema(
+	stream, invocationErr := client.StreamProtocolWithFlatSchema(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -175,6 +211,15 @@ func TestStreamProtocolWithFlatSchemaWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamProtocolWithFlatSchemaWithWireMock", "POST", "/stream/protocol-with-flat-schema", nil, 1)
 }
 
@@ -189,7 +234,7 @@ func TestStreamDataContextWithEnvelopeSchemaWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamDataContextWithEnvelopeSchema(
+	stream, invocationErr := client.StreamDataContextWithEnvelopeSchema(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -198,6 +243,15 @@ func TestStreamDataContextWithEnvelopeSchemaWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamDataContextWithEnvelopeSchemaWithWireMock", "POST", "/stream/data-context-with-envelope-schema", nil, 1)
 }
 
@@ -212,7 +266,7 @@ func TestStreamOasSpecNativeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.StreamRequest{}
-	_, invocationErr := client.StreamOasSpecNative(
+	stream, invocationErr := client.StreamOasSpecNative(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -221,5 +275,14 @@ func TestStreamOasSpecNativeWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	eventCount := 0
+	for {
+		_, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		eventCount++
+	}
+	require.Greater(t, eventCount, 0, "Expected at least one event")
 	VerifyRequestCount(t, "TestStreamOasSpecNativeWithWireMock", "POST", "/stream/oas-spec-native", nil, 1)
 }
