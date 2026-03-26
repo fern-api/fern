@@ -68,6 +68,15 @@ function generateGrpcMockServerTests({ context }: { context: SdkGeneratorContext
         return [];
     }
 
+    // Skip if unions with base properties exist (snippets don't support them)
+    if (
+        Object.values(context.ir.types).find(
+            (typeReference) => typeReference.shape.type === "union" && typeReference.shape.baseProperties.length > 0
+        )
+    ) {
+        return [];
+    }
+
     const servicesWithTests = new Set<string>();
 
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
