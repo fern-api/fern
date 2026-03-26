@@ -550,4 +550,3 @@ allowedFailures:
   - package-yml
   - inferred-auth-implicit-reference
   - unions:serde-layer
-  - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
