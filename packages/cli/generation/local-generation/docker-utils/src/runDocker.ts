@@ -79,6 +79,10 @@ export async function runContainer({
             await pullImage(imageName, runner, signal);
             containerId = await tryRun();
         } else {
+            // Clean up the named container that was started without --rm
+            if (needsCopyBack && containerName != null && removeAfterCompletion) {
+                await stopContainer({ logger, containerId: containerName, runner });
+            }
             throw e;
         }
     }
