@@ -21,9 +21,8 @@ from typing import (
     cast,
 )
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 from pydantic.fields import FieldInfo as _FieldInfo
 
 _logger = logging.getLogger(__name__)
@@ -328,6 +327,7 @@ class UniversalBaseModel(pydantic.BaseModel):
                 elif isinstance(obj, list):
                     return [_serialize_recursive(item) for item in obj]
                 return obj
+
             serialized = self.model_dump()  # type: ignore[attr-defined]
             return _serialize_recursive(serialized)
 
