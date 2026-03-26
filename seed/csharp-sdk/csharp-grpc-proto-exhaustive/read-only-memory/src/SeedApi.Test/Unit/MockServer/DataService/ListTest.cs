@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
-using SeedApi.Core;
+using Google.Protobuf;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -33,10 +33,7 @@ public class ListTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnList(_ =>
-        {
-            var mockObject = JsonUtils.Deserialize<ListResponse>(mockResponse);
-            return mockObject.ToProto();
-        });
+            JsonParser.Default.Parse<Data.V1.Grpc.ListResponse>(mockResponse));
 
         var response = await Client.DataService.ListAsync(
             new SeedApi.ListRequest
@@ -71,10 +68,7 @@ public class ListTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnList(_ =>
-        {
-            var mockObject = JsonUtils.Deserialize<ListResponse>(mockResponse);
-            return mockObject.ToProto();
-        });
+            JsonParser.Default.Parse<Data.V1.Grpc.ListResponse>(mockResponse));
 
         var response = await Client.DataService.ListAsync(new SeedApi.ListRequest());
         JsonAssert.AreEqual(response, mockResponse);

@@ -174,7 +174,9 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         isSupportedResponse: boolean;
     }): void {
         const returnTypeName = this.getReturnTypeName();
-        const canAssertResponse = isSupportedResponse && returnTypeName != null;
+        const responseJsonStr = jsonExampleResponse != null ? JSON.stringify(jsonExampleResponse) : undefined;
+        const hasProtoAnyInResponse = responseJsonStr != null && responseJsonStr.includes('"@type"');
+        const canAssertResponse = isSupportedResponse && returnTypeName != null && !hasProtoAnyInResponse;
 
         // Write the mock response JSON only when we can fully round-trip it
         if (canAssertResponse && jsonExampleResponse != null) {
@@ -193,15 +195,12 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         const methodName = this.endpoint.name.pascalCase.safeName;
         const protoResponseType = this.stubGenerator.getProtoResponseType(this.endpoint);
 
-        // Configure stub handler — deserialize JSON into SDK type, then convert to proto
-        if (canAssertResponse && returnTypeName != null) {
-            writer.addNamespace(this.namespaces.core);
+        // Configure stub handler — parse JSON directly into proto type
+        if (canAssertResponse) {
+            writer.addNamespace("Google.Protobuf");
             writer.writeTextStatement(
                 `${stubClassName}.On${methodName}(_ =>\n` +
-                    `{\n` +
-                    `    var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);\n` +
-                    `    return mockObject.ToProto();\n` +
-                    `})`
+                    `    JsonParser.Default.Parse<${protoResponseType}>(mockResponse))`
             );
         } else {
             writer.writeTextStatement(`${stubClassName}.On${methodName}(_ => new ${protoResponseType}())`);
@@ -228,7 +227,6 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
     /**
      * Gets the C# type name for the endpoint's return type (the SDK wrapper type, not the proto type).
-     * This is used to determine whether the response can be asserted (canAssertResponse).
      */
     private getReturnTypeName(): string | undefined {
         const responseBody = this.endpoint.response?.body;

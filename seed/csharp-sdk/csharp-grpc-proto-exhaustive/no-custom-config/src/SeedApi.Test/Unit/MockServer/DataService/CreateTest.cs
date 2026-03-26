@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
-using SeedApi.Core;
+using Google.Protobuf;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -37,10 +37,7 @@ public class CreateTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnCreate(_ =>
-        {
-            var mockObject = JsonUtils.Deserialize<CreateResponse>(mockResponse);
-            return mockObject.ToProto();
-        });
+            JsonParser.Default.Parse<Data.V1.Grpc.CreateResponse>(mockResponse));
 
         var response = await Client.DataService.CreateAsync(
             new SeedApi.CreateRequest { Name = "name" }
