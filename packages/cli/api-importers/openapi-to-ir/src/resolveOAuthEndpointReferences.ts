@@ -47,7 +47,9 @@ export function resolveOAuthEndpointReferences({
             basic: () => undefined,
             tokenBearer: () => undefined,
             inferredBearer: () => undefined,
-            oauth: (oauthScheme) => resolveOAuthScheme({ ir, key: scheme.key, oauthScheme })
+            oauth: (oauthScheme) => {
+                return resolveOAuthScheme({ ir, key: scheme.key, oauthScheme });
+            }
         });
 
         updatedSchemes.push(resolvedScheme ?? scheme);
