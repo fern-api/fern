@@ -145,6 +145,39 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  CheckRuleSeverity:
+    enum:
+      - warn
+      - error
+
+  CheckRulesConfig:
+    properties:
+      example-validation:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for OpenAPI example validation. Default is warn.
+      broken-links:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for broken link detection. Defaults to error for broken internal links and warn for malformed URLs.
+      no-non-component-refs:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for non-component OpenAPI reference validation. Default is error.
+      valid-local-references:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for local OpenAPI reference validation. Default is warn.
+      no-circular-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for circular redirect validation. Default is error.
+      valid-docs-endpoints:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for docs endpoint URL validation. Default is warn.
+
+  CheckConfig:
+    docs: |
+      Configure the severity of validation rules run by `fern check`.
+      Each rule can be set to `warn` (non-blocking) or `error` (blocking).
+    properties:
+      rules: optional<CheckRulesConfig>
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -216,6 +249,9 @@ types:
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
+
+      # validation
+      check: optional<CheckConfig>
 
       # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
 

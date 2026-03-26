@@ -1,14 +1,63 @@
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules.js";
+import {
+    createDocsConfigFileAstVisitorForRules,
+    type RuleWithVisitor,
+    type SeverityOverride
+} from "./createDocsConfigFileAstVisitorForRules.js";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
+import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
+import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
+import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
+import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
+import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
+
+function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
+    switch (severity) {
+        case "error":
+            return "error";
+        case "warn":
+            return "warning";
+        default:
+            assertNever(severity);
+    }
+}
+
+const CHECK_RULE_CONFIG_TO_RULE_NAME = {
+    exampleValidation: ValidOpenApiExamples.name,
+    brokenLinks: ValidMarkdownLinks.name,
+    noNonComponentRefs: NoNonComponentRefsRule.name,
+    validLocalReferences: ValidLocalReferencesRule.name,
+    noCircularRedirects: NoCircularRedirectsRule.name,
+    validDocsEndpoints: ValidDocsEndpoints.name
+} satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
+
+function buildSeverityOverrides(
+    checkConfig: docsYml.RawSchemas.CheckConfig | undefined
+): Map<string, SeverityOverride> {
+    const severityOverrides = new Map<string, SeverityOverride>();
+    const rulesConfig = checkConfig?.rules;
+    if (rulesConfig == null) {
+        return severityOverrides;
+    }
+    for (const [configKey, ruleName] of Object.entries(CHECK_RULE_CONFIG_TO_RULE_NAME) as Array<
+        [keyof docsYml.RawSchemas.CheckRulesConfig, string]
+    >) {
+        const severity = rulesConfig[configKey];
+        if (severity != null) {
+            severityOverrides.set(ruleName, toSeverityOverride(severity));
+        }
+    }
+    return severityOverrides;
+}
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
@@ -27,7 +76,7 @@ export async function validateDocsWorkspace(
 // exported for testing
 export async function runRulesOnDocsWorkspace({
     workspace,
-    rules,
+    rules: selectedRules,
     context,
     apiWorkspaces,
     ossWorkspaces
@@ -39,6 +88,15 @@ export async function runRulesOnDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
+    const rules = [...selectedRules];
+    const severityOverrides = buildSeverityOverrides(workspace.config.check);
+    const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
+    // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.
+    // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
+    // until those CLI args are removed.
+    if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
+        rules.push(ValidMarkdownLinks);
+    }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(
         `Initial memory usage: RSS=${(startMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(startMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
@@ -47,15 +105,21 @@ export async function runRulesOnDocsWorkspace({
     const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
-    const allRuleVisitors = await Promise.all(
-        rules.map((rule) => rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger }))
+    const allRulesWithVisitors = await Promise.all(
+        rules.map(
+            async (rule): Promise<RuleWithVisitor> => ({
+                ruleName: rule.name,
+                visitor: await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger })
+            })
+        )
     );
     const ruleCreationTime = performance.now() - ruleCreationStart;
     context.logger.debug(`Created ${rules.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms`);
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
-        allRuleVisitors,
+        allRulesWithVisitors,
+        severityOverrides,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
         }

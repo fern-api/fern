@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.0
+  changelogEntry:
+    - summary: |
+        Add `check.rules` to `docs.yml` to configure severities for selected docs
+        validation rules, including OpenAPI example validation, broken links,
+        non-component refs, local refs, circular redirects, and docs endpoint checks.
+        Deprecate the `--broken-links` and `--strict-broken-links` CLI flags in favor
+        of configuring broken link behavior in `docs.yml`.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.45.0
   changelogEntry:
     - summary: |

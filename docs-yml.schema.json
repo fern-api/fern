@@ -241,6 +241,16 @@
         }
       ]
     },
+    "check": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.CheckConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "logo": {
       "oneOf": [
         {
@@ -4586,6 +4596,95 @@
         "source",
         "destination"
       ],
+      "additionalProperties": false
+    },
+    "docs.CheckRuleSeverity": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error"
+      ]
+    },
+    "docs.CheckRulesConfig": {
+      "type": "object",
+      "properties": {
+        "example-validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "broken-links": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-non-component-refs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-local-references": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-circular-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.CheckConfig": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRulesConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
       "additionalProperties": false
     },
     "docs.LogoConfiguration": {
