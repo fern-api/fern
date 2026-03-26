@@ -103,6 +103,32 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
+                // Add auth header matching for endpoints that require authentication
+                if (endpoint.auth) {
+                    for (const scheme of this.context.ir.auth.schemes) {
+                        switch (scheme.type) {
+                            case "basic":
+                                writer.write(
+                                    `.WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Basic .+"))`
+                                );
+                                break;
+                            case "bearer":
+                                writer.write(
+                                    `.WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Bearer .+"))`
+                                );
+                                break;
+                            case "header": {
+                                const headerName = scheme.name?.wireValue;
+                                if (headerName) {
+                                    writer.write(
+                                        `.WithHeader("${headerName}", new WireMock.Matchers.RegexMatcher(".+"))`
+                                    );
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
                 if (requestContentType) {
                     writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
                 }

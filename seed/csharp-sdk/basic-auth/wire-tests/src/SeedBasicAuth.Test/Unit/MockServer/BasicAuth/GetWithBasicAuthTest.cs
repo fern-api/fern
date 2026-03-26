@@ -16,7 +16,13 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/basic-auth").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/basic-auth")
+                    .WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Basic .+"))
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -36,7 +42,13 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/basic-auth").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/basic-auth")
+                    .WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Basic .+"))
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
