@@ -107,22 +107,24 @@ export class MockEndpointGenerator extends WithGeneration {
                 if (endpoint.auth) {
                     for (const scheme of this.context.ir.auth.schemes) {
                         switch (scheme.type) {
-                            case "basic":
-                                writer.write(
-                                    `.WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Basic .+"))`
-                                );
+                            case "basic": {
+                                // Compute exact expected header value from the known test credentials
+                                const username = scheme.username.screamingSnakeCase.safeName;
+                                const password = scheme.password.screamingSnakeCase.safeName;
+                                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                                writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
                                 break;
-                            case "bearer":
-                                writer.write(
-                                    `.WithHeader("Authorization", new WireMock.Matchers.RegexMatcher("Bearer .+"))`
-                                );
+                            }
+                            case "bearer": {
+                                const tokenValue = scheme.token.screamingSnakeCase.safeName;
+                                writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
                                 break;
+                            }
                             case "header": {
                                 const headerName = scheme.name?.wireValue;
-                                if (headerName) {
-                                    writer.write(
-                                        `.WithHeader("${headerName}", new WireMock.Matchers.RegexMatcher(".+"))`
-                                    );
+                                const headerValue = scheme.name?.name?.screamingSnakeCase?.safeName;
+                                if (headerName && headerValue) {
+                                    writer.write(`.WithHeader("${headerName}", "${headerValue}")`);
                                 }
                                 break;
                             }
