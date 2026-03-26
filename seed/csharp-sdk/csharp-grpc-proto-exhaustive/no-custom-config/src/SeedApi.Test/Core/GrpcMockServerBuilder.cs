@@ -63,12 +63,34 @@ public sealed class GrpcMockServerBuilder
         var server = new TestServer(builder);
         server.PreserveExecutionContext = true;
 
-        var httpClient = server.CreateClient();
+        var handler = new ResponseVersionHandler(server.CreateHandler());
+        var httpClient = new HttpClient(handler) { BaseAddress = new Uri("http://localhost") };
         var channel = GrpcChannel.ForAddress(
             httpClient.BaseAddress!,
             new GrpcChannelOptions { HttpClient = httpClient }
         );
 
         return Task.FromResult(new GrpcMockServer(server, channel, httpClient));
+    }
+
+    /// <summary>
+    /// Ensures gRPC responses have the correct HTTP/2 version.
+    /// <see cref="TestServer"/> returns HTTP/1.1 by default, which causes gRPC
+    /// calls to fail. This handler copies the request version to the response.
+    /// </summary>
+    private sealed class ResponseVersionHandler : DelegatingHandler
+    {
+        public ResponseVersionHandler(HttpMessageHandler innerHandler)
+            : base(innerHandler) { }
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await base.SendAsync(request, cancellationToken);
+            response.Version = request.Version;
+            return response;
+        }
     }
 }
