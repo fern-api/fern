@@ -228,11 +228,40 @@ describe("updateApiDefinitionIdInTree", () => {
         expect(tree.children[2]?.apiDefinitionId).toBe("other-id");
     });
 
-    it("does not modify unrelated values", () => {
-        const node = { apiDefinitionId: "keep-me", other: "old-id" };
+    it("does not modify unrelated string values that don't contain the old id", () => {
+        const node = { apiDefinitionId: "keep-me", other: "something-else" };
         updateApiDefinitionIdInTree(node, "old-id", "new-id");
         expect(node.apiDefinitionId).toBe("keep-me");
-        expect(node.other).toBe("old-id");
+        expect(node.other).toBe("something-else");
+    });
+
+    it("replaces old id embedded in string values like endpoint ids", () => {
+        const tree = {
+            children: [
+                {
+                    id: "__pending_api_0__:endpoint_auth.getToken",
+                    apiDefinitionId: "__pending_api_0__",
+                    type: "endpoint"
+                },
+                {
+                    id: "__pending_api_0__:subpackage_users",
+                    apiDefinitionId: "__pending_api_0__",
+                    children: [
+                        {
+                            id: "__pending_api_0__:endpoint_users.list",
+                            apiDefinitionId: "__pending_api_0__"
+                        }
+                    ]
+                }
+            ]
+        };
+        updateApiDefinitionIdInTree(tree, "__pending_api_0__", "my-api-1");
+        expect(tree.children[0]?.id).toBe("my-api-1:endpoint_auth.getToken");
+        expect(tree.children[0]?.apiDefinitionId).toBe("my-api-1");
+        expect(tree.children[1]?.id).toBe("my-api-1:subpackage_users");
+        expect(tree.children[1]?.apiDefinitionId).toBe("my-api-1");
+        expect(tree.children[1]?.children[0]?.id).toBe("my-api-1:endpoint_users.list");
+        expect(tree.children[1]?.children[0]?.apiDefinitionId).toBe("my-api-1");
     });
 
     it("handles null and undefined", () => {

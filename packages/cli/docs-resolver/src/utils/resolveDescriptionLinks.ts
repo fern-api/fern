@@ -73,11 +73,12 @@ export function updateApiDefinitionIdInTree(node: unknown, oldId: string, newId:
         return;
     }
     const record = node as Record<string, unknown>;
-    if (record["apiDefinitionId"] === oldId) {
-        record["apiDefinitionId"] = newId;
-    }
-    for (const value of Object.values(record)) {
-        if (typeof value === "object") {
+    for (const [key, value] of Object.entries(record)) {
+        if (key === "apiDefinitionId" && value === oldId) {
+            record[key] = newId;
+        } else if (typeof value === "string" && value.includes(oldId)) {
+            record[key] = value.replaceAll(oldId, newId);
+        } else if (typeof value === "object") {
             updateApiDefinitionIdInTree(value, oldId, newId);
         }
     }
