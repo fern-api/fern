@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.9
+  changelogEntry:
+    - summary: |
+        Upgrade vitest from ^3.2.4 to ^4.1.1 in generated SDK test configuration.
+
+        Vitest 4 brings performance improvements (especially with project-based configs),
+        more accurate V8 coverage remapping, and stable browser mode. Note that vitest 4
+        requires Node.js >= 20 at test-run time (Node 18 is EOL).
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 3.59.8
   changelogEntry:
     - summary: |
