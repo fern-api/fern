@@ -68,6 +68,7 @@ public class TestPatchTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/http-methods/id")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
             )

@@ -17,7 +17,11 @@ public class TestGetTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/http-methods/id").UsingGet()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/http-methods/id")
+                    .WithHeader("Authorization", "Bearer TOKEN")
+                    .UsingGet()
             )
             .RespondWith(
                 WireMock

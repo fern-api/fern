@@ -24,6 +24,7 @@ public class GetAndReturnUuidTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/primitive/uuid")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBody(requestJson)
             )

@@ -32,6 +32,7 @@ public class GetAndReturnMapOfDocumentedUnknownTypeTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/object/get-and-return-map-of-documented-unknown-type")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

@@ -37,7 +37,13 @@ public class GetWithNoRequestBodyTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/no-req-body").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/no-req-body")
+                    .WithHeader("Authorization", "Bearer TOKEN")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

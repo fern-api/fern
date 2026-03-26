@@ -17,7 +17,11 @@ public class TestDeleteTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/http-methods/id").UsingDelete()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/http-methods/id")
+                    .WithHeader("Authorization", "Bearer TOKEN")
+                    .UsingDelete()
             )
             .RespondWith(
                 WireMock

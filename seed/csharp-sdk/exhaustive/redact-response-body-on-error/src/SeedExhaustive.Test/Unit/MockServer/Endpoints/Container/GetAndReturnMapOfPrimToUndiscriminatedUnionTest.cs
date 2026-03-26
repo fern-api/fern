@@ -29,6 +29,7 @@ public class GetAndReturnMapOfPrimToUndiscriminatedUnionTest : BaseMockServerTes
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/map-prim-to-union")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

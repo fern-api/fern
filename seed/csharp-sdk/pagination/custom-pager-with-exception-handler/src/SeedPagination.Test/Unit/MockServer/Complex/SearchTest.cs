@@ -55,6 +55,7 @@ public class SearchTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/index/conversations/search")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)

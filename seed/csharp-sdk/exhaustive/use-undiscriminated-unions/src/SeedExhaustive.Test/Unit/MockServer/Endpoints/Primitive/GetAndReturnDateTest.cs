@@ -24,6 +24,7 @@ public class GetAndReturnDateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/primitive/date")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBody(requestJson)
             )

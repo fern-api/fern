@@ -18,7 +18,11 @@ public class GetWithInlinePathTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/param").UsingGet()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/params/path/param")
+                    .WithHeader("Authorization", "Bearer TOKEN")
+                    .UsingGet()
             )
             .RespondWith(
                 WireMock
