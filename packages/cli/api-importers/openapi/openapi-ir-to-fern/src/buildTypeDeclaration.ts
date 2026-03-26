@@ -709,16 +709,23 @@ export function buildOneOfTypeDeclaration({
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
                 discriminant:
-                    schema.discriminantPropertyNameOverride != null
-                        ? { name: schema.discriminantPropertyNameOverride, value: schema.discriminantProperty }
+                    schema.discriminantPropertyNameOverride != null || schema.discriminatorContext != null
+                        ? {
+                              ...(schema.discriminantPropertyNameOverride != null && {
+                                  name: schema.discriminantPropertyNameOverride
+                              }),
+                              value: schema.discriminantProperty,
+                              ...(schema.discriminatorContext != null && {
+                                  context: schema.discriminatorContext
+                              })
+                          }
                         : schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
                 encoding,
-                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined,
-                ...(schema.discriminatorContext && { context: schema.discriminatorContext })
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
