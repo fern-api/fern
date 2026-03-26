@@ -169,6 +169,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         writer.newLine();
 
         const methodName = this.endpoint.name.pascalCase.safeName;
+        const protoResponseType = this.stubGenerator.getProtoResponseType(this.endpoint);
         if (canAssertResponse) {
             writer.writeLine(`    .On${methodName}((request) =>`);
             writer.writeLine("    {");
@@ -176,7 +177,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.writeLine("        return mockObject.ToProto();");
             writer.writeTextStatement("    })");
         } else {
-            writer.writeTextStatement(`    .On${methodName}((request) => new Google.Protobuf.WellKnownTypes.Empty())`);
+            writer.writeTextStatement(`    .On${methodName}((request) => new ${protoResponseType}())`);
         }
         writer.newLine();
 

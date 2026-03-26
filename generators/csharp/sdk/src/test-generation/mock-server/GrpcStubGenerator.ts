@@ -52,6 +52,10 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
         return `${this.grpcNamespace}.${this.grpcServiceName}.${this.grpcServiceName}Base`;
     }
 
+    public getProtoResponseType(endpoint: HttpEndpoint): string {
+        return this.getProtoTypes(endpoint).protoResponseType;
+    }
+
     protected doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
             reference: this.csharp.classReference({
