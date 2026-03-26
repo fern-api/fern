@@ -986,54 +986,68 @@ public abstract class AbstractHttpResponseParserGenerator {
                             SseDiscriminationAnalyzer.analyze(
                                     sse.getPayload(), clientGeneratorContext.getTypeDeclarations());
 
-                    if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.PROTOCOL_LEVEL) {
-                        // Protocol-level discrimination: discriminator is at SSE envelope level
+                    com.squareup.javapoet.ClassName streamClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getStreamClassName();
+                    com.squareup.javapoet.ClassName responseBodyReaderClassName =
+                            clientGeneratorContext
+                                    .getPoetClassNameFactory()
+                                    .getResponseBodyReaderClassName();
+                    String responseName = variables.getResponseName();
+
+                    if (discriminationInfo.getType()
+                                    == SseDiscriminationAnalyzer.DiscriminationType.PROTOCOL_LEVEL
+                            || discriminationInfo.getType()
+                                    == SseDiscriminationAnalyzer.DiscriminationType.DATA_LEVEL) {
                         String discriminatorProperty =
                                 discriminationInfo.getDiscriminatorProperty().orElse("event");
+                        com.squareup.javapoet.ClassName sseDiscriminatorContextClassName =
+                                streamClassName.nestedClass("SseDiscriminatorContext");
+                        String contextValue =
+                                discriminationInfo.getType()
+                                                == SseDiscriminationAnalyzer.DiscriminationType
+                                                        .PROTOCOL_LEVEL
+                                        ? "PROTOCOL"
+                                        : "DATA";
                         if (terminator != null) {
                             return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
+                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue
+                                            + ", $S)",
+                                    streamClassName,
                                     bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
+                                    responseBodyReaderClassName,
+                                    responseName,
                                     discriminatorProperty,
+                                    sseDiscriminatorContextClassName,
                                     terminator);
                         } else {
                             return CodeBlock.of(
-                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S)",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getStreamClassName(),
+                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue
+                                            + ")",
+                                    streamClassName,
                                     bodyTypeName,
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getResponseBodyReaderClassName(),
-                                    variables.getResponseName(),
-                                    discriminatorProperty);
+                                    responseBodyReaderClassName,
+                                    responseName,
+                                    discriminatorProperty,
+                                    sseDiscriminatorContextClassName);
                         }
                     }
 
-                    // Data-level discrimination or non-union: use standard SSE parsing
+                    // Non-discriminated union: use standard SSE parsing
                     if (terminator != null) {
                         return CodeBlock.of(
                                 "$T.fromSse($T.class, new $T($L), $S)",
-                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                streamClassName,
                                 bodyTypeName,
-                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                                variables.getResponseName(),
+                                responseBodyReaderClassName,
+                                responseName,
                                 terminator);
                     } else {
                         return CodeBlock.of(
                                 "$T.fromSse($T.class, new $T($L))",
-                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                streamClassName,
                                 bodyTypeName,
-                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                                variables.getResponseName());
+                                responseBodyReaderClassName,
+                                responseName);
                     }
                 }
 
