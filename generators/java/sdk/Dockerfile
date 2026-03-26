@@ -70,7 +70,6 @@ RUN cd / \
     && rm -rf sdk.tar
 
 ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
-ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
