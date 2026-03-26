@@ -61,8 +61,10 @@
                 "type": "integer",
               },
             },
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": "Base form field with discriminator",
             "encoding": undefined,
             "source": {
@@ -142,7 +144,9 @@
     openapi: ../openapi.yml
 types:
   FormFieldBase:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties:
       name:
         type: string
@@ -160,7 +164,6 @@ types:
       signature: FormFieldSignature
     source:
       openapi: ../openapi.yml
-    context: data
   FormFieldText:
     docs: Text input field
     properties:

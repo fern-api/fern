@@ -9,8 +9,10 @@
           "UnionJob": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -27,7 +29,9 @@
       },
       "rawContents": "types:
   UnionJob:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       EMBEDDING_GENERATION: unknown
@@ -36,7 +40,6 @@
       TRAINING: unknown
     source:
       openapi: ../openapi.yml
-    context: data
 ",
     },
   },
