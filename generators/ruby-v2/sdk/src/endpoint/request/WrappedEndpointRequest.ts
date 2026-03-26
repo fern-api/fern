@@ -1,4 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { rubyPropertyName } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
@@ -66,7 +67,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = {}`);
                 for (const queryParam of this.endpoint.queryParameters) {
-                    const snakeCaseName = queryParam.name.name.snakeCase.safeName;
+                    const snakeCaseName = rubyPropertyName(queryParam.name.name);
                     const wireValue = queryParam.name.wireValue;
 
                     const extracted =
@@ -103,7 +104,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: ruby.codeblock((writer) => {
                 writer.writeLine(`${HEADER_BAG_NAME} = {}`);
                 for (const header of this.endpoint.headers) {
-                    const snakeCaseName = header.name.name.snakeCase.safeName;
+                    const snakeCaseName = rubyPropertyName(header.name.name);
                     const wireValue = header.name.wireValue;
 
                     const extracted = defaultExtractor?.extractDefault(header.valueType);
@@ -227,11 +228,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map((pathParameter) => pathParameter.name.snakeCase.safeName);
+        return this.endpoint.allPathParameters.map((pathParameter) => rubyPropertyName(pathParameter.name));
     }
 
     private getQueryParameterNames(): string[] {
-        return this.endpoint.queryParameters.map((queryParameter) => queryParameter.name.name.snakeCase.safeName);
+        return this.endpoint.queryParameters.map((queryParameter) => rubyPropertyName(queryParameter.name.name));
     }
 
     private hasPathParameters(): boolean {

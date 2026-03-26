@@ -81,10 +81,10 @@ module <%= gem_namespace %>
                }
               return type.coerce(value, strict: strict)
             else
-              value
+              return value
             end
           else
-            value
+            return value
           end
 
           raise Errors::TypeError, "cannot coerce value of type `#{value.class}` to `#{target}`" if strict
@@ -113,4 +113,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end   
+end      

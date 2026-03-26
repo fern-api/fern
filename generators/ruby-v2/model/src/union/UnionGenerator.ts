@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { FileGenerator, RubyFile, rubyPropertyName } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -28,7 +28,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
-        this.discriminantPropertyName = unionDeclaration.discriminant.name.snakeCase.safeName;
+        this.discriminantPropertyName = rubyPropertyName(unionDeclaration.discriminant.name);
         this.classReference = this.context.typeMapper.convertToClassReference(this.typeDeclaration.name);
         this.unionMembers = this.unionDeclaration.types.map((type) => this.unionMemberFromUnionType(type));
     }

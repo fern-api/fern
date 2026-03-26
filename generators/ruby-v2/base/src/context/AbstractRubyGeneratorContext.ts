@@ -14,13 +14,30 @@ import { RubyTypeMapper } from "./RubyTypeMapper.js";
 /**
  * Converts a string to snake_case for Ruby naming conventions.
  * Unlike lodash's snakeCase, this does NOT treat letter-to-number transitions as word boundaries.
- * For example: "auth0" -> "auth0" (not "auth_0"), "MyCompany" -> "my_company"
+ * For example: "auth0" -> "auth0" (not "auth_0"), "account_last4" -> "account_last4" (not "account_last_4")
  */
-function rubySnakeCase(str: string): string {
+export function rubySnakeCase(str: string): string {
     return str
         .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
         .replace(/([a-z\d])([A-Z])/g, "$1_$2")
         .toLowerCase();
+}
+
+/**
+ * Converts a Fern IR SafeAndUnsafeString to a Ruby-safe snake_case name.
+ * Uses rubySnakeCase on the original name to avoid inserting underscores before digits,
+ * then applies the same reserved-word safety suffix that the IR uses (if any).
+ */
+export function rubyPropertyName(name: FernIr.Name): string {
+    const base = rubySnakeCase(name.originalName);
+    // If the IR's safeName differs from unsafeName, a reserved-word suffix was added.
+    // Apply the same suffix to our custom conversion.
+    const irSafe = name.snakeCase.safeName;
+    const irUnsafe = name.snakeCase.unsafeName;
+    if (irSafe !== irUnsafe && irSafe.startsWith(irUnsafe)) {
+        return base + irSafe.slice(irUnsafe.length);
+    }
+    return base;
 }
 
 const defaultVersion: string = "0.0.0";

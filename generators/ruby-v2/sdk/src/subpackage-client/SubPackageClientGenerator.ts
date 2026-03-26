@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { FileGenerator, RubyFile, rubyPropertyName } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
@@ -146,7 +146,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: subpackage.name.snakeCase.safeName,
+            name: rubyPropertyName(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
@@ -159,14 +159,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${rubyPropertyName(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
                                 `Client.new(client: @client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${rubyPropertyName(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
                                 `Client.new(client: @client)`

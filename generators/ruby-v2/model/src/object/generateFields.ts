@@ -1,4 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { rubyPropertyName } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -12,7 +13,7 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = prop.name.name.snakeCase.safeName;
+        const fieldName = rubyPropertyName(prop.name.name);
         const wireValue = prop.name.wireValue;
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 

@@ -1,6 +1,6 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { FileGenerator, RubyFile, rubyPropertyName, rubySnakeCase } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -286,7 +286,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: scheme.name.name.snakeCase.safeName,
+                        name: rubyPropertyName(scheme.name.name),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -350,7 +350,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            snakeName: property.name.name.snakeCase.unsafeName,
+                            snakeName: rubySnakeCase(property.name.name.originalName),
                             isOptional: this.isOptional(property.valueType)
                         });
                     }
@@ -362,7 +362,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const literal = this.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        snakeName: header.name.name.snakeCase.unsafeName,
+                        snakeName: rubySnakeCase(header.name.name.originalName),
                         isOptional: this.isOptional(header.valueType)
                     });
                 }
@@ -415,7 +415,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 case "header": {
-                    const headerParamName = header.name.name.snakeCase.safeName;
+                    const headerParamName = rubyPropertyName(header.name.name);
                     const headerName = header.name.wireValue;
                     const headerValue =
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
@@ -436,7 +436,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: subpackage.name.snakeCase.safeName,
+            name: rubyPropertyName(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
@@ -449,14 +449,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${rubyPropertyName(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
                                 `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${rubyPropertyName(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
                                 `Client.new(client: @raw_client)`

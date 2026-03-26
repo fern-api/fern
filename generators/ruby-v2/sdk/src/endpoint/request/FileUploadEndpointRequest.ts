@@ -1,4 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { rubyPropertyName } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
@@ -40,7 +41,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    const snakeCaseName = property.value.key.name.snakeCase.safeName;
+                    const snakeCaseName = rubyPropertyName(property.value.key.name);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -58,7 +59,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         })
                     );
                 } else {
-                    const snakeCaseName = property.name.name.snakeCase.safeName;
+                    const snakeCaseName = rubyPropertyName(property.name.name);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -111,7 +112,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
     }
 
     private getFormDataPartForNonFileProperty(property: FernIr.FileUploadBodyProperty): ruby.CodeBlock | undefined {
-        const snakeCaseName = property.name.name.snakeCase.safeName;
+        const snakeCaseName = rubyPropertyName(property.name.name);
         switch (property.style) {
             case "json":
                 return ruby.codeblock((writer) => {
