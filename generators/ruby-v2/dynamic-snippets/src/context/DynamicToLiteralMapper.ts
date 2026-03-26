@@ -12,7 +12,7 @@ import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorConte
  * underscores after digits (e.g., `_3_d` stays `_3_d`).
  */
 function normalizeVariableNumber(name: string): string {
-    return name.replace(/([a-zA-Z])_(\d)/g, "$1$2");
+    return name.replace(/([a-zA-Z\d])_(?=\d)/g, "$1");
 }
 
 export declare namespace DynamicTypeLiteralMapper {
