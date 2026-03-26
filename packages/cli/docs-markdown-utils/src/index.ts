@@ -8,7 +8,7 @@ export {
     replaceImagePathsAndUrls,
     trimAnchor
 } from "./parseImagePaths.js";
-export { parseMarkdownToTree } from "./parseMarkdownToTree.js";
+export { parseMarkdownToTree, selfCloseVoidHtmlElements } from "./parseMarkdownToTree.js";
 export { replaceReferencedCode } from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
