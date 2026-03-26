@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { existsSync } from "fs";
 import { readdir, readFile, writeFile } from "fs/promises";
 import type { Volume } from "memfs/lib/volume";
 import path from "path";
@@ -300,14 +301,19 @@ export async function fixImportsForCoreFiles(dirs: string[], shallowDirs: string
     const fileExistenceCache = new Set<string>();
     const filesToProcess = new Set<string>();
 
-    // Recursively collect from dirs
-    await Promise.all(dirs.map((dir) => collectFilesRecursive(dir, fileExistenceCache)));
+    // Recursively collect from dirs (skip directories that don't exist)
+    await Promise.all(
+        dirs.filter((dir) => existsSync(dir)).map((dir) => collectFilesRecursive(dir, fileExistenceCache))
+    );
     for (const f of fileExistenceCache) {
         filesToProcess.add(f);
     }
 
     // Collect shallow (top-level only) files from shallowDirs
     for (const dir of shallowDirs) {
+        if (!existsSync(dir)) {
+            continue;
+        }
         const entries = await readdir(dir, { withFileTypes: true });
         for (const entry of entries) {
             if (!entry.isDirectory()) {
