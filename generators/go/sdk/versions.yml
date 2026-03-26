@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.31.4
+  changelogEntry:
+    - summary: |
+        Fix sub-package ErrorCodes maps being empty when errors are declared in a
+        different namespace than the endpoints that reference them. The generator now
+        groups errors by the service namespace that uses them (via endpoint error
+        references) instead of by where they are declared. This ensures that
+        sub-packages like `audio/` correctly get populated ErrorCodes with typed
+        errors (e.g. BadRequestError, UnauthorizedError) instead of an empty map
+        that would cause API errors to be returned as generic `*core.APIError`.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 61
+
 - version: 1.31.3
   changelogEntry:
     - summary: |
