@@ -61,12 +61,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
         await Promise.all(
             batch.map(async (filePath) => {
                 const content = await readFile(filePath, "utf-8");
-                const newContent = fixImportsInSource(
-                    content,
-                    filePath,
-                    fileExistenceCache,
-                    importModificationCache
-                );
+                const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
                 if (newContent !== content) {
                     await writeFile(filePath, newContent);
                 }
