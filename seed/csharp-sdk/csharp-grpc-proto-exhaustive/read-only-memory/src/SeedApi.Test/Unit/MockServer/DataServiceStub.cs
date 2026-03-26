@@ -164,12 +164,12 @@ public class DataServiceStub : global::Data.V1.Grpc.DataService.DataServiceBase
         );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.FetchResponse>? _fetchHandler;
+    private Func<Data.V1.Grpc.FetchRequest, Data.V1.Grpc.FetchResponse>? _fetchHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> FetchRequests { get; } = new();
+    public List<Data.V1.Grpc.FetchRequest> FetchRequests { get; } = new();
 
     public DataServiceStub OnFetch(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.FetchResponse> handler
+        Func<Data.V1.Grpc.FetchRequest, Data.V1.Grpc.FetchResponse> handler
     )
     {
         _fetchHandler = handler;
@@ -177,7 +177,7 @@ public class DataServiceStub : global::Data.V1.Grpc.DataService.DataServiceBase
     }
 
     public override Task<Data.V1.Grpc.FetchResponse> Fetch(
-        Google.Protobuf.WellKnownTypes.Empty request,
+        Data.V1.Grpc.FetchRequest request,
         Grpc.Core.ServerCallContext context
     )
     {
@@ -191,20 +191,18 @@ public class DataServiceStub : global::Data.V1.Grpc.DataService.DataServiceBase
         );
     }
 
-    private Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.ListResponse>? _listHandler;
+    private Func<Data.V1.Grpc.ListRequest, Data.V1.Grpc.ListResponse>? _listHandler;
 
-    public List<Google.Protobuf.WellKnownTypes.Empty> ListRequests { get; } = new();
+    public List<Data.V1.Grpc.ListRequest> ListRequests { get; } = new();
 
-    public DataServiceStub OnList(
-        Func<Google.Protobuf.WellKnownTypes.Empty, Data.V1.Grpc.ListResponse> handler
-    )
+    public DataServiceStub OnList(Func<Data.V1.Grpc.ListRequest, Data.V1.Grpc.ListResponse> handler)
     {
         _listHandler = handler;
         return this;
     }
 
     public override Task<Data.V1.Grpc.ListResponse> List(
-        Google.Protobuf.WellKnownTypes.Empty request,
+        Data.V1.Grpc.ListRequest request,
         Grpc.Core.ServerCallContext context
     )
     {

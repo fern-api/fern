@@ -148,7 +148,8 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
      * 1. Referenced request bodies: resolve directly via TypeReference -> proto source
      * 2. Inlined request bodies: use the SDK wrapper request type name, which matches
      *    the proto message name (e.g., SDK's UploadRequest.ToProto() returns Proto.UploadRequest)
-     * 3. No request body: defaults to google.protobuf.Empty
+     * 3. Query/path-only parameters (no request body): derive from sdkRequest wrapper name
+     * 4. No request body or sdkRequest: defaults to google.protobuf.Empty
      */
     private getProtoTypes(endpoint: HttpEndpoint): { protoRequestType: string; protoResponseType: string } {
         let protoRequestType = "Google.Protobuf.WellKnownTypes.Empty";
@@ -186,6 +187,16 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
                     const requestName = endpoint.requestBody.name.originalName;
                     protoRequestType = `${this.grpcNamespace}.${requestName}`;
                 }
+            }
+        }
+
+        // Fallback for endpoints with query/path parameters but no request body
+        // (e.g., Fetch, List). The proto service still defines a request message,
+        // derivable from the SDK wrapper name.
+        if (protoRequestType === "Google.Protobuf.WellKnownTypes.Empty" && endpoint.sdkRequest != null) {
+            if (endpoint.sdkRequest.shape.type === "wrapper") {
+                const requestName = endpoint.sdkRequest.shape.wrapperName.originalName;
+                protoRequestType = `${this.grpcNamespace}.${requestName}`;
             }
         }
 
