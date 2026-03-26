@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.11
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints where expected event
+        assertions used snake_case wire format instead of camelCase deserialized format.
+        The `call_id` field (and similar snake_case properties) in SSE event data now
+        correctly appear as `callId` in test expectations, matching the SDK's runtime
+        deserialization behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.10
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 3.59.9
   changelogEntry:
     - summary: |
@@ -30,7 +50,6 @@
       type: chore
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 3.59.7
   changelogEntry:
     - summary: |

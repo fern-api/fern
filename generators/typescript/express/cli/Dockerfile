@@ -13,10 +13,10 @@ RUN npm install -g pnpm@10.33.0 --force && \
     npm install -g yarn@1.22.22 --force
 RUN pnpm add -g \
   prettier@3.8.1 \
-  oxfmt@0.35.0 \
+  oxfmt@0.42.0 \
   @biomejs/biome@2.4.9 \
-  oxlint@1.50.0 \
-  oxlint-tsgolint@0.14.2
+  oxlint@1.57.0 \
+  oxlint-tsgolint@0.17.4
 
 WORKDIR /tmp/cache-warm
 
@@ -32,9 +32,9 @@ RUN echo '{ \
     "express": "4.18.2", \
     "@biomejs/biome": "2.4.9", \
     "prettier": "3.8.1", \
-    "oxfmt": "0.35.0", \
-    "oxlint": "1.50.0", \
-    "oxlint-tsgolint": "0.14.2", \
+    "oxfmt": "0.42.0", \
+    "oxlint": "1.57.0", \
+    "oxlint-tsgolint": "0.17.4", \
     "typescript": "~5.9.3", \
     "url-join": "4.0.1" \
   } \
