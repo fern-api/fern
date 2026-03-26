@@ -141,6 +141,23 @@ describe("selfCloseVoidHtmlElements", () => {
         expect(selfCloseVoidHtmlElements(input)).toBe(input);
     });
 
+    it("handles > inside quoted attribute values", () => {
+        expect(selfCloseVoidHtmlElements('<img alt="arrow ->" src="test.png">')).toBe(
+            '<img alt="arrow ->" src="test.png" />'
+        );
+    });
+
+    it("handles > inside single-quoted attribute values", () => {
+        expect(selfCloseVoidHtmlElements("<img alt='a > b' src='test.png'>")).toBe(
+            "<img alt='a > b' src='test.png' />"
+        );
+    });
+
+    it("handles boolean attributes without values", () => {
+        expect(selfCloseVoidHtmlElements("<input disabled>")).toBe("<input disabled />");
+        expect(selfCloseVoidHtmlElements('<input type="text" disabled>')).toBe('<input type="text" disabled />');
+    });
+
     it("preserves content inside code fences (regex does not distinguish)", () => {
         // Note: the regex-based approach processes ALL content including code fences.
         // This is acceptable because converting <br> to <br /> inside a code fence

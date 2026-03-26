@@ -12,7 +12,9 @@ import { mdxjs } from "micromark-extension-mdxjs";
 // explicit self-closing syntax (<br />) in JSX/MDX. The MDX parser (mdxjs)
 // treats `<br>` as an opening tag and fails when it encounters a mismatched
 // closing tag. This regex normalizes them to XHTML-compatible self-closing form.
-const VOID_ELEMENTS = /(<(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\b)([^>]*?)\/?\s*>/gi;
+// The attribute pattern handles quoted values (which may contain ">") and unquoted values.
+const VOID_ELEMENTS =
+    /(<(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\b)((?:\s+(?:[^>"'/\s]+=(?:"[^"]*"|'[^']*'|[^>\s]+)|[^>"'/\s]+))*)\s*\/?\s*>/gi;
 
 export function selfCloseVoidHtmlElements(content: string): string {
     return content.replace(VOID_ELEMENTS, (_match, tag: string, attrs: string) => `${tag}${attrs.trimEnd()} />`);
