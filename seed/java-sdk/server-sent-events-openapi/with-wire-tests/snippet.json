@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "61a16292",
+            "example_identifier": "270b334c",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-no-collision",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "2930632e",
+            "example_identifier": "6a3c5550",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-collision",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "54bb343e",
+            "example_identifier": "93f79da0",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-with-flat-schema",
