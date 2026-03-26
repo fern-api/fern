@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -42,7 +43,11 @@ public class FetchTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnFetch(_ => ParseProtoJson<Data.V1.Grpc.FetchResponse>(mockResponse));
+        DataServiceStub.OnFetch(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<FetchResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.FetchAsync(
             new SeedApi.FetchRequest { Ids = ["ids"], Namespace = "namespace" }
@@ -81,7 +86,11 @@ public class FetchTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnFetch(_ => ParseProtoJson<Data.V1.Grpc.FetchResponse>(mockResponse));
+        DataServiceStub.OnFetch(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<FetchResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.FetchAsync(new SeedApi.FetchRequest());
         JsonAssert.AreEqual(response, mockResponse);

@@ -1,4 +1,3 @@
-using Google.Protobuf;
 using Grpc.Net.Client;
 using NUnit.Framework;
 using SeedApi;
@@ -39,10 +38,4 @@ public class BaseGrpcMockServerTest
         await _mock.DisposeAsync();
     }
 
-    protected static T ParseProtoJson<T>(string json)
-        where T : IMessage<T>, new()
-    {
-        var settings = JsonParser.Settings.Default.WithIgnoreUnknownFields(true);
-        return new JsonParser(settings).Parse<T>(json);
-    }
 }

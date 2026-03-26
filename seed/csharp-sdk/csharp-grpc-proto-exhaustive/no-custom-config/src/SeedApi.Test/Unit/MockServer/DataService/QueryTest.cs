@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -50,7 +51,11 @@ public class QueryTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnQuery(_ => ParseProtoJson<Data.V1.Grpc.QueryResponse>(mockResponse));
+        DataServiceStub.OnQuery(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<QueryResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.QueryAsync(new SeedApi.QueryRequest { TopK = 1 });
         JsonAssert.AreEqual(response, mockResponse);

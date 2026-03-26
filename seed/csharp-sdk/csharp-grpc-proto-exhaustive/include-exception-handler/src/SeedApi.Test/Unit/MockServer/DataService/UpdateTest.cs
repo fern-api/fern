@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -25,7 +26,11 @@ public class UpdateTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnUpdate(_ => ParseProtoJson<Data.V1.Grpc.UpdateResponse>(mockResponse));
+        DataServiceStub.OnUpdate(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<UpdateResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest { Id = "id" }

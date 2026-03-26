@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -25,8 +26,10 @@ public class DescribeTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnDescribe(_ =>
-            ParseProtoJson<Data.V1.Grpc.DescribeResponse>(mockResponse)
-        );
+        {
+            var mockObject = JsonUtils.Deserialize<DescribeResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.DescribeAsync(new SeedApi.DescribeRequest());
         JsonAssert.AreEqual(response, mockResponse);

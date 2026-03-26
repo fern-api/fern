@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -18,7 +19,11 @@ public class CheckTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnCheck(_ => ParseProtoJson<Data.V1.Grpc.CheckResponse>(mockResponse));
+        DataServiceStub.OnCheck(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<CheckResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);
@@ -34,7 +39,11 @@ public class CheckTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnCheck(_ => ParseProtoJson<Data.V1.Grpc.CheckResponse>(mockResponse));
+        DataServiceStub.OnCheck(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<CheckResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);

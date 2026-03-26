@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -35,7 +36,11 @@ public class CreateTest : BaseGrpcMockServerTest
             }
             """;
 
-        DataServiceStub.OnCreate(_ => ParseProtoJson<Data.V1.Grpc.CreateResponse>(mockResponse));
+        DataServiceStub.OnCreate(_ =>
+        {
+            var mockObject = JsonUtils.Deserialize<CreateResponse>(mockResponse);
+            return mockObject.ToProto();
+        });
 
         var response = await Client.DataService.CreateAsync(
             new SeedApi.CreateRequest { Name = "name" }

@@ -137,18 +137,6 @@ export class BaseGrpcMockServerTestGenerator extends FileGenerator<CSharpFile, S
             annotations: [this.NUnit.Framework.OneTimeTearDown]
         });
 
-        // Add ParseProtoJson<T> helper method
-        class_.addRawBodyContent(
-            this.csharp.codeblock((writer: Writer) => {
-                writer.addNamespace("Google.Protobuf");
-                writer.writeLine("protected static T ParseProtoJson<T>(string json) where T : IMessage<T>, new()");
-                writer.pushScope();
-                writer.writeLine("var settings = JsonParser.Settings.Default.WithIgnoreUnknownFields(true);");
-                writer.writeLine("return new JsonParser(settings).Parse<T>(json);");
-                writer.popScope();
-            })
-        );
-
         return new CSharpFile({
             clazz: class_,
             directory: this.constants.folders.mockServerTests,
