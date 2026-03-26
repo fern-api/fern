@@ -12,7 +12,7 @@ class StreamEventContextProtocol extends JsonSerializableType
      * @var (
      *    'completion'
      *   |'error'
-     *   |'notification'
+     *   |'event'
      *   |'_unknown'
      * ) $event
      */
@@ -33,7 +33,7 @@ class StreamEventContextProtocol extends JsonSerializableType
      *   event: (
      *    'completion'
      *   |'error'
-     *   |'notification'
+     *   |'event'
      *   |'_unknown'
      * ),
      *   value: (
@@ -76,14 +76,14 @@ class StreamEventContextProtocol extends JsonSerializableType
     }
 
     /**
-     * @param EventEvent $notification
+     * @param EventEvent $event
      * @return StreamEventContextProtocol
      */
-    public static function notification(EventEvent $notification): StreamEventContextProtocol
+    public static function event(EventEvent $event): StreamEventContextProtocol
     {
         return new StreamEventContextProtocol([
-            'event' => 'notification',
-            'value' => $notification,
+            'event' => 'event',
+            'value' => $event,
         ]);
     }
 
@@ -134,19 +134,19 @@ class StreamEventContextProtocol extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isNotification(): bool
+    public function isEvent(): bool
     {
-        return $this->value instanceof EventEvent && $this->event === 'notification';
+        return $this->value instanceof EventEvent && $this->event === 'event';
     }
 
     /**
      * @return EventEvent
      */
-    public function asNotification(): EventEvent
+    public function asEvent(): EventEvent
     {
-        if (!($this->value instanceof EventEvent && $this->event === 'notification')) {
+        if (!($this->value instanceof EventEvent && $this->event === 'event')) {
             throw new Exception(
-                "Expected notification; got " . $this->event . " with value of type " . get_debug_type($this->value),
+                "Expected event; got " . $this->event . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -181,8 +181,8 @@ class StreamEventContextProtocol extends JsonSerializableType
                 $value = $this->asError()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
-            case 'notification':
-                $value = $this->asNotification()->jsonSerialize();
+            case 'event':
+                $value = $this->asEvent()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
             case '_unknown':
@@ -239,7 +239,7 @@ class StreamEventContextProtocol extends JsonSerializableType
             case 'error':
                 $args['value'] = ErrorEvent::jsonDeserialize($data);
                 break;
-            case 'notification':
+            case 'event':
                 $args['value'] = EventEvent::jsonDeserialize($data);
                 break;
             case '_unknown':

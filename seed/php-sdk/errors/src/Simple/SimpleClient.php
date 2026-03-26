@@ -59,11 +59,11 @@ class SimpleClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FooResponse
+     * @return ?FooResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function fooWithoutEndpointError(FooRequest $request, ?array $options = null): FooResponse
+    public function fooWithoutEndpointError(FooRequest $request, ?array $options = null): ?FooResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,7 +80,7 @@ class SimpleClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return FooResponse::fromJson($json);
             }
@@ -106,11 +106,11 @@ class SimpleClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FooResponse
+     * @return ?FooResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function foo(FooRequest $request, ?array $options = null): FooResponse
+    public function foo(FooRequest $request, ?array $options = null): ?FooResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -127,7 +127,7 @@ class SimpleClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return FooResponse::fromJson($json);
             }
@@ -153,11 +153,11 @@ class SimpleClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FooResponse
+     * @return ?FooResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function fooWithExamples(FooRequest $request, ?array $options = null): FooResponse
+    public function fooWithExamples(FooRequest $request, ?array $options = null): ?FooResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -174,7 +174,7 @@ class SimpleClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return FooResponse::fromJson($json);
             }

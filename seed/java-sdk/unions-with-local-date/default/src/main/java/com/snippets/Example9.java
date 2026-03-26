@@ -7,6 +7,6 @@ public class Example9 {
         SeedUnionsClient client =
                 SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.bigunion().get("id");
+        client.union().get("id");
     }
 }

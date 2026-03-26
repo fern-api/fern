@@ -8,6 +8,12 @@ use Seed\Core\Json\JsonProperty;
 class EventEvent extends JsonSerializableType
 {
     /**
+     * @var string $event
+     */
+    #[JsonProperty('event')]
+    public string $event;
+
+    /**
      * @var string $name
      */
     #[JsonProperty('name')]
@@ -15,12 +21,14 @@ class EventEvent extends JsonSerializableType
 
     /**
      * @param array{
+     *   event: string,
      *   name: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->event = $values['event'];
         $this->name = $values['name'];
     }
 

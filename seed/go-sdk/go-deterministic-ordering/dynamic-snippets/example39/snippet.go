@@ -17,11 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.GetWithQuery{
-        Query: "query",
-        Number: 1,
+    request := &fern.GetWithMultipleQuery{
+        Query: []string{
+            "query",
+        },
+        Number: []int{
+            1,
+        },
     }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )

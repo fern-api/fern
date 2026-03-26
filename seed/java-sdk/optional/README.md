@@ -13,7 +13,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:optional'
+  implementation 'com.fern:optional:0.0.1'
 }
 ```
 

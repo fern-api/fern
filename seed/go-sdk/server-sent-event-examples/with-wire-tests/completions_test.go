@@ -359,6 +359,14 @@ func TestSettersMarkExplicitErrorEvent(t *testing.T) {
 }
 
 func TestSettersEventEvent(t *testing.T) {
+	t.Run("SetEvent", func(t *testing.T) {
+		obj := &EventEvent{}
+		var fernTestValueEvent string
+		obj.SetEvent(fernTestValueEvent)
+		assert.Equal(t, fernTestValueEvent, obj.Event)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetName", func(t *testing.T) {
 		obj := &EventEvent{}
 		var fernTestValueName string
@@ -370,6 +378,29 @@ func TestSettersEventEvent(t *testing.T) {
 }
 
 func TestGettersEventEvent(t *testing.T) {
+	t.Run("GetEvent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventEvent{}
+		var expected string
+		obj.Event = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEvent(), "getter should return the property value")
+	})
+
+	t.Run("GetEvent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventEvent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEvent() // Should return zero value
+	})
+
 	t.Run("GetName", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -396,6 +427,37 @@ func TestGettersEventEvent(t *testing.T) {
 }
 
 func TestSettersMarkExplicitEventEvent(t *testing.T) {
+	t.Run("SetEvent_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventEvent{}
+		var fernTestValueEvent string
+
+		// Act
+		obj.SetEvent(fernTestValueEvent)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetName_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -611,28 +673,28 @@ func TestGettersStreamEventContextProtocol(t *testing.T) {
 		_ = obj.GetError() // Should return zero value
 	})
 
-	t.Run("GetNotification", func(t *testing.T) {
+	t.Run("GetEvent", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &StreamEventContextProtocol{}
 		var expected *EventEvent
-		obj.Notification = expected
+		obj.Event = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetNotification(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEvent(), "getter should return the property value")
 	})
 
-	t.Run("GetNotification_NilValue", func(t *testing.T) {
+	t.Run("GetEvent_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &StreamEventContextProtocol{}
-		obj.Notification = nil
+		obj.Event = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetNotification(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEvent(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetNotification_NilReceiver", func(t *testing.T) {
+	t.Run("GetEvent_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *StreamEventContextProtocol
 		// Should not panic - getters should handle nil receiver gracefully
@@ -641,7 +703,7 @@ func TestGettersStreamEventContextProtocol(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetNotification() // Should return zero value
+		_ = obj.GetEvent() // Should return zero value
 	})
 
 }

@@ -40,8 +40,8 @@ export const MANIFEST: CoreUtility.Manifest = {
     name: "websocket",
     pathInCoreUtilities: { nameOnDisk: "websocket", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager): void => {
-        dependencyManager.addDependency("ws", "^8.16.0");
-        dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
+        dependencyManager.addDependency("ws", "^8.20.0");
+        dependencyManager.addDependency("@types/ws", "^8.18.1", { type: DependencyType.DEV });
     },
     dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: () => {

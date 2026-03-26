@@ -120,10 +120,18 @@ func (c *CompletionEvent) String() string {
 }
 
 type EventEvent struct {
-	Name string `json:"name" url:"name"`
+	Event string `json:"event" url:"event"`
+	Name  string `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
+}
+
+func (e *EventEvent) GetEvent() string {
+	if e == nil {
+		return ""
+	}
+	return e.Event
 }
 
 func (e *EventEvent) GetName() string {
@@ -230,10 +238,10 @@ func (e *ErrorEvent) String() string {
 }
 
 type StreamEventContextProtocol struct {
-	Event        string
-	Completion   CompletionEvent
-	Error        ErrorEvent
-	Notification EventEvent
+	Event      string
+	Completion CompletionEvent
+	Error      ErrorEvent
+	Event      EventEvent
 }
 
 type StreamEvent struct {

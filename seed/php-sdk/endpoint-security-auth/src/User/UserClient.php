@@ -58,11 +58,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBearer(?array $options = null): array
+    public function getWithBearer(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -78,7 +78,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -103,11 +103,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithApiKey(?array $options = null): array
+    public function getWithApiKey(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -123,7 +123,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -148,11 +148,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithOAuth(?array $options = null): array
+    public function getWithOAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -168,7 +168,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -193,11 +193,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBasic(?array $options = null): array
+    public function getWithBasic(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -213,7 +213,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -238,11 +238,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInferredAuth(?array $options = null): array
+    public function getWithInferredAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -258,7 +258,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -283,11 +283,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithAnyAuth(?array $options = null): array
+    public function getWithAnyAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -303,7 +303,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
@@ -328,11 +328,11 @@ class UserClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithAllAuth(?array $options = null): array
+    public function getWithAllAuth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -348,7 +348,7 @@ class UserClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    throw new SeedException(message: "Expected a JSON response body, but received an empty response.");
+                    return null;
                 }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }

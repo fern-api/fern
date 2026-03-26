@@ -19,10 +19,18 @@ import java.util.Objects;
     builder = EventEvent.Builder.class
 )
 public final class EventEvent {
+  private final String event;
+
   private final String name;
 
-  private EventEvent(String name) {
+  private EventEvent(String event, String name) {
+    this.event = event;
     this.name = name;
+  }
+
+  @JsonProperty("event")
+  public String getEvent() {
+    return event;
   }
 
   @JsonProperty("name")
@@ -37,12 +45,12 @@ public final class EventEvent {
   }
 
   private boolean equalTo(EventEvent other) {
-    return name.equals(other.name);
+    return event.equals(other.event) && name.equals(other.name);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.name);
+    return Objects.hash(this.event, this.name);
   }
 
   @java.lang.Override
@@ -50,14 +58,18 @@ public final class EventEvent {
     return ObjectMappers.stringify(this);
   }
 
-  public static NameStage builder() {
+  public static EventStage builder() {
     return new Builder();
+  }
+
+  public interface EventStage {
+    NameStage event(String event);
+
+    Builder from(EventEvent other);
   }
 
   public interface NameStage {
     _FinalStage name(String name);
-
-    Builder from(EventEvent other);
   }
 
   public interface _FinalStage {
@@ -67,7 +79,9 @@ public final class EventEvent {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements NameStage, _FinalStage {
+  public static final class Builder implements EventStage, NameStage, _FinalStage {
+    private String event;
+
     private String name;
 
     private Builder() {
@@ -75,7 +89,15 @@ public final class EventEvent {
 
     @java.lang.Override
     public Builder from(EventEvent other) {
+      event(other.getEvent());
       name(other.getName());
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("event")
+    public NameStage event(String event) {
+      this.event = Objects.requireNonNull(event, "event must not be null");
       return this;
     }
 
@@ -88,7 +110,7 @@ public final class EventEvent {
 
     @java.lang.Override
     public EventEvent build() {
-      return new EventEvent(name);
+      return new EventEvent(event, name);
     }
   }
 }

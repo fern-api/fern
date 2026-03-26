@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>$client-&gt;users-&gt;listWithUriPagination() -> ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listWithUriPagination() -> ?ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->users->listWithUriPagination();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithPathPagination() -> ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listWithPathPagination() -> ?ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 

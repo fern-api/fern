@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.0
+  changelogEntry:
+    - summary: |
+        Add `check.rules` to `docs.yml` to configure severities for selected docs
+        validation rules, including OpenAPI example validation, broken links,
+        non-component refs, local refs, circular redirects, and docs endpoint checks.
+        Deprecate the `--broken-links` and `--strict-broken-links` CLI flags in favor
+        of configuring broken link behavior in `docs.yml`.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 4.45.0
+  changelogEntry:
+    - summary: |
+        Add validation for OpenAPI specs that contain non-ASCII characters
+        (e.g. emojis) in tag names or `---` frontmatter delimiters in endpoint
+        descriptions. Tag names with non-ASCII characters end up in URL paths
+        and HTTP headers which only support ASCII, causing ERR_INVALID_CHAR
+        errors at runtime. Descriptions with `---` delimiters are interpreted
+        as YAML frontmatter by the docs renderer, causing parsing failures and
+        500 errors on generated docs sites. Both `fern check` and docs
+        generation now surface these as errors so users can fix their specs
+        before publishing.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer discarding response body examples when the 2xx
+        response has `examples` but no `schema`. The synthetic empty-object
+        fallback now preserves `examples` and `example` from the original
+        media type object, so example names, response bodies, and ordering
+        are correctly carried through to the IR.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Nest tabs configuration under `theme.tabs` as an object with `style`,
+        `alignment`, and `placement` properties. `theme.tabs: bubble` (string)
+        is still supported for backward compatibility. The `layout.tabs-placement`
+        field is preserved for backward compat. Tab alignment is only available
+        via `theme.tabs.alignment`. Warn when sidebar placement is combined with
+        center alignment since centering is only supported for header tabs.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 4.43.4
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generators to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 4.43.3
+  changelogEntry:
+    - summary: |
+        Include version number in the Gradle installation snippet for Java SDKs
+        in generated README.md files. Previously only the Maven snippet included
+        the version.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.43.2
   changelogEntry:
     - summary: |
@@ -10,7 +80,6 @@
       type: fix
   createdAt: "2026-03-23"
   irVersion: 65
-
 - version: 4.43.1
   changelogEntry:
     - summary: |
@@ -1188,7 +1257,6 @@
       type: feat
   createdAt: "2026-03-02"
   irVersion: 65
-
 - version: 4.0.1
   changelogEntry:
     - summary: |

@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:unions-with-local-date'
+  implementation 'com.fern:unions-with-local-date:0.0.1'
 }
 ```
 

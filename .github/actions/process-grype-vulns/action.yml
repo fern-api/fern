@@ -331,7 +331,7 @@ runs:
 
             // Send Slack notification
             if (slackToken) {
-              const message = `${devinMention} *New Grype Container Scan PR Created*\nNew PR created for \`${containerName}\` container security vulnerabilities. Please open a PR into the \`fern\` repo to address the ${relevant.length} vulnerabilities found. Follow the instructions in the <${pr.data.html_url}|PR>.`;
+              const message = `${devinMention} *New Grype Container Scan PR Created*\nNew PR created for \`${containerName}\` container security vulnerabilities. Please update the existing PR in the \`fern\` repo to address the ${relevant.length} vulnerabilities found. Follow the instructions in the existing <${pr.data.html_url}|PR>.`;
 
               try {
                 const response = await fetch('https://slack.com/api/chat.postMessage', {

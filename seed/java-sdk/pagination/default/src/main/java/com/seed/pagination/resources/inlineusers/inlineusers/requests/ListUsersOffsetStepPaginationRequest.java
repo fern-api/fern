@@ -5,9 +5,9 @@ package com.seed.pagination.resources.inlineusers.inlineusers.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -43,7 +43,7 @@ public final class ListUsersOffsetStepPaginationRequest {
     /**
      * @return Defaults to first page
      */
-    @JsonProperty("page")
+    @JsonIgnore
     public Optional<Integer> getPage() {
         return page;
     }
@@ -53,12 +53,12 @@ public final class ListUsersOffsetStepPaginationRequest {
      * This is also used as the step size in this
      * paginated endpoint.
      */
-    @JsonProperty("limit")
+    @JsonIgnore
     public Optional<Integer> getLimit() {
         return limit;
     }
 
-    @JsonProperty("order")
+    @JsonIgnore
     public Optional<Order> getOrder() {
         return order;
     }

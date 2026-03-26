@@ -7,26 +7,14 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators/index.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
-import { convertIr } from "../utils/convertIr.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    public constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext, dynamicSnippetsGenerator: DynamicSnippetsGenerator) {
         this.context = context;
-        this.dynamicSnippetsGenerator = this.buildDynamicSnippetsGenerator();
-    }
-
-    private buildDynamicSnippetsGenerator(): DynamicSnippetsGenerator {
-        const dynamicIr = this.context.ir.dynamic;
-        if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
-        return new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: this.context.config
-        });
+        this.dynamicSnippetsGenerator = dynamicSnippetsGenerator;
     }
 
     public buildReferenceConfigBuilder(): ReferenceConfigBuilder {

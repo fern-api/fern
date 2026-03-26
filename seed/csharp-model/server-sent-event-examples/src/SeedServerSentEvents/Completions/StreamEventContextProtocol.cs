@@ -37,11 +37,11 @@ public record StreamEventContextProtocol
     }
 
     /// <summary>
-    /// Create an instance of StreamEventContextProtocol with <see cref="StreamEventContextProtocol.Notification"/>.
+    /// Create an instance of StreamEventContextProtocol with <see cref="StreamEventContextProtocol.Event"/>.
     /// </summary>
-    public StreamEventContextProtocol(StreamEventContextProtocol.Notification value)
+    public StreamEventContextProtocol(StreamEventContextProtocol.Event value)
     {
-        Event = "notification";
+        Event = "event";
         Value = value.Value;
     }
 
@@ -67,9 +67,9 @@ public record StreamEventContextProtocol
     public bool IsError => Event == "error";
 
     /// <summary>
-    /// Returns true if <see cref="Event"/> is "notification"
+    /// Returns true if <see cref="Event"/> is "event"
     /// </summary>
-    public bool IsNotification => Event == "notification";
+    public bool IsEvent => Event == "event";
 
     /// <summary>
     /// Returns the value as a <see cref="SeedServerSentEvents.CompletionEvent"/> if <see cref="Event"/> is 'completion', otherwise throws an exception.
@@ -92,20 +92,18 @@ public record StreamEventContextProtocol
             : throw new global::System.Exception("StreamEventContextProtocol.Event is not 'error'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedServerSentEvents.EventEvent"/> if <see cref="Event"/> is 'notification', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedServerSentEvents.EventEvent"/> if <see cref="Event"/> is 'event', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Event"/> is not 'notification'.</exception>
-    public SeedServerSentEvents.EventEvent AsNotification() =>
-        IsNotification
+    /// <exception cref="Exception">Thrown when <see cref="Event"/> is not 'event'.</exception>
+    public SeedServerSentEvents.EventEvent AsEvent() =>
+        IsEvent
             ? (SeedServerSentEvents.EventEvent)Value!
-            : throw new global::System.Exception(
-                "StreamEventContextProtocol.Event is not 'notification'"
-            );
+            : throw new global::System.Exception("StreamEventContextProtocol.Event is not 'event'");
 
     public T Match<T>(
         Func<SeedServerSentEvents.CompletionEvent, T> onCompletion,
         Func<SeedServerSentEvents.ErrorEvent, T> onError,
-        Func<SeedServerSentEvents.EventEvent, T> onNotification,
+        Func<SeedServerSentEvents.EventEvent, T> onEvent,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -113,7 +111,7 @@ public record StreamEventContextProtocol
         {
             "completion" => onCompletion(AsCompletion()),
             "error" => onError(AsError()),
-            "notification" => onNotification(AsNotification()),
+            "event" => onEvent(AsEvent()),
             _ => onUnknown_(Event, Value),
         };
     }
@@ -121,7 +119,7 @@ public record StreamEventContextProtocol
     public void Visit(
         Action<SeedServerSentEvents.CompletionEvent> onCompletion,
         Action<SeedServerSentEvents.ErrorEvent> onError,
-        Action<SeedServerSentEvents.EventEvent> onNotification,
+        Action<SeedServerSentEvents.EventEvent> onEvent,
         Action<string, object?> onUnknown_
     )
     {
@@ -133,8 +131,8 @@ public record StreamEventContextProtocol
             case "error":
                 onError(AsError());
                 break;
-            case "notification":
-                onNotification(AsNotification());
+            case "event":
+                onEvent(AsEvent());
                 break;
             default:
                 onUnknown_(Event, Value);
@@ -173,9 +171,9 @@ public record StreamEventContextProtocol
     /// <summary>
     /// Attempts to cast the value to a <see cref="SeedServerSentEvents.EventEvent"/> and returns true if successful.
     /// </summary>
-    public bool TryAsNotification(out SeedServerSentEvents.EventEvent? value)
+    public bool TryAsEvent(out SeedServerSentEvents.EventEvent? value)
     {
-        if (Event == "notification")
+        if (Event == "event")
         {
             value = (SeedServerSentEvents.EventEvent)Value!;
             return true;
@@ -195,7 +193,7 @@ public record StreamEventContextProtocol
     ) => new(value);
 
     public static implicit operator StreamEventContextProtocol(
-        StreamEventContextProtocol.Notification value
+        StreamEventContextProtocol.Event value
     ) => new(value);
 
     [Serializable]
@@ -252,11 +250,10 @@ public record StreamEventContextProtocol
                     ?? throw new JsonException(
                         "Failed to deserialize SeedServerSentEvents.ErrorEvent"
                     ),
-                "notification" =>
-                    jsonWithoutDiscriminator.Deserialize<SeedServerSentEvents.EventEvent?>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedServerSentEvents.EventEvent"
-                        ),
+                "event" => json.Deserialize<SeedServerSentEvents.EventEvent?>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedServerSentEvents.EventEvent"
+                    ),
                 _ => json.Deserialize<object?>(options),
             };
             return new StreamEventContextProtocol(discriminator, value);
@@ -273,7 +270,7 @@ public record StreamEventContextProtocol
                 {
                     "completion" => JsonSerializer.SerializeToNode(value.Value, options),
                     "error" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "notification" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "event" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
             json["event"] = value.Event;
@@ -343,12 +340,12 @@ public record StreamEventContextProtocol
     }
 
     /// <summary>
-    /// Discriminated union type for notification
+    /// Discriminated union type for event
     /// </summary>
     [Serializable]
-    public struct Notification
+    public struct Event
     {
-        public Notification(SeedServerSentEvents.EventEvent value)
+        public Event(SeedServerSentEvents.EventEvent value)
         {
             Value = value;
         }
@@ -357,7 +354,7 @@ public record StreamEventContextProtocol
 
         public override string ToString() => Value.ToString() ?? "null";
 
-        public static implicit operator StreamEventContextProtocol.Notification(
+        public static implicit operator StreamEventContextProtocol.Event(
             SeedServerSentEvents.EventEvent value
         ) => new(value);
     }

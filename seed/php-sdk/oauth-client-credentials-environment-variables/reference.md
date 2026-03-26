@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getTokenWithClientCredentials($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getTokenWithClientCredentials($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ $client->auth->getTokenWithClientCredentials(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;auth-&gt;refreshToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;refreshToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 

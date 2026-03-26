@@ -90,11 +90,11 @@ Best client = Best
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.exhaustive.core.SeedExhaustiveApiException;
+import com.seed.exhaustive.core.BestApiException;
 
 try{
     client.endpoints().container().getAndReturnListOfPrimitives(...);
-} catch (SeedExhaustiveApiException e){
+} catch (BestApiException e){
     // Do something with the API exception...
 }
 ```
