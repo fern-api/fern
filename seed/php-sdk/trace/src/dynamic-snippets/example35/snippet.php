@@ -10,4 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->v2->problem->getProblems();
+$client->v2->v3->problem->getProblems();

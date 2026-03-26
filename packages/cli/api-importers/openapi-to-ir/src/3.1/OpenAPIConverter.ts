@@ -1,6 +1,11 @@
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
-import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
+import {
+    AbstractSpecConverter,
+    Converters,
+    ServersConverter,
+    validateOpenApiSpec
+} from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
@@ -29,6 +34,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
+
+        validateOpenApiSpec({
+            spec: this.context.spec,
+            errorCollector: this.context.errorCollector
+        });
 
         this.overrideOpenApiAuthWithGeneratorsAuth();
 

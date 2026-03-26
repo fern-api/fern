@@ -1,0 +1,40 @@
+openapi: 3.1.0
+info:
+  title: Non-JSON Examples with JSON Fallback API
+  version: 1.0.0
+  description: Edge case where non-JSON content type has examples but JSON does not
+
+paths:
+  /plants/:
+    post:
+      summary: Create a Plant
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                species:
+                  type: string
+            examples:
+              fern:
+                summary: A fern plant
+                value:
+                  name: "Boston Fern"
+                  species: "Nephrolepis exaltata"
+      responses:
+        "201":
+          description: Plant created
+          content:
+            application/xml:
+              examples:
+                fern:
+                  summary: XML fern response
+                  value:
+                    xmlData: "<plant><name>Boston Fern</name></plant>"
+
+components: {}
