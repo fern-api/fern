@@ -612,7 +612,7 @@ overrides:
   katex: 0.16.21
   micromatch: 4.0.8
   nanoid: 3.3.8
-  yaml: 2.3.3
+  yaml: 2.8.3
   ajv: 8.18.0
   node-fetch@2.x>whatwg-url: ^14.0.0
   minimatch: '>=10.2.3'
@@ -691,7 +691,7 @@ importers:
         version: 5.0.0(postcss@8.5.6)(stylelint@14.16.1)
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       tsx:
         specifier: 'catalog:'
         version: 4.21.0
@@ -703,7 +703,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/base:
     dependencies:
@@ -752,7 +752,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/browser-compatible-base:
     dependencies:
@@ -786,7 +786,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/base:
     devDependencies:
@@ -828,7 +828,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/codegen:
     dependencies:
@@ -865,7 +865,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/dynamic-snippets:
     devDependencies:
@@ -901,7 +901,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/formatter:
     dependencies:
@@ -926,7 +926,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/model:
     devDependencies:
@@ -962,7 +962,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/csharp/sdk:
     devDependencies:
@@ -1016,7 +1016,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/go-v2/ast:
     devDependencies:
@@ -1040,7 +1040,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1085,7 +1085,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
@@ -1118,7 +1118,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/go-v2/formatter:
     dependencies:
@@ -1140,7 +1140,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/go-v2/model:
     devDependencies:
@@ -1173,7 +1173,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/go-v2/sdk:
     devDependencies:
@@ -1224,7 +1224,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/java-v2/ast:
     dependencies:
@@ -1249,7 +1249,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/java-v2/base:
     devDependencies:
@@ -1282,7 +1282,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/java-v2/dynamic-snippets:
     devDependencies:
@@ -1318,7 +1318,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/java-v2/sdk:
     devDependencies:
@@ -1369,7 +1369,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/openapi:
     devDependencies:
@@ -1417,7 +1417,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/php/base:
     devDependencies:
@@ -1456,7 +1456,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/php/codegen:
     dependencies:
@@ -1484,7 +1484,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1523,7 +1523,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/php/model:
     devDependencies:
@@ -1556,7 +1556,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1616,7 +1616,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1658,7 +1658,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1682,7 +1682,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/python-v2/base:
     dependencies:
@@ -1728,7 +1728,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/python-v2/browser-compatible-base:
     devDependencies:
@@ -1743,7 +1743,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1785,7 +1785,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/python-v2/fastapi:
     devDependencies:
@@ -1800,7 +1800,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/python-v2/formatter:
     devDependencies:
@@ -1821,7 +1821,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1857,7 +1857,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1914,7 +1914,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1942,7 +1942,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/ruby-v2/base:
     devDependencies:
@@ -1993,7 +1993,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/ruby-v2/dynamic-snippets:
     devDependencies:
@@ -2029,7 +2029,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/ruby-v2/model:
     devDependencies:
@@ -2062,7 +2062,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/ruby-v2/sdk:
     devDependencies:
@@ -2128,7 +2128,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/rust/base:
     dependencies:
@@ -2168,7 +2168,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/rust/codegen:
     dependencies:
@@ -2187,7 +2187,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/rust/dynamic-snippets:
     dependencies:
@@ -2221,7 +2221,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/rust/model:
     devDependencies:
@@ -2260,7 +2260,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2318,7 +2318,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2351,7 +2351,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/swift/codegen:
     dependencies:
@@ -2388,7 +2388,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/swift/dynamic-snippets:
     devDependencies:
@@ -2424,7 +2424,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/swift/model:
     dependencies:
@@ -2467,7 +2467,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2533,7 +2533,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -2561,7 +2561,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript-v2/base:
     devDependencies:
@@ -2576,7 +2576,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
@@ -2597,7 +2597,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript-v2/dynamic-snippets:
     devDependencies:
@@ -2630,7 +2630,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript-v2/formatter:
     dependencies:
@@ -2655,7 +2655,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2728,7 +2728,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -2759,7 +2759,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -2793,7 +2793,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -2818,7 +2818,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -2849,7 +2849,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -2886,7 +2886,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -2917,7 +2917,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/generator:
     dependencies:
@@ -2993,7 +2993,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -3021,7 +3021,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -3052,13 +3052,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -3089,13 +3089,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -3126,13 +3126,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -3166,13 +3166,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -3203,7 +3203,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -3234,7 +3234,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -3322,13 +3322,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -3362,13 +3362,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -3396,13 +3396,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -3502,13 +3502,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -3536,13 +3536,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -3573,13 +3573,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -3619,13 +3619,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -3656,13 +3656,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -3696,13 +3696,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -3733,13 +3733,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/sdk/test-utils:
     dependencies:
@@ -3795,13 +3795,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -3823,13 +3823,13 @@ importers:
         version: 18.15.3
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -3875,7 +3875,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -3900,7 +3900,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/commons:
     dependencies:
@@ -3970,7 +3970,7 @@ importers:
         version: 4.0.1
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       memfs:
         specifier: 'catalog:'
         version: 3.6.0
@@ -3982,7 +3982,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -4019,7 +4019,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   generators/typescript/utils/resolvers:
     dependencies:
@@ -4041,7 +4041,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/ai:
     dependencies:
@@ -4063,7 +4063,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4100,7 +4100,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -4134,7 +4134,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -4149,7 +4149,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/conjure/conjure-to-fern:
     dependencies:
@@ -4186,7 +4186,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -4211,7 +4211,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/graphql:
     dependencies:
@@ -4239,7 +4239,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi-pruner:
     dependencies:
@@ -4258,7 +4258,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
@@ -4304,7 +4304,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
@@ -4326,7 +4326,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -4375,7 +4375,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -4421,7 +4421,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -4461,7 +4461,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
@@ -4498,7 +4498,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
@@ -4562,7 +4562,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/api-importers/v3-importer-tests:
     dependencies:
@@ -4596,7 +4596,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/auth:
     dependencies:
@@ -4636,7 +4636,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli:
     devDependencies:
@@ -4921,7 +4921,7 @@ importers:
         version: 3.0.3
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -4933,13 +4933,13 @@ importers:
         version: 4.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       ws:
         specifier: 'catalog:'
         version: 8.19.0
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -4982,7 +4982,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli-migrations:
     dependencies:
@@ -5023,8 +5023,8 @@ importers:
         specifier: 'catalog:'
         version: 4.1.1
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -5049,7 +5049,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli-source-resolver:
     dependencies:
@@ -5080,7 +5080,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli-v2:
     devDependencies:
@@ -5263,7 +5263,7 @@ importers:
         version: 7.7.4
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -5272,10 +5272,10 @@ importers:
         version: 9.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -5296,7 +5296,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -5333,7 +5333,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/configuration-loader:
     dependencies:
@@ -5412,7 +5412,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -5446,7 +5446,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -5486,7 +5486,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/docs-importers/readme:
     dependencies:
@@ -5562,7 +5562,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/docs-markdown-utils:
     dependencies:
@@ -5638,7 +5638,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -5744,7 +5744,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/docs-resolver:
     dependencies:
@@ -5853,7 +5853,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/ete-tests:
     dependencies:
@@ -5914,7 +5914,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -5937,8 +5937,8 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5951,7 +5951,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
@@ -6003,7 +6003,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -6025,7 +6025,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -6095,7 +6095,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/ir-generator:
     devDependencies:
@@ -6158,7 +6158,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/ir-generator-tests:
     dependencies:
@@ -6204,7 +6204,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -6289,7 +6289,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -6320,7 +6320,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -6462,7 +6462,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/protoc-gen-fern:
     dependencies:
@@ -6508,7 +6508,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
@@ -6646,7 +6646,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yazl:
         specifier: 'catalog:'
         version: 3.3.1
@@ -6671,7 +6671,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/init:
     dependencies:
@@ -6750,7 +6750,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/library-docs-generator:
     dependencies:
@@ -6775,7 +6775,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/logger:
     dependencies:
@@ -6794,7 +6794,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/login:
     dependencies:
@@ -6849,7 +6849,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/mock:
     dependencies:
@@ -6892,7 +6892,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/posthog-manager:
     dependencies:
@@ -6929,7 +6929,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/project-loader:
     dependencies:
@@ -6963,7 +6963,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/register:
     dependencies:
@@ -7048,7 +7048,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/semver-utils:
     dependencies:
@@ -7067,7 +7067,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/source:
     devDependencies:
@@ -7085,7 +7085,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/task-context:
     dependencies:
@@ -7104,7 +7104,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/workspace/api-workspace-validator:
     dependencies:
@@ -7165,7 +7165,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/workspace/browser-compatible-fern-workspace:
     dependencies:
@@ -7229,13 +7229,13 @@ importers:
         version: 0.27.3
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/workspace/lazy-fern-workspace:
     dependencies:
@@ -7383,7 +7383,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/workspace/loader:
     dependencies:
@@ -7438,7 +7438,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/workspace/oss-validator:
     dependencies:
@@ -7475,7 +7475,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -7614,7 +7614,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/yaml/generators-validator:
     dependencies:
@@ -7666,7 +7666,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/yaml/loader:
     devDependencies:
@@ -7693,10 +7693,10 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -7772,7 +7772,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/casings-generator:
     dependencies:
@@ -7803,7 +7803,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/core-utils:
     dependencies:
@@ -7870,7 +7870,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/fs-utils:
     dependencies:
@@ -7907,7 +7907,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/github:
     dependencies:
@@ -7944,7 +7944,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/ir-utils:
     dependencies:
@@ -7981,7 +7981,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/loadable:
     dependencies:
@@ -8000,7 +8000,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/logging-execa:
     dependencies:
@@ -8025,7 +8025,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/mock-utils:
     dependencies:
@@ -8044,7 +8044,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/path-utils:
     devDependencies:
@@ -8059,7 +8059,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/test-utils:
     devDependencies:
@@ -8098,22 +8098,22 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/configs:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))
+        version: 4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
       esbuild-plugin-polyfill-node:
         specifier: 'catalog:'
         version: 0.3.0(esbuild@0.27.3)
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/core:
     dependencies:
@@ -8144,7 +8144,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/generator-cli:
     dependencies:
@@ -8190,13 +8190,13 @@ importers:
         version: 9.6.1
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8226,7 +8226,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/ir-sdk:
     devDependencies:
@@ -8241,7 +8241,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/migrations-base:
     dependencies:
@@ -8266,7 +8266,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/scripts:
     devDependencies:
@@ -8290,10 +8290,10 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yaml:
-        specifier: 2.3.3
-        version: 2.3.3
+        specifier: 2.8.3
+        version: 2.8.3
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -8405,13 +8405,13 @@ importers:
         version: 3.0.3
       tsup:
         specifier: 'catalog:'
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8453,7 +8453,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
 packages:
 
@@ -13874,7 +13874,7 @@ packages:
       jiti: '>=1.21.0'
       postcss: '>=8.0.9'
       tsx: ^4.8.1
-      yaml: 2.3.3
+      yaml: 2.8.3
     peerDependenciesMeta:
       jiti:
         optional: true
@@ -15047,7 +15047,7 @@ packages:
       sugarss: ^5.0.0
       terser: ^5.16.0
       tsx: ^4.8.1
-      yaml: 2.3.3
+      yaml: 2.8.3
     peerDependenciesMeta:
       '@types/node':
         optional: true
@@ -15239,9 +15239,10 @@ packages:
   yaml-ast-parser@0.0.43:
     resolution: {integrity: sha512-2PTINUwsRqSd+s8XxKaJWQlUuEMHJQyEuh2edBbW8KNJz0SJPwUSD2zRWqezFEdN7IzAgeuYHFUCF7o8zRdZ0A==}
 
-  yaml@2.3.3:
-    resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
-    engines: {node: '>= 14'}
+  yaml@2.8.3:
+    resolution: {integrity: sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
 
   yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
@@ -16604,7 +16605,7 @@ snapshots:
       minimatch: 10.2.4
       node-diff3: 3.2.0
       simple-git: 3.33.0
-      yaml: 2.3.3
+      yaml: 2.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -16613,7 +16614,7 @@ snapshots:
       minimatch: 10.2.4
       node-diff3: 3.2.0
       simple-git: 3.33.0
-      yaml: 2.3.3
+      yaml: 2.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -18269,7 +18270,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))':
+  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.1.0
@@ -18281,9 +18282,9 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.0.3
-      vitest: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      vitest: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
-  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)))':
+  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.1.0
@@ -18295,7 +18296,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.0.3
-      vitest: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      vitest: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@4.1.0':
     dependencies:
@@ -18306,29 +18307,29 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
 
-  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
 
-  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
+  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
 
   '@vitest/pretty-format@4.1.0':
     dependencies:
@@ -18873,7 +18874,7 @@ snapshots:
       import-fresh: 3.3.1
       parse-json: 5.2.0
       path-type: 4.0.0
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   cosmiconfig@9.0.0(typescript@5.9.3):
     dependencies:
@@ -18900,7 +18901,7 @@ snapshots:
       '@cspell/cspell-types': 9.7.0
       comment-json: 4.5.1
       smol-toml: 1.6.1
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   cspell-dictionary@9.7.0:
     dependencies:
@@ -21164,14 +21165,14 @@ snapshots:
     dependencies:
       '@exodus/schemasafe': 1.3.0
       should: 13.2.3
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   oas-resolver@2.5.6:
     dependencies:
       node-fetch-h2: 2.3.0
       oas-kit-common: 1.0.8
       reftools: 1.1.9
-      yaml: 2.3.3
+      yaml: 2.8.3
       yargs: 17.7.2
 
   oas-schema-walker@1.1.5: {}
@@ -21185,7 +21186,7 @@ snapshots:
       oas-schema-walker: 1.1.5
       reftools: 1.1.9
       should: 13.2.3
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   object-assign@4.1.1: {}
 
@@ -21454,14 +21455,14 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(yaml@2.3.3):
+  postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 2.6.1
       postcss: 8.5.6
       tsx: 4.21.0
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   postcss-media-query-parser@0.2.3: {}
 
@@ -22433,7 +22434,7 @@ snapshots:
       oas-schema-walker: 1.1.5
       oas-validator: 5.0.8
       reftools: 1.1.9
-      yaml: 2.3.3
+      yaml: 2.8.3
       yargs: 17.7.2
     transitivePeerDependencies:
       - encoding
@@ -22624,7 +22625,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3):
+  tsup@8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.27.3)
       cac: 6.7.14
@@ -22635,7 +22636,7 @@ snapshots:
       fix-dts-default-cjs-exports: 1.0.1
       joycon: 3.1.1
       picocolors: 1.1.1
-      postcss-load-config: 6.0.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(yaml@2.3.3)
+      postcss-load-config: 6.0.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(yaml@2.8.3)
       resolve-from: 5.0.0
       rollup: 4.59.0
       source-map: 0.7.6
@@ -22852,7 +22853,7 @@ snapshots:
   vfile-matter@5.0.1:
     dependencies:
       vfile: 6.0.3
-      yaml: 2.3.3
+      yaml: 2.8.3
 
   vfile-message@4.0.3:
     dependencies:
@@ -22864,7 +22865,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.4)
@@ -22877,9 +22878,9 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       tsx: 4.21.0
-      yaml: 2.3.3
+      yaml: 2.8.3
 
-  vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.4)
@@ -22892,9 +22893,9 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       tsx: 4.21.0
-      yaml: 2.3.3
+      yaml: 2.8.3
 
-  vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
+  vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.4)
@@ -22907,12 +22908,12 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       tsx: 4.21.0
-      yaml: 2.3.3
+      yaml: 2.8.3
 
-  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
+  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22929,7 +22930,7 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
@@ -22937,10 +22938,10 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
+  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@22.19.11)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22957,7 +22958,7 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
@@ -22965,10 +22966,10 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)):
+  vitest@4.1.0(@opentelemetry/api@1.9.0)(@types/node@25.2.1)(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22985,7 +22986,7 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      vite: 7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
@@ -23106,7 +23107,7 @@ snapshots:
 
   yaml-ast-parser@0.0.43: {}
 
-  yaml@2.3.3: {}
+  yaml@2.8.3: {}
 
   yargs-parser@20.2.9: {}
 
