@@ -459,9 +459,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
+                            innerWriter.controlFlow(
+                                "if",
+                                this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
+                            );
                             innerWriter.writeTextStatement(
                                 `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
                             );
+                            innerWriter.endControlFlow();
                         }
                     }
 
