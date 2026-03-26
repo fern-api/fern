@@ -106,7 +106,7 @@ export abstract class TypescriptProject {
     protected readonly dependencies: PackageDependencies;
     protected readonly extraConfigs: Record<string, unknown> | undefined;
     protected readonly outputJsr: boolean;
-    protected readonly volume = new Volume();
+    public readonly volume = new Volume();
     public readonly tsMorphProject: Project;
     public readonly extraFiles: Record<string, string>;
     protected readonly extraDependencies: Record<string, string>;
@@ -194,7 +194,6 @@ export abstract class TypescriptProject {
 
     public async persist(options?: {
         fixEsmImports?: boolean;
-        coreUtilityPaths?: Set<string>;
     }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
@@ -209,12 +208,12 @@ export abstract class TypescriptProject {
 
         await this.addFilesToVolume();
 
-        // Fix ESM imports in-memory before writing to disk, eliminating one
-        // full read+write round-trip vs the post-persist disk-based approach.
-        // When coreUtilityPaths is provided, those paths are added to the existence
-        // cache so generated file imports to core (e.g. "../../core/index") resolve.
+        // Fix ESM imports in-memory before writing to disk. Core utility files
+        // should already be in the Volume (via copyCoreUtilitiesToVolume) so their
+        // imports are processed alongside generated source files — no post-persist
+        // disk pass needed for core utilities.
         if (options?.fixEsmImports) {
-            fixImportsInVolume(this.volume, this.packagePath, options.coreUtilityPaths);
+            fixImportsInVolume(this.volume, this.packagePath);
         }
 
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);

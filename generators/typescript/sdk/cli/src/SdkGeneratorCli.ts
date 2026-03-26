@@ -257,20 +257,23 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         });
         const typescriptProject = await sdkGenerator.generate();
-        // Pre-compute core utility file paths so the in-memory import processor
-        // can resolve generated file imports to core (e.g. "../../core/index").
-        const coreUtilityPaths = customConfig.useLegacyExports
-            ? undefined
-            : await sdkGenerator.getCoreUtilityFilePaths();
+        // Copy core utility files into the Volume before persist so they are
+        // processed in-memory by fixImportsInVolume alongside generated source
+        // files — no post-persist disk pass needed for core utilities.
+        if (!customConfig.useLegacyExports) {
+            await sdkGenerator.copyCoreUtilitiesToVolume(typescriptProject.volume);
+        }
         const persistedTypescriptProject = await typescriptProject.persist({
-            fixEsmImports: !customConfig.useLegacyExports,
-            coreUtilityPaths
+            fixEsmImports: !customConfig.useLegacyExports
         });
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
-        await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
-            pathToRoot: rootDirectory
-        });
+        // For legacy exports, core utilities are still copied to disk the traditional way.
+        if (customConfig.useLegacyExports) {
+            await sdkGenerator.copyCoreUtilities({
+                pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+                pathToRoot: rootDirectory
+            });
+        }
         await sdkGenerator.generatePublicExports({
             pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });
@@ -334,9 +337,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     ): Promise<void> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         if (customConfig.useLegacyExports === false) {
-            // Generated source files were already processed in-memory during persist().
-            // This targeted pass fixes only files written to disk after persist:
-            //   - src/core/ (recursively) — core utilities copied by copyCoreUtilities
+            // Generated source files and core utilities were already processed
+            // in-memory during persist(). This targeted pass only fixes imports
+            // in files written to disk after persist:
+            //   - src/core/ (existence cache only) — already processed, no writes
             //   - src/*.ts (shallow) — public exports written by generatePublicExports
             const srcDir = persistedTypescriptProject.getSrcDirectory();
             await fixImportsForCoreFiles([path.join(srcDir, "core")], [srcDir]);

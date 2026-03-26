@@ -233,26 +233,18 @@ function determineModification(
  * @param volume - The memfs Volume containing the project files.
  * @param packagePath - The source directory path within the volume (e.g. "src").
  */
-export function fixImportsInVolume(volume: Volume, packagePath: string, extraExistencePaths?: Set<string>): void {
+export function fixImportsInVolume(volume: Volume, packagePath: string): void {
     const srcDir = "/" + packagePath;
 
-    // Phase 1: Collect all source file paths from the volume
+    // Phase 1: Collect all source file paths from the volume.
+    // Core utility files should already be in the Volume (via copyCoreUtilitiesToVolume)
+    // so their paths are included in the existence cache automatically.
     const volumeFiles = new Set<string>();
     collectVolumeFilesSync(volume, srcDir, volumeFiles);
 
-    // Build the existence cache: volume files + extra paths for files that will exist
-    // on disk after persist (e.g. core utilities copied by copyCoreUtilities). This
-    // allows generated file imports like "../../core/index" to resolve correctly.
     const fileExistenceCache = new Set<string>(volumeFiles);
-    if (extraExistencePaths) {
-        for (const p of extraExistencePaths) {
-            fileExistenceCache.add(path.resolve("/" + p));
-        }
-    }
 
     // Phase 2: Process each TypeScript file in the volume via string replacement.
-    // Only iterate volumeFiles (not extraExistencePaths) since extra paths don't
-    // exist in the volume — they're only used for import resolution lookups.
     const importModificationCache = new Map<string, ImportModificationType>();
 
     for (const filePath of volumeFiles) {

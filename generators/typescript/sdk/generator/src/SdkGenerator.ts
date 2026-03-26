@@ -16,6 +16,7 @@ import {
     getFullPathForEndpoint,
     getTextOfTsNode,
     ImportsManager,
+    type MemfsVolume,
     NpmPackage,
     PackageId,
     PublicExportsManager,
@@ -782,8 +783,8 @@ export class SdkGenerator {
         return this.intermediateRepresentation.types;
     }
 
-    public async getCoreUtilityFilePaths(): Promise<Set<string>> {
-        return this.coreUtilitiesManager.getCoreUtilityFilePaths();
+    public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilitiesToVolume(volume);
     }
 
     public async copyCoreUtilities({

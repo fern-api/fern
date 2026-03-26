@@ -303,44 +303,35 @@ describe("fixImportsInVolume", () => {
         expect(result).toBe('{"from": "./foo"}');
     });
 
-    it("handles extraExistencePaths for core utility resolution", () => {
+    it("resolves imports to core utility files written into the Volume", () => {
         volume.mkdirSync("/src/api", { recursive: true });
-        volume.writeFileSync("/src/api/client.ts", 'import { fetch } from "./utils";\n');
-        // utils.ts is NOT in the volume — it's an extra path that will exist on disk later
-        const extraPaths = new Set(["src/api/utils.ts"]);
-
-        fixImportsInVolume(volume, "src", extraPaths);
-
-        const result = volume.readFileSync("/src/api/client.ts", "utf-8");
-        expect(result).toBe('import { fetch } from "./utils.js";\n');
-    });
-
-    it("resolves directory imports via extraExistencePaths index files", () => {
-        volume.mkdirSync("/src/api", { recursive: true });
-        // ../core from /src/api/ resolves to /src/core
+        volume.mkdirSync("/src/core", { recursive: true });
         volume.writeFileSync("/src/api/client.ts", 'import { fetch } from "../core";\n');
-        // core/index.ts is NOT in the volume — extra path provides index.ts
-        const extraPaths = new Set(["src/core/index.ts"]);
+        // Core utility files are now written directly into the Volume
+        volume.writeFileSync("/src/core/index.ts", 'export { fetch } from "./Fetcher";\n');
+        volume.writeFileSync("/src/core/Fetcher.ts", "export function fetch() {}\n");
 
-        fixImportsInVolume(volume, "src", extraPaths);
+        fixImportsInVolume(volume, "src");
 
-        const result = volume.readFileSync("/src/api/client.ts", "utf-8");
-        expect(result).toBe('import { fetch } from "../core/index.js";\n');
+        const clientResult = volume.readFileSync("/src/api/client.ts", "utf-8");
+        expect(clientResult).toBe('import { fetch } from "../core/index.js";\n');
+        const indexResult = volume.readFileSync("/src/core/index.ts", "utf-8");
+        expect(indexResult).toBe('export { fetch } from "./Fetcher.js";\n');
     });
 
-    it("does not try to read files from extraExistencePaths", () => {
+    it("processes core utility imports alongside generated source files", () => {
         volume.mkdirSync("/src/api", { recursive: true });
-        volume.writeFileSync("/src/api/client.ts", 'import { foo } from "./types";\n');
-        volume.writeFileSync("/src/api/types.ts", "export const foo = 1;\n");
+        volume.mkdirSync("/src/core/auth", { recursive: true });
+        volume.writeFileSync("/src/api/client.ts", 'import { BasicAuth } from "../core/auth";\n');
+        volume.writeFileSync("/src/core/auth/index.ts", 'export { BasicAuth } from "./BasicAuth";\n');
+        volume.writeFileSync("/src/core/auth/BasicAuth.ts", "export class BasicAuth {}\n");
 
-        // Extra paths point to files that don't exist in the volume
-        const extraPaths = new Set(["src/core/Fetcher.ts", "src/core/index.ts"]);
-
-        // Should not throw ENOENT trying to read extra paths
-        expect(() => fixImportsInVolume(volume, "src", extraPaths)).not.toThrow();
+        fixImportsInVolume(volume, "src");
 
         const result = volume.readFileSync("/src/api/client.ts", "utf-8");
-        expect(result).toBe('import { foo } from "./types.js";\n');
+        expect(result).toBe('import { BasicAuth } from "../core/auth/index.js";\n');
+        const authIndex = volume.readFileSync("/src/core/auth/index.ts", "utf-8");
+        expect(authIndex).toBe('export { BasicAuth } from "./BasicAuth.js";\n');
     });
 
     it("processes multiple files in a single pass", () => {

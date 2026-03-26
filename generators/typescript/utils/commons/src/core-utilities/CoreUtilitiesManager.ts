@@ -4,6 +4,16 @@ import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
+/**
+ * Minimal interface for an in-memory filesystem volume.
+ * Structurally compatible with memfs Volume so consumers don't need a
+ * direct dependency on the memfs package.
+ */
+export interface MemfsVolume {
+    mkdirSync(path: string, options?: { recursive?: boolean }): unknown;
+    writeFileSync(file: string, data: string | Buffer): void;
+}
+
 import { DependencyManager } from "../dependency-manager/DependencyManager.js";
 import { ExportsManager } from "../exports-manager/index.js";
 import { ImportsManager } from "../imports-manager/index.js";
@@ -218,6 +228,137 @@ export class CoreUtilitiesManager {
         }
 
         return files;
+    }
+
+    /**
+     * Copies core utility files into a memfs Volume instead of to disk.
+     * This allows fixImportsInVolume to process core utility imports in-memory
+     * alongside generated source files, eliminating the need for a post-persist
+     * disk pass on core utility files.
+     */
+    public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
+        const files = new Set(
+            await Promise.all(
+                Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
+                    const { patterns, ignore } = utility.getFilesPatterns({
+                        streamType: this.streamType,
+                        formDataSupport: this.formDataSupport,
+                        fetchSupport: this.fetchSupport
+                    });
+                    return glob(patterns, { ignore, cwd: UTILITIES_PATH, nodir: true });
+                })
+            ).then((results) => results.flat())
+        );
+
+        const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
+        const findAndReplace: Record<string, { importPath: string; body: string }> = isCustomPackagePath
+            ? {
+                  [DEFAULT_PACKAGE_PATH]: {
+                      importPath: this.getPackagePathImport(),
+                      body: this.relativePackagePath
+                  },
+                  [DEFAULT_TEST_PATH]: {
+                      importPath: this.getTestPathImport(),
+                      body: this.relativeTestPath
+                  }
+              }
+            : {};
+
+        await Promise.all(
+            Array.from(files).map(async (file) => {
+                let destinationFile = file;
+                if (isCustomPackagePath) {
+                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
+                    if (!isPathAlreadyUpdated) {
+                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
+                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
+                        if (isTestFile) {
+                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
+                        } else if (isSourceFile) {
+                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
+                        }
+                    }
+                }
+
+                const sourcePath = path.join(UTILITIES_PATH, file);
+                let content = await readFile(sourcePath, "utf8");
+
+                if (isCustomPackagePath) {
+                    content = this.updateImportPathsInMemory(content, findAndReplace);
+                }
+
+                const volumePath = "/" + destinationFile;
+                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
+                volume.writeFileSync(volumePath, content);
+            })
+        );
+
+        // Handle auth overrides
+        if (this.referencedCoreUtilities["auth"] != null) {
+            for (const [filepath, content] of Object.entries(this.authOverrides)) {
+                const volumePath = "/" + path.join(this.relativePackagePath, "core", "auth", filepath);
+                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
+                volume.writeFileSync(volumePath, content);
+            }
+        }
+
+        // Handle custom pagination
+        if (this.referencedCoreUtilities["customPagination"] != null) {
+            const paginationDir = "/" + path.join(this.relativePackagePath, "core", "pagination");
+            volume.mkdirSync(paginationDir, { recursive: true });
+
+            let customPagerContents = await readFile(
+                path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
+                "utf8"
+            );
+            customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
+            volume.writeFileSync(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents);
+        }
+
+        // Handle pagination index
+        if (this.referencedCoreUtilities["pagination"] != null) {
+            const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
+            const paginationDir = "/" + path.join(this.relativePackagePath, "core", "pagination");
+            volume.mkdirSync(paginationDir, { recursive: true });
+
+            if (hasCustomPagination) {
+                volume.writeFileSync(
+                    path.join(paginationDir, "index.ts"),
+                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`
+                );
+            } else {
+                volume.writeFileSync(
+                    path.join(paginationDir, "index.ts"),
+                    `export { Page } from "./Page";\n`
+                );
+            }
+        }
+    }
+
+    private updateImportPathsInMemory(
+        content: string,
+        findAndReplace: Record<string, { importPath: string; body: string }>
+    ): string {
+        const lines = content.split("\n");
+        let hasReplaced = false;
+
+        const updatedLines = lines.map((line) => {
+            let updatedLine = line;
+            for (const [find, { importPath, body }] of Object.entries(findAndReplace)) {
+                if (line.includes(find)) {
+                    if (line.includes("import")) {
+                        updatedLine = updatedLine.replaceAll(find, importPath);
+                        hasReplaced = true;
+                    } else {
+                        updatedLine = updatedLine.replaceAll(find, body);
+                        hasReplaced = true;
+                    }
+                }
+            }
+            return updatedLine;
+        });
+
+        return hasReplaced ? updatedLines.join("\n") : content;
     }
 
     public async copyCoreUtilities({
