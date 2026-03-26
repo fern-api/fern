@@ -30,11 +30,13 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "devDependencies": {
+  "dependencies": {
     "@fern-api/base-generator": "workspace:*",
+    "@wasm-fmt/ruff_fmt": "catalog:"
+  },
+  "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "catalog:",
-    "@wasm-fmt/ruff_fmt": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

@@ -1,6 +1,6 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
+import { PythonFormatter } from "@fern-api/python-formatter";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -15,9 +15,11 @@ const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
  */
 export class PythonProject extends AbstractProject<AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>> {
     private sourceFiles: WriteablePythonFile[] = [];
+    private formatter: PythonFormatter;
 
     public constructor({ context }: { context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema> }) {
         super(context);
+        this.formatter = new PythonFormatter();
     }
 
     public addSourceFiles(file: WriteablePythonFile): void {
@@ -32,38 +34,26 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
     }
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        let contents = (await readFile(getAsIsFilepath(filename))).toString();
         filename = filename.replace(".Template", "");
+        if (filename.endsWith(".py")) {
+            contents = await this.formatter.format(contents);
+        }
         return new File(filename, RelativeFilePath.of(""), contents);
     }
 
     public async persist(): Promise<void> {
+        this.context.logger.debug("Formatting and writing generated files...");
         await Promise.all(
             this.sourceFiles.map(async (file) => {
+                if (typeof file.fileContents === "string") {
+                    file.fileContents = await this.formatter.format(file.fileContents);
+                }
                 return await file.write(this.absolutePathToOutputDirectory);
             })
         );
 
         await this.createRawFiles();
-        await this.runRuffLinting();
-    }
-
-    private async runRuffLinting(): Promise<void> {
-        if (this.sourceFiles.length === 0) {
-            return;
-        }
-
-        this.context.logger.debug("Running ruff check --fix on generated files...");
-        await loggingExeca(this.context.logger, "ruff", ["check", "--fix", "--no-cache", "--ignore", "E741"], {
-            doNotPipeOutput: true,
-            cwd: this.absolutePathToOutputDirectory
-        });
-
-        this.context.logger.debug("Running ruff format on generated files...");
-        await loggingExeca(this.context.logger, "ruff", ["format", "--no-cache"], {
-            doNotPipeOutput: true,
-            cwd: this.absolutePathToOutputDirectory
-        });
     }
 }
 
