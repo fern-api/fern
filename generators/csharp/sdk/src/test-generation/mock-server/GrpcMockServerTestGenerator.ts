@@ -221,6 +221,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private writeClientInstantiation(writer: Writer): void {
         const rootClientName = this.Types.RootClient.name;
+        writer.addNamespace("Grpc.Net.Client");
         writer.writeLine(`var client = new ${rootClientName}(`);
         writer.writeLine("    clientOptions: new ClientOptions");
         writer.writeLine("    {");

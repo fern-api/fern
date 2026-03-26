@@ -1,3 +1,4 @@
+using Grpc.Net.Client;
 using NUnit.Framework;
 using SeedApi.Test.Utils;
 
