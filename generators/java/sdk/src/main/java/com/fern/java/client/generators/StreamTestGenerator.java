@@ -232,12 +232,13 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get("java.io", "StringReader"),
                         ClassName.get("java.io", "StringReader"))
                 .addStatement(
-                        "$T<$T> sseStream = $T.fromSseWithEventDiscrimination($T.class, sseInput, $S)",
+                        "$T<$T> sseStream = $T.fromSse($T.class, sseInput, $S, $T.PROTOCOL)",
                         streamClassName,
                         ClassName.get("java.util", "Map"),
                         streamClassName,
                         ClassName.get("java.util", "Map"),
-                        "event")
+                        "event",
+                        streamClassName.nestedClass("SseDiscriminatorContext"))
                 .addStatement("int expectedEvents = 2")
                 .addStatement("int actualEvents = 0")
                 .beginControlFlow("for ($T eventData : sseStream)", ClassName.get("java.util", "Map"))
