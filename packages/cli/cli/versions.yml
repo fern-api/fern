@@ -7,7 +7,7 @@
         value was placed as a sibling of `discriminant` instead of being nested
         inside it, so the information was silently lost during IR generation.
         This caused generated SDKs to always use the default discriminator context
-        of `data` and never use the alternate `protocol` which is used in SEE when
+        of `data` and never use the alternate `protocol` which is used in SSE when
         the SSE envelope's event field is the discriminant.
       type: fix
   createdAt: "2026-03-26"
