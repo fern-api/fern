@@ -3,7 +3,15 @@
 package file
 
 import (
+	fern "github.com/examples/fern"
+	core "github.com/examples/fern/core"
 	internal "github.com/examples/fern/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	404: func(apiError *core.APIError) error {
+		return &fern.NotFoundError{
+			APIError: apiError,
+		}
+	},
+}
