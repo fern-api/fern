@@ -39,11 +39,8 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        if (username != null && accessToken != null)
-        {
-            clientOptionsWithAuth.Headers["Authorization"] =
-                $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{accessToken}"))}";
-        }
+        clientOptionsWithAuth.Headers["Authorization"] =
+            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{accessToken}"))}";
         _client = new RawClient(clientOptionsWithAuth);
         BasicAuth = new BasicAuthClient(_client);
     }
