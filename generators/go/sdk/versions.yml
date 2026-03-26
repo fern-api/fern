@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.31.5
+  changelogEntry:
+    - summary: |
+        Format Go files in memory using WASM gofmt before writing to disk instead
+        of running `go fmt ./...` as a subprocess after writing. This eliminates one
+        full disk read-write pass over all generated Go files, improving generation
+        performance.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 61
+
 - version: 1.31.4
   changelogEntry:
     - summary: |

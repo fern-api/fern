@@ -1064,6 +1064,9 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-api/go-formatter':
+        specifier: workspace:*
+        version: link:../formatter
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa

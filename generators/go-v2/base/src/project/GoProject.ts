@@ -2,6 +2,7 @@ import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generat
 import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
+import { GoFormatter } from "@fern-api/go-formatter";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
@@ -61,7 +62,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         if (moduleConfig == null) {
             return;
         }
-        // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
+        // We write the go.mod file to disk upfront so that 'go mod tidy' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
         await this.writeRawFile(moduleConfigWriter.generate());
     }
@@ -81,21 +82,23 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             )
         );
 
-        await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
-        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
-        if (files.length > 0 && isModule) {
-            try {
-                await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                    doNotPipeOutput: true,
-                    cwd: this.absolutePathToOutputDirectory
-                });
-            } catch (error) {
-                this.context.logger.warn(
-                    `Failed to format Go files with 'go fmt': ${extractErrorMessage(error)}. ` +
-                        "The generated files have been written but may not be properly formatted."
-                );
-            }
-        }
+        const formatter = new GoFormatter();
+        await Promise.all(
+            files.map(async (file) => {
+                const f = file.toFile();
+                if (typeof f.fileContents === "string") {
+                    try {
+                        f.fileContents = await formatter.format(f.fileContents);
+                    } catch (error) {
+                        this.context.logger.warn(
+                            `Failed to format Go file '${file.getFullyQualifiedName()}' in memory: ${extractErrorMessage(error)}. ` +
+                                "The file will be written without formatting."
+                        );
+                    }
+                }
+                await f.write(AbsoluteFilePath.of(outputDir));
+            })
+        );
         return this.absolutePathToOutputDirectory;
     }
 

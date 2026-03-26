@@ -41,6 +41,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/go-ast": "workspace:*",
+    "@fern-api/go-formatter": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^61.7.0",
