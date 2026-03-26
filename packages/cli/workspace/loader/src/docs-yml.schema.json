@@ -370,6 +370,21 @@
           "type": "null"
         }
       ]
+    },
+    "icon-library": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "fontawesome",
+            "lucide",
+            "phosphor"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
