@@ -137,9 +137,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 return;
             }
 
-            let isAsyncTest = false;
             const methodBody = this.csharp.codeblock((writer: Writer) => {
-                isAsyncTest = this.writeGrpcMockServerTestBody({
+                this.writeGrpcMockServerTestBody({
                     writer,
                     endpointSnippet,
                     jsonExampleResponse,
@@ -150,7 +149,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             testClass.addTestMethod({
                 name: `MockServerTest${testNumber}`,
                 body: methodBody,
-                isAsync: isAsyncTest
+                isAsync: true
             });
         });
         return new CSharpFile({
@@ -173,7 +172,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         endpointSnippet: ast.MethodInvocation;
         jsonExampleResponse: unknown | undefined;
         isSupportedResponse: boolean;
-    }): boolean {
+    }): void {
         const returnTypeName = this.getReturnTypeName();
         const responseJsonStr = jsonExampleResponse != null ? JSON.stringify(jsonExampleResponse) : undefined;
         const hasProtoAnyInResponse = responseJsonStr != null && responseJsonStr.includes('"@type"');
@@ -219,12 +218,10 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                     arguments_: [this.csharp.codeblock("response"), this.csharp.codeblock("mockResponse")]
                 })
             );
-            return true;
         } else {
             writer.write("await Assert.DoesNotThrowAsync(async () => ");
             writer.writeNode(endpointSnippet);
             writer.write(");");
-            return true;
         }
     }
 
