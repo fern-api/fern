@@ -161,8 +161,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.newLine();
         }
 
-        // Add using for JsonUtils (needed for Deserialize in stub handler)
-        writer.addNamespace(`${this.namespaces.root}.Core`);
+        // Add using for Google.Protobuf (needed for JsonParser in stub handler)
+        writer.addNamespace("Google.Protobuf");
 
         const stubClassName = this.stubGenerator.getStubClassName();
         const serviceBaseClassName = this.stubGenerator.getServiceBaseClassName();
@@ -176,8 +176,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         if (canAssertResponse) {
             writer.writeLine(`    .On${methodName}((request) =>`);
             writer.writeLine("    {");
-            writer.writeLine(`        var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);`);
-            writer.writeLine("        return mockObject.ToProto();");
+            writer.writeLine(`        return JsonParser.Default.Parse<${protoResponseType}>(mockResponse);`);
             writer.writeTextStatement("    })");
         } else {
             writer.writeTextStatement(`    .On${methodName}((request) => new ${protoResponseType}())`);
@@ -214,7 +213,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
     /**
      * Gets the C# type name for the endpoint's return type (the SDK wrapper type, not the proto type).
-     * This is used for `JsonUtils.Deserialize<T>` / `ToProto` round-tripping in the stub handler.
+     * This is used to determine whether the response can be asserted (canAssertResponse).
      */
     private getReturnTypeName(): string | undefined {
         const responseBody = this.endpoint.response?.body;

@@ -1,7 +1,7 @@
+using Google.Protobuf;
 using Grpc.Net.Client;
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
@@ -22,8 +22,7 @@ public class UploadTest
         var stub = new DataServiceStub().OnUpload(
             (request) =>
             {
-                var mockObject = JsonUtils.Deserialize<UploadResponse>(mockResponse);
-                return mockObject.ToProto();
+                return JsonParser.Default.Parse<Data.V1.Grpc.UploadResponse>(mockResponse);
             }
         );
 

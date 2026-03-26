@@ -1,7 +1,7 @@
+using Google.Protobuf;
 using Grpc.Net.Client;
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
@@ -23,8 +23,7 @@ public class CheckTest
         var stub = new DataServiceStub().OnCheck(
             (request) =>
             {
-                var mockObject = JsonUtils.Deserialize<CheckResponse>(mockResponse);
-                return mockObject.ToProto();
+                return JsonParser.Default.Parse<Data.V1.Grpc.CheckResponse>(mockResponse);
             }
         );
 
@@ -59,8 +58,7 @@ public class CheckTest
         var stub = new DataServiceStub().OnCheck(
             (request) =>
             {
-                var mockObject = JsonUtils.Deserialize<CheckResponse>(mockResponse);
-                return mockObject.ToProto();
+                return JsonParser.Default.Parse<Data.V1.Grpc.CheckResponse>(mockResponse);
             }
         );
 
