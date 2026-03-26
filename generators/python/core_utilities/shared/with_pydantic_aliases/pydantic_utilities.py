@@ -313,6 +313,8 @@ class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
         model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
             populate_by_name=True,
+            validate_by_name=True,
+            validate_by_alias=True,
             # Allow fields beginning with `model_` to be used in the model
             protected_namespaces=(),
         )
