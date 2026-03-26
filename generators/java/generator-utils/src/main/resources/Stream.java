@@ -1,7 +1,9 @@
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -23,8 +25,18 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
     public enum StreamType {
         JSON,
-        SSE,
-        SSE_EVENT_DISCRIMINATED
+        SSE
+    }
+
+    /**
+     * Indicates where the discriminator for a discriminated union lives
+     * relative to the SSE envelope.
+     */
+    public enum SseDiscriminatorContext {
+        /** Discriminator is at the SSE protocol level (e.g., the event: field). */
+        PROTOCOL,
+        /** Discriminator is inside the JSON data payload. */
+        DATA
     }
 
     private final Class<T> valueType;
@@ -34,6 +46,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final String streamTerminator;
     private final Reader sseReader;
     private final String discriminatorProperty;
+    private final SseDiscriminatorContext sseDiscriminatorContext;
     private boolean isClosed = false;
 
     /**
@@ -51,27 +64,23 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.streamTerminator = null;
         this.sseReader = null;
         this.discriminatorProperty = null;
+        this.sseDiscriminatorContext = null;
     }
 
-    private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
-        this(valueType, type, reader, terminator, null);
-    }
-
-    private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator, String discriminatorProperty) {
+    private Stream(
+            Class<T> valueType,
+            Reader reader,
+            String streamTerminator,
+            String discriminatorProperty,
+            SseDiscriminatorContext sseDiscriminatorContext) {
         this.valueType = valueType;
-        this.streamType = type;
+        this.streamType = StreamType.SSE;
         this.discriminatorProperty = discriminatorProperty;
-        if (type == StreamType.JSON) {
-            this.scanner = new Scanner(reader).useDelimiter(terminator);
-            this.messageTerminator = terminator;
-            this.streamTerminator = null;
-            this.sseReader = null;
-        } else {
-            this.scanner = null;
-            this.messageTerminator = NEWLINE;
-            this.streamTerminator = terminator;
-            this.sseReader = reader;
-        }
+        this.sseDiscriminatorContext = sseDiscriminatorContext;
+        this.scanner = null;
+        this.messageTerminator = NEWLINE;
+        this.streamTerminator = streamTerminator;
+        this.sseReader = reader;
     }
 
     public static <T> Stream<T> fromJson(Class<T> valueType, Reader reader, String delimiter) {
@@ -83,42 +92,28 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader) {
-        return new Stream<>(valueType, StreamType.SSE, sseReader, null);
+        return new Stream<>(valueType, sseReader, null, null, null);
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader, String streamTerminator) {
-        return new Stream<>(valueType, StreamType.SSE, sseReader, streamTerminator);
+        return new Stream<>(valueType, sseReader, streamTerminator, null, null);
     }
 
-    /**
-     * Creates a stream from SSE data with event-level discrimination support.
-     * Use this when the SSE payload is a discriminated union where the discriminator
-     * is an SSE envelope field (e.g., 'event').
-     *
-     * @param valueType             The class of the objects in the stream.
-     * @param sseReader             The reader that provides the SSE data.
-     * @param discriminatorProperty The property name used for discrimination (e.g., "event").
-     * @param <T>                   The type of objects in the stream.
-     * @return A new Stream instance configured for SSE with event-level discrimination.
-     */
-    public static <T> Stream<T> fromSseWithEventDiscrimination(
-            Class<T> valueType, Reader sseReader, String discriminatorProperty) {
-        return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, null, discriminatorProperty);
+    public static <T> Stream<T> fromSse(
+            Class<T> valueType,
+            Reader sseReader,
+            String discriminatorProperty,
+            SseDiscriminatorContext discriminatorContext) {
+        return new Stream<>(valueType, sseReader, null, discriminatorProperty, discriminatorContext);
     }
 
-    /**
-     * Creates a stream from SSE data with event-level discrimination support and a stream terminator.
-     *
-     * @param valueType             The class of the objects in the stream.
-     * @param sseReader             The reader that provides the SSE data.
-     * @param discriminatorProperty The property name used for discrimination (e.g., "event").
-     * @param streamTerminator      The terminator string that signals end of stream (e.g., "[DONE]").
-     * @param <T>                   The type of objects in the stream.
-     * @return A new Stream instance configured for SSE with event-level discrimination.
-     */
-    public static <T> Stream<T> fromSseWithEventDiscrimination(
-            Class<T> valueType, Reader sseReader, String discriminatorProperty, String streamTerminator) {
-        return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, streamTerminator, discriminatorProperty);
+    public static <T> Stream<T> fromSse(
+            Class<T> valueType,
+            Reader sseReader,
+            String discriminatorProperty,
+            SseDiscriminatorContext discriminatorContext,
+            String streamTerminator) {
+        return new Stream<>(valueType, sseReader, streamTerminator, discriminatorProperty, discriminatorContext);
     }
 
     @Override
@@ -148,9 +143,10 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     public Iterator<T> iterator() {
         switch (streamType) {
             case SSE:
+                if (sseDiscriminatorContext == SseDiscriminatorContext.PROTOCOL) {
+                    return new SSEProtocolDiscriminatedIterator();
+                }
                 return new SSEIterator();
-            case SSE_EVENT_DISCRIMINATED:
-                return new SSEEventDiscriminatedIterator();
             case JSON:
             default:
                 return new JsonIterator();
@@ -340,10 +336,10 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     }
 
     /**
-     * Iterator for SSE streams with event-level discrimination.
-     * Uses SseEventParser to construct the full SSE envelope for Jackson deserialization.
+     * Iterator for SSE streams with protocol-level discrimination.
+     * Constructs the full SSE envelope for Jackson deserialization using protocol-level fields.
      */
-    private final class SSEEventDiscriminatedIterator implements Iterator<T> {
+    private final class SSEProtocolDiscriminatedIterator implements Iterator<T> {
         private Scanner sseScanner;
         private T nextItem;
         private boolean hasNextItem = false;
@@ -353,7 +349,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         private String currentEventId = null;
         private Long currentRetry = null;
 
-        private SSEEventDiscriminatedIterator() {
+        private SSEProtocolDiscriminatedIterator() {
             if (sseReader != null && !isStreamClosed()) {
                 this.sseScanner = new Scanner(sseReader);
             } else {
@@ -391,6 +387,26 @@ public final class Stream<T> implements Iterable<T>, Closeable {
             throw new UnsupportedOperationException();
         }
 
+        private T parseProtocolLevelUnion(
+                String eventType, String data, String id, Long retry) {
+            try {
+                Map<String, Object> envelope = new HashMap<>();
+                envelope.put(discriminatorProperty, eventType);
+                envelope.put("data", data);
+                if (id != null) {
+                    envelope.put("id", id);
+                }
+                if (retry != null) {
+                    envelope.put("retry", retry);
+                }
+
+                String envelopeJson = ObjectMappers.JSON_MAPPER.writeValueAsString(envelope);
+                return ObjectMappers.JSON_MAPPER.readValue(envelopeJson, valueType);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to parse SSE event with protocol-level discrimination", e);
+            }
+        }
+
         private boolean readNextMessage() {
             if (sseScanner == null || isStreamClosed()) {
                 endOfStream = true;
@@ -404,14 +420,11 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                     if (line.trim().isEmpty()) {
                         if (eventDataBuffer.length() > 0 || currentEventType != null) {
                             try {
-                                // Use SseEventParser for event-level discrimination
-                                nextItem = SseEventParser.parseEventLevelUnion(
+                                nextItem = parseProtocolLevelUnion(
                                         currentEventType,
                                         eventDataBuffer.toString(),
                                         currentEventId,
-                                        currentRetry,
-                                        valueType,
-                                        discriminatorProperty);
+                                        currentRetry);
                                 hasNextItem = true;
                                 resetEventState();
                                 return true;
@@ -469,13 +482,11 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 // Handle any remaining buffered data at end of stream
                 if (eventDataBuffer.length() > 0 || currentEventType != null) {
                     try {
-                        nextItem = SseEventParser.parseEventLevelUnion(
+                        nextItem = parseProtocolLevelUnion(
                                 currentEventType,
                                 eventDataBuffer.toString(),
                                 currentEventId,
-                                currentRetry,
-                                valueType,
-                                discriminatorProperty);
+                                currentRetry);
                         hasNextItem = true;
                         resetEventState();
                         return true;
