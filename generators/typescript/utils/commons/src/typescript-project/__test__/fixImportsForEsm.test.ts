@@ -347,7 +347,6 @@ describe("fixImportsInVolume", () => {
         volume.mkdirSync("/src/api", { recursive: true });
         volume.writeFileSync("/src/api/a.ts", 'import { B } from "./b";\n');
         volume.writeFileSync("/src/api/b.ts", 'import { A } from "./a";\n');
-        volume.writeFileSync("/src/api/a.ts", 'import { B } from "./b";\n');
 
         fixImportsInVolume(volume, "src");
 
