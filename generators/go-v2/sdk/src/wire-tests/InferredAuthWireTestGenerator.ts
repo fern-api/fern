@@ -41,8 +41,12 @@ interface TestEndpointInfo {
     methodName: string;
     /** Whether the endpoint has a response body */
     hasResponseBody: boolean;
-    /** Whether the endpoint has a request body */
-    hasRequestBody: boolean;
+    /** Whether the endpoint requires a request parameter (body, query params, or headers) */
+    hasRequestParam: boolean;
+    /** The request type name, set when hasRequestParam is true */
+    requestTypeName?: string;
+    /** The import path for the request type package, set when hasRequestParam is true */
+    requestTypeImportPath?: string;
 }
 
 /**
@@ -131,44 +135,70 @@ export class InferredAuthWireTestGenerator {
     }
 
     /**
-     * Finds a non-auth endpoint to use for testing. Prefers endpoints with no request body.
+     * Finds a non-auth endpoint to use for testing. Prefers endpoints with no request parameter.
      */
     private findTestEndpoint(authServiceId: string): TestEndpointInfo | undefined {
-        // First pass: find an endpoint with no request body (simplest to call)
+        // First pass: find an endpoint with no request parameter at all (simplest to call)
         for (const [serviceId, service] of Object.entries(this.context.ir.services)) {
             if (serviceId === authServiceId) {
                 continue;
             }
             for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody == null && endpoint.pathParameters.length === 0) {
+                if (endpoint.sdkRequest == null && endpoint.pathParameters.length === 0) {
                     return {
                         accessPath: getClientAccessPath(service),
                         methodName: this.context.getMethodName(endpoint.name),
                         hasResponseBody: endpoint.response?.body != null,
-                        hasRequestBody: false
+                        hasRequestParam: false
                     };
                 }
             }
         }
 
-        // Second pass: any non-auth endpoint
+        // Second pass: any non-auth endpoint without path parameters
         for (const [serviceId, service] of Object.entries(this.context.ir.services)) {
             if (serviceId === authServiceId) {
                 continue;
             }
             for (const endpoint of service.endpoints) {
                 if (endpoint.pathParameters.length === 0) {
+                    const requestTypeInfo = this.getRequestTypeInfo(serviceId, endpoint);
                     return {
                         accessPath: getClientAccessPath(service),
                         methodName: this.context.getMethodName(endpoint.name),
                         hasResponseBody: endpoint.response?.body != null,
-                        hasRequestBody: endpoint.requestBody != null
+                        hasRequestParam: endpoint.sdkRequest != null,
+                        ...requestTypeInfo
                     };
                 }
             }
         }
 
         return undefined;
+    }
+
+    /**
+     * Gets the request type name and import path for an endpoint that requires a request parameter.
+     */
+    private getRequestTypeInfo(
+        serviceId: string,
+        endpoint: FernIr.HttpEndpoint
+    ): { requestTypeName?: string; requestTypeImportPath?: string } {
+        if (endpoint.sdkRequest == null) {
+            return {};
+        }
+        const requestName =
+            endpoint.sdkRequest.shape.type === "wrapper"
+                ? endpoint.sdkRequest.shape.wrapperName
+                : endpoint.sdkRequest.requestParameterName;
+        if (requestName == null) {
+            return {};
+        }
+        const typeRef = this.context.getRequestWrapperTypeReference(serviceId, requestName);
+        return {
+            requestTypeName: typeRef.name,
+            requestTypeImportPath: typeRef.importPath ?? this.context.getRootImportPath()
+        };
     }
 
     /**
@@ -192,6 +222,9 @@ export class InferredAuthWireTestGenerator {
             writer.addImport("github.com/stretchr/testify/require");
             writer.addImport(`${rootImportPath}/client`);
             writer.addImport(`${rootImportPath}/option`);
+            if (testEndpoint.hasRequestParam && testEndpoint.requestTypeImportPath != null) {
+                writer.addImport(testEndpoint.requestTypeImportPath);
+            }
 
             writer.newLine();
 
@@ -432,20 +465,34 @@ export class InferredAuthWireTestGenerator {
      */
     private writeTestEndpointCall(writer: go.Writer, testEndpoint: TestEndpointInfo, errVar?: string): void {
         const varName = errVar ?? "err";
+        const requestArg =
+            testEndpoint.hasRequestParam && testEndpoint.requestTypeName != null
+                ? this.buildRequestArg(testEndpoint)
+                : "";
+        const callArgs = requestArg ? `context.Background(), ${requestArg}` : "context.Background()";
         if (testEndpoint.hasResponseBody) {
-            writer.writeLine(
-                `\t_, ${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(context.Background())`
-            );
+            writer.writeLine(`\t_, ${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`);
         } else {
-            writer.writeLine(
-                `\t${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(context.Background())`
-            );
+            writer.writeLine(`\t${varName} := c.${testEndpoint.accessPath}.${testEndpoint.methodName}(${callArgs})`);
         }
         writer.writeLine(`\tif ${varName} != nil {`);
         writer.writeLine(
             `\t\tt.Logf("${testEndpoint.methodName} returned error (may be expected in test): %v", ${varName})`
         );
         writer.writeLine("\t}");
+    }
+
+    /**
+     * Builds the request argument string for an endpoint call.
+     */
+    private buildRequestArg(testEndpoint: TestEndpointInfo): string {
+        if (testEndpoint.requestTypeImportPath == null || testEndpoint.requestTypeName == null) {
+            return "";
+        }
+        // Extract the package alias from the import path (last segment)
+        const segments = testEndpoint.requestTypeImportPath.split("/");
+        const packageAlias = segments[segments.length - 1] ?? "";
+        return `&${packageAlias}.${testEndpoint.requestTypeName}{}`;
     }
 
     private getInferredAuthScheme(): FernIr.InferredAuthScheme | undefined {
