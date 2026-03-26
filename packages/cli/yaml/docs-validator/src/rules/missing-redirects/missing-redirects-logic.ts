@@ -1,0 +1,113 @@
+import { match } from "path-to-regexp";
+
+export interface MarkdownEntry {
+    pageId: string;
+    slug: string;
+}
+
+export interface RemovedSlug {
+    pageId: string;
+    oldSlug: string;
+    newSlug: string | undefined;
+}
+
+export interface Redirect {
+    source: string;
+    destination: string;
+}
+
+export interface MissingRedirectViolation {
+    severity: "warning";
+    message: string;
+}
+
+function removeTrailingSlash(pathname: string): string {
+    return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+}
+
+function withBasepath(source: string, basePath: string | undefined): string {
+    if (basePath == null) {
+        return source;
+    }
+    return source.startsWith(basePath)
+        ? source
+        : `${removeTrailingSlash(basePath)}${source.startsWith("/") ? "" : "/"}${source}`;
+}
+
+function matchPath(pattern: string, path: string): boolean {
+    if (pattern === path) {
+        return true;
+    }
+    try {
+        return match(pattern)(path) !== false;
+    } catch {
+        return false;
+    }
+}
+
+function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePath: string | undefined): boolean {
+    const oldPath = oldSlug.startsWith("/") ? oldSlug : `/${oldSlug}`;
+    return redirects.some((redirect) => {
+        const source = removeTrailingSlash(withBasepath(redirect.source, basePath));
+        return matchPath(source, oldPath);
+    });
+}
+
+/**
+ * Compares published slug table entries against the local pageId->slug map
+ * and returns entries whose slug disappeared or changed.
+ */
+export function findRemovedSlugs(
+    publishedEntries: MarkdownEntry[],
+    localPageIdToSlug: Map<string, string>
+): RemovedSlug[] {
+    const removed: RemovedSlug[] = [];
+    for (const entry of publishedEntries) {
+        const newSlug = localPageIdToSlug.get(entry.pageId);
+        if (newSlug === undefined) {
+            removed.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug: undefined });
+        } else if (newSlug !== entry.slug) {
+            removed.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug });
+        }
+    }
+    return removed;
+}
+
+/**
+ * Produces rule violations for removed/moved slugs that are not covered
+ * by any configured redirect.
+ */
+export function checkMissingRedirects(
+    removedSlugs: RemovedSlug[],
+    redirects: Redirect[],
+    basePath: string | undefined
+): MissingRedirectViolation[] {
+    const violations: MissingRedirectViolation[] = [];
+    for (const removed of removedSlugs) {
+        if (isSlugCoveredByRedirect(removed.oldSlug, redirects, basePath)) {
+            continue;
+        }
+
+        const oldPath = removed.oldSlug.startsWith("/") ? removed.oldSlug : `/${removed.oldSlug}`;
+
+        if (removed.newSlug != null) {
+            const newPath = removed.newSlug.startsWith("/") ? removed.newSlug : `/${removed.newSlug}`;
+            violations.push({
+                severity: "warning",
+                message:
+                    `Page "${removed.pageId}" was moved from "${oldPath}" to "${newPath}". ` +
+                    `The old URL will return 404 without a redirect. ` +
+                    `Add to docs.yml: redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
+            });
+        } else {
+            violations.push({
+                severity: "warning",
+                message:
+                    `Page "${removed.pageId}" was removed. ` +
+                    `The previously published URL "${oldPath}" will return 404 without a redirect. ` +
+                    `Consider adding a redirect in docs.yml to preserve existing links.`
+            });
+        }
+    }
+    return violations;
+}

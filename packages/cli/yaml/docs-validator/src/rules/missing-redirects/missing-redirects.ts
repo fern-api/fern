@@ -5,22 +5,12 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { Rule, RuleViolation } from "../../Rule.js";
-import { matchPath } from "../valid-markdown-link/redirect-for-path.js";
-import { getInstanceUrls, removeTrailingSlash, toBaseUrl } from "../valid-markdown-link/url-utils.js";
+import { Rule } from "../../Rule.js";
+import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
+import { buildPageIdToSlugMap } from "./buildPageIdToSlugMap.js";
+import { checkMissingRedirects, findRemovedSlugs, type MarkdownEntry } from "./missing-redirects-logic.js";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
-
-interface MarkdownEntry {
-    pageId: string;
-    slug: string;
-}
-
-interface RemovedSlug {
-    pageId: string;
-    oldSlug: string;
-    newSlug: string | undefined;
-}
 
 type FetchResult =
     | { type: "success"; entries: MarkdownEntry[] }
@@ -49,7 +39,8 @@ async function fetchMarkdownEntries(
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${authToken}`
             },
-            body: JSON.stringify({ domain, basepath: basepath ?? "" })
+            body: JSON.stringify({ domain, basepath: basepath ?? "" }),
+            signal: AbortSignal.timeout(30_000)
         });
         if (!response.ok) {
             return { error: `FDR returned ${response.status}` };
@@ -76,28 +67,6 @@ function getFdrOrigin(): string {
         process.env.DEFAULT_FDR_ORIGIN ??
         "https://registry.buildwithfern.com"
     );
-}
-
-function withBasepath(source: string, basePath: string | undefined): string {
-    if (basePath == null) {
-        return source;
-    }
-
-    return source.startsWith(basePath)
-        ? source
-        : `${removeTrailingSlash(basePath)}${source.startsWith("/") ? "" : "/"}${source}`;
-}
-
-function isSlugCoveredByRedirect(
-    oldSlug: string,
-    redirects: { source: string; destination: string }[],
-    basePath: string | undefined
-): boolean {
-    const oldPath = oldSlug.startsWith("/") ? oldSlug : `/${oldSlug}`;
-    return redirects.some((redirect) => {
-        const source = removeTrailingSlash(withBasepath(redirect.source, basePath));
-        return matchPath(source, oldPath) !== false;
-    });
 }
 
 export const MissingRedirectsRule: Rule = {
@@ -144,29 +113,8 @@ export const MissingRedirectsRule: Rule = {
         }
 
         const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root);
-        const collector = FernNavigation.NodeCollector.collect(root);
-
-        const localPageIdToSlug = new Map<string, string>();
-        collector.slugMap.forEach((node, slug) => {
-            if (node == null || !FernNavigation.isPage(node)) {
-                return;
-            }
-
-            const pageId = FernNavigation.getPageId(node);
-            if (pageId != null) {
-                localPageIdToSlug.set(pageId, slug);
-            }
-        });
-
-        const removedSlugs: RemovedSlug[] = [];
-        for (const entry of result.entries) {
-            const newSlug = localPageIdToSlug.get(entry.pageId);
-            if (newSlug === undefined) {
-                removedSlugs.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug: undefined });
-            } else if (newSlug !== entry.slug) {
-                removedSlugs.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug });
-            }
-        }
+        const localPageIdToSlug = buildPageIdToSlugMap(root);
+        const removedSlugs = findRemovedSlugs(result.entries, localPageIdToSlug);
 
         if (removedSlugs.length === 0) {
             return {};
@@ -174,40 +122,11 @@ export const MissingRedirectsRule: Rule = {
 
         return {
             file: async ({ config }) => {
-                const violations: RuleViolation[] = [];
                 const redirects = (config.redirects ?? []).map((redirect) => ({
                     source: redirect.source,
                     destination: redirect.destination
                 }));
-
-                for (const removed of removedSlugs) {
-                    if (isSlugCoveredByRedirect(removed.oldSlug, redirects, baseUrl.basePath)) {
-                        continue;
-                    }
-
-                    const oldPath = removed.oldSlug.startsWith("/") ? removed.oldSlug : `/${removed.oldSlug}`;
-
-                    if (removed.newSlug != null) {
-                        const newPath = removed.newSlug.startsWith("/") ? removed.newSlug : `/${removed.newSlug}`;
-                        violations.push({
-                            severity: "warning",
-                            message:
-                                `Page "${removed.pageId}" was moved from "${oldPath}" to "${newPath}". ` +
-                                `The old URL will return 404 without a redirect. ` +
-                                `Add to docs.yml: redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
-                        });
-                    } else {
-                        violations.push({
-                            severity: "warning",
-                            message:
-                                `Page "${removed.pageId}" was removed. ` +
-                                `The previously published URL "${oldPath}" will return 404 without a redirect. ` +
-                                `Consider adding a redirect in docs.yml to preserve existing links.`
-                        });
-                    }
-                }
-
-                return violations;
+                return checkMissingRedirects(removedSlugs, redirects, baseUrl.basePath);
             }
         };
     }
