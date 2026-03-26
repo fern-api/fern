@@ -457,63 +457,61 @@ describe("BufDownloader (real e2e)", () => {
         return `buf-${version}${ext}`;
     }
 
-    it(
-        "downloads real buf binary from GitHub Releases, caches it, and reuses on second call",
-        { timeout: 120_000 },
-        async () => {
-            // Do NOT mock fetch — use the real network
-            const { resolveBuf } = await import("../BufDownloader.js");
+    it("downloads real buf binary from GitHub Releases, caches it, and reuses on second call", {
+        timeout: 120_000
+    }, async () => {
+        // Do NOT mock fetch — use the real network
+        const { resolveBuf } = await import("../BufDownloader.js");
 
-            // --- First call: should download from GitHub Releases ---
-            const result1 = await resolveBuf(logger);
+        // --- First call: should download from GitHub Releases ---
+        const result1 = await resolveBuf(logger);
 
-            const expectedPath = path.join(getCacheDir(), getBinaryName());
-            expect(result1).toBe(AbsoluteFilePath.of(expectedPath));
+        const expectedPath = path.join(getCacheDir(), getBinaryName());
+        expect(result1).toBe(AbsoluteFilePath.of(expectedPath));
 
-            // Verify download log messages
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading buf"));
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded buf"));
+        // Verify download log messages
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading buf"));
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded buf"));
 
-            // Verify cache structure
-            const cacheDir = getCacheDir();
-            const canonicalPath = path.join(cacheDir, getBinaryName());
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
-            const markerPath = path.join(cacheDir, "buf.version");
+        // Verify cache structure
+        const cacheDir = getCacheDir();
+        const canonicalPath = path.join(cacheDir, getBinaryName());
+        const versionedPath = path.join(cacheDir, getVersionedBinaryName("v1.50.0"));
+        const markerPath = path.join(cacheDir, "buf.version");
 
-            // All cache files should exist
-            expect(await fileExists(canonicalPath)).toBe(true);
-            expect(await fileExists(versionedPath)).toBe(true);
-            expect(await fileExists(markerPath)).toBe(true);
+        // All cache files should exist
+        expect(await fileExists(canonicalPath)).toBe(true);
+        expect(await fileExists(versionedPath)).toBe(true);
+        expect(await fileExists(markerPath)).toBe(true);
 
-            // Version marker should contain v1.50.0
-            const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v1.50.0");
+        // Version marker should contain v1.50.0
+        const markerContent = await readFile(markerPath, "utf-8");
+        expect(markerContent.trim()).toBe("v1.50.0");
 
-            // Binary should be a real executable (buf is ~47-52MB)
-            const binaryStat = await stat(canonicalPath);
-            expect(binaryStat.size).toBeGreaterThan(10_000_000);
+        // Binary should be a real executable (buf is ~47-52MB)
+        const binaryStat = await stat(canonicalPath);
+        expect(binaryStat.size).toBeGreaterThan(10_000_000);
 
-            // Binary should have executable permissions
-            expect(binaryStat.mode & 0o100).toBeTruthy();
+        // Binary should have executable permissions
+        expect(binaryStat.mode & 0o100).toBeTruthy();
 
-            // Lock should be cleaned up
-            const lockPath = path.join(cacheDir, "buf.lock");
-            expect(await fileExists(lockPath)).toBe(false);
+        // Lock should be cleaned up
+        const lockPath = path.join(cacheDir, "buf.lock");
+        expect(await fileExists(lockPath)).toBe(false);
 
-            // --- Second call: should use cache (no re-download) ---
-            const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
-            const result2 = await resolveBuf(logger);
+        // --- Second call: should use cache (no re-download) ---
+        const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
+        const result2 = await resolveBuf(logger);
 
-            expect(result2).toBe(AbsoluteFilePath.of(expectedPath));
+        expect(result2).toBe(AbsoluteFilePath.of(expectedPath));
 
-            // Should log cache hit, not download
-            const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
-            const newCalls = infoCallsAfter.slice(infoCallsBefore);
-            const newMessages = newCalls.map((call) => call[0] as string);
-            expect(newMessages.some((msg) => msg.includes("Using cached buf"))).toBe(true);
-            expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
-        }
-    );
+        // Should log cache hit, not download
+        const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
+        const newCalls = infoCallsAfter.slice(infoCallsBefore);
+        const newMessages = newCalls.map((call) => call[0] as string);
+        expect(newMessages.some((msg) => msg.includes("Using cached buf"))).toBe(true);
+        expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
+    });
 
     it("downloaded binary is a valid ELF/Mach-O executable", { timeout: 120_000 }, async () => {
         const { resolveBuf } = await import("../BufDownloader.js");

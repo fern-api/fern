@@ -1202,13 +1202,15 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("broken-links", {
                     boolean: true,
                     description: "Log a warning if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: warn` instead."
                 })
                 .option("strict-broken-links", {
                     boolean: true,
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: error` instead."
                 })
                 .option("local", {
                     boolean: true,

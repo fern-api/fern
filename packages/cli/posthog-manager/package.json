@@ -36,7 +36,7 @@
     "@fern-api/core": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "posthog-node": "^5.26.2",
+    "posthog-node": "^5.28.6",
     "uuid": "catalog:"
   },
   "devDependencies": {

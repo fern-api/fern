@@ -54,6 +54,7 @@ export interface DocsConfiguration {
     aiExamples?: FernDocsConfig.AiExamplesConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
+    check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */
     favicon?: string;

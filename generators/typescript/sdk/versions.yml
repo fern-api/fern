@@ -1,4 +1,75 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.11
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints where expected event
+        assertions used snake_case wire format instead of camelCase deserialized format.
+        The `call_id` field (and similar snake_case properties) in SSE event data now
+        correctly appear as `callId` in test expectations, matching the SDK's runtime
+        deserialization behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.10
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 3.59.9
+  changelogEntry:
+    - summary: |
+        Upgrade vitest from ^3.2.4 to ^4.1.1 in generated SDK test configuration.
+
+        Vitest 4 brings performance improvements (especially with project-based configs),
+        more accurate V8 coverage remapping, and stable browser mode. Note that vitest 4
+        requires Node.js >= 20 at test-run time (Node 18 is EOL).
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.8
+  changelogEntry:
+    - summary: |
+        Upgrade generated SDK dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - webpack ^5.97.1 -> ^5.105.4
+        - ts-loader ^9.5.1 -> ^9.5.4
+        - ws ^8.16.0 -> ^8.20.0
+        - @types/ws ^8.5.10 -> ^8.18.1
+        - readable-stream ^4.5.2 -> ^4.7.0
+        - @types/readable-stream ^4.0.18 -> ^4.0.23
+        - form-data-encoder ^4.0.2 -> ^4.1.0
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.7
+  changelogEntry:
+    - summary: |
+        Extend `globalThis.` qualification for shadowed global types (e.g. `Date`) to
+        union visitor signatures and builder parameters, not just interface properties.
+      type: fix
+    - summary: |
+        Fix `Record` serialization schema for maps with optional value types to strip
+        the optional wrapper, matching the type converter's behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.6
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
 - version: 3.59.5
   changelogEntry:
     - summary: |
@@ -10,7 +81,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 3.59.4
   changelogEntry:
     - summary: |
