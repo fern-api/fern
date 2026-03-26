@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.1
+  changelogEntry:
+    - summary: |
+        Fix tag description pages incorrectly escaping curly braces and angle
+        brackets inside fenced code blocks and inline code. The blanket
+        character escaping has been removed in favor of the downstream MDX
+        sanitizer which correctly handles special characters only where needed.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
 - version: 4.46.0
   changelogEntry:
     - summary: |

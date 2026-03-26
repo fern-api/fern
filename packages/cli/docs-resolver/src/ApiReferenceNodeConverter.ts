@@ -206,17 +206,9 @@ export class ApiReferenceNodeConverter {
         const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
         const pageId = FernNavigation.V1.PageId(relativeFilePath);
 
-        // Escape special characters in the description to prevent MDX parsing errors:
-        // - Curly braces {} are interpreted as JSX expressions
-        // - Angle brackets <> are interpreted as HTML/JSX tags
-        const escapedDescription = tagInfo.description
-            .replace(/\{/g, "\\{")
-            .replace(/\}/g, "\\}")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-
-        // Store the tag description content
-        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${escapedDescription}`;
+        // Store the tag description content (no manual escaping needed;
+        // the downstream MDX pipeline handles sanitization)
+        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${tagInfo.description}`;
         this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
 
         // Add to markdown files collections for processing
