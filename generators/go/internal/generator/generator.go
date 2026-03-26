@@ -11,6 +11,7 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/coordinator"
@@ -167,9 +168,11 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 	if err != nil {
 		return nil, nil, err
 	}
-	files := make([]*File, 0, len(fileInfoToTypes))
-	var generatedRootClients []*GeneratedClient
-	for _, fileInfo := range sortedFileInfoKeys(fileInfoToTypes) {
+
+	// Phase 1: Create writers and write types to buffers (fast, sequential).
+	sortedFileInfos := sortedFileInfoKeys(fileInfoToTypes)
+	writers := make([]*fileWriter, 0, len(sortedFileInfos))
+	for _, fileInfo := range sortedFileInfos {
 		typesToGenerate := fileInfoToTypes[fileInfo]
 		writer := newFileWriter(
 			fileInfo.filename,
@@ -211,19 +214,42 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 				}
 			}
 		}
-		file, err := writer.File()
-		if err != nil {
-			return nil, nil, err
-		}
-		files = append(files, file)
+		writers = append(writers, writer)
+	}
 
-		// Generate test file for getter/setter methods
-		testFile, err := writer.GenerateGetterSetterTestFile()
-		if err != nil {
-			return nil, nil, err
+	// Phase 2: Format files in parallel (expensive removeUnusedImports calls).
+	type fileResult struct {
+		file     *File
+		testFile *File
+		err      error
+	}
+	results := make([]fileResult, len(writers))
+	var wg sync.WaitGroup
+	for i, w := range writers {
+		wg.Add(1)
+		go func(idx int, writer *fileWriter) {
+			defer wg.Done()
+			file, err := writer.File()
+			if err != nil {
+				results[idx] = fileResult{err: err}
+				return
+			}
+			testFile, err := writer.GenerateGetterSetterTestFile()
+			results[idx] = fileResult{file: file, testFile: testFile, err: err}
+		}(i, w)
+	}
+	wg.Wait()
+
+	// Phase 3: Collect results in deterministic order.
+	files := make([]*File, 0, len(writers)*2)
+	var generatedRootClients []*GeneratedClient
+	for _, r := range results {
+		if r.err != nil {
+			return nil, nil, r.err
 		}
-		if testFile != nil {
-			files = append(files, testFile)
+		files = append(files, r.file)
+		if r.testFile != nil {
+			files = append(files, r.testFile)
 		}
 	}
 	return files, generatedRootClients, nil

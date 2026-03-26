@@ -3,10 +3,8 @@
 package exhaustive
 
 import (
-	json "encoding/json"
 	types "github.com/go-deterministic-ordering/fern/types"
 	assert "github.com/stretchr/testify/assert"
-	require "github.com/stretchr/testify/require"
 	testing "testing"
 )
 

@@ -246,6 +246,37 @@ func (f *fileWriter) File() (*File, error) {
 	return NewFile(f.coordinator, f.filename, formatted), nil
 }
 
+// fileWithPreciseImports constructs a *File using only the specified imports,
+// bypassing removeUnusedImports entirely. This avoids the expensive AST parse
+// and format.Node round-trip for large generated test files where the required
+// imports are known ahead of time.
+func (f *fileWriter) fileWithPreciseImports(imports map[string]string) *File {
+	header := f.clone()
+	if f.whitelabel {
+		header.P(whitelabelFileHeader)
+	} else {
+		header.P(fileHeader)
+	}
+	header.P("package ", f.packageName)
+	header.P("import (")
+	// Sort imports by alias for deterministic output.
+	type importStatement struct {
+		Alias string
+		Path  string
+	}
+	var sorted []importStatement
+	for importPath, alias := range imports {
+		sorted = append(sorted, importStatement{Alias: alias, Path: importPath})
+	}
+	sort.Slice(sorted, func(i, j int) bool { return sorted[i].Alias < sorted[j].Alias })
+	for _, imp := range sorted {
+		header.P(fmt.Sprintf("%s %q", imp.Alias, imp.Path))
+	}
+	header.P(")")
+
+	return NewFile(f.coordinator, f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
+}
+
 // DocsFile acts like File, but is tailored to write docs.go files.
 func (f *fileWriter) DocsFile() *File {
 	f.P("package ", f.packageName)
@@ -448,37 +479,32 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.coordinator,
 	)
 
-	// Remove SDK-specific imports that may not exist in all fixtures
-	// These packages (core, option, internal) are only needed for SDK runtime code, not tests
-	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "core"))
-	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "option"))
-	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "internal"))
+	// Build a reverse lookup from alias → import path using the testWriter's scope.
+	// This lets us resolve full import paths from the package qualifiers found in property types.
+	aliasToImportPath := make(map[string]string)
+	for importPath, alias := range testWriter.scope.Imports.Values {
+		aliasToImportPath[alias] = importPath
+	}
 
-	// Add test-specific imports
-	testWriter.scope.AddImport("github.com/stretchr/testify/assert")
-	testWriter.scope.AddImport("github.com/stretchr/testify/require")
-
-	// Build a set of valid subpackages from the IR types and add them as imports.
-	// This ensures we only import packages that are actually part of the generated SDK.
-	// removeUnusedImports will clean up any that aren't actually used in the tests.
+	// Build a set of valid subpackages from the IR types and register their imports.
 	validSubpackages := make(map[string]struct{})
 	for _, typeDecl := range f.types {
 		if typeDecl.Name.FernFilepath != nil && len(typeDecl.Name.FernFilepath.PackagePath) > 0 {
-			// The last element of the package path is the subpackage name
 			subpkg := typeDecl.Name.FernFilepath.PackagePath[len(typeDecl.Name.FernFilepath.PackagePath)-1].CamelCase.SafeName
 			if subpkg != "" && subpkg != f.packageName {
 				validSubpackages[subpkg] = struct{}{}
-				// Add import for this SDK subpackage upfront
 				subpkgImportPath := packagePathToImportPath(f.baseImportPath, []string{subpkg})
-				testWriter.scope.AddImport(subpkgImportPath)
+				alias := testWriter.scope.AddImport(subpkgImportPath)
+				aliasToImportPath[alias] = subpkgImportPath
 			}
 		}
 	}
 
+	// Track which package aliases are actually referenced in the generated test code.
+	usedAliases := make(map[string]struct{})
+
 	// Write tests for each type
 	for _, testData := range f.testData {
-		// Filter properties to only include those without external package qualifiers
-		// We only test properties that are in the current package or known subpackages
 		localPropertyNames := make([]string, 0, len(testData.propertyNames))
 		localPropertyTypes := make([]string, 0, len(testData.propertyTypes))
 		localPropertySafeNames := make([]string, 0, len(testData.propertySafeNames))
@@ -487,22 +513,19 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		for i, propType := range testData.propertyTypes {
 			pkgQualifier := extractPackageQualifier(propType)
 
-			// Include property if:
-			// 1. No package qualifier (same package)
-			// 2. Package qualifier matches current package (will be stripped)
-			// 3. Package qualifier is in validSubpackages (known generated subpackage)
-			// 4. Package qualifier is a standard library package
 			shouldInclude := false
 			if pkgQualifier == "" || pkgQualifier == f.packageName {
 				shouldInclude = true
 			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
 				shouldInclude = true
+				usedAliases[pkgQualifier] = struct{}{}
 			} else if isStdLibPackage(pkgQualifier) {
 				shouldInclude = true
+				usedAliases[pkgQualifier] = struct{}{}
 			}
 
 			if !shouldInclude {
-				continue // Skip external or unknown package types
+				continue
 			}
 
 			localPropertyNames = append(localPropertyNames, testData.propertyNames[i])
@@ -517,7 +540,6 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			}
 		}
 
-		// Skip types with no testable properties (all were filtered out)
 		if len(localPropertyNames) == 0 {
 			continue
 		}
@@ -533,7 +555,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		)
 	}
 
-	// Write JSON marshaling tests for types that have them (sorted for deterministic output)
+	// Write JSON marshaling tests
 	jsonTestNames := make([]string, 0, len(f.jsonMarshalingTests))
 	for typeName := range f.jsonMarshalingTests {
 		jsonTestNames = append(jsonTestNames, typeName)
@@ -543,7 +565,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteJSONMarshalingTests(typeName, f.jsonMarshalingTests[typeName])
 	}
 
-	// Write String() method tests for types that have them (sorted for deterministic output)
+	// Write String() method tests
 	stringTestNames := make([]string, 0, len(f.stringMethodTests))
 	for typeName := range f.stringMethodTests {
 		stringTestNames = append(stringTestNames, typeName)
@@ -553,7 +575,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteStringMethodTests(typeName)
 	}
 
-	// Write enum tests for enum types (sorted for deterministic output)
+	// Write enum tests
 	enumTestNames := make([]string, 0, len(f.enumTests))
 	for typeName := range f.enumTests {
 		enumTestNames = append(enumTestNames, typeName)
@@ -563,7 +585,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteEnumTests(typeName, f.enumTests[typeName])
 	}
 
-	// Write GetExtraProperties() tests for types that have them (sorted for deterministic output)
+	// Write GetExtraProperties() tests
 	extraPropsTestNames := make([]string, 0, len(f.extraPropertiesTests))
 	for typeName := range f.extraPropertiesTests {
 		extraPropsTestNames = append(extraPropsTestNames, typeName)
@@ -573,7 +595,31 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteExtraPropertiesTests(typeName)
 	}
 
-	return testWriter.File()
+	// If no test content was written, don't generate a test file.
+	// This can happen when testData entries exist but all their properties
+	// get filtered out during the package qualifier check above.
+	if testWriter.buffer.Len() == 0 {
+		return nil, nil
+	}
+
+	// Build the precise set of imports needed by the generated test code.
+	// This avoids the expensive removeUnusedImports + format.Node round-trip
+	// which dominates generation time for large files (e.g. 9s+ for Stripe's 71MB test file).
+	preciseImports := map[string]string{
+		"testing":                            "testing",
+		"github.com/stretchr/testify/assert": "assert",
+	}
+	if len(f.jsonMarshalingTests) > 0 {
+		preciseImports["encoding/json"] = "json"
+		preciseImports["github.com/stretchr/testify/require"] = "require"
+	}
+	for alias := range usedAliases {
+		if importPath, ok := aliasToImportPath[alias]; ok {
+			preciseImports[importPath] = alias
+		}
+	}
+
+	return testWriter.fileWithPreciseImports(preciseImports), nil
 }
 
 // stripPackageQualifier removes the package qualifier from a type if it matches the current package.

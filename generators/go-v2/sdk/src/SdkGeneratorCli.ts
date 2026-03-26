@@ -4,7 +4,6 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -14,7 +13,6 @@ import { RawClientGenerator } from "./raw-client/RawClientGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
@@ -61,13 +59,24 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateRawClients(context);
         this.generateInternalFiles(context);
 
-        await context.snippetGenerator.populateSnippetsCache();
+        // Create a shared DynamicSnippetsGenerator to avoid duplicate IR conversion
+        // and snippet generation between README and Reference generation.
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+        const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        await context.snippetGenerator.populateSnippetsCache({ dynamicSnippetsGenerator: sharedSnippetsGenerator });
 
         await this.generateWireTestFiles(context);
 
         if (this.shouldGenerateReadme(context)) {
             try {
-                const endpointSnippets = this.generateSnippets({ context });
+                const endpointSnippets = context.snippetGenerator.getReadmeEndpoints();
                 await this.generateReadme({
                     context,
                     endpointSnippets
@@ -167,41 +176,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         for (const file of internalFiles.generate()) {
             context.project.addGoFiles(file);
         }
-    }
-
-    private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
-        const endpointSnippets: Endpoint[] = [];
-
-        const dynamicIr = context.ir.dynamic;
-        if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
-
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: context.config
-        });
-
-        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
-                endpointSnippets.push({
-                    exampleIdentifier: endpointExample.id,
-                    id: {
-                        method: endpoint.location.method,
-                        path,
-                        identifierOverride: endpointId
-                    },
-                    snippet: FernGeneratorExec.EndpointSnippet.go({
-                        client: dynamicSnippetsGenerator.generateSync(
-                            convertDynamicEndpointSnippetRequest(endpointExample)
-                        ).snippet
-                    })
-                });
-            }
-        }
-
-        return endpointSnippets;
     }
 
     private async generateReadme({
