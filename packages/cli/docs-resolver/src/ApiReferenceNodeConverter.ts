@@ -66,7 +66,10 @@ export class ApiReferenceNodeConverter {
         private workspace?: FernWorkspace,
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability,
-        private openApiTags?: Record<string, { id: string; description: string | undefined }>,
+        private openApiTags?: Record<
+            string,
+            { id: string; description: string | undefined; displayName: string | undefined }
+        >,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>
     ) {
         this.#tagDescriptionContent = new Map();
@@ -208,7 +211,8 @@ export class ApiReferenceNodeConverter {
 
         // Store the tag description content (no manual escaping needed;
         // the downstream MDX pipeline handles sanitization)
-        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${tagInfo.description}`;
+        const heading = tagInfo.displayName ?? titleCase(tagInfo.id.replace(/[_-]/g, " "));
+        const markdownContent = `# ${heading}\n\n${tagInfo.description}`;
         this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
 
         // Add to markdown files collections for processing

@@ -1352,7 +1352,9 @@ export class DocsDefinitionResolver {
         }
 
         // Extract OpenAPI IR tags when tag description pages are enabled
-        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        let openApiTags:
+            | Record<string, { id: string; description: string | undefined; displayName: string | undefined }>
+            | undefined;
         if (item.tagDescriptionPages && useV3Parser) {
             try {
                 const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
@@ -1371,7 +1373,11 @@ export class DocsDefinitionResolver {
                             .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
                             .map(([tagId, tag]) => [
                                 camelCase(tagId),
-                                { id: String(tag.id), description: tag.description }
+                                {
+                                    id: String(tag.id),
+                                    description: tag.description,
+                                    displayName: tag.displayName
+                                }
                             ])
                     );
                 }

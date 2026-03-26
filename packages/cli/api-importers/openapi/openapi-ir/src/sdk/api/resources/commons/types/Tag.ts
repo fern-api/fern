@@ -4,4 +4,6 @@ import type * as FernOpenapiIr from "../../../index.js";
 
 export interface Tag extends FernOpenapiIr.WithDescription {
     id: FernOpenapiIr.TagId;
+    /** Read from `x-displayName` extension on the tag object. */
+    displayName: string | undefined;
 }

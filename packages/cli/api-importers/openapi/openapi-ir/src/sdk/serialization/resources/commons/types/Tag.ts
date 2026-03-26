@@ -9,11 +9,13 @@ import { WithDescription } from "./WithDescription.js";
 export const Tag: core.serialization.ObjectSchema<serializers.Tag.Raw, FernOpenapiIr.Tag> = core.serialization
     .objectWithoutOptionalProperties({
         id: TagId,
+        displayName: core.serialization.string().optional(),
     })
     .extend(WithDescription);
 
 export declare namespace Tag {
     export interface Raw extends WithDescription.Raw {
         id: TagId.Raw;
+        displayName?: string | null;
     }
 }

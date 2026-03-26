@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: tag-display-names
+  description: Tests that x-displayName on tags is respected and tag names are not mangled
+  version: ""
+tags:
+  - name: WhatsApp Messages
+    description: Endpoints for managing WhatsApp messages
+    x-displayName: WhatsApp Messages
+  - name: PlantCare
+    description: Endpoints for plant care operations
+paths:
+  /whatsapp/messages:
+    post:
+      tags:
+        - WhatsApp Messages
+      summary: Send Message
+      description: Send a WhatsApp message to a plant owner
+      operationId: whatsAppMessages_send
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageRequest"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+      x-fern-sdk-group-name: whatsAppMessages
+      x-fern-sdk-method-name: send
+  /whatsapp/messages/{messageId}:
+    get:
+      tags:
+        - WhatsApp Messages
+      summary: Get Message
+      description: Get a WhatsApp message by ID
+      operationId: whatsAppMessages_get
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+      x-fern-sdk-group-name: whatsAppMessages
+      x-fern-sdk-method-name: get
+  /plants/{plantId}/care:
+    post:
+      tags:
+        - PlantCare
+      summary: Water Plant
+      description: Water a plant
+      operationId: plantCare_water
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CareResult"
+      x-fern-sdk-group-name: plantCare
+      x-fern-sdk-method-name: water
+components:
+  schemas:
+    SendMessageRequest:
+      type: object
+      properties:
+        to:
+          type: string
+        body:
+          type: string
+      required:
+        - to
+        - body
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        to:
+          type: string
+        body:
+          type: string
+        status:
+          type: string
+      required:
+        - id
+        - to
+        - body
+    CareResult:
+      type: object
+      properties:
+        plantId:
+          type: string
+        action:
+          type: string
+        timestamp:
+          type: string
+      required:
+        - plantId
+        - action

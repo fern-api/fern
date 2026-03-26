@@ -164,9 +164,13 @@ describe("tag-description-pages", () => {
             });
 
             // Provide openApiTags with descriptions containing special characters
-            const openApiTags: Record<string, { id: string; description: string | undefined }> = {
+            const openApiTags: Record<
+                string,
+                { id: string; description: string | undefined; displayName: string | undefined }
+            > = {
                 pet: {
                     id: "pet",
+                    displayName: undefined,
                     description: [
                         "Everything about your Pets.",
                         "",
@@ -184,13 +188,18 @@ describe("tag-description-pages", () => {
                         "Filter pets with query params like `status=available` or `tags=<indoor>`."
                     ].join("\n")
                 },
-                store: { id: "store", description: "Access to Petstore orders" },
-                user: { id: "user", description: "Operations about user" },
+                store: { id: "store", description: "Access to Petstore orders", displayName: undefined },
+                user: { id: "user", description: "Operations about user", displayName: undefined },
                 studyCollections: {
                     id: "Study Collections",
-                    description: "Manage study collections and their contents"
+                    description: "Manage study collections and their contents",
+                    displayName: undefined
                 },
-                userManagement: { id: "user-management", description: "User management operations" }
+                userManagement: {
+                    id: "user-management",
+                    description: "User management operations",
+                    displayName: undefined
+                }
             };
 
             const converter = new ApiReferenceNodeConverter(
@@ -299,15 +308,23 @@ describe("tag-description-pages", () => {
                 context
             });
 
-            const openApiTags: Record<string, { id: string; description: string | undefined }> = {
-                pet: { id: "pet", description: "Everything about your Pets" },
-                store: { id: "store", description: "Access to Petstore orders" },
-                user: { id: "user", description: "Operations about user" },
+            const openApiTags: Record<
+                string,
+                { id: string; description: string | undefined; displayName: string | undefined }
+            > = {
+                pet: { id: "pet", description: "Everything about your Pets", displayName: undefined },
+                store: { id: "store", description: "Access to Petstore orders", displayName: undefined },
+                user: { id: "user", description: "Operations about user", displayName: undefined },
                 studyCollections: {
                     id: "Study Collections",
-                    description: "Manage study collections and their contents"
+                    description: "Manage study collections and their contents",
+                    displayName: undefined
                 },
-                userManagement: { id: "user-management", description: "User management operations" }
+                userManagement: {
+                    id: "user-management",
+                    description: "User management operations",
+                    displayName: undefined
+                }
             };
 
             const converter = new ApiReferenceNodeConverter(

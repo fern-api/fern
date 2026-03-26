@@ -80,6 +80,9 @@ types:
     extends: WithDescription
     properties:
       id: TagId
+      displayName:
+        type: optional<string>
+        docs: Read from `x-displayName` extension on the tag object.
 
   SecuritySchemeId:
     type: string

@@ -409,7 +409,10 @@ export function generateIr({
         tags: {
             tagsById: Object.fromEntries(
                 (openApi.tags ?? []).map((tag) => {
-                    return [tag.name, { id: tag.name, description: tag.description }];
+                    const xDisplayName = (tag as unknown as Record<string, unknown>)["x-displayName"];
+                    const displayName =
+                        typeof xDisplayName === "string" && xDisplayName.trim().length > 0 ? xDisplayName : undefined;
+                    return [tag.name, { id: tag.name, description: tag.description, displayName }];
                 })
             ),
             orderedTagIds: openApi.tags?.map((tag) => tag.name)
