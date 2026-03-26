@@ -183,8 +183,8 @@ function resolveOAuthScheme({
     }
     logger?.info(`[resolveOAuth] Endpoint response body type: ${endpoint.response?.body?.type ?? "none"}`);
 
-    const clientIdProp = findRequestBodyProperty({ endpoint, wireValue: clientIdWire });
-    const clientSecretProp = findRequestBodyProperty({ endpoint, wireValue: clientSecretWire });
+    const clientIdProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientIdWire, logger });
+    const clientSecretProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientSecretWire, logger });
     const accessTokenProp = findResponseProperty({ ir, endpoint, wireValue: accessTokenWire });
 
     logger?.info(`[resolveOAuth] clientIdProp found: ${clientIdProp != null}`);
@@ -276,8 +276,10 @@ function resolveRefreshEndpoint({
     const requestProperties = refreshTokenConfig["request-properties"];
 
     const refreshTokenReqProp = findRequestBodyProperty({
+        ir,
         endpoint,
-        wireValue: extractPropertyName(requestProperties?.["refresh-token"]) ?? "refresh_token"
+        wireValue: extractPropertyName(requestProperties?.["refresh-token"]) ?? "refresh_token",
+        logger
     });
     const accessTokenProp = findResponseProperty({
         ir,
@@ -400,11 +402,15 @@ function extractPropertyName(value: string | undefined): string | undefined {
 }
 
 function findRequestBodyProperty({
+    ir,
     endpoint,
-    wireValue
+    wireValue,
+    logger
 }: {
+    ir: IntermediateRepresentation;
     endpoint: FernIr.HttpEndpoint;
     wireValue: string;
+    logger?: OAuthResolutionLogger;
 }): FernIr.RequestProperty | undefined {
     if (endpoint.requestBody == null) {
         return undefined;
@@ -424,6 +430,36 @@ function findRequestBodyProperty({
                         v2Examples: prop.v2Examples
                     })
                 };
+            }
+        }
+    }
+
+    // Handle reference-type request bodies by resolving the referenced type
+    if (endpoint.requestBody.type === "reference") {
+        const bodyType = endpoint.requestBody.requestBodyType;
+        logger?.info(`[resolveOAuth] Reference request body type: ${bodyType.type}`);
+        if (bodyType.type === "named") {
+            const typeDecl = ir.types[bodyType.typeId];
+            logger?.info(
+                `[resolveOAuth] Resolved named type: ${typeDecl?.name?.name?.originalName ?? "unknown"}, shape=${typeDecl?.shape?.type}`
+            );
+            if (typeDecl?.shape.type === "object") {
+                for (const prop of typeDecl.shape.properties) {
+                    logger?.info(`[resolveOAuth] Reference body property: ${prop.name.wireValue}`);
+                    if (prop.name.wireValue === wireValue) {
+                        return {
+                            propertyPath: undefined,
+                            property: RequestPropertyValue.body({
+                                name: prop.name,
+                                valueType: prop.valueType,
+                                availability: prop.availability,
+                                docs: prop.docs,
+                                propertyAccess: prop.propertyAccess,
+                                v2Examples: prop.v2Examples
+                            })
+                        };
+                    }
+                }
             }
         }
     }
