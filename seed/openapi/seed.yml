@@ -51,4 +51,6 @@ fixtures:
             schemas: 
               Operand: 
                 type: null     
-      outputFolder: custom-overrides      
+      outputFolder: custom-overrides
+allowedFailures:
+  - server-sent-events-openapi

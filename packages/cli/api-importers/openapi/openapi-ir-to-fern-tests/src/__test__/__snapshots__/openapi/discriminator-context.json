@@ -89,8 +89,10 @@
           "DataLevelUnion": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -121,8 +123,10 @@
           "SseStreamEvent": {
             "availability": undefined,
             "base-properties": {},
-            "context": "protocol",
-            "discriminant": "event",
+            "discriminant": {
+              "context": "protocol",
+              "value": "event",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -178,14 +182,15 @@
     openapi: ../openapi.yml
 types:
   SseStreamEvent:
-    discriminant: event
+    discriminant:
+      value: event
+      context: protocol
     base-properties: {}
     union:
       completion: CompletionEvent
       error: ErrorEvent
     source:
       openapi: ../openapi.yml
-    context: protocol
   CompletionEvent:
     properties:
       content:
@@ -204,14 +209,15 @@ types:
     source:
       openapi: ../openapi.yml
   DataLevelUnion:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       user: UserData
       admin: AdminData
     source:
       openapi: ../openapi.yml
-    context: data
   UserData:
     properties:
       username: optional<string>

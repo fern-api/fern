@@ -1,0 +1,14 @@
+services:
+  wiremock:
+    image: wiremock/wiremock:3.9.1
+    ports:
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
+    volumes:
+      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
+    command: ["--global-response-templating", "--verbose"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
