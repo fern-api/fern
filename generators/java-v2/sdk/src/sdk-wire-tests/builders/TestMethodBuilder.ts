@@ -112,9 +112,15 @@ export class TestMethodBuilder {
                 );
             }
 
+            const isStreamingEndpoint = endpoint.response?.body?.type === "streaming";
+
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
             writer.writeLine(`.setResponseCode(${responseStatusCode})`);
+
+            if (isStreamingEndpoint) {
+                writer.writeLine('.addHeader("Content-Type", "text/event-stream")');
+            }
 
             if (responseResourcePath) {
                 writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
@@ -207,7 +213,16 @@ export class TestMethodBuilder {
                 }
             }
 
-            if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
+            if (hasResponseBody && isStreamingEndpoint && responseStatusCode < 400) {
+                writer.writeLine("");
+                writer.writeLine("// Validate streaming response");
+                writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
+                writer.writeLine("int eventCount = 0;");
+                writer.writeLine("for (Object event : response) {");
+                writer.writeLine("    eventCount++;");
+                writer.writeLine("}");
+                writer.writeLine('Assertions.assertTrue(eventCount > 0, "Expected at least one SSE event");');
+            } else if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
                 writer.writeLine("");
                 writer.writeLine("// Validate response body");
                 writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
