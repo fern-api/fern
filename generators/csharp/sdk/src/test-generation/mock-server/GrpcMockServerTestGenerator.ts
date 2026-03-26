@@ -196,11 +196,13 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         // Configure stub handler — deserialize JSON into SDK type, then convert to proto
         if (canAssertResponse && returnTypeName != null) {
             writer.addNamespace(this.namespaces.core);
-            writer.writeLine(`${stubClassName}.On${methodName}(_ =>`);
-            writer.writeLine("{");
-            writer.writeLine(`    var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);`);
-            writer.writeLine("    return mockObject.ToProto();");
-            writer.writeTextStatement("}");
+            writer.writeTextStatement(
+                `${stubClassName}.On${methodName}(_ =>\n` +
+                `{\n` +
+                `    var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);\n` +
+                `    return mockObject.ToProto();\n` +
+                `})`
+            );
         } else {
             writer.writeTextStatement(`${stubClassName}.On${methodName}(_ => new ${protoResponseType}())`);
         }
