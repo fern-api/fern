@@ -2,7 +2,10 @@ openapi: 3.1.0
 info:
   title: server-sent-events-openapi
   description: >
-    Test fixture for SSE handling via OpenAPI 3.2's itemSchema.
+    Test fixture for SSE handling via OpenAPI's itemSchema property (introduced
+    in OAS 3.2). Although itemSchema originates from the 3.2 spec, Fern does not
+    yet claim exhaustive OAS 3.2 support, so this file's version is set to 3.1.0.
+    You should keep your spec version at 3.1 or below even when using itemSchema.
 
     Endpoints 1-2 test context=protocol with the envelope+data schema pattern
     and the full range of data types that protocol-level discrimination enables:
