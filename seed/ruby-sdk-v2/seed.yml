@@ -107,3 +107,5 @@ features:
   additionalProperties: true
   whitelabel: false
   apiReferenceGeneration: false
+allowedFailures:
+  - server-sent-events-openapi

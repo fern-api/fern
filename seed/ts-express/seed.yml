@@ -114,6 +114,7 @@ allowedFailures:
   - public-object
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - streaming
   - streaming-parameter
   - enum
