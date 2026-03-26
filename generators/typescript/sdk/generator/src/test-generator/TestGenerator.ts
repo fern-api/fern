@@ -1534,17 +1534,24 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.type === "union" &&
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
-                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
+                discriminantField = context.includeSerdeLayer
+                    ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
+                    : typeDeclaration.shape.discriminant.wireValue;
             }
         }
 
-        const createRawJsonExample = this.createRawJsonExample.bind(this);
         const eventCodes = sseEvents.map((event) => {
+            // Build the deserialized (camelCase) representation of the event data
+            const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
             if (discriminantField != null) {
-                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
-                return code`${literalOf(merged)}`;
+                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
+                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
             }
-            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+            return code`${getTextOfTsNode(deserializedData)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
     }
