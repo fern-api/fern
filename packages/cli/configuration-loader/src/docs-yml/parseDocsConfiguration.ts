@@ -117,7 +117,7 @@ export async function parseDocsConfiguration({
 
         pageActions,
 
-        icons: iconLibrary,
+        "icon-library": iconLibrary,
 
         experimental
     } = rawDocsConfiguration;

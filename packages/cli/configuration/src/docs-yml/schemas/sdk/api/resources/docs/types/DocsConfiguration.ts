@@ -69,7 +69,7 @@ export interface DocsConfiguration {
      * When set, bare icon names (e.g., "arrow-right") are resolved using the specified library.
      * Options: "fontawesome" (default), "lucide", "phosphor"
      */
-    icons?: FernDocsConfig.IconLibrary;
+    iconLibrary?: FernDocsConfig.IconLibrary;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
     /**
