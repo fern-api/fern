@@ -124,7 +124,9 @@ export class MockEndpointGenerator extends WithGeneration {
                                 const headerName = scheme.name?.wireValue;
                                 const headerValue = scheme.name?.name?.screamingSnakeCase?.safeName;
                                 if (headerName && headerValue) {
-                                    writer.write(`.WithHeader("${headerName}", "${headerValue}")`);
+                                    const prefix = scheme.prefix;
+                                    const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
+                                    writer.write(`.WithHeader("${headerName}", "${fullValue}")`);
                                 }
                                 break;
                             }

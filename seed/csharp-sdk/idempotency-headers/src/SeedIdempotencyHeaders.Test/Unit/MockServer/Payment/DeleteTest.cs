@@ -15,6 +15,7 @@ public class DeleteTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/payment/paymentId")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));

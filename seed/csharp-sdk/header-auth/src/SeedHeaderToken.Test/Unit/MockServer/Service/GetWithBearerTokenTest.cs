@@ -16,7 +16,13 @@ public class GetWithBearerTokenTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/apiKey").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/apiKey")
+                    .WithHeader("x-api-key", "test_prefix HEADER_TOKEN_AUTH")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

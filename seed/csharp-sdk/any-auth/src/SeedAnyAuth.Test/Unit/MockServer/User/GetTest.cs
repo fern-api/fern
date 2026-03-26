@@ -25,7 +25,15 @@ public class GetTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingPost())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/users")
+                    .WithHeader("Authorization", "Bearer TOKEN")
+                    .WithHeader("X-API-Key", "API_KEY")
+                    .WithHeader("Authorization", "Basic VVNFUk5BTUU6UEFTU1dPUkQ=")
+                    .UsingPost()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
