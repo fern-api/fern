@@ -155,7 +155,8 @@
       "form-data": "^4.0.4",
       "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
       "vite": "^7.0.0",
-      "yauzl": "^3.2.1"
+      "yauzl": "^3.2.1",
+      "smol-toml": "^1.6.1"
     }
   },
   "dependencies": {
