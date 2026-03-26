@@ -327,10 +327,7 @@ export class CoreUtilitiesManager {
                     `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`
                 );
             } else {
-                volume.writeFileSync(
-                    path.join(paginationDir, "index.ts"),
-                    `export { Page } from "./Page";\n`
-                );
+                volume.writeFileSync(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`);
             }
         }
     }
