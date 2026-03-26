@@ -838,6 +838,10 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
         TIMEOUT
     );
 
+    // Go proxy tests need a longer timeout because the function now probes
+    // multiple major version paths in parallel (base + /v2../v10).
+    const GO_PROXY_TIMEOUT = 30_000;
+
     it(
         "Go proxy: fetches latest version of a well-known module",
         async () => {
@@ -847,7 +851,7 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
             // Should NOT have the v prefix
             expect(version).not.toMatch(/^v/);
         },
-        TIMEOUT
+        GO_PROXY_TIMEOUT
     );
 
     it(
@@ -859,7 +863,7 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
             expect(version).toBeDefined();
             expect(version).toMatch(/^2\.\d+/);
         },
-        TIMEOUT
+        GO_PROXY_TIMEOUT
     );
 
     it(
@@ -868,7 +872,7 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
             const version = await getLatestVersionFromGoProxy("nonexistent.example.com/zzz-fern-test-12345");
             expect(version).toBeUndefined();
         },
-        TIMEOUT
+        GO_PROXY_TIMEOUT
     );
 
     it(
