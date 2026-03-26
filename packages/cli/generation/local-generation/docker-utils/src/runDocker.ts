@@ -77,7 +77,14 @@ export async function runContainer({
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
             await pullImage(imageName, runner, signal);
-            containerId = await tryRun();
+            try {
+                containerId = await tryRun();
+            } catch (retryError) {
+                if (needsCopyBack && containerName != null && removeAfterCompletion) {
+                    await stopContainer({ logger, containerId: containerName, runner });
+                }
+                throw retryError;
+            }
         } else {
             // Clean up the named container that was started without --rm
             if (needsCopyBack && containerName != null && removeAfterCompletion) {
