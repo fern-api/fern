@@ -236,7 +236,7 @@ describe("updateApiDefinitionIdInTree", () => {
     });
 
     it("replaces old id embedded in string values like endpoint ids", () => {
-        const tree = {
+        const tree: Record<string, unknown> = {
             children: [
                 {
                     id: "__pending_api_0__:endpoint_auth.getToken",
@@ -256,14 +256,14 @@ describe("updateApiDefinitionIdInTree", () => {
             ]
         };
         updateApiDefinitionIdInTree(tree, "__pending_api_0__", "my-api-1");
-        expect(tree.children[0]?.id).toBe("my-api-1:endpoint_auth.getToken");
-        expect(tree.children[0]?.apiDefinitionId).toBe("my-api-1");
-        expect(tree.children[1]?.id).toBe("my-api-1:subpackage_users");
-        expect(tree.children[1]?.apiDefinitionId).toBe("my-api-1");
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const nestedChild = (tree.children[1] as any)?.children[0];
-        expect(nestedChild?.id).toBe("my-api-1:endpoint_users.list");
-        expect(nestedChild?.apiDefinitionId).toBe("my-api-1");
+        const children = tree["children"] as Record<string, unknown>[];
+        expect(children[0]?.["id"]).toBe("my-api-1:endpoint_auth.getToken");
+        expect(children[0]?.["apiDefinitionId"]).toBe("my-api-1");
+        expect(children[1]?.["id"]).toBe("my-api-1:subpackage_users");
+        expect(children[1]?.["apiDefinitionId"]).toBe("my-api-1");
+        const nestedChildren = children[1]?.["children"] as Record<string, unknown>[];
+        expect(nestedChildren[0]?.["id"]).toBe("my-api-1:endpoint_users.list");
+        expect(nestedChildren[0]?.["apiDefinitionId"]).toBe("my-api-1");
     });
 
     it("handles null and undefined", () => {
