@@ -237,18 +237,17 @@ export class CoreUtilitiesManager {
      * disk pass on core utility files.
      */
     public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
-        const files = new Set(
-            await Promise.all(
-                Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
-                    const { patterns, ignore } = utility.getFilesPatterns({
-                        streamType: this.streamType,
-                        formDataSupport: this.formDataSupport,
-                        fetchSupport: this.fetchSupport
-                    });
-                    return glob(patterns, { ignore, cwd: UTILITIES_PATH, nodir: true });
-                })
-            ).then((results) => results.flat())
+        const globResults = await Promise.all(
+            Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
+                const { patterns, ignore } = utility.getFilesPatterns({
+                    streamType: this.streamType,
+                    formDataSupport: this.formDataSupport,
+                    fetchSupport: this.fetchSupport
+                });
+                return glob(patterns, { ignore, cwd: UTILITIES_PATH, nodir: true });
+            })
         );
+        const files = new Set(globResults.flat());
 
         const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
         const findAndReplace: Record<string, { importPath: string; body: string }> = isCustomPackagePath
