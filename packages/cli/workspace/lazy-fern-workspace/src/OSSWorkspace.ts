@@ -298,7 +298,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const authOverrides =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
         if (authOverrides) {
-            context.logger.trace("Using auth overrides from generators configuration");
+            context.logger.info(`[OSSWorkspace] Using auth overrides from generators configuration. auth=${JSON.stringify(authOverrides.auth)}, auth-schemes keys=${JSON.stringify(Object.keys(authOverrides["auth-schemes"] ?? {}))}`);
+        } else {
+            context.logger.info(`[OSSWorkspace] No auth overrides. generatorsConfiguration exists=${this.generatorsConfiguration != null}, api exists=${this.generatorsConfiguration?.api != null}, api.auth=${JSON.stringify(this.generatorsConfiguration?.api?.auth)}`);
         }
 
         const environmentOverrides =
@@ -487,7 +489,15 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         // Resolve OAuth endpoint references after all specs have been merged,
         // because the token endpoint may be in a different spec than the auth scheme.
         if (authOverrides != null) {
-            mergedIr = resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides });
+            context.logger.info(`[OSSWorkspace] Resolving OAuth endpoint references post-merge. IR has ${Object.keys(mergedIr.services).length} services, ${mergedIr.auth?.schemes?.length ?? 0} auth schemes`);
+            const oauthLogger = {
+                info: (msg: string) => context.logger.info(msg),
+                warn: (msg: string) => context.logger.warn(msg),
+                error: (msg: string) => context.logger.error(msg)
+            };
+            mergedIr = resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides, logger: oauthLogger });
+        } else {
+            context.logger.info("[OSSWorkspace] Skipping OAuth resolution - no auth overrides");
         }
 
         return mergedIr;
