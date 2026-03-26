@@ -104,6 +104,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // Check if basic auth is configured so we can conditionally add the Authorization header
         const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
         const hasBasicAuth = basicAuthScheme != null && basicAuthScheme.type === "basic";
+        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
 
         method.addStatement(
             ruby.codeblock((writer) => {
@@ -114,9 +115,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.newLine();
                     const usernameName = basicAuthScheme.username.snakeCase.safeName;
                     const passwordName = basicAuthScheme.password.snakeCase.safeName;
-                    writer.writeLine(
-                        `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}" if !${usernameName}.nil? && !${passwordName}.nil?`
-                    );
+                    if (isAuthOptional) {
+                        writer.writeLine(
+                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}" if !${usernameName}.nil? && !${passwordName}.nil?`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                        );
+                    }
                 }
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
