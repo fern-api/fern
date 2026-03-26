@@ -7,9 +7,9 @@ import { askToLogin } from "@fern-api/login";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
-import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
+import { computePreviewVersion } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
-import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
+import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
 interface SdkPreviewSuccess {
@@ -44,37 +44,39 @@ export async function sdkPreview({
     apiName: string | undefined;
     json: boolean;
 }): Promise<void> {
-    // 1. Auth
-    const token = await cliContext.runTask(async (context) => {
-        return askToLogin(context);
-    });
-    if (token == null) {
-        return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
-    }
-
-    // 2. Load project
-    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-        commandLineApiWorkspace: apiName,
-        defaultToAllApiWorkspaces: false
-    });
-
-    if (token.type === "user") {
-        await cliContext.runTask(async (context) => {
-            await createOrganizationIfDoesNotExist({
-                organization: project.config.organization,
-                token,
-                context
-            });
-        });
-    }
-
-    // 3. Resolve preview ID
-    const previewId = await getPreviewId();
-    cliContext.logger.info(`Preview ID: ${previewId}`);
-
     const previews: SdkPreviewSuccess["previews"] = [];
+    let organization: string | undefined;
 
     try {
+        // 1. Auth
+        const token = await cliContext.runTask(async (context) => {
+            return askToLogin(context);
+        });
+        if (token == null) {
+            return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
+        }
+
+        // 2. Load project
+        const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+            commandLineApiWorkspace: apiName,
+            defaultToAllApiWorkspaces: false
+        });
+        organization = project.config.organization;
+
+        if (token.type === "user") {
+            await cliContext.runTask(async (context) => {
+                await createOrganizationIfDoesNotExist({
+                    organization: project.config.organization,
+                    token,
+                    context
+                });
+            });
+        }
+
+        // 3. Resolve preview ID
+        const previewId = await getPreviewId();
+        cliContext.logger.info(`Preview ID: ${previewId}`);
+
         // 4. Process each workspace
         for (const workspace of project.apiWorkspaces) {
             if (workspace.generatorsConfiguration == null) {
@@ -173,7 +175,6 @@ export async function sdkPreview({
                 });
 
                 const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
-                cliContext.logger.info(`→ ${installCommand}`);
 
                 previews.push({
                     preview_id: previewId,
@@ -200,9 +201,17 @@ export async function sdkPreview({
     if (json) {
         const result: SdkPreviewResult = {
             status: "success",
-            org: project.config.organization,
+            org: organization ?? "",
             previews
         };
         process.stdout.write(JSON.stringify(result, null, 2));
+    } else if (previews.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(`Published ${previews.length} preview package${previews.length > 1 ? "s" : ""}:`);
+        for (const preview of previews) {
+            cliContext.logger.info("");
+            cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+            cliContext.logger.info(`  Install: ${preview.install}`);
+        }
     }
 }

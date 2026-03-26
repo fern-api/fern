@@ -15,7 +15,12 @@ export async function getPreviewId(): Promise<string> {
             return generateRandomId();
         }
 
-        return sanitizeBranchName(branch);
+        const sanitized = sanitizeBranchName(branch);
+        if (sanitized === "") {
+            return generateRandomId();
+        }
+
+        return sanitized;
     } catch {
         return generateRandomId();
     }

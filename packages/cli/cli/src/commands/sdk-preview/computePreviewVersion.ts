@@ -1,4 +1,3 @@
-const PREVIEW_REGISTRY_URL = process.env.FERN_PREVIEW_REGISTRY_URL ?? "https://npm.buildwithfern.com";
 const BASE_VERSION = "0.0.1";
 
 /**
@@ -16,5 +15,3 @@ export function computePreviewVersion({ previewId }: { previewId: string }): str
     const timestamp = Math.floor(Date.now() / 1000);
     return `${BASE_VERSION}-${previewId}.${timestamp}`;
 }
-
-export { PREVIEW_REGISTRY_URL };

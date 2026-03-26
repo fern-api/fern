@@ -40,4 +40,10 @@ describe("sanitizeBranchName", () => {
     it("handles user-prefixed branches", () => {
         expect(sanitizeBranchName("jsmith/my-feature")).toBe("jsmith-my-feature");
     });
+
+    it("returns empty string for branches with only special characters", () => {
+        expect(sanitizeBranchName("///")).toBe("");
+        expect(sanitizeBranchName("---")).toBe("");
+        expect(sanitizeBranchName("@@@")).toBe("");
+    });
 });

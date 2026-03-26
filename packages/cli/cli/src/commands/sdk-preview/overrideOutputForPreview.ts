@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
+export const PREVIEW_REGISTRY_URL = process.env.FERN_PREVIEW_REGISTRY_URL ?? "https://npm.buildwithfern.com";
 
 const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
     "fernapi/fern-typescript-node-sdk",
