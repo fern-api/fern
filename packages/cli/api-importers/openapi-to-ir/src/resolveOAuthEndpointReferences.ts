@@ -8,12 +8,6 @@ import {
     RequestPropertyValue
 } from "@fern-api/ir-sdk";
 
-export interface OAuthResolutionLogger {
-    info(message: string): void;
-    warn(message: string): void;
-    error(message: string): void;
-}
-
 /**
  * Resolves OAuth endpoint references in the IR auth schemes.
  *
@@ -23,91 +17,46 @@ export interface OAuthResolutionLogger {
  */
 export function resolveOAuthEndpointReferences({
     ir,
-    authOverrides,
-    logger
+    authOverrides
 }: {
     ir: IntermediateRepresentation;
     authOverrides: RawSchemas.WithAuthSchema;
-    logger?: OAuthResolutionLogger;
 }): IntermediateRepresentation {
-    logger?.info("[resolveOAuth] Starting OAuth endpoint reference resolution");
-    logger?.info(`[resolveOAuth] authOverrides keys: ${JSON.stringify(Object.keys(authOverrides))}`);
-    logger?.info(`[resolveOAuth] auth-schemes present: ${authOverrides["auth-schemes"] != null}`);
-    logger?.info(`[resolveOAuth] ir.auth present: ${ir.auth != null}`);
-    logger?.info(`[resolveOAuth] ir.auth.schemes count: ${ir.auth?.schemes?.length ?? 0}`);
-    logger?.info(`[resolveOAuth] ir.services count: ${Object.keys(ir.services).length}`);
-
     if (!authOverrides["auth-schemes"]) {
-        logger?.warn("[resolveOAuth] No auth-schemes found in authOverrides, returning IR unchanged");
         return ir;
     }
     if (!ir.auth) {
-        logger?.warn("[resolveOAuth] No ir.auth found, returning IR unchanged");
         return ir;
     }
 
     const authSchemes = authOverrides["auth-schemes"];
-    logger?.info(`[resolveOAuth] auth-schemes keys: ${JSON.stringify(Object.keys(authSchemes))}`);
     const updatedSchemes: AuthScheme[] = [];
 
     for (const scheme of ir.auth.schemes) {
-        logger?.info(`[resolveOAuth] Processing IR auth scheme: type=${scheme.type}, key=${scheme.key}`);
-
         // Only replace bearer schemes that were placeholders for OAuth
         if (scheme.type !== "bearer") {
-            logger?.info(`[resolveOAuth] Scheme type is "${scheme.type}", not "bearer" - keeping as-is`);
             updatedSchemes.push(scheme);
             continue;
         }
 
         const rawDeclaration = authSchemes[scheme.key];
         if (rawDeclaration == null) {
-            logger?.info(
-                `[resolveOAuth] No raw declaration found for key "${scheme.key}" in auth-schemes - keeping bearer`
-            );
             updatedSchemes.push(scheme);
             continue;
         }
 
-        logger?.info(
-            `[resolveOAuth] Found raw declaration for key "${scheme.key}": ${JSON.stringify(rawDeclaration).substring(0, 300)}`
-        );
-
         const resolvedScheme = visitRawAuthSchemeDeclaration<AuthScheme | undefined>(rawDeclaration, {
-            header: () => {
-                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> header (not OAuth)");
-                return undefined;
-            },
-            basic: () => {
-                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> basic (not OAuth)");
-                return undefined;
-            },
-            tokenBearer: () => {
-                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> tokenBearer (not OAuth)");
-                return undefined;
-            },
-            inferredBearer: () => {
-                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> inferredBearer (not OAuth)");
-                return undefined;
-            },
+            header: () => undefined,
+            basic: () => undefined,
+            tokenBearer: () => undefined,
+            inferredBearer: () => undefined,
             oauth: (oauthScheme) => {
-                logger?.info(`[resolveOAuth] visitRawAuthSchemeDeclaration -> oauth branch! type=${oauthScheme.type}`);
-                return resolveOAuthScheme({ ir, key: scheme.key, oauthScheme, logger });
+                return resolveOAuthScheme({ ir, key: scheme.key, oauthScheme });
             }
         });
 
-        if (resolvedScheme != null) {
-            logger?.info(
-                `[resolveOAuth] Successfully resolved OAuth for key "${scheme.key}", type=${resolvedScheme.type}`
-            );
-        } else {
-            logger?.warn(`[resolveOAuth] Failed to resolve OAuth for key "${scheme.key}" - keeping bearer placeholder`);
-        }
-
         updatedSchemes.push(resolvedScheme ?? scheme);
     }
-
-    logger?.info(`[resolveOAuth] Final auth schemes: ${updatedSchemes.map((s) => `${s.key}:${s.type}`).join(", ")}`);
 
     return {
         ...ir,
@@ -121,46 +70,29 @@ export function resolveOAuthEndpointReferences({
 function resolveOAuthScheme({
     ir,
     key,
-    oauthScheme,
-    logger
+    oauthScheme
 }: {
     ir: IntermediateRepresentation;
     key: string;
     oauthScheme: RawSchemas.OAuthSchemeSchema;
-    logger?: OAuthResolutionLogger;
 }): AuthScheme | undefined {
     if (oauthScheme.type !== "client-credentials") {
-        logger?.warn(`[resolveOAuth] OAuth type "${oauthScheme.type}" is not "client-credentials" - unsupported`);
         return undefined;
     }
 
     const tokenEndpointConfig = oauthScheme["get-token"];
-    logger?.info(`[resolveOAuth] Token endpoint config: ${JSON.stringify(tokenEndpointConfig).substring(0, 300)}`);
 
     const parsed = parseEndpointReference(tokenEndpointConfig.endpoint);
     if (parsed == null) {
-        logger?.error(`[resolveOAuth] Failed to parse endpoint reference: "${tokenEndpointConfig.endpoint}"`);
         return undefined;
     }
 
     const { method, path } = parsed;
-    logger?.info(`[resolveOAuth] Looking for endpoint: ${method} ${path}`);
-
-    // Log all available endpoints for debugging
-    for (const [svcId, service] of Object.entries(ir.services)) {
-        for (const ep of service.endpoints) {
-            const epPath = reconstructPath(ep.fullPath);
-            logger?.info(`[resolveOAuth] Available endpoint: ${ep.method} ${epPath} (service=${svcId}, id=${ep.id})`);
-        }
-    }
 
     const resolved = findEndpointInIr({ ir, method, path });
     if (resolved == null) {
-        logger?.error(`[resolveOAuth] Could not find endpoint ${method} ${path} in merged IR`);
         return undefined;
     }
-
-    logger?.info(`[resolveOAuth] Found matching endpoint: id=${resolved.endpoint.id}, serviceId=${resolved.serviceId}`);
 
     const { endpoint, serviceId, subpackageId } = resolved;
 
@@ -171,30 +103,11 @@ function resolveOAuthScheme({
     const clientSecretWire = extractPropertyName(requestProperties?.["client-secret"]) ?? "client_secret";
     const accessTokenWire = extractPropertyName(responseProperties?.["access-token"]) ?? "access_token";
 
-    logger?.info(
-        `[resolveOAuth] Looking for request props: clientId="${clientIdWire}", clientSecret="${clientSecretWire}"`
-    );
-    logger?.info(`[resolveOAuth] Looking for response prop: accessToken="${accessTokenWire}"`);
-    logger?.info(`[resolveOAuth] Endpoint requestBody type: ${endpoint.requestBody?.type ?? "none"}`);
-    if (endpoint.requestBody?.type === "inlinedRequestBody") {
-        logger?.info(
-            `[resolveOAuth] Request body properties: ${endpoint.requestBody.properties.map((p) => p.name.wireValue).join(", ")}`
-        );
-    }
-    logger?.info(`[resolveOAuth] Endpoint response body type: ${endpoint.response?.body?.type ?? "none"}`);
-
-    const clientIdProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientIdWire, logger });
-    const clientSecretProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientSecretWire, logger });
+    const clientIdProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientIdWire });
+    const clientSecretProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientSecretWire });
     const accessTokenProp = findResponseProperty({ ir, endpoint, wireValue: accessTokenWire });
 
-    logger?.info(`[resolveOAuth] clientIdProp found: ${clientIdProp != null}`);
-    logger?.info(`[resolveOAuth] clientSecretProp found: ${clientSecretProp != null}`);
-    logger?.info(`[resolveOAuth] accessTokenProp found: ${accessTokenProp != null}`);
-
     if (clientIdProp == null || clientSecretProp == null || accessTokenProp == null) {
-        logger?.error(
-            `[resolveOAuth] Missing required properties - clientId=${clientIdProp != null}, clientSecret=${clientSecretProp != null}, accessToken=${accessTokenProp != null}`
-        );
         return undefined;
     }
 
@@ -212,11 +125,8 @@ function resolveOAuthScheme({
     let refreshEndpoint: FernIr.OAuthRefreshEndpoint | undefined;
     const refreshTokenConfig = oauthScheme["refresh-token"];
     if (refreshTokenConfig != null) {
-        logger?.info("[resolveOAuth] Resolving refresh endpoint...");
-        refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig, logger });
+        refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig });
     }
-
-    logger?.info(`[resolveOAuth] Successfully building OAuth AuthScheme for key="${key}"`);
 
     return AuthScheme.oauth({
         key,
@@ -252,22 +162,18 @@ function resolveOAuthScheme({
 
 function resolveRefreshEndpoint({
     ir,
-    refreshTokenConfig,
-    logger
+    refreshTokenConfig
 }: {
     ir: IntermediateRepresentation;
     refreshTokenConfig: RawSchemas.OAuthRefreshTokenEndpointSchema;
-    logger?: OAuthResolutionLogger;
 }): FernIr.OAuthRefreshEndpoint | undefined {
     const parsed = parseEndpointReference(refreshTokenConfig.endpoint);
     if (parsed == null) {
-        logger?.error(`[resolveOAuth] Failed to parse refresh endpoint: "${refreshTokenConfig.endpoint}"`);
         return undefined;
     }
 
     const resolved = findEndpointInIr({ ir, ...parsed });
     if (resolved == null) {
-        logger?.error(`[resolveOAuth] Could not find refresh endpoint ${parsed.method} ${parsed.path}`);
         return undefined;
     }
 
@@ -278,8 +184,7 @@ function resolveRefreshEndpoint({
     const refreshTokenReqProp = findRequestBodyProperty({
         ir,
         endpoint,
-        wireValue: extractPropertyName(requestProperties?.["refresh-token"]) ?? "refresh_token",
-        logger
+        wireValue: extractPropertyName(requestProperties?.["refresh-token"]) ?? "refresh_token"
     });
     const accessTokenProp = findResponseProperty({
         ir,
@@ -288,7 +193,6 @@ function resolveRefreshEndpoint({
     });
 
     if (refreshTokenReqProp == null || accessTokenProp == null) {
-        logger?.error("[resolveOAuth] Missing required refresh endpoint properties");
         return undefined;
     }
 
@@ -404,13 +308,11 @@ function extractPropertyName(value: string | undefined): string | undefined {
 function findRequestBodyProperty({
     ir,
     endpoint,
-    wireValue,
-    logger
+    wireValue
 }: {
     ir: IntermediateRepresentation;
     endpoint: FernIr.HttpEndpoint;
     wireValue: string;
-    logger?: OAuthResolutionLogger;
 }): FernIr.RequestProperty | undefined {
     if (endpoint.requestBody == null) {
         return undefined;
@@ -437,15 +339,10 @@ function findRequestBodyProperty({
     // Handle reference-type request bodies by resolving the referenced type
     if (endpoint.requestBody.type === "reference") {
         const bodyType = endpoint.requestBody.requestBodyType;
-        logger?.info(`[resolveOAuth] Reference request body type: ${bodyType.type}`);
         if (bodyType.type === "named") {
             const typeDecl = ir.types[bodyType.typeId];
-            logger?.info(
-                `[resolveOAuth] Resolved named type: ${typeDecl?.name?.name?.originalName ?? "unknown"}, shape=${typeDecl?.shape?.type}`
-            );
             if (typeDecl?.shape.type === "object") {
                 for (const prop of typeDecl.shape.properties) {
-                    logger?.info(`[resolveOAuth] Reference body property: ${prop.name.wireValue}`);
                     if (prop.name.wireValue === wireValue) {
                         return {
                             propertyPath: undefined,
