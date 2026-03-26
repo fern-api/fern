@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import type { FernToken } from "@fern-api/auth";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
@@ -2297,7 +2298,19 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
             // If --group is provided, load config from generators.yml
             if (argv.group != null) {
-                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
+                // Get Fern token as fallback when GITHUB_TOKEN is not set
+                let fernToken: FernToken | undefined;
+                if (token == null && process.env.GITHUB_TOKEN == null) {
+                    try {
+                        fernToken = await cliContext.runTask((context) => {
+                            return askToLogin(context);
+                        });
+                    } catch {
+                        cliContext.logger.debug("Could not obtain Fern token for GitHub App fallback.");
+                    }
+                }
+
+                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api, fernToken);
                 // Use group config as defaults, allow --github/--token to override
                 githubRepo = githubRepo ?? resolved.githubRepo;
                 token = token ?? resolved.token;
@@ -2306,7 +2319,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             if (githubRepo == null || token == null) {
                 const hint =
                     githubRepo != null
-                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
+                        ? "Repository found but no token. Ensure the Fern GitHub App (https://github.com/apps/fern-api) is installed on the repository, or pass --token / set GITHUB_TOKEN."
                         : "Either use --group to read from generators.yml, or provide --github and --token directly.";
                 return cliContext.failAndThrow(`Missing required github config. ${hint}`);
             }
