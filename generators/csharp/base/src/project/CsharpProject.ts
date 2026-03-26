@@ -427,9 +427,7 @@ dotnet_diagnostic.IDE0005.severity = error
         // GrpcServices="Server" so that ServiceBase classes are available for stubs.
         const protoServerItems: string[] = [];
         if (this.context.hasGrpcEndpoints() && this.protobufSourceFilePaths.length > 0) {
-            const pathToProtobufDirectory = path.win32.normalize(
-                `../../${this.generation.constants.folders.protobuf}`
-            );
+            const pathToProtobufDirectory = path.win32.normalize(`../../${this.generation.constants.folders.protobuf}`);
             for (const protoFilePath of this.protobufSourceFilePaths) {
                 if (EXTERNAL_PROTO_FILE_PREFIXES.some((prefix) => protoFilePath.startsWith(prefix))) {
                     continue;
