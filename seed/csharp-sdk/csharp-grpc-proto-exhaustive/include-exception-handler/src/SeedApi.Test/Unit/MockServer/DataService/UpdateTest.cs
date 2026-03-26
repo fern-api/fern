@@ -8,11 +8,11 @@ namespace SeedApi.Test.Unit.MockServer.DataService;
 public class UpdateTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
-    public Task MockServerTest_2()
+    public async Task MockServerTest_2()
     {
         DataServiceStub.OnUpdate(_ => new Data.V1.Grpc.UpdateResponse());
 
-        Assert.DoesNotThrowAsync(async () => await Client.DataService.UpdateAsync(
+        await Assert.DoesNotThrowAsync(async () => await Client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest { Id = "id" }
         ));
     }
