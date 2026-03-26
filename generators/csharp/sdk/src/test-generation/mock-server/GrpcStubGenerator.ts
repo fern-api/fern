@@ -223,6 +223,7 @@ export class GrpcStubGenerator extends FileGenerator<CSharpFile, SdkGeneratorCon
             const classRef = this.context.protobufResolver.getProtobufClassReference(typeId);
             return `${classRef.namespace}.${classRef.name}`;
         } catch {
+            // Type does not have a protobuf source; fall back to undefined
             return undefined;
         }
     }
