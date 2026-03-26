@@ -81,10 +81,6 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "SseEvent");
     }
 
-    public final ClassName getSseEventParserClassName() {
-        return ClassName.get(getCorePackage(), "SseEventParser");
-    }
-
     public final ClassName getQueryStringMapperClassName() {
         return ClassName.get(getCorePackage(), "QueryStringMapper");
     }
