@@ -181,7 +181,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             const responseBodyType = this.endpoint.response?.body?.type;
             if (responseBodyType === "json") {
                 writer.writeLine('const string mockResponse = """');
-                writer.writeLine(JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\\"'));
+                writer.writeLine(JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"'));
                 writer.writeTextStatement('"""');
             } else if (responseBodyType === "text") {
                 writer.writeTextStatement(`const string mockResponse = "${jsonExampleResponse as string}"`);
