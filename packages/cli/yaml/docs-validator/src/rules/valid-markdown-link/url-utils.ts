@@ -67,11 +67,11 @@ function urlMatchesInstanceHost(url: URL, instanceUrls: string[]): boolean {
 }
 
 export {
-    stripAnchorsAndSearchParams,
-    removeLeadingSlash,
     addLeadingSlash,
-    removeTrailingSlash,
     getInstanceUrls,
+    removeLeadingSlash,
+    removeTrailingSlash,
+    stripAnchorsAndSearchParams,
     toBaseUrl,
     urlMatchesInstanceHost
 };
