@@ -787,14 +787,8 @@ export class SdkGenerator {
         await this.coreUtilitiesManager.copyCoreUtilitiesToVolume(volume);
     }
 
-    public async copyCoreUtilities({
-        pathToSrc,
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+    public async copyCoreUtilities({ pathToRoot }: { pathToRoot: AbsoluteFilePath }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToRoot });
     }
 
     public async generatePublicExports({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {

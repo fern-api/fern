@@ -315,17 +315,8 @@ export class ExpressGenerator {
         });
     }
 
-    public async copyCoreUtilities({
-        pathToSrc,
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({
-            pathToSrc,
-            pathToRoot
-        });
+    public async copyCoreUtilities({ pathToRoot }: { pathToRoot: AbsoluteFilePath }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToRoot });
     }
 
     private getTypesToGenerate(): Record<FernIr.TypeId, FernIr.TypeDeclaration> {

@@ -178,21 +178,15 @@ export class CoreUtilitiesManager {
     public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
         const coreFiles = await this.collectCoreUtilityFiles();
 
-        await Promise.all(
-            coreFiles.map(async ({ destinationFile, content }) => {
-                const volumePath = "/" + destinationFile;
-                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
-                volume.writeFileSync(volumePath, content);
-            })
-        );
+        // mkdirSync/writeFileSync are synchronous — no need for Promise.all.
+        for (const { destinationFile, content } of coreFiles) {
+            const volumePath = "/" + destinationFile;
+            volume.mkdirSync(path.dirname(volumePath), { recursive: true });
+            volume.writeFileSync(volumePath, content);
+        }
     }
 
-    public async copyCoreUtilities({
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
+    public async copyCoreUtilities({ pathToRoot }: { pathToRoot: AbsoluteFilePath }): Promise<void> {
         const coreFiles = await this.collectCoreUtilityFiles();
 
         await Promise.all(
@@ -207,6 +201,9 @@ export class CoreUtilitiesManager {
     /**
      * Collects all core utility files with their destination paths and content.
      * Shared by both copyCoreUtilitiesToVolume (in-memory) and copyCoreUtilities (disk).
+     *
+     * Files are read as UTF-8 strings because replaceImportPaths needs string
+     * content. All core utility files are .ts source files so this is safe.
      */
     private async collectCoreUtilityFiles(): Promise<Array<{ destinationFile: string; content: string }>> {
         const globResults = await Promise.all(

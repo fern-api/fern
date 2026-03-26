@@ -192,10 +192,15 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(options?: {
-        fixEsmImports?: boolean;
-        beforeFixImports?: (volume: Volume) => Promise<void>;
-    }): Promise<PersistedTypescriptProject> {
+    /**
+     * Writes the project to disk.
+     *
+     * @param esmImportHook - When provided, enables in-memory ESM import fixup.
+     *   The hook runs AFTER ts-morph source files are written to the Volume but
+     *   BEFORE imports are processed, allowing callers to inject additional files
+     *   (e.g. core utilities) so their imports are fixed in the same pass.
+     */
+    public async persist(esmImportHook?: (volume: Volume) => Promise<void>): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
@@ -209,18 +214,15 @@ export abstract class TypescriptProject {
 
         await this.addFilesToVolume();
 
-        // Hook for writing additional files (e.g. core utilities) into the Volume
-        // after ts-morph source files, so they overwrite at overlapping paths
-        // (preserving the old semantic where core utilities take precedence).
-        if (options?.beforeFixImports) {
-            await options.beforeFixImports(this.volume);
-        }
+        if (esmImportHook) {
+            // Hook for writing additional files (e.g. core utilities) into the Volume
+            // after ts-morph source files, so they overwrite at overlapping paths
+            // (preserving the old semantic where core utilities take precedence).
+            await esmImportHook(this.volume);
 
-        // Fix ESM imports in-memory before writing to disk. Core utility files
-        // should already be in the Volume (via beforeFixImports hook) so their
-        // imports are processed alongside generated source files — no post-persist
-        // disk pass needed for core utilities.
-        if (options?.fixEsmImports) {
+            // Fix ESM imports in-memory before writing to disk. Core utility files
+            // should already be in the Volume (via the hook above) so their imports
+            // are processed alongside generated source files.
             fixImportsInVolume(this.volume, this.packagePath);
         }
 

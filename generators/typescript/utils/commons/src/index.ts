@@ -43,7 +43,6 @@ export { type TypeReferenceNode } from "./TypeReferenceNode.js";
 export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest.js";
 export {
     fixImportsForCoreFiles,
-    fixImportsForEsm,
     fixImportsInSource,
     fixImportsInVolume
 } from "./typescript-project/fixImportsForEsm.js";

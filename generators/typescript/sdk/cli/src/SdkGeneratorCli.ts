@@ -8,6 +8,7 @@ import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,
     fixImportsForCoreFiles,
+    type MemfsVolume,
     NpmPackage,
     PersistedTypescriptProject,
     writeTemplateFiles
@@ -257,21 +258,18 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         });
         const typescriptProject = await sdkGenerator.generate();
-        const persistedTypescriptProject = await typescriptProject.persist({
-            fixEsmImports: !customConfig.useLegacyExports,
-            // Copy core utility files into the Volume AFTER writeSrcToVolume
-            // so they overwrite ts-morph files at overlapping paths (preserving
-            // the old semantic), but BEFORE fixImportsInVolume so their imports
-            // are processed in-memory alongside generated source files.
-            beforeFixImports: customConfig.useLegacyExports
-                ? undefined
-                : async (volume) => sdkGenerator.copyCoreUtilitiesToVolume(volume)
-        });
+        // When not using legacy exports, enable in-memory ESM import fixup.
+        // The hook copies core utility files into the Volume AFTER writeSrcToVolume
+        // so they overwrite ts-morph files at overlapping paths (preserving
+        // the old semantic), then fixImportsInVolume processes all imports together.
+        const esmImportHook = customConfig.useLegacyExports
+            ? undefined
+            : async (volume: MemfsVolume) => sdkGenerator.copyCoreUtilitiesToVolume(volume);
+        const persistedTypescriptProject = await typescriptProject.persist(esmImportHook);
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
         // For legacy exports, core utilities are still copied to disk the traditional way.
         if (customConfig.useLegacyExports) {
             await sdkGenerator.copyCoreUtilities({
-                pathToSrc: persistedTypescriptProject.getSrcDirectory(),
                 pathToRoot: rootDirectory
             });
         }
