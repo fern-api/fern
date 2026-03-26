@@ -21,9 +21,9 @@ export function resolveOAuthEndpointReferences({
 }: {
     ir: IntermediateRepresentation;
     authOverrides: RawSchemas.WithAuthSchema;
-}): void {
+}): IntermediateRepresentation {
     if (!authOverrides["auth-schemes"] || !ir.auth) {
-        return;
+        return ir;
     }
 
     const authSchemes = authOverrides["auth-schemes"];
@@ -55,9 +55,12 @@ export function resolveOAuthEndpointReferences({
         updatedSchemes.push(resolvedScheme ?? scheme);
     }
 
-    ir.auth = {
-        ...ir.auth,
-        schemes: updatedSchemes
+    return {
+        ...ir,
+        auth: {
+            ...ir.auth,
+            schemes: updatedSchemes
+        }
     };
 }
 

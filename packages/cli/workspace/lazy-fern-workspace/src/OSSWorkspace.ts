@@ -487,7 +487,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         // Resolve OAuth endpoint references after all specs have been merged,
         // because the token endpoint may be in a different spec than the auth scheme.
         if (authOverrides != null) {
-            resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides });
+            mergedIr = resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides });
         }
 
         return mergedIr;
