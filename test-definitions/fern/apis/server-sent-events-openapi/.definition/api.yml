@@ -1,4 +1,0 @@
-display-name: server-sent-events-openapi
-error-discrimination:
-  strategy: status-code
-name: api
