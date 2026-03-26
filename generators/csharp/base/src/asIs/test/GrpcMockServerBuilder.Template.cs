@@ -72,6 +72,6 @@ public sealed class GrpcMockServerBuilder
             }
         );
 
-        return new GrpcMockServer(server, channel);
+        return new GrpcMockServer(server, channel, httpClient);
     }
 }

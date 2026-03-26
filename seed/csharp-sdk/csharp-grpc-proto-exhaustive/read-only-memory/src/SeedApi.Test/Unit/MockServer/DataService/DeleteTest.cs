@@ -33,10 +33,7 @@ public class DeleteTest
             {
                 BaseUrl = "http://localhost",
                 MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions
-                {
-                    HttpClient = mock.Channel.CreateHttpClient(),
-                },
+                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
             }
         );
 
@@ -77,10 +74,7 @@ public class DeleteTest
             {
                 BaseUrl = "http://localhost",
                 MaxRetries = 0,
-                GrpcOptions = new GrpcChannelOptions
-                {
-                    HttpClient = mock.Channel.CreateHttpClient(),
-                },
+                GrpcOptions = new GrpcChannelOptions { HttpClient = mock.HttpClient },
             }
         );
 

@@ -69,6 +69,6 @@ public sealed class GrpcMockServerBuilder
             new GrpcChannelOptions { HttpClient = httpClient }
         );
 
-        return new GrpcMockServer(server, channel);
+        return new GrpcMockServer(server, channel, httpClient);
     }
 }

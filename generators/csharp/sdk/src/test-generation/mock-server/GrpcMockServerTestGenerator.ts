@@ -228,7 +228,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         writer.writeLine("        MaxRetries = 0,");
         writer.writeLine("        GrpcOptions = new GrpcChannelOptions");
         writer.writeLine("        {");
-        writer.writeLine("            HttpClient = mock.Channel.CreateHttpClient(),");
+        writer.writeLine("            HttpClient = mock.HttpClient,");
         writer.writeLine("        }");
         writer.writeLine("    }");
         writer.writeTextStatement(")");

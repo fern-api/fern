@@ -11,10 +11,11 @@ public sealed class GrpcMockServer : IAsyncDisposable
 {
     private readonly TestServer _server;
 
-    internal GrpcMockServer(TestServer server, GrpcChannel channel)
+    internal GrpcMockServer(TestServer server, GrpcChannel channel, HttpClient httpClient)
     {
         _server = server;
         Channel = channel;
+        HttpClient = httpClient;
     }
 
     /// <summary>
@@ -23,10 +24,17 @@ public sealed class GrpcMockServer : IAsyncDisposable
     /// </summary>
     public GrpcChannel Channel { get; }
 
+    /// <summary>
+    /// The <see cref="HttpClient"/> connected to the in-process server.
+    /// Use this for <c>GrpcChannelOptions.HttpClient</c> when constructing SDK clients.
+    /// </summary>
+    public HttpClient HttpClient { get; }
+
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
         Channel.Dispose();
+        HttpClient.Dispose();
         _server.Dispose();
     }
 }

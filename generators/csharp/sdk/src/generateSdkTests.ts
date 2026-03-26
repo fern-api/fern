@@ -60,6 +60,16 @@ function generateGrpcMockServerTests({ context }: { context: SdkGeneratorContext
     // Track generated stub classes per service to avoid duplicates
     const stubGeneratorsByService = new Map<string, GrpcStubGenerator>();
 
+    // Skip if multi-URL environments without default (snippets don't support setting environment)
+    if (
+        context.ir.environments?.environments.type === "multipleBaseUrls" &&
+        context.ir.environments.defaultEnvironment == null
+    ) {
+        return [];
+    }
+
+    const servicesWithTests = new Set<string>();
+
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         const grpcClientInfo = context.getGrpcClientInfoForServiceId(serviceId);
         if (grpcClientInfo == null) {
@@ -100,12 +110,15 @@ function generateGrpcMockServerTests({ context }: { context: SdkGeneratorContext
                 stubGenerator
             );
             files.push(testGenerator.generate());
+            servicesWithTests.add(serviceId);
         }
     }
 
-    // Generate stub files for each service that had at least one test
-    for (const stubGenerator of stubGeneratorsByService.values()) {
-        files.push(stubGenerator.generate());
+    // Generate stub files only for services that had at least one test
+    for (const [serviceId, stubGenerator] of stubGeneratorsByService.entries()) {
+        if (servicesWithTests.has(serviceId)) {
+            files.push(stubGenerator.generate());
+        }
     }
 
     return files;
