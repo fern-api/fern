@@ -1,30 +1,34 @@
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadDocsWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { camelCase } from "lodash-es";
 
+import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter.js";
+import { NodeIdGenerator } from "../NodeIdGenerator.js";
+import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
+
 const context = createMockTaskContext();
+
+const FIXTURE_DIR = resolve(AbsoluteFilePath.of(__dirname), "fixtures/tag-description-pages/fern");
 
 describe("tag-description-pages", () => {
     describe("tag name normalization for subpackage lookup", () => {
         it("normalizes tags with spaces to match subpackage names", () => {
-            // This test verifies the fix for tags with spaces not matching subpackage names.
-            // Subpackage names are derived using camelCase (see getEndpointLocation.ts lines 40, 101, 184).
-            // The openApiTags lookup must use the same normalization.
+            // Subpackage names are derived using camelCase (see getEndpointLocation.ts).
             expect(camelCase("Study Collections")).toBe("studyCollections");
             expect(camelCase("User Management")).toBe("userManagement");
         });
 
         it("normalizes tags with hyphens to match subpackage names", () => {
-            // Tags with hyphens must also normalize to camelCase for the lookup to work
             expect(camelCase("study-collections")).toBe("studyCollections");
             expect(camelCase("user-management")).toBe("userManagement");
         });
 
         it("ensures different tag formats normalize to the same subpackage name", () => {
-            // This is the core of the bug fix: tags like "Study Collections" and "study-collections"
-            // must both normalize to "studyCollections" to match the subpackage name lookup
             const tagWithSpaces = "Study Collections";
             const tagWithHyphens = "study-collections";
             const expectedSubpackageName = "studyCollections";
@@ -37,7 +41,7 @@ describe("tag-description-pages", () => {
 
     it("parses tag-description-pages configuration correctly", async () => {
         const docsWorkspace = await loadDocsWorkspace({
-            fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/tag-description-pages/fern"),
+            fernDirectory: FIXTURE_DIR,
             context
         });
 
@@ -62,7 +66,6 @@ describe("tag-description-pages", () => {
 
         const apiSection = parsedDocsConfig.navigation.items[0];
 
-        // Verify tag-description-pages is enabled
         expect(apiSection.tagDescriptionPages).toBe(true);
         expect(apiSection.tagDescriptionPages).toMatchSnapshot("tag-description-pages-enabled");
     });
@@ -94,41 +97,245 @@ describe("tag-description-pages", () => {
 
         const apiSection = parsedDocsConfig.navigation.items[0];
 
-        // Verify tag-description-pages defaults to false
         expect(apiSection.tagDescriptionPages).toBe(false);
         expect(apiSection.tagDescriptionPages).toMatchSnapshot("tag-description-pages-disabled");
     });
 
-    it("validates that tag description content is accessible", async () => {
-        // This is a simple test to ensure the getter method works
-        // More comprehensive integration tests would require a full setup
-        const docsWorkspace = await loadDocsWorkspace({
-            fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/tag-description-pages/fern"),
-            context
+    describe("tag description content preservation", () => {
+        it("does not escape curly braces or angle brackets in tag descriptions", async () => {
+            const docsWorkspace = await loadDocsWorkspace({
+                fernDirectory: FIXTURE_DIR,
+                context
+            });
+
+            if (docsWorkspace == null) {
+                throw new Error("Workspace is null");
+            }
+
+            const parsedDocsConfig = await parseDocsConfiguration({
+                rawDocsConfiguration: docsWorkspace.config,
+                context,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+            });
+
+            if (parsedDocsConfig.navigation.type !== "untabbed") {
+                throw new Error("Expected untabbed navigation");
+            }
+
+            if (parsedDocsConfig.navigation.items[0]?.type !== "apiSection") {
+                throw new Error("Expected apiSection");
+            }
+
+            const apiSection = parsedDocsConfig.navigation.items[0];
+
+            const result = await loadAPIWorkspace({
+                absolutePathToWorkspace: FIXTURE_DIR,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: undefined
+            });
+
+            if (!result.didSucceed) {
+                throw new Error("API workspace failed to load");
+            }
+
+            const apiWorkspace = await result.workspace.toFernWorkspace({ context });
+            const slug = FernNavigation.V1.SlugGenerator.init("/docs");
+
+            const ir = generateIntermediateRepresentation({
+                workspace: apiWorkspace,
+                audiences: { type: "all" },
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, apiWorkspace)
+            });
+
+            const apiDefinition = convertIrToApiDefinition({
+                ir,
+                apiDefinitionId: "test-api-id",
+                context
+            });
+
+            // Provide openApiTags with descriptions containing special characters
+            const openApiTags: Record<string, { id: string; description: string | undefined }> = {
+                pet: {
+                    id: "pet",
+                    description: [
+                        "Everything about your Pets.",
+                        "",
+                        "Use the `{petId}` path parameter to identify a specific pet.",
+                        "For example: `GET /pets/{petId}`",
+                        "",
+                        "```json",
+                        "{",
+                        '  "id": 10,',
+                        '  "name": "doggie",',
+                        '  "status": "available"',
+                        "}",
+                        "```",
+                        "",
+                        "Filter pets with query params like `status=available` or `tags=<indoor>`."
+                    ].join("\n")
+                },
+                store: { id: "store", description: "Access to Petstore orders" },
+                user: { id: "user", description: "Operations about user" },
+                studyCollections: {
+                    id: "Study Collections",
+                    description: "Manage study collections and their contents"
+                },
+                userManagement: { id: "user-management", description: "User management operations" }
+            };
+
+            const converter = new ApiReferenceNodeConverter(
+                apiSection,
+                apiDefinition,
+                slug,
+                docsWorkspace,
+                context,
+                new Map(),
+                new Map(),
+                new Map(),
+                NodeIdGenerator.init(),
+                new Map(),
+                apiWorkspace,
+                undefined,
+                undefined,
+                openApiTags
+            );
+
+            const tagDescriptionContent = converter.getTagDescriptionContent();
+
+            // Find the pet tag description entry
+            let petContent: string | undefined;
+            for (const [, content] of tagDescriptionContent.entries()) {
+                if (content.startsWith("# Pet")) {
+                    petContent = content;
+                    break;
+                }
+            }
+
+            expect(petContent).toBeDefined();
+
+            // Verify curly braces are NOT escaped (the bug was adding backslashes)
+            expect(petContent).not.toContain("\\{");
+            expect(petContent).not.toContain("\\}");
+
+            // Verify angle brackets are NOT HTML-entity-encoded
+            expect(petContent).not.toContain("&lt;");
+            expect(petContent).not.toContain("&gt;");
+
+            // Verify the raw content is preserved as-is
+            expect(petContent).toContain("{petId}");
+            expect(petContent).toContain("```json");
+            expect(petContent).toContain('"id": 10');
+            expect(petContent).toContain("<indoor>");
         });
 
-        expect(docsWorkspace).toBeDefined();
-        expect(docsWorkspace?.config).toBeDefined();
+        it("preserves plain text descriptions without modification", async () => {
+            const docsWorkspace = await loadDocsWorkspace({
+                fernDirectory: FIXTURE_DIR,
+                context
+            });
 
-        if (!docsWorkspace) {
-            throw Error("Unexpected null docs workspace");
-        }
+            if (docsWorkspace == null) {
+                throw new Error("Workspace is null");
+            }
 
-        // This validates that our test fixture is properly set up
-        // and the configuration parsing works correctly
-        const parsedDocsConfig = await parseDocsConfiguration({
-            rawDocsConfiguration: docsWorkspace.config,
-            context,
-            absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-            absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+            const parsedDocsConfig = await parseDocsConfiguration({
+                rawDocsConfiguration: docsWorkspace.config,
+                context,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+            });
+
+            if (parsedDocsConfig.navigation.type !== "untabbed") {
+                throw new Error("Expected untabbed navigation");
+            }
+
+            if (parsedDocsConfig.navigation.items[0]?.type !== "apiSection") {
+                throw new Error("Expected apiSection");
+            }
+
+            const apiSection = parsedDocsConfig.navigation.items[0];
+
+            const result = await loadAPIWorkspace({
+                absolutePathToWorkspace: FIXTURE_DIR,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: undefined
+            });
+
+            if (!result.didSucceed) {
+                throw new Error("API workspace failed to load");
+            }
+
+            const apiWorkspace = await result.workspace.toFernWorkspace({ context });
+            const slug = FernNavigation.V1.SlugGenerator.init("/docs");
+
+            const ir = generateIntermediateRepresentation({
+                workspace: apiWorkspace,
+                audiences: { type: "all" },
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, apiWorkspace)
+            });
+
+            const apiDefinition = convertIrToApiDefinition({
+                ir,
+                apiDefinitionId: "test-api-id",
+                context
+            });
+
+            const openApiTags: Record<string, { id: string; description: string | undefined }> = {
+                pet: { id: "pet", description: "Everything about your Pets" },
+                store: { id: "store", description: "Access to Petstore orders" },
+                user: { id: "user", description: "Operations about user" },
+                studyCollections: {
+                    id: "Study Collections",
+                    description: "Manage study collections and their contents"
+                },
+                userManagement: { id: "user-management", description: "User management operations" }
+            };
+
+            const converter = new ApiReferenceNodeConverter(
+                apiSection,
+                apiDefinition,
+                slug,
+                docsWorkspace,
+                context,
+                new Map(),
+                new Map(),
+                new Map(),
+                NodeIdGenerator.init(),
+                new Map(),
+                apiWorkspace,
+                undefined,
+                undefined,
+                openApiTags
+            );
+
+            const tagDescriptionContent = converter.getTagDescriptionContent();
+
+            // Verify plain text descriptions are stored without any transformation
+            for (const [, content] of tagDescriptionContent.entries()) {
+                expect(content).not.toContain("\\{");
+                expect(content).not.toContain("\\}");
+                expect(content).not.toContain("&lt;");
+                expect(content).not.toContain("&gt;");
+            }
         });
-
-        // Verify the tag-description-pages setting is enabled in our test fixture
-        if (
-            parsedDocsConfig.navigation.type === "untabbed" &&
-            parsedDocsConfig.navigation.items[0]?.type === "apiSection"
-        ) {
-            expect(parsedDocsConfig.navigation.items[0].tagDescriptionPages).toBe(true);
-        }
     });
 });

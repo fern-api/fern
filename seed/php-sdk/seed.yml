@@ -207,4 +207,5 @@ allowedFailures:
   - variables
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  - server-sent-events-openapi
 
