@@ -10,6 +10,22 @@
   createdAt: "2026-03-25"
   irVersion: 65
 
+- version: 4.46.2
+  changelogEntry:
+    - summary: |
+        Fix Go SDK auto-versioning returning incorrect versions for modules with
+        major version >= 2. The Go module proxy treats `github.com/owner/repo` and
+        `github.com/owner/repo/v2` as separate modules, but `getGoPackageName()`
+        only constructed the base path without the `/vN` suffix. This caused the
+        version resolver to find ancient v0.x versions instead of the current v2.x+
+        versions, producing wrong `sdkVersion` values in `.fern/metadata.json` and
+        incorrect module paths in generated code. The Go proxy lookup now probes
+        `/v2` through `/v10` in parallel to discover the highest published major
+        version.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.46.1
   changelogEntry:
     - summary: |

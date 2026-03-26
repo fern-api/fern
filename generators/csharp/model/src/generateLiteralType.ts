@@ -4,6 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type Literal = FernIr.Literal;
+
 export type { Literal };
 
 /**
