@@ -8,6 +8,14 @@ import { upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper.js";
 
+/**
+ * Normalizes a snake_case name to match RuboCop's `Naming/VariableNumber` `normalcase` style.
+ * Removes underscores immediately before digit sequences (e.g., `account_last_4` -> `account_last4`).
+ */
+function normalizeVariableNumber(name: string): string {
+    return name.replace(/_(\d)/g, "$1");
+}
+
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseRubyCustomConfigSchema | undefined;
@@ -91,7 +99,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return this.getName(name.snakeCase.safeName);
+        return this.getName(normalizeVariableNumber(name.snakeCase.safeName));
     }
 
     private getName(name: string): string {

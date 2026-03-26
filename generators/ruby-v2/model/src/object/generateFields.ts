@@ -2,6 +2,14 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
+/**
+ * Normalizes a snake_case name to match RuboCop's `Naming/VariableNumber` `normalcase` style.
+ * Removes underscores immediately before digit sequences (e.g., `account_last_4` -> `account_last4`).
+ */
+function normalizeVariableNumber(name: string): string {
+    return name.replace(/_(\d)/g, "$1");
+}
+
 export function generateFields({
     typeDeclaration,
     properties,
@@ -12,7 +20,7 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = prop.name.name.snakeCase.safeName;
+        const fieldName = normalizeVariableNumber(prop.name.name.snakeCase.safeName);
         const wireValue = prop.name.wireValue;
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 

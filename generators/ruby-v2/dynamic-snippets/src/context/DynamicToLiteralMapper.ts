@@ -5,6 +5,14 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
+/**
+ * Normalizes a snake_case name to match RuboCop's `Naming/VariableNumber` `normalcase` style.
+ * Removes underscores immediately before digit sequences (e.g., `account_last_4` -> `account_last4`).
+ */
+function normalizeVariableNumber(name: string): string {
+    return name.replace(/_(\d)/g, "$1");
+}
+
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
@@ -439,8 +447,9 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key);
                 const property = object.properties.find((p) => p.name.wireValue === key);
                 const typeReference = property?.typeReference ?? { type: "unknown" };
-                // Use snake_case property name for Ruby, falling back to wire value if not found
-                const propertyName = property?.name.name.snakeCase.safeName ?? key;
+                // Use snake_case property name for Ruby, falling back to wire value if not found.
+                // Normalize to remove underscores before digits for RuboCop normalcase style.
+                const propertyName = normalizeVariableNumber(property?.name.name.snakeCase.safeName ?? key);
                 const astNode = {
                     key: ruby.TypeLiteral.string(propertyName),
                     value: this.convert({ typeReference, value: val })
