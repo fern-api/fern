@@ -12,7 +12,7 @@ module Seed
         "User-Agent" => "fern_basic-auth/0.0.1",
         "X-Fern-Language" => "Ruby"
       }
-      headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}" if !username.nil? && !password.nil?
+      headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}"
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers
