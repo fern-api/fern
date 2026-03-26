@@ -119,6 +119,9 @@ function generateGrpcMockServerTests({ context }: { context: SdkGeneratorContext
                 grpcClientInfo,
                 stubGenerator
             );
+            if (!testGenerator.shouldGenerate()) {
+                continue;
+            }
             files.push(testGenerator.generate());
             servicesWithTests.add(serviceId);
         }

@@ -64,6 +64,35 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         return [this.namespaces.mockServerTest, ...segments].join(".");
     }
 
+    /**
+     * Returns true if at least one example produces a valid test method.
+     * This pre-filters examples using the same logic as doGenerate() to avoid
+     * producing empty test files.
+     */
+    public override shouldGenerate(): boolean {
+        return this.exampleEndpointCalls.some((example) => {
+            const endpointSnippet = this.grpcEndpointGenerator.generateGrpcEndpointSnippet({
+                example,
+                endpoint: this.endpoint,
+                clientVariableName: "Client",
+                serviceId: this.serviceId,
+                parseDatetimes: true,
+                getResult: true
+            });
+            if (endpointSnippet == null) {
+                return false;
+            }
+            const snippetCode = endpointSnippet.toString({
+                namespace: this.getTestNamespace(),
+                allNamespaceSegments: this.context.getAllNamespaceSegments(),
+                allTypeClassReferences: this.context.getAllTypeClassReferences(),
+                generation: this.generation,
+                skipImports: true
+            });
+            return !hasUnsupportedSnippetPattern(snippetCode);
+        });
+    }
+
     protected doGenerate(): CSharpFile {
         const testClass = this.csharp.testClass({
             name: this.classReference.name,
