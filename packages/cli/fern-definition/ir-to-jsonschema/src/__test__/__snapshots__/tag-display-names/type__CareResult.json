@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "plantId": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "timestamp": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "plantId",
+    "action"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
