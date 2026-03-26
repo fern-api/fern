@@ -8,7 +8,7 @@ namespace SeedApi.Test.Unit.MockServer.DataService;
 public class UpdateTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public Task MockServerTest_2()
     {
         DataServiceStub.OnUpdate(_ => new Data.V1.Grpc.UpdateResponse());
 
