@@ -5,24 +5,20 @@ import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
+import com.fern.ir.model.types.UnionDiscriminatorContext;
 import com.fern.ir.model.types.UnionTypeDeclaration;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 /**
- * Analyzes SSE payload types to determine if event-level or data-level discrimination is needed.
+ * Analyzes SSE payload types to determine if protocol-level or data-level discrimination is needed.
  *
- * <p>Following Python's approach from PR #11726: - If the union's discriminator property name matches an SSE envelope
- * field (event, id, retry, data), it's event-level discrimination. - Otherwise, it's data-level discrimination where
- * the discriminator is inside the JSON data payload.
+ * <p>Uses the IR's {@code discriminatorContext} on the union declaration: if the context is
+ * {@code PROTOCOL}, the discriminator lives at the SSE envelope level and requires custom handling.
+ * Otherwise (including absent/default), the discriminator is inside the JSON data payload and
+ * Jackson handles it automatically.
  */
 public final class SseDiscriminationAnalyzer {
-
-    /** SSE envelope fields that indicate event-level discrimination when used as a discriminator. */
-    private static final Set<String> SSE_ENVELOPE_FIELDS = new HashSet<>(Arrays.asList("event", "id", "retry", "data"));
 
     /** Type of discrimination for SSE events. */
     public enum DiscriminationType {
@@ -31,7 +27,7 @@ public final class SseDiscriminationAnalyzer {
         /** Discriminator is inside the JSON data payload - Jackson handles automatically */
         DATA_LEVEL,
         /** Discriminator is at SSE envelope level - requires custom handling */
-        EVENT_LEVEL
+        PROTOCOL_LEVEL
     }
 
     /** Result of SSE discrimination analysis. */
@@ -60,8 +56,8 @@ public final class SseDiscriminationAnalyzer {
             return new SseDiscriminationInfo(DiscriminationType.DATA_LEVEL, discriminatorProperty);
         }
 
-        public static SseDiscriminationInfo eventLevel(String discriminatorProperty) {
-            return new SseDiscriminationInfo(DiscriminationType.EVENT_LEVEL, discriminatorProperty);
+        public static SseDiscriminationInfo protocolLevel(String discriminatorProperty) {
+            return new SseDiscriminationInfo(DiscriminationType.PROTOCOL_LEVEL, discriminatorProperty);
         }
     }
 
@@ -90,17 +86,14 @@ public final class SseDiscriminationAnalyzer {
         // Get the discriminant property name
         String discriminatorProperty = unionDeclaration.get().getDiscriminant().getWireValue();
 
-        // Check if the discriminator is an SSE envelope field
-        if (isEventLevelDiscriminator(discriminatorProperty)) {
-            return SseDiscriminationInfo.eventLevel(discriminatorProperty);
+        // Use the IR's discriminatorContext to determine discrimination level
+        Optional<UnionDiscriminatorContext> context =
+                unionDeclaration.get().getDiscriminatorContext();
+        if (context.isPresent() && context.get().equals(UnionDiscriminatorContext.PROTOCOL)) {
+            return SseDiscriminationInfo.protocolLevel(discriminatorProperty);
         } else {
             return SseDiscriminationInfo.dataLevel(discriminatorProperty);
         }
-    }
-
-    /** Checks if the discriminator property indicates event-level discrimination. */
-    public static boolean isEventLevelDiscriminator(String discriminatorProperty) {
-        return SSE_ENVELOPE_FIELDS.contains(discriminatorProperty);
     }
 
     /** Resolves a TypeReference to its UnionTypeDeclaration, following aliases if necessary. */
