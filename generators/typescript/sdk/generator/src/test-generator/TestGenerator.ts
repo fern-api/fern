@@ -1717,6 +1717,7 @@ describe("${serviceName}", () => {
                         }
                         const sseLines = events.map((event) => {
                             let dataJson: unknown = event.data.jsonExample;
+                            let sseEventField = event.event;
                             if (
                                 discriminantField != null &&
                                 dataJson != null &&
@@ -1724,10 +1725,13 @@ describe("${serviceName}", () => {
                                 !Array.isArray(dataJson)
                             ) {
                                 const copy = { ...(dataJson as Record<string, unknown>) };
+                                if (!sseEventField && discriminantField in copy) {
+                                    sseEventField = String(copy[discriminantField]);
+                                }
                                 delete copy[discriminantField];
                                 dataJson = copy;
                             }
-                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
+                            return `event: ${sseEventField}\ndata: ${JSON.stringify(dataJson)}\n`;
                         });
                         return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },
