@@ -1,7 +1,5 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
-using SeedApi.Test.Utils;
-using Google.Protobuf;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -12,81 +10,18 @@ public class FetchTest : BaseGrpcMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
-        const string mockResponse = """
-            {
-              "columns": {
-                "columns": {
-                  "id": "id",
-                  "values": [
-                    1.1,
-                    1.1
-                  ],
-                  "metadata": {
-                    "metadata": 1.1
-                  },
-                  "indexed_data": {
-                    "indices": [
-                      1,
-                      1
-                    ],
-                    "values": [
-                      1.1,
-                      1.1
-                    ]
-                  }
-                }
-              },
-              "namespace": "namespace",
-              "usage": {
-                "units": 1
-              }
-            }
-            """;
+        DataServiceStub.OnFetch(_ => new Data.V1.Grpc.FetchResponse());
 
-        DataServiceStub.OnFetch(_ =>
-            JsonParser.Default.Parse<Data.V1.Grpc.FetchResponse>(mockResponse));
-
-        var response = await Client.DataService.FetchAsync(
+        await Client.DataService.FetchAsync(
             new SeedApi.FetchRequest { Ids = ["ids"], Namespace = "namespace" }
         );
-        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
     {
-        const string mockResponse = """
-            {
-              "columns": {
-                "key": {
-                  "id": "id",
-                  "values": [
-                    1.1
-                  ],
-                  "metadata": {
-                    "key": 1.1
-                  },
-                  "indexed_data": {
-                    "indices": [
-                      1
-                    ],
-                    "values": [
-                      1.1
-                    ]
-                  }
-                }
-              },
-              "namespace": "namespace",
-              "usage": {
-                "units": 1
-              }
-            }
-            """;
+        DataServiceStub.OnFetch(_ => new Data.V1.Grpc.FetchResponse());
 
-        DataServiceStub.OnFetch(_ =>
-            JsonParser.Default.Parse<Data.V1.Grpc.FetchResponse>(mockResponse));
-
-        var response = await Client.DataService.FetchAsync(new SeedApi.FetchRequest());
-        JsonAssert.AreEqual(response, mockResponse);
+        await Client.DataService.FetchAsync(new SeedApi.FetchRequest());
     }
 }

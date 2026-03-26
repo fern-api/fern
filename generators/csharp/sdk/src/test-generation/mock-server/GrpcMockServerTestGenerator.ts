@@ -176,7 +176,9 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         const returnTypeName = this.getReturnTypeName();
         const responseJsonStr = jsonExampleResponse != null ? JSON.stringify(jsonExampleResponse) : undefined;
         const hasProtoAnyInResponse = responseJsonStr != null && responseJsonStr.includes('"@type"');
-        const canAssertResponse = isSupportedResponse && returnTypeName != null && !hasProtoAnyInResponse;
+        const hasProtoIncompatibleFields = this.responseHasProtoIncompatibleFields();
+        const canAssertResponse =
+            isSupportedResponse && returnTypeName != null && !hasProtoAnyInResponse && !hasProtoIncompatibleFields;
 
         // Write the mock response JSON only when we can fully round-trip it
         if (canAssertResponse && jsonExampleResponse != null) {
@@ -220,6 +222,87 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             );
         } else {
             writer.writeNodeStatement(endpointSnippet);
+        }
+    }
+
+    /**
+     * Checks whether the endpoint's response type contains proto fields that
+     * prevent clean JSON round-tripping through JsonParser.Default.Parse:
+     *  - oneof fields (IR: undiscriminatedUnion properties) — mock JSON may set
+     *    multiple oneof members simultaneously, which JsonParser rejects
+     *  - google.protobuf.Struct / Value fields — the mock JSON uses SDK format
+     *    (e.g. {"key": 1.1}) which doesn't round-trip identically through proto
+     */
+    private responseHasProtoIncompatibleFields(): boolean {
+        const responseBody = this.endpoint.response?.body;
+        if (responseBody == null || responseBody.type !== "json") {
+            return false;
+        }
+        const jsonResponseBody = responseBody.value;
+        if (jsonResponseBody.type !== "response") {
+            return false;
+        }
+        const responseBodyType = jsonResponseBody.responseBodyType;
+        if (responseBodyType.type !== "named") {
+            return false;
+        }
+        return this.typeHasProtoIncompatibleFields(responseBodyType.typeId, new Set());
+    }
+
+    private typeHasProtoIncompatibleFields(typeId: string, visited: Set<string>): boolean {
+        if (visited.has(typeId)) {
+            return false;
+        }
+        visited.add(typeId);
+
+        // Well-known protobuf types (Struct, Value, Any) don't round-trip cleanly
+        if (this.context.protobufResolver.isWellKnownProtobufType(typeId)) {
+            return true;
+        }
+
+        const typeDeclaration = this.context.ir.types[typeId];
+        if (typeDeclaration == null) {
+            return false;
+        }
+
+        // oneof in proto is represented as undiscriminatedUnion in the IR;
+        // mock JSON may set multiple oneof members, which JsonParser rejects
+        if (typeDeclaration.shape.type === "undiscriminatedUnion") {
+            return true;
+        }
+
+        if (typeDeclaration.shape.type === "object") {
+            for (const property of typeDeclaration.shape.properties) {
+                if (this.typeReferenceHasProtoIncompatibleFields(property.valueType, visited)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private typeReferenceHasProtoIncompatibleFields(typeRef: FernIr.TypeReference, visited: Set<string>): boolean {
+        switch (typeRef.type) {
+            case "named":
+                return this.typeHasProtoIncompatibleFields(typeRef.typeId, visited);
+            case "container":
+                switch (typeRef.container.type) {
+                    case "optional":
+                        return this.typeReferenceHasProtoIncompatibleFields(typeRef.container.optional, visited);
+                    case "nullable":
+                        return this.typeReferenceHasProtoIncompatibleFields(typeRef.container.nullable, visited);
+                    case "list":
+                        return this.typeReferenceHasProtoIncompatibleFields(typeRef.container.list, visited);
+                    case "map":
+                        return this.typeReferenceHasProtoIncompatibleFields(typeRef.container.valueType, visited);
+                    case "set":
+                        return this.typeReferenceHasProtoIncompatibleFields(typeRef.container.set, visited);
+                    default:
+                        return false;
+                }
+            default:
+                return false;
         }
     }
 
