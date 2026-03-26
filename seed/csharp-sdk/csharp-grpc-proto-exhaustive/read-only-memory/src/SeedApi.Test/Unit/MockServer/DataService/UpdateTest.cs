@@ -12,8 +12,8 @@ public class UpdateTest : BaseGrpcMockServerTest
     {
         DataServiceStub.OnUpdate(_ => new Data.V1.Grpc.UpdateResponse());
 
-        await Assert.DoesNotThrowAsync(async () => await Client.DataService.UpdateAsync(
+        await Client.DataService.UpdateAsync(
             new SeedApi.UpdateRequest { Id = "id" }
-        ));
+        );
     }
 }

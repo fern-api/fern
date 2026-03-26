@@ -219,9 +219,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             );
         } else {
-            writer.write("await Assert.DoesNotThrowAsync(async () => ");
-            writer.writeNode(endpointSnippet);
-            writer.write(");");
+            writer.writeNodeStatement(endpointSnippet);
         }
     }
 
