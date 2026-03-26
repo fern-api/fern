@@ -198,10 +198,10 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.addNamespace(this.namespaces.core);
             writer.writeTextStatement(
                 `${stubClassName}.On${methodName}(_ =>\n` +
-                `{\n` +
-                `    var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);\n` +
-                `    return mockObject.ToProto();\n` +
-                `})`
+                    `{\n` +
+                    `    var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);\n` +
+                    `    return mockObject.ToProto();\n` +
+                    `})`
             );
         } else {
             writer.writeTextStatement(`${stubClassName}.On${methodName}(_ => new ${protoResponseType}())`);
