@@ -463,9 +463,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             if (isAuthOptional) {
                                 innerWriter.controlFlow(
                                     "if",
-                                    this.csharp.codeblock(
-                                        `${usernameAccess} != null && ${passwordAccess} != null`
-                                    )
+                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
                                 );
                             }
                             innerWriter.writeTextStatement(
