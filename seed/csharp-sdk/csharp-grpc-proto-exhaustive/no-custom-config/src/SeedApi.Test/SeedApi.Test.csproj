@@ -49,6 +49,23 @@
     />
   </ItemGroup>
 
+  <!--
+      Grpc.Tools compiles .proto files and generates both message types (*. cs) and
+      gRPC service stubs (*Grpc.cs). The message types are already provided by the
+      SDK project reference, so including them here causes CS0029 type-identity
+      conflicts between the two assemblies. This target removes the duplicate
+      message-only files from compilation, keeping only the *Grpc.cs server stubs.
+    -->
+  <Target Name="ExcludeProtoMessageTypes" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <_ProtoMessageFiles
+        Include="$(IntermediateOutputPath)**\*.cs"
+        Exclude="$(IntermediateOutputPath)**\*Grpc.cs"
+      />
+      <Compile Remove="@(_ProtoMessageFiles)" />
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\SeedApi\SeedApi.csproj" />
   </ItemGroup>
