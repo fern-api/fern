@@ -8,6 +8,7 @@ import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
 import { AnnouncementConfig } from "./AnnouncementConfig.js";
 import { BackgroundImageConfiguration } from "./BackgroundImageConfiguration.js";
+import { CheckConfig } from "./CheckConfig.js";
 import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { CssConfig } from "./CssConfig.js";
 import { DocsInstance } from "./DocsInstance.js";
@@ -62,6 +63,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
+    check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
     backgroundImage: core.serialization.property("background-image", BackgroundImageConfiguration.optional()),
@@ -101,6 +103,7 @@ export declare namespace DocsConfiguration {
         "ai-examples"?: AiExamplesConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
+        check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;
         "background-image"?: BackgroundImageConfiguration.Raw | null;
