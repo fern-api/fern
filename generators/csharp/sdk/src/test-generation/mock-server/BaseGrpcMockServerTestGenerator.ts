@@ -64,7 +64,7 @@ export class BaseGrpcMockServerTestGenerator extends FileGenerator<CSharpFile, S
             access: ast.Access.Private,
             type: this.csharp.classReference({
                 name: "GrpcMockServer",
-                namespace: this.namespaces.mockServerTest
+                namespace: this.namespaces.root
             }),
             initializer: this.csharp.codeblock("null!")
         });
