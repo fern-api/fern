@@ -249,12 +249,16 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                this.dependencyManager.addDependency("vitest", "^4.1.1", {
                     type: DependencyType.DEV
                 });
                 break;
         }
         if (this.generateWireTests) {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
             this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });

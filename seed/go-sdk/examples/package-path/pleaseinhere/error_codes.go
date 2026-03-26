@@ -3,14 +3,7 @@
 package examples
 
 import (
-	core "github.com/examples/fern/pleaseinhere/core"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
-	404: func(apiError *core.APIError) error {
-		return &NotFoundError{
-			APIError: apiError,
-		}
-	},
-}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
