@@ -84,7 +84,7 @@
         "webpack": "^5.105.4",
         "ts-loader": "^9.5.4",
         "@types/ws": "^8.18.1",
-        "vitest": "^3.2.4",
+        "vitest": "^4.1.1",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.9.3",
