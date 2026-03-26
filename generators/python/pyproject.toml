@@ -21,6 +21,9 @@ isort = "^6.0.1"
 # would overwrite Poetry 1.8.5's internal poetry-core and cause "'ProjectPackage' object has no
 # attribute 'readme_content'" errors during `poetry install`.
 poetry-core = "^1.9.0"
+# Pinned to pygments master (post-2.19.2) to include the fix for CVE-2026-4539
+# (ReDoS in AdlLexer). Remove this override once Pygments >= 2.19.3 is released on PyPI.
+pygments = {git = "https://github.com/pygments/pygments.git", rev = "c3d93adb9827fc054c3c12b47bde31c781a36a93"}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"

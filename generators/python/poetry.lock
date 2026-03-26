@@ -798,19 +798,23 @@ files = [
 typing-extensions = ">=4.14.1"
 
 [[package]]
-name = "pygments"
+name = "Pygments"
 version = "2.19.2"
 description = "Pygments is a syntax highlighting package written in Python."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
-files = [
-    {file = "pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b"},
-    {file = "pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887"},
-]
+files = []
+develop = false
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/pygments/pygments.git"
+reference = "c3d93adb9827fc054c3c12b47bde31c781a36a93"
+resolved_reference = "c3d93adb9827fc054c3c12b47bde31c781a36a93"
 
 [[package]]
 name = "pytest"
@@ -1330,4 +1334,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "93779010c150d4eee8c4ccf9e3fe2a8e3c2e7762eb595cc70c352ca309cd554d"
+content-hash = "d8df8d74af1bd89ddc1bc2c2e09288cafb639ad86cccdb32a079dc63b7ccfa05"
