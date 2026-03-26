@@ -106,7 +106,7 @@ export abstract class TypescriptProject {
     protected readonly dependencies: PackageDependencies;
     protected readonly extraConfigs: Record<string, unknown> | undefined;
     protected readonly outputJsr: boolean;
-    public readonly volume = new Volume();
+    protected readonly volume = new Volume();
     public readonly tsMorphProject: Project;
     public readonly extraFiles: Record<string, string>;
     protected readonly extraDependencies: Record<string, string>;
@@ -194,7 +194,7 @@ export abstract class TypescriptProject {
 
     public async persist(options?: {
         fixEsmImports?: boolean;
-        beforeFixImports?: () => Promise<void>;
+        beforeFixImports?: (volume: Volume) => Promise<void>;
     }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
@@ -213,7 +213,7 @@ export abstract class TypescriptProject {
         // after ts-morph source files, so they overwrite at overlapping paths
         // (preserving the old semantic where core utilities take precedence).
         if (options?.beforeFixImports) {
-            await options.beforeFixImports();
+            await options.beforeFixImports(this.volume);
         }
 
         // Fix ESM imports in-memory before writing to disk. Core utility files

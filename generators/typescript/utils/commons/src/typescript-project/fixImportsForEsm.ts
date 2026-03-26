@@ -242,7 +242,7 @@ export function fixImportsInVolume(volume: Volume, packagePath: string): void {
     const volumeFiles = new Set<string>();
     collectVolumeFilesSync(volume, srcDir, volumeFiles);
 
-    const fileExistenceCache = new Set<string>(volumeFiles);
+    const fileExistenceCache = volumeFiles;
 
     // Phase 2: Process each TypeScript file in the volume via string replacement.
     const importModificationCache = new Map<string, ImportModificationType>();
@@ -263,7 +263,7 @@ export function fixImportsInVolume(volume: Volume, packagePath: string): void {
 function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>): void {
     const entries = volume.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
-        // readdirSync with withFileTypes returns objects with name and isDirectory()
+        // memfs 3.x returns dirent-like objects with name and isDirectory()
         const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
         const name = typeof dirent.name === "string" ? dirent.name : dirent.name.toString();
         const fullPath = path.join(dir, name);

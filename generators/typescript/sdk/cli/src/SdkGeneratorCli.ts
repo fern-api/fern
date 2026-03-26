@@ -265,7 +265,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             // are processed in-memory alongside generated source files.
             beforeFixImports: customConfig.useLegacyExports
                 ? undefined
-                : async () => sdkGenerator.copyCoreUtilitiesToVolume(typescriptProject.volume)
+                : async (volume) => sdkGenerator.copyCoreUtilitiesToVolume(volume)
         });
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
         // For legacy exports, core utilities are still copied to disk the traditional way.
@@ -341,7 +341,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             // Generated source files and core utilities were already processed
             // in-memory during persist(). This targeted pass only fixes imports
             // in files written to disk after persist:
-            //   - src/core/ (existence cache only) — already processed, no writes
+            //   - src/core/ (recursive) — already processed in-memory, included for existence cache; re-processed but results in no-ops
             //   - src/*.ts (shallow) — public exports written by generatePublicExports
             const srcDir = persistedTypescriptProject.getSrcDirectory();
             await fixImportsForCoreFiles([path.join(srcDir, "core")], [srcDir]);

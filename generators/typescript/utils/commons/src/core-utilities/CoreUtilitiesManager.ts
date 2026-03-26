@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
@@ -170,73 +170,45 @@ export class CoreUtilitiesManager {
     }
 
     /**
-     * Returns the set of file paths (relative to the project root) that copyCoreUtilities
-     * would create. Used to pre-populate the existence cache for in-memory import processing,
-     * so generated file imports to core utilities (e.g. "../../core/index") resolve correctly.
-     */
-    public async getCoreUtilityFilePaths(): Promise<Set<string>> {
-        const files = new Set<string>();
-
-        // Discover files from glob patterns (same logic as copyCoreUtilities)
-        const globResults = await Promise.all(
-            Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
-                const { patterns, ignore } = utility.getFilesPatterns({
-                    streamType: this.streamType,
-                    formDataSupport: this.formDataSupport,
-                    fetchSupport: this.fetchSupport
-                });
-                return glob(patterns, { ignore, cwd: UTILITIES_PATH, nodir: true });
-            })
-        );
-
-        const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
-
-        for (const result of globResults) {
-            for (const file of result) {
-                let destinationFile = file;
-                if (isCustomPackagePath) {
-                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
-                    if (!isPathAlreadyUpdated) {
-                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
-                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
-                        if (isTestFile) {
-                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
-                        } else if (isSourceFile) {
-                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
-                        }
-                    }
-                }
-                files.add(destinationFile);
-            }
-        }
-
-        // Add auth override files
-        if (this.referencedCoreUtilities["auth"] != null) {
-            for (const filepath of Object.keys(this.authOverrides)) {
-                files.add(path.join(this.relativePackagePath, "core", "auth", filepath));
-            }
-        }
-
-        // Add custom pagination file
-        if (this.referencedCoreUtilities["customPagination"] != null) {
-            files.add(path.join(this.relativePackagePath, "core", "pagination", `${this.customPagerName}.ts`));
-        }
-
-        // Add pagination index file
-        if (this.referencedCoreUtilities["pagination"] != null) {
-            files.add(path.join(this.relativePackagePath, "core", "pagination", "index.ts"));
-        }
-
-        return files;
-    }
-
-    /**
      * Copies core utility files into a memfs Volume instead of to disk.
      * This allows fixImportsInVolume to process core utility imports in-memory
      * alongside generated source files, eliminating the need for a post-persist
      * disk pass on core utility files.
      */
     public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
+        const coreFiles = await this.collectCoreUtilityFiles();
+
+        await Promise.all(
+            coreFiles.map(async ({ destinationFile, content }) => {
+                const volumePath = "/" + destinationFile;
+                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
+                volume.writeFileSync(volumePath, content);
+            })
+        );
+    }
+
+    public async copyCoreUtilities({
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        const coreFiles = await this.collectCoreUtilityFiles();
+
+        await Promise.all(
+            coreFiles.map(async ({ destinationFile, content }) => {
+                const destPath = path.join(pathToRoot, destinationFile);
+                await mkdir(path.dirname(destPath), { recursive: true });
+                await writeFile(destPath, content);
+            })
+        );
+    }
+
+    /**
+     * Collects all core utility files with their destination paths and content.
+     * Shared by both copyCoreUtilitiesToVolume (in-memory) and copyCoreUtilities (disk).
+     */
+    private async collectCoreUtilityFiles(): Promise<Array<{ destinationFile: string; content: string }>> {
         const globResults = await Promise.all(
             Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
                 const { patterns, ignore } = utility.getFilesPatterns({
@@ -263,7 +235,10 @@ export class CoreUtilitiesManager {
               }
             : {};
 
-        await Promise.all(
+        const result: Array<{ destinationFile: string; content: string }> = [];
+
+        // Collect globbed source files
+        const fileEntries = await Promise.all(
             Array.from(files).map(async (file) => {
                 let destinationFile = file;
                 if (isCustomPackagePath) {
@@ -283,55 +258,62 @@ export class CoreUtilitiesManager {
                 let content = await readFile(sourcePath, "utf8");
 
                 if (isCustomPackagePath) {
-                    content = this.updateImportPathsInMemory(content, findAndReplace);
+                    content = this.replaceImportPaths(content, findAndReplace);
                 }
 
-                const volumePath = "/" + destinationFile;
-                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
-                volume.writeFileSync(volumePath, content);
+                return { destinationFile, content };
             })
         );
+        result.push(...fileEntries);
 
-        // Handle auth overrides
+        // Auth overrides
         if (this.referencedCoreUtilities["auth"] != null) {
             for (const [filepath, content] of Object.entries(this.authOverrides)) {
-                const volumePath = "/" + path.join(this.relativePackagePath, "core", "auth", filepath);
-                volume.mkdirSync(path.dirname(volumePath), { recursive: true });
-                volume.writeFileSync(volumePath, content);
+                result.push({
+                    destinationFile: path.join(this.relativePackagePath, "core", "auth", filepath),
+                    content
+                });
             }
         }
 
-        // Handle custom pagination
+        // Custom pagination
         if (this.referencedCoreUtilities["customPagination"] != null) {
-            const paginationDir = "/" + path.join(this.relativePackagePath, "core", "pagination");
-            volume.mkdirSync(paginationDir, { recursive: true });
-
             let customPagerContents = await readFile(
                 path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
                 "utf8"
             );
             customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
-            volume.writeFileSync(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents);
+            result.push({
+                destinationFile: path.join(
+                    this.relativePackagePath,
+                    "core",
+                    "pagination",
+                    `${this.customPagerName}.ts`
+                ),
+                content: customPagerContents
+            });
         }
 
-        // Handle pagination index
+        // Pagination index
         if (this.referencedCoreUtilities["pagination"] != null) {
             const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
-            const paginationDir = "/" + path.join(this.relativePackagePath, "core", "pagination");
-            volume.mkdirSync(paginationDir, { recursive: true });
-
-            if (hasCustomPagination) {
-                volume.writeFileSync(
-                    path.join(paginationDir, "index.ts"),
-                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`
-                );
-            } else {
-                volume.writeFileSync(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`);
-            }
+            const indexContent = hasCustomPagination
+                ? `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`
+                : `export { Page } from "./Page";\n`;
+            result.push({
+                destinationFile: path.join(this.relativePackagePath, "core", "pagination", "index.ts"),
+                content: indexContent
+            });
         }
+
+        return result;
     }
 
-    private updateImportPathsInMemory(
+    /**
+     * Pure string transformation: replaces import paths in file content.
+     * Used by both the Volume-based and disk-based copy flows.
+     */
+    private replaceImportPaths(
         content: string,
         findAndReplace: Record<string, { importPath: string; body: string }>
     ): string {
@@ -355,155 +337,6 @@ export class CoreUtilitiesManager {
         });
 
         return hasReplaced ? updatedLines.join("\n") : content;
-    }
-
-    public async copyCoreUtilities({
-        pathToSrc,
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
-        const files = new Set(
-            await Promise.all(
-                Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
-                    const { patterns, ignore } = utility.getFilesPatterns({
-                        streamType: this.streamType,
-                        formDataSupport: this.formDataSupport,
-                        fetchSupport: this.fetchSupport
-                    });
-
-                    const foundFiles = await glob(patterns, {
-                        ignore,
-                        cwd: UTILITIES_PATH,
-                        nodir: true
-                    });
-                    return foundFiles;
-                })
-            ).then((results) => results.flat())
-        );
-
-        // Copy each file to the destination preserving the directory structure
-        await Promise.all(
-            Array.from(files).map(async (file) => {
-                // If the client specified a package path, we need to copy the file to the correct location
-                let destinationFile = file;
-                const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
-
-                if (isCustomPackagePath) {
-                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
-                    if (!isPathAlreadyUpdated) {
-                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
-                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
-
-                        if (isTestFile) {
-                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
-                        } else if (isSourceFile) {
-                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
-                        }
-                    }
-                }
-
-                const sourcePath = path.join(UTILITIES_PATH, file);
-                const destPath = path.join(pathToRoot, destinationFile);
-
-                // Ensure the destination directory exists
-                const destDir = path.dirname(destPath);
-                await mkdir(destDir, { recursive: true });
-
-                // Copy the file
-                await cp(sourcePath, destPath);
-
-                // Update import paths after copying (customize findAndReplace as needed)
-                if (isCustomPackagePath) {
-                    const findAndReplace: Record<string, { importPath: string; body: string }> = {
-                        [DEFAULT_PACKAGE_PATH]: {
-                            importPath: this.getPackagePathImport(),
-                            body: this.relativePackagePath
-                        },
-                        [DEFAULT_TEST_PATH]: {
-                            importPath: this.getTestPathImport(),
-                            body: this.relativeTestPath
-                        }
-                    };
-
-                    await this.updateImportPaths(destPath, findAndReplace);
-                }
-            })
-        );
-
-        // Handle auth overrides
-        if (this.referencedCoreUtilities["auth"] != null) {
-            await Promise.all(
-                Object.entries(this.authOverrides).map(async ([filepath, content]) => {
-                    const destPath = path.join(pathToSrc, "core", "auth", filepath);
-                    await writeFile(destPath, content);
-                })
-            );
-        }
-
-        if (this.referencedCoreUtilities["customPagination"] != null) {
-            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
-            await mkdir(paginationDir, { recursive: true });
-
-            let customPagerContents = await readFile(
-                path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
-                "utf8"
-            );
-            customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
-            await writeFile(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents, {
-                encoding: "utf8"
-            });
-        }
-
-        if (this.referencedCoreUtilities["pagination"] != null) {
-            const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
-            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
-            await mkdir(paginationDir, { recursive: true });
-
-            if (hasCustomPagination) {
-                await writeFile(
-                    path.join(paginationDir, "index.ts"),
-                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`,
-                    { encoding: "utf8" }
-                );
-            } else {
-                await writeFile(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`, {
-                    encoding: "utf8"
-                });
-            }
-        }
-    }
-
-    // Helper to update import paths in a file
-    private async updateImportPaths(
-        filePath: string,
-        findAndReplace: Record<string, { importPath: string; body: string }>
-    ) {
-        const contents = await readFile(filePath, "utf8");
-        const lines = contents.split("\n");
-        let hasReplaced = false;
-
-        const updatedLines = lines.map((line) => {
-            let updatedLine = line;
-            for (const [find, { importPath, body }] of Object.entries(findAndReplace)) {
-                if (line.includes(find)) {
-                    if (line.includes("import")) {
-                        updatedLine = updatedLine.replaceAll(find, importPath);
-                        hasReplaced = true;
-                    } else {
-                        updatedLine = updatedLine.replaceAll(find, body);
-                        hasReplaced = true;
-                    }
-                }
-            }
-            return updatedLine;
-        });
-
-        if (hasReplaced) {
-            const updatedContent = updatedLines.join("\n");
-            await writeFile(filePath, updatedContent);
-        }
     }
 
     public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {
