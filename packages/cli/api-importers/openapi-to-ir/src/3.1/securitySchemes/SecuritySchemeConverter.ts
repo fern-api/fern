@@ -25,6 +25,14 @@ interface HeaderSecuritySchemeExtension {
     prefix?: string;
 }
 
+export interface OAuth2FlowInfo {
+    schemeId: string;
+    tokenUrl: string;
+    refreshUrl?: string;
+    scopes?: Record<string, string>;
+    description?: string;
+}
+
 export declare namespace SecuritySchemeConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         securityScheme: OpenAPIV3_1.SecuritySchemeObject;
@@ -35,6 +43,7 @@ export declare namespace SecuritySchemeConverter {
 export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterContext3_1, AuthScheme> {
     private readonly securityScheme: OpenAPIV3_1.SecuritySchemeObject;
     private readonly schemeId: string;
+    private _oAuth2FlowInfo: OAuth2FlowInfo | undefined;
 
     constructor({ context, breadcrumbs, securityScheme, schemeId }: SecuritySchemeConverter.Args) {
         super({ context, breadcrumbs });
@@ -45,6 +54,10 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     private getExtension<T>(key: string): T | undefined {
         const value = (this.securityScheme as unknown as Record<string, unknown>)[key];
         return value as T | undefined;
+    }
+
+    public get oAuth2FlowInfo(): OAuth2FlowInfo | undefined {
+        return this._oAuth2FlowInfo;
     }
 
     public convert(): AuthScheme | undefined {
@@ -102,7 +115,9 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 break;
             }
             case "oauth2": {
-                // TODO: Correctly implement OAuth.
+                this._oAuth2FlowInfo = this.extractOAuth2FlowInfo();
+                // Return bearer as a fallback; OpenAPIConverter.resolveOAuthSchemes()
+                // will upgrade this to AuthScheme.oauth() after endpoints are converted.
                 return AuthScheme.bearer({
                     key: this.schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
@@ -110,6 +125,35 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     docs: this.securityScheme.description
                 });
             }
+        }
+        return undefined;
+    }
+
+    private extractOAuth2FlowInfo(): OAuth2FlowInfo | undefined {
+        if (this.securityScheme.type !== "oauth2") {
+            return undefined;
+        }
+        const oauthScheme = this.securityScheme as OpenAPIV3_1.OAuth2SecurityScheme;
+        const clientCredentials = oauthScheme.flows?.clientCredentials;
+        if (clientCredentials != null) {
+            return {
+                schemeId: this.schemeId,
+                tokenUrl: clientCredentials.tokenUrl,
+                refreshUrl: clientCredentials.refreshUrl,
+                scopes: clientCredentials.scopes,
+                description: oauthScheme.description
+            };
+        }
+        // Also check authorizationCode flow as a fallback
+        const authorizationCode = oauthScheme.flows?.authorizationCode;
+        if (authorizationCode != null) {
+            return {
+                schemeId: this.schemeId,
+                tokenUrl: authorizationCode.tokenUrl,
+                refreshUrl: authorizationCode.refreshUrl,
+                scopes: authorizationCode.scopes,
+                description: oauthScheme.description
+            };
         }
         return undefined;
     }

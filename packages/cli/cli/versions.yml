@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.1
+  changelogEntry:
+    - summary: |
+        Fix the v3 OpenAPI parser to generate proper `AuthScheme.oauth()` IR nodes
+        for OAuth2 security schemes instead of falling back to plain bearer auth.
+        This restores the "Enter your credentials" OAuth form in the docs playground
+        when `playground.oauth: true` is set in `docs.yml`.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.46.0
   changelogEntry:
     - summary: |

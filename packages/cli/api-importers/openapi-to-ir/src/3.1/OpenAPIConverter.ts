@@ -1,4 +1,4 @@
-import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AuthScheme, FernIr, IntermediateRepresentation, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import {
     AbstractSpecConverter,
@@ -13,7 +13,7 @@ import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExte
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
-import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter.js";
+import { OAuth2FlowInfo, SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -22,6 +22,8 @@ export declare namespace OpenAPIConverter {
 }
 
 export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
+    private pendingOAuth2Schemes: OAuth2FlowInfo[] = [];
+
     constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<OpenAPIConverterContext3_1>) {
         super({ breadcrumbs, context, audiences });
     }
@@ -53,6 +55,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertWebhooks();
 
         const { endpointLevelServers, errors } = this.convertPaths();
+
+        this.resolveOAuthSchemes();
 
         this.addErrorsToIr(errors);
 
@@ -149,9 +153,266 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             if (convertedScheme != null) {
                 securitySchemes.push(convertedScheme);
             }
+            if (securitySchemeConverter.oAuth2FlowInfo != null) {
+                this.pendingOAuth2Schemes.push(securitySchemeConverter.oAuth2FlowInfo);
+            }
         }
 
         return securitySchemes;
+    }
+
+    /**
+     * After endpoints are converted, resolve pending OAuth2 security schemes
+     * by matching their tokenUrl to converted endpoints and upgrading the
+     * bearer auth placeholder to a proper AuthScheme.oauth().
+     */
+    private resolveOAuthSchemes(): void {
+        if (this.pendingOAuth2Schemes.length === 0) {
+            return;
+        }
+
+        for (const oauthFlow of this.pendingOAuth2Schemes) {
+            const match = this.findEndpointByTokenUrl(oauthFlow.tokenUrl);
+            if (match == null) {
+                continue;
+            }
+
+            const { endpoint, serviceId, subpackageId } = match;
+
+            const oauthScheme = this.buildOAuthScheme({
+                oauthFlow,
+                endpoint,
+                serviceId,
+                subpackageId
+            });
+
+            // Replace the bearer placeholder in auth schemes with the OAuth scheme
+            if (this.ir.auth.schemes.length > 0) {
+                const idx = this.ir.auth.schemes.findIndex((s) => s.type === "bearer" && s.key === oauthFlow.schemeId);
+                if (idx !== -1) {
+                    this.ir.auth.schemes[idx] = oauthScheme;
+                }
+            }
+        }
+    }
+
+    private findEndpointByTokenUrl(
+        tokenUrl: string
+    ): { endpoint: FernIr.HttpEndpoint; serviceId: string; subpackageId: string | undefined } | undefined {
+        // Extract path from tokenUrl (may be absolute URL or relative path)
+        let tokenPath: string;
+        try {
+            const url = new URL(tokenUrl);
+            tokenPath = url.pathname;
+        } catch {
+            // Not a valid URL, treat as relative path
+            tokenPath = tokenUrl;
+        }
+
+        // Normalize: ensure leading slash, remove trailing slash
+        if (!tokenPath.startsWith("/")) {
+            tokenPath = "/" + tokenPath;
+        }
+        tokenPath = tokenPath.replace(/\/$/, "");
+
+        for (const [serviceId, service] of Object.entries(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.method !== "POST") {
+                    continue;
+                }
+                const endpointPath = this.reconstructPath(endpoint.fullPath);
+                if (endpointPath === tokenPath) {
+                    // Derive subpackageId from serviceId
+                    const subpackageId = this.findSubpackageForService(serviceId);
+                    return { endpoint, serviceId, subpackageId };
+                }
+            }
+        }
+        return undefined;
+    }
+
+    private reconstructPath(httpPath: FernIr.HttpPath): string {
+        let path = httpPath.head;
+        for (const part of httpPath.parts) {
+            path += `{${part.pathParameter}}` + part.tail;
+        }
+        return path;
+    }
+
+    private findSubpackageForService(serviceId: string): string | undefined {
+        for (const [subpackageId, subpackage] of Object.entries(this.ir.subpackages)) {
+            if (subpackage.service === serviceId) {
+                return subpackageId;
+            }
+        }
+        return undefined;
+    }
+
+    private buildOAuthScheme({
+        oauthFlow,
+        endpoint,
+        serviceId,
+        subpackageId
+    }: {
+        oauthFlow: OAuth2FlowInfo;
+        endpoint: FernIr.HttpEndpoint;
+        serviceId: string;
+        subpackageId: string | undefined;
+    }): AuthScheme.Oauth {
+        const accessTokenProperty = this.findResponseProperty(endpoint, [
+            "access_token",
+            "accessToken",
+            "AccessToken",
+            "token",
+            "Token"
+        ]);
+
+        const expiresInProperty = this.findResponseProperty(endpoint, [
+            "expires_in",
+            "expiresIn",
+            "ExpiresIn",
+            "expires",
+            "Expires"
+        ]);
+
+        const clientIdProperty = this.findRequestBodyProperty(endpoint, ["client_id", "clientId", "ClientId"]);
+
+        const clientSecretProperty = this.findRequestBodyProperty(endpoint, [
+            "client_secret",
+            "clientSecret",
+            "ClientSecret"
+        ]);
+
+        return AuthScheme.oauth({
+            key: oauthFlow.schemeId,
+            docs: oauthFlow.description,
+            configuration: OAuthConfiguration.clientCredentials({
+                clientIdEnvVar: undefined,
+                clientSecretEnvVar: undefined,
+                tokenPrefix: undefined,
+                tokenHeader: undefined,
+                scopes: oauthFlow.scopes != null ? Object.keys(oauthFlow.scopes) : undefined,
+                tokenEndpoint: {
+                    endpointReference: {
+                        endpointId: endpoint.id,
+                        serviceId,
+                        subpackageId
+                    },
+                    requestProperties: {
+                        clientId: clientIdProperty ?? this.createDefaultRequestProperty("client_id"),
+                        clientSecret: clientSecretProperty ?? this.createDefaultRequestProperty("client_secret"),
+                        scopes: undefined,
+                        customProperties: undefined
+                    },
+                    responseProperties: {
+                        accessToken: accessTokenProperty ?? this.createDefaultResponseProperty("access_token"),
+                        expiresIn: expiresInProperty,
+                        refreshToken: undefined
+                    }
+                },
+                refreshEndpoint: undefined
+            })
+        });
+    }
+
+    private findResponseProperty(
+        endpoint: FernIr.HttpEndpoint,
+        propertyNames: string[]
+    ): FernIr.ResponseProperty | undefined {
+        if (endpoint.response?.body == null) {
+            return undefined;
+        }
+        const body = endpoint.response.body;
+        if (body.type !== "json") {
+            return undefined;
+        }
+        const jsonResponse = body.value;
+        if (jsonResponse.type !== "response") {
+            return undefined;
+        }
+        const responseType = jsonResponse.responseBodyType;
+        if (responseType.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.ir.types[responseType.typeId];
+        if (typeDeclaration == null) {
+            return undefined;
+        }
+        const shape = typeDeclaration.shape;
+        if (shape.type !== "object") {
+            return undefined;
+        }
+        for (const prop of shape.properties) {
+            if (propertyNames.includes(prop.name.wireValue)) {
+                return {
+                    propertyPath: undefined,
+                    property: prop
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private findRequestBodyProperty(
+        endpoint: FernIr.HttpEndpoint,
+        propertyNames: string[]
+    ): FernIr.RequestProperty | undefined {
+        if (endpoint.requestBody == null) {
+            return undefined;
+        }
+        const reqBody = endpoint.requestBody;
+        if (reqBody.type !== "inlinedRequestBody") {
+            return undefined;
+        }
+        for (const prop of reqBody.properties) {
+            if (propertyNames.includes(prop.name.wireValue)) {
+                return {
+                    propertyPath: undefined,
+                    property: FernIr.RequestPropertyValue.body(prop)
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private createDefaultResponseProperty(wireValue: string): FernIr.ResponseProperty {
+        return {
+            propertyPath: undefined,
+            property: {
+                docs: undefined,
+                availability: undefined,
+                name: {
+                    name: this.context.casingsGenerator.generateName(wireValue),
+                    wireValue
+                },
+                valueType: FernIr.TypeReference.primitive({
+                    v1: FernIr.PrimitiveTypeV1.String,
+                    v2: FernIr.PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                }),
+                propertyAccess: undefined,
+                v2Examples: undefined
+            }
+        };
+    }
+
+    private createDefaultRequestProperty(wireValue: string): FernIr.RequestProperty {
+        return {
+            propertyPath: undefined,
+            property: FernIr.RequestPropertyValue.body({
+                docs: undefined,
+                availability: undefined,
+                name: {
+                    name: this.context.casingsGenerator.generateName(wireValue),
+                    wireValue
+                },
+                valueType: FernIr.TypeReference.primitive({
+                    v1: FernIr.PrimitiveTypeV1.String,
+                    v2: FernIr.PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                }),
+                propertyAccess: undefined,
+                v2Examples: undefined
+            })
+        };
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
