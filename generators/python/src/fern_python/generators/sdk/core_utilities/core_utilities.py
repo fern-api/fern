@@ -908,21 +908,28 @@ class CoreUtilities:
             ),
         )
 
-    def get_parse_sse_obj(self) -> AST.Reference:
+    def get_parse_sse_data(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_sse_obj"
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_sse_data"
             ),
         )
 
-    def get_construct_sse(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
-        """Generate a parse_sse_obj call for SSE handling."""
-        return self._parse_sse_obj(type_of_obj, sse_obj)
+    def get_parse_sse_protocol(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_sse_protocol"
+            ),
+        )
 
-    def _parse_sse_obj(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
+    def get_construct_sse(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression, *, is_protocol: bool = False) -> AST.Expression:
+        """Generate a parse_sse_data or parse_sse_protocol call for SSE handling."""
+        ref = self.get_parse_sse_protocol() if is_protocol else self.get_parse_sse_data()
+
         def write_value_being_casted(writer: NodeWriter) -> None:
-            writer.write_reference(self.get_parse_sse_obj())
+            writer.write_reference(ref)
             writer.write("(")
             writer.write_newline_if_last_line_not()
             with writer.indent():

@@ -10,7 +10,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.http_response import AsyncHttpResponse, HttpResponse
 from .core.http_sse._api import EventSource
 from .core.parse_error import ParsingError
-from .core.pydantic_utilities import parse_sse_obj
+from .core.pydantic_utilities import parse_sse_data, parse_sse_protocol
 from .core.request_options import RequestOptions
 from .types.event import Event
 from .types.stream_data_context_response import StreamDataContextResponse
@@ -73,7 +73,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolNoCollisionResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolNoCollisionResponse,  # type: ignore
                                         ),
@@ -152,7 +152,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolCollisionResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolCollisionResponse,  # type: ignore
                                         ),
@@ -231,7 +231,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamDataContextResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamDataContextResponse,  # type: ignore
                                         ),
@@ -310,7 +310,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamNoContextResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamNoContextResponse,  # type: ignore
                                         ),
@@ -389,7 +389,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolWithFlatSchemaResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolWithFlatSchemaResponse,  # type: ignore
                                         ),
@@ -468,7 +468,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamDataContextWithEnvelopeSchemaResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamDataContextWithEnvelopeSchemaResponse,  # type: ignore
                                         ),
@@ -547,7 +547,7 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         Event,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=Event,  # type: ignore
                                         ),
@@ -631,7 +631,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolNoCollisionResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolNoCollisionResponse,  # type: ignore
                                         ),
@@ -710,7 +710,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolCollisionResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolCollisionResponse,  # type: ignore
                                         ),
@@ -789,7 +789,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamDataContextResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamDataContextResponse,  # type: ignore
                                         ),
@@ -868,7 +868,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamNoContextResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamNoContextResponse,  # type: ignore
                                         ),
@@ -947,7 +947,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamProtocolWithFlatSchemaResponse,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamProtocolWithFlatSchemaResponse,  # type: ignore
                                         ),
@@ -1026,7 +1026,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         StreamDataContextWithEnvelopeSchemaResponse,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamDataContextWithEnvelopeSchemaResponse,  # type: ignore
                                         ),
@@ -1105,7 +1105,7 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         Event,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=Event,  # type: ignore
                                         ),
