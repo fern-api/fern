@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        `fern replay init --group` now uses the Fern GitHub App installation token
+        for write operations (push and PR creation) when the user's personal token
+        lacks write access to the target repository. This enables replay init on
+        customer repos where the Fern App is installed without requiring a personal
+        access token with write permissions.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.46.2
   changelogEntry:
     - summary: |

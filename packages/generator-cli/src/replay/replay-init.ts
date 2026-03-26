@@ -9,10 +9,8 @@ import { ensureReplayFernignoreEntriesSync } from "./fernignore";
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
     githubRepo: string;
-    /** GitHub token for clone (read access). Falls back to writeToken if not set. */
+    /** GitHub token with push + PR permissions */
     token: string;
-    /** Fern GitHub App installation token for push + PR (write access). Falls back to token if not set. */
-    writeToken?: string;
     /** Report what would happen but don't create PR */
     dryRun?: boolean;
     /** Max commits to scan for generation history */
@@ -111,19 +109,11 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         commitMessage
     ]);
 
-    // Use installation token for write operations if available
-    const effectiveWriteToken = params.writeToken ?? token;
-    if (params.writeToken != null) {
-        const parsed = parseRepository(githubRepo);
-        const writeUrl = `https://x-access-token:${params.writeToken}@${parsed.remote}/${parsed.owner}/${parsed.repo}.git`;
-        await git.exec(["remote", "set-url", "origin", writeUrl]);
-    }
-
     await repository.pushUpstream(branchName);
 
     // Create PR
     const parsed = parseRepository(githubRepo);
-    const octokit = new Octokit({ auth: effectiveWriteToken });
+    const octokit = new Octokit({ auth: token });
     const prTitle = params.prTitle ?? "[fern-replay] Initialize Replay for SDK customizations";
     const prBody = params.prBody ?? buildPrBody(bootstrapResult);
 

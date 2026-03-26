@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import type { FernToken } from "@fern-api/auth";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
@@ -80,7 +81,7 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
-import { fetchInstallationToken, resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
+import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 
 void runCli();
@@ -2297,28 +2298,25 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
             // If --group is provided, load config from generators.yml
             if (argv.group != null) {
-                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
+                // Get Fern token as fallback when GITHUB_TOKEN is not set
+                let fernToken: FernToken | undefined;
+                if (token == null && process.env.GITHUB_TOKEN == null) {
+                    try {
+                        fernToken = await cliContext.runTask((context) => {
+                            return askToLogin(context);
+                        });
+                    } catch {
+                        cliContext.logger.debug("Could not obtain Fern token for GitHub App fallback.");
+                    }
+                }
+
+                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api, fernToken);
                 // Use group config as defaults, allow --github/--token to override
                 githubRepo = githubRepo ?? resolved.githubRepo;
                 token = token ?? resolved.token;
             }
 
-            // Always try to get Fern App installation token for write operations (push + PR).
-            // The user's GITHUB_TOKEN may not have write access to the target repo,
-            // but the Fern GitHub App installation token will.
-            let writeToken: string | undefined;
-            if (githubRepo != null) {
-                try {
-                    const fernToken = await cliContext.runTask((context) => askToLogin(context));
-                    writeToken = await fetchInstallationToken(cliContext, githubRepo, fernToken);
-                } catch {
-                    cliContext.logger.debug("Could not obtain Fern App installation token for write operations.");
-                }
-            }
-
-            // Need at least one token (for clone) and writeToken or token (for push)
-            const readToken = token ?? writeToken;
-            if (githubRepo == null || readToken == null) {
+            if (githubRepo == null || token == null) {
                 const hint =
                     githubRepo != null
                         ? "Repository found but no token. Ensure the Fern GitHub App (https://github.com/apps/fern-api) is installed on the repository, or pass --token / set GITHUB_TOKEN."
@@ -2334,8 +2332,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             try {
                 const result = await replayInit({
                     githubRepo,
-                    token: readToken,
-                    writeToken,
+                    token,
                     dryRun: argv.dryRun,
                     maxCommitsToScan: argv.maxCommits,
                     force: argv.force
