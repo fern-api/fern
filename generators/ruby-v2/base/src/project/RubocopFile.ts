@@ -61,7 +61,7 @@ Layout/LineLength:
   Enabled: false
 
 Naming/VariableNumber:
-  EnforcedStyle: normalcase
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
