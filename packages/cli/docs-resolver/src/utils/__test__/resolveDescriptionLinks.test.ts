@@ -260,8 +260,10 @@ describe("updateApiDefinitionIdInTree", () => {
         expect(tree.children[0]?.apiDefinitionId).toBe("my-api-1");
         expect(tree.children[1]?.id).toBe("my-api-1:subpackage_users");
         expect(tree.children[1]?.apiDefinitionId).toBe("my-api-1");
-        expect(tree.children[1]?.children[0]?.id).toBe("my-api-1:endpoint_users.list");
-        expect(tree.children[1]?.children[0]?.apiDefinitionId).toBe("my-api-1");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const nestedChild = (tree.children[1] as any)?.children[0];
+        expect(nestedChild?.id).toBe("my-api-1:endpoint_users.list");
+        expect(nestedChild?.apiDefinitionId).toBe("my-api-1");
     });
 
     it("handles null and undefined", () => {
