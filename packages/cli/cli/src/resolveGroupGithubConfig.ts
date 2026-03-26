@@ -15,8 +15,7 @@ export interface ResolvedGithubConfig {
 export async function resolveGroupGithubConfig(
     cliContext: CliContext,
     groupName: string,
-    apiWorkspace: string | undefined,
-    fernToken?: FernToken
+    apiWorkspace: string | undefined
 ): Promise<ResolvedGithubConfig> {
     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
         commandLineApiWorkspace: apiWorkspace,
@@ -67,19 +66,12 @@ export async function resolveGroupGithubConfig(
 
     if (generatorWithRepo?.raw?.github != null && "repository" in generatorWithRepo.raw.github) {
         const githubConfig = resolveEnv(generatorWithRepo.raw.github);
-        let token: string | undefined = process.env.GITHUB_TOKEN;
+        const token: string | undefined = process.env.GITHUB_TOKEN;
 
-        if (token != null) {
-            cliContext.logger.info(
-                `Using repository config from group "${groupName}" generator "${generatorWithRepo.name}". Using GITHUB_TOKEN from environment.`
-            );
-        } else if (fernToken != null) {
-            token = await fetchInstallationToken(cliContext, githubConfig.repository, fernToken);
-        } else {
-            cliContext.logger.info(
-                `Using repository config from group "${groupName}" generator "${generatorWithRepo.name}".`
-            );
-        }
+        cliContext.logger.info(
+            `Using repository config from group "${groupName}" generator "${generatorWithRepo.name}"` +
+                (token != null ? ". Using GITHUB_TOKEN from environment." : ".")
+        );
 
         return {
             githubRepo: githubConfig.repository,
@@ -92,7 +84,7 @@ export async function resolveGroupGithubConfig(
     return cliContext.failAndThrow(`No generator in group "${groupName}" has a github configuration.`);
 }
 
-async function fetchInstallationToken(
+export async function fetchInstallationToken(
     cliContext: CliContext,
     repository: string,
     fernToken: FernToken
