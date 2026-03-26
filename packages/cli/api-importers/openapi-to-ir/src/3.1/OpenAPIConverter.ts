@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import {
     AbstractSpecConverter,
