@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir, readFile, writeFile } from "fs/promises";
+import type { Volume } from "memfs/lib/volume";
 import path from "path";
 
 // File extensions to collect for the existence cache and to process
@@ -221,6 +222,55 @@ function determineModification(
     }
 
     return ImportModification.NONE;
+}
+
+/**
+ * Fixes imports in-memory inside a memfs Volume before writing to disk.
+ * This eliminates the disk read+write round-trip that fixImportsForEsm performs,
+ * since the files are already in memory. Uses synchronous Volume APIs for speed.
+ *
+ * @param volume - The memfs Volume containing the project files.
+ * @param packagePath - The source directory path within the volume (e.g. "src").
+ */
+export function fixImportsInVolume(volume: Volume, packagePath: string): void {
+    const srcDir = "/" + packagePath;
+
+    // Phase 1: Collect all source file paths from the volume
+    const fileExistenceCache = new Set<string>();
+    collectVolumeFilesSync(volume, srcDir, fileExistenceCache);
+
+    // Phase 2: Process each TypeScript file via string replacement
+    const importModificationCache = new Map<string, ImportModificationType>();
+
+    for (const filePath of fileExistenceCache) {
+        if (!TS_EXTENSIONS.has(path.extname(filePath))) {
+            continue;
+        }
+        const contentBuf = volume.readFileSync(filePath, "utf-8");
+        const content = typeof contentBuf === "string" ? contentBuf : contentBuf.toString();
+        const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
+        if (newContent !== content) {
+            volume.writeFileSync(filePath, newContent);
+        }
+    }
+}
+
+function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>): void {
+    const entries = volume.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+        // readdirSync with withFileTypes returns objects with name and isDirectory()
+        const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
+        const name = typeof dirent.name === "string" ? dirent.name : dirent.name.toString();
+        const fullPath = path.join(dir, name);
+        if (dirent.isDirectory()) {
+            collectVolumeFilesSync(volume, fullPath, files);
+        } else {
+            const ext = path.extname(name);
+            if (ALL_EXTENSIONS.has(ext)) {
+                files.add(path.resolve(fullPath));
+            }
+        }
+    }
 }
 
 // Recursively collect all source file paths, parallelizing subdirectory traversal.

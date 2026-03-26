@@ -8,6 +8,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
+import { fixImportsInVolume } from "./fixImportsForEsm.js";
 import { JSR } from "./JSR.js";
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
@@ -191,7 +192,7 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(): Promise<PersistedTypescriptProject> {
+    public async persist(options?: { fixEsmImports?: boolean }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
@@ -204,6 +205,13 @@ export abstract class TypescriptProject {
         }
 
         await this.addFilesToVolume();
+
+        // Fix ESM imports in-memory before writing to disk, eliminating one
+        // full read+write round-trip vs the post-persist disk-based approach.
+        if (options?.fixEsmImports) {
+            fixImportsInVolume(this.volume, this.packagePath);
+        }
+
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         return new PersistedTypescriptProject({
