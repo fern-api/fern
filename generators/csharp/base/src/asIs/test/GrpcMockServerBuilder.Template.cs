@@ -37,7 +37,7 @@ public sealed class GrpcMockServerBuilder
     /// <summary>
     /// Builds and starts the in-process gRPC server.
     /// </summary>
-    public async Task<GrpcMockServer> BuildAsync()
+    public Task<GrpcMockServer> BuildAsync()
     {
         var builder = new WebHostBuilder();
         builder.ConfigureServices(services =>
@@ -72,6 +72,6 @@ public sealed class GrpcMockServerBuilder
             }
         );
 
-        return new GrpcMockServer(server, channel, httpClient);
+        return Task.FromResult(new GrpcMockServer(server, channel, httpClient));
     }
 }

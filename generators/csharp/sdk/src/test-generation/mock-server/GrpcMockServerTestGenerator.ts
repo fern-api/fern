@@ -142,8 +142,11 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         jsonExampleResponse: unknown | undefined;
         isSupportedResponse: boolean;
     }): void {
-        // Write the mock response JSON if supported
-        if (isSupportedResponse && jsonExampleResponse != null) {
+        const returnTypeName = this.getReturnTypeName();
+        const canAssertResponse = isSupportedResponse && returnTypeName != null;
+
+        // Write the mock response JSON only when we can fully round-trip it
+        if (canAssertResponse && jsonExampleResponse != null) {
             const responseBodyType = this.endpoint.response?.body?.type;
             if (responseBodyType === "json") {
                 writer.writeLine('const string mockResponse = """');
@@ -166,19 +169,12 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         writer.newLine();
 
         const methodName = this.endpoint.name.pascalCase.safeName;
-        if (isSupportedResponse) {
-            const returnTypeName = this.getReturnTypeName();
-            if (returnTypeName != null) {
-                writer.writeLine(`    .On${methodName}((request) =>`);
-                writer.writeLine("    {");
-                writer.writeLine(`        var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);`);
-                writer.writeLine("        return mockObject.ToProto();");
-                writer.writeTextStatement("    })");
-            } else {
-                writer.writeTextStatement(
-                    `    .On${methodName}((request) => new Google.Protobuf.WellKnownTypes.Empty())`
-                );
-            }
+        if (canAssertResponse) {
+            writer.writeLine(`    .On${methodName}((request) =>`);
+            writer.writeLine("    {");
+            writer.writeLine(`        var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);`);
+            writer.writeLine("        return mockObject.ToProto();");
+            writer.writeTextStatement("    })");
         } else {
             writer.writeTextStatement(`    .On${methodName}((request) => new Google.Protobuf.WellKnownTypes.Empty())`);
         }
@@ -195,7 +191,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         writer.newLine();
 
         // Call the method and assert
-        if (isSupportedResponse) {
+        if (canAssertResponse) {
             writer.write("var response = ");
             writer.writeNodeStatement(endpointSnippet);
             writer.writeNodeStatement(
