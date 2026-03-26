@@ -17,13 +17,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :x_test_endpoint_header
+      # @option params [String] :x-test-endpoint-header
       #
       # @return [untyped]
       def get_with_custom_header(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
-        headers["X-TEST-ENDPOINT-HEADER"] = params[:x_test_endpoint_header] if params[:x_test_endpoint_header]
+        headers["X-TEST-ENDPOINT-HEADER"] = params[:x - test - endpoint - header] if params[:x - test - endpoint - header]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

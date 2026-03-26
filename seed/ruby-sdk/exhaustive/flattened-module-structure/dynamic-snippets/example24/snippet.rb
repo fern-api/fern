@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.params.get_with_path(param: "param")
+client.endpoints.object.get_and_return_with_documented_unknown_type

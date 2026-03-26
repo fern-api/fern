@@ -35,9 +35,9 @@ module Seed
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :next_,
             item_field: :items,
-            initial_cursor: query_params[:cursor]
+            initial_cursor: query_params["cursor"]
           ) do |next_cursor|
-            query_params[:cursor] = next_cursor
+            query_params["cursor"] = next_cursor
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
