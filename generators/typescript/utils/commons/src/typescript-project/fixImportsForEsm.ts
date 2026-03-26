@@ -34,12 +34,14 @@ type ImportModificationType = (typeof ImportModification)[keyof typeof ImportMod
  * @param pathToProject - The absolute path to the root of the TypeScript project.
  */
 export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
-    // Phase 1: Discover all source files in the project.
-    // We scan the entire project directory since we already know the layout of the
-    // generated code. This avoids the complexity and fragility of parsing tsconfig
-    // include/exclude (which can contain globs, JSONC comments, extends chains, etc.).
+    // Phase 1: Discover all source files in the project's src/ directory.
+    // Generated TypeScript projects always use `include: ["src"]` in their tsconfig,
+    // so we scan src/ directly. This avoids the complexity and fragility of parsing
+    // tsconfig include/exclude (which can contain globs, JSONC comments, extends
+    // chains, etc.) while matching the original ts-morph scoping behavior.
     const fileExistenceCache = new Set<string>();
-    await collectFiles(pathToProject, fileExistenceCache);
+    const srcDir = join(pathToProject, RelativeFilePath.of("src"));
+    await collectFiles(srcDir, fileExistenceCache);
 
     // Phase 2: Process each TypeScript file via string replacement
     const importModificationCache = new Map<string, ImportModificationType>();
@@ -66,14 +68,18 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
 }
 
 /**
- * Strips single-line comments (// ...), multi-line comments, and string
- * literals (single-quoted, double-quoted, and template literals) from source
- * text, replacing them with whitespace of equal length. This ensures that
- * regex-based import matching only operates on actual code, not on patterns
- * that happen to appear inside comments or strings.
+ * Strips single-line comments (// ...) and multi-line comments (/* ... *\/)
+ * from source text, replacing them with whitespace of equal length so that
+ * character positions are preserved. This ensures that regex-based import
+ * matching only operates on actual code, not on patterns that happen to
+ * appear inside comments.
+ *
+ * Note: String literals are intentionally NOT stripped. The import-matching
+ * regexes require `from`/`import` keywords before the string, which is
+ * sufficient to avoid false positives from non-import strings.
  */
-function stripCommentsAndStrings(source: string): string {
-    const pattern = /\/\/[^\n]*|\/\*[\s\S]*?\*\/|`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g;
+function stripComments(source: string): string {
+    const pattern = /\/\/[^\n]*|\/\*[\s\S]*?\*\//g;
     return source.replace(pattern, (match) => " ".repeat(match.length));
 }
 
@@ -90,9 +96,9 @@ function fixImportsInSource(
     fileExistenceCache: Set<string>,
     importModificationCache: Map<string, ImportModificationType>
 ): string {
-    // Strip comments and strings to find where real imports are, then apply
+    // Strip comments to find where real imports are, then apply
     // replacements to the original content using the positions from the stripped version.
-    const stripped = stripCommentsAndStrings(content);
+    const stripped = stripComments(content);
 
     let result = content;
     // Track offset shifts from replacements so far
