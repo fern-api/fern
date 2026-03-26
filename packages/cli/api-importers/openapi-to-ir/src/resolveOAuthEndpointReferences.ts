@@ -62,18 +62,34 @@ export function resolveOAuthEndpointReferences({
 
         const rawDeclaration = authSchemes[scheme.key];
         if (rawDeclaration == null) {
-            logger?.info(`[resolveOAuth] No raw declaration found for key "${scheme.key}" in auth-schemes - keeping bearer`);
+            logger?.info(
+                `[resolveOAuth] No raw declaration found for key "${scheme.key}" in auth-schemes - keeping bearer`
+            );
             updatedSchemes.push(scheme);
             continue;
         }
 
-        logger?.info(`[resolveOAuth] Found raw declaration for key "${scheme.key}": ${JSON.stringify(rawDeclaration).substring(0, 300)}`);
+        logger?.info(
+            `[resolveOAuth] Found raw declaration for key "${scheme.key}": ${JSON.stringify(rawDeclaration).substring(0, 300)}`
+        );
 
         const resolvedScheme = visitRawAuthSchemeDeclaration<AuthScheme | undefined>(rawDeclaration, {
-            header: () => { logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> header (not OAuth)"); return undefined; },
-            basic: () => { logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> basic (not OAuth)"); return undefined; },
-            tokenBearer: () => { logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> tokenBearer (not OAuth)"); return undefined; },
-            inferredBearer: () => { logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> inferredBearer (not OAuth)"); return undefined; },
+            header: () => {
+                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> header (not OAuth)");
+                return undefined;
+            },
+            basic: () => {
+                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> basic (not OAuth)");
+                return undefined;
+            },
+            tokenBearer: () => {
+                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> tokenBearer (not OAuth)");
+                return undefined;
+            },
+            inferredBearer: () => {
+                logger?.info("[resolveOAuth] visitRawAuthSchemeDeclaration -> inferredBearer (not OAuth)");
+                return undefined;
+            },
             oauth: (oauthScheme) => {
                 logger?.info(`[resolveOAuth] visitRawAuthSchemeDeclaration -> oauth branch! type=${oauthScheme.type}`);
                 return resolveOAuthScheme({ ir, key: scheme.key, oauthScheme, logger });
@@ -81,7 +97,9 @@ export function resolveOAuthEndpointReferences({
         });
 
         if (resolvedScheme != null) {
-            logger?.info(`[resolveOAuth] Successfully resolved OAuth for key "${scheme.key}", type=${resolvedScheme.type}`);
+            logger?.info(
+                `[resolveOAuth] Successfully resolved OAuth for key "${scheme.key}", type=${resolvedScheme.type}`
+            );
         } else {
             logger?.warn(`[resolveOAuth] Failed to resolve OAuth for key "${scheme.key}" - keeping bearer placeholder`);
         }
@@ -153,11 +171,15 @@ function resolveOAuthScheme({
     const clientSecretWire = extractPropertyName(requestProperties?.["client-secret"]) ?? "client_secret";
     const accessTokenWire = extractPropertyName(responseProperties?.["access-token"]) ?? "access_token";
 
-    logger?.info(`[resolveOAuth] Looking for request props: clientId="${clientIdWire}", clientSecret="${clientSecretWire}"`);
+    logger?.info(
+        `[resolveOAuth] Looking for request props: clientId="${clientIdWire}", clientSecret="${clientSecretWire}"`
+    );
     logger?.info(`[resolveOAuth] Looking for response prop: accessToken="${accessTokenWire}"`);
     logger?.info(`[resolveOAuth] Endpoint requestBody type: ${endpoint.requestBody?.type ?? "none"}`);
     if (endpoint.requestBody?.type === "inlinedRequestBody") {
-        logger?.info(`[resolveOAuth] Request body properties: ${endpoint.requestBody.properties.map((p) => p.name.wireValue).join(", ")}`);
+        logger?.info(
+            `[resolveOAuth] Request body properties: ${endpoint.requestBody.properties.map((p) => p.name.wireValue).join(", ")}`
+        );
     }
     logger?.info(`[resolveOAuth] Endpoint response body type: ${endpoint.response?.body?.type ?? "none"}`);
 
@@ -170,7 +192,9 @@ function resolveOAuthScheme({
     logger?.info(`[resolveOAuth] accessTokenProp found: ${accessTokenProp != null}`);
 
     if (clientIdProp == null || clientSecretProp == null || accessTokenProp == null) {
-        logger?.error(`[resolveOAuth] Missing required properties - clientId=${clientIdProp != null}, clientSecret=${clientSecretProp != null}, accessToken=${accessTokenProp != null}`);
+        logger?.error(
+            `[resolveOAuth] Missing required properties - clientId=${clientIdProp != null}, clientSecret=${clientSecretProp != null}, accessToken=${accessTokenProp != null}`
+        );
         return undefined;
     }
 
