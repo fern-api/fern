@@ -1,5 +1,6 @@
 using Grpc.Net.Client;
 using NUnit.Framework;
+using SeedApi;
 using SeedApi.Core;
 using SeedApi.Test.Utils;
 

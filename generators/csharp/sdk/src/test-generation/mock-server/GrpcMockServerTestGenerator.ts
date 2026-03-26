@@ -8,6 +8,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type ServiceId = FernIr.ServiceId;
 
 import { GrpcEndpointGenerator } from "../../endpoint/grpc/GrpcEndpointGenerator.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { GrpcStubGenerator } from "./GrpcStubGenerator.js";
 
@@ -24,6 +25,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
     private readonly grpcEndpointGenerator: GrpcEndpointGenerator;
     private readonly grpcClientInfo: GrpcClientInfo;
     private readonly stubGenerator: GrpcStubGenerator;
+    private readonly rootClientGenerator: RootClientGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -37,6 +39,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
         this.grpcClientInfo = grpcClientInfo;
         this.stubGenerator = stubGenerator;
+        this.rootClientGenerator = new RootClientGenerator(context);
 
         this.classReference = this.csharp.classReference({
             origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
@@ -231,19 +234,33 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
     }
 
     private writeClientInstantiation(writer: Writer): void {
-        const rootClientName = this.Types.RootClient.name;
         writer.addNamespace("Grpc.Net.Client");
-        writer.writeLine(`var client = new ${rootClientName}(`);
-        writer.writeLine("    clientOptions: new ClientOptions");
-        writer.writeLine("    {");
-        writer.writeLine('        BaseUrl = "http://localhost",');
-        writer.writeLine("        MaxRetries = 0,");
-        writer.writeLine("        GrpcOptions = new GrpcChannelOptions");
-        writer.writeLine("        {");
-        writer.writeLine("            HttpClient = mock.HttpClient,");
-        writer.writeLine("        }");
-        writer.writeLine("    }");
-        writer.writeTextStatement(")");
+        writer.write("var client = ");
+        writer.writeNodeStatement(
+            this.rootClientGenerator.generateExampleClientInstantiationSnippet({
+                includeEnvVarArguments: true,
+                asSnippet: false,
+                clientOptionsArgument: this.csharp.instantiateClass({
+                    classReference: this.Types.ClientOptions,
+                    arguments_: [
+                        {
+                            name: "BaseUrl",
+                            assignment: this.csharp.codeblock('"http://localhost"')
+                        },
+                        { name: "MaxRetries", assignment: this.csharp.codeblock("0") },
+                        {
+                            name: "GrpcOptions",
+                            assignment: this.csharp.codeblock((w) => {
+                                w.writeLine("new GrpcChannelOptions");
+                                w.writeLine("{");
+                                w.writeLine("    HttpClient = mock.HttpClient,");
+                                w.write("}");
+                            })
+                        }
+                    ]
+                })
+            })
+        );
     }
 
     private getDirectory(): RelativeFilePath {
