@@ -6,7 +6,9 @@ import {
     ExampleInlinedRequestBodyProperty,
     ExampleRequestBody,
     ExampleResponse,
+    ExampleServerSideEvent,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
@@ -292,39 +294,16 @@ export function generateEndpointExample({
                 let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined;
                 switch (endpoint.response.body.value.type) {
                     case "sse": {
-                        generatedExample = generateTypeReferenceExample({
-                            currentDepth: 0,
-                            maxDepth: 10,
-                            typeDeclarations,
-                            typeReference: endpoint.response.body.value.payload,
-                            skipOptionalProperties: false
-                        });
-                        if (generatedExample.type === "failure") {
-                            return generatedExample;
-                        }
-                        const { example, jsonExample } = generatedExample;
-                        // For protocol-discriminated unions the SSE `event:` field carries the
-                        // discriminant value — use the first union variant's wire value so the
-                        // auto-generated example has a meaningful event type instead of "".
                         const ssePayload = endpoint.response.body.value.payload;
-                        let sseEventType = "";
-                        if (ssePayload.type === "named") {
-                            const typeDecl = typeDeclarations[ssePayload.typeId];
-                            if (
-                                typeDecl?.shape.type === "union" &&
-                                typeDecl.shape.discriminatorContext === UnionDiscriminatorContext.Protocol
-                            ) {
-                                const firstVariant = typeDecl.shape.types[0];
-                                if (firstVariant != null) {
-                                    sseEventType = firstVariant.discriminantValue.wireValue;
-                                }
-                            }
+                        const sseEvents = generateSseExamples({
+                            payload: ssePayload,
+                            typeDeclarations,
+                            skipOptionalProperties: skipOptionalRequestProperties
+                        });
+                        if (sseEvents.length === 0) {
+                            return { type: "failure", message: "Failed to generate SSE examples" };
                         }
-                        result.response = ExampleResponse.ok(
-                            ExampleEndpointSuccessResponse.sse([
-                                { data: { ...example, jsonExample }, event: sseEventType }
-                            ])
-                        );
+                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.sse(sseEvents));
                         break;
                     }
                     case "json": {
@@ -443,4 +422,161 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
             .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
             .join("");
     return url.startsWith("/") || url === "" ? url : `/${url}`;
+}
+
+/**
+ * Generates SSE example events for a streaming endpoint. When the payload is
+ * a discriminated union, produces one event per variant so that wire tests
+ * cover all union branches. For non-union payloads, generates a single event.
+ */
+function generateSseExamples({
+    payload,
+    typeDeclarations,
+    skipOptionalProperties
+}: {
+    payload: TypeReference;
+    typeDeclarations: Record<TypeId, TypeDeclaration>;
+    skipOptionalProperties: boolean;
+}): ExampleServerSideEvent[] {
+    // Check if the payload is a discriminated union — if so, generate one event per variant.
+    if (payload.type === "named") {
+        const typeDecl = typeDeclarations[payload.typeId];
+        if (typeDecl?.shape.type === "union") {
+            const isProtocol = typeDecl.shape.discriminatorContext === UnionDiscriminatorContext.Protocol;
+            const events = generatePerVariantSseExamples({
+                typeDecl,
+                typeDeclarations,
+                skipOptionalProperties,
+                isProtocol
+            });
+            if (events.length > 0) {
+                return events;
+            }
+        }
+    }
+
+    // Non-union payload: generate a single event
+    const generatedExample = generateTypeReferenceExample({
+        currentDepth: 0,
+        maxDepth: 10,
+        typeDeclarations,
+        typeReference: payload,
+        skipOptionalProperties: false
+    });
+    if (generatedExample.type === "failure") {
+        return [];
+    }
+    return [
+        {
+            data: { ...generatedExample.example, jsonExample: generatedExample.jsonExample },
+            event: ""
+        }
+    ];
+}
+
+/**
+ * Generates one SSE event per union variant by building each variant's example
+ * individually using the variant's type shape.
+ */
+function generatePerVariantSseExamples({
+    typeDecl,
+    typeDeclarations,
+    skipOptionalProperties,
+    isProtocol
+}: {
+    typeDecl: TypeDeclaration;
+    typeDeclarations: Record<TypeId, TypeDeclaration>;
+    skipOptionalProperties: boolean;
+    isProtocol: boolean;
+}): ExampleServerSideEvent[] {
+    if (typeDecl.shape.type !== "union") {
+        return [];
+    }
+    const discriminant = typeDecl.shape.discriminant;
+    const events: ExampleServerSideEvent[] = [];
+
+    // Generate base property examples once (shared across all variants)
+    const basePropertyJsonExamples: Record<string, unknown> = {};
+    for (const baseProperty of typeDecl.shape.baseProperties) {
+        const basePropExample = generateTypeReferenceExample({
+            fieldName: baseProperty.name.wireValue,
+            typeReference: baseProperty.valueType,
+            typeDeclarations,
+            currentDepth: 1,
+            maxDepth: 10,
+            skipOptionalProperties,
+            visitedTypes: new Map()
+        });
+        if (basePropExample.type === "success") {
+            basePropertyJsonExamples[baseProperty.name.wireValue] = basePropExample.jsonExample;
+        }
+    }
+
+    for (const variant of typeDecl.shape.types) {
+        const eventType = isProtocol ? variant.discriminantValue.wireValue : "";
+        const variantJsonExample: Record<string, unknown> = {
+            [discriminant.wireValue]: variant.discriminantValue.wireValue,
+            ...basePropertyJsonExamples
+        };
+
+        const variantResult = variant.shape._visit<{ jsonExample: Record<string, unknown> } | undefined>({
+            noProperties: () => ({ jsonExample: {} }),
+            samePropertiesAsObject: (ref) => {
+                const variantTypeDecl = typeDeclarations[ref.typeId];
+                if (variantTypeDecl == null) {
+                    return undefined;
+                }
+                const variantEx = generateTypeDeclarationExample({
+                    typeDeclaration: variantTypeDecl,
+                    typeDeclarations,
+                    currentDepth: 1,
+                    maxDepth: 10,
+                    skipOptionalProperties,
+                    visitedTypes: new Map(),
+                    fieldName: undefined
+                });
+                if (variantEx == null || variantEx.type === "failure") {
+                    return undefined;
+                }
+                return {
+                    jsonExample:
+                        typeof variantEx.jsonExample === "object" && variantEx.jsonExample != null
+                            ? (variantEx.jsonExample as Record<string, unknown>)
+                            : {}
+                };
+            },
+            singleProperty: (prop) => {
+                const propEx = generateTypeReferenceExample({
+                    fieldName: prop.name.wireValue,
+                    typeReference: prop.type,
+                    typeDeclarations,
+                    currentDepth: 1,
+                    maxDepth: 10,
+                    skipOptionalProperties,
+                    visitedTypes: new Map()
+                });
+                if (propEx.type === "failure") {
+                    return undefined;
+                }
+                return { jsonExample: { [prop.name.wireValue]: propEx.jsonExample } };
+            },
+            _other: () => undefined
+        });
+
+        if (variantResult == null) {
+            continue;
+        }
+
+        const fullJsonExample = { ...variantJsonExample, ...variantResult.jsonExample };
+
+        events.push({
+            data: {
+                shape: ExampleTypeReferenceShape.unknown(fullJsonExample),
+                jsonExample: fullJsonExample
+            },
+            event: eventType
+        });
+    }
+
+    return events;
 }

@@ -7,8 +7,9 @@ describe("SeedApiClient", () => {
     test("streamProtocolNoCollision", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: heartbeat\ndata: {}\n\nevent: string_data\ndata: {"data":"data"}\n\nevent: number_data\ndata: {"data":1.1}\n\nevent: object_data\ndata: {"data":{"message":"message","timestamp":"2024-01-15T09:30:00Z"}}\n\n';
 
         server
             .mockEndpoint()
@@ -19,19 +20,53 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamProtocolNoCollision({});
+        const response = await client.streamProtocolNoCollision({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                ...{
+                    event: "heartbeat",
+                },
+            },
+            {
+                event: "string_data",
+                ...{
+                    event: "string_data",
+                    data: "data",
+                },
+            },
+            {
+                event: "number_data",
+                ...{
+                    event: "number_data",
+                    data: 1.1,
+                },
+            },
+            {
+                event: "object_data",
+                ...{
+                    event: "object_data",
+                    data: {
+                        message: "message",
+                        timestamp: "2024-01-15T09:30:00Z",
+                    },
+                },
+            },
+        ]);
     });
 
     test("streamProtocolCollision", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: heartbeat\ndata: {}\n\nevent: string_data\ndata: {"data":"data"}\n\nevent: number_data\ndata: {"data":1.1}\n\nevent: object_data\ndata: {"data":{"id":"id","name":"name","event":"event"}}\n\n';
 
         server
             .mockEndpoint()
@@ -42,19 +77,54 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamProtocolCollision({});
+        const response = await client.streamProtocolCollision({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                ...{
+                    event: "heartbeat",
+                },
+            },
+            {
+                event: "string_data",
+                ...{
+                    event: "string_data",
+                    data: "data",
+                },
+            },
+            {
+                event: "number_data",
+                ...{
+                    event: "number_data",
+                    data: 1.1,
+                },
+            },
+            {
+                event: "object_data",
+                ...{
+                    event: "object_data",
+                    data: {
+                        id: "id",
+                        name: "name",
+                        event: "event",
+                    },
+                },
+            },
+        ]);
     });
 
     test("streamDataContext", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = 'event: \ndata: {"timestamp":"2024-01-15T09:30:00Z","event":"heartbeat"}\n\n';
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: \ndata: {"event":"heartbeat","timestamp":"2024-01-15T09:30:00Z"}\n\nevent: \ndata: {"event":"entity","entityId":"entityId","eventType":"CREATED","updatedTime":"2024-01-15T09:30:00Z"}\n\n';
 
         server
             .mockEndpoint()
@@ -65,19 +135,33 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamDataContext({});
+        const response = await client.streamDataContext({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
+            },
+            {
+                event: "entity",
+                entityId: "entityId",
+                eventType: "CREATED",
+                updatedTime: "2024-01-15T09:30:00Z",
+            },
+        ]);
     });
 
     test("streamNoContext", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = 'event: \ndata: {"timestamp":"2024-01-15T09:30:00Z","event":"heartbeat"}\n\n';
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: \ndata: {"event":"heartbeat","timestamp":"2024-01-15T09:30:00Z"}\n\nevent: \ndata: {"event":"entity","entityId":"entityId","eventType":"CREATED","updatedTime":"2024-01-15T09:30:00Z"}\n\n';
 
         server
             .mockEndpoint()
@@ -88,19 +172,33 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamNoContext({});
+        const response = await client.streamNoContext({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
+            },
+            {
+                event: "entity",
+                entityId: "entityId",
+                eventType: "CREATED",
+                updatedTime: "2024-01-15T09:30:00Z",
+            },
+        ]);
     });
 
     test("streamProtocolWithFlatSchema", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = 'event: heartbeat\ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: heartbeat\ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\nevent: entity\ndata: {"entityId":"entityId","eventType":"CREATED","updatedTime":"2024-01-15T09:30:00Z"}\n\n';
 
         server
             .mockEndpoint()
@@ -111,19 +209,39 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamProtocolWithFlatSchema({});
+        const response = await client.streamProtocolWithFlatSchema({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                ...{
+                    event: "heartbeat",
+                    timestamp: "2024-01-15T09:30:00Z",
+                },
+            },
+            {
+                event: "entity",
+                ...{
+                    event: "entity",
+                    entityId: "entityId",
+                    eventType: "CREATED",
+                    updatedTime: "2024-01-15T09:30:00Z",
+                },
+            },
+        ]);
     });
 
     test("streamDataContextWithEnvelopeSchema", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = 'event: \ndata: {"event":"heartbeat"}\n\n';
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: \ndata: {"event":"heartbeat"}\n\nevent: \ndata: {"event":"string_data","data":"data"}\n\nevent: \ndata: {"event":"number_data","data":1.1}\n\nevent: \ndata: {"event":"object_data","data":{"message":"message","timestamp":"2024-01-15T09:30:00Z"}}\n\n';
 
         server
             .mockEndpoint()
@@ -134,12 +252,33 @@ describe("SeedApiClient", () => {
             .sseBody(rawResponseBody)
             .build();
 
-        const response = await client.streamDataContextWithEnvelopeSchema({});
+        const response = await client.streamDataContextWithEnvelopeSchema({
+            query: "query",
+        });
         const events: unknown[] = [];
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+            },
+            {
+                event: "string_data",
+                data: "data",
+            },
+            {
+                event: "number_data",
+                data: 1.1,
+            },
+            {
+                event: "object_data",
+                data: {
+                    message: "message",
+                    timestamp: "2024-01-15T09:30:00Z",
+                },
+            },
+        ]);
     });
 
     test("streamOasSpecNative", async () => {
@@ -162,6 +301,13 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ data: "data", event: "event", id: "id", retry: 1 }]);
+        expect(events).toEqual([
+            {
+                data: "data",
+                event: "event",
+                id: "id",
+                retry: 1,
+            },
+        ]);
     });
 });
