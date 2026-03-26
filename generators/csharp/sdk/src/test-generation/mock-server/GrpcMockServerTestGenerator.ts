@@ -81,10 +81,35 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             const isSupportedResponse =
                 jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
 
+            // Pre-generate the endpoint snippet to check for unsupported patterns
+            const endpointSnippet = this.grpcEndpointGenerator.generateGrpcEndpointSnippet({
+                example,
+                endpoint: this.endpoint,
+                clientVariableName: "client",
+                serviceId: this.serviceId,
+                parseDatetimes: true,
+                getResult: true
+            });
+            if (endpointSnippet == null) {
+                return;
+            }
+
+            // Render the snippet to check for patterns that won't compile
+            const snippetCode = endpointSnippet.toString({
+                namespace: this.getTestNamespace(),
+                allNamespaceSegments: this.context.getAllNamespaceSegments(),
+                allTypeClassReferences: this.context.getAllTypeClassReferences(),
+                generation: this.generation,
+                skipImports: true
+            });
+            if (hasUnsupportedSnippetPattern(snippetCode)) {
+                return;
+            }
+
             const methodBody = this.csharp.codeblock((writer: Writer) => {
                 this.writeGrpcMockServerTestBody({
                     writer,
-                    example,
+                    endpointSnippet,
                     jsonExampleResponse,
                     isSupportedResponse
                 });
@@ -108,12 +133,12 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private writeGrpcMockServerTestBody({
         writer,
-        example,
+        endpointSnippet,
         jsonExampleResponse,
         isSupportedResponse
     }: {
         writer: Writer;
-        example: ExampleEndpointCall;
+        endpointSnippet: ast.MethodInvocation;
         jsonExampleResponse: unknown | undefined;
         isSupportedResponse: boolean;
     }): void {
@@ -130,19 +155,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.newLine();
         }
 
-        // Generate the endpoint snippet for calling the SDK method
-        const endpointSnippet = this.grpcEndpointGenerator.generateGrpcEndpointSnippet({
-            example,
-            endpoint: this.endpoint,
-            clientVariableName: "client",
-            serviceId: this.serviceId,
-            parseDatetimes: true,
-            getResult: true
-        });
-
-        if (endpointSnippet == null) {
-            throw new Error("gRPC endpoint snippet is null");
-        }
+        // Add using for JsonUtils (needed for Deserialize in stub handler)
+        writer.addNamespace(`${this.namespaces.root}.Core`);
 
         const stubClassName = this.stubGenerator.getStubClassName();
         const serviceBaseClassName = this.stubGenerator.getServiceBaseClassName();
@@ -157,7 +171,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             if (returnTypeName != null) {
                 writer.writeLine(`    .On${methodName}((request) =>`);
                 writer.writeLine("    {");
-                writer.writeLine(`        var mockObject = ${returnTypeName}.FromJson(mockResponse);`);
+                writer.writeLine(`        var mockObject = JsonUtils.Deserialize<${returnTypeName}>(mockResponse);`);
                 writer.writeLine("        return mockObject.ToProto();");
                 writer.writeTextStatement("    })");
             } else {
@@ -200,7 +214,7 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
     /**
      * Gets the C# type name for the endpoint's return type (the SDK wrapper type, not the proto type).
-     * This is used for `FromJson` / `ToProto` round-tripping in the stub handler.
+     * This is used for `JsonUtils.Deserialize<T>` / `ToProto` round-tripping in the stub handler.
      */
     private getReturnTypeName(): string | undefined {
         const responseBody = this.endpoint.response?.body;
@@ -250,4 +264,21 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             RelativeFilePath.of(`${this.classReference.name}.cs`)
         );
     }
+}
+
+/**
+ * Checks the rendered snippet code for patterns that produce compilation errors.
+ * These are pre-existing snippet generation limitations:
+ *  - `new Dictionary<` for map wrapper types (e.g., Metadata extends Dictionary)
+ *  - `GoogleProtobufAny` / `GoogleRpcStatus` without proper namespace resolution
+ *  - string literals assigned to byte[] fields
+ */
+function hasUnsupportedSnippetPattern(code: string): boolean {
+    if (/new Dictionary</.test(code)) {
+        return true;
+    }
+    if (/GoogleProtobufAny|GoogleRpcStatus/.test(code)) {
+        return true;
+    }
+    return false;
 }

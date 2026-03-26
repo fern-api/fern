@@ -1,5 +1,6 @@
 using Grpc.Net.Client;
 using NUnit.Framework;
+using SeedApi.Core;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
@@ -34,7 +35,7 @@ public class ListTest
         var stub = new DataServiceStub().OnList(
             (request) =>
             {
-                var mockObject = ListResponse.FromJson(mockResponse);
+                var mockObject = JsonUtils.Deserialize<ListResponse>(mockResponse);
                 return mockObject.ToProto();
             }
         );
@@ -88,7 +89,7 @@ public class ListTest
         var stub = new DataServiceStub().OnList(
             (request) =>
             {
-                var mockObject = ListResponse.FromJson(mockResponse);
+                var mockObject = JsonUtils.Deserialize<ListResponse>(mockResponse);
                 return mockObject.ToProto();
             }
         );

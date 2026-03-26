@@ -1,5 +1,6 @@
 using Grpc.Net.Client;
 using NUnit.Framework;
+using SeedApi.Core;
 using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
@@ -45,7 +46,7 @@ public class FetchTest
         var stub = new DataServiceStub().OnFetch(
             (request) =>
             {
-                var mockObject = FetchResponse.FromJson(mockResponse);
+                var mockObject = JsonUtils.Deserialize<FetchResponse>(mockResponse);
                 return mockObject.ToProto();
             }
         );
@@ -104,7 +105,7 @@ public class FetchTest
         var stub = new DataServiceStub().OnFetch(
             (request) =>
             {
-                var mockObject = FetchResponse.FromJson(mockResponse);
+                var mockObject = JsonUtils.Deserialize<FetchResponse>(mockResponse);
                 return mockObject.ToProto();
             }
         );
