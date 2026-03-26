@@ -232,17 +232,29 @@ function determineModification(
  * @param volume - The memfs Volume containing the project files.
  * @param packagePath - The source directory path within the volume (e.g. "src").
  */
-export function fixImportsInVolume(volume: Volume, packagePath: string): void {
+export function fixImportsInVolume(volume: Volume, packagePath: string, extraExistencePaths?: Set<string>): void {
     const srcDir = "/" + packagePath;
 
     // Phase 1: Collect all source file paths from the volume
-    const fileExistenceCache = new Set<string>();
-    collectVolumeFilesSync(volume, srcDir, fileExistenceCache);
+    const volumeFiles = new Set<string>();
+    collectVolumeFilesSync(volume, srcDir, volumeFiles);
 
-    // Phase 2: Process each TypeScript file via string replacement
+    // Build the existence cache: volume files + extra paths for files that will exist
+    // on disk after persist (e.g. core utilities copied by copyCoreUtilities). This
+    // allows generated file imports like "../../core/index" to resolve correctly.
+    const fileExistenceCache = new Set<string>(volumeFiles);
+    if (extraExistencePaths) {
+        for (const p of extraExistencePaths) {
+            fileExistenceCache.add(path.resolve("/" + p));
+        }
+    }
+
+    // Phase 2: Process each TypeScript file in the volume via string replacement.
+    // Only iterate volumeFiles (not extraExistencePaths) since extra paths don't
+    // exist in the volume — they're only used for import resolution lookups.
     const importModificationCache = new Map<string, ImportModificationType>();
 
-    for (const filePath of fileExistenceCache) {
+    for (const filePath of volumeFiles) {
         if (!TS_EXTENSIONS.has(path.extname(filePath))) {
             continue;
         }
@@ -269,6 +281,33 @@ function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>)
             if (ALL_EXTENSIONS.has(ext)) {
                 files.add(path.resolve(fullPath));
             }
+        }
+    }
+}
+
+/**
+ * Fixes imports in core utility files on disk after they are copied by copyCoreUtilities.
+ * Only processes files within the specified directory, using a self-contained existence
+ * cache (core files only import from other core files, not from generated API files).
+ *
+ * @param coreDir - Absolute path to the core directory (e.g. "/tmp/xyz/src/core").
+ */
+export async function fixImportsForCoreFiles(coreDir: string): Promise<void> {
+    // Build existence cache from just the core directory tree
+    const fileExistenceCache = new Set<string>();
+    await collectFilesRecursive(coreDir, fileExistenceCache);
+
+    // Process each TypeScript file
+    const importModificationCache = new Map<string, ImportModificationType>();
+
+    for (const filePath of fileExistenceCache) {
+        if (!TS_EXTENSIONS.has(path.extname(filePath))) {
+            continue;
+        }
+        const content = await readFile(filePath, "utf-8");
+        const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
+        if (newContent !== content) {
+            await writeFile(filePath, newContent);
         }
     }
 }

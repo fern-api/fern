@@ -159,6 +159,67 @@ export class CoreUtilitiesManager {
         }
     }
 
+    /**
+     * Returns the set of file paths (relative to the project root) that copyCoreUtilities
+     * would create. Used to pre-populate the existence cache for in-memory import processing,
+     * so generated file imports to core utilities (e.g. "../../core/index") resolve correctly.
+     */
+    public async getCoreUtilityFilePaths(): Promise<Set<string>> {
+        const files = new Set<string>();
+
+        // Discover files from glob patterns (same logic as copyCoreUtilities)
+        const globResults = await Promise.all(
+            Object.entries(this.referencedCoreUtilities).map(async ([_name, utility]) => {
+                const { patterns, ignore } = utility.getFilesPatterns({
+                    streamType: this.streamType,
+                    formDataSupport: this.formDataSupport,
+                    fetchSupport: this.fetchSupport
+                });
+                return glob(patterns, { ignore, cwd: UTILITIES_PATH, nodir: true });
+            })
+        );
+
+        const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
+
+        for (const result of globResults) {
+            for (const file of result) {
+                let destinationFile = file;
+                if (isCustomPackagePath) {
+                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
+                    if (!isPathAlreadyUpdated) {
+                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
+                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
+                        if (isTestFile) {
+                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
+                        } else if (isSourceFile) {
+                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
+                        }
+                    }
+                }
+                files.add(destinationFile);
+            }
+        }
+
+        // Add auth override files
+        if (this.referencedCoreUtilities["auth"] != null) {
+            for (const filepath of Object.keys(this.authOverrides)) {
+                files.add(path.join(this.relativePackagePath, "core", "auth", filepath));
+            }
+        }
+
+        // Add custom pagination file
+        if (this.referencedCoreUtilities["customPagination"] != null) {
+            files.add(path.join(this.relativePackagePath, "core", "pagination", `${this.customPagerName}.ts`));
+        }
+
+        // Add pagination index file
+        if (this.referencedCoreUtilities["pagination"] != null) {
+            files.add(path.join(this.relativePackagePath, "core", "pagination", "index.ts"));
+        }
+
+        return files;
+    }
+
     public async copyCoreUtilities({
         pathToSrc,
         pathToRoot

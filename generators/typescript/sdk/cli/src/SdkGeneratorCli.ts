@@ -7,7 +7,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,
-    fixImportsForEsm,
+    fixImportsForCoreFiles,
     NpmPackage,
     PersistedTypescriptProject,
     writeTemplateFiles
@@ -257,8 +257,14 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         });
         const typescriptProject = await sdkGenerator.generate();
+        // Pre-compute core utility file paths so the in-memory import processor
+        // can resolve generated file imports to core (e.g. "../../core/index").
+        const coreUtilityPaths = customConfig.useLegacyExports
+            ? undefined
+            : await sdkGenerator.getCoreUtilityFilePaths();
         const persistedTypescriptProject = await typescriptProject.persist({
-            fixEsmImports: !customConfig.useLegacyExports
+            fixEsmImports: !customConfig.useLegacyExports,
+            coreUtilityPaths
         });
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
         await sdkGenerator.copyCoreUtilities({
@@ -328,9 +334,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     ): Promise<void> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         if (customConfig.useLegacyExports === false) {
-            // The bulk of source files were already processed in-memory during persist().
-            // This disk-based pass handles core utility files copied after persist.
-            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+            // Generated source files were already processed in-memory during persist().
+            // This targeted pass fixes imports in files written to disk after persist:
+            // core utilities (copyCoreUtilities) and public exports (generatePublicExports).
+            // Already-processed files are skipped (content unchanged = no disk write).
+            await fixImportsForCoreFiles(persistedTypescriptProject.getSrcDirectory());
         }
         if (customConfig.testFramework === "vitest") {
             await convertJestImportsToVitest(

@@ -782,6 +782,10 @@ export class SdkGenerator {
         return this.intermediateRepresentation.types;
     }
 
+    public async getCoreUtilityFilePaths(): Promise<Set<string>> {
+        return this.coreUtilitiesManager.getCoreUtilityFilePaths();
+    }
+
     public async copyCoreUtilities({
         pathToSrc,
         pathToRoot

@@ -192,7 +192,10 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(options?: { fixEsmImports?: boolean }): Promise<PersistedTypescriptProject> {
+    public async persist(options?: {
+        fixEsmImports?: boolean;
+        coreUtilityPaths?: Set<string>;
+    }): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
@@ -208,8 +211,10 @@ export abstract class TypescriptProject {
 
         // Fix ESM imports in-memory before writing to disk, eliminating one
         // full read+write round-trip vs the post-persist disk-based approach.
+        // When coreUtilityPaths is provided, those paths are added to the existence
+        // cache so generated file imports to core (e.g. "../../core/index") resolve.
         if (options?.fixEsmImports) {
-            fixImportsInVolume(this.volume, this.packagePath);
+            fixImportsInVolume(this.volume, this.packagePath, options.coreUtilityPaths);
         }
 
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
