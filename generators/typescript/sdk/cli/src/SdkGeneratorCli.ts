@@ -335,10 +335,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         if (customConfig.useLegacyExports === false) {
             // Generated source files were already processed in-memory during persist().
-            // This targeted pass fixes imports in files written to disk after persist:
-            // core utilities (copyCoreUtilities) and public exports (generatePublicExports).
-            // Already-processed files are skipped (content unchanged = no disk write).
-            await fixImportsForCoreFiles(persistedTypescriptProject.getSrcDirectory());
+            // This targeted pass fixes only files written to disk after persist:
+            //   - src/core/ (recursively) — core utilities copied by copyCoreUtilities
+            //   - src/*.ts (shallow) — public exports written by generatePublicExports
+            const srcDir = persistedTypescriptProject.getSrcDirectory();
+            await fixImportsForCoreFiles([path.join(srcDir, "core")], [srcDir]);
         }
         if (customConfig.testFramework === "vitest") {
             await convertJestImportsToVitest(

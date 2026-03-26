@@ -286,21 +286,45 @@ function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>)
 }
 
 /**
- * Fixes imports in core utility files on disk after they are copied by copyCoreUtilities.
- * Only processes files within the specified directory, using a self-contained existence
- * cache (core files only import from other core files, not from generated API files).
+ * Fixes imports in files written to disk after persist(). Scans the given directories
+ * recursively, plus any shallow (non-recursive) .ts files in shallowDirs. This is much
+ * faster than scanning the entire project tree since generated source files were already
+ * processed in-memory during persist() and would be no-ops.
  *
- * @param coreDir - Absolute path to the core directory (e.g. "/tmp/xyz/src/core").
+ * @param dirs - Directories to scan recursively (e.g. ["src/core"]).
+ * @param shallowDirs - Directories to scan non-recursively for top-level .ts files only
+ *                      (e.g. ["src"] for exports.ts, index.ts written by generatePublicExports).
  */
-export async function fixImportsForCoreFiles(coreDir: string): Promise<void> {
-    // Build existence cache from just the core directory tree
+export async function fixImportsForCoreFiles(dirs: string[], shallowDirs: string[] = []): Promise<void> {
+    // Build existence cache from the specified directories
     const fileExistenceCache = new Set<string>();
-    await collectFilesRecursive(coreDir, fileExistenceCache);
+    const filesToProcess = new Set<string>();
+
+    // Recursively collect from dirs
+    await Promise.all(dirs.map((dir) => collectFilesRecursive(dir, fileExistenceCache)));
+    for (const f of fileExistenceCache) {
+        filesToProcess.add(f);
+    }
+
+    // Collect shallow (top-level only) files from shallowDirs
+    for (const dir of shallowDirs) {
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            if (!entry.isDirectory()) {
+                const ext = path.extname(entry.name);
+                if (ALL_EXTENSIONS.has(ext)) {
+                    const fullPath = path.resolve(path.join(dir, entry.name));
+                    fileExistenceCache.add(fullPath);
+                    filesToProcess.add(fullPath);
+                }
+            }
+        }
+    }
 
     // Process each TypeScript file
     const importModificationCache = new Map<string, ImportModificationType>();
 
-    for (const filePath of fileExistenceCache) {
+    for (const filePath of filesToProcess) {
         if (!TS_EXTENSIONS.has(path.extname(filePath))) {
             continue;
         }
