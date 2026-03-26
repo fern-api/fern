@@ -63,6 +63,7 @@ export class SeedApiClient {
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "sse",
+                        eventDiscriminator: "event",
                     },
                 }),
                 rawResponse: _response.rawResponse,
@@ -127,6 +128,7 @@ export class SeedApiClient {
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "sse",
+                        eventDiscriminator: "event",
                     },
                 }),
                 rawResponse: _response.rawResponse,
@@ -304,6 +306,7 @@ export class SeedApiClient {
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "sse",
+                        eventDiscriminator: "event",
                     },
                 }),
                 rawResponse: _response.rawResponse,
