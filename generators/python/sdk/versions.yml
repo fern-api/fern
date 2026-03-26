@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.9
+  changelogEntry:
+    - summary: |
+        Replace runtime reflection-based SSE discriminant detection with compile-time
+        knowledge from the IR's discriminatorContext field. Protocol-level SSE endpoints
+        now call parse_sse_protocol and data-level endpoints call parse_sse_data, eliminating
+        type introspection overhead at runtime.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 5.0.8
   changelogEntry:
     - summary: |

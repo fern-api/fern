@@ -1,6 +1,9 @@
 from typing import Any, Callable, Optional
 
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
+from fern.ir.resources.types import UnionDiscriminatorContext
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
@@ -26,8 +29,6 @@ from fern_python.generators.sdk.client_generator.pagination.uri import (
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
-
-import fern.ir.resources as ir_types
 
 
 class EndpointResponseCodeWriter:
@@ -156,6 +157,7 @@ class EndpointResponseCodeWriter:
                                         self._context.core_utilities.get_construct_sse(
                                             self._get_streaming_response_data_type(stream_response),
                                             AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                                            is_protocol=self._is_protocol_discriminated_sse(stream_response),
                                         ),
                                     ),
                                 ],
@@ -870,3 +872,17 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+    def _is_protocol_discriminated_sse(self, stream_response: ir_types.StreamingResponse) -> bool:
+        """Check if the SSE payload's union type uses protocol-level discrimination."""
+        union = stream_response.get_as_union()
+        if union.type != "sse":
+            return False
+        payload_union = union.payload.get_as_union()
+        if payload_union.type != "named":
+            return False
+        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(payload_union.type_id)
+        shape = declaration.shape.get_as_union()
+        if shape.type != "union":
+            return False
+        return shape.discriminator_context == UnionDiscriminatorContext.PROTOCOL
