@@ -58,6 +58,7 @@ export * from "./GtmConfig.js";
 export * from "./HeaderPosition.js";
 export * from "./HttpSnippetLanguage.js";
 export * from "./HttpSnippetsConfig.js";
+export * from "./IconLibrary.js";
 export * from "./IntegrationsConfig.js";
 export * from "./IntercomConfig.js";
 export * from "./InternalProduct.js";

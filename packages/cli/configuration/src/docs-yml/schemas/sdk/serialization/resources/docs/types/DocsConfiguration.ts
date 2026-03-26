@@ -12,6 +12,7 @@ import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { CssConfig } from "./CssConfig.js";
 import { DocsInstance } from "./DocsInstance.js";
 import { DocsSettingsConfig } from "./DocsSettingsConfig.js";
+import { IconLibrary } from "./IconLibrary.js";
 import { DocsTypographyConfig } from "./DocsTypographyConfig.js";
 import { ExperimentalConfig } from "./ExperimentalConfig.js";
 import { FooterLinksConfig } from "./FooterLinksConfig.js";
@@ -71,6 +72,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
     integrations: IntegrationsConfig.optional(),
+    icons: IconLibrary.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
     header: core.serialization.string().optional(),
@@ -110,6 +112,7 @@ export declare namespace DocsConfiguration {
         settings?: DocsSettingsConfig.Raw | null;
         theme?: ThemeConfig.Raw | null;
         integrations?: IntegrationsConfig.Raw | null;
+        icons?: IconLibrary.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;
         header?: string | null;

@@ -128,6 +128,8 @@ export const Target = z.enum(["_blank", "_self", "_parent", "_top"]);
 
 export const TwitterCardSetting = z.enum(["summary", "summary_large_image", "app", "player"]);
 
+export const IconLibrary = z.enum(["fontawesome", "lucide", "phosphor"]);
+
 export const JsScriptStrategy = z.enum(["beforeInteractive", "afterInteractive", "lazyOnload"]);
 
 // ===== Simple undiscriminated unions =====
@@ -940,6 +942,7 @@ export const DocsConfiguration = z.object({
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
     integrations: IntegrationsConfig.optional(),
+    icons: IconLibrary.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
     header: z.string().optional(),

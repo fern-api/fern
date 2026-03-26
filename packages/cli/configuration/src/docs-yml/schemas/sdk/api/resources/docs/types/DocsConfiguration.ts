@@ -64,6 +64,12 @@ export interface DocsConfiguration {
     settings?: FernDocsConfig.DocsSettingsConfig;
     theme?: FernDocsConfig.ThemeConfig;
     integrations?: FernDocsConfig.IntegrationsConfig;
+    /**
+     * Specifies the icon library to use for this docs site.
+     * When set, bare icon names (e.g., "arrow-right") are resolved using the specified library.
+     * Options: "fontawesome" (default), "lucide", "phosphor"
+     */
+    icons?: FernDocsConfig.IconLibrary;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
     /**

@@ -17,6 +17,11 @@ function shouldProcessIconPath(iconPath?: string): boolean {
         return false;
     }
 
+    // Don't treat icon library prefixes as file paths
+    if (iconPath.startsWith("lucide:") || iconPath.startsWith("phosphor:")) {
+        return false;
+    }
+
     return (
         iconPath.startsWith(".") || // check for mac + linux relative paths
         iconPath.includes("/") ||
@@ -25,9 +30,36 @@ function shouldProcessIconPath(iconPath?: string): boolean {
     );
 }
 
+/**
+ * Applies the global icon library prefix to bare icon names.
+ * If the icon already has a recognized prefix (lucide:, phosphor:, fa-, http, SVG, or file path),
+ * it is returned as-is. Otherwise, the global library prefix is prepended.
+ */
+function applyIconLibraryPrefix(icon: string, iconLibrary: string | undefined): string {
+    // If no global library set or it's fontawesome (default), return as-is
+    if (!iconLibrary || iconLibrary === "fontawesome") {
+        return icon;
+    }
+
+    // If icon already has a recognized prefix, return as-is
+    if (
+        icon.startsWith("lucide:") ||
+        icon.startsWith("phosphor:") ||
+        icon.startsWith("fa-") ||
+        icon.startsWith("http") ||
+        icon.startsWith("<")
+    ) {
+        return icon;
+    }
+
+    // Apply the global library prefix
+    return `${iconLibrary}:${icon}`;
+}
+
 function resolveIconPath(
     iconPath: string | undefined,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): AbsoluteFilePath | string | undefined {
     if (!iconPath) {
         return undefined;
@@ -35,7 +67,7 @@ function resolveIconPath(
     if (shouldProcessIconPath(iconPath)) {
         return resolveFilepath(iconPath, absoluteFilepathToDocsConfig);
     }
-    return iconPath;
+    return applyIconLibraryPrefix(iconPath, iconLibrary);
 }
 
 export async function parseDocsConfiguration({
@@ -85,6 +117,8 @@ export async function parseDocsConfiguration({
 
         pageActions,
 
+        icons: iconLibrary,
+
         experimental
     } = rawDocsConfiguration;
 
@@ -100,7 +134,8 @@ export async function parseDocsConfiguration({
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
         context,
-        folderTitleSource
+        folderTitleSource,
+        iconLibrary
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
@@ -165,7 +200,7 @@ export async function parseDocsConfiguration({
         /* navigation */
         landingPage,
         navigation,
-        navbarLinks: convertNavbarLinks(navbarLinks, absoluteFilepathToDocsConfig),
+        navbarLinks: convertNavbarLinks(navbarLinks, absoluteFilepathToDocsConfig, iconLibrary),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
         languages: rawDocsConfiguration.languages,
@@ -231,7 +266,7 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
+        pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig, iconLibrary),
 
         /* custom components */
         header: resolveFilepath(rawDocsConfiguration.header, absoluteFilepathToDocsConfig),
@@ -339,7 +374,8 @@ async function convertJsConfig(
 
 function convertPageActions(
     pageActions: docsYml.RawSchemas.PageActionsConfig | undefined,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): docsYml.ParsedDocsConfiguration["pageActions"] {
     if (pageActions == null) {
         return undefined;
@@ -358,7 +394,7 @@ function convertPageActions(
             cursor: pageActions.options?.cursor ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
-                convertCustomPageAction(action, absoluteFilepathToDocsConfig)
+                convertCustomPageAction(action, absoluteFilepathToDocsConfig, iconLibrary)
             )
         }
     };
@@ -389,13 +425,14 @@ function convertPageActionOption(
 
 function convertCustomPageAction(
     customAction: docsYml.RawSchemas.CustomPageAction,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): docsYml.ParsedCustomPageAction {
     return {
         title: customAction.title,
         subtitle: customAction.subtitle,
         url: customAction.url,
-        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig),
+        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig, iconLibrary),
         default: customAction.default
     };
 }
@@ -548,13 +585,15 @@ async function getVersionedNavigationConfiguration({
     versions,
     absolutePathToFernFolder,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.VersionedDocsNavigation> {
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
@@ -577,7 +616,8 @@ async function getVersionedNavigationConfiguration({
             absolutePathToFernFolder,
             absolutePathToConfig: absoluteFilepathToVersionFile,
             context,
-            folderTitleSource
+            folderTitleSource,
+            iconLibrary
         });
         versionedNavbars.push({
             landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
@@ -606,7 +646,8 @@ async function getNavigationConfiguration({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
@@ -616,6 +657,7 @@ async function getNavigationConfiguration({
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
@@ -624,7 +666,8 @@ async function getNavigationConfiguration({
             absolutePathToFernFolder,
             absolutePathToConfig,
             context,
-            folderTitleSource
+            folderTitleSource,
+            iconLibrary
         });
     } else if (products != null) {
         const productNavbars: docsYml.ProductInfo[] = [];
@@ -655,7 +698,8 @@ async function getNavigationConfiguration({
                         versions: product.versions,
                         absolutePathToFernFolder,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        iconLibrary
                     });
                 } else {
                     // Process as a regular navigation if no versions
@@ -665,7 +709,8 @@ async function getNavigationConfiguration({
                         absolutePathToFernFolder,
                         absolutePathToConfig: absoluteFilepathToProductFile,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        iconLibrary
                     });
                 }
 
@@ -676,7 +721,7 @@ async function getNavigationConfiguration({
                     navigation,
                     slug: product.slug,
                     subtitle: product.subtitle,
-                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
+                    icon: resolveIconPath(product.icon, absolutePathToConfig, iconLibrary) || "fa-solid fa-code",
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
@@ -690,7 +735,7 @@ async function getNavigationConfiguration({
                     href: product.href,
                     target: product.target,
                     subtitle: product.subtitle,
-                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
+                    icon: resolveIconPath(product.icon, absolutePathToConfig, iconLibrary) || "fa-solid fa-code",
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
@@ -712,7 +757,8 @@ async function getNavigationConfiguration({
             versions,
             absolutePathToFernFolder,
             context,
-            folderTitleSource
+            folderTitleSource,
+            iconLibrary
         });
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
@@ -860,7 +906,8 @@ async function convertNavigationTabConfiguration({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     tabs: Record<string, docsYml.RawSchemas.TabConfig>;
     item: docsYml.RawSchemas.TabbedNavigationItem;
@@ -868,6 +915,7 @@ async function convertNavigationTabConfiguration({
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.TabbedNavigation> {
     const tab = tabs[item.tab];
     if (tab == null) {
@@ -884,14 +932,15 @@ async function convertNavigationTabConfiguration({
                             absolutePathToFernFolder,
                             absolutePathToConfig,
                             context,
-                            folderTitleSource
+                            folderTitleSource,
+                            iconLibrary
                         })
                     )
                 );
                 return {
                     title: variant.title,
                     subtitle: variant.subtitle,
-                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
+                    icon: resolveIconPath(variant.icon, absolutePathToConfig, iconLibrary),
                     layout,
                     slug: variant.slug,
                     skipUrlSlug: variant.skipSlug,
@@ -905,7 +954,7 @@ async function convertNavigationTabConfiguration({
         );
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveIconPath(tab.icon, absolutePathToConfig, iconLibrary),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -927,13 +976,14 @@ async function convertNavigationTabConfiguration({
                     absolutePathToFernFolder,
                     absolutePathToConfig,
                     context,
-                    folderTitleSource
+                    folderTitleSource,
+                    iconLibrary
                 })
             )
         );
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveIconPath(tab.icon, absolutePathToConfig, iconLibrary),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -950,7 +1000,7 @@ async function convertNavigationTabConfiguration({
     if (tab.href != null) {
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveIconPath(tab.icon, absolutePathToConfig, iconLibrary),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -968,7 +1018,7 @@ async function convertNavigationTabConfiguration({
     if (tab.changelog != null) {
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveIconPath(tab.icon, absolutePathToConfig, iconLibrary),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -991,7 +1041,8 @@ async function convertNavigationConfiguration({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     rawNavigationConfig: docsYml.RawSchemas.NavigationConfig;
@@ -999,6 +1050,7 @@ async function convertNavigationConfiguration({
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
@@ -1009,7 +1061,8 @@ async function convertNavigationConfiguration({
                     absolutePathToFernFolder,
                     absolutePathToConfig,
                     context,
-                    folderTitleSource
+                    folderTitleSource,
+                    iconLibrary
                 })
             )
         );
@@ -1027,7 +1080,8 @@ async function convertNavigationConfiguration({
                         absolutePathToFernFolder,
                         absolutePathToConfig,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        iconLibrary
                     })
                 )
             )
@@ -1042,13 +1096,15 @@ async function expandFolderConfiguration({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     rawConfig: docsYml.RawSchemas.FolderConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.DocsNavigationItem> {
     const folderPath = resolveFilepath(rawConfig.folder, absolutePathToConfig);
 
@@ -1092,7 +1148,7 @@ async function expandFolderConfiguration({
     return {
         type: "section",
         title,
-        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig, iconLibrary),
         contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
@@ -1113,16 +1169,18 @@ async function convertNavigationItem({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    iconLibrary
 }: {
     rawConfig: docsYml.RawSchemas.NavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    iconLibrary?: string;
 }): Promise<docsYml.DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
-        return parsePageConfig(rawConfig, absolutePathToConfig);
+        return parsePageConfig(rawConfig, absolutePathToConfig, iconLibrary);
     }
     if (isRawSectionConfig(rawConfig)) {
         validateCollapsibleConfig({
@@ -1135,7 +1193,7 @@ async function convertNavigationItem({
         return {
             type: "section",
             title: rawConfig.section,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig, iconLibrary),
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
                     convertNavigationItem({
@@ -1143,7 +1201,8 @@ async function convertNavigationItem({
                         absolutePathToFernFolder,
                         absolutePathToConfig,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        iconLibrary
                     })
                 )
             ),
@@ -1165,7 +1224,7 @@ async function convertNavigationItem({
             type: "apiSection",
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig, iconLibrary),
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null
@@ -1180,8 +1239,9 @@ async function convertNavigationItem({
                     : undefined,
             postman: rawConfig.postman,
             navigation:
-                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig, context)) ??
-                [],
+                rawConfig.layout?.flatMap((item) =>
+                    parseApiReferenceLayoutItem(item, absolutePathToConfig, context, iconLibrary)
+                ) ?? [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
@@ -1201,7 +1261,7 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig, iconLibrary),
             target: rawConfig.target
         };
     }
@@ -1210,7 +1270,7 @@ async function convertNavigationItem({
             type: "changelog",
             changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
             hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig, iconLibrary),
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
@@ -1224,7 +1284,8 @@ async function convertNavigationItem({
             absolutePathToFernFolder,
             absolutePathToConfig,
             context,
-            folderTitleSource
+            folderTitleSource,
+            iconLibrary
         });
     }
     if (isRawLibraryReferenceConfig(rawConfig)) {
@@ -1243,15 +1304,18 @@ async function convertNavigationItem({
 
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): docsYml.DocsNavigationItem.Page;
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): docsYml.DocsNavigationItem.Page | undefined;
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): docsYml.DocsNavigationItem.Page | undefined {
     if (item == null) {
         return undefined;
@@ -1261,7 +1325,7 @@ function parsePageConfig(
         title: item.page,
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
-        icon: resolveIconPath(item.icon, absolutePathToConfig),
+        icon: resolveIconPath(item.icon, absolutePathToConfig, iconLibrary),
         hidden: item.hidden,
         noindex: item.noindex,
         viewers: parseRoles(item.viewers),
@@ -1274,21 +1338,22 @@ function parsePageConfig(
 function parseApiReferenceLayoutItem(
     item: docsYml.RawSchemas.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath,
-    context?: TaskContext
+    context?: TaskContext,
+    iconLibrary?: string
 ): docsYml.ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
     }
 
     if (isRawPageConfig(item)) {
-        return [parsePageConfig(item, absolutePathToConfig)];
+        return [parsePageConfig(item, absolutePathToConfig, iconLibrary)];
     } else if (isRawLinkConfig(item)) {
         return [
             {
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveIconPath(item.icon, absolutePathToConfig, iconLibrary),
                 target: item.target
             }
         ];
@@ -1310,7 +1375,7 @@ function parseApiReferenceLayoutItem(
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
                     item.contents?.flatMap((value) =>
-                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context, iconLibrary)
                     ) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
@@ -1319,7 +1384,7 @@ function parseApiReferenceLayoutItem(
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveIconPath(item.icon, absolutePathToConfig, iconLibrary),
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
@@ -1332,7 +1397,7 @@ function parseApiReferenceLayoutItem(
                 type: "endpoint",
                 endpoint: item.endpoint,
                 title: item.title,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveIconPath(item.icon, absolutePathToConfig, iconLibrary),
                 slug: item.slug,
                 hidden: item.hidden,
                 availability: item.availability,
@@ -1366,12 +1431,12 @@ function parseApiReferenceLayoutItem(
                 overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
                 contents:
                     value.contents?.flatMap((value) =>
-                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context, iconLibrary)
                     ) ?? [],
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
-                icon: resolveIconPath(value.icon, absolutePathToConfig),
+                icon: resolveIconPath(value.icon, absolutePathToConfig, iconLibrary),
                 playground: value.playground,
                 availability: value.availability,
                 viewers: parseRoles(value.viewers),
@@ -1384,7 +1449,9 @@ function parseApiReferenceLayoutItem(
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
-            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
+            contents: value.flatMap((value) =>
+                parseApiReferenceLayoutItem(value, absolutePathToConfig, context, iconLibrary)
+            ),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
@@ -1544,7 +1611,8 @@ function tabbedNavigationItemHasVariants(
 
 function convertNavbarLinks(
     navbarLinks: docsYml.RawSchemas.NavbarLink[] | undefined,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    iconLibrary?: string
 ): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
@@ -1573,8 +1641,8 @@ function convertNavbarLinks(
             return {
                 type: "dropdown",
                 text: navbarLink.text,
-                icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
-                rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
+                icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig, iconLibrary),
+                rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig, iconLibrary),
                 rounded: navbarLink.rounded,
                 viewers,
                 links:
@@ -1583,8 +1651,8 @@ function convertNavbarLinks(
                         target: link.target,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
-                        icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
-                        rightIcon: resolveIconPath(link.rightIcon, absoluteFilepathToDocsConfig),
+                        icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig, iconLibrary),
+                        rightIcon: resolveIconPath(link.rightIcon, absoluteFilepathToDocsConfig, iconLibrary),
                         rounded: link.rounded,
                         viewers: convertRoleToRoleIds(link.viewers)
                     })) ?? []
@@ -1596,8 +1664,8 @@ function convertNavbarLinks(
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
             target: navbarLink.target,
-            icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
-            rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
+            icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig, iconLibrary),
+            rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig, iconLibrary),
             rounded: navbarLink.rounded,
             viewers
         };
