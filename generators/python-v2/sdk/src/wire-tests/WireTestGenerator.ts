@@ -379,12 +379,12 @@ export class WireTestGenerator {
                     );
                 }
             } else {
-                // For streaming endpoints, wrap the call in a for loop to consume the iterator
-                // This is necessary because streaming methods return lazy generators that don't
-                // execute the HTTP request until iterated
+                // For streaming endpoints, collect events and assert we received at least one.
+                // Streaming methods return lazy generators that don't execute the HTTP
+                // request until iterated, so we must consume the iterator.
                 if (this.isStreamingEndpoint(endpoint)) {
-                    statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
-                    statements.push(python.codeBlock("    pass"));
+                    statements.push(python.codeBlock(`events = list(${apiCallAst.toString()})`));
+                    statements.push(python.codeBlock(`assert len(events) > 0, "Expected at least one event"`));
                 } else {
                     statements.push(apiCallAst);
                 }
