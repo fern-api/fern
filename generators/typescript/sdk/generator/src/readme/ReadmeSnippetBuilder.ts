@@ -599,29 +599,15 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 
     private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
         const defaultEnvId = envConfig.defaultEnvironment;
-        const environments = envConfig.environments;
+        const envs = envConfig.environments.environments;
 
-        if (environments.type === "singleBaseUrl") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.pascalCase.unsafeName;
-                }
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.pascalCase.unsafeName;
             }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.pascalCase.unsafeName;
-        } else if (environments.type === "multipleBaseUrls") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.pascalCase.unsafeName;
-                }
-            }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.pascalCase.unsafeName;
         }
-
-        return undefined;
+        return envs[0]?.name.pascalCase.unsafeName;
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {

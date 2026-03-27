@@ -424,24 +424,16 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
         }
 
         const environmentsClassName = this.Types.Environments.name;
-        const rootClientName =
-            this.context
-                .getAccessFromRootClient(
-                    Object.values(this.context.ir.services)[0]?.name.fernFilepath ?? {
-                        allParts: [],
-                        packagePath: [],
-                        file: undefined
-                    }
-                )
-                .split(".")[0] ?? "client";
+        const isSingleBaseUrl = envConfig.environments.type === "singleBaseUrl";
+        const envField = isSingleBaseUrl ? "BaseUrl" : "Environment";
 
         return [
             this.writeCode(`
 using ${this.namespaces.root};
 
-var ${rootClientName} = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.name}
+var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.name}
 {
-    Environment = ${environmentsClassName}.${defaultEnvName}
+    ${envField} = ${environmentsClassName}.${defaultEnvName}
 });
 `)
         ];
@@ -449,7 +441,7 @@ var ${rootClientName} = new ${this.Types.RootClient.name}(new ${this.Types.Clien
 
     private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
         const defaultEnvId = envConfig.defaultEnvironment;
-        const environments = envConfig.environments;
+        const envs = envConfig.environments.environments;
 
         const getEnvName = (env: { name: FernIr.Name }): string => {
             return this.context.settings.pascalCaseEnvironments
@@ -457,27 +449,14 @@ var ${rootClientName} = new ${this.Types.RootClient.name}(new ${this.Types.Clien
                 : env.name.screamingSnakeCase.safeName;
         };
 
-        if (environments.type === "singleBaseUrl") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return getEnvName(defaultEnv);
-                }
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return getEnvName(defaultEnv);
             }
-            const firstEnv = environments.environments[0];
-            return firstEnv != null ? getEnvName(firstEnv) : undefined;
-        } else if (environments.type === "multipleBaseUrls") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return getEnvName(defaultEnv);
-                }
-            }
-            const firstEnv = environments.environments[0];
-            return firstEnv != null ? getEnvName(firstEnv) : undefined;
         }
-
-        return undefined;
+        const firstEnv = envs[0];
+        return firstEnv != null ? getEnvName(firstEnv) : undefined;
     }
 
     private writeCode(s: string): string {

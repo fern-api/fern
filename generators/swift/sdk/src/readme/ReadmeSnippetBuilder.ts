@@ -356,29 +356,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
         const defaultEnvId = envConfig.defaultEnvironment;
-        const environments = envConfig.environments;
+        const envs = envConfig.environments.environments;
 
-        if (environments.type === "singleBaseUrl") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.camelCase.unsafeName;
-                }
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.camelCase.unsafeName;
             }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.camelCase.unsafeName;
-        } else if (environments.type === "multipleBaseUrls") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.camelCase.unsafeName;
-                }
-            }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.camelCase.unsafeName;
         }
-
-        return undefined;
+        return envs[0]?.name.camelCase.unsafeName;
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

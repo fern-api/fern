@@ -845,7 +845,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         writer.write(`let config = ClientConfig {`);
         writer.newLine();
         writer.indent();
-        writer.write(`environment: Some(${environmentEnumName}::${defaultEnvName}),`);
+        writer.write(`base_url: ${environmentEnumName}::${defaultEnvName}.url().to_string(),`);
         writer.newLine();
         writer.write(`..Default::default()`);
         writer.newLine();
@@ -859,29 +859,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
         const defaultEnvId = envConfig.defaultEnvironment;
-        const environments = envConfig.environments;
+        const envs = envConfig.environments.environments;
 
-        if (environments.type === "singleBaseUrl") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.pascalCase.safeName;
-                }
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.pascalCase.safeName;
             }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.pascalCase.safeName;
-        } else if (environments.type === "multipleBaseUrls") {
-            if (defaultEnvId != null) {
-                const defaultEnv = environments.environments.find((e) => e.id === defaultEnvId);
-                if (defaultEnv != null) {
-                    return defaultEnv.name.pascalCase.safeName;
-                }
-            }
-            const firstEnv = environments.environments[0];
-            return firstEnv?.name.pascalCase.safeName;
         }
-
-        return undefined;
+        return envs[0]?.name.pascalCase.safeName;
     }
 
     private writeCode(code: string): string {
