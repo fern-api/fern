@@ -9,7 +9,7 @@ export interface BulkUpdateTasksRequest {
     filterIsComplete?: string | null;
     filterDate?: string | null;
     /** Comma-separated list of fields to include in the response. */
-    fields?: string;
+    _fields?: string;
     assigned_to?: string;
     date?: string;
     is_complete?: boolean;
