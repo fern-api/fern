@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.12
+  changelogEntry:
+    - summary: |
+        Fix POST endpoints with optional request bodies sending `undefined` instead of `{}`
+        when the caller omits the body argument. The generated SDK now wraps the serialized
+        body with `?? {}` so that an empty JSON object is sent to the server, matching the
+        expected wire behavior.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 3.59.11
   changelogEntry:
     - summary: |
