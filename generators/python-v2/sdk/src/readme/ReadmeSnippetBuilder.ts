@@ -546,7 +546,6 @@ client = ${this.clientClassName}(
         }
 
         const { importLine, constructorArg } = environmentInfo;
-        const envClassName = `${this.clientClassName}Environment`;
 
         return this.writeCode(
             `from ${this.packageName} import ${this.clientClassName}
