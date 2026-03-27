@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { join } from "path";
 
-export const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml"];
+export const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock"];
 
 export async function ensureReplayFernignoreEntries(outputDir: string): Promise<boolean> {
     const fernignorePath = join(outputDir, ".fernignore");

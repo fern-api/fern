@@ -15,9 +15,11 @@ on:
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
+# On main: runs queue (no cancellation) so every merge gets tested
+# On PRs: previous runs are cancelled when new commits are pushed
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   DO_NOT_TRACK: "1"
@@ -258,7 +260,7 @@ jobs:
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -289,7 +291,7 @@ jobs:
 
   pydantic:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -319,7 +321,7 @@ jobs:
 
   python-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -350,7 +352,7 @@ jobs:
 
   fastapi:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -380,7 +382,7 @@ jobs:
 
   openapi:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -410,7 +412,7 @@ jobs:
 
   postman:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -440,7 +442,7 @@ jobs:
 
   java-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -470,7 +472,7 @@ jobs:
 
   java-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -500,7 +502,7 @@ jobs:
 
   java-spring:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -530,7 +532,7 @@ jobs:
 
   ts-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -561,7 +563,7 @@ jobs:
 
   ts-express:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -592,7 +594,7 @@ jobs:
 
   go-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -622,7 +624,7 @@ jobs:
 
   go-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -652,7 +654,7 @@ jobs:
 
   csharp-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -682,7 +684,7 @@ jobs:
 
   csharp-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -712,7 +714,7 @@ jobs:
 
   php-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -742,7 +744,7 @@ jobs:
 
   php-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -772,7 +774,7 @@ jobs:
 
   swift-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -802,7 +804,7 @@ jobs:
 
   rust-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -832,7 +834,7 @@ jobs:
 
   rust-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
