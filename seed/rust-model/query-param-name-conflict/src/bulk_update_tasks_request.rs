@@ -30,7 +30,7 @@ pub struct BulkUpdateTasksRequest {
 
 impl BulkUpdateTasksRequest {
     pub fn builder() -> BulkUpdateTasksRequestBuilder {
-        BulkUpdateTasksRequestBuilder::default()
+        <BulkUpdateTasksRequestBuilder as Default>::default()
     }
 }
 

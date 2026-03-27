@@ -12,7 +12,7 @@ pub struct LightweightStackframeInformation {
 
 impl LightweightStackframeInformation {
     pub fn builder() -> LightweightStackframeInformationBuilder {
-        LightweightStackframeInformationBuilder::default()
+        <LightweightStackframeInformationBuilder as Default>::default()
     }
 }
 

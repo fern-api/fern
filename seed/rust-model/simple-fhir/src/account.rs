@@ -15,7 +15,7 @@ pub struct Account {
 
 impl Account {
     pub fn builder() -> AccountBuilder {
-        AccountBuilder::default()
+        <AccountBuilder as Default>::default()
     }
 }
 

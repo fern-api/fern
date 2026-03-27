@@ -10,7 +10,7 @@ pub struct ReceiveSnakeCase {
 
 impl ReceiveSnakeCase {
     pub fn builder() -> ReceiveSnakeCaseBuilder {
-        ReceiveSnakeCaseBuilder::default()
+        <ReceiveSnakeCaseBuilder as Default>::default()
     }
 }
 

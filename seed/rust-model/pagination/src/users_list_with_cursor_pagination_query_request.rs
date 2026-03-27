@@ -19,7 +19,7 @@ pub struct UsersListWithCursorPaginationQueryRequest {
 
 impl UsersListWithCursorPaginationQueryRequest {
     pub fn builder() -> UsersListWithCursorPaginationQueryRequestBuilder {
-        UsersListWithCursorPaginationQueryRequestBuilder::default()
+        <UsersListWithCursorPaginationQueryRequestBuilder as Default>::default()
     }
 }
 

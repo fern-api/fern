@@ -7,7 +7,7 @@ pub struct LangServerRequest {
 
 impl LangServerRequest {
     pub fn builder() -> LangServerRequestBuilder {
-        LangServerRequestBuilder::default()
+        <LangServerRequestBuilder as Default>::default()
     }
 }
 

@@ -8,7 +8,7 @@ pub struct T {
 
 impl T {
     pub fn builder() -> TBuilder {
-        TBuilder::default()
+        <TBuilder as Default>::default()
     }
 }
 

@@ -8,7 +8,7 @@ pub struct Conversation {
 
 impl Conversation {
     pub fn builder() -> ConversationBuilder {
-        ConversationBuilder::default()
+        <ConversationBuilder as Default>::default()
     }
 }
 

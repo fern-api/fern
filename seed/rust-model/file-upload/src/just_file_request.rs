@@ -23,7 +23,7 @@ impl JustFileRequest {
 
 impl JustFileRequest {
     pub fn builder() -> JustFileRequestBuilder {
-        JustFileRequestBuilder::default()
+        <JustFileRequestBuilder as Default>::default()
     }
 }
 

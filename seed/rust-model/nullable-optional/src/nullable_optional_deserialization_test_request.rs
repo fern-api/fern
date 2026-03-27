@@ -43,7 +43,7 @@ pub struct DeserializationTestRequest {
 
 impl DeserializationTestRequest {
     pub fn builder() -> DeserializationTestRequestBuilder {
-        DeserializationTestRequestBuilder::default()
+        <DeserializationTestRequestBuilder as Default>::default()
     }
 }
 

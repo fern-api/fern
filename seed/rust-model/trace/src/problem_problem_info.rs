@@ -33,7 +33,7 @@ pub struct ProblemInfo {
 
 impl ProblemInfo {
     pub fn builder() -> ProblemInfoBuilder {
-        ProblemInfoBuilder::default()
+        <ProblemInfoBuilder as Default>::default()
     }
 }
 

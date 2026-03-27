@@ -10,7 +10,7 @@ pub struct GenerateRequest {
 
 impl GenerateRequest {
     pub fn builder() -> GenerateRequestBuilder {
-        GenerateRequestBuilder::default()
+        <GenerateRequestBuilder as Default>::default()
     }
 }
 

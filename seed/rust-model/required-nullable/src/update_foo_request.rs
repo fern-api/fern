@@ -15,7 +15,7 @@ pub struct UpdateFooRequest {
 
 impl UpdateFooRequest {
     pub fn builder() -> UpdateFooRequestBuilder {
-        UpdateFooRequestBuilder::default()
+        <UpdateFooRequestBuilder as Default>::default()
     }
 }
 

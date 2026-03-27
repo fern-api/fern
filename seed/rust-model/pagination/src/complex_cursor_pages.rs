@@ -15,7 +15,7 @@ pub struct CursorPages {
 
 impl CursorPages {
     pub fn builder() -> CursorPagesBuilder {
-        CursorPagesBuilder::default()
+        <CursorPagesBuilder as Default>::default()
     }
 }
 

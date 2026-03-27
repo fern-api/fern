@@ -32,7 +32,7 @@ impl UploadFileRequest {
 
 impl UploadFileRequest {
     pub fn builder() -> UploadFileRequestBuilder {
-        UploadFileRequestBuilder::default()
+        <UploadFileRequestBuilder as Default>::default()
     }
 }
 
