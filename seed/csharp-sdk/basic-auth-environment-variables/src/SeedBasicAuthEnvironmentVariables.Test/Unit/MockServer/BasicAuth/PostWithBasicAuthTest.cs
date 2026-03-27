@@ -26,6 +26,7 @@ public class PostWithBasicAuthTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/basic-auth")
+                    .WithHeader("Authorization", "Basic VVNFUk5BTUU6QUNDRVNTX1RPS0VO")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

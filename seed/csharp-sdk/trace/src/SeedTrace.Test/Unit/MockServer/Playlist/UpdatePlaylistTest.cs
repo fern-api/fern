@@ -39,6 +39,7 @@ public class UpdatePlaylistTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/playlistId")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPut()
                     .WithBodyAsJson(requestJson)
             )

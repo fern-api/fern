@@ -20,6 +20,7 @@ public class NoEndingSlashTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/urls/no-ending-slash")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(

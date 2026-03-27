@@ -79,17 +79,40 @@ export class InternalFilesGenerator {
         return Array.from(namespaces.values());
     }
 
+    /**
+     * Groups error declarations by the namespace (service) that references them,
+     * not by where they are declared. This ensures that sub-packages whose endpoints
+     * reference errors declared elsewhere (e.g. at the root level) still get a
+     * populated ErrorCodes map.
+     */
     private groupErrorsByNamespace(): Map<string, FernIr.ErrorDeclaration[]> {
         const errorsByNamespace = new Map<string, FernIr.ErrorDeclaration[]>();
+        // Track seen status codes per namespace to avoid duplicates when multiple
+        // services in the same namespace reference the same error.
+        const seenStatusCodesByNamespace = new Map<string, Set<number>>();
 
-        for (const errorDeclaration of Object.values(this.context.ir.errors ?? {})) {
-            const location = this.context.getLocationForErrorId(errorDeclaration.name.errorId);
-            const importPath = location.importPath;
+        for (const service of Object.values(this.context.ir.services)) {
+            const serviceLocation = this.context.getPackageLocation(service.name.fernFilepath);
+            const serviceImportPath = serviceLocation.importPath;
 
-            if (!errorsByNamespace.has(importPath)) {
-                errorsByNamespace.set(importPath, []);
+            let seenStatusCodes = seenStatusCodesByNamespace.get(serviceImportPath);
+            if (seenStatusCodes == null) {
+                seenStatusCodes = new Set<number>();
+                seenStatusCodesByNamespace.set(serviceImportPath, seenStatusCodes);
             }
-            errorsByNamespace.get(importPath)?.push(errorDeclaration);
+
+            for (const endpoint of service.endpoints) {
+                for (const responseError of endpoint.errors) {
+                    const errorDeclaration = this.context.ir.errors[responseError.error.errorId];
+                    if (errorDeclaration != null && !seenStatusCodes.has(errorDeclaration.statusCode)) {
+                        seenStatusCodes.add(errorDeclaration.statusCode);
+                        if (!errorsByNamespace.has(serviceImportPath)) {
+                            errorsByNamespace.set(serviceImportPath, []);
+                        }
+                        errorsByNamespace.get(serviceImportPath)?.push(errorDeclaration);
+                    }
+                }
+            }
         }
 
         return errorsByNamespace;

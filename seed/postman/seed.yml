@@ -25,3 +25,5 @@ fixtures:
       outputFolder: collection-description
 generatorType: Documentation
 defaultOutputMode: local_files
+allowedFailures:
+  - server-sent-events-openapi

@@ -120,3 +120,4 @@ allowedFailures:
   - unions
   - unions-with-local-date
   - server-sent-event-examples
+  - server-sent-events-openapi

@@ -33,6 +33,7 @@ public class GetAndReturnWithDocumentedUnknownTypeTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/object/get-and-return-with-documented-unknown-type")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

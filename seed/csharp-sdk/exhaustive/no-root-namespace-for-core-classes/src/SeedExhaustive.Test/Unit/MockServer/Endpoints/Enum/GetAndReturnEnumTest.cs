@@ -25,6 +25,7 @@ public class GetAndReturnEnumTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/enum")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBody(requestJson)
             )

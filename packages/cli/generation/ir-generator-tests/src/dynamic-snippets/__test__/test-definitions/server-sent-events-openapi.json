@@ -1,0 +1,2399 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:StreamProtocolNoCollisionResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamProtocolNoCollisionResponse",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolNoCollisionResponse",
+                        "safeName": "streamProtocolNoCollisionResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_no_collision_response",
+                        "safeName": "stream_protocol_no_collision_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_NO_COLLISION_RESPONSE",
+                        "safeName": "STREAM_PROTOCOL_NO_COLLISION_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolNoCollisionResponse",
+                        "safeName": "StreamProtocolNoCollisionResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "string_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolStringEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "string_data",
+                            "camelCase": {
+                                "unsafeName": "stringData",
+                                "safeName": "stringData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string_data",
+                                "safeName": "string_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING_DATA",
+                                "safeName": "STRING_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StringData",
+                                "safeName": "StringData"
+                            }
+                        },
+                        "wireValue": "string_data"
+                    },
+                    "properties": []
+                },
+                "number_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolNumberEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "number_data",
+                            "camelCase": {
+                                "unsafeName": "numberData",
+                                "safeName": "numberData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number_data",
+                                "safeName": "number_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER_DATA",
+                                "safeName": "NUMBER_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NumberData",
+                                "safeName": "NumberData"
+                            }
+                        },
+                        "wireValue": "number_data"
+                    },
+                    "properties": []
+                },
+                "object_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolObjectEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "object_data",
+                            "camelCase": {
+                                "unsafeName": "objectData",
+                                "safeName": "objectData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object_data",
+                                "safeName": "object_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_DATA",
+                                "safeName": "OBJECT_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ObjectData",
+                                "safeName": "ObjectData"
+                            }
+                        },
+                        "wireValue": "object_data"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamProtocolCollisionResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamProtocolCollisionResponse",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolCollisionResponse",
+                        "safeName": "streamProtocolCollisionResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_collision_response",
+                        "safeName": "stream_protocol_collision_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_COLLISION_RESPONSE",
+                        "safeName": "STREAM_PROTOCOL_COLLISION_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolCollisionResponse",
+                        "safeName": "StreamProtocolCollisionResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "string_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolStringEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "string_data",
+                            "camelCase": {
+                                "unsafeName": "stringData",
+                                "safeName": "stringData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string_data",
+                                "safeName": "string_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING_DATA",
+                                "safeName": "STRING_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StringData",
+                                "safeName": "StringData"
+                            }
+                        },
+                        "wireValue": "string_data"
+                    },
+                    "properties": []
+                },
+                "number_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolNumberEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "number_data",
+                            "camelCase": {
+                                "unsafeName": "numberData",
+                                "safeName": "numberData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number_data",
+                                "safeName": "number_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER_DATA",
+                                "safeName": "NUMBER_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NumberData",
+                                "safeName": "NumberData"
+                            }
+                        },
+                        "wireValue": "number_data"
+                    },
+                    "properties": []
+                },
+                "object_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolCollisionObjectEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "object_data",
+                            "camelCase": {
+                                "unsafeName": "objectData",
+                                "safeName": "objectData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object_data",
+                                "safeName": "object_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_DATA",
+                                "safeName": "OBJECT_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ObjectData",
+                                "safeName": "ObjectData"
+                            }
+                        },
+                        "wireValue": "object_data"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamDataContextResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamDataContextResponse",
+                    "camelCase": {
+                        "unsafeName": "streamDataContextResponse",
+                        "safeName": "streamDataContextResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_data_context_response",
+                        "safeName": "stream_data_context_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_DATA_CONTEXT_RESPONSE",
+                        "safeName": "STREAM_DATA_CONTEXT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamDataContextResponse",
+                        "safeName": "StreamDataContextResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "entity": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextEntityEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "entity",
+                            "camelCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY",
+                                "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Entity",
+                                "safeName": "Entity"
+                            }
+                        },
+                        "wireValue": "entity"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamNoContextResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamNoContextResponse",
+                    "camelCase": {
+                        "unsafeName": "streamNoContextResponse",
+                        "safeName": "streamNoContextResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_no_context_response",
+                        "safeName": "stream_no_context_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_NO_CONTEXT_RESPONSE",
+                        "safeName": "STREAM_NO_CONTEXT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamNoContextResponse",
+                        "safeName": "StreamNoContextResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "entity": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextEntityEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "entity",
+                            "camelCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY",
+                                "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Entity",
+                                "safeName": "Entity"
+                            }
+                        },
+                        "wireValue": "entity"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamProtocolWithFlatSchemaResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamProtocolWithFlatSchemaResponse",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolWithFlatSchemaResponse",
+                        "safeName": "streamProtocolWithFlatSchemaResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_with_flat_schema_response",
+                        "safeName": "stream_protocol_with_flat_schema_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_WITH_FLAT_SCHEMA_RESPONSE",
+                        "safeName": "STREAM_PROTOCOL_WITH_FLAT_SCHEMA_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolWithFlatSchemaResponse",
+                        "safeName": "StreamProtocolWithFlatSchemaResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "entity": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:DataContextEntityEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "entity",
+                            "camelCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity",
+                                "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY",
+                                "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Entity",
+                                "safeName": "Entity"
+                            }
+                        },
+                        "wireValue": "entity"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamDataContextWithEnvelopeSchemaResponse": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamDataContextWithEnvelopeSchemaResponse",
+                    "camelCase": {
+                        "unsafeName": "streamDataContextWithEnvelopeSchemaResponse",
+                        "safeName": "streamDataContextWithEnvelopeSchemaResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_data_context_with_envelope_schema_response",
+                        "safeName": "stream_data_context_with_envelope_schema_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_DATA_CONTEXT_WITH_ENVELOPE_SCHEMA_RESPONSE",
+                        "safeName": "STREAM_DATA_CONTEXT_WITH_ENVELOPE_SCHEMA_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamDataContextWithEnvelopeSchemaResponse",
+                        "safeName": "StreamDataContextWithEnvelopeSchemaResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "wireValue": "event"
+            },
+            "types": {
+                "heartbeat": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolHeartbeat",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "heartbeat",
+                            "camelCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "heartbeat",
+                                "safeName": "heartbeat"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEARTBEAT",
+                                "safeName": "HEARTBEAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Heartbeat",
+                                "safeName": "Heartbeat"
+                            }
+                        },
+                        "wireValue": "heartbeat"
+                    },
+                    "properties": []
+                },
+                "string_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolStringEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "string_data",
+                            "camelCase": {
+                                "unsafeName": "stringData",
+                                "safeName": "stringData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string_data",
+                                "safeName": "string_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING_DATA",
+                                "safeName": "STRING_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StringData",
+                                "safeName": "StringData"
+                            }
+                        },
+                        "wireValue": "string_data"
+                    },
+                    "properties": []
+                },
+                "number_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolNumberEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "number_data",
+                            "camelCase": {
+                                "unsafeName": "numberData",
+                                "safeName": "numberData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number_data",
+                                "safeName": "number_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER_DATA",
+                                "safeName": "NUMBER_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NumberData",
+                                "safeName": "NumberData"
+                            }
+                        },
+                        "wireValue": "number_data"
+                    },
+                    "properties": []
+                },
+                "object_data": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:ProtocolObjectEvent",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "object_data",
+                            "camelCase": {
+                                "unsafeName": "objectData",
+                                "safeName": "objectData"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object_data",
+                                "safeName": "object_data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_DATA",
+                                "safeName": "OBJECT_DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ObjectData",
+                                "safeName": "ObjectData"
+                            }
+                        },
+                        "wireValue": "object_data"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:StreamRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamRequest",
+                    "camelCase": {
+                        "unsafeName": "streamRequest",
+                        "safeName": "streamRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_request",
+                        "safeName": "stream_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_REQUEST",
+                        "safeName": "STREAM_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamRequest",
+                        "safeName": "StreamRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "query",
+                            "camelCase": {
+                                "unsafeName": "query",
+                                "safeName": "query"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "query",
+                                "safeName": "query"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "QUERY",
+                                "safeName": "QUERY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Query",
+                                "safeName": "Query"
+                            }
+                        },
+                        "wireValue": "query"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:Event": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "event",
+                            "camelCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT",
+                                "safeName": "EVENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Event",
+                                "safeName": "Event"
+                            }
+                        },
+                        "wireValue": "event"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "retry",
+                            "camelCase": {
+                                "unsafeName": "retry",
+                                "safeName": "retry"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "retry",
+                                "safeName": "retry"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RETRY",
+                                "safeName": "RETRY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Retry",
+                                "safeName": "Retry"
+                            }
+                        },
+                        "wireValue": "retry"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:StatusPayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "StatusPayload",
+                    "camelCase": {
+                        "unsafeName": "statusPayload",
+                        "safeName": "statusPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "status_payload",
+                        "safeName": "status_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STATUS_PAYLOAD",
+                        "safeName": "STATUS_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StatusPayload",
+                        "safeName": "StatusPayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "timestamp",
+                            "camelCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMP",
+                                "safeName": "TIMESTAMP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Timestamp",
+                                "safeName": "Timestamp"
+                            }
+                        },
+                        "wireValue": "timestamp"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DATE_TIME"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ObjectPayloadWithEventField": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ObjectPayloadWithEventField",
+                    "camelCase": {
+                        "unsafeName": "objectPayloadWithEventField",
+                        "safeName": "objectPayloadWithEventField"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "object_payload_with_event_field",
+                        "safeName": "object_payload_with_event_field"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OBJECT_PAYLOAD_WITH_EVENT_FIELD",
+                        "safeName": "OBJECT_PAYLOAD_WITH_EVENT_FIELD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ObjectPayloadWithEventField",
+                        "safeName": "ObjectPayloadWithEventField"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "event",
+                            "camelCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event",
+                                "safeName": "event"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT",
+                                "safeName": "EVENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Event",
+                                "safeName": "Event"
+                            }
+                        },
+                        "wireValue": "event"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:HeartbeatPayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "HeartbeatPayload",
+                    "camelCase": {
+                        "unsafeName": "heartbeatPayload",
+                        "safeName": "heartbeatPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "heartbeat_payload",
+                        "safeName": "heartbeat_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "HEARTBEAT_PAYLOAD",
+                        "safeName": "HEARTBEAT_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "HeartbeatPayload",
+                        "safeName": "HeartbeatPayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "timestamp",
+                            "camelCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMP",
+                                "safeName": "TIMESTAMP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Timestamp",
+                                "safeName": "Timestamp"
+                            }
+                        },
+                        "wireValue": "timestamp"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:EntityEventPayloadEventType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "EntityEventPayloadEventType",
+                    "camelCase": {
+                        "unsafeName": "entityEventPayloadEventType",
+                        "safeName": "entityEventPayloadEventType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "entity_event_payload_event_type",
+                        "safeName": "entity_event_payload_event_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ENTITY_EVENT_PAYLOAD_EVENT_TYPE",
+                        "safeName": "ENTITY_EVENT_PAYLOAD_EVENT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EntityEventPayloadEventType",
+                        "safeName": "EntityEventPayloadEventType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "CREATED",
+                        "camelCase": {
+                            "unsafeName": "created",
+                            "safeName": "created"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "created",
+                            "safeName": "created"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATED",
+                            "safeName": "CREATED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Created",
+                            "safeName": "Created"
+                        }
+                    },
+                    "wireValue": "CREATED"
+                },
+                {
+                    "name": {
+                        "originalName": "UPDATED",
+                        "camelCase": {
+                            "unsafeName": "updated",
+                            "safeName": "updated"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "updated",
+                            "safeName": "updated"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATED",
+                            "safeName": "UPDATED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Updated",
+                            "safeName": "Updated"
+                        }
+                    },
+                    "wireValue": "UPDATED"
+                },
+                {
+                    "name": {
+                        "originalName": "DELETED",
+                        "camelCase": {
+                            "unsafeName": "deleted",
+                            "safeName": "deleted"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "deleted",
+                            "safeName": "deleted"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DELETED",
+                            "safeName": "DELETED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Deleted",
+                            "safeName": "Deleted"
+                        }
+                    },
+                    "wireValue": "DELETED"
+                },
+                {
+                    "name": {
+                        "originalName": "PREEXISTING",
+                        "camelCase": {
+                            "unsafeName": "preexisting",
+                            "safeName": "preexisting"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "preexisting",
+                            "safeName": "preexisting"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PREEXISTING",
+                            "safeName": "PREEXISTING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Preexisting",
+                            "safeName": "Preexisting"
+                        }
+                    },
+                    "wireValue": "PREEXISTING"
+                }
+            ]
+        },
+        "type_:EntityEventPayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "EntityEventPayload",
+                    "camelCase": {
+                        "unsafeName": "entityEventPayload",
+                        "safeName": "entityEventPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "entity_event_payload",
+                        "safeName": "entity_event_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ENTITY_EVENT_PAYLOAD",
+                        "safeName": "ENTITY_EVENT_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EntityEventPayload",
+                        "safeName": "EntityEventPayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "entityId",
+                            "camelCase": {
+                                "unsafeName": "entityID",
+                                "safeName": "entityID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity_id",
+                                "safeName": "entity_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY_ID",
+                                "safeName": "ENTITY_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EntityID",
+                                "safeName": "EntityID"
+                            }
+                        },
+                        "wireValue": "entityId"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "eventType",
+                            "camelCase": {
+                                "unsafeName": "eventType",
+                                "safeName": "eventType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event_type",
+                                "safeName": "event_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT_TYPE",
+                                "safeName": "EVENT_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EventType",
+                                "safeName": "EventType"
+                            }
+                        },
+                        "wireValue": "eventType"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:EntityEventPayloadEventType"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updatedTime",
+                            "camelCase": {
+                                "unsafeName": "updatedTime",
+                                "safeName": "updatedTime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_time",
+                                "safeName": "updated_time"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_TIME",
+                                "safeName": "UPDATED_TIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedTime",
+                                "safeName": "UpdatedTime"
+                            }
+                        },
+                        "wireValue": "updatedTime"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ProtocolHeartbeat": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProtocolHeartbeat",
+                    "camelCase": {
+                        "unsafeName": "protocolHeartbeat",
+                        "safeName": "protocolHeartbeat"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "protocol_heartbeat",
+                        "safeName": "protocol_heartbeat"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PROTOCOL_HEARTBEAT",
+                        "safeName": "PROTOCOL_HEARTBEAT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProtocolHeartbeat",
+                        "safeName": "ProtocolHeartbeat"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ProtocolStringEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProtocolStringEvent",
+                    "camelCase": {
+                        "unsafeName": "protocolStringEvent",
+                        "safeName": "protocolStringEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "protocol_string_event",
+                        "safeName": "protocol_string_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PROTOCOL_STRING_EVENT",
+                        "safeName": "PROTOCOL_STRING_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProtocolStringEvent",
+                        "safeName": "ProtocolStringEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ProtocolNumberEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProtocolNumberEvent",
+                    "camelCase": {
+                        "unsafeName": "protocolNumberEvent",
+                        "safeName": "protocolNumberEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "protocol_number_event",
+                        "safeName": "protocol_number_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PROTOCOL_NUMBER_EVENT",
+                        "safeName": "PROTOCOL_NUMBER_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProtocolNumberEvent",
+                        "safeName": "ProtocolNumberEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DOUBLE"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ProtocolObjectEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProtocolObjectEvent",
+                    "camelCase": {
+                        "unsafeName": "protocolObjectEvent",
+                        "safeName": "protocolObjectEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "protocol_object_event",
+                        "safeName": "protocol_object_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PROTOCOL_OBJECT_EVENT",
+                        "safeName": "PROTOCOL_OBJECT_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProtocolObjectEvent",
+                        "safeName": "ProtocolObjectEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:StatusPayload"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ProtocolCollisionObjectEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProtocolCollisionObjectEvent",
+                    "camelCase": {
+                        "unsafeName": "protocolCollisionObjectEvent",
+                        "safeName": "protocolCollisionObjectEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "protocol_collision_object_event",
+                        "safeName": "protocol_collision_object_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PROTOCOL_COLLISION_OBJECT_EVENT",
+                        "safeName": "PROTOCOL_COLLISION_OBJECT_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProtocolCollisionObjectEvent",
+                        "safeName": "ProtocolCollisionObjectEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:ObjectPayloadWithEventField"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:DataContextHeartbeat": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "DataContextHeartbeat",
+                    "camelCase": {
+                        "unsafeName": "dataContextHeartbeat",
+                        "safeName": "dataContextHeartbeat"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "data_context_heartbeat",
+                        "safeName": "data_context_heartbeat"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATA_CONTEXT_HEARTBEAT",
+                        "safeName": "DATA_CONTEXT_HEARTBEAT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DataContextHeartbeat",
+                        "safeName": "DataContextHeartbeat"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "timestamp",
+                            "camelCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMP",
+                                "safeName": "TIMESTAMP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Timestamp",
+                                "safeName": "Timestamp"
+                            }
+                        },
+                        "wireValue": "timestamp"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": [
+                "type_:HeartbeatPayload"
+            ],
+            "additionalProperties": false
+        },
+        "type_:DataContextEntityEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "DataContextEntityEvent",
+                    "camelCase": {
+                        "unsafeName": "dataContextEntityEvent",
+                        "safeName": "dataContextEntityEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "data_context_entity_event",
+                        "safeName": "data_context_entity_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATA_CONTEXT_ENTITY_EVENT",
+                        "safeName": "DATA_CONTEXT_ENTITY_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DataContextEntityEvent",
+                        "safeName": "DataContextEntityEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "entityId",
+                            "camelCase": {
+                                "unsafeName": "entityID",
+                                "safeName": "entityID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "entity_id",
+                                "safeName": "entity_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENTITY_ID",
+                                "safeName": "ENTITY_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EntityID",
+                                "safeName": "EntityID"
+                            }
+                        },
+                        "wireValue": "entityId"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "eventType",
+                            "camelCase": {
+                                "unsafeName": "eventType",
+                                "safeName": "eventType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "event_type",
+                                "safeName": "event_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENT_TYPE",
+                                "safeName": "EVENT_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EventType",
+                                "safeName": "EventType"
+                            }
+                        },
+                        "wireValue": "eventType"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:EntityEventPayloadEventType"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updatedTime",
+                            "camelCase": {
+                                "unsafeName": "updatedTime",
+                                "safeName": "updatedTime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_time",
+                                "safeName": "updated_time"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_TIME",
+                                "safeName": "UPDATED_TIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedTime",
+                                "safeName": "UpdatedTime"
+                            }
+                        },
+                        "wireValue": "updatedTime"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": [
+                "type_:EntityEventPayload"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.streamProtocolNoCollision": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamProtocolNoCollision",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolNoCollision",
+                        "safeName": "streamProtocolNoCollision"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_no_collision",
+                        "safeName": "stream_protocol_no_collision"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_NO_COLLISION",
+                        "safeName": "STREAM_PROTOCOL_NO_COLLISION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolNoCollision",
+                        "safeName": "StreamProtocolNoCollision"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/protocol-no-collision"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamProtocolCollision": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamProtocolCollision",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolCollision",
+                        "safeName": "streamProtocolCollision"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_collision",
+                        "safeName": "stream_protocol_collision"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_COLLISION",
+                        "safeName": "STREAM_PROTOCOL_COLLISION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolCollision",
+                        "safeName": "StreamProtocolCollision"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/protocol-collision"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamDataContext": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamDataContext",
+                    "camelCase": {
+                        "unsafeName": "streamDataContext",
+                        "safeName": "streamDataContext"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_data_context",
+                        "safeName": "stream_data_context"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_DATA_CONTEXT",
+                        "safeName": "STREAM_DATA_CONTEXT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamDataContext",
+                        "safeName": "StreamDataContext"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/data-context"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamNoContext": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamNoContext",
+                    "camelCase": {
+                        "unsafeName": "streamNoContext",
+                        "safeName": "streamNoContext"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_no_context",
+                        "safeName": "stream_no_context"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_NO_CONTEXT",
+                        "safeName": "STREAM_NO_CONTEXT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamNoContext",
+                        "safeName": "StreamNoContext"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/no-context"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamProtocolWithFlatSchema": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamProtocolWithFlatSchema",
+                    "camelCase": {
+                        "unsafeName": "streamProtocolWithFlatSchema",
+                        "safeName": "streamProtocolWithFlatSchema"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_protocol_with_flat_schema",
+                        "safeName": "stream_protocol_with_flat_schema"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_PROTOCOL_WITH_FLAT_SCHEMA",
+                        "safeName": "STREAM_PROTOCOL_WITH_FLAT_SCHEMA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamProtocolWithFlatSchema",
+                        "safeName": "StreamProtocolWithFlatSchema"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/protocol-with-flat-schema"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamDataContextWithEnvelopeSchema": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamDataContextWithEnvelopeSchema",
+                    "camelCase": {
+                        "unsafeName": "streamDataContextWithEnvelopeSchema",
+                        "safeName": "streamDataContextWithEnvelopeSchema"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_data_context_with_envelope_schema",
+                        "safeName": "stream_data_context_with_envelope_schema"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_DATA_CONTEXT_WITH_ENVELOPE_SCHEMA",
+                        "safeName": "STREAM_DATA_CONTEXT_WITH_ENVELOPE_SCHEMA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamDataContextWithEnvelopeSchema",
+                        "safeName": "StreamDataContextWithEnvelopeSchema"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/data-context-with-envelope-schema"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.streamOasSpecNative": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamOasSpecNative",
+                    "camelCase": {
+                        "unsafeName": "streamOasSpecNative",
+                        "safeName": "streamOasSpecNative"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_oas_spec_native",
+                        "safeName": "stream_oas_spec_native"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_OAS_SPEC_NATIVE",
+                        "safeName": "STREAM_OAS_SPEC_NATIVE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamOasSpecNative",
+                        "safeName": "StreamOasSpecNative"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream/oas-spec-native"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:StreamRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

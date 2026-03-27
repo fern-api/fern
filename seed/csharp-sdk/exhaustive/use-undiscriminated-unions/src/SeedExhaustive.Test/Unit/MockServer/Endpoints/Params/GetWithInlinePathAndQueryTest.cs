@@ -17,6 +17,7 @@ public class GetWithInlinePathAndQueryTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/params/path-query/param")
                     .WithParam("query", "query")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));

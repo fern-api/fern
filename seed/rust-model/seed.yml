@@ -49,3 +49,5 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders
+allowedFailures:
+  - server-sent-events-openapi

@@ -45,6 +45,7 @@ public class GetPlaylistsTest : BaseMockServerTest
                     .WithParam("multiLineDocs", "multiLineDocs")
                     .WithParam("optionalMultipleField", "optionalMultipleField")
                     .WithParam("multipleField", "multipleField")
+                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(
