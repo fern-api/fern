@@ -47,6 +47,10 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
+            // Skip endpoints with unsupported pagination types
+            if (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") {
+                return undefined;
+            }
             const example = context.getExampleEndpointCallIfExists(endpoint);
             if (!example) {
                 // skip endpoints that don't have an example

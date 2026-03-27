@@ -2283,8 +2283,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "TerminalNodeResultOutput": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2414,8 +2416,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowNodeResultData": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2485,8 +2489,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowRequestInputRequest": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2555,8 +2561,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowResultEventOutputData": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2627,8 +2635,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowStreamEvent": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -4139,7 +4149,9 @@ types:
     source:
       openapi: ../openapi.yml
   TerminalNodeResultOutput:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: TerminalNodeStringResult
@@ -4147,7 +4159,6 @@ types:
       CHAT_HISTORY: TerminalNodeChatHistoryResult
     source:
       openapi: ../openapi.yml
-    context: data
   TerminalNodeStringResult:
     properties:
       name:
@@ -4220,7 +4231,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowNodeResultData:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       PROMPT: PromptNodeResult
@@ -4231,7 +4244,6 @@ types:
       TERMINAL: TerminalNodeResult
     source:
       openapi: ../openapi.yml
-    context: data
   WorkflowNodeResultEvent:
     properties:
       id: string
@@ -4267,7 +4279,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowRequestInputRequest:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: WorkflowRequestStringInputRequest
@@ -4275,7 +4289,6 @@ types:
       CHAT_HISTORY: WorkflowRequestChatHistoryInputRequest
     source:
       openapi: ../openapi.yml
-    context: data
   WorkflowRequestJsonInputRequest:
     properties:
       name:
@@ -4306,7 +4319,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowResultEventOutputData:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: WorkflowResultEventOutputDataString
@@ -4314,7 +4329,6 @@ types:
       CHAT_HISTORY: WorkflowResultEventOutputDataChatHistory
     source:
       openapi: ../openapi.yml
-    context: data
   WorkflowResultEventOutputDataChatHistory:
     properties:
       name: string
@@ -4361,14 +4375,15 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowStreamEvent:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       WORKFLOW: WorkflowExecutionWorkflowResultEvent
       NODE: WorkflowExecutionNodeResultEvent
     source:
       openapi: ../openapi.yml
-    context: data
 ",
     },
     "deployments.yml": {

@@ -29,8 +29,14 @@ describe("CompletionsClient", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { delta: "foo", tokens: 1 },
-            { delta: "bar", tokens: 2 },
+            {
+                delta: "foo",
+                tokens: 1,
+            },
+            {
+                delta: "bar",
+                tokens: 2,
+            },
         ]);
     });
 
@@ -80,8 +86,14 @@ describe("CompletionsClient", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { event: "completion", content: "hello" },
-            { event: "error", error: "something went wrong" },
+            {
+                event: "completion",
+                content: "hello",
+            },
+            {
+                event: "error",
+                error: "something went wrong",
+            },
         ]);
     });
 
@@ -131,8 +143,20 @@ describe("CompletionsClient", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { event: "completion", content: "hello" },
-            { event: "error", error: "something went wrong" },
+            {
+                event: "completion",
+                ...{
+                    event: "completion",
+                    content: "hello",
+                },
+            },
+            {
+                event: "error",
+                ...{
+                    event: "error",
+                    error: "something went wrong",
+                },
+            },
         ]);
     });
 
