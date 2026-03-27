@@ -18,6 +18,7 @@ import { RubyTypeMapper } from "./RubyTypeMapper.js";
  */
 export function rubySnakeCase(str: string): string {
     return str
+        .replace(/[-\s]+/g, "_")
         .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
         .replace(/([a-z\d])([A-Z])/g, "$1_$2")
         .toLowerCase();
