@@ -200,9 +200,36 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryParameters: this.getQueryParams(context).getReferenceTo(),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+            contentType: this.getContentType(context),
             requestType: this.getRequestType()
         };
+    }
+
+    private getContentType(context: SdkContext): string | ts.Expression | undefined {
+        const staticContentType = this.requestBody?.contentType ?? this.getFallbackContentType();
+        if (staticContentType == null) {
+            return undefined;
+        }
+        // When the request body is optional, conditionally omit the content-type header
+        // when the body is not provided. This avoids sending Content-Type: application/json
+        // with no body, which can cause server-side parse errors.
+        if (this.requestParameter != null && this.requestParameter.isOptional({ context })) {
+            const referenceToRequestBody = this.requestParameter.getReferenceToRequestBody(context);
+            if (referenceToRequestBody != null) {
+                return ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        referenceToRequestBody,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    ts.factory.createStringLiteral(staticContentType),
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createIdentifier("undefined")
+                );
+            }
+        }
+        return staticContentType;
     }
 
     private getFallbackContentType(): string | undefined {

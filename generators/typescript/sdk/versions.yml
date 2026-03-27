@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.12
+  changelogEntry:
+    - summary: |
+        Omit the Content-Type header when an optional request body is not provided.
+        Previously, the SDK always sent `Content-Type: application/json` even when
+        the optional body was omitted, which could cause server-side parse errors.
+        Now, the Content-Type header is conditionally included only when the body
+        is actually present.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 3.59.11
   changelogEntry:
     - summary: |
