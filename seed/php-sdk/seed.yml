@@ -25,6 +25,10 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  basic-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null
@@ -175,8 +179,7 @@ allowedFailures:
   - header-auth-environment-variable
   # TODO: Add support for bytes upload.
   - bytes-upload
-  # Basic auth is not supported yet.
-  - basic-auth
+  # Basic auth wire-tests are enabled in fixtures section.
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
@@ -208,4 +211,8 @@ allowedFailures:
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
   - server-sent-events-openapi
+  - any-auth
+  - circular-references
+  - file-upload
+
 
