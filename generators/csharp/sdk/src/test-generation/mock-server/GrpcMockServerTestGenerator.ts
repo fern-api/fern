@@ -147,7 +147,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 });
             });
             generatedTestCount++;
-            const testNumber = generatedTestCount > 1 || this.exampleEndpointCalls.length > 1 ? `_${generatedTestCount}` : "";
+            const testNumber =
+                generatedTestCount > 1 || this.exampleEndpointCalls.length > 1 ? `_${generatedTestCount}` : "";
             testClass.addTestMethod({
                 name: `MockServerTest${testNumber}`,
                 body: methodBody,
