@@ -10,7 +10,7 @@
         Test fixtures follow the same `[TestFixture]` / `MockServerTest` pattern as
         existing HTTP mock server tests.
       type: feat
-  createdAt: "2026-03-25"
+  createdAt: "2026-03-27"
   irVersion: 65
 
 - version: 2.55.0
