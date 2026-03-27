@@ -121,7 +121,7 @@ export function writeBuilderCode(
     writer.newLine();
     writer.writeLine(`impl ${structName} {`);
     writer.writeLine(`    pub fn builder() -> ${builderName} {`);
-    writer.writeLine(`        ${builderName}::default()`);
+    writer.writeLine(`        <${builderName} as Default>::default()`);
     writer.writeLine(`    }`);
     writer.writeLine(`}`);
 
