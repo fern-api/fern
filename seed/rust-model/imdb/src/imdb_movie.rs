@@ -13,7 +13,7 @@ pub struct Movie {
 
 impl Movie {
     pub fn builder() -> MovieBuilder {
-        MovieBuilder::default()
+        <MovieBuilder as Default>::default()
     }
 }
 

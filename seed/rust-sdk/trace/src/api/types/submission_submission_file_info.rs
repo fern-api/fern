@@ -12,7 +12,7 @@ pub struct SubmissionFileInfo {
 
 impl SubmissionFileInfo {
     pub fn builder() -> SubmissionFileInfoBuilder {
-        SubmissionFileInfoBuilder::default()
+        <SubmissionFileInfoBuilder as Default>::default()
     }
 }
 

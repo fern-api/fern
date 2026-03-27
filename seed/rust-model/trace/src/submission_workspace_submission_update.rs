@@ -12,7 +12,7 @@ pub struct WorkspaceSubmissionUpdate {
 
 impl WorkspaceSubmissionUpdate {
     pub fn builder() -> WorkspaceSubmissionUpdateBuilder {
-        WorkspaceSubmissionUpdateBuilder::default()
+        <WorkspaceSubmissionUpdateBuilder as Default>::default()
     }
 }
 

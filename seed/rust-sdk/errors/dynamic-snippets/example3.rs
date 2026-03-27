@@ -12,6 +12,7 @@ async fn main() {
         .foo_without_endpoint_error(
             &FooRequest {
                 bar: "bar".to_string(),
+                ..Default::default()
             },
             None,
         )

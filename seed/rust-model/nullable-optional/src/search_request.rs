@@ -13,7 +13,7 @@ pub struct SearchRequest {
 
 impl SearchRequest {
     pub fn builder() -> SearchRequestBuilder {
-        SearchRequestBuilder::default()
+        <SearchRequestBuilder as Default>::default()
     }
 }
 

@@ -11,7 +11,7 @@ pub struct Record {
 
 impl Record {
     pub fn builder() -> RecordBuilder {
-        RecordBuilder::default()
+        <RecordBuilder as Default>::default()
     }
 }
 

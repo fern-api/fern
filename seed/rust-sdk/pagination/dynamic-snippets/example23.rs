@@ -13,6 +13,7 @@ async fn main() {
         .list_with_extended_results(
             &UsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
             },
             None,
         )

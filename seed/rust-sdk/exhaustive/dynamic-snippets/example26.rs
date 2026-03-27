@@ -15,6 +15,7 @@ async fn main() {
             &ObjectWithDatetimeLikeString {
                 datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
                 actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+                ..Default::default()
             },
             None,
         )

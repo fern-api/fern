@@ -48,9 +48,11 @@ async fn test_endpoints_container_get_and_return_list_of_objects_with_wiremock()
             &vec![
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             ],
             None,
@@ -109,6 +111,7 @@ async fn test_endpoints_container_get_and_return_set_of_objects_with_wiremock() 
         .get_and_return_set_of_objects(
             &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }]),
             None,
         )
@@ -171,6 +174,7 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_object_with_wire
                 "string".to_string(),
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             )]),
             None,
@@ -233,6 +237,7 @@ async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
         .get_and_return_optional(
             &Some(ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }),
             None,
         )

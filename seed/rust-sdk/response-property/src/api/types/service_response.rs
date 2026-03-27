@@ -12,7 +12,7 @@ pub struct Response {
 
 impl Response {
     pub fn builder() -> ResponseBuilder {
-        ResponseBuilder::default()
+        <ResponseBuilder as Default>::default()
     }
 }
 

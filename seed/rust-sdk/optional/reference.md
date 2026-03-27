@@ -69,6 +69,7 @@ async fn main() {
         .send_optional_typed_body(
             &Some(SendOptionalBodyRequest {
                 message: "message".to_string(),
+                ..Default::default()
             }),
             None,
         )
@@ -128,6 +129,7 @@ async fn main() {
             &"id".to_string(),
             &Some(DeployParams {
                 update_draft: Some(true),
+                ..Default::default()
             }),
             None,
         )

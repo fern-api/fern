@@ -8,7 +8,7 @@ pub struct DeployResponse {
 
 impl DeployResponse {
     pub fn builder() -> DeployResponseBuilder {
-        DeployResponseBuilder::default()
+        <DeployResponseBuilder as Default>::default()
     }
 }
 

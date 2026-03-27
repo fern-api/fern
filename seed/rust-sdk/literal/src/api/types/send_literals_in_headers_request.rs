@@ -8,7 +8,7 @@ pub struct SendLiteralsInHeadersRequest {
 
 impl SendLiteralsInHeadersRequest {
     pub fn builder() -> SendLiteralsInHeadersRequestBuilder {
-        SendLiteralsInHeadersRequestBuilder::default()
+        <SendLiteralsInHeadersRequestBuilder as Default>::default()
     }
 }
 

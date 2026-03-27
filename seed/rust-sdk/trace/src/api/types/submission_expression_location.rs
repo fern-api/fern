@@ -10,7 +10,7 @@ pub struct ExpressionLocation {
 
 impl ExpressionLocation {
     pub fn builder() -> ExpressionLocationBuilder {
-        ExpressionLocationBuilder::default()
+        <ExpressionLocationBuilder as Default>::default()
     }
 }
 

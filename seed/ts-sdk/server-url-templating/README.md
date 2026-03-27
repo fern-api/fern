@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -45,6 +46,18 @@ const client = new SeedApiClient;
 await client.getToken({
     client_id: "client_id",
     client_secret: "client_secret"
+});
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { SeedApiClient, SeedApiEnvironment } from "@fern/server-url-templating";
+
+const client = new SeedApiClient({
+    environment: SeedApiEnvironment.RegionalApiServer,
 });
 ```
 

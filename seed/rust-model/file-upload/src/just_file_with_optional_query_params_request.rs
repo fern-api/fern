@@ -41,7 +41,7 @@ impl JustFileWithOptionalQueryParamsRequest {
 
 impl JustFileWithOptionalQueryParamsRequest {
     pub fn builder() -> JustFileWithOptionalQueryParamsRequestBuilder {
-        JustFileWithOptionalQueryParamsRequestBuilder::default()
+        <JustFileWithOptionalQueryParamsRequestBuilder as Default>::default()
     }
 }
 

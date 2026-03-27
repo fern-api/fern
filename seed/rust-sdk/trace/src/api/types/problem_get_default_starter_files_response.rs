@@ -8,7 +8,7 @@ pub struct GetDefaultStarterFilesResponse {
 
 impl GetDefaultStarterFilesResponse {
     pub fn builder() -> GetDefaultStarterFilesResponseBuilder {
-        GetDefaultStarterFilesResponseBuilder::default()
+        <GetDefaultStarterFilesResponseBuilder as Default>::default()
     }
 }
 

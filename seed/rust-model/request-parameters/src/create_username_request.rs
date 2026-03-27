@@ -14,7 +14,7 @@ pub struct CreateUsernameRequest {
 
 impl CreateUsernameRequest {
     pub fn builder() -> CreateUsernameRequestBuilder {
-        CreateUsernameRequestBuilder::default()
+        <CreateUsernameRequestBuilder as Default>::default()
     }
 }
 

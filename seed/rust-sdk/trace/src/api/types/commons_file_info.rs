@@ -10,7 +10,7 @@ pub struct FileInfo {
 
 impl FileInfo {
     pub fn builder() -> FileInfoBuilder {
-        FileInfoBuilder::default()
+        <FileInfoBuilder as Default>::default()
     }
 }
 

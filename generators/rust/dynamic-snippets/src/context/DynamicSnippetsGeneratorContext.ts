@@ -525,4 +525,69 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         // Check if all collected properties are optional
         return this.allParametersAreOptional(allProperties);
     }
+
+    /**
+     * Check if a dynamic IR object type will have Default derived by the model generator.
+     * Mirrors the logic in StructGenerator.canDeriveDefault():
+     * - All property types must support Default
+     * - Extended types must support Default
+     */
+    public canObjectTypeUseDefault(objectType: FernIr.dynamic.ObjectType): boolean {
+        // Check if extends exist (types with inheritance are harder to verify)
+        const extendsProperty = (objectType as { extends?: string[] }).extends;
+        if (extendsProperty != null && extendsProperty.length > 0) {
+            // Check if all base types support Default
+            for (const baseTypeId of extendsProperty) {
+                const baseType = this.ir.types[baseTypeId];
+                if (!baseType || baseType.type !== "object" || !this.canObjectTypeUseDefault(baseType)) {
+                    return false;
+                }
+            }
+        }
+        // Check if all property types support Default
+        return objectType.properties.every((prop) => this.typeSupportsDefault(prop.typeReference));
+    }
+
+    /**
+     * Check if a type reference maps to a Rust type that implements Default.
+     * Mirrors the model generator's typeSupportsDefault logic.
+     */
+    public typeSupportsDefault(typeRef: FernIr.dynamic.TypeReference, visited: Set<string> = new Set()): boolean {
+        switch (typeRef.type) {
+            case "primitive":
+                return true; // All Rust primitives implement Default
+            case "optional":
+            case "nullable":
+                return true; // Option<T> defaults to None
+            case "list":
+            case "map":
+            case "set":
+                return true; // Vec, HashMap, HashSet all implement Default
+            case "unknown":
+                return true; // serde_json::Value implements Default
+            case "literal":
+                return false;
+            case "named": {
+                const typeId = typeRef.value;
+                if (visited.has(typeId)) {
+                    return false; // Prevent infinite recursion
+                }
+                visited.add(typeId);
+                const namedType = this.ir.types[typeId];
+                if (!namedType) {
+                    return false;
+                }
+                if (namedType.type === "object") {
+                    return this.canObjectTypeUseDefault(namedType);
+                }
+                if (namedType.type === "alias") {
+                    return this.typeSupportsDefault(namedType.typeReference, visited);
+                }
+                // Enums, unions don't derive Default
+                return false;
+            }
+            default:
+                return false;
+        }
+    }
 }

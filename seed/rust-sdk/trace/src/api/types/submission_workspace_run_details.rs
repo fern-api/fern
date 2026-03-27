@@ -13,7 +13,7 @@ pub struct WorkspaceRunDetails {
 
 impl WorkspaceRunDetails {
     pub fn builder() -> WorkspaceRunDetailsBuilder {
-        WorkspaceRunDetailsBuilder::default()
+        <WorkspaceRunDetailsBuilder as Default>::default()
     }
 }
 

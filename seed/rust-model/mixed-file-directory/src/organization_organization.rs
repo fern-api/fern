@@ -12,7 +12,7 @@ pub struct Organization {
 
 impl Organization {
     pub fn builder() -> OrganizationBuilder {
-        OrganizationBuilder::default()
+        <OrganizationBuilder as Default>::default()
     }
 }
 
