@@ -80,7 +80,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/inline-path/{jsonable_encoder(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -167,7 +167,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple-query",
             method="GET",
             params={
                 "query": query,
@@ -246,7 +246,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/inline-path-query/{jsonable_encoder(param)}",
             method="GET",
             params={
                 "query": query,
@@ -330,7 +330,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/inline-path/{jsonable_encoder(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -468,7 +468,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/inline-path/{jsonable_encoder(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -555,7 +555,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple-query",
             method="GET",
             params={
                 "query": query,
@@ -634,7 +634,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/inline-path-query/{jsonable_encoder(param)}",
             method="GET",
             params={
                 "query": query,
@@ -718,7 +718,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/inline-path/{jsonable_encoder(param)}",
             method="PUT",
             json=request,
             request_options=request_options,

@@ -135,7 +135,7 @@ public class AsyncRawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("inline-path")
                 .addPathSegment(param);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -254,7 +254,8 @@ public class AsyncRawParamsClient {
             GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("params");
+                .addPathSegments("params")
+                .addPathSegments("allow-multiple-query");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
         if (requestOptions != null) {
@@ -376,7 +377,7 @@ public class AsyncRawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path-query")
+                .addPathSegments("inline-path-query")
                 .addPathSegment(param);
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
@@ -506,7 +507,7 @@ public class AsyncRawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("inline-path")
                 .addPathSegment(param);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

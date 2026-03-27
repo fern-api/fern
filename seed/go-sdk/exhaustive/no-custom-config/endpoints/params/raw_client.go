@@ -88,7 +88,7 @@ func (r *RawClient) GetWithInlinePath(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/params/path/%v",
+		baseURL+"/params/inline-path/%v",
 		request.Param,
 	)
 	headers := internal.MergeHeaders(
@@ -175,7 +175,7 @@ func (r *RawClient) GetWithAllowMultipleQuery(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/params"
+	endpointURL := baseURL + "/params/allow-multiple-query"
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
@@ -270,7 +270,7 @@ func (r *RawClient) GetWithInlinePathAndQuery(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/params/path-query/%v",
+		baseURL+"/params/inline-path-query/%v",
 		request.Param,
 	)
 	queryParams, err := internal.QueryValues(request)
@@ -363,7 +363,7 @@ func (r *RawClient) ModifyWithInlinePath(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/params/path/%v",
+		baseURL+"/params/inline-path/%v",
 		request.Param,
 	)
 	headers := internal.MergeHeaders(

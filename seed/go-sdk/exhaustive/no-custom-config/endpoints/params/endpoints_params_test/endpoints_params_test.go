@@ -85,7 +85,7 @@ func TestEndpointsParamsGetWithPathWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathWithWireMock", "GET", "/params/path/param", nil, 1)
 }
 
-func TestEndpointsParamsGetWithPathWithWireMock2(
+func TestEndpointsParamsGetWithInlinePathWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -95,16 +95,19 @@ func TestEndpointsParamsGetWithPathWithWireMock2(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	_, invocationErr := client.Endpoints.Params.GetWithPath(
+	request := &endpoints.GetWithInlinePath{
+		Param: "param",
+	}
+	_, invocationErr := client.Endpoints.Params.GetWithInlinePath(
 		context.TODO(),
-		"param",
+		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithPathWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithInlinePathWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathWithWireMock2", "GET", "/params/path/param", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithInlinePathWithWireMock", "GET", "/params/inline-path/param", nil, 1)
 }
 
 func TestEndpointsParamsGetWithQueryWithWireMock(
@@ -133,7 +136,7 @@ func TestEndpointsParamsGetWithQueryWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock", "GET", "/params", map[string]string{"query": "query", "number": "1"}, 1)
 }
 
-func TestEndpointsParamsGetWithQueryWithWireMock2(
+func TestEndpointsParamsGetWithAllowMultipleQueryWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -143,20 +146,24 @@ func TestEndpointsParamsGetWithQueryWithWireMock2(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &endpoints.GetWithQuery{
-		Query:  "query",
-		Number: 1,
+	request := &endpoints.GetWithMultipleQuery{
+		Query: []string{
+			"query",
+		},
+		Number: []int{
+			1,
+		},
 	}
-	invocationErr := client.Endpoints.Params.GetWithQuery(
+	invocationErr := client.Endpoints.Params.GetWithAllowMultipleQuery(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithQueryWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithAllowMultipleQueryWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock2", "GET", "/params", map[string]string{"query": "query", "number": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithAllowMultipleQueryWithWireMock", "GET", "/params/allow-multiple-query", map[string]string{"query": "query", "number": "1"}, 1)
 }
 
 func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
@@ -185,7 +192,7 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock", "GET", "/params/path-query/param", map[string]string{"query": "query"}, 1)
 }
 
-func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
+func TestEndpointsParamsGetWithInlinePathAndQueryWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -195,20 +202,20 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &endpoints.GetWithPathAndQuery{
+	request := &endpoints.GetWithInlinePathAndQuery{
+		Param: "param",
 		Query: "query",
 	}
-	invocationErr := client.Endpoints.Params.GetWithPathAndQuery(
+	invocationErr := client.Endpoints.Params.GetWithInlinePathAndQuery(
 		context.TODO(),
-		"param",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithPathAndQueryWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithInlinePathAndQueryWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock2", "GET", "/params/path-query/param", map[string]string{"query": "query"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithInlinePathAndQueryWithWireMock", "GET", "/params/inline-path-query/param", map[string]string{"query": "query"}, 1)
 }
 
 func TestEndpointsParamsModifyWithPathWithWireMock(
@@ -235,7 +242,7 @@ func TestEndpointsParamsModifyWithPathWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock", "PUT", "/params/path/param", nil, 1)
 }
 
-func TestEndpointsParamsModifyWithPathWithWireMock2(
+func TestEndpointsParamsModifyWithInlinePathWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -245,16 +252,18 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := "string"
-	_, invocationErr := client.Endpoints.Params.ModifyWithPath(
+	request := &endpoints.ModifyResourceAtInlinedPath{
+		Param: "param",
+		Body:  "string",
+	}
+	_, invocationErr := client.Endpoints.Params.ModifyWithInlinePath(
 		context.TODO(),
-		"param",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsParamsModifyWithPathWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsModifyWithInlinePathWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsModifyWithInlinePathWithWireMock", "PUT", "/params/inline-path/param", nil, 1)
 }
