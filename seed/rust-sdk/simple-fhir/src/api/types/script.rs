@@ -11,7 +11,7 @@ pub struct Script {
 
 impl Script {
     pub fn builder() -> ScriptBuilder {
-        ScriptBuilder::default()
+        <ScriptBuilder as Default>::default()
     }
 }
 

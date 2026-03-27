@@ -15,7 +15,7 @@ pub struct DoublyLinkedListNodeValue {
 
 impl DoublyLinkedListNodeValue {
     pub fn builder() -> DoublyLinkedListNodeValueBuilder {
-        DoublyLinkedListNodeValueBuilder::default()
+        <DoublyLinkedListNodeValueBuilder as Default>::default()
     }
 }
 

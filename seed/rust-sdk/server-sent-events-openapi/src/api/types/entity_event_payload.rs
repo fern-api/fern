@@ -17,7 +17,7 @@ pub struct EntityEventPayload {
 
 impl EntityEventPayload {
     pub fn builder() -> EntityEventPayloadBuilder {
-        EntityEventPayloadBuilder::default()
+        <EntityEventPayloadBuilder as Default>::default()
     }
 }
 

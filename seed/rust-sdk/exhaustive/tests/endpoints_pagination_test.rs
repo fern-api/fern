@@ -22,6 +22,7 @@ async fn test_endpoints_pagination_list_items_with_wiremock() {
             &ListItemsQueryRequest {
                 cursor: Some("cursor".to_string()),
                 limit: Some(1),
+                ..Default::default()
             },
             None,
         )

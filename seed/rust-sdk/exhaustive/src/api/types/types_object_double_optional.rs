@@ -9,7 +9,7 @@ pub struct DoubleOptional {
 
 impl DoubleOptional {
     pub fn builder() -> DoubleOptionalBuilder {
-        DoubleOptionalBuilder::default()
+        <DoubleOptionalBuilder as Default>::default()
     }
 }
 

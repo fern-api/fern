@@ -8,7 +8,7 @@ pub struct BulkUpdateTasksResponse {
 
 impl BulkUpdateTasksResponse {
     pub fn builder() -> BulkUpdateTasksResponseBuilder {
-        BulkUpdateTasksResponseBuilder::default()
+        <BulkUpdateTasksResponseBuilder as Default>::default()
     }
 }
 

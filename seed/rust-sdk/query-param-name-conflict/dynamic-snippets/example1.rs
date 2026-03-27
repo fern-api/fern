@@ -20,6 +20,7 @@ async fn main() {
                 ),
                 bulk_update_tasks_request_is_complete: Some(true),
                 text: Some("text".to_string()),
+                ..Default::default()
             },
             None,
         )

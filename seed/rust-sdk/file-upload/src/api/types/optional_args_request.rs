@@ -35,7 +35,7 @@ impl OptionalArgsRequest {
 
 impl OptionalArgsRequest {
     pub fn builder() -> OptionalArgsRequestBuilder {
-        OptionalArgsRequestBuilder::default()
+        <OptionalArgsRequestBuilder as Default>::default()
     }
 }
 

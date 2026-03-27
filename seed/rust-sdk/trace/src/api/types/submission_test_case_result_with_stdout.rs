@@ -9,7 +9,7 @@ pub struct TestCaseResultWithStdout {
 
 impl TestCaseResultWithStdout {
     pub fn builder() -> TestCaseResultWithStdoutBuilder {
-        TestCaseResultWithStdoutBuilder::default()
+        <TestCaseResultWithStdoutBuilder as Default>::default()
     }
 }
 

@@ -12,7 +12,7 @@ pub struct Inlined {
 
 impl Inlined {
     pub fn builder() -> InlinedBuilder {
-        InlinedBuilder::default()
+        <InlinedBuilder as Default>::default()
     }
 }
 

@@ -56,9 +56,7 @@ async fn main() {
     client
         .upload_json_document(
             &UploadDocumentRequest {
-                author: None,
-                tags: None,
-                title: None,
+                ..Default::default()
             },
             None,
         )

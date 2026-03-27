@@ -15,6 +15,7 @@ async fn main() {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )

@@ -11,9 +11,7 @@ async fn main() {
         .user
         .create_username_optional(
             &Some(CreateUsernameBodyOptionalProperties {
-                username: None,
-                password: None,
-                name: None,
+                ..Default::default()
             }),
             None,
         )

@@ -406,6 +406,7 @@ async fn main() {
                         literal_2: "literal2".to_string(),
                         str_prop: "strProp".to_string(),
                     }],
+                    ..Default::default()
                 },
             },
             None,

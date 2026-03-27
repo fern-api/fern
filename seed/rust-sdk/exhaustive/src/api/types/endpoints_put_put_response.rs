@@ -8,7 +8,7 @@ pub struct PutResponse {
 
 impl PutResponse {
     pub fn builder() -> PutResponseBuilder {
-        PutResponseBuilder::default()
+        <PutResponseBuilder as Default>::default()
     }
 }
 

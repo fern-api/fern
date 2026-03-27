@@ -8,7 +8,7 @@ pub struct StreamRequest {
 
 impl StreamRequest {
     pub fn builder() -> StreamRequestBuilder {
-        StreamRequestBuilder::default()
+        <StreamRequestBuilder as Default>::default()
     }
 }
 
