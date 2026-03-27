@@ -385,7 +385,7 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): go.AstNode {
-        const arguments_ = auth.passwordOmit
+        const arguments_ = (auth as FernIr.dynamic.BasicAuth & { passwordOmit?: boolean }).passwordOmit
             ? [go.TypeInstantiation.string(values.username)]
             : [go.TypeInstantiation.string(values.username), go.TypeInstantiation.string(values.password)];
         return go.codeblock((writer) => {

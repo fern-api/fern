@@ -299,7 +299,7 @@ export class EndpointSnippetGenerator {
                 value: python.TypeInstantiation.str(values.username)
             }
         ];
-        if (!auth.passwordOmit) {
+        if (!(auth as FernIr.dynamic.BasicAuth & { passwordOmit?: boolean }).passwordOmit) {
             fields.push({
                 name: this.context.getPropertyName(auth.password),
                 value: python.TypeInstantiation.str(values.password)

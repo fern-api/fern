@@ -281,7 +281,7 @@ export class EndpointSnippetGenerator {
                 value: ts.TypeLiteral.string(values.username)
             }
         ];
-        if (!auth.passwordOmit) {
+        if (!(auth as FernIr.dynamic.BasicAuth & { passwordOmit?: boolean }).passwordOmit) {
             fields.push({
                 name: this.context.getPropertyName(auth.password),
                 value: ts.TypeLiteral.string(values.password)

@@ -327,7 +327,7 @@ export class EndpointSnippetGenerator {
                 assignment: php.TypeLiteral.string(values.username)
             }
         ];
-        if (!auth.passwordOmit) {
+        if (!(auth as FernIr.dynamic.BasicAuth & { passwordOmit?: boolean }).passwordOmit) {
             args.push({
                 name: this.context.getPropertyName(auth.password),
                 assignment: php.TypeLiteral.string(values.password)

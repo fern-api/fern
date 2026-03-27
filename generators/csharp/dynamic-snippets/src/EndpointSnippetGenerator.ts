@@ -391,7 +391,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 assignment: this.csharp.Literal.string(values.username)
             }
         ];
-        if (!auth.passwordOmit) {
+        if (!(auth as FernIr.dynamic.BasicAuth & { passwordOmit?: boolean }).passwordOmit) {
             args.push({
                 name: this.context.getParameterName(auth.password),
                 assignment: this.csharp.Literal.string(values.password)
