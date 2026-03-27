@@ -24,7 +24,14 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "",
+                ...{
+                    event: "heartbeat",
+                },
+            },
+        ]);
     });
 
     test("streamProtocolCollision", async () => {
@@ -47,7 +54,14 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "",
+                ...{
+                    event: "heartbeat",
+                },
+            },
+        ]);
     });
 
     test("streamDataContext", async () => {
@@ -70,7 +84,12 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
+            },
+        ]);
     });
 
     test("streamNoContext", async () => {
@@ -93,7 +112,12 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
+            },
+        ]);
     });
 
     test("streamProtocolWithFlatSchema", async () => {
@@ -116,7 +140,15 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat", timestamp: "2024-01-15T09:30:00Z" }]);
+        expect(events).toEqual([
+            {
+                event: "",
+                ...{
+                    event: "heartbeat",
+                    timestamp: "2024-01-15T09:30:00Z",
+                },
+            },
+        ]);
     });
 
     test("streamDataContextWithEnvelopeSchema", async () => {
@@ -139,7 +171,11 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "heartbeat" }]);
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+            },
+        ]);
     });
 
     test("streamOasSpecNative", async () => {
@@ -162,6 +198,13 @@ describe("SeedApiClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ data: "data", event: "event", id: "id", retry: 1 }]);
+        expect(events).toEqual([
+            {
+                data: "data",
+                event: "event",
+                id: "id",
+                retry: 1,
+            },
+        ]);
     });
 });

@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.5
+  changelogEntry:
+    - summary: |
+        Wire Basic Auth credentials into the Authorization header. Previously,
+        the generated client accepted username/password constructor parameters
+        but never set the `Authorization: Basic <base64>` header on outgoing
+        requests. The constructor now encodes the credentials and adds the
+        header automatically.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 62
+
 - version: 2.2.4
   changelogEntry:
     - summary: |
@@ -7,7 +19,6 @@
       type: fix
   createdAt: "2026-03-25"
   irVersion: 62
-
 - version: 2.2.3
   changelogEntry:
     - summary: |
