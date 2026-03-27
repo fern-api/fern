@@ -1,5 +1,7 @@
 from typing import Any, Dict
+from unittest.mock import MagicMock, AsyncMock, patch
 
+import httpx
 import pytest
 
 from core_utilities.shared.http_client import (
@@ -296,3 +298,159 @@ def test_preserves_base_url_path_prefix_trailing_slash() -> None:
     """Test that path prefixes in base URL are preserved."""
     result = _build_url("https://cloud.example.com/org/tenant/api/", "/users")
     assert result == "https://cloud.example.com/org/tenant/api/users"
+
+
+# ---------------------------------------------------------------------------
+# Connection error retry tests
+# ---------------------------------------------------------------------------
+
+
+def _make_sync_http_client(mock_client: Any) -> HttpClient:
+    return HttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+
+
+def _make_async_http_client(mock_client: Any) -> AsyncHttpClient:
+    return AsyncHttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_sync_retries_on_connect_error(mock_sleep: MagicMock) -> None:
+    """Sync: connection error retries on httpx.ConnectError."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = [
+        httpx.ConnectError("connection failed"),
+        _DummyResponse(),
+    ]
+    http_client = _make_sync_http_client(mock_client)
+
+    response = http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    assert mock_client.request.call_count == 2
+    mock_sleep.assert_called_once()
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
+    """Sync: connection error retries on httpx.RemoteProtocolError."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = [
+        httpx.RemoteProtocolError("Remote end closed connection without response"),
+        _DummyResponse(),
+    ]
+    http_client = _make_sync_http_client(mock_client)
+
+    response = http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    assert mock_client.request.call_count == 2
+    mock_sleep.assert_called_once()
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_sync_connection_error_exhausts_retries(mock_sleep: MagicMock) -> None:
+    """Sync: connection error exhausts retries then raises."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = httpx.ConnectError("connection failed")
+    http_client = _make_sync_http_client(mock_client)
+
+    with pytest.raises(httpx.ConnectError):
+        http_client.request(
+            path="/test",
+            method="GET",
+            request_options={"max_retries": 2},
+        )
+
+    # 1 initial + 2 retries = 3 total attempts
+    assert mock_client.request.call_count == 3
+    assert mock_sleep.call_count == 2
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_sync_connection_error_respects_max_retries_zero(mock_sleep: MagicMock) -> None:
+    """Sync: connection error respects max_retries=0."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = httpx.ConnectError("connection failed")
+    http_client = _make_sync_http_client(mock_client)
+
+    with pytest.raises(httpx.ConnectError):
+        http_client.request(
+            path="/test",
+            method="GET",
+            request_options={"max_retries": 0},
+        )
+
+    # No retries, just the initial attempt
+    assert mock_client.request.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_retries_on_connect_error(mock_sleep: AsyncMock) -> None:
+    """Async: connection error retries on httpx.ConnectError."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(
+        side_effect=[
+            httpx.ConnectError("connection failed"),
+            _DummyResponse(),
+        ]
+    )
+    http_client = _make_async_http_client(mock_client)
+
+    response = await http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    assert mock_client.request.call_count == 2
+    mock_sleep.assert_called_once()
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
+    """Async: connection error retries on httpx.RemoteProtocolError."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(
+        side_effect=[
+            httpx.RemoteProtocolError("Remote end closed connection without response"),
+            _DummyResponse(),
+        ]
+    )
+    http_client = _make_async_http_client(mock_client)
+
+    response = await http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    assert mock_client.request.call_count == 2
+    mock_sleep.assert_called_once()
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_connection_error_exhausts_retries(mock_sleep: AsyncMock) -> None:
+    """Async: connection error exhausts retries then raises."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(side_effect=httpx.ConnectError("connection failed"))
+    http_client = _make_async_http_client(mock_client)
+
+    with pytest.raises(httpx.ConnectError):
+        await http_client.request(
+            path="/test",
+            method="GET",
+            request_options={"max_retries": 2},
+        )
+
+    # 1 initial + 2 retries = 3 total attempts
+    assert mock_client.request.call_count == 3
+    assert mock_sleep.call_count == 2
