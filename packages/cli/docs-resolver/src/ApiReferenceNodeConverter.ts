@@ -182,7 +182,8 @@ export class ApiReferenceNodeConverter {
     }
 
     private createTagDescriptionPageId(
-        subpackage: APIV1Read.ApiDefinitionPackage
+        subpackage: APIV1Read.ApiDefinitionPackage,
+        packageLocator?: string
     ): FernNavigation.V1.PageId | undefined {
         if (!this.apiSection.tagDescriptionPages || !this.openApiTags) {
             return undefined;
@@ -194,8 +195,12 @@ export class ApiReferenceNodeConverter {
             return undefined;
         }
 
-        // Check if this subpackage corresponds to a tag with description
-        const tagInfo = this.openApiTags[subpackageName];
+        // Try matching by subpackage name first, then by the full package locator (camelCased).
+        // For nested tags like "Activities / WhatsApp Messages", the subpackage name is the leaf
+        // ("whatsAppMessages") but the openApiTags key is the full camelCase ("activitiesWhatsAppMessages").
+        const tagInfo =
+            this.openApiTags[subpackageName] ??
+            (packageLocator != null ? this.openApiTags[camelCase(packageLocator)] : undefined);
         if (!tagInfo || !tagInfo.description) {
             return undefined;
         }
@@ -299,7 +304,7 @@ export class ApiReferenceNodeConverter {
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             // Fall back to tag description page when no explicit overview is provided
-            const overviewPageId = explicitOverviewPageId ?? this.createTagDescriptionPageId(subpackage);
+            const overviewPageId = explicitOverviewPageId ?? this.createTagDescriptionPageId(subpackage, pkg.package);
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
@@ -503,7 +508,7 @@ export class ApiReferenceNodeConverter {
                 slug: slug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
-                overviewPageId: this.createTagDescriptionPageId(subpackage),
+                overviewPageId: this.createTagDescriptionPageId(subpackage, unknownIdentifier),
                 collapsible: undefined,
                 collapsedByDefault: undefined,
                 availability: parentAvailability,
