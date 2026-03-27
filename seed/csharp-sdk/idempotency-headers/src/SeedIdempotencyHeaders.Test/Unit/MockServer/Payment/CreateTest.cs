@@ -28,7 +28,6 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/payment")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

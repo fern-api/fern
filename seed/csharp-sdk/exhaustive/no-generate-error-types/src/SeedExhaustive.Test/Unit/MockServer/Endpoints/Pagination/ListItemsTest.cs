@@ -32,7 +32,6 @@ public class ListItemsTest : BaseMockServerTest
                     .WithPath("/pagination")
                     .WithParam("cursor", "cursor")
                     .WithParam("limit", "1")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(

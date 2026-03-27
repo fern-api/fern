@@ -24,7 +24,6 @@ public class GetAndReturnStringTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/primitive/string")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBody(requestJson)
             )

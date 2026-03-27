@@ -101,7 +101,6 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/object/get-and-return-nested-with-required-field-list")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

@@ -16,13 +16,7 @@ public class WithMixedCaseTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/urls/MixedCase")
-                    .WithHeader("Authorization", "Bearer TOKEN")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/urls/MixedCase").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

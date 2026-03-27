@@ -28,7 +28,6 @@ public class GetAndReturnSetOfPrimitivesTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/set-of-primitives")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

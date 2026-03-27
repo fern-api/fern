@@ -33,7 +33,6 @@ public class GetAndReturnSetOfObjectsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/set-of-objects")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

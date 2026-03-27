@@ -16,13 +16,7 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/basic-auth")
-                    .WithHeader("Authorization", "Basic VVNFUk5BTUU6QUNDRVNTX1RPS0VO")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/basic-auth").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

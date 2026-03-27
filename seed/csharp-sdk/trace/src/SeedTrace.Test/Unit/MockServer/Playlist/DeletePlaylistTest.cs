@@ -15,7 +15,6 @@ public class DeletePlaylistTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/playlist_id")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));

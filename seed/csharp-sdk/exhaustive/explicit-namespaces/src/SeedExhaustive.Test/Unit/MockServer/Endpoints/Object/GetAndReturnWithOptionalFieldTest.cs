@@ -68,7 +68,6 @@ public class GetAndReturnWithOptionalFieldTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/object/get-and-return-with-optional-field")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

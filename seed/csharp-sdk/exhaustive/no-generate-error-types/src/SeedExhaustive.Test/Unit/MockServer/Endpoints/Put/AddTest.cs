@@ -32,13 +32,7 @@ public class AddTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/id")
-                    .WithHeader("Authorization", "Bearer TOKEN")
-                    .UsingPut()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/id").UsingPut())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

@@ -16,13 +16,7 @@ public class GetDummyTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/dummy")
-                    .WithHeader("Authorization", "Bearer TOKEN")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/dummy").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

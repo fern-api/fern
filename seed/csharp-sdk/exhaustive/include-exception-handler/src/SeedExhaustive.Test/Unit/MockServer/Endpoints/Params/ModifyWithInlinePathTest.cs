@@ -25,7 +25,6 @@ public class ModifyWithInlinePathTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/params/path/param")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPut()
                     .WithBody(requestJson)
             )

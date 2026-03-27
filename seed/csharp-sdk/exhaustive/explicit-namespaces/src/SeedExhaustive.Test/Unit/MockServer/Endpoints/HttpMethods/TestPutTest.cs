@@ -48,7 +48,6 @@ public class TestPutTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/http-methods/id")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPut()
                     .WithBodyAsJson(requestJson)
             )

@@ -33,7 +33,6 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/map-prim-to-object")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

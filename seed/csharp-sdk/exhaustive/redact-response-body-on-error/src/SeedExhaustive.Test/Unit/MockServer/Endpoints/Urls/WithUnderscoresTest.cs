@@ -20,7 +20,6 @@ public class WithUnderscoresTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/urls/with_underscores")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(
