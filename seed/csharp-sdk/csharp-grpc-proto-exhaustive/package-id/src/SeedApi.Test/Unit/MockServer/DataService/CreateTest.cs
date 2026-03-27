@@ -8,7 +8,7 @@ namespace SeedApi.Test.Unit.MockServer.DataService;
 public class CreateTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest_1()
     {
         DataServiceStub.OnCreate(_ => new Data.V1.Grpc.CreateResponse());
 

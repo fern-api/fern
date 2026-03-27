@@ -10,7 +10,7 @@ namespace SeedApi.Test.Unit.MockServer.DataService;
 public class UploadTest : BaseGrpcMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest_1()
     {
         const string mockResponse = """
             {

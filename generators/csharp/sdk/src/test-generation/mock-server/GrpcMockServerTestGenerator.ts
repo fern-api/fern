@@ -100,7 +100,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             origin: this.classReference.origin,
             parentClassReference: this.Types.BaseGrpcMockServerTest
         });
-        this.exampleEndpointCalls.forEach((example, index) => {
+        let generatedTestCount = 0;
+        this.exampleEndpointCalls.forEach((example) => {
             let jsonExampleResponse: unknown | undefined = undefined;
             if (example.response != null) {
                 if (example.response.type !== "ok" || example.response.value.type !== "body") {
@@ -145,7 +146,8 @@ export class GrpcMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                     isSupportedResponse
                 });
             });
-            const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : "";
+            generatedTestCount++;
+            const testNumber = generatedTestCount > 1 || this.exampleEndpointCalls.length > 1 ? `_${generatedTestCount}` : "";
             testClass.addTestMethod({
                 name: `MockServerTest${testNumber}`,
                 body: methodBody,
