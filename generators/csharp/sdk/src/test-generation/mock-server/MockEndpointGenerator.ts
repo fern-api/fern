@@ -105,7 +105,12 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
                 // Add auth header matching for endpoints that require authentication
                 if (endpoint.auth) {
+                    // When endpoint has per-endpoint security, only match schemes used by this endpoint
+                    const allowedSchemeKeys = this.getEndpointAuthSchemeKeys(endpoint);
                     for (const scheme of this.context.ir.auth.schemes) {
+                        if (allowedSchemeKeys != null && !allowedSchemeKeys.has(scheme.key)) {
+                            continue;
+                        }
                         switch (scheme.type) {
                             case "basic": {
                                 // Compute exact expected header value from the known test credentials
@@ -204,6 +209,23 @@ export class MockEndpointGenerator extends WithGeneration {
             case "unknown":
                 return undefined;
         }
+    }
+
+    /**
+     * Returns the set of auth scheme keys that this endpoint uses, or undefined if
+     * the endpoint uses global auth (i.e., all schemes apply).
+     */
+    private getEndpointAuthSchemeKeys(endpoint: HttpEndpoint): Set<string> | undefined {
+        if (endpoint.security == null || endpoint.security.length === 0) {
+            return undefined;
+        }
+        const keys = new Set<string>();
+        for (const securityItem of endpoint.security) {
+            for (const key of Object.keys(securityItem)) {
+                keys.add(key);
+            }
+        }
+        return keys;
     }
 
     /**

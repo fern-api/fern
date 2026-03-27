@@ -25,15 +25,7 @@ public class GetWithOAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithHeader("Authorization", "Bearer TOKEN")
-                    .WithHeader("X-API-Key", "API_KEY")
-                    .WithHeader("Authorization", "Basic VVNFUk5BTUU6UEFTU1dPUkQ=")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

@@ -270,7 +270,12 @@ export class WireMock {
         // Build auth header matchers for endpoints that require authentication
         const authHeaders: Record<string, { matches: string }> = {};
         if (endpoint.auth) {
+            // When endpoint has per-endpoint security, only match schemes used by this endpoint
+            const allowedSchemeKeys = this.getEndpointAuthSchemeKeys(endpoint);
             for (const scheme of ir.auth.schemes) {
+                if (allowedSchemeKeys != null && !allowedSchemeKeys.has(scheme.key)) {
+                    continue;
+                }
                 switch (scheme.type) {
                     case "basic":
                         authHeaders["Authorization"] = { matches: "Basic .+" };
@@ -393,6 +398,23 @@ export class WireMock {
             case "unknown":
                 return undefined;
         }
+    }
+
+    /**
+     * Returns the set of auth scheme keys that this endpoint uses, or undefined if
+     * the endpoint uses global auth (i.e., all schemes apply).
+     */
+    private getEndpointAuthSchemeKeys(endpoint: FernIr.HttpEndpoint): Set<string> | undefined {
+        if (endpoint.security == null || endpoint.security.length === 0) {
+            return undefined;
+        }
+        const keys = new Set<string>();
+        for (const securityItem of endpoint.security) {
+            for (const key of Object.keys(securityItem)) {
+                keys.add(key);
+            }
+        }
+        return keys;
     }
 
     private extractExampleValue(
