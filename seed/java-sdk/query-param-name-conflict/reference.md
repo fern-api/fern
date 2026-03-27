@@ -63,7 +63,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**assignedTo:** `Optional<String>` 
+**bulkUpdateTasksRequestAssignedTo:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -71,7 +71,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**date:** `Optional<String>` 
+**bulkUpdateTasksRequestDate:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -79,7 +79,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**isComplete:** `Optional<Boolean>` 
+**bulkUpdateTasksRequestIsComplete:** `Optional<Boolean>` 
     
 </dd>
 </dl>
