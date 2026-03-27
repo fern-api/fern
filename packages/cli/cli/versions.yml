@@ -6,7 +6,7 @@
         OG images. These allow explicit control over text and background colors in
         dynamically generated OG images, fixing visibility issues on light backgrounds.
       type: feat
-  createdAt: "2026-03-17"
+  createdAt: "2026-03-27"
   irVersion: 65
 
 - version: 4.46.6
