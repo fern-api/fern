@@ -50,7 +50,7 @@ export class NoAuthClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
+            contentType: request != null ? "application/json" : undefined,
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,

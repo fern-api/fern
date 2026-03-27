@@ -54,7 +54,7 @@ export class FooClient {
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
+            contentType: _body != null ? "application/json" : undefined,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
             body: _body,

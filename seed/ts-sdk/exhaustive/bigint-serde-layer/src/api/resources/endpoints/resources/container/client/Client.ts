@@ -577,7 +577,7 @@ export class ContainerClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
+            contentType: request != null ? "application/json" : undefined,
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {

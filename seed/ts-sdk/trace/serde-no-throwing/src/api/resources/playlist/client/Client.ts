@@ -356,7 +356,7 @@ export class PlaylistClient {
             ),
             method: "PUT",
             headers: _headers,
-            contentType: "application/json",
+            contentType: request != null ? "application/json" : undefined,
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
