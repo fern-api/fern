@@ -25,7 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/movie/#{params[:movie_id]}",
+          path: "/movie/#{URI.encode_uri_component(params[:movie_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -83,7 +83,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Boolean, nil] :shallow
       # @option params [String, nil] :tag
-      # @option params [String] :x_api_version
+      # @option params [String] :x-api-version
       #
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
@@ -95,7 +95,7 @@ module Seed
         params = params.except(*query_param_names)
 
         headers = {}
-        headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]
+        headers["X-API-Version"] = params[:x - api - version] if params[:x - api - version]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

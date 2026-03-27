@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :x_api_key
+      # @option params [String] :x-api-key
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
@@ -27,7 +27,7 @@ module Seed
         body = request_data.except(*non_body_param_names)
 
         headers = {}
-        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
+        headers["X-Api-Key"] = params[:x - api - key] if params[:x - api - key]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -58,7 +58,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :x_api_key
+      # @option params [String] :x-api-key
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
@@ -68,7 +68,7 @@ module Seed
         body = request_data.except(*non_body_param_names)
 
         headers = {}
-        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
+        headers["X-Api-Key"] = params[:x - api - key] if params[:x - api - key]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.user.get_with_bearer
+client.user.get_with_api_key

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -6,7 +6,7 @@ module Seed
     # @param token [String]
     #
     # @return [void]
-    def initialize(token:, base_url: nil)
+    def initialize(base_url: nil, token:)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -16,17 +16,14 @@ module Seed
         }
       )
     end
-
     # @return [Seed::Complex::Client]
     def complex
       @complex ||= Seed::Complex::Client.new(client: @raw_client)
     end
-
     # @return [Seed::InlineUsers::Client]
-    def inline_users
-      @inline_users ||= Seed::InlineUsers::Client.new(client: @raw_client)
+    def inline-users
+      @inline-users ||= Seed::InlineUsers::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Users::Client]
     def users
       @users ||= Seed::Users::Client.new(client: @raw_client)

@@ -17,13 +17,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :admin_key_header
+      # @option params [String] :admin-key-header
       #
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
-        headers["admin-key-header"] = params[:admin_key_header] if params[:admin_key_header]
+        headers["admin-key-header"] = params[:admin - key - header] if params[:admin - key - header]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

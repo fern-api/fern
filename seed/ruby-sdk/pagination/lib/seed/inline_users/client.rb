@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module InlineUsers
@@ -10,9 +9,10 @@ module Seed
         @client = client
       end
 
+
       # @return [Seed::InlineUsers::Client]
-      def inline_users
-        @inline_users ||= Seed::InlineUsers::InlineUsers::Client.new(client: @client)
+      def inline-users
+        @inline-users ||= Seed::InlineUsers::InlineUsers::Client.new(client: @client)
       end
     end
   end

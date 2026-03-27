@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -6,7 +6,7 @@ module Seed
     # @param api_key [String]
     #
     # @return [void]
-    def initialize(api_key:, base_url: nil)
+    def initialize(base_url: nil, api_key:)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -33,22 +33,18 @@ module Seed
         }.merge(@auth_provider.auth_headers)
       )
     end
-
     # @return [Seed::Auth::Client]
     def auth
       @auth ||= Seed::Auth::Client.new(client: @raw_client)
     end
-
     # @return [Seed::NestedNoAuth::Client]
-    def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+    def nested-no-auth
+      @nested-no-auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Nested::Client]
     def nested
       @nested ||= Seed::Nested::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Simple::Client]
     def simple
       @simple ||= Seed::Simple::Client.new(client: @raw_client)

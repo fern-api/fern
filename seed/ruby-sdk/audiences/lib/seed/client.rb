@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -14,17 +14,14 @@ module Seed
         }
       )
     end
-
     # @return [Seed::FolderA::Client]
-    def folder_a
-      @folder_a ||= Seed::FolderA::Client.new(client: @raw_client)
+    def folder-a
+      @folder-a ||= Seed::FolderA::Client.new(client: @raw_client)
     end
-
     # @return [Seed::FolderD::Client]
-    def folder_d
-      @folder_d ||= Seed::FolderD::Client.new(client: @raw_client)
+    def folder-d
+      @folder-d ||= Seed::FolderD::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Foo::Client]
     def foo
       @foo ||= Seed::Foo::Client.new(client: @raw_client)

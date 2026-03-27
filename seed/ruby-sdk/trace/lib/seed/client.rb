@@ -18,8 +18,8 @@ module Seed
     end
 
     # @return [Seed::V2::Client]
-    def v_2
-      @v_2 ||= Seed::V2::Client.new(client: @raw_client)
+    def v2
+      @v2 ||= Seed::V2::Client.new(client: @raw_client)
     end
 
     # @return [Seed::Admin::Client]

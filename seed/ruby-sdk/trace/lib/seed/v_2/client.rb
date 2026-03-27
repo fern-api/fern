@@ -45,8 +45,8 @@ module Seed
       end
 
       # @return [Seed::V3::Client]
-      def v_3
-        @v_3 ||= Seed::V2::V3::Client.new(client: @client)
+      def v3
+        @v3 ||= Seed::V2::V3::Client.new(client: @client)
       end
     end
   end

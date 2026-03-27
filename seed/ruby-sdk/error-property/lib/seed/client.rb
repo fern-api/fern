@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -14,10 +14,9 @@ module Seed
         }
       )
     end
-
     # @return [Seed::PropertyBasedError::Client]
-    def property_based_error
-      @property_based_error ||= Seed::PropertyBasedError::Client.new(client: @raw_client)
+    def property-based-error
+      @property-based-error ||= Seed::PropertyBasedError::Client.new(client: @raw_client)
     end
   end
 end

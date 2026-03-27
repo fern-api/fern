@@ -22,13 +22,13 @@ module Seed
     end
 
     # @return [Seed::Ec2::Client]
-    def ec_2
-      @ec_2 ||= Seed::Ec2::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+    def ec2
+      @ec2 ||= Seed::Ec2::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
     end
 
     # @return [Seed::S3::Client]
-    def s_3
-      @s_3 ||= Seed::S3::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+    def s3
+      @s3 ||= Seed::S3::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
     end
   end
 end

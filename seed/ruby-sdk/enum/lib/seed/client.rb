@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -14,30 +14,25 @@ module Seed
         }
       )
     end
-
     # @return [Seed::Headers::Client]
     def headers
       @headers ||= Seed::Headers::Client.new(client: @raw_client)
     end
-
     # @return [Seed::InlinedRequest::Client]
-    def inlined_request
-      @inlined_request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
+    def inlined-request
+      @inlined-request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
     end
-
     # @return [Seed::MultipartForm::Client]
-    def multipart_form
-      @multipart_form ||= Seed::MultipartForm::Client.new(client: @raw_client)
+    def multipart-form
+      @multipart-form ||= Seed::MultipartForm::Client.new(client: @raw_client)
     end
-
     # @return [Seed::PathParam::Client]
-    def path_param
-      @path_param ||= Seed::PathParam::Client.new(client: @raw_client)
+    def path-param
+      @path-param ||= Seed::PathParam::Client.new(client: @raw_client)
     end
-
     # @return [Seed::QueryParam::Client]
-    def query_param
-      @query_param ||= Seed::QueryParam::Client.new(client: @raw_client)
+    def query-param
+      @query-param ||= Seed::QueryParam::Client.new(client: @raw_client)
     end
   end
 end

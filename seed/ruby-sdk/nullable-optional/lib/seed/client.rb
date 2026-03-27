@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -14,10 +14,9 @@ module Seed
         }
       )
     end
-
     # @return [Seed::NullableOptional::Client]
-    def nullable_optional
-      @nullable_optional ||= Seed::NullableOptional::Client.new(client: @raw_client)
+    def nullable-optional
+      @nullable-optional ||= Seed::NullableOptional::Client.new(client: @raw_client)
     end
   end
 end

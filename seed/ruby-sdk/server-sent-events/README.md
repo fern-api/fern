@@ -30,7 +30,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.completions.stream(query: "query")
+client.completions.stream(query: "foo")
 ```
 
 ## Environments

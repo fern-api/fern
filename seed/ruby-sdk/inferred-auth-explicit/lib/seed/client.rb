@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module Seed
   class Client
@@ -6,10 +6,10 @@ module Seed
     # @param client_id [String]
     # @param client_secret [String]
     # @param scope [String, nil]
-    # @param x_api_key [String]
+    # @param x-api-key [String]
     #
     # @return [void]
-    def initialize(client_id:, client_secret:, x_api_key:, base_url: nil, scope: nil)
+    def initialize(base_url: nil, client_id:, client_secret:, scope: nil, x-api-key:)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -18,7 +18,7 @@ module Seed
           "X-Client-Id" => client_id,
           "X-Client-Secret" => client_secret,
           "X-Scope" => scope,
-          "X-Api-Key" => x_api_key
+          "X-X-api-key" => x-api-key
         }
       )
 
@@ -28,7 +28,7 @@ module Seed
       # Create the auth provider with the auth client and credentials
       @auth_provider = Seed::Internal::InferredAuthProvider.new(
         auth_client: auth_client,
-        options: { base_url: base_url, client_id: client_id, client_secret: client_secret, scope: scope, x_api_key: x_api_key }
+        options: { base_url: base_url, client_id: client_id, client_secret: client_secret, scope: scope, x-api-key: x-api-key }
       )
 
       @raw_client = Seed::Internal::Http::RawClient.new(
@@ -39,22 +39,18 @@ module Seed
         }.merge(@auth_provider.auth_headers)
       )
     end
-
     # @return [Seed::Auth::Client]
     def auth
       @auth ||= Seed::Auth::Client.new(client: @raw_client)
     end
-
     # @return [Seed::NestedNoAuth::Client]
-    def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+    def nested-no-auth
+      @nested-no-auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Nested::Client]
     def nested
       @nested ||= Seed::Nested::Client.new(client: @raw_client)
     end
-
     # @return [Seed::Simple::Client]
     def simple
       @simple ||= Seed::Simple::Client.new(client: @raw_client)
