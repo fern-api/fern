@@ -424,9 +424,16 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
         }
 
         const environmentsClassName = this.Types.Environments.name;
-        const rootClientName = this.context.getAccessFromRootClient(
-            Object.values(this.context.ir.services)[0]?.name.fernFilepath ?? { allParts: [], packagePath: [], file: undefined }
-        ).split(".")[0] ?? "client";
+        const rootClientName =
+            this.context
+                .getAccessFromRootClient(
+                    Object.values(this.context.ir.services)[0]?.name.fernFilepath ?? {
+                        allParts: [],
+                        packagePath: [],
+                        file: undefined
+                    }
+                )
+                .split(".")[0] ?? "client";
 
         return [
             this.writeCode(`
